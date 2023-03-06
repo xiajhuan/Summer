@@ -22,12 +22,7 @@
             <groupId>me.xiajhuan</groupId>
             <artifactId>summer-common</artifactId>
         </dependency>
-        <!--web支持-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <!--junit单元测试-->
+        <!--单元测试-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>

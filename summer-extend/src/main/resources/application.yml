@@ -1,2 +1,11 @@
 server:
   port: 8888
+
+spring:
+  application:
+    name: summer-extend
+  profiles:
+    # 包含 application-common.yml
+    include: common
+    # 环境 dev/test/prod
+    active: dev

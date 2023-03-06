@@ -13,7 +13,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.7.8</version>
+		<version>2.7.9</version>
 	</parent>
 
     <modules>
@@ -27,17 +27,19 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <summer.version>1.0.0</summer.version>
-        <druid.version>1.2.16</druid.version>
-        <mybatisplus.version>3.5.3</mybatisplus.version>
+        <mybatisplus.version>3.5.3.1</mybatisplus.version>
+        <dynamic.datasource>3.6.1</dynamic.datasource>
         <mysql.version>8.0.32</mysql.version>
+        <shiro.version>1.11.0</shiro.version>
         <commons.lang3.version>3.12.0</commons.lang3.version>
-        <commons.fileupload.version>1.5</commons.fileupload.version>
+        <commons.pool2.version>2.11.1</commons.pool2.version>
         <commons.io.version>2.11.0</commons.io.version>
-        <commons.codec.version>1.15</commons.codec.version>
+        <commons.fileupload.version>1.5</commons.fileupload.version>
         <guava.version>31.1-jre</guava.version>
-        <gson.version>2.10.1</gson.version>
-        <hutool.version>5.8.12</hutool.version>
+        <hutool.version>5.8.13</hutool.version>
         <jsoup.version>1.15.4</jsoup.version>
+        <easy.excel.version>3.2.1</easy.excel.version>
+        <p6spy.version>3.9.1</p6spy.version>
         <lombok.version>1.18.26</lombok.version>
         <docker.plugin.version>1.2.2</docker.plugin.version>
     </properties>
@@ -50,23 +52,17 @@
                 <artifactId>summer-common</artifactId>
                 <version>${summer.version}</version>
             </dependency>
-            <!--summer-single扩展模块-->
-            <dependency>
-                <groupId>me.xiajhuan</groupId>
-                <artifactId>summer-extend</artifactId>
-                <version>${summer.version}</version>
-            </dependency>
-            <!--druid数据源-->
-            <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>druid-spring-boot-starter</artifactId>
-                <version>${druid.version}</version>
-            </dependency>
             <!--mybatis-plus-->
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${mybatisplus.version}</version>
+            </dependency>
+            <!--多数据源-->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
+                <version>${dynamic.datasource}</version>
             </dependency>
             <!--mysql驱动-->
             <dependency>
@@ -74,11 +70,27 @@
                 <artifactId>mysql-connector-java</artifactId>
                 <version>${mysql.version}</version>
             </dependency>
+            <!--apache-shiro-->
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-core</artifactId>
+                <version>${shiro.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-spring</artifactId>
+                <version>${shiro.version}</version>
+            </dependency>
             <!--apache-commons工具包-->
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
                 <version>${commons.lang3.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-pool2</artifactId>
+                <version>${commons.pool2.version}</version>
             </dependency>
             <dependency>
                 <groupId>commons-fileupload</groupId>
@@ -90,22 +102,11 @@
                 <artifactId>commons-io</artifactId>
                 <version>${commons.io.version}</version>
             </dependency>
-            <dependency>
-                <groupId>commons-codec</groupId>
-                <artifactId>commons-codec</artifactId>
-                <version>${commons.codec.version}</version>
-            </dependency>
             <!--google-guava工具包-->
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
                 <version>${guava.version}</version>
-            </dependency>
-            <!--gson-->
-            <dependency>
-                <groupId>com.google.code.gson</groupId>
-                <artifactId>gson</artifactId>
-                <version>${gson.version}</version>
             </dependency>
             <!--hutool工具包-->
             <dependency>
@@ -118,6 +119,18 @@
                 <groupId>org.jsoup</groupId>
                 <artifactId>jsoup</artifactId>
                 <version>${jsoup.version}</version>
+            </dependency>
+            <!--easyExcel-->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>easyexcel</artifactId>
+                <version>${easy.excel.version}</version>
+            </dependency>
+            <!--p6spy-->
+            <dependency>
+                <groupId>p6spy</groupId>
+                <artifactId>p6spy</artifactId>
+                <version>${p6spy.version}</version>
             </dependency>
             <!--lombok-->
             <dependency>

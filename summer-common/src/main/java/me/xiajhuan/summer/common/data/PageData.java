@@ -1,0 +1,63 @@
+package me.xiajhuan.summer.common.data;
+
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+import java.io.Serializable;
+import java.util.List;
+
+/**
+ * 分页数据
+ *
+ * @author xiajhuan
+ * @date 2022/11/21
+ */
+@Setter
+@Getter
+@ToString
+public class PageData<T> implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    private PageData() {
+    }
+
+    /**
+     * 总记录数
+     */
+    private Long total;
+
+    /**
+     * 列表数据
+     */
+    private List<T> rows;
+
+    /**
+     * 构建分页数据
+     *
+     * @param pageInfo {@link IPage}
+     * @param <T>      列表数据类型
+     * @return 分页数据
+     */
+    public static <T> PageData<T> of(IPage<T> pageInfo) {
+        return of(pageInfo.getTotal(), pageInfo.getRecords());
+    }
+
+    /**
+     * 构建分页数据
+     *
+     * @param total 总记录数
+     * @param rows  数据列表
+     * @param <T>   列表数据类型
+     * @return 分页数据
+     */
+    public static <T> PageData<T> of(long total, List<T> rows) {
+        PageData pageData = new PageData();
+        pageData.setTotal(total);
+        pageData.setRows(rows);
+        return pageData;
+    }
+
+}

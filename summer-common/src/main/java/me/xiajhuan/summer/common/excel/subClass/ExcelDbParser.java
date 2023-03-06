@@ -1,0 +1,65 @@
+package me.xiajhuan.summer.common.excel.subClass;
+
+import com.baomidou.mybatisplus.extension.service.IService;
+import me.xiajhuan.summer.common.excel.AbstractExcelParser;
+
+/**
+ * Excel数据解析（保存到Db）
+ * <p>
+ * note：想个性化前置处理，请自定义Parser继承当前类覆写 {@link AbstractExcelParser#handleParsedDataBefore}
+ * </p>
+ *
+ * @author xiajhuan
+ * @date 2022/12/1
+ */
+public class ExcelDbParser<T, E> extends AbstractExcelParser<T, E> {
+
+    /**
+     * {@link IService}<br>
+     * 用于提供Db保存接口
+     */
+    protected IService<T> service;
+
+    /**
+     * 当前EntityClass
+     */
+    protected Class<T> currentEntityClass;
+
+    /**
+     * 构造ExcelDbParser
+     *
+     * @param service            Service
+     * @param currentEntityClass 当前EntityClass
+     */
+    protected ExcelDbParser(IService<T> service, Class<T> currentEntityClass) {
+        this.service = service;
+        this.currentEntityClass = currentEntityClass;
+    }
+
+    /**
+     * 构建ExcelDbParser
+     *
+     * @param service            Service
+     * @param currentEntityClass 当前EntityClass
+     * @param <T>                Entity类型
+     * @return ExcelDbParser
+     */
+    public static <T> ExcelDbParser build(IService<T> service, Class<T> currentEntityClass) {
+        return new ExcelDbParser(service, currentEntityClass);
+    }
+
+    @Override
+    protected Class<T> currentEntityClass() {
+        return currentEntityClass;
+    }
+
+    @Override
+    protected void handleParsedData() {
+        LOGGER.info("解析到【{}】条Excel数据，开始保存到Db！", entityList.size());
+
+        service.saveBatch(entityList);
+
+        LOGGER.info("保存到Db成功！");
+    }
+
+}
