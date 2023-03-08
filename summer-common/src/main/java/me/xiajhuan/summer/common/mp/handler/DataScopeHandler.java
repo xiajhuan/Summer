@@ -13,7 +13,6 @@ import me.xiajhuan.summer.common.enums.DataScopeEnum;
 import me.xiajhuan.summer.common.enums.UserTypeEnum;
 import me.xiajhuan.summer.common.security.login.LoginUser;
 import me.xiajhuan.summer.common.utils.SecurityUtil;
-import me.xiajhuan.summer.common.utils.SpringContextUtil;
 import me.xiajhuan.summer.common.utils.WildcardUtil;
 import net.sf.jsqlparser.expression.Expression;
 import com.baomidou.mybatisplus.annotation.InterceptorIgnore;
@@ -27,7 +26,10 @@ import net.sf.jsqlparser.expression.operators.relational.InExpression;
 import net.sf.jsqlparser.schema.Column;
 import net.sf.jsqlparser.schema.Table;
 import net.sf.jsqlparser.statement.select.PlainSelect;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,19 +50,20 @@ import java.util.stream.Collectors;
  * @see DataPermissionInterceptor#setWhere(PlainSelect, String)
  * @see MultiDataPermissionHandler#getSqlSegment(Table, Expression, String)
  */
+@Component
 public class DataScopeHandler implements MultiDataPermissionHandler {
+
+    @Resource(name = SettingBeanConst.COMMON)
+    private Setting setting;
 
     /**
      * 数据权限忽略的表名称数组
      */
     private static String[] dataScopeIgnoreArray = null;
 
-    /**
-     * 初始化 {@link dataScopeIgnoreArray}
-     */
-    static {
-        String dataScopeIgnore = SpringContextUtil.getBean(SettingBeanConst.COMMON, Setting.class)
-                .getByGroup("dataScope.ignore", "Mp");
+    @PostConstruct
+    void init() {
+        String dataScopeIgnore = setting.getByGroup("dataScope.ignore", "Mp");
 
         if (StrUtil.isNotBlank(dataScopeIgnore)) {
             dataScopeIgnoreArray = dataScopeIgnore.split(StrPool.COMMA);

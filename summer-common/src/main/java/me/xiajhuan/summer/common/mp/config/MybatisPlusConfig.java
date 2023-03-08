@@ -9,7 +9,6 @@ import me.xiajhuan.summer.common.mp.handler.DataScopeHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-
 /**
  * MybatisPlus配置
  *
@@ -23,10 +22,11 @@ public class MybatisPlusConfig {
      * 注册 {@link MybatisPlusInterceptor}<br>
      * 集成【分页/乐观锁/防止全表更新与删除/数据权限】功能
      *
+     * @param dataScopeHandler 数据权限处理器
      * @return {@link MybatisPlusInterceptor}
      */
     @Bean
-    public MybatisPlusInterceptor mybatisPlusInterceptor() {
+    public MybatisPlusInterceptor mybatisPlusInterceptor(DataScopeHandler dataScopeHandler) {
         MybatisPlusInterceptor mybatisPlusInterceptor = new MybatisPlusInterceptor();
         // 分页插件
         mybatisPlusInterceptor.addInnerInterceptor(new PaginationInnerInterceptor());
@@ -36,7 +36,7 @@ public class MybatisPlusConfig {
         mybatisPlusInterceptor.addInnerInterceptor(new BlockAttackInnerInterceptor());
         // 数据权限
         DataPermissionInterceptor dataPermissionInterceptor = new DataPermissionInterceptor();
-        dataPermissionInterceptor.setDataPermissionHandler(new DataScopeHandler());
+        dataPermissionInterceptor.setDataPermissionHandler(dataScopeHandler);
         mybatisPlusInterceptor.addInnerInterceptor(dataPermissionInterceptor);
 
         return mybatisPlusInterceptor;

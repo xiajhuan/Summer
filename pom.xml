@@ -10,11 +10,11 @@
     <description>summer单体应用版</description>
     <url>https://gitee.com/xiajhuan/summer-single</url>
 
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.7.9</version>
-	</parent>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.7.9</version>
+    </parent>
 
     <modules>
         <module>summer-server</module>
@@ -37,7 +37,7 @@
         <commons.fileupload.version>1.5</commons.fileupload.version>
         <guava.version>31.1-jre</guava.version>
         <hutool.version>5.8.13</hutool.version>
-        <jsoup.version>1.15.4</jsoup.version>
+        <mica.xss.version>2.7.9</mica.xss.version>
         <easy.excel.version>3.2.1</easy.excel.version>
         <p6spy.version>3.9.1</p6spy.version>
         <lombok.version>1.18.26</lombok.version>
@@ -114,11 +114,11 @@
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool.version}</version>
             </dependency>
-            <!--jsoup-->
+            <!--mica-xss-->
             <dependency>
-                <groupId>org.jsoup</groupId>
-                <artifactId>jsoup</artifactId>
-                <version>${jsoup.version}</version>
+                <groupId>net.dreamlu</groupId>
+                <artifactId>mica-xss</artifactId>
+                <version>${mica.xss.version}</version>
             </dependency>
             <!--easyExcel-->
             <dependency>

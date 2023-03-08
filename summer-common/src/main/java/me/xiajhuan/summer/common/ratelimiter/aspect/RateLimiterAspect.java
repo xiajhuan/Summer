@@ -113,7 +113,7 @@ public class RateLimiterAspect {
 
                 realQps = loadBalanceStrategy.calRealQpsBySetQpsAndNodeNum(setQps, nodeNum);
             } catch (Exception e) {
-                LOGGER.error(e, "负载均衡-Class【{}】获取realQps失败，自动切换为默认负载均衡策略，请参照【DefaultLoadBalanceStrategy】编写", loadBalanceStrategyClass.getSimpleName());
+                LOGGER.error(e, "LoadBalance-Class【{}】获取realQps失败，自动切换为默认负载均衡策略，请参照【DefaultLoadBalanceStrategy】编写", loadBalanceStrategyClass.getSimpleName());
 
                 realQps = BigDecimal.valueOf(setQps / nodeNum).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
             }
@@ -126,7 +126,7 @@ public class RateLimiterAspect {
             }
 
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("接口【{}[{}]】设置的QPS为：【{}】，当前服务节点实际的QPS为：【{}】，key-Class【{}】，负载均衡-Class【{}】{}",
+                LOGGER.debug("接口【{}[{}]】设置的QPS为：【{}】，当前服务节点实际的QPS为：【{}】，key-Class【{}】，LoadBalance-Class【{}】{}",
                         request.getRequestURI(), request.getMethod(), setQps, RATE_LIMITER_CACHE.get(rateLimiterKey).getRate(),
                         keyStrategyClass.getSimpleName(), loadBalanceStrategyClass.getSimpleName(),
                         StrUtil.isNotBlank(msgTemplate) ? StrUtil.format(msgTemplate, StrUtil.subAfter(rateLimiterKey, "#", true)) : StrUtil.EMPTY);
@@ -135,7 +135,7 @@ public class RateLimiterAspect {
             // 尝试获取令牌
             if (RATE_LIMITER_CACHE.get(rateLimiterKey) != null && !RATE_LIMITER_CACHE.get(rateLimiterKey).tryAcquire(rateLimiter.timeout(), TimeUnit.MILLISECONDS)) {
                 if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("接口【{}[{}]】限流成功，key-Class【{}】，负载均衡-Class【{}】{}",
+                    LOGGER.debug("接口【{}[{}]】限流成功，key-Class【{}】，LoadBalance-Class【{}】{}",
                             request.getRequestURI(), request.getMethod(), keyStrategyClass.getSimpleName(), loadBalanceStrategyClass.getSimpleName(),
                             StrUtil.isNotBlank(msgTemplate) ? StrUtil.format(msgTemplate, StrUtil.subAfter(rateLimiterKey, "#", true)) : StrUtil.EMPTY);
                 }

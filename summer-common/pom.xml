@@ -72,12 +72,10 @@
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-core</artifactId>
-            <version>${shiro.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-spring</artifactId>
-            <version>${shiro.version}</version>
         </dependency>
         <!--apache-commons工具包-->
         <dependency>
@@ -106,10 +104,10 @@
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
         </dependency>
-        <!--jsoup-->
+        <!--mica-xss-->
         <dependency>
-            <groupId>org.jsoup</groupId>
-            <artifactId>jsoup</artifactId>
+            <groupId>net.dreamlu</groupId>
+            <artifactId>mica-xss</artifactId>
         </dependency>
         <!--easyExcel-->
         <dependency>

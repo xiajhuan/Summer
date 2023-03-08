@@ -101,11 +101,11 @@ public class WildcardUtil {
     private static final String template = "{} matches {},result:{}\n";
 
     public static void main(String args[]) {
-        String source1 = "c_log_operation";
-        String pattern11 = "*_log_*";
-        String pattern12 = "?_log_*";
-        Console.log(template, source1, pattern11, matches(source1, pattern11));
-        Console.log(template, source1, pattern12, matches(source1, pattern12));
+        String source = "c_log_operation";
+        String pattern1 = "*_log_*";
+        String pattern2 = "?_log_*";
+        Console.log(template, source, pattern1, matches(source, pattern1));
+        Console.log(template, source, pattern2, matches(source, pattern2));
     }
 
 }
