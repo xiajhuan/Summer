@@ -9,14 +9,16 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
+import net.dreamlu.mica.xss.config.MicaXssConfiguration;
 
 /**
- * Spring容器工具
+ * Spring容器工具<br>
+ * note：这里需自定义Bean名称，否则会和 {@link MicaXssConfiguration#springContextUtil()} 注册Bean冲突
  *
  * @author xiajhuan
  * @date 2022/11/22
  */
-@Component
+@Component("mySpringContextUtil")
 public class SpringContextUtil implements ApplicationContextAware {
 
     /**

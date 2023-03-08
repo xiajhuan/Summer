@@ -17,8 +17,8 @@
     </parent>
 
     <modules>
-        <module>summer-server</module>
         <module>summer-common</module>
+        <module>summer-server</module>
         <module>summer-extend</module>
     </modules>
 

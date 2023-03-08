@@ -11,9 +11,9 @@ spring:
   # 消息国际化
   messages:
     basename: i18n/messages,i18n/validation
-  # 允许同名Bean覆盖
+  # 不允许同名Bean覆盖
   main:
-    allow-bean-definition-overriding: true
+    allow-bean-definition-overriding: false
   # 排除自动装配
   autoconfigure:
     exclude: org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
@@ -26,6 +26,8 @@ server:
 mybatis-plus:
   # Entity扫描，多个package用“,”或者“;”分隔
   typeAliasesPackage: me.xiajhuan.summer.**.entity
+  # Mapper.xml文件位置
+  mapperlocations: classpath*:/mapper/**/*.xml
   global-config:
     # 关闭LOGO
     banner: false
