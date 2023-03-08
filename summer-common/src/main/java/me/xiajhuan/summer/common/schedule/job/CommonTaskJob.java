@@ -7,6 +7,7 @@ import cn.hutool.log.LogFactory;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import me.xiajhuan.summer.common.log.service.LogErrorService;
+import me.xiajhuan.summer.common.log.service.LogLoginService;
 import me.xiajhuan.summer.common.log.service.LogOperationService;
 import org.springframework.scheduling.annotation.Scheduled;
 
@@ -26,6 +27,8 @@ public class CommonTaskJob {
 
     private LogErrorService logErrorService;
 
+    private LogLoginService logLoginService;
+
     /**
      * 清理操作日志和错误日志<br>
      * note：按标准时间计，每天1：00执行
@@ -37,6 +40,7 @@ public class CommonTaskJob {
 
         logOperationService.clearLog();
         logErrorService.clearLog();
+        logLoginService.clearLog();
 
         LOGGER.info("【CommonTaskJob】【clearOperationAndErrorLog】Job执行结束：{}，耗时【{}】ms", DateUtil.date(), timer.interval());
     }

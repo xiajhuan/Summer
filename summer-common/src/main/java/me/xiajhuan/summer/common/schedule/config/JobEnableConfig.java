@@ -5,6 +5,7 @@ import cn.hutool.log.LogFactory;
 import cn.hutool.setting.Setting;
 import me.xiajhuan.summer.common.constant.SettingBeanConst;
 import me.xiajhuan.summer.common.log.service.LogErrorService;
+import me.xiajhuan.summer.common.log.service.LogLoginService;
 import me.xiajhuan.summer.common.log.service.LogOperationService;
 import me.xiajhuan.summer.common.schedule.job.CommonTaskJob;
 import org.springframework.beans.factory.annotation.Value;
@@ -44,6 +45,9 @@ public class JobEnableConfig {
     @Resource
     private LogErrorService logErrorService;
 
+    @Resource
+    private LogLoginService logLoginService;
+
     /**
      * 注册通用定时任务
      *
@@ -54,7 +58,8 @@ public class JobEnableConfig {
         if (setting.getBool("enable-schedule", "Schedule") && setting.getBool("job.common", "Schedule")) {
             LOGGER.info("【{}】定时任务【CommonTaskJob】装载完毕", applicationName);
             return new CommonTaskJob().setLogOperationService(logOperationService)
-                    .setLogErrorService(logErrorService);
+                    .setLogErrorService(logErrorService)
+                    .setLogLoginService(logLoginService);
         }
         return null;
     }
