@@ -75,9 +75,9 @@ public class RateLimiterAspect {
             // 限流key策略Class
             Class<? extends KeyStrategy> keyStrategyClass = rateLimiter.keyStrategy();
             // 限流key策略实例
-            KeyStrategy keyStrategy = null;
+            final KeyStrategy keyStrategy;
             // 限流Key
-            String rateLimiterKey = null;
+            String rateLimiterKey;
             // 附加信息模板
             String msgTemplate = null;
 
@@ -103,7 +103,7 @@ public class RateLimiterAspect {
             // 限流负载均衡策略Class
             Class<? extends LoadBalanceStrategy> loadBalanceStrategyClass = rateLimiter.loadBalanceStrategy();
             // 限流负载均衡策略实例
-            LoadBalanceStrategy loadBalanceStrategy = null;
+            final LoadBalanceStrategy loadBalanceStrategy;
             // 实际的Qps
             double realQps;
 

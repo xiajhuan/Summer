@@ -14,12 +14,6 @@ import java.util.List;
  */
 public interface RoleDeptMapper extends BaseMapper<RoleDeptEntity> {
 
-    /**
-     * 根据用户ID获取部门ID列表
-     *
-     * @param userId 用户ID
-     * @return 部门ID列表
-     */
     @Select("SELECT\n" +
             "\tt2.dept_id \n" +
             "FROM\n" +

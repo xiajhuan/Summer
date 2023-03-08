@@ -44,12 +44,20 @@ public interface SecurityService {
     UserEntity getUserById(Long userId);
 
     /**
-     * 获取用户所属部门ID列表
+     * 获取部门ID列表（这里指用户所有角色关联的所有部门ID）
      *
      * @param userId 用户ID
-     * @return 用户所属部门ID列表
+     * @return 用户所有角色关联的所有部门ID
      */
     List<Long> getDeptIdListOfUser(Long userId);
+
+    /**
+     * 获取本部门及本部门下子部门ID
+     *
+     * @param deptId 所属部门ID
+     * @return 本部门及本部门下子部门ID
+     */
+    List<Long> getDeptAndChildIdList(Long deptId);
 
     //*******************验证码********************
 
@@ -65,7 +73,7 @@ public interface SecurityService {
     /**
      * 校验验证码
      *
-     * @param uuid uuid
+     * @param uuid    uuid
      * @param captcha 验证码
      * @return 校验结果 true：成功 false：失败
      */

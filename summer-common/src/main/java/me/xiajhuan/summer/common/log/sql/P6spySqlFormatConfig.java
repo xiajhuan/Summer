@@ -28,11 +28,11 @@ public class P6spySqlFormatConfig implements MessageFormattingStrategy {
      * 初始化 {@link excludeReplaceSqlArray}
      */
     static {
-        String excludeReplaceSqlStr = SpringContextUtil.getBean(SettingBeanConst.COMMON, Setting.class)
+        String excludeReplaceSql = SpringContextUtil.getBean(SettingBeanConst.COMMON, Setting.class)
                 .getByGroup("sql.exclude-replace", "Log");
 
-        if (StrUtil.isNotBlank(excludeReplaceSqlStr)) {
-            excludeReplaceSqlArray = excludeReplaceSqlStr.split(StrPool.COMMA);
+        if (StrUtil.isNotBlank(excludeReplaceSql)) {
+            excludeReplaceSqlArray = excludeReplaceSql.split(StrPool.COMMA);
         }
     }
 

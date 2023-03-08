@@ -57,7 +57,7 @@ public class SecurityUtil {
      * @return 当前用户ID
      */
     public static Long getCurrentUserId() {
-        return getUserLogin().getId();
+        return getLoginUser().getId();
     }
 
     /**
@@ -77,7 +77,7 @@ public class SecurityUtil {
      * @return 当前用户名
      */
     public static String getCurrentUsername(String defaultUsername) {
-        LoginUser loginUser = getUserLogin();
+        LoginUser loginUser = getLoginUser();
 
         if (loginUser.getId() == null) {
             return StrUtil.isNotBlank(defaultUsername) ? defaultUsername : DefaultUserEnum.SYSTEM_USER.getValue();
@@ -103,7 +103,7 @@ public class SecurityUtil {
      * @return 当前用户真实姓名
      */
     public static String getCurrentRealName(String defaultRealName) {
-        LoginUser loginUser = getUserLogin();
+        LoginUser loginUser = getLoginUser();
 
         if (loginUser.getId() == null) {
             return StrUtil.isNotBlank(defaultRealName) ? defaultRealName : DefaultUserEnum.SYSTEM_USER.getName();
@@ -118,7 +118,7 @@ public class SecurityUtil {
      * @return 当前用户部门ID
      */
     public static Long getCurrentDeptId() {
-        return getUserLogin().getDeptId();
+        return getLoginUser().getDeptId();
     }
 
     /**
@@ -126,7 +126,7 @@ public class SecurityUtil {
      *
      * @return 登录用户信息
      */
-    public static LoginUser getUserLogin() {
+    public static LoginUser getLoginUser() {
         Subject subject = getSubject();
         if (subject == null) {
             return new LoginUser();

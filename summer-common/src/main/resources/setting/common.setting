@@ -47,7 +47,7 @@ error.clear.day-limit = -90
 # 登录日志清理天数限制，-n则清理n天以前的日志
 login.clear.day-limit = -30
 
-# p6spy不详细打印的Sql语句配置，替换格式：操作关键字:表名,操作关键字:表名，例如：INSERT:log_operation,INSERT:log_error
+# p6spy不详细打印的Sql语句配置，替换格式：操作关键字:表名,操作关键字:表名，例如：INSERT:c_log_operation,INSERT:c_log_error
 sql.exclude-replace = INSERT:c_log_operation,INSERT:c_log_error,INSERT:c_log_login
 
 
@@ -79,7 +79,11 @@ graphic.char-num = 4
 cache.ttl = 5
 
 
-# 乐观锁配置
-[OptimisticLock]
-# 更新失败时的重试次数
-retry.max-times = 20
+# MybatisPlus插件配置
+[Mp]
+# 数据权限忽略的表名称配置，以“,”分隔
+# 支持通配符：“*”（任意匹配）和“?”（单值匹配）
+dataScope.ignore = ?_log_*
+
+# 乐观锁控制更新失败时的重试次数
+optimisticLock.retry-times = 20

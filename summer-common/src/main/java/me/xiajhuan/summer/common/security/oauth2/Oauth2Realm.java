@@ -60,11 +60,14 @@ public class Oauth2Realm extends AuthorizingRealm {
             throw new IncorrectCredentialsException(MessageUtil.getI18nMessage(ErrorCode.TOKEN_INVALID));
         }
 
-        // 查询用户信息并转换成UserLogin对象
+        // 查询用户信息并转换成LoginUser
         LoginUser loginUser = ConvertUtil.convert(securityService.getUserById(tokenEntity.getUserId()), LoginUser.class);
 
-        // 获取用户所属部门ID列表（数据权限）
+        // 获取部门ID列表（这里指用户所有角色关联的所有部门ID）
         loginUser.setDeptIdList(securityService.getDeptIdListOfUser(loginUser.getId()));
+
+        // 获取本部门及本部门下子部门ID
+        loginUser.setDeptAndChildIdList(securityService.getDeptAndChildIdList(loginUser.getDeptId()));
 
         // 账号锁定
         if (loginUser.getStatus() == 0) {

@@ -115,7 +115,7 @@ public class SecurityController {
      */
     @PostMapping("logout")
     public Result logout(HttpServletRequest request) {
-        LoginUser loginUser = SecurityUtil.getUserLogin();
+        LoginUser loginUser = SecurityUtil.getLoginUser();
 
         userTokenService.logout(loginUser.getId());
 

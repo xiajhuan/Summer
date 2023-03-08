@@ -62,11 +62,11 @@ public class LogLoginServiceImpl extends ServiceImpl<LogLoginMapper, LogLoginEnt
         Integer status = dto.getStatus();
         queryWrapper.eq(status != null, LogLoginEntity::getStatus, status);
         // 创建时间（闭区间）
-        Date createTimeStart = dto.getCreateTimeStart();
+        Date createTimeStart = dto.getParams().getDate("createTimeStart");
         if (createTimeStart != null) {
             queryWrapper.ge(LogLoginEntity::getCreateTime, createTimeStart);
         }
-        Date createTimeEnd = dto.getCreateTimeEnd();
+        Date createTimeEnd = dto.getParams().getDate("createTimeEnd");
         if (createTimeEnd != null) {
             queryWrapper.le(LogLoginEntity::getCreateTime, createTimeEnd);
         }

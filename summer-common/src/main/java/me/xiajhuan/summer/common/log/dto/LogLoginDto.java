@@ -1,10 +1,11 @@
 package me.xiajhuan.summer.common.log.dto;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import me.xiajhuan.summer.common.dto.BaseDto;
 import me.xiajhuan.summer.common.enums.LoginOperationEnum;
 import me.xiajhuan.summer.common.enums.LoginStatusEnum;
 
-import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -14,14 +15,8 @@ import java.util.Date;
  * @date 2023/3/3
  */
 @Data
-public class LogLoginDto implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-
-    /**
-     * 主键ID
-     */
-    private Long id;
+@EqualsAndHashCode(callSuper = true)
+public class LogLoginDto extends BaseDto {
 
     /**
      * 登录用户
@@ -56,17 +51,5 @@ public class LogLoginDto implements Serializable {
      * 创建时间
      */
     private Date createTime;
-
-    //*******************查询专用********************
-
-    /**
-     * 创建时间区间（开始）
-     */
-    private Date createTimeStart;
-
-    /**
-     * 创建时间区间（结束）
-     */
-    private Date createTimeEnd;
 
 }

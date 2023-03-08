@@ -42,7 +42,7 @@ public class UserTokenServiceImpl extends ServiceImpl<UserTokenMapper, UserToken
         int expireHour = setting.getInt("token.expire", "Security");
         Date expireTime = DateUtil.offsetHour(DateUtil.date(), expireHour);
 
-        String accessToken = null;
+        String accessToken;
         // 判断是否生成过Token
         if (tokenEntity == null) {
             accessToken = SecurityUtil.generateToken();

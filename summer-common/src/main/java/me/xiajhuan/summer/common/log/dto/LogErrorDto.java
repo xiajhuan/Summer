@@ -1,8 +1,9 @@
 package me.xiajhuan.summer.common.log.dto;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import me.xiajhuan.summer.common.dto.BaseDto;
 
-import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -12,14 +13,8 @@ import java.util.Date;
  * @date 2022/11/28
  */
 @Data
-public class LogErrorDto implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-
-    /**
-     * 主键ID
-     */
-    private Long id;
+@EqualsAndHashCode(callSuper = true)
+public class LogErrorDto extends BaseDto {
 
     /**
      * 请求URI
@@ -55,17 +50,5 @@ public class LogErrorDto implements Serializable {
      * 异常堆栈信息
      */
     private String errorInfo;
-
-    //*******************查询专用********************
-
-    /**
-     * 创建时间区间（开始）
-     */
-    private Date createTimeStart;
-
-    /**
-     * 创建时间区间（结束）
-     */
-    private Date createTimeEnd;
 
 }

@@ -1,7 +1,7 @@
-# boot-single-demo
+# summer-single
 
 #### 介绍
-基于springBoot2.7的单体应用demo
+基于springBoot2.7的单体应用
 
 #### 软件架构
 软件架构说明

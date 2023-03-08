@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import me.xiajhuan.summer.common.entity.CommonBaseEntity;
+import me.xiajhuan.summer.common.enums.DataScopeEnum;
 import me.xiajhuan.summer.common.enums.GenderEnum;
 import me.xiajhuan.summer.common.enums.CommonStatusEnum;
 import me.xiajhuan.summer.common.enums.UserTypeEnum;
@@ -70,6 +71,13 @@ public class UserEntity extends CommonBaseEntity {
      * @see UserTypeEnum
      */
     private Integer userType;
+
+    /**
+     * 数据权限
+     *
+     * @see DataScopeEnum
+     */
+    private Integer dataScope;
 
     /**
      * 所属部门名称

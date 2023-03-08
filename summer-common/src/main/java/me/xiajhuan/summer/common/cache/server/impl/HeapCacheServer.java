@@ -331,7 +331,7 @@ public class HeapCacheServer implements CacheServer {
     public void setListRPushTtl(String key, Object element, long ttl) {
         initCache(CacheConst.VALUE_LIST);
 
-        List<Object> elementList = null;
+        final List<Object> elementList;
         if (hasKeyList(key)) {
             elementList = getList(key);
         } else {

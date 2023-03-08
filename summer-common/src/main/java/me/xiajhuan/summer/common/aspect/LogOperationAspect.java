@@ -51,8 +51,8 @@ public class LogOperationAspect {
     /**
      * 环绕通知
      *
-     * @param point 切入点
-     * @return 执行结果
+     * @param point {@link ProceedingJoinPoint}
+     * @return 切入点方法执行结果
      * @throws Throwable 异常/错误
      */
     @Around("pointCut()")
@@ -78,7 +78,7 @@ public class LogOperationAspect {
     /**
      * 记录日志
      *
-     * @param joinPoint 切入点
+     * @param joinPoint {@link ProceedingJoinPoint}
      * @param cost      操作耗时（ms）
      * @param status    操作状态
      * @throws Exception 异常

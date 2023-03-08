@@ -166,7 +166,7 @@ public class HttpContextUtil {
         // 标记当前参数是否为文件上传
         boolean notMultipart = true;
 
-        StringBuilder paramStr = new StringBuilder();
+        StringBuilder paramStr = StrUtil.builder();
         for (int i = 0; i < args.length; i++) {
             if (notMultipart && (args[i] instanceof MultipartFile || args[i] instanceof MultipartFile[])) {
                 notMultipart = false;

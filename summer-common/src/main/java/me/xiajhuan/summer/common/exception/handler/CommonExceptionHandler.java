@@ -1,6 +1,7 @@
 package me.xiajhuan.summer.common.exception.handler;
 
 import cn.hutool.core.text.StrPool;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
 import cn.hutool.setting.Setting;
@@ -102,7 +103,7 @@ public class CommonExceptionHandler {
     @ExceptionHandler(BindException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Result handleBindException(BindException e) {
-        StringBuilder message = new StringBuilder();
+        StringBuilder message = StrUtil.builder();
         List<FieldError> fieldErrors = e.getBindingResult().getFieldErrors();
         for (FieldError error : fieldErrors) {
             message.append(error.getField()).append("【").append(error.getDefaultMessage()).append("】").append(StrPool.COMMA);

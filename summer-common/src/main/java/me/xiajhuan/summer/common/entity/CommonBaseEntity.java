@@ -31,7 +31,8 @@ public abstract class CommonBaseEntity extends SimpleBaseEntity {
     private Date updateTime;
 
     /**
-     * 部门ID
+     * 部门ID<br>
+     * 使用数据权限功能则必须包含此字段
      */
     @TableField(fill = FieldFill.INSERT)
     private Long deptId;

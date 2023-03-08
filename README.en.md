@@ -1,7 +1,7 @@
-# boot-single-demo
+# summer-single
 
 #### Description
-基于springBoot2.7的单体应用demo
+基于springBoot2.7的单体应用
 
 #### Software Architecture
 Software architecture description

@@ -28,7 +28,8 @@ public abstract class SimpleBaseEntity implements Serializable {
     private Long id;
 
     /**
-     * 创建者
+     * 创建者<br>
+     * 使用数据权限功能则必须包含此字段
      */
     @TableField(fill = FieldFill.INSERT, value = "create_by")
     private String createBy;

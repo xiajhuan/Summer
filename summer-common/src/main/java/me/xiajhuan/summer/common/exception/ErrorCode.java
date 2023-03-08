@@ -89,7 +89,7 @@ public interface ErrorCode {
     int SUPERIOR_MENU_ERROR = 10012;
 
     /**
-     * 数据权限接口，只能是Map类型参数
+     * 数据权限接口，只能是BaseDto类型参数
      */
     int DATA_SCOPE_PARAMS_ERROR = 10013;
 

@@ -1,6 +1,7 @@
 package me.xiajhuan.summer.common.security.login;
 
 import lombok.Data;
+import me.xiajhuan.summer.common.enums.DataScopeEnum;
 import me.xiajhuan.summer.common.enums.GenderEnum;
 import me.xiajhuan.summer.common.enums.CommonStatusEnum;
 import me.xiajhuan.summer.common.enums.UserTypeEnum;
@@ -81,8 +82,20 @@ public class LoginUser implements Serializable {
     private Integer userType;
 
     /**
-     * 所属部门ID列表（数据权限）
+     * 数据权限
+     *
+     * @see DataScopeEnum
+     */
+    private Integer dataScope;
+
+    /**
+     * 部门ID列表（这里指用户所有角色关联的所有部门ID）
      */
     private List<Long> deptIdList;
+
+    /**
+     * 本部门及本部门下子部门ID
+     */
+    private List<Long> deptAndChildIdList;
 
 }

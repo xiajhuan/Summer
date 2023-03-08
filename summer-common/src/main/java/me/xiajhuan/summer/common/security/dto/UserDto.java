@@ -1,17 +1,18 @@
 package me.xiajhuan.summer.common.security.dto;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import me.xiajhuan.summer.common.dto.BaseDto;
 import me.xiajhuan.summer.common.enums.CommonStatusEnum;
+import me.xiajhuan.summer.common.enums.DataScopeEnum;
 import me.xiajhuan.summer.common.enums.GenderEnum;
 import me.xiajhuan.summer.common.enums.UserTypeEnum;
 import me.xiajhuan.summer.common.validation.annotation.Mobile;
 import me.xiajhuan.summer.common.validation.group.AddGroup;
 import me.xiajhuan.summer.common.validation.group.DefaultGroup;
-import me.xiajhuan.summer.common.validation.group.UpdateGroup;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.*;
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -22,16 +23,8 @@ import java.util.List;
  * @date 2023/3/4
  */
 @Data
-public class UserDto implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-
-    /**
-     * 主键ID
-     */
-    @Null(message = "{id.null}", groups = AddGroup.class)
-    @NotNull(message = "{id.require}", groups = UpdateGroup.class)
-    private Long id;
+@EqualsAndHashCode(callSuper = true)
+public class UserDto extends BaseDto {
 
     /**
      * 用户名
@@ -96,6 +89,14 @@ public class UserDto implements Serializable {
      * @see UserTypeEnum
      */
     private Integer userType;
+
+    /**
+     * 数据权限
+     *
+     * @see DataScopeEnum
+     */
+    @Range(min = 0, max = 4, message = "{c.security.user.status.range}", groups = DefaultGroup.class)
+    private Integer dataScope;
 
     /**
      * 创建时间
