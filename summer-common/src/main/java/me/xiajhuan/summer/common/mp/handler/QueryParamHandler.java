@@ -61,4 +61,15 @@ public class QueryParamHandler {
         return page;
     }
 
+    /**
+     * 获取分页起始位置
+     *
+     * @param pageNum  当前页码
+     * @param pageSize 每页记录数
+     * @return 分页起始位置
+     */
+    public static int getPageOffset(int pageNum, int pageSize) {
+        return (pageNum - 1) * pageSize;
+    }
+
 }

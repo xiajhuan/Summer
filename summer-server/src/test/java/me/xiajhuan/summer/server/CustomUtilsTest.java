@@ -6,11 +6,24 @@ import me.xiajhuan.summer.common.utils.WildcardUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+/**
+ * 自定义工具 Test
+ *
+ * @author xiajhuan
+ * @date 2023/3/9
+ */
 @SpringBootTest
-class SummerServerApplicationTests {
+class CustomUtilsTest {
 
     private static final String template = "{} matches {},result:{}\n";
 
+    /**
+     * 权限相关工具测试
+     *
+     * @see SecurityUtil#generateToken()
+     * @see SecurityUtil#encode(String)
+     * @see SecurityUtil#matches(String, String)
+     */
     @Test
     void securityUtilTest() {
         Console.log("生成的Token：{}\n", SecurityUtil.generateToken());
@@ -20,6 +33,11 @@ class SummerServerApplicationTests {
         Console.log(template, plainText, hashed, SecurityUtil.matches(plainText, hashed));
     }
 
+    /**
+     * 通配符工具测试
+     *
+     * @see WildcardUtil#matches(String, String)
+     */
     @Test
     void wildcardUtilTest() {
         String source = "c_log_operation";

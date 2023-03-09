@@ -28,7 +28,7 @@ public class ExcelDbParser<T, E> extends AbstractExcelParser<T, E> {
     /**
      * 构造ExcelDbParser
      *
-     * @param service            Service
+     * @param service            {@link IService}
      * @param currentEntityClass 当前EntityClass
      */
     protected ExcelDbParser(IService<T> service, Class<T> currentEntityClass) {
@@ -39,7 +39,7 @@ public class ExcelDbParser<T, E> extends AbstractExcelParser<T, E> {
     /**
      * 构建ExcelDbParser
      *
-     * @param service            Service
+     * @param service            {@link IService}
      * @param currentEntityClass 当前EntityClass
      * @param <T>                Entity类型
      * @return ExcelDbParser

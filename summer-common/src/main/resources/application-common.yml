@@ -1,5 +1,22 @@
+server:
+  # 最大请求头大小
+  max-http-header-size: 1024000
+  # Tomcat
+  tomcat:
+    threads:
+      # 最大工作线程（并发）
+      max: 1000
+      # 最小工作线程
+      min-spare: 30
+  # Servlet
+  servlet:
+    context-path: /summer-single
+    session:
+      cookie:
+        http-only: true
+
 spring:
-  # jackson
+  # Jackson
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
@@ -17,10 +34,6 @@ spring:
   # 排除自动装配
   autoconfigure:
     exclude: org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
-
-server:
-  # 最大请求头大小
-  max-http-header-size: 1024000
 
 # MybatisPlus
 mybatis-plus:
