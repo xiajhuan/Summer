@@ -12,11 +12,11 @@ import me.xiajhuan.summer.common.exception.BusinessException;
 import me.xiajhuan.summer.common.exception.FileDownloadException;
 import me.xiajhuan.summer.common.ratelimiter.annotation.RateLimiter;
 import me.xiajhuan.summer.common.ratelimiter.strategy.impl.IpKeyStrategy;
-import me.xiajhuan.summer.common.security.dto.RoleDto;
-import me.xiajhuan.summer.common.security.entity.RoleEntity;
-import me.xiajhuan.summer.common.security.excel.RoleExcel;
-import me.xiajhuan.summer.common.security.excel.parser.RoleExcelDbParser;
-import me.xiajhuan.summer.common.security.service.RoleService;
+import me.xiajhuan.summer.common.security.dto.SecurityRoleDto;
+import me.xiajhuan.summer.common.security.entity.SecurityRoleEntity;
+import me.xiajhuan.summer.common.security.excel.SecurityRoleExcel;
+import me.xiajhuan.summer.common.security.excel.parser.SecurityRoleExcelDbParser;
+import me.xiajhuan.summer.common.security.service.SecurityRoleService;
 import me.xiajhuan.summer.common.utils.AssertUtil;
 import me.xiajhuan.summer.common.utils.ExcelUtil;
 import me.xiajhuan.summer.common.validation.group.AddGroup;
@@ -37,12 +37,12 @@ import javax.servlet.http.HttpServletResponse;
  */
 @RestController
 @RequestMapping("security/role")
-public class RoleController {
+public class SecurityRoleController {
 
     private static final Log LOGGER = LogFactory.get();
 
     @Resource
-    private RoleService mainService;
+    private SecurityRoleService mainService;
 
     //*******************Common Crud********************
 
@@ -54,9 +54,9 @@ public class RoleController {
      * @return 响应结果
      */
     @GetMapping("page")
-    @RequiresPermissions("c:security:role:page")
+    @RequiresPermissions("security:role:page")
     @LogOperation(OperationConst.PAGE)
-    public Result<PageData<RoleDto>> page(PageAndSort pageAndSort, RoleDto dto) {
+    public Result<PageData<SecurityRoleDto>> page(PageAndSort pageAndSort, SecurityRoleDto dto) {
         return Result.ofSuccess(PageData.of(mainService.page(pageAndSort, dto)));
     }
 
@@ -67,9 +67,9 @@ public class RoleController {
      * @return 响应结果
      */
     @PostMapping("add")
-    @RequiresPermissions("c:security:role:add")
+    @RequiresPermissions("security:role:add")
     @LogOperation(OperationConst.ADD)
-    public Result add(@Validated(AddGroup.class) RoleDto dto) {
+    public Result add(@Validated(AddGroup.class) SecurityRoleDto dto) {
         try {
             mainService.add(dto);
 
@@ -88,9 +88,9 @@ public class RoleController {
      * @return 响应结果
      */
     @PostMapping("update")
-    @RequiresPermissions("c:security:role:update")
+    @RequiresPermissions("security:role:update")
     @LogOperation(OperationConst.UPDATE)
-    public Result update(@Validated(UpdateGroup.class) RoleDto dto) {
+    public Result update(@Validated(UpdateGroup.class) SecurityRoleDto dto) {
         try {
             mainService.update(dto);
 
@@ -110,7 +110,7 @@ public class RoleController {
      * @throws BusinessException 业务异常
      */
     @DeleteMapping("delete")
-    @RequiresPermissions("c:security:role:delete")
+    @RequiresPermissions("security:role:delete")
     @LogOperation(OperationConst.DELETE)
     public Result delete(String[] ids) throws BusinessException {
         AssertUtil.isNotEmpty("ids", ids);
@@ -135,12 +135,12 @@ public class RoleController {
      * @return 响应结果
      */
     @PostMapping("excelImport")
-    @RequiresPermissions("c:security:role:excelImport")
+    @RequiresPermissions("security:role:excelImport")
     @RateLimiter(value = 0.2, keyStrategy = IpKeyStrategy.class)
     @LogOperation(OperationConst.EXCEL_IMPORT)
     public Result excelImport(@RequestParam("file") MultipartFile file) {
         try {
-            ExcelUtil.importToDb(file, RoleExcel.class, RoleExcelDbParser.of(mainService, RoleEntity.class));
+            ExcelUtil.importToDb(file, SecurityRoleExcel.class, SecurityRoleExcelDbParser.of(mainService, SecurityRoleEntity.class));
 
             return Result.ofSuccess();
         } catch (Exception e) {
@@ -156,12 +156,12 @@ public class RoleController {
      * @param response {@link HttpServletResponse}
      */
     @PostMapping("excelTemplate")
-    @RequiresPermissions("c:security:role:excelTemplate")
+    @RequiresPermissions("security:role:excelTemplate")
     @RateLimiter(value = 0.2, keyStrategy = IpKeyStrategy.class)
     @LogOperation(OperationConst.EXCEL_TEMPLATE)
     public void excelTemplate(HttpServletResponse response) throws FileDownloadException {
         try {
-            ExcelUtil.exportWithE(response, "角色模板", "角色", mainService.excelTemplate(), RoleExcel.class);
+            ExcelUtil.exportWithE(response, "角色模板", "角色", mainService.excelTemplate(), SecurityRoleExcel.class);
         } catch (Exception e) {
             throw FileDownloadException.of(e, "Excel模板下载失败");
         }
@@ -175,12 +175,12 @@ public class RoleController {
      * @throws FileDownloadException 文件下载异常
      */
     @PostMapping("excelExport")
-    @RequiresPermissions("c:security:role:excelExport")
+    @RequiresPermissions("security:role:excelExport")
     @RateLimiter(value = 0.2, keyStrategy = IpKeyStrategy.class)
     @LogOperation(OperationConst.EXCEL_EXPORT)
-    public void excelExport(RoleDto dto, HttpServletResponse response) throws FileDownloadException {
+    public void excelExport(SecurityRoleDto dto, HttpServletResponse response) throws FileDownloadException {
         try {
-            ExcelUtil.exportWithE(response, "角色", "角色", mainService.list(dto), RoleExcel.class);
+            ExcelUtil.exportWithE(response, "角色", "角色", mainService.list(dto), SecurityRoleExcel.class);
         } catch (Exception e) {
             throw FileDownloadException.of(e, "Excel导出失败");
         }

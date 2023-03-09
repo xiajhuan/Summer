@@ -3,7 +3,9 @@ package me.xiajhuan.summer.common.security.dto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import me.xiajhuan.summer.common.dto.BaseDto;
+import me.xiajhuan.summer.common.validation.group.DefaultGroup;
 
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 import java.util.List;
 
@@ -15,11 +17,12 @@ import java.util.List;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class RoleDto extends BaseDto {
+public class SecurityRoleDto extends BaseDto {
 
     /**
      * 角色名称
      */
+    @NotBlank(message = "{security.role.name.require}", groups = DefaultGroup.class)
     private String name;
 
     /**

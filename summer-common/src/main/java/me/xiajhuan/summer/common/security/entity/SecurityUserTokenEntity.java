@@ -17,8 +17,8 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@TableName("c_user_token")
-public class UserTokenEntity extends SimpleBaseEntity {
+@TableName("security_user_token")
+public class SecurityUserTokenEntity extends SimpleBaseEntity {
 
     /**
      * 用户ID

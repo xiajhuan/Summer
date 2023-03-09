@@ -20,19 +20,19 @@ public class LoginDto implements Serializable {
     /**
      * 用户名
      */
-    @NotBlank(message = "{c.security.user.username.require}")
+    @NotBlank(message = "{security.user.username.require}")
     private String username;
 
     /**
      * 密码
      */
-    @NotBlank(message = "{c.security.user.password.require}")
+    @NotBlank(message = "{security.user.password.require}")
     private String password;
 
     /**
      * 验证码
      */
-    @NotBlank(message = "{c.security.captcha.require}")
+    @NotBlank(message = "{security.captcha.require}")
     private String captcha;
 
     /**
@@ -41,7 +41,7 @@ public class LoginDto implements Serializable {
      *
      * @see CacheConst#CAPTCHA_CODE
      */
-    @NotBlank(message = "{c.security.uuid.require}")
+    @NotBlank(message = "{security.uuid.require}")
     private String uuid;
 
 }

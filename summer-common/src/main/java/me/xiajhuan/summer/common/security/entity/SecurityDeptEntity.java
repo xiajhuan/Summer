@@ -17,8 +17,8 @@ import java.util.Date;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("c_dept")
-public class DeptEntity extends SimpleBaseEntity {
+@TableName("security_dept")
+public class SecurityDeptEntity extends SimpleBaseEntity {
 
     /**
      * 更新者

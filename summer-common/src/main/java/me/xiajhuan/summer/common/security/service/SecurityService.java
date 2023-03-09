@@ -1,7 +1,7 @@
 package me.xiajhuan.summer.common.security.service;
 
-import me.xiajhuan.summer.common.security.entity.UserEntity;
-import me.xiajhuan.summer.common.security.entity.UserTokenEntity;
+import me.xiajhuan.summer.common.security.entity.SecurityUserEntity;
+import me.xiajhuan.summer.common.security.entity.SecurityUserTokenEntity;
 import me.xiajhuan.summer.common.security.login.LoginUser;
 
 import javax.servlet.http.HttpServletResponse;
@@ -33,7 +33,7 @@ public interface SecurityService {
      * @param token accessToken
      * @return 用户Token
      */
-    UserTokenEntity getByToken(String token);
+    SecurityUserTokenEntity getByToken(String token);
 
     /**
      * 根据用户ID获取用户
@@ -41,7 +41,7 @@ public interface SecurityService {
      * @param userId 用户ID
      * @return 用户
      */
-    UserEntity getUserById(Long userId);
+    SecurityUserEntity getUserById(Long userId);
 
     /**
      * 获取部门ID列表（这里指用户所有角色关联的所有部门ID）

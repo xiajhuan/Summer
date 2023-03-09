@@ -1,8 +1,8 @@
 package me.xiajhuan.summer.common.security.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import me.xiajhuan.summer.common.security.dto.UserTokenDto;
-import me.xiajhuan.summer.common.security.entity.UserTokenEntity;
+import me.xiajhuan.summer.common.security.dto.SecurityUserTokenDto;
+import me.xiajhuan.summer.common.security.entity.SecurityUserTokenEntity;
 
 /**
  * 用户Token Service
@@ -10,7 +10,7 @@ import me.xiajhuan.summer.common.security.entity.UserTokenEntity;
  * @author xiajhuan
  * @date 2023/3/3
  */
-public interface UserTokenService extends IService<UserTokenEntity> {
+public interface SecurityUserTokenService extends IService<SecurityUserTokenEntity> {
 
     /**
      * 生成Token
@@ -18,7 +18,7 @@ public interface UserTokenService extends IService<UserTokenEntity> {
      * @param userId 用户ID
      * @return 用户TokenDto
      */
-    UserTokenDto generateToken(Long userId);
+    SecurityUserTokenDto generateToken(Long userId);
 
     /**
      * 用户退出

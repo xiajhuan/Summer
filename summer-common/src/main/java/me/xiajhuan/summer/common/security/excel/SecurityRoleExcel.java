@@ -27,7 +27,7 @@ import java.util.Date;
 @ContentRowHeight(20)
 @HeadRowHeight(20)
 @ColumnWidth(25)
-public class RoleExcel implements Serializable {
+public class SecurityRoleExcel implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

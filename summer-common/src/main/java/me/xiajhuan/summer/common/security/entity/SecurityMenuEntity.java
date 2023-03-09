@@ -19,8 +19,8 @@ import java.util.Date;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("c_menu")
-public class MenuEntity extends SimpleBaseEntity {
+@TableName("security_menu")
+public class SecurityMenuEntity extends SimpleBaseEntity {
 
     /**
      * 更新者
@@ -48,11 +48,11 @@ public class MenuEntity extends SimpleBaseEntity {
      * 授权
      * <p>
      * 多个授权以“,”分隔
-     * 格式：所属子项目首字母:模块名:业务名:操作名
+     * 格式：模块名:业务名:操作名
      * 例如：
      * <pre>
-     *     1.c:security:user:list,c:security:user:add
-     *     2.s:plan:planOrder:page,s:plan:planOrder:update
+     *     1.security:user:page,security:user:add
+     *     2.log:error:page,log:error:excelExport
      * </pre>
      * </p>
      */

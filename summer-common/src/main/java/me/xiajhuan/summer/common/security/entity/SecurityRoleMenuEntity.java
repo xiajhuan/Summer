@@ -3,27 +3,27 @@ package me.xiajhuan.summer.common.security.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import me.xiajhuan.summer.common.entity.CommonBaseEntity;
+import me.xiajhuan.summer.common.entity.SimpleBaseEntity;
 
 /**
- * 角色 Entity
+ * 角色菜单关联 Entity
  *
  * @author xiajhuan
  * @date 2023/2/28
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("c_role")
-public class RoleEntity extends CommonBaseEntity {
+@TableName("security_role_menu")
+public class SecurityRoleMenuEntity extends SimpleBaseEntity {
 
     /**
-     * 角色名称
+     * 角色ID
      */
-    private String name;
+    private Long roleId;
 
     /**
-     * 描述
+     * 菜单ID
      */
-    private String desc;
-
+    private Long menuId;
+    
 }

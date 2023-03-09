@@ -24,24 +24,24 @@ import java.util.List;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class UserDto extends BaseDto {
+public class SecurityUserDto extends BaseDto {
 
     /**
      * 用户名
      */
-    @NotBlank(message = "{c.security.user.username.require}", groups = DefaultGroup.class)
+    @NotBlank(message = "{security.user.username.require}", groups = DefaultGroup.class)
     private String username;
 
     /**
      * 密码
      */
-    @NotBlank(message = "{c.security.user.password.require}", groups = AddGroup.class)
+    @NotBlank(message = "{security.user.password.require}", groups = AddGroup.class)
     private String password;
 
     /**
      * 真实姓名
      */
-    @NotBlank(message = "{c.security.user.realName.require}", groups = DefaultGroup.class)
+    @NotBlank(message = "{security.user.realName.require}", groups = DefaultGroup.class)
     private String realName;
 
     /**
@@ -54,25 +54,25 @@ public class UserDto extends BaseDto {
      *
      * @see GenderEnum
      */
-    @Range(min = 0, max = 2, message = "{c.security.user.gender.range}", groups = DefaultGroup.class)
+    @Range(min = 0, max = 2, message = "{security.user.gender.range}", groups = DefaultGroup.class)
     private Integer gender;
 
     /**
      * 邮箱
      */
-    @Email(message = "{c.security.user.email.error}", groups = DefaultGroup.class)
+    @Email(message = "{security.user.email.error}", groups = DefaultGroup.class)
     private String email;
 
     /**
      * 手机号
      */
-    @Mobile(message = "{c.security.user.mobile.error}", groups = DefaultGroup.class)
+    @Mobile(message = "{security.user.mobile.error}", groups = DefaultGroup.class)
     private String mobile;
 
     /**
      * 所属部门ID
      */
-    @NotNull(message = "{c.security.user.deptId.require}", groups = DefaultGroup.class)
+    @NotNull(message = "{security.user.deptId.require}", groups = DefaultGroup.class)
     private Long deptId;
 
     /**
@@ -80,7 +80,7 @@ public class UserDto extends BaseDto {
      *
      * @see CommonStatusEnum
      */
-    @Range(min = 0, max = 1, message = "{c.security.user.status.range}", groups = DefaultGroup.class)
+    @Range(min = 0, max = 1, message = "{security.user.status.range}", groups = DefaultGroup.class)
     private Integer status;
 
     /**
@@ -95,7 +95,7 @@ public class UserDto extends BaseDto {
      *
      * @see DataScopeEnum
      */
-    @Range(min = 0, max = 4, message = "{c.security.user.status.range}", groups = DefaultGroup.class)
+    @Range(min = 0, max = 4, message = "{security.user.status.range}", groups = DefaultGroup.class)
     private Integer dataScope;
 
     /**

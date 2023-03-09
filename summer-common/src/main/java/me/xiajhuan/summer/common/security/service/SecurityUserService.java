@@ -1,8 +1,8 @@
 package me.xiajhuan.summer.common.security.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import me.xiajhuan.summer.common.security.dto.UserDto;
-import me.xiajhuan.summer.common.security.entity.UserEntity;
+import me.xiajhuan.summer.common.security.dto.SecurityUserDto;
+import me.xiajhuan.summer.common.security.entity.SecurityUserEntity;
 
 /**
  * 用户 Service
@@ -10,7 +10,7 @@ import me.xiajhuan.summer.common.security.entity.UserEntity;
  * @author xiajhuan
  * @date 2023/3/3
  */
-public interface UserService extends IService<UserEntity> {
+public interface SecurityUserService extends IService<SecurityUserEntity> {
 
     /**
      * 根据用户名获取
@@ -18,6 +18,6 @@ public interface UserService extends IService<UserEntity> {
      * @param username 用户名
      * @return 用户Dto
      */
-    UserDto getByUsername(String username);
+    SecurityUserDto getByUsername(String username);
 
 }

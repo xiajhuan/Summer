@@ -1,7 +1,7 @@
 package me.xiajhuan.summer.common.security.oauth2;
 
 import me.xiajhuan.summer.common.exception.ErrorCode;
-import me.xiajhuan.summer.common.security.entity.UserTokenEntity;
+import me.xiajhuan.summer.common.security.entity.SecurityUserTokenEntity;
 import me.xiajhuan.summer.common.security.service.SecurityService;
 import me.xiajhuan.summer.common.security.login.LoginUser;
 import me.xiajhuan.summer.common.utils.ConvertUtil;
@@ -54,7 +54,7 @@ public class Oauth2Realm extends AuthorizingRealm {
         String accessToken = (String) token.getPrincipal();
 
         // 根据accessToken，查询用户Token
-        UserTokenEntity tokenEntity = securityService.getByToken(accessToken);
+        SecurityUserTokenEntity tokenEntity = securityService.getByToken(accessToken);
         // token失效
         if (tokenEntity == null || tokenEntity.getExpireTime().getTime() < System.currentTimeMillis()) {
             throw new IncorrectCredentialsException(MessageUtil.getI18nMessage(ErrorCode.TOKEN_INVALID));

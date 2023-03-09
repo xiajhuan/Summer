@@ -9,10 +9,10 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import me.xiajhuan.summer.common.constant.DataSourceConst;
 import me.xiajhuan.summer.common.constant.SettingBeanConst;
-import me.xiajhuan.summer.common.security.dto.UserTokenDto;
-import me.xiajhuan.summer.common.security.entity.UserTokenEntity;
-import me.xiajhuan.summer.common.security.mapper.UserTokenMapper;
-import me.xiajhuan.summer.common.security.service.UserTokenService;
+import me.xiajhuan.summer.common.security.dto.SecurityUserTokenDto;
+import me.xiajhuan.summer.common.security.entity.SecurityUserTokenEntity;
+import me.xiajhuan.summer.common.security.mapper.SecurityUserTokenMapper;
+import me.xiajhuan.summer.common.security.service.SecurityUserTokenService;
 import me.xiajhuan.summer.common.utils.SecurityUtil;
 import org.springframework.stereotype.Service;
 
@@ -27,16 +27,16 @@ import java.util.Date;
  */
 @Service
 @DS(DataSourceConst.COMMON)
-public class UserTokenServiceImpl extends ServiceImpl<UserTokenMapper, UserTokenEntity> implements UserTokenService {
+public class SecurityUserTokenServiceImpl extends ServiceImpl<SecurityUserTokenMapper, SecurityUserTokenEntity> implements SecurityUserTokenService {
 
     @Resource(name = SettingBeanConst.COMMON)
     private Setting setting;
 
     @Override
-    public UserTokenDto generateToken(Long userId) {
-        LambdaQueryWrapper<UserTokenEntity> queryWrapper = Wrappers.lambdaQuery();
-        queryWrapper.eq(UserTokenEntity::getUserId, userId);
-        UserTokenEntity tokenEntity = getOne(queryWrapper);
+    public SecurityUserTokenDto generateToken(Long userId) {
+        LambdaQueryWrapper<SecurityUserTokenEntity> queryWrapper = Wrappers.lambdaQuery();
+        queryWrapper.eq(SecurityUserTokenEntity::getUserId, userId);
+        SecurityUserTokenEntity tokenEntity = getOne(queryWrapper);
 
         // 计算Token过期时间
         int expireHour = setting.getInt("token.expire", "Security");
@@ -47,7 +47,7 @@ public class UserTokenServiceImpl extends ServiceImpl<UserTokenMapper, UserToken
         if (tokenEntity == null) {
             accessToken = SecurityUtil.generateToken();
             // 构建用户Token
-            tokenEntity = UserTokenEntity.builder()
+            tokenEntity = SecurityUserTokenEntity.builder()
                     .userId(userId).token(accessToken)
                     .expireTime(expireTime).build();
 
@@ -60,13 +60,13 @@ public class UserTokenServiceImpl extends ServiceImpl<UserTokenMapper, UserToken
             }
 
             // 更新用户Token
-            UserTokenEntity tokenNew = UserTokenEntity.builder()
+            SecurityUserTokenEntity tokenNew = SecurityUserTokenEntity.builder()
                     .token(accessToken).expireTime(expireTime).build();
 
             updateById(tokenNew);
         }
 
-        UserTokenDto tokenDto = new UserTokenDto();
+        SecurityUserTokenDto tokenDto = new SecurityUserTokenDto();
         tokenDto.setToken(accessToken);
         tokenDto.setExpireTime(expireHour * 3600);
 
@@ -76,9 +76,9 @@ public class UserTokenServiceImpl extends ServiceImpl<UserTokenMapper, UserToken
     @Override
     public void logout(Long userId) {
         // 将Token过期时间设值为10s前（使Token失效）
-        LambdaUpdateWrapper<UserTokenEntity> updateWrapper = Wrappers.lambdaUpdate();
-        updateWrapper.set(UserTokenEntity::getExpireTime, DateUtil.offsetSecond(DateUtil.date(), -10));
-        updateWrapper.eq(UserTokenEntity::getUserId, updateWrapper);
+        LambdaUpdateWrapper<SecurityUserTokenEntity> updateWrapper = Wrappers.lambdaUpdate();
+        updateWrapper.set(SecurityUserTokenEntity::getExpireTime, DateUtil.offsetSecond(DateUtil.date(), -10));
+        updateWrapper.eq(SecurityUserTokenEntity::getUserId, updateWrapper);
 
         update(updateWrapper);
     }

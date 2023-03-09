@@ -6,15 +6,15 @@ import lombok.EqualsAndHashCode;
 import me.xiajhuan.summer.common.entity.SimpleBaseEntity;
 
 /**
- * 角色部门关联 Entity
+ * 角色用户关联 Entity
  *
  * @author xiajhuan
  * @date 2023/2/28
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("c_role_dept")
-public class RoleDeptEntity extends SimpleBaseEntity {
+@TableName("security_role_user")
+public class SecurityRoleUserEntity extends SimpleBaseEntity {
 
     /**
      * 角色ID
@@ -22,8 +22,8 @@ public class RoleDeptEntity extends SimpleBaseEntity {
     private Long roleId;
 
     /**
-     * 部门ID
+     * 用户ID
      */
-    private Long deptId;
+    private Long userId;
 
 }

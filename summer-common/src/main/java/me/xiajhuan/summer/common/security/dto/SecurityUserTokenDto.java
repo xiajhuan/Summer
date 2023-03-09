@@ -11,7 +11,7 @@ import java.io.Serializable;
  * @date 2023/3/4
  */
 @Data
-public class UserTokenDto implements Serializable {
+public class SecurityUserTokenDto implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

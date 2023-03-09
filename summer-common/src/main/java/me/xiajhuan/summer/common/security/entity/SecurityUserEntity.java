@@ -18,8 +18,8 @@ import me.xiajhuan.summer.common.enums.UserTypeEnum;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("c_user")
-public class UserEntity extends CommonBaseEntity {
+@TableName("security_user")
+public class SecurityUserEntity extends CommonBaseEntity {
 
     /**
      * 用户名

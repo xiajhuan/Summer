@@ -15,9 +15,9 @@ import me.xiajhuan.summer.common.constant.DataSourceConst;
 import me.xiajhuan.summer.common.constant.SettingBeanConst;
 import me.xiajhuan.summer.common.constant.TimeUnitConst;
 import me.xiajhuan.summer.common.enums.UserTypeEnum;
-import me.xiajhuan.summer.common.security.entity.DeptEntity;
-import me.xiajhuan.summer.common.security.entity.UserEntity;
-import me.xiajhuan.summer.common.security.entity.UserTokenEntity;
+import me.xiajhuan.summer.common.security.entity.SecurityDeptEntity;
+import me.xiajhuan.summer.common.security.entity.SecurityUserEntity;
+import me.xiajhuan.summer.common.security.entity.SecurityUserTokenEntity;
 import me.xiajhuan.summer.common.security.mapper.*;
 import me.xiajhuan.summer.common.security.service.SecurityService;
 import me.xiajhuan.summer.common.security.login.LoginUser;
@@ -44,19 +44,19 @@ public class SecurityServiceImpl implements SecurityService {
     private Setting setting;
 
     @Resource
-    private MenuMapper menuMapper;
+    private SecurityMenuMapper securityMenuMapper;
 
     @Resource
-    private UserTokenMapper userTokenMapper;
+    private SecurityUserTokenMapper securityUserTokenMapper;
 
     @Resource
-    private UserMapper userMapper;
+    private SecurityUserMapper securityUserMapper;
 
     @Resource
-    private RoleDeptMapper roleDeptMapper;
+    private SecurityRoleDeptMapper securityRoleDeptMapper;
 
     @Resource
-    private DeptMapper deptMapper;
+    private SecurityDeptMapper securityDeptMapper;
 
     //*******************认证授权********************
 
@@ -66,10 +66,10 @@ public class SecurityServiceImpl implements SecurityService {
         final List<String> permissionsOfUser;
         if (loginUser.getUserType() == UserTypeEnum.SUPER_ADMIN.getValue()) {
             // 超级管理员
-            permissionsOfUser = menuMapper.getPermissionsAll();
+            permissionsOfUser = securityMenuMapper.getPermissionsAll();
         } else {
             // 普通用户
-            permissionsOfUser = menuMapper.getPermissionsOfUser(loginUser.getId());
+            permissionsOfUser = securityMenuMapper.getPermissionsOfUser(loginUser.getId());
         }
 
         if (CollUtil.isNotEmpty(permissionsOfUser)) {
@@ -81,22 +81,22 @@ public class SecurityServiceImpl implements SecurityService {
     }
 
     @Override
-    public UserTokenEntity getByToken(String token) {
-        LambdaQueryWrapper<UserTokenEntity> queryWrapper = Wrappers.lambdaQuery();
-        queryWrapper.select(UserTokenEntity::getUserId, UserTokenEntity::getExpireTime);
-        queryWrapper.eq(UserTokenEntity::getToken, token);
+    public SecurityUserTokenEntity getByToken(String token) {
+        LambdaQueryWrapper<SecurityUserTokenEntity> queryWrapper = Wrappers.lambdaQuery();
+        queryWrapper.select(SecurityUserTokenEntity::getUserId, SecurityUserTokenEntity::getExpireTime);
+        queryWrapper.eq(SecurityUserTokenEntity::getToken, token);
 
-        return userTokenMapper.selectOne(queryWrapper);
+        return securityUserTokenMapper.selectOne(queryWrapper);
     }
 
     @Override
-    public UserEntity getUserById(Long userId) {
-        return userMapper.selectById(userId);
+    public SecurityUserEntity getUserById(Long userId) {
+        return securityUserMapper.selectById(userId);
     }
 
     @Override
     public List<Long> getDeptIdListOfUser(Long userId) {
-        return roleDeptMapper.getDeptListByUserId(userId);
+        return securityRoleDeptMapper.getDeptListByUserId(userId);
     }
 
     @Override
@@ -104,10 +104,10 @@ public class SecurityServiceImpl implements SecurityService {
         List<Long> deptIdList = CollUtil.newArrayList(deptId);
 
         // 获取所有子部门ID
-        LambdaQueryWrapper<DeptEntity> queryWrapper = Wrappers.lambdaQuery();
-        queryWrapper.select(DeptEntity::getId);
-        queryWrapper.like(DeptEntity::getPidAll, deptId);
-        List<DeptEntity> entityList = deptMapper.selectList(queryWrapper);
+        LambdaQueryWrapper<SecurityDeptEntity> queryWrapper = Wrappers.lambdaQuery();
+        queryWrapper.select(SecurityDeptEntity::getId);
+        queryWrapper.like(SecurityDeptEntity::getPidAll, deptId);
+        List<SecurityDeptEntity> entityList = securityDeptMapper.selectList(queryWrapper);
 
         if (CollUtil.isNotEmpty(entityList)) {
             entityList.forEach(d -> deptIdList.add(d.getId()));

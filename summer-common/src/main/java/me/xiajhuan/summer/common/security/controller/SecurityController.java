@@ -8,13 +8,13 @@ import me.xiajhuan.summer.common.exception.BusinessException;
 import me.xiajhuan.summer.common.exception.ErrorCode;
 import me.xiajhuan.summer.common.log.entity.LogLoginEntity;
 import me.xiajhuan.summer.common.log.service.LogLoginService;
-import me.xiajhuan.summer.common.security.dto.UserDto;
-import me.xiajhuan.summer.common.security.dto.UserTokenDto;
+import me.xiajhuan.summer.common.security.dto.SecurityUserDto;
+import me.xiajhuan.summer.common.security.dto.SecurityUserTokenDto;
 import me.xiajhuan.summer.common.security.login.LoginDto;
 import me.xiajhuan.summer.common.security.login.LoginUser;
 import me.xiajhuan.summer.common.security.service.SecurityService;
-import me.xiajhuan.summer.common.security.service.UserService;
-import me.xiajhuan.summer.common.security.service.UserTokenService;
+import me.xiajhuan.summer.common.security.service.SecurityUserService;
+import me.xiajhuan.summer.common.security.service.SecurityUserTokenService;
 import me.xiajhuan.summer.common.utils.AssertUtil;
 import me.xiajhuan.summer.common.utils.HttpContextUtil;
 import me.xiajhuan.summer.common.utils.IpUtil;
@@ -41,10 +41,10 @@ public class SecurityController {
     private SecurityService mainService;
 
     @Resource
-    private UserService userService;
+    private SecurityUserService securityUserService;
 
     @Resource
-    private UserTokenService userTokenService;
+    private SecurityUserTokenService securityUserTokenService;
 
     @Resource
     private LogLoginService logLoginService;
@@ -72,39 +72,39 @@ public class SecurityController {
      * @return 响应结果
      */
     @PostMapping("login")
-    public Result<UserTokenDto> login(@Validated LoginDto loginDto, HttpServletRequest request) {
+    public Result<SecurityUserTokenDto> login(@Validated LoginDto loginDto, HttpServletRequest request) {
         // 校验验证码
         if (!mainService.validateCaptcha(loginDto.getUuid(), loginDto.getCaptcha())) {
             return Result.ofFail(ErrorCode.CAPTCHA_ERROR);
         }
 
         // 用户信息
-        UserDto userDto = userService.getByUsername(loginDto.getUsername());
+        SecurityUserDto securityUserDto = securityUserService.getByUsername(loginDto.getUsername());
 
         // 登录处理
         // 用户不存在
-        if (userDto == null) {
+        if (securityUserDto == null) {
             saveLoginLog(loginDto.getUsername(), LoginOperationEnum.LOGIN, LoginStatusEnum.FAIL, request);
             return Result.ofFail(ErrorCode.ACCOUNT_PASSWORD_ERROR);
         }
 
         // 密码错误
-        if (!SecurityUtil.matches(loginDto.getPassword(), userDto.getPassword())) {
-            saveLoginLog(userDto.getUsername(), LoginOperationEnum.LOGIN, LoginStatusEnum.FAIL, request);
+        if (!SecurityUtil.matches(loginDto.getPassword(), securityUserDto.getPassword())) {
+            saveLoginLog(securityUserDto.getUsername(), LoginOperationEnum.LOGIN, LoginStatusEnum.FAIL, request);
             return Result.ofFail(ErrorCode.ACCOUNT_PASSWORD_ERROR);
         }
 
         // 用户账号已停用
-        if (userDto.getStatus() == CommonStatusEnum.DISABLE.getValue()) {
-            saveLoginLog(userDto.getUsername(), LoginOperationEnum.LOGIN, LoginStatusEnum.LOCK, request);
+        if (securityUserDto.getStatus() == CommonStatusEnum.DISABLE.getValue()) {
+            saveLoginLog(securityUserDto.getUsername(), LoginOperationEnum.LOGIN, LoginStatusEnum.LOCK, request);
             return Result.ofFail(ErrorCode.ACCOUNT_DISABLE);
         }
 
         // 登录成功
-        saveLoginLog(userDto.getUsername(), LoginOperationEnum.LOGIN, LoginStatusEnum.SUCCESS, request);
+        saveLoginLog(securityUserDto.getUsername(), LoginOperationEnum.LOGIN, LoginStatusEnum.SUCCESS, request);
 
         // 生成accessToken
-        return Result.ofSuccess(userTokenService.generateToken(userDto.getId()));
+        return Result.ofSuccess(securityUserTokenService.generateToken(securityUserDto.getId()));
     }
 
     /**
@@ -117,7 +117,7 @@ public class SecurityController {
     public Result logout(HttpServletRequest request) {
         LoginUser loginUser = SecurityUtil.getLoginUser();
 
-        userTokenService.logout(loginUser.getId());
+        securityUserTokenService.logout(loginUser.getId());
 
         saveLoginLog(loginUser.getUsername(), LoginOperationEnum.LOGOUT, LoginStatusEnum.SUCCESS, request);
 
