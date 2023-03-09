@@ -17,7 +17,7 @@ import me.xiajhuan.summer.common.enums.OperationStatusEnum;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@TableName("c_log_operation")
+@TableName("log_operation")
 public class LogOperationEntity extends SimpleBaseEntity {
 
     /**

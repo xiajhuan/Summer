@@ -40,9 +40,9 @@ class CustomUtilsTest {
      */
     @Test
     void wildcardUtilTest() {
-        String source = "c_log_operation";
-        String pattern1 = "*_log_*";
-        String pattern2 = "?_log_*";
+        String source = "log_operation";
+        String pattern1 = "*log_*";
+        String pattern2 = "?log_*";
         Console.log(template, source, pattern1, WildcardUtil.matches(source, pattern1));
         Console.log(template, source, pattern2, WildcardUtil.matches(source, pattern2));
     }

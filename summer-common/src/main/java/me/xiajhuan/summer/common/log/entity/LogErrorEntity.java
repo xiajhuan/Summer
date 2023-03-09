@@ -15,7 +15,7 @@ import me.xiajhuan.summer.common.entity.SimpleBaseEntity;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@TableName("c_log_error")
+@TableName("log_error")
 public class LogErrorEntity extends SimpleBaseEntity {
 
     /**

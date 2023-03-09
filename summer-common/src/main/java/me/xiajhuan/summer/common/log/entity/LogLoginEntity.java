@@ -17,7 +17,7 @@ import me.xiajhuan.summer.common.enums.LoginStatusEnum;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@TableName("c_log_login")
+@TableName("log_login")
 public class LogLoginEntity extends SimpleBaseEntity {
 
     /**
