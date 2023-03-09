@@ -1,6 +1,6 @@
 package me.xiajhuan.summer.common.utils;
 
-import cn.hutool.core.lang.Console;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * 通配符工具
@@ -56,56 +56,49 @@ public class WildcardUtil {
      * @return 是否匹配，true：匹配 false：不匹配
      */
     public static boolean matches(String source, String pattern) {
-        // i 用来记录source串检测的索引的位置
-        int i = 0;
-        // j 用来记录pattern串检测的索引的位置
-        int j = 0;
-        // 记录 待测串i的回溯点
-        int ii = -1;
-        // 记录 通配符*的回溯点
-        int jj = -1;
+        if (StrUtil.isAllNotBlank(source, pattern)) {
+            // i 用来记录source串检测的索引的位置
+            int i = 0;
+            // j 用来记录pattern串检测的索引的位置
+            int j = 0;
+            // 记录 待测串i的回溯点
+            int ii = -1;
+            // 记录 通配符*的回溯点
+            int jj = -1;
 
-        // 以source字符串的长度为循环基数，用i来记录source串当前的位置
-        while (i < source.length()) {
-            // 用j来记录pattern串的当前位置，检测pattern串中j位置的值是不是通配符*
-            if (j < pattern.length() && pattern.charAt(j) == '*') {
-                // 如果在pattern串中碰到通配符*，复制两串的当前索引，记录当前的位置，并对pattern串+1，定位到非通配符位置
-                ii = i;
-                jj = j;
-                j++;
-            } else if (j < pattern.length() // 检测pattern串是否结束
-                    && (source.charAt(i) == pattern.charAt(j)   // 检测两串当前位置的值是否相等
-                    || pattern.charAt(j) == '?')) { // 检测pattern串中j位置是否是单值通配符？
-                // 如果此时pattern串还在有效位置上，那么两串当前位置相等或者pattern串中是单值通配符，表明此时匹配通过，两串均向前移动一步
-                i++;
-                j++;
-            } else {
-                // 如果在以上两种情况下均放行，表明此次匹配是失败的，那么此时就要明确一点，source串是否在被pattern串中的通配符*监听着，
-                // 因为在首次判断中如果碰到通配符*，我们会将他当前索引的位置记录在jj的位置上，
-                // 如果jj = -1 表明匹配失败，当前source串不在监听位置上
-                if (jj == -1) return false;
-                // 如果此时在source串在通配符*的监听下， 让pattern串回到通配符*的位置上继续监听下一个字符
-                j = jj;
-                // 让i回到source串中与通配符对应的当前字符的下一个字符上，也就是此轮匹配只放行一个字符
-                i = ii + 1;
+            // 以source字符串的长度为循环基数，用i来记录source串当前的位置
+            while (i < source.length()) {
+                // 用j来记录pattern串的当前位置，检测pattern串中j位置的值是不是通配符*
+                if (j < pattern.length() && pattern.charAt(j) == '*') {
+                    // 如果在pattern串中碰到通配符*，复制两串的当前索引，记录当前的位置，并对pattern串+1，定位到非通配符位置
+                    ii = i;
+                    jj = j;
+                    j++;
+                } else if (j < pattern.length() // 检测pattern串是否结束
+                        && (source.charAt(i) == pattern.charAt(j)   // 检测两串当前位置的值是否相等
+                        || pattern.charAt(j) == '?')) { // 检测pattern串中j位置是否是单值通配符？
+                    // 如果此时pattern串还在有效位置上，那么两串当前位置相等或者pattern串中是单值通配符，表明此时匹配通过，两串均向前移动一步
+                    i++;
+                    j++;
+                } else {
+                    // 如果在以上两种情况下均放行，表明此次匹配是失败的，那么此时就要明确一点，source串是否在被pattern串中的通配符*监听着，
+                    // 因为在首次判断中如果碰到通配符*，我们会将他当前索引的位置记录在jj的位置上，
+                    // 如果jj = -1 表明匹配失败，当前source串不在监听位置上
+                    if (jj == -1) return false;
+                    // 如果此时在source串在通配符*的监听下， 让pattern串回到通配符*的位置上继续监听下一个字符
+                    j = jj;
+                    // 让i回到source串中与通配符对应的当前字符的下一个字符上，也就是此轮匹配只放行一个字符
+                    i = ii + 1;
+                }
             }
+
+            // 当source串中的每一个字符都与pattern串中的字符进行匹配之后，对pattern串的残余串进行检查，如果残余串是一个*那么继续检测，否则跳出
+            while (j < pattern.length() && pattern.charAt(j) == '*') j++;
+
+            // 此时查看pattern是否已经检测到最后，如果检测到最后表示匹配成功，否则匹配失败
+            return j == pattern.length();
         }
-
-        // 当source串中的每一个字符都与pattern串中的字符进行匹配之后，对pattern串的残余串进行检查，如果残余串是一个*那么继续检测，否则跳出
-        while (j < pattern.length() && pattern.charAt(j) == '*') j++;
-
-        // 此时查看pattern是否已经检测到最后，如果检测到最后表示匹配成功，否则匹配失败
-        return j == pattern.length();
-    }
-
-    private static final String template = "{} matches {},result:{}\n";
-
-    public static void main(String args[]) {
-        String source = "c_log_operation";
-        String pattern1 = "*_log_*";
-        String pattern2 = "?_log_*";
-        Console.log(template, source, pattern1, matches(source, pattern1));
-        Console.log(template, source, pattern2, matches(source, pattern2));
+        return false;
     }
 
 }

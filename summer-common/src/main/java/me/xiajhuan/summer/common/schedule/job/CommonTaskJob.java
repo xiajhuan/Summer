@@ -30,7 +30,7 @@ public class CommonTaskJob {
     private LogLoginService logLoginService;
 
     /**
-     * 清理操作日志和错误日志<br>
+     * 清理操作日志/错误日志/登录日志<br>
      * note：按标准时间计，每天1：00执行
      */
     @Scheduled(cron = "0 0 1 * * ?")
