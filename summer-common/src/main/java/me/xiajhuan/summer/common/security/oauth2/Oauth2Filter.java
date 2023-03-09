@@ -20,10 +20,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Oauth2过滤
+ * Oauth2Filter
  *
  * @author xiajhuan
  * @date 2023/02/27
+ * @see AuthenticatingFilter
  */
 public class Oauth2Filter extends AuthenticatingFilter {
 

@@ -14,6 +14,7 @@ import java.util.concurrent.ScheduledExecutorService;
  *
  * @author xiajhuan
  * @date 2022/11/22
+ * @see SchedulingConfigurer
  */
 @Configuration
 @EnableScheduling

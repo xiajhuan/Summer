@@ -16,6 +16,7 @@ import java.util.Arrays;
  *
  * @author xiajhuan
  * @date 2022/11/26
+ * @see MessageFormattingStrategy
  */
 public class P6spySqlFormatConfig implements MessageFormattingStrategy {
 

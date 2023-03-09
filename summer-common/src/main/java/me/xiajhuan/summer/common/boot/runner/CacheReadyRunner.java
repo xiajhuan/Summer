@@ -15,6 +15,7 @@ import javax.annotation.Resource;
  *
  * @author xiajhuan
  * @date 2022/11/28
+ * @see ApplicationRunner
  */
 @Component
 public class CacheReadyRunner implements ApplicationRunner {

@@ -3,10 +3,11 @@ package me.xiajhuan.summer.common.security.oauth2;
 import org.apache.shiro.authc.AuthenticationToken;
 
 /**
- * Oauth2 Token
+ * Oauth2Token
  *
  * @author xiajhuan
  * @date 2023/02/27
+ * @see AuthenticationToken
  */
 public class Oauth2Token implements AuthenticationToken {
 

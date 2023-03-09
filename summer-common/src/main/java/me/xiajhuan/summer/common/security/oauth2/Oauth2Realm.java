@@ -18,10 +18,11 @@ import javax.annotation.Resource;
 import java.util.Set;
 
 /**
- * Oauth2域
+ * Oauth2Realm
  *
  * @author xiajhuan
  * @date 2023/02/27
+ * @see AuthorizingRealm
  */
 @Component
 public class Oauth2Realm extends AuthorizingRealm {

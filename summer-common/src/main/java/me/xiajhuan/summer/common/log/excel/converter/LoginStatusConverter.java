@@ -13,6 +13,7 @@ import static me.xiajhuan.summer.common.enums.LoginStatusEnum.*;
  *
  * @author xiajhuan
  * @date 2023/3/3
+ * @see Converter
  */
 public class LoginStatusConverter implements Converter<Integer> {
 

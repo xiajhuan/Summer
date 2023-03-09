@@ -17,6 +17,7 @@ import net.dreamlu.mica.xss.config.MicaXssConfiguration;
  *
  * @author xiajhuan
  * @date 2022/11/22
+ * @see ApplicationContextAware
  */
 @Component("mySpringContextUtil")
 public class SpringContextUtil implements ApplicationContextAware {
