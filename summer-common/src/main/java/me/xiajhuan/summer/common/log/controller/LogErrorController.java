@@ -46,7 +46,7 @@ public class LogErrorController {
      * @return 响应结果
      */
     @GetMapping("page")
-    @RequiresPermissions("c:log:error:page")
+    @RequiresPermissions("log:error:page")
     @LogOperation(OperationConst.PAGE)
     public Result<PageData<LogErrorDto>> page(PageAndSort pageAndSort, LogErrorDto dto) {
         return Result.ofSuccess(PageData.of(mainService.page(pageAndSort, dto)));
@@ -59,7 +59,7 @@ public class LogErrorController {
      * @return 响应结果
      */
     @GetMapping("getById")
-    @RequiresPermissions("c:log:error:getById")
+    @RequiresPermissions("log:error:getById")
     @LogOperation(OperationConst.GET_BY_ID)
     public Result<LogErrorDto> getById(Long id) throws BusinessException {
         AssertUtil.isNotNull("id", id);
@@ -77,7 +77,7 @@ public class LogErrorController {
      * @throws FileDownloadException 文件下载异常
      */
     @PostMapping("excelExport")
-    @RequiresPermissions("c:log:error:excelExport")
+    @RequiresPermissions("log:error:excelExport")
     @RateLimiter(value = 0.2, keyStrategy = IpKeyStrategy.class)
     @LogOperation(OperationConst.EXCEL_EXPORT)
     public void excelExport(LogErrorDto dto, HttpServletResponse response) throws FileDownloadException {

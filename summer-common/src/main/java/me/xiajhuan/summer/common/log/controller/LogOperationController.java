@@ -44,7 +44,7 @@ public class LogOperationController {
      * @return 响应结果
      */
     @GetMapping("page")
-    @RequiresPermissions("c:log:operation:page")
+    @RequiresPermissions("log:operation:page")
     @LogOperation(OperationConst.PAGE)
     public Result<PageData<LogOperationDto>> page(PageAndSort pageAndSort, LogOperationDto dto) {
         return Result.ofSuccess(PageData.of(mainService.page(pageAndSort, dto)));
@@ -60,7 +60,7 @@ public class LogOperationController {
      * @throws FileDownloadException 文件下载异常
      */
     @PostMapping("excelExport")
-    @RequiresPermissions("c:log:operation:excelExport")
+    @RequiresPermissions("log:operation:excelExport")
     @RateLimiter(value = 0.2, keyStrategy = IpKeyStrategy.class)
     @LogOperation(OperationConst.EXCEL_EXPORT)
     public void excelExport(LogOperationDto dto, HttpServletResponse response) throws FileDownloadException {
