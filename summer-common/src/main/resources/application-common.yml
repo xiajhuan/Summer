@@ -26,7 +26,7 @@ server:
 mybatis-plus:
   # Entity扫描，多个package用“,”或者“;”分隔
   typeAliasesPackage: me.xiajhuan.summer.**.entity
-  # Mapper.xml文件位置
+  # Mapper.xml文件位置，多个location用“,”分隔
   mapperlocations: classpath*:/mapper/**/*.xml
   global-config:
     # 关闭LOGO

@@ -16,7 +16,7 @@ import java.util.Map;
 
 
 /**
- * 堆内缓存，基于Hutool-cache
+ * 堆内缓存，基于Hutool-Cache
  *
  * @author xiajhuan
  * @date 2022/11/22

@@ -27,11 +27,11 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 限流切面<br>
- * 基于Guava-RateLimiter {@link com.google.common.util.concurrent.RateLimiter}
+ * 限流切面，基于Guava-RateLimiter
  *
  * @author xiajhuan
  * @date 2022/12/1
+ * @see com.google.common.util.concurrent.RateLimiter
  */
 @Aspect
 @Component

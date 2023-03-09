@@ -1,7 +1,7 @@
 # Hutool setting配置文件
 # https://hutool.cn/docs/#/setting/%E6%A6%82%E8%BF%B0
 
-# 通用配置
+# summer-common配置
 
 # 权限配置
 [Security]

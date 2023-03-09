@@ -13,4 +13,14 @@ public class SettingBeanConst {
      */
     public static final String COMMON = "commonSetting";
 
+    /**
+     * serve.setting配置Bean名称
+     */
+    public static final String SERVER = "serverSetting";
+
+    /**
+     * extend.setting配置Bean名称
+     */
+    public static final String EXTEND = "extendSetting";
+
 }

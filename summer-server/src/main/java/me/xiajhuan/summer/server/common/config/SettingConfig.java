@@ -1,4 +1,4 @@
-package me.xiajhuan.summer.common.config;
+package me.xiajhuan.summer.server.common.config;
 
 import cn.hutool.setting.Setting;
 import me.xiajhuan.summer.common.constant.SettingBeanConst;
@@ -9,19 +9,19 @@ import org.springframework.context.annotation.Configuration;
  * 注册setting配置文件Bean
  *
  * @author xiajhuan
- * @date 2022/11/23
+ * @date 2023/3/9
  */
-@Configuration("commonConfig")
+@Configuration("serverConfig")
 public class SettingConfig {
 
     /**
-     * 注册 common.setting的配置Bean
+     * 注册 server.setting的配置Bean
      *
      * @return {@link Setting}
      */
-    @Bean(SettingBeanConst.COMMON)
-    public Setting commonSetting() {
-        return new Setting("setting/common.setting");
+    @Bean(SettingBeanConst.SERVER)
+    public Setting serverSetting() {
+        return new Setting("setting/server.setting");
     }
 
 }

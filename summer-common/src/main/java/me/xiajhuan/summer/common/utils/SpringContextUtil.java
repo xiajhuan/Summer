@@ -24,12 +24,12 @@ public class SpringContextUtil implements ApplicationContextAware {
     /**
      * {@link ApplicationContext}
      */
-    private static ApplicationContext applicationContext;
+    private static ApplicationContext context;
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext)
             throws BeansException {
-        SpringContextUtil.applicationContext = applicationContext;
+        context = applicationContext;
     }
 
     /**
@@ -39,7 +39,7 @@ public class SpringContextUtil implements ApplicationContextAware {
      * @return Bean
      */
     public static Object getBean(String name) {
-        return applicationContext.getBean(name);
+        return context == null ? null : context.getBean(name);
     }
 
     /**
@@ -50,7 +50,7 @@ public class SpringContextUtil implements ApplicationContextAware {
      * @return Bean
      */
     public static <T> T getBean(Class<T> type) {
-        return applicationContext.getBean(type);
+        return context == null ? null : context.getBean(type);
     }
 
     /**
@@ -62,7 +62,7 @@ public class SpringContextUtil implements ApplicationContextAware {
      * @return Bean
      */
     public static <T> T getBean(String name, Class<T> type) {
-        return applicationContext.getBean(name, type);
+        return context == null ? null : context.getBean(name, type);
     }
 
     /**
@@ -72,7 +72,7 @@ public class SpringContextUtil implements ApplicationContextAware {
      * @return 是否存在，true：存在 false：不存在
      */
     public static boolean containsBean(String name) {
-        return applicationContext.containsBean(name);
+        return context == null ? null : context.containsBean(name);
     }
 
     /**
@@ -82,7 +82,7 @@ public class SpringContextUtil implements ApplicationContextAware {
      * @return 是否是单例的，true：是 false：不是
      */
     public static boolean isSingleton(String name) {
-        return applicationContext.isSingleton(name);
+        return context == null ? null : context.isSingleton(name);
     }
 
     /**
@@ -92,7 +92,7 @@ public class SpringContextUtil implements ApplicationContextAware {
      * @return BeanClass
      */
     public static Class<? extends Object> getType(String name) {
-        return applicationContext.getType(name);
+        return context == null ? null : context.getType(name);
     }
 
     /**
@@ -103,7 +103,7 @@ public class SpringContextUtil implements ApplicationContextAware {
      * @return Bean名称数组
      */
     public static <T> String[] getNameArray(Class<T> type) {
-        return applicationContext.getBeanNamesForType(type);
+        return context == null ? null : context.getBeanNamesForType(type);
     }
 
     /**
@@ -114,9 +114,11 @@ public class SpringContextUtil implements ApplicationContextAware {
      * @param <T>  Bean类型
      */
     public static <T> void addBean(String name, Class<T> type) {
-        BeanDefinitionRegistry beanDefinitionRegistry = (BeanDefinitionRegistry) applicationContext.getParentBeanFactory();
-        if (!beanDefinitionRegistry.containsBeanDefinition(name)) {
-            beanDefinitionRegistry.registerBeanDefinition(name, BeanDefinitionBuilder.genericBeanDefinition(type).getBeanDefinition());
+        if (context != null) {
+            BeanDefinitionRegistry beanDefinitionRegistry = (BeanDefinitionRegistry) context.getParentBeanFactory();
+            if (!beanDefinitionRegistry.containsBeanDefinition(name)) {
+                beanDefinitionRegistry.registerBeanDefinition(name, BeanDefinitionBuilder.genericBeanDefinition(type).getBeanDefinition());
+            }
         }
     }
 
@@ -126,9 +128,11 @@ public class SpringContextUtil implements ApplicationContextAware {
      * @param name 名称
      */
     public static void removeBean(String name) {
-        BeanDefinitionRegistry beanDefinitionRegistry = (BeanDefinitionRegistry) applicationContext.getParentBeanFactory();
-        beanDefinitionRegistry.getBeanDefinition(name);
-        beanDefinitionRegistry.removeBeanDefinition(name);
+        if (context != null) {
+            BeanDefinitionRegistry beanDefinitionRegistry = (BeanDefinitionRegistry) context.getParentBeanFactory();
+            beanDefinitionRegistry.getBeanDefinition(name);
+            beanDefinitionRegistry.removeBeanDefinition(name);
+        }
     }
 
     /**
@@ -137,7 +141,10 @@ public class SpringContextUtil implements ApplicationContextAware {
      * @return 应用名称
      */
     public static String getApplicationName() {
-        return StrUtil.subBefore(applicationContext.getId(), StrPool.DASHED, true);
+        if (context != null) {
+            return StrUtil.subBefore(context.getId(), StrPool.DASHED, true);
+        }
+        return null;
     }
 
     /**
