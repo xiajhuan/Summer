@@ -21,7 +21,7 @@ public enum RegionMobileEnum {
     /**
      * EN_US
      */
-    EN_US("/^(\\+?0?86\\-?)?1[345789]\\d{9}$/");
+    EN_US("/^(\\+?1)?[2-9]\\d{2}[2-9](?!11)\\d{6}$/");
 
     private String value;
 
