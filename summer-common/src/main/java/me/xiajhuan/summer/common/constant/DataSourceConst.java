@@ -9,14 +9,14 @@ package me.xiajhuan.summer.common.constant;
 public class DataSourceConst {
 
     /**
+     * admin模块数据源，summer-admin
+     */
+    public static final String ADMIN = "admin";
+
+    /**
      * common模块数据源，summer-common
      */
     public static final String COMMON = "common";
-
-    /**
-     * server模块数据源，summer-server
-     */
-    public static final String SERVER = "server";
 
     /**
      * extend模块数据源，summer-extend

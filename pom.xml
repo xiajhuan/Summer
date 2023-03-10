@@ -17,8 +17,8 @@
     </parent>
 
     <modules>
+        <module>summer-admin</module>
         <module>summer-common</module>
-        <module>summer-server</module>
         <module>summer-extend</module>
     </modules>
 
@@ -46,7 +46,7 @@
 
     <dependencyManagement>
         <dependencies>
-            <!--summer-single通用模块-->
+            <!--summer-single基础通用模块-->
             <dependency>
                 <groupId>me.xiajhuan</groupId>
                 <artifactId>summer-common</artifactId>

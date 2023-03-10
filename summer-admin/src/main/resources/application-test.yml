@@ -10,12 +10,12 @@ spring:
         max-pool-size: 15
         min-idle: 5
       # 默认数据源
-      primary: extend
+      primary: admin
       datasource:
-        # extend模块数据源
-        extend:
+        # admin模块数据源
+        admin:
           driver-class-name: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://192.168.0.142:3306/summer-extend?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true
+          url: jdbc:mysql://192.168.0.142:3306/summer-admin?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true
           username: root
           password: jack%2021#2@6XJH
         # common模块数据源
@@ -30,7 +30,7 @@ spring:
     host: 192.168.0.7
     port: 6379
     password: jack_2021
-    database: 3
+    database: 2
     timeout: 5000
     lettuce:
       # 连接池配置
@@ -43,4 +43,6 @@ spring:
 server:
   # 缓存类型，值：REDIS/HEAP
   cache:
-    type: REDIS
+    type: HEAP
+
+

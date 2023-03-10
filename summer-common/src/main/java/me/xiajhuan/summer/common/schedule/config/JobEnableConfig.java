@@ -22,7 +22,7 @@ import javax.annotation.Resource;
  *      2.1 随机启动时缓存基本数据
  *      2.2 定期清理日志
  *  3.可通过common.setting下Schedule组进行配置
- *  4.有需要前台展示或涉及复杂业务的需求请使用“summer-server”中基于Quartz的实现
+ *  4.有需要前台展示或涉及复杂业务的需求请使用“summer-admin”中基于Quartz的实现
  * </pre>
  *
  * @author xiajhuan

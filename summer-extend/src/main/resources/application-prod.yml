@@ -12,16 +12,16 @@ spring:
       # 默认数据源
       primary: extend
       datasource:
-        # common模块数据源
-        common:
-          driver-class-name: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://192.168.0.142:3306/summer-common?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true
-          username: root
-          password: jack%2021#2@6XJH
         # extend模块数据源
         extend:
           driver-class-name: com.mysql.cj.jdbc.Driver
           url: jdbc:mysql://192.168.0.142:3306/summer-extend?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true
+          username: root
+          password: jack%2021#2@6XJH
+        # common模块数据源
+        common:
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          url: jdbc:mysql://192.168.0.142:3306/summer-common?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true
           username: root
           password: jack%2021#2@6XJH
 

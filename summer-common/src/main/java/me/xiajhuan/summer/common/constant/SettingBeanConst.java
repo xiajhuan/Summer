@@ -9,14 +9,14 @@ package me.xiajhuan.summer.common.constant;
 public class SettingBeanConst {
 
     /**
+     * admin.setting配置Bean名称
+     */
+    public static final String ADMIN = "adminSetting";
+
+    /**
      * common.setting配置Bean名称
      */
     public static final String COMMON = "commonSetting";
-
-    /**
-     * serve.setting配置Bean名称
-     */
-    public static final String SERVER = "serverSetting";
 
     /**
      * extend.setting配置Bean名称

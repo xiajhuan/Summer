@@ -7,7 +7,7 @@
     <packaging>jar</packaging>
 
     <name>summer-common</name>
-    <description>summer单体应用版-通用模块</description>
+    <description>summer单体应用版-基础通用模块</description>
 
     <parent>
         <groupId>me.xiajhuan</groupId>
