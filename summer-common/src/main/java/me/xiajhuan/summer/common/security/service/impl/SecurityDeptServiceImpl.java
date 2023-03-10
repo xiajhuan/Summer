@@ -36,8 +36,8 @@ public class SecurityDeptServiceImpl extends ServiceImpl<SecurityDeptMapper, Sec
     public LambdaQueryWrapper<SecurityDeptEntity> getSelectWrapper(Class<SecurityDeptEntity> entityClass) {
         LambdaQueryWrapper<SecurityDeptEntity> queryWrapper = Wrappers.lambdaQuery();
         // 查询字段
-        queryWrapper.select(SecurityDeptEntity::getId, SecurityDeptEntity::getPid, SecurityDeptEntity::getName,
-                SecurityDeptEntity::getSort, SecurityDeptEntity::getParentName, SimpleBaseEntity::getCreateTime);
+        queryWrapper.select(SecurityDeptEntity::getId, SecurityDeptEntity::getParentId, SecurityDeptEntity::getName,
+                SecurityDeptEntity::getWeight, SecurityDeptEntity::getParentName, SimpleBaseEntity::getCreateTime);
 
         return queryWrapper;
     }

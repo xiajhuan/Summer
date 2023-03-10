@@ -106,7 +106,7 @@ public class SecurityServiceImpl implements SecurityService {
         // 获取所有子部门ID
         LambdaQueryWrapper<SecurityDeptEntity> queryWrapper = Wrappers.lambdaQuery();
         queryWrapper.select(SecurityDeptEntity::getId);
-        queryWrapper.like(SecurityDeptEntity::getPidAll, deptId);
+        queryWrapper.like(SecurityDeptEntity::getParentIdAll, deptId);
         List<SecurityDeptEntity> entityList = securityDeptMapper.selectList(queryWrapper);
 
         if (CollUtil.isNotEmpty(entityList)) {

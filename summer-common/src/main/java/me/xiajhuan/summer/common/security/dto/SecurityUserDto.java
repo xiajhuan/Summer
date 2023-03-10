@@ -70,7 +70,7 @@ public class SecurityUserDto extends BaseDto {
     private String mobile;
 
     /**
-     * 所属部门ID
+     * 部门ID
      */
     @NotNull(message = "{security.user.deptId.require}", groups = {AddGroup.class, UpdateGroup.class})
     private Long deptId;

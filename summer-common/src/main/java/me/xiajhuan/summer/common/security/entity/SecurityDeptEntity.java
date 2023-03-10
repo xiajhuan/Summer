@@ -35,12 +35,12 @@ public class SecurityDeptEntity extends SimpleBaseEntity {
     /**
      * 上级部门ID
      */
-    private Long pid;
+    private Long parentId;
 
     /**
      * 所有上级部门ID，用“,”分隔
      */
-    private String pidAll;
+    private String parentIdAll;
 
     /**
      * 部门名称
@@ -48,9 +48,9 @@ public class SecurityDeptEntity extends SimpleBaseEntity {
     private String name;
 
     /**
-     * 排序
+     * 顺序，越小优先级越高
      */
-    private Integer sort;
+    private Integer weight;
 
     /**
      * 上级部门名称

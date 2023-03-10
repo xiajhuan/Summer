@@ -35,9 +35,9 @@ public class SecurityMenuEntity extends SimpleBaseEntity {
     private Date updateTime;
 
     /**
-     * 父菜单ID，一级菜单为0
+     * 上级菜单ID
      */
-    private Long pid;
+    private Long parentId;
 
     /**
      * 菜单URL
@@ -78,9 +78,9 @@ public class SecurityMenuEntity extends SimpleBaseEntity {
     private String icon;
 
     /**
-     * 排序
+     * 顺序，越小优先级越高
      */
-    private Integer sort;
+    private Integer weight;
 
     /**
      * 菜单名称
