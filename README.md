@@ -1,7 +1,7 @@
 # summer-single
 
 #### 介绍
-基于springBoot2.7的单体应用
+基于SpringBoot2.7的SaaS后端模板（单体应用）
 
 #### 软件架构
 软件架构说明

@@ -1,7 +1,7 @@
 # summer-single
 
 #### Description
-基于springBoot2.7的单体应用
+SaaS Back-end Template Based on SpringBoot2.7 (Single Application)
 
 #### Software Architecture
 Software architecture description
