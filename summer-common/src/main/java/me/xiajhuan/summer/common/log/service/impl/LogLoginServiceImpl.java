@@ -108,7 +108,7 @@ public class LogLoginServiceImpl extends ServiceImpl<LogLoginMapper, LogLoginEnt
         // 删除登录日志
         LambdaQueryWrapper<LogLoginEntity> queryWrapper = Wrappers.lambdaQuery();
         queryWrapper.select(LogLoginEntity::getId);
-        queryWrapper.lt(LogLoginEntity::getCreateTime, DateUtil.offsetDay(DateUtil.date(), setting.getInt("login.clear.day-limit", "Log")));
+        queryWrapper.lt(LogLoginEntity::getCreateTime, DateUtil.offsetDay(DateUtil.date(), setting.getInt("login.clear.day-limit", "Log", -30)));
 
         List<LogLoginEntity> entityList = list(queryWrapper);
 

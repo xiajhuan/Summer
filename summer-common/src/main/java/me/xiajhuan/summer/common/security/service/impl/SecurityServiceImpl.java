@@ -132,7 +132,7 @@ public class SecurityServiceImpl implements SecurityService {
         // 缓存验证码
         CacheServerFactory.getInstance().getCacheServer()
                 .setStringTtl(StrUtil.format(CacheConst.CAPTCHA_CODE, uuid), captcha.getCode(),
-                        setting.getInt("cache.ttl", "Captcha") * TimeUnitConst.MINUTE);
+                        setting.getInt("cache.ttl", "Captcha", 5) * TimeUnitConst.MINUTE);
     }
 
     @Override
@@ -157,20 +157,20 @@ public class SecurityServiceImpl implements SecurityService {
         // 验证码类型
         String type = setting.getByGroup("graphic.type", "Captcha");
         // 验证码长宽
-        int width = setting.getInt("graphic.width", "Captcha");
-        int height = setting.getInt("graphic.height", "Captcha");
+        int width = setting.getInt("graphic.width", "Captcha", 150);
+        int height = setting.getInt("graphic.height", "Captcha", 40);
         // 验证码字符个数
-        int codeNum = setting.getInt("graphic.char-num", "Captcha");
+        int codeNum = setting.getInt("graphic.char-num", "Captcha", 4);
         switch (type) {
             case "Line":
                 return CaptchaUtil.createLineCaptcha(width, height, codeNum,
-                        setting.getInt("graphic.line-num", "Captcha"));
+                        setting.getInt("graphic.line-num", "Captcha", 10));
             case "Circle":
                 return CaptchaUtil.createCircleCaptcha(width, height, codeNum,
-                        setting.getInt("graphic.circle-num", "Captcha"));
+                        setting.getInt("graphic.circle-num", "Captcha", 10));
             case "Shear":
                 return CaptchaUtil.createShearCaptcha(width, height, codeNum,
-                        setting.getInt("graphic.shear-width", "Captcha"));
+                        setting.getInt("graphic.shear-width", "Captcha", 4));
             default:
                 throw new IllegalArgumentException(StrUtil.format("不支持的验证码类型【{}】", type));
         }

@@ -50,10 +50,10 @@ public class HeapCacheServer implements CacheServer {
     private HeapCacheServer() {
         // 初始化缓存容量
         Setting setting = SpringContextUtil.getBean(SettingBeanConst.COMMON, Setting.class);
-        capacityString = setting.getInt("heap.capacity.string", "Cache");
-        capacityAuto = setting.getInt("heap.capacity.auto", "Cache");
-        capacityHash = setting.getInt("heap.capacity.hash", "Cache");
-        capacityList = setting.getInt("heap.capacity.list", "Cache");
+        capacityString = setting.getInt("heap.capacity.string", "Cache", 1000);
+        capacityAuto = setting.getInt("heap.capacity.auto", "Cache", 1000);
+        capacityHash = setting.getInt("heap.capacity.hash", "Cache", 1000);
+        capacityList = setting.getInt("heap.capacity.list", "Cache", 1000);
     }
 
     private static volatile HeapCacheServer instance = null;

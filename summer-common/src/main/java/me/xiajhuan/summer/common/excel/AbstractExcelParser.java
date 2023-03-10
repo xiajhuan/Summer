@@ -30,7 +30,7 @@ public abstract class AbstractExcelParser<T, E> extends AnalysisEventListener<E>
      * 最多每隔该数量的数据后清理List，方便GC
      */
     private static final int MAX_BATCH_NUM = SpringContextUtil.getBean(SettingBeanConst.COMMON, Setting.class)
-            .getInt("parser.max-batch-num", "Excel");
+            .getInt("parser.max-batch-num", "Excel", 2000);
 
     /**
      * Entity列表

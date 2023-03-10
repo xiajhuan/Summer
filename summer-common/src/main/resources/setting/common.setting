@@ -79,6 +79,12 @@ graphic.char-num = 4
 cache.ttl = 5
 
 
+# 树形结构配置
+[Tree]
+# 最大递归深度（从0开始计算）
+deep = 5
+
+
 # MybatisPlus插件配置
 [Mp]
 # 数据权限忽略的表名称配置，以“,”分隔
