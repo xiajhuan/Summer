@@ -1,5 +1,6 @@
 package me.xiajhuan.summer.common.security.mapper;
 
+import com.baomidou.mybatisplus.annotation.InterceptorIgnore;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import me.xiajhuan.summer.common.security.entity.SecurityMenuEntity;
 import org.apache.ibatis.annotations.Select;
@@ -12,6 +13,7 @@ import java.util.List;
  * @author xiajhuan
  * @date 2023/2/28
  */
+@InterceptorIgnore
 public interface SecurityMenuMapper extends BaseMapper<SecurityMenuEntity> {
 
     /**

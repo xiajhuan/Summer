@@ -83,7 +83,7 @@ cache.ttl = 5
 [Mp]
 # 数据权限忽略的表名称配置，以“,”分隔
 # 支持通配符：“*”（任意匹配）和“?”（单值匹配）
-dataScope.ignore = log_*
+dataScope.ignore = log_*,*_token,security_role_*
 
 # 乐观锁控制更新失败时的重试次数
 optimisticLock.retry-times = 20
