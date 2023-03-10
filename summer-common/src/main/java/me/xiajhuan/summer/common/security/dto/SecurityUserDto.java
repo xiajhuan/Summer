@@ -9,7 +9,7 @@ import me.xiajhuan.summer.common.enums.GenderEnum;
 import me.xiajhuan.summer.common.enums.UserTypeEnum;
 import me.xiajhuan.summer.common.validation.annotation.Mobile;
 import me.xiajhuan.summer.common.validation.group.AddGroup;
-import me.xiajhuan.summer.common.validation.group.DefaultGroup;
+import me.xiajhuan.summer.common.validation.group.UpdateGroup;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.*;
@@ -29,7 +29,7 @@ public class SecurityUserDto extends BaseDto {
     /**
      * 用户名
      */
-    @NotBlank(message = "{security.user.username.require}", groups = DefaultGroup.class)
+    @NotBlank(message = "{security.user.username.require}", groups = {AddGroup.class, UpdateGroup.class})
     private String username;
 
     /**
@@ -41,7 +41,7 @@ public class SecurityUserDto extends BaseDto {
     /**
      * 真实姓名
      */
-    @NotBlank(message = "{security.user.realName.require}", groups = DefaultGroup.class)
+    @NotBlank(message = "{security.user.realName.require}", groups = {AddGroup.class, UpdateGroup.class})
     private String realName;
 
     /**
@@ -54,25 +54,25 @@ public class SecurityUserDto extends BaseDto {
      *
      * @see GenderEnum
      */
-    @Range(min = 0, max = 2, message = "{security.user.gender.range}", groups = DefaultGroup.class)
+    @Range(min = 0, max = 2, message = "{security.user.gender.range}", groups = {AddGroup.class, UpdateGroup.class})
     private Integer gender;
 
     /**
      * 邮箱
      */
-    @Email(message = "{security.user.email.error}", groups = DefaultGroup.class)
+    @Email(message = "{security.user.email.error}", groups = {AddGroup.class, UpdateGroup.class})
     private String email;
 
     /**
      * 手机号
      */
-    @Mobile(message = "{security.user.mobile.error}", groups = DefaultGroup.class)
+    @Mobile(message = "{security.user.mobile.error}", groups = {AddGroup.class, UpdateGroup.class})
     private String mobile;
 
     /**
      * 所属部门ID
      */
-    @NotNull(message = "{security.user.deptId.require}", groups = DefaultGroup.class)
+    @NotNull(message = "{security.user.deptId.require}", groups = {AddGroup.class, UpdateGroup.class})
     private Long deptId;
 
     /**
@@ -80,7 +80,7 @@ public class SecurityUserDto extends BaseDto {
      *
      * @see CommonStatusEnum
      */
-    @Range(min = 0, max = 1, message = "{security.user.status.range}", groups = DefaultGroup.class)
+    @Range(min = 0, max = 1, message = "{security.user.status.range}", groups = {AddGroup.class, UpdateGroup.class})
     private Integer status;
 
     /**
@@ -95,7 +95,7 @@ public class SecurityUserDto extends BaseDto {
      *
      * @see DataScopeEnum
      */
-    @Range(min = 0, max = 4, message = "{security.user.status.range}", groups = DefaultGroup.class)
+    @Range(min = 0, max = 4, message = "{security.user.status.range}", groups = {AddGroup.class, UpdateGroup.class})
     private Integer dataScope;
 
     /**

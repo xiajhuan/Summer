@@ -2,34 +2,42 @@ package me.xiajhuan.summer.common.security.dto;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import me.xiajhuan.summer.common.dto.BaseDto;
+import me.xiajhuan.summer.common.dto.TreeNodeDto;
 import me.xiajhuan.summer.common.validation.group.AddGroup;
 import me.xiajhuan.summer.common.validation.group.UpdateGroup;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
-import java.util.List;
 
 /**
- * 角色 Dto
+ * 部门 Dto
  *
  * @author xiajhuan
- * @date 2023/3/6
+ * @date 2023/3/10
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class SecurityRoleDto extends BaseDto {
+public class SecurityDeptDto extends TreeNodeDto {
 
     /**
-     * 角色名称
+     * 上级部门ID
+     */
+    @NotNull(message = "{security.dept.pid.require}", groups = {AddGroup.class, UpdateGroup.class})
+    private Long pid;
+
+    /**
+     * 部门名称
      */
     @NotBlank(message = "{security.role.name.require}", groups = {AddGroup.class, UpdateGroup.class})
     private String name;
 
     /**
-     * 描述
+     * 排序
      */
-    private String desc;
+    @Min(value = 0, message = "{sort.number}", groups = {AddGroup.class, UpdateGroup.class})
+    private Integer sort;
 
     /**
      * 创建时间
@@ -37,13 +45,8 @@ public class SecurityRoleDto extends BaseDto {
     private Date createTime;
 
     /**
-     * 菜单ID列表
+     * 上级部门名称
      */
-    private List<Long> menuIdList;
-
-    /**
-     * 部门ID列表
-     */
-    private List<Long> deptIdList;
+    private String parentName;
 
 }

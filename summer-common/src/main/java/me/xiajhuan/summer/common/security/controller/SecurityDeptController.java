@@ -9,8 +9,8 @@ import me.xiajhuan.summer.common.data.PageAndSort;
 import me.xiajhuan.summer.common.data.PageData;
 import me.xiajhuan.summer.common.data.Result;
 import me.xiajhuan.summer.common.exception.BusinessException;
-import me.xiajhuan.summer.common.security.dto.SecurityRoleDto;
-import me.xiajhuan.summer.common.security.service.SecurityRoleService;
+import me.xiajhuan.summer.common.security.dto.SecurityDeptDto;
+import me.xiajhuan.summer.common.security.service.SecurityDeptService;
 import me.xiajhuan.summer.common.utils.AssertUtil;
 import me.xiajhuan.summer.common.validation.group.AddGroup;
 import me.xiajhuan.summer.common.validation.group.UpdateGroup;
@@ -21,19 +21,19 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 
 /**
- * 角色 Controller
+ * 部门 Controller
  *
  * @author xiajhuan
- * @date 2023/3/9
+ * @date 2023/3/10
  */
 @RestController
-@RequestMapping("security/role")
-public class SecurityRoleController {
+@RequestMapping("security/dept")
+public class SecurityDeptController {
 
     private static final Log LOGGER = LogFactory.get();
 
     @Resource
-    private SecurityRoleService mainService;
+    private SecurityDeptService mainService;
 
     //*******************Common Crud********************
 
@@ -41,26 +41,26 @@ public class SecurityRoleController {
      * 分页
      *
      * @param pageAndSort 分页排序参数
-     * @param dto         角色Dto
+     * @param dto         部门Dto
      * @return 响应结果
      */
     @GetMapping("page")
-    @RequiresPermissions("security:role:page")
+    @RequiresPermissions("security:dept:page")
     @LogOperation(OperationConst.PAGE)
-    public Result<PageData<SecurityRoleDto>> page(PageAndSort pageAndSort, SecurityRoleDto dto) {
+    public Result<PageData<SecurityDeptDto>> page(PageAndSort pageAndSort, SecurityDeptDto dto) {
         return Result.ofSuccess(PageData.of(mainService.page(pageAndSort, dto)));
     }
 
     /**
      * 新增
      *
-     * @param dto 角色Dto
+     * @param dto 部门Dto
      * @return 响应结果
      */
     @PostMapping("add")
-    @RequiresPermissions("security:role:add")
+    @RequiresPermissions("security:dept:add")
     @LogOperation(OperationConst.ADD)
-    public Result add(@Validated(AddGroup.class) SecurityRoleDto dto) {
+    public Result add(@Validated(AddGroup.class) SecurityDeptDto dto) {
         try {
             mainService.add(dto);
 
@@ -75,13 +75,13 @@ public class SecurityRoleController {
     /**
      * 修改
      *
-     * @param dto 角色Dto
+     * @param dto 部门Dto
      * @return 响应结果
      */
     @PostMapping("update")
-    @RequiresPermissions("security:role:update")
+    @RequiresPermissions("security:dept:update")
     @LogOperation(OperationConst.UPDATE)
-    public Result update(@Validated(UpdateGroup.class) SecurityRoleDto dto) {
+    public Result update(@Validated(UpdateGroup.class) SecurityDeptDto dto) {
         try {
             mainService.update(dto);
 
@@ -101,7 +101,7 @@ public class SecurityRoleController {
      * @throws BusinessException 业务异常
      */
     @DeleteMapping("delete")
-    @RequiresPermissions("security:role:delete")
+    @RequiresPermissions("security:dept:delete")
     @LogOperation(OperationConst.DELETE)
     public Result delete(String[] ids) throws BusinessException {
         AssertUtil.isNotEmpty("ids", ids);

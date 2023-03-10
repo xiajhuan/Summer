@@ -66,7 +66,6 @@ public class SecurityUserServiceImpl extends ServiceImpl<SecurityUserMapper, Sec
         return pageResult;
     }
 
-
     //*******************MpCommonOperation覆写结束********************
 
     @Override

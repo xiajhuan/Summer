@@ -12,14 +12,12 @@ import me.xiajhuan.summer.common.data.PageAndSort;
 import me.xiajhuan.summer.common.mp.standard.MpCommonOperation;
 import me.xiajhuan.summer.common.security.dto.SecurityRoleDto;
 import me.xiajhuan.summer.common.security.entity.SecurityRoleEntity;
-import me.xiajhuan.summer.common.security.excel.SecurityRoleExcel;
 import me.xiajhuan.summer.common.security.mapper.SecurityRoleMapper;
 import me.xiajhuan.summer.common.security.service.SecurityRoleService;
 import me.xiajhuan.summer.common.utils.ConvertUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -75,11 +73,6 @@ public class SecurityRoleServiceImpl extends ServiceImpl<SecurityRoleMapper, Sec
     }
 
     @Override
-    public List<SecurityRoleDto> list(SecurityRoleDto dto) {
-        return ConvertUtil.convert(list(getQueryWrapper(dto, false)), SecurityRoleDto.class);
-    }
-
-    @Override
     public void add(SecurityRoleDto dto) {
 
     }
@@ -92,11 +85,6 @@ public class SecurityRoleServiceImpl extends ServiceImpl<SecurityRoleMapper, Sec
     @Override
     public void delete(String[] ids) {
         removeByIds(Arrays.stream(ids).collect(Collectors.toSet()));
-    }
-
-    @Override
-    public List<SecurityRoleExcel> excelTemplate() {
-        return null;
     }
 
 }
