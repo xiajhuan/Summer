@@ -39,7 +39,7 @@ public interface SecurityMenuMapper extends BaseMapper<SecurityMenuEntity> {
             "WHERE\n" +
             "\tt1.user_id = #{value} \n" +
             "ORDER BY\n" +
-            "\tt3.sort ASC")
+            "\tt3.weight ASC")
     List<String> getPermissionsOfUser(Long userId);
 
 }
