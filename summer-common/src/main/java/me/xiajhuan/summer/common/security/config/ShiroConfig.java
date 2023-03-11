@@ -19,7 +19,6 @@ import org.springframework.context.annotation.Configuration;
 
 import javax.servlet.Filter;
 import java.util.Arrays;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -87,7 +86,7 @@ public class ShiroConfig {
         shiroFilter.setFilters(filterMap);
 
         // 白名单URI过滤
-        Map<String, String> filterUriMap = new LinkedHashMap<>();
+        Map<String, String> filterUriMap = MapUtil.newHashMap(true);
         // 默认过滤的URI
         filterUriMap.put("/webjars/**", SECURITY_ANON);
         filterUriMap.put("/favicon.ico", SECURITY_ANON);

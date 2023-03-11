@@ -1,5 +1,6 @@
 package me.xiajhuan.summer.common.annotation;
 
+import cn.hutool.core.util.StrUtil;
 import org.springframework.core.annotation.AliasFor;
 import org.springframework.core.annotation.AnnotationUtils;
 
@@ -18,13 +19,13 @@ import java.lang.annotation.*;
 public @interface LogOperation {
 
     @AliasFor("name")
-    String value() default "";
+    String value() default StrUtil.EMPTY;
 
     /**
      * 操作名称
      */
     @AliasFor("value")
-    String name() default "";
+    String name() default StrUtil.EMPTY;
 
     /**
      * 是否保存请求参数，true：保存 false：不保存
