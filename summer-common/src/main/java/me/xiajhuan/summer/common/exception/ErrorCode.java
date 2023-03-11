@@ -2,7 +2,7 @@ package me.xiajhuan.summer.common.exception;
 
 /**
  * 错误编码，由5位数字组成，前2位为模块编码，后3位为业务编码<br>
- * 如：10001（10代表权限模块，001代表业务代码）
+ * 如：10001（10代表权限相关模块，001代表业务代码）
  *
  * @author xiajhuan
  * @date 2022/11/19
@@ -268,7 +268,7 @@ public interface ErrorCode {
      */
     int BACK_PROCESS_HANDLEING_ERROR = 10047;
 
-    //*******************server********************
+    //*******************admin********************
 
     //*******************extend********************
 

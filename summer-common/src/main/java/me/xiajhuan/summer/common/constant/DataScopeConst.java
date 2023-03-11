@@ -9,11 +9,6 @@ package me.xiajhuan.summer.common.constant;
 public class DataScopeConst {
 
     /**
-     * 参数名
-     */
-    public static final String DATA_SCOPE = "dataScope";
-
-    /**
      * 记录部门ID的字段
      */
     public static final String DEPT_ID_RECORDER = "dept_id";

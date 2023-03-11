@@ -7,17 +7,19 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import me.xiajhuan.summer.common.constant.DataSourceConst;
-import me.xiajhuan.summer.common.data.PageAndSort;
 import me.xiajhuan.summer.common.entity.SimpleBaseEntity;
+import me.xiajhuan.summer.common.enums.UserTypeEnum;
 import me.xiajhuan.summer.common.mp.standard.MpCommonOperation;
 import me.xiajhuan.summer.common.security.dto.SecurityDeptDto;
 import me.xiajhuan.summer.common.security.entity.SecurityDeptEntity;
+import me.xiajhuan.summer.common.security.login.LoginUser;
 import me.xiajhuan.summer.common.security.mapper.SecurityDeptMapper;
 import me.xiajhuan.summer.common.security.service.SecurityDeptService;
-import me.xiajhuan.summer.common.utils.ConvertUtil;
+import me.xiajhuan.summer.common.utils.SecurityUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -62,8 +64,13 @@ public class SecurityDeptServiceImpl extends ServiceImpl<SecurityDeptMapper, Sec
     //*******************MpCommonOperation覆写结束********************
 
     @Override
-    public IPage<SecurityDeptDto> page(PageAndSort pageAndSort, SecurityDeptDto dto) {
-        return ConvertUtil.convert(customPage(handlePageAndSort(pageAndSort), dto), SecurityDeptDto.class);
+    public List<SecurityDeptDto> tree() {
+        LoginUser loginUser = SecurityUtil.getLoginUser();
+        // 这里不细分数据权限，非超级管理员，一律只能查询本部门及本部门下子部门的数据
+        if (UserTypeEnum.GENERAL.getValue() == loginUser.getUserType()) {
+
+        }
+        return null;
     }
 
     @Override

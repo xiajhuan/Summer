@@ -5,8 +5,6 @@ import cn.hutool.log.LogFactory;
 import me.xiajhuan.summer.common.annotation.LogOperation;
 import me.xiajhuan.summer.common.constant.OperationConst;
 import me.xiajhuan.summer.common.constant.StrTemplateConst;
-import me.xiajhuan.summer.common.data.PageAndSort;
-import me.xiajhuan.summer.common.data.PageData;
 import me.xiajhuan.summer.common.data.Result;
 import me.xiajhuan.summer.common.exception.BusinessException;
 import me.xiajhuan.summer.common.security.dto.SecurityDeptDto;
@@ -19,6 +17,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 部门 Controller
@@ -38,17 +37,15 @@ public class SecurityDeptController {
     //*******************Common Crud********************
 
     /**
-     * 分页
+     * 列表
      *
-     * @param pageAndSort 分页排序参数
-     * @param dto         部门Dto
      * @return 响应结果
      */
-    @GetMapping("page")
-    @RequiresPermissions("security:dept:page")
-    @LogOperation(OperationConst.PAGE)
-    public Result<PageData<SecurityDeptDto>> page(PageAndSort pageAndSort, SecurityDeptDto dto) {
-        return Result.ofSuccess(PageData.of(mainService.page(pageAndSort, dto)));
+    @GetMapping("list")
+    @RequiresPermissions("security:dept:list")
+    @LogOperation(OperationConst.LIST)
+    public Result<List<SecurityDeptDto>> list() {
+        return Result.ofSuccess(mainService.tree());
     }
 
     /**

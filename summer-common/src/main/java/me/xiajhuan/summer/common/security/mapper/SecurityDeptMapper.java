@@ -12,4 +12,7 @@ import me.xiajhuan.summer.common.security.entity.SecurityDeptEntity;
  */
 @InterceptorIgnore
 public interface SecurityDeptMapper extends BaseMapper<SecurityDeptEntity> {
+
+
+
 }

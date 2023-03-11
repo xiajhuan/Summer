@@ -1,10 +1,10 @@
 package me.xiajhuan.summer.common.security.service;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import me.xiajhuan.summer.common.data.PageAndSort;
 import me.xiajhuan.summer.common.security.dto.SecurityDeptDto;
 import me.xiajhuan.summer.common.security.entity.SecurityDeptEntity;
+
+import java.util.List;
 
 /**
  * 部门 Service
@@ -14,7 +14,7 @@ import me.xiajhuan.summer.common.security.entity.SecurityDeptEntity;
  */
 public interface SecurityDeptService extends IService<SecurityDeptEntity> {
 
-    IPage<SecurityDeptDto> page(PageAndSort pageAndSort, SecurityDeptDto dto);
+    List<SecurityDeptDto> tree();
 
     void add(SecurityDeptDto dto);
 
