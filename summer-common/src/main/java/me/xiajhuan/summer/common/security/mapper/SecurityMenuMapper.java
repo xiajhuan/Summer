@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import me.xiajhuan.summer.common.security.entity.SecurityMenuEntity;
 import org.apache.ibatis.annotations.Select;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * 菜单 Mapper
@@ -22,7 +22,7 @@ public interface SecurityMenuMapper extends BaseMapper<SecurityMenuEntity> {
      * @return 所有权限列表
      */
     @Select("SELECT permissions FROM security_menu")
-    List<String> getPermissionsAll();
+    Set<String> getPermissionsAll();
 
     /**
      * 获取用户权限列表
@@ -40,6 +40,6 @@ public interface SecurityMenuMapper extends BaseMapper<SecurityMenuEntity> {
             "\tt1.user_id = #{value} \n" +
             "ORDER BY\n" +
             "\tt3.weight ASC")
-    List<String> getPermissionsOfUser(Long userId);
+    Set<String> getPermissionsOfUser(Long userId);
 
 }

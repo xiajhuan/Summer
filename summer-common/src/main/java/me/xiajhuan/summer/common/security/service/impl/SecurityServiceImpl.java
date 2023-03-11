@@ -63,7 +63,7 @@ public class SecurityServiceImpl implements SecurityService {
     @Override
     public Set<String> getPermissionsOfUser(LoginUser loginUser) {
         // 用户拥有的所有权限
-        final List<String> permissionsOfUser;
+        final Set<String> permissionsOfUser;
         if (loginUser.getUserType() == UserTypeEnum.SUPER_ADMIN.getValue()) {
             // 超级管理员
             permissionsOfUser = securityMenuMapper.getPermissionsAll();
@@ -73,7 +73,7 @@ public class SecurityServiceImpl implements SecurityService {
         }
 
         if (CollUtil.isNotEmpty(permissionsOfUser)) {
-            return permissionsOfUser.stream().filter(p -> StrUtil.isNotBlank(p))
+            return permissionsOfUser.stream().filter(p -> !StrUtil.isBlankOrUndefined(p))
                     .collect(Collectors.toSet());
         } else {
             return CollUtil.newHashSet();
