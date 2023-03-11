@@ -16,6 +16,9 @@ import me.xiajhuan.summer.common.enums.DefaultUserEnum;
  *
  * @author xiajhuan
  * @date 2023/02/27
+ * @see SecureUtil
+ * @see BCrypt
+ * @see SecurityUtils
  */
 public class SecurityUtil {
 
