@@ -24,7 +24,8 @@ import java.util.stream.Collectors;
  * 树形结构工具
  * <pre>
  *     1.Dto类型必须继承 {@link TreeNode}
- *     2.【id,parentId,name,weight】以外的属性都为扩展属性
+ *     2.【id,parentId】必须为 {@link Long}，【weight】必须可比较 {@link Comparable}
+ *     3.【id,parentId,name,weight】以外的属性都为扩展属性
  * </pre>
  *
  * @author xiajhuan

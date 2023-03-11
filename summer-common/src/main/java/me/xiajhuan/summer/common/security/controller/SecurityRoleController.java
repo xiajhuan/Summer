@@ -96,7 +96,7 @@ public class SecurityRoleController {
     /**
      * 删除
      *
-     * @param ids id数组
+     * @param ids ID数组
      * @return 响应结果
      * @throws BusinessException 业务异常
      */
