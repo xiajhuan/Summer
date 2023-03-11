@@ -79,17 +79,10 @@ public interface MpCommonOperation<D, T> {
     }
 
     /**
-     * 查询结果属性填充钩子
-     *
-     * @param entity Entity类型对象
-     */
-    default void fieldFillHook(T entity) {
-    }
-
-    /**
-     * 自定义分页
+     * 自定义分页钩子
      * <p>
-     * note：推荐关闭MP分页时内置的count查询使用自定义count，
+     * note：必须覆写该方法才能调用！否则将抛出 {@link UnsupportedOperationException}，
+     * 推荐关闭MP分页时内置的count查询使用自定义count，
      * 因为它只是在查询语句外包裹了一层COUNT(*)，这将带来不必要的性能开销
      * </p>
      *
@@ -97,6 +90,16 @@ public interface MpCommonOperation<D, T> {
      * @param dto  Dto类型对象
      * @return {@link IPage}
      */
-    IPage<T> customPage(Page<T> page, D dto);
+    default IPage<T> customPage(Page<T> page, D dto) {
+        throw new UnsupportedOperationException("必须覆写该方法才能调用！");
+    }
+
+    /**
+     * 查询结果属性填充钩子
+     *
+     * @param entity Entity类型对象
+     */
+    default void fieldFill(T entity) {
+    }
 
 }
