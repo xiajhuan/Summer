@@ -80,6 +80,23 @@ public class ExcelUtil {
     }
 
     /**
+     * 导出（List<ExcelClass>）
+     *
+     * @param response   {@link HttpServletResponse}
+     * @param fileName   文件名称
+     * @param sheetName  sheet名称
+     * @param dtoList    Dto类型列表
+     * @param excelClass ExcelClass
+     * @param <D>        Dto类型
+     * @param <E>        Excel类型
+     * @throws IOException I/O异常
+     */
+    public static <D, E> void exportWithE(HttpServletResponse response, String fileName, String sheetName, List<D> dtoList,
+                                          Class<E> excelClass) throws IOException {
+        exportWithD(response, fileName, sheetName, ConvertUtil.convert(dtoList, excelClass), excelClass);
+    }
+
+    /**
      * 导出（List<DtoClass>）
      *
      * @param response   {@link HttpServletResponse}
@@ -105,23 +122,6 @@ public class ExcelUtil {
         response.setHeader("Content-disposition", StrUtil.format("attachment;filename={}.xlsx", fileName));
 
         EasyExcel.write(response.getOutputStream(), excelClass).sheet(sheetName).doWrite(dtoList);
-    }
-
-    /**
-     * 导出（List<ExcelClass>）
-     *
-     * @param response   {@link HttpServletResponse}
-     * @param fileName   文件名称
-     * @param sheetName  sheet名称
-     * @param dtoList    Dto类型列表
-     * @param excelClass ExcelClass
-     * @param <D>        Dto类型
-     * @param <E>        Excel类型
-     * @throws IOException I/O异常
-     */
-    public static <D, E> void exportWithE(HttpServletResponse response, String fileName, String sheetName, List<D> dtoList,
-                                          Class<E> excelClass) throws IOException {
-        exportWithD(response, fileName, sheetName, ConvertUtil.convert(dtoList, excelClass), excelClass);
     }
 
 }
