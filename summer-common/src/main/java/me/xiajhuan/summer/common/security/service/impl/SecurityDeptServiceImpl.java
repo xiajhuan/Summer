@@ -2,11 +2,10 @@ package me.xiajhuan.summer.common.security.service.impl;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import me.xiajhuan.summer.common.constant.DataSourceConst;
+import me.xiajhuan.summer.common.constant.ExtraFieldConst;
 import me.xiajhuan.summer.common.entity.SimpleBaseEntity;
 import me.xiajhuan.summer.common.enums.UserTypeEnum;
 import me.xiajhuan.summer.common.mp.standard.MpCommonOperation;
@@ -15,11 +14,14 @@ import me.xiajhuan.summer.common.security.entity.SecurityDeptEntity;
 import me.xiajhuan.summer.common.security.login.LoginUser;
 import me.xiajhuan.summer.common.security.mapper.SecurityDeptMapper;
 import me.xiajhuan.summer.common.security.service.SecurityDeptService;
+import me.xiajhuan.summer.common.utils.ConvertUtil;
 import me.xiajhuan.summer.common.utils.SecurityUtil;
+import me.xiajhuan.summer.common.utils.TreeUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -39,38 +41,31 @@ public class SecurityDeptServiceImpl extends ServiceImpl<SecurityDeptMapper, Sec
         LambdaQueryWrapper<SecurityDeptEntity> queryWrapper = Wrappers.lambdaQuery();
         // 查询字段
         queryWrapper.select(SecurityDeptEntity::getId, SecurityDeptEntity::getParentId, SecurityDeptEntity::getName,
-                SecurityDeptEntity::getWeight, SecurityDeptEntity::getParentName, SimpleBaseEntity::getCreateTime);
+                SecurityDeptEntity::getWeight, SimpleBaseEntity::getCreateTime, SecurityDeptEntity::getParentName);
 
         return queryWrapper;
-    }
-
-    @Override
-    public void fieldFillHook(SecurityDeptEntity entity) {
-
-    }
-
-    @Override
-    public IPage<SecurityDeptEntity> customPage(Page<SecurityDeptEntity> page, SecurityDeptDto dto) {
-        // 关闭MP分页时内置的count查询
-        page.setSearchCount(false);
-
-        IPage<SecurityDeptEntity> pageResult = page(page, getQueryWrapper(dto, false));
-
-        pageResult.setTotal(count(getQueryWrapper(dto, true)));
-
-        return pageResult;
     }
 
     //*******************MpCommonOperation覆写结束********************
 
     @Override
-    public List<SecurityDeptDto> tree() {
+    public List<SecurityDeptDto> treeList() {
+        Set<Long> param = null;
         LoginUser loginUser = SecurityUtil.getLoginUser();
         // 这里不细分数据权限，非超级管理员，一律只能查询本部门及本部门下子部门的数据
+        boolean isGeneral = false;
         if (UserTypeEnum.GENERAL.getValue() == loginUser.getUserType()) {
-
+            isGeneral = true;
+            param = loginUser.getDeptAndChildIdSet();
         }
-        return null;
+
+        // 部门列表
+        List<SecurityDeptDto> dtoList = ConvertUtil.convert(
+                baseMapper.getList(param), SecurityDeptDto.class);
+
+        // 构建部门树形结构列表
+        return isGeneral ? TreeUtil.buildWithD(SecurityDeptDto.class, dtoList, loginUser.getDeptId(), ExtraFieldConst.TREE_DEPT)
+                : TreeUtil.buildWithD(SecurityDeptDto.class, dtoList, 0L, ExtraFieldConst.TREE_DEPT);
     }
 
     @Override

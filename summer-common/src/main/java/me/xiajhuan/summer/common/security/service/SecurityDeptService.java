@@ -14,7 +14,12 @@ import java.util.List;
  */
 public interface SecurityDeptService extends IService<SecurityDeptEntity> {
 
-    List<SecurityDeptDto> tree();
+    /**
+     * 树形结构列表
+     *
+     * @return 部门列表（树形结构）
+     */
+    List<SecurityDeptDto> treeList();
 
     void add(SecurityDeptDto dto);
 

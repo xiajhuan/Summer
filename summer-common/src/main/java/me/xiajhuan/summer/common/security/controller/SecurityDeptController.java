@@ -45,7 +45,7 @@ public class SecurityDeptController {
     @RequiresPermissions("security:dept:list")
     @LogOperation(OperationConst.LIST)
     public Result<List<SecurityDeptDto>> list() {
-        return Result.ofSuccess(mainService.tree());
+        return Result.ofSuccess(mainService.treeList());
     }
 
     /**
