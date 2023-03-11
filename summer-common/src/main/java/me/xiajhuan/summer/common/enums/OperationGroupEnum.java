@@ -26,7 +26,7 @@ import lombok.Getter;
 public enum OperationGroupEnum {
 
     /**
-     * 通用CRUD，包含：分页/列表/新增/修改/删除
+     * 通用CRUD，包含：分页/列表/根据ID获取/新增/修改/删除
      */
     COMMON_CRUD(0, "Common Crud"),
 
