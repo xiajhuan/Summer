@@ -17,18 +17,18 @@ import java.util.Set;
 public interface SecurityMenuMapper extends BaseMapper<SecurityMenuEntity> {
 
     /**
-     * 获取所有权限列表
+     * 获取所有权限集合
      *
-     * @return 所有权限列表
+     * @return 所有权限集合
      */
     @Select("SELECT permissions FROM security_menu")
     Set<String> getPermissionsAll();
 
     /**
-     * 获取用户权限列表
+     * 获取用户权限集合
      *
      * @param userId 用户ID
-     * @return 用户权限列表
+     * @return 用户权限集合
      */
     @Select("SELECT" +
             "\tt3.permissions \n" +

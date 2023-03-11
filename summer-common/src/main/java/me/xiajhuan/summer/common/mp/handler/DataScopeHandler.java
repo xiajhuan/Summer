@@ -30,7 +30,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -124,13 +124,13 @@ public class DataScopeHandler implements MultiDataPermissionHandler {
         final Expression filterCondition;
         switch (loginUser.getDataScope()) {
             case 1:
-                filterCondition = getFilterConditionByDeptIds(prefix, loginUser.getDeptIdList());
+                filterCondition = getFilterConditionByDeptIds(prefix, loginUser.getDeptIdSet());
                 break;
             case 2:
-                filterCondition = getFilterConditionByDeptIds(prefix, CollUtil.newArrayList(loginUser.getDeptId()));
+                filterCondition = getFilterConditionByDeptIds(prefix, CollUtil.newHashSet(loginUser.getDeptId()));
                 break;
             case 3:
-                filterCondition = getFilterConditionByDeptIds(prefix, loginUser.getDeptAndChildIdList());
+                filterCondition = getFilterConditionByDeptIds(prefix, loginUser.getDeptAndChildIdSet());
                 break;
             case 4:
                 // 仅本人
@@ -151,17 +151,17 @@ public class DataScopeHandler implements MultiDataPermissionHandler {
      * 基于 角色/本部门/本部门及以下
      *
      * @param prefix     前缀
-     * @param deptIdList 部门ID列表
+     * @param deptIdSet 部门ID集合
      * @return {@link Expression}
      * @see DataScopeEnum#ROLE_BASED
      * @see DataScopeEnum#DEPT_SELF
      * @see DataScopeEnum#DEPT_AND_CHILD
      */
-    private Expression getFilterConditionByDeptIds(String prefix, List<Long> deptIdList) {
+    private Expression getFilterConditionByDeptIds(String prefix, Set<Long> deptIdSet) {
         // Sql片段示例：dept_id IN (1,2,3)
         return new InExpression()
                 .withLeftExpression(new Column(prefix + DataScopeConst.DEPT_ID_RECORDER))
-                .withRightItemsList(new ExpressionList(deptIdList.stream().map(LongValue::new).collect(Collectors.toList())));
+                .withRightItemsList(new ExpressionList(deptIdSet.stream().map(LongValue::new).collect(Collectors.toList())));
     }
 
 }

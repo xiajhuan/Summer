@@ -14,7 +14,7 @@ import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.*;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 /**
  * 用户 Dto
@@ -104,9 +104,9 @@ public class SecurityUserDto extends BaseDto {
     private Date createTime;
 
     /**
-     * 角色ID列表
+     * 角色ID集合
      */
-    private List<Long> roleIdList;
+    private Set<Long> roleIdSet;
 
     /**
      * 所属部门名称

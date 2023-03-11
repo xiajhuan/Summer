@@ -6,7 +6,6 @@ import me.xiajhuan.summer.common.security.login.LoginUser;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -44,12 +43,12 @@ public interface SecurityService {
     SecurityUserEntity getUserById(Long userId);
 
     /**
-     * 获取部门ID列表（这里指用户所有角色关联的所有部门ID）
+     * 获取部门ID集合（这里指用户所有角色关联的所有部门ID）
      *
      * @param userId 用户ID
      * @return 用户所有角色关联的所有部门ID
      */
-    List<Long> getDeptIdListOfUser(Long userId);
+    Set<Long> getDeptIdSetOfUser(Long userId);
 
     /**
      * 获取本部门及本部门下子部门ID
@@ -57,7 +56,7 @@ public interface SecurityService {
      * @param deptId 所属部门ID
      * @return 本部门及本部门下子部门ID
      */
-    List<Long> getDeptAndChildIdList(Long deptId);
+    Set<Long> getDeptAndChildIdSet(Long deptId);
 
     //*******************验证码********************
 

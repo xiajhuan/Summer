@@ -7,7 +7,7 @@ import me.xiajhuan.summer.common.enums.CommonStatusEnum;
 import me.xiajhuan.summer.common.enums.UserTypeEnum;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Set;
 
 /**
  * 登录用户信息
@@ -89,13 +89,13 @@ public class LoginUser implements Serializable {
     private Integer dataScope;
 
     /**
-     * 部门ID列表（这里指用户所有角色关联的所有部门ID）
+     * 部门ID集合（这里指用户所有角色关联的所有部门ID）
      */
-    private List<Long> deptIdList;
+    private Set<Long> deptIdSet;
 
     /**
      * 本部门及本部门下子部门ID
      */
-    private List<Long> deptAndChildIdList;
+    private Set<Long> deptAndChildIdSet;
 
 }

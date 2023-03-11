@@ -8,7 +8,7 @@ import me.xiajhuan.summer.common.validation.group.UpdateGroup;
 
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 /**
  * 角色 Dto
@@ -37,13 +37,13 @@ public class SecurityRoleDto extends BaseDto {
     private Date createTime;
 
     /**
-     * 菜单ID列表
+     * 菜单ID集合
      */
-    private List<Long> menuIdList;
+    private Set<Long> menuIdSet;
 
     /**
-     * 部门ID列表
+     * 部门ID集合
      */
-    private List<Long> deptIdList;
+    private Set<Long> deptIdSet;
 
 }

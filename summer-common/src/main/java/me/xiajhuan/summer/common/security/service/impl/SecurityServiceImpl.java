@@ -95,13 +95,13 @@ public class SecurityServiceImpl implements SecurityService {
     }
 
     @Override
-    public List<Long> getDeptIdListOfUser(Long userId) {
-        return securityRoleDeptMapper.getDeptListByUserId(userId);
+    public Set<Long> getDeptIdSetOfUser(Long userId) {
+        return securityRoleDeptMapper.getDeptSetByUserId(userId);
     }
 
     @Override
-    public List<Long> getDeptAndChildIdList(Long deptId) {
-        List<Long> deptIdList = CollUtil.newArrayList(deptId);
+    public Set<Long> getDeptAndChildIdSet(Long deptId) {
+        Set<Long> deptIdSet = CollUtil.newHashSet(deptId);
 
         // 获取所有子部门ID
         LambdaQueryWrapper<SecurityDeptEntity> queryWrapper = Wrappers.lambdaQuery();
@@ -110,9 +110,9 @@ public class SecurityServiceImpl implements SecurityService {
         List<SecurityDeptEntity> entityList = securityDeptMapper.selectList(queryWrapper);
 
         if (CollUtil.isNotEmpty(entityList)) {
-            entityList.forEach(d -> deptIdList.add(d.getId()));
+            entityList.forEach(d -> deptIdSet.add(d.getId()));
         }
-        return deptIdList;
+        return deptIdSet;
     }
 
     //*******************验证码********************

@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import me.xiajhuan.summer.common.security.entity.SecurityRoleDeptEntity;
 import org.apache.ibatis.annotations.Select;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * 角色部门关联 Mapper
@@ -22,6 +22,6 @@ public interface SecurityRoleDeptMapper extends BaseMapper<SecurityRoleDeptEntit
             "WHERE\n" +
             "\tt1.user_id = #{value} \n" +
             "\tAND t1.role_id = t2.role_id")
-    List<Long> getDeptListByUserId(Long userId);
+    Set<Long> getDeptSetByUserId(Long userId);
 
 }

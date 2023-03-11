@@ -41,7 +41,7 @@ public class Oauth2Realm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         LoginUser loginUser = (LoginUser) principals.getPrimaryPrincipal();
 
-        // 用户权限列表
+        // 用户权限集合
         Set<String> permsSet = securityService.getPermissionsOfUser(loginUser);
 
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
@@ -64,11 +64,11 @@ public class Oauth2Realm extends AuthorizingRealm {
         // 查询用户信息并转换成LoginUser
         LoginUser loginUser = ConvertUtil.convert(securityService.getUserById(tokenEntity.getUserId()), LoginUser.class);
 
-        // 获取部门ID列表（这里指用户所有角色关联的所有部门ID）
-        loginUser.setDeptIdList(securityService.getDeptIdListOfUser(loginUser.getId()));
+        // 获取部门ID集合（这里指用户所有角色关联的所有部门ID）
+        loginUser.setDeptIdSet(securityService.getDeptIdSetOfUser(loginUser.getId()));
 
         // 获取本部门及本部门下子部门ID
-        loginUser.setDeptAndChildIdList(securityService.getDeptAndChildIdList(loginUser.getDeptId()));
+        loginUser.setDeptAndChildIdSet(securityService.getDeptAndChildIdSet(loginUser.getDeptId()));
 
         // 账号锁定
         if (loginUser.getStatus() == 0) {
