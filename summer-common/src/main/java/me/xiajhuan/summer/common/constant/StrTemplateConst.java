@@ -28,4 +28,9 @@ public class StrTemplateConst {
      */
     public static final String RATE_LIMITER_KEY = "{}#{}";
 
+    /**
+     * 匹配失败信息
+     */
+    public static final String MATCHES_FAIL_MSG = "{} matches {} failed!";
+
 }
