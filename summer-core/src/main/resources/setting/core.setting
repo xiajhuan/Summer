@@ -1,0 +1,44 @@
+# Hutool setting配置文件
+# https://hutool.cn/docs/#/setting/%E6%A6%82%E8%BF%B0
+
+# summer-core配置
+
+# 缓存配置
+[Cache]
+# 堆内缓存配置，只有server.cache.type: HEAP 时会生效
+# 最大缓存容量
+heap.capacity.string = 1000
+heap.capacity.auto = 1000
+heap.capacity.hash = 1000
+heap.capacity.list = 1000
+
+
+# Excel配置
+[Excel]
+# Excel数据解析后的最大批量操作数，note：最多每隔该数量的数据后清理List，方便GC，防止OOM
+parser.max-batch-num = 2000
+# Excel数据解析后保存到缓存的过期时间（ms），note：请谨慎使用该功能，防止OOM
+parser.cache.ttl = 86400000
+
+
+# MybatisPlus插件配置
+[Mp]
+# 数据权限忽略的表名称配置，以“,”分隔
+# 支持通配符：“*”（任意匹配）和“?”（单值匹配）
+dataScope.ignore = log_*,*_token,security_role_*
+
+# 乐观锁控制更新失败时的重试次数
+optimisticLock.retry-times = 20
+
+
+# 树形结构配置
+[Tree]
+# 最大递归深度（从0开始计算）
+deep = 5
+
+
+[Sql]
+# Sql打印配置
+# p6spy不详细打印的Sql语句配置，替换格式：操作关键字:表名,操作关键字:表名，例如：INSERT:log_operation,INSERT:log_error
+sql.exclude-replace = INSERT:log_operation,INSERT:log_error,INSERT:log_login
+

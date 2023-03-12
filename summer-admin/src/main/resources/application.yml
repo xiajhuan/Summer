@@ -5,7 +5,17 @@ spring:
   application:
     name: summer-admin
   profiles:
-    # 包含 application-common.yml
-    include: common
+    # 包含 application-core.yml
+    include: core
     # 环境 dev/test/prod
     active: dev
+
+# 指标监控
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: ALWAYS

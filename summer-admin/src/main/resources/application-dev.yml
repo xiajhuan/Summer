@@ -10,12 +10,12 @@ spring:
         max-pool-size: 15
         min-idle: 5
       # 默认数据源
-      primary: admin
+      primary: business
       datasource:
-        # admin模块数据源
-        admin:
+        # business模块数据源
+        business:
           driver-class-name: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://192.168.0.142:3306/summer-admin?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true
+          url: jdbc:mysql://192.168.0.142:3306/summer-business?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true
           username: root
           password: jack%2021#2@6XJH
         # common模块数据源
@@ -43,6 +43,6 @@ spring:
 server:
   # 缓存类型，值：REDIS/HEAP
   cache:
-    type: HEAP
+    type: REDIS
 
 

@@ -1,0 +1,59 @@
+# Hutool setting配置文件
+# https://hutool.cn/docs/#/setting/%E6%A6%82%E8%BF%B0
+
+# common模块配置
+
+# 权限相关配置
+[Security]
+# 免认证URI，以”/“开头，”,“分隔
+anonUris = /api/**,/test/**
+
+# accessToken过期时间（h）
+token.expire = 12
+
+
+# 定时任务配置
+[Schedule]
+# 定时任务线程池核心线程数，note：建议和定时任务数一致
+pool.core-size = 1
+
+# 是否开启定时任务（总开关），值：true/false
+enable-schedule = true
+# 定时任务独立开关，只有总开关为true才能生效，值：true/false
+job.common = true
+job.business = true
+
+
+# 日志配置
+[Log]
+# 是否记录业务异常日志（BusinessException），值：true/false
+error.enable-business = true
+# 保存错误日志时，异常堆栈的最大长度，note：不能超过表字段限制的长度
+error.stacktrace.length = 65535
+
+# 操作日志清理天数限制，-n则清理n天以前的日志
+operation.clear.day-limit = -30
+# 错误日志清理天数限制，-n则清理n天以前的日志
+error.clear.day-limit = -90
+# 登录日志清理天数限制，-n则清理n天以前的日志
+login.clear.day-limit = -30
+
+
+# 验证码配置
+[Captcha]
+# 图形验证码背景干扰类型，值：Line（线段干扰）Circle（圆圈干扰）Shear（扭曲干扰）
+graphic.type = Circle
+# 干扰线个数，note：只有graphic.type = Line 时会生效
+graphic.line-num = 10
+# 干扰元素个数，note：只有graphic.type = Circle 时会生效
+graphic.circle-num = 10
+# 干扰线宽度，note：只有graphic.type = Shear 时会生效
+graphic.shear-width = 4
+# 图形验证码宽/高
+graphic.width = 150
+graphic.height = 40
+# 图形验证码字符个数
+graphic.char-num = 4
+
+# 图形验证码缓存（失效）时间（min）
+cache.ttl = 5
