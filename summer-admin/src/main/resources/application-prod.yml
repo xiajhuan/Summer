@@ -45,4 +45,15 @@ server:
   cache:
     type: REDIS
 
+# 日志级别
+logging:
+  level:
+    me:
+      xiajhuan:
+        summer:
+          # summer-core日志
+          core:
+            # 限流日志
+            ratelimiter: debug
+
 

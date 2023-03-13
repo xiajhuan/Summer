@@ -55,16 +55,6 @@ mybatis-plus:
     # 当没有为参数指定特定的 JDBC 类型时，空值的默认 JDBC 类型
     jdbc-type-for-null: NULL
 
-# 日志级别
-logging:
-  level:
-    me:
-      xiajhuan:
-        summer:
-          common:
-            # 限流日志
-            ratelimiter: debug
-
 # XSS过滤
 mica:
   xss:

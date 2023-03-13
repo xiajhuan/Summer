@@ -43,7 +43,7 @@ public class BusinessTaskJob {
         TimeInterval timer = DateUtil.timer();
         LOGGER.info("【BusinessTaskJob】【demo】Job开始执行：{}", DateUtil.date());
 
-        Console.log("业务 XXX 开始执行...\n");
+        Console.log("业务 XXX 开始执行...");
         Console.log("业务 XXX 执行完毕！");
 
         LOGGER.info("【BusinessTaskJob】【demo】Job执行结束：{}，耗时【{}】ms", DateUtil.date(), timer.interval());
