@@ -1560,7 +1560,7 @@
           "codeRoot": ""
         }
       },
-      "defKey": "secutity_role_user",
+      "defKey": "security_role_user",
       "defName": "角色用户关联",
       "comment": "",
       "properties": {

@@ -190,10 +190,10 @@ CREATE TABLE `security_user_token`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户Token' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Table structure for secutity_role_user
+-- Table structure for security_role_user
 -- ----------------------------
-DROP TABLE IF EXISTS `secutity_role_user`;
-CREATE TABLE `secutity_role_user`  (
+DROP TABLE IF EXISTS `security_role_user`;
+CREATE TABLE `security_role_user`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
   `create_by` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '创建者',
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
