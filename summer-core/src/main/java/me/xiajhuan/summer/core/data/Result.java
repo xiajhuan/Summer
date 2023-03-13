@@ -103,7 +103,7 @@ public class Result<T> implements Serializable {
      * @return 响应结果
      */
     public static Result ofFail() {
-        return ofFail(MessageUtil.getI18nMessage(1000));
+        return ofFail(MessageUtil.getI18nMessage(ErrorCode.OPERATION_FAILURE));
     }
 
     /**

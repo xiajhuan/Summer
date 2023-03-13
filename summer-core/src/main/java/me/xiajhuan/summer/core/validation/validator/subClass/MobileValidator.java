@@ -28,7 +28,7 @@ public class MobileValidator extends AbstractPatternValidator<Mobile> {
     @Override
     public void initialize(Mobile constraintAnnotation) {
         required = constraintAnnotation.required();
-        pattern = Pattern.compile(constraintAnnotation.region().getValue());
+        pattern = Pattern.compile(constraintAnnotation.region().getMobileRegex());
     }
 
 }

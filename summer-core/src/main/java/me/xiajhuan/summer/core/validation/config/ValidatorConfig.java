@@ -55,8 +55,8 @@ public class ValidatorConfig {
     @Bean
     public LocaleResolver localeResolver() {
         AcceptHeaderLocaleResolver acceptHeaderLocaleResolver = new AcceptHeaderLocaleResolver();
-        // 设置默认的Locale为简体中文
-        acceptHeaderLocaleResolver.setDefaultLocale(Locale.SIMPLIFIED_CHINESE);
+        // 设置默认的Locale为：中国（中文）
+        acceptHeaderLocaleResolver.setDefaultLocale(Locale.CHINA);
         return acceptHeaderLocaleResolver;
     }
 

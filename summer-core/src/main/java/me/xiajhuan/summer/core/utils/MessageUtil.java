@@ -12,9 +12,16 @@
 
 package me.xiajhuan.summer.core.utils;
 
+import cn.hutool.log.Log;
+import cn.hutool.log.LogFactory;
+import cn.hutool.setting.Setting;
+import me.xiajhuan.summer.core.constant.SettingBeanConst;
+import me.xiajhuan.summer.core.enums.RegionSupportEnum;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import me.xiajhuan.summer.core.exception.ErrorCode;
+
+import java.util.Locale;
 
 /**
  * 消息国际化工具
@@ -24,16 +31,25 @@ import me.xiajhuan.summer.core.exception.ErrorCode;
  */
 public class MessageUtil {
 
+    private static final Log LOGGER = LogFactory.get();
+
     /**
      * {@link MessageSource}
      */
     private static MessageSource messageSource;
 
     /**
-     * 初始化 {@link messageSource}
+     * 中英文以外地区的默认语言
+     */
+    private static String extraDefault;
+
+    /**
+     * 初始化 {@link messageSource} {@link extraDefault}
      */
     static {
         messageSource = (MessageSource) SpringContextUtil.getBean("messageSource");
+        extraDefault = SpringContextUtil.getBean(SettingBeanConst.CORE, Setting.class)
+                .getByGroup("extra.default", "Locale");
     }
 
     /**
@@ -44,7 +60,31 @@ public class MessageUtil {
      * @return 国际化消息
      */
     public static String getI18nMessage(int code, String... params) {
-        return messageSource.getMessage(String.valueOf(code), params, LocaleContextHolder.getLocale());
+        // 优先取请求头“Accept-Language”中的设置
+        Locale locale = HttpContextUtil.getLocale(HttpContextUtil.getHttpServletRequest());
+
+        if (locale == null) {
+            locale = LocaleContextHolder.getLocale();
+
+            // 默认地区，中国（中文）
+            Locale defaultLocale = RegionSupportEnum.ZH_CN.getValue();
+            // 美国（英文）
+            Locale englishLocale = RegionSupportEnum.EN_US.getValue();
+            if (locale.getLanguage().equals(defaultLocale.getLanguage())) {
+                // 所有中文地区，强制为：中国（中文）
+                locale = defaultLocale;
+            } else if (locale.getLanguage().equals(englishLocale.getLanguage())) {
+                // 所有英文地区，强制为：美国（英语）
+                locale = englishLocale;
+            } else {
+                LOGGER.warn("中英文以外的地区【{}】，自动调整为默认地区【{}】", locale.toLanguageTag(), extraDefault);
+
+                locale = RegionSupportEnum.ZH_CN.getName().equalsIgnoreCase(extraDefault)
+                        ? defaultLocale : englishLocale;
+            }
+        }
+
+        return messageSource.getMessage(String.valueOf(code), params, locale);
     }
 
 }

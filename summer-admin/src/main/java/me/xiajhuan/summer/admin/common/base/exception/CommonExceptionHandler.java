@@ -54,24 +54,6 @@ public class CommonExceptionHandler {
     private LogErrorService logErrorService;
 
     /**
-     * 记录日志并响应
-     *
-     * @param e              {@link Exception}
-     * @param isSaveErrorLog 是否保存错误日志，true：保存 false：不保存
-     * @return 响应结果
-     */
-    private Result logAndResponse(Exception e, boolean isSaveErrorLog) {
-        if (isSaveErrorLog) {
-            // 异步保存错误日志
-            logErrorService.saveLogAsync(e, HttpContextUtil.getHttpServletRequest());
-        }
-
-        String msg = e.getMessage();
-        LOGGER.error(e, msg);
-        return Result.ofFail(msg);
-    }
-
-    /**
      * 异常处理（所有受检/非受检异常）
      *
      * @param e {@link Exception}
@@ -84,7 +66,8 @@ public class CommonExceptionHandler {
 
         // 处理限流切面的异常
         Exception cause = (Exception) e.getCause();
-        if (cause != null && cause instanceof BusinessException && "服务器繁忙，请稍后再试~".equals(cause.getMessage())) {
+        if (cause != null && cause instanceof BusinessException
+                && ("服务器繁忙，请稍后再试~".equals(cause.getMessage()) || "Server busy, please try again later ~".equals(cause.getMessage()))) {
             e = cause;
             if (!setting.getBool("error.enable-business", "Log")) {
                 isSaveErrorLog = false;
@@ -143,6 +126,24 @@ public class CommonExceptionHandler {
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public Result handleAccessDeniedException() {
         return Result.ofFail(MessageUtil.getI18nMessage(ErrorCode.FORBIDDEN));
+    }
+
+    /**
+     * 记录日志并响应
+     *
+     * @param e              {@link Exception}
+     * @param isSaveErrorLog 是否保存错误日志，true：保存 false：不保存
+     * @return 响应结果
+     */
+    private Result logAndResponse(Exception e, boolean isSaveErrorLog) {
+        if (isSaveErrorLog) {
+            // 异步保存错误日志
+            logErrorService.saveLogAsync(e, HttpContextUtil.getHttpServletRequest());
+        }
+
+        String msg = e.getMessage();
+        LOGGER.error(e, msg);
+        return Result.ofFail(msg);
     }
 
 }

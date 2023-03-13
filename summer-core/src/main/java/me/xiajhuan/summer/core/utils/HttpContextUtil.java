@@ -17,6 +17,11 @@ import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
+import cn.hutool.log.Log;
+import cn.hutool.log.LogFactory;
+import cn.hutool.setting.Setting;
+import me.xiajhuan.summer.core.constant.SettingBeanConst;
+import me.xiajhuan.summer.core.enums.RegionSupportEnum;
 import org.aspectj.lang.JoinPoint;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.context.request.RequestAttributes;
@@ -30,6 +35,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.Map;
+import java.util.Locale;
 
 /**
  * Http上下文工具
@@ -38,6 +44,21 @@ import java.util.Map;
  * @date 2022/11/28
  */
 public class HttpContextUtil {
+
+    private static final Log LOGGER = LogFactory.get();
+
+    /**
+     * 中英文以外地区的默认语言
+     */
+    private static String extraDefault;
+
+    /**
+     * 初始化 {@link extraDefault}
+     */
+    static {
+        extraDefault = SpringContextUtil.getBean(SettingBeanConst.CORE, Setting.class)
+                .getByGroup("extra.default", "Locale");
+    }
 
     /**
      * 获取请求
@@ -106,23 +127,38 @@ public class HttpContextUtil {
     }
 
     /**
-     * 获取请求语言
+     * 获取请求语言对应 {@link Locale}<br>
+     * Locale：表示特定的地理，政治，或文化区域
      *
      * @param request {@link HttpServletRequest}
-     * @return 请求语言
+     * @return 请求语言对应 {@link Locale}
+     * @see RegionSupportEnum
      */
-    public static String getLanguage(HttpServletRequest request) {
-        // 默认语言
-        String defaultLanguage = "zh-CN";
-
+    public static Locale getLocale(HttpServletRequest request) {
         if (request == null) {
-            return defaultLanguage;
+            return null;
         }
-
         // 请求语言
-        defaultLanguage = request.getHeader(HttpHeaders.ACCEPT_LANGUAGE);
+        String languageHeader = request.getHeader(HttpHeaders.ACCEPT_LANGUAGE);
+        if (StrUtil.isNotBlank(languageHeader) && languageHeader.length() >= 2) {
+            // 默认地区，中国（中文）
+            Locale defaultLocale = RegionSupportEnum.ZH_CN.getValue();
+            // 美国（英文）
+            Locale englishLocale = RegionSupportEnum.EN_US.getValue();
+            if ("zh".equals(languageHeader.substring(0, 2))) {
+                // 所有中文地区，强制为：中国（中文）
+                return defaultLocale;
+            } else if ("en".equals(languageHeader.substring(0, 2))) {
+                // 所有英文地区，强制为：美国（英语）
+                return englishLocale;
+            } else {
+                LOGGER.warn("中英文以外的地区【{}】，自动调整为默认地区【{}】", languageHeader, extraDefault);
 
-        return defaultLanguage;
+                return RegionSupportEnum.ZH_CN.getName().equalsIgnoreCase(extraDefault)
+                        ? defaultLocale : englishLocale;
+            }
+        }
+        return null;
     }
 
     /**

@@ -18,11 +18,13 @@ import cn.hutool.log.LogFactory;
 import me.xiajhuan.summer.core.constant.StrTemplateConst;
 import me.xiajhuan.summer.core.enums.DefaultUserEnum;
 import me.xiajhuan.summer.core.exception.BusinessException;
+import me.xiajhuan.summer.core.exception.ErrorCode;
 import me.xiajhuan.summer.core.ratelimiter.annotation.RateLimiter;
 import me.xiajhuan.summer.core.ratelimiter.strategy.KeyStrategy;
 import me.xiajhuan.summer.core.ratelimiter.strategy.LoadBalanceStrategy;
 import me.xiajhuan.summer.core.ratelimiter.strategy.StrategyFactory;
 import me.xiajhuan.summer.core.utils.HttpContextUtil;
+import me.xiajhuan.summer.core.utils.MessageUtil;
 import me.xiajhuan.summer.core.utils.ReflectUtil;
 import me.xiajhuan.summer.core.utils.SecurityUtil;
 import org.aspectj.lang.JoinPoint;
@@ -152,7 +154,7 @@ public class RateLimiterAspect {
                             StrUtil.isNotBlank(msgTemplate) ? StrUtil.format(msgTemplate, StrUtil.subAfter(rateLimiterKey, "#", true)) : StrUtil.EMPTY);
                 }
 
-                throw BusinessException.of("服务器繁忙，请稍后再试~");
+                throw BusinessException.of(MessageUtil.getI18nMessage(ErrorCode.SERVER_BUSY));
             }
         }
     }

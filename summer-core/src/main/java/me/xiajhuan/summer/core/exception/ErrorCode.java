@@ -24,12 +24,17 @@ public interface ErrorCode {
     //*******************system********************
 
     /**
+     * 操作失败
+     */
+    int OPERATION_FAILURE = 1000;
+
+    /**
      * 服务器内部异常
      */
     int INTERNAL_SERVER_ERROR = 500;
 
     /**
-     * 未授权
+     * 未授权，请先登录
      */
     int UNAUTHORIZED = 401;
 
@@ -37,6 +42,11 @@ public interface ErrorCode {
      * 拒绝访问，没有权限
      */
     int FORBIDDEN = 403;
+
+    /**
+     * 服务器繁忙，请稍后再试~
+     */
+    int SERVER_BUSY = 800;
 
     //*******************common********************
 

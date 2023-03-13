@@ -15,26 +15,32 @@ package me.xiajhuan.summer.core.enums;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.Locale;
+
 /**
- * 地区电话号码正则枚举
+ * 地区支持枚举
  *
  * @author xiajhuan
  * @date 2023/3/4
  */
 @Getter
 @AllArgsConstructor
-public enum RegionMobileEnum {
+public enum RegionSupportEnum {
 
     /**
-     * ZH_CN
+     * zh_CN
      */
-    ZH_CN("/^(\\+?0?86\\-?)?1[345789]\\d{9}$/"),
+    ZH_CN(Locale.CHINA, "zh_CN", "/^(\\+?0?86\\-?)?1[345789]\\d{9}$/"),
 
     /**
-     * EN_US
+     * en_US
      */
-    EN_US("/^(\\+?1)?[2-9]\\d{2}[2-9](?!11)\\d{6}$/");
+    EN_US(Locale.US, "en_US", "/^(\\+?1)?[2-9]\\d{2}[2-9](?!11)\\d{6}$/");
 
-    private String value;
+    private Locale value;
+
+    private String name;
+
+    private String mobileRegex;
 
 }

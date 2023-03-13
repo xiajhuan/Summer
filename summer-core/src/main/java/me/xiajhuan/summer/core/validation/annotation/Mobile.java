@@ -12,7 +12,7 @@
 
 package me.xiajhuan.summer.core.validation.annotation;
 
-import me.xiajhuan.summer.core.enums.RegionMobileEnum;
+import me.xiajhuan.summer.core.enums.RegionSupportEnum;
 import me.xiajhuan.summer.core.validation.validator.subClass.MobileValidator;
 
 import javax.validation.Constraint;
@@ -52,7 +52,7 @@ public @interface Mobile {
     /**
      * 号码所在地区
      */
-    RegionMobileEnum region() default RegionMobileEnum.ZH_CN;
+    RegionSupportEnum region() default RegionSupportEnum.ZH_CN;
 
     @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
     @Retention(RUNTIME)
