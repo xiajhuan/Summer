@@ -144,7 +144,7 @@ public class SecurityServiceImpl implements SecurityService {
         // 缓存验证码
         CacheServerFactory.getInstance().getCacheServer()
                 .setStringTtl(StrUtil.format(CacheKeyConst.CAPTCHA_CODE, uuid), captcha.getCode(),
-                        setting.getInt("cache.ttl", "Captcha", 5) * TimeUnitConst.MINUTE);
+                        setting.getInt("captcha.cache.ttl", "Security", 5) * TimeUnitConst.MINUTE);
     }
 
     @Override
@@ -167,22 +167,22 @@ public class SecurityServiceImpl implements SecurityService {
      */
     private AbstractCaptcha buildGraphicCaptcha() {
         // 验证码类型
-        String type = setting.getByGroup("graphic.type", "Captcha");
+        String type = setting.getByGroup("captcha.type", "Security");
         // 验证码长宽
-        int width = setting.getInt("graphic.width", "Captcha", 150);
-        int height = setting.getInt("graphic.height", "Captcha", 40);
+        int width = setting.getInt("captcha.width", "Security", 150);
+        int height = setting.getInt("captcha.height", "Security", 40);
         // 验证码字符个数
-        int codeNum = setting.getInt("graphic.char-num", "Captcha", 4);
+        int codeNum = setting.getInt("captcha.char-num", "Security", 4);
         switch (type) {
             case "Line":
                 return CaptchaUtil.createLineCaptcha(width, height, codeNum,
-                        setting.getInt("graphic.line-num", "Captcha", 10));
+                        setting.getInt("captcha.line-num", "Security", 10));
             case "Circle":
                 return CaptchaUtil.createCircleCaptcha(width, height, codeNum,
-                        setting.getInt("graphic.circle-num", "Captcha", 10));
+                        setting.getInt("captcha.circle-num", "Security", 10));
             case "Shear":
                 return CaptchaUtil.createShearCaptcha(width, height, codeNum,
-                        setting.getInt("graphic.shear-width", "Captcha", 4));
+                        setting.getInt("captcha.shear-width", "Security", 4));
             default:
                 throw new IllegalArgumentException(StrUtil.format("不支持的验证码类型【{}】", type));
         }
