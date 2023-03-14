@@ -47,7 +47,7 @@
         <commons.io.version>2.11.0</commons.io.version>
         <commons.fileupload.version>1.5</commons.fileupload.version>
         <guava.version>31.1-jre</guava.version>
-        <hutool.version>5.8.13</hutool.version>
+        <hutool.version>5.8.15</hutool.version>
         <mica.xss.version>2.7.9</mica.xss.version>
         <easy.excel.version>3.2.1</easy.excel.version>
         <p6spy.version>3.9.1</p6spy.version>
