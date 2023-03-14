@@ -15,7 +15,7 @@ token.expire = 12
 # 定时任务配置
 [Schedule]
 # 定时任务线程池核心线程数，note：建议和定时任务数一致
-pool.core-size = 1
+pool.core-size = 2
 
 # 是否开启定时任务（总开关），值：true/false
 enable-schedule = true

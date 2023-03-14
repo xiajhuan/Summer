@@ -41,6 +41,13 @@ spring:
         max-wait: 5000
 
 server:
+  # Tomcat
+  tomcat:
+    threads:
+      # 最大工作线程（并发）
+      max: 1000
+      # 最小工作线程
+      min-spare: 30
   # 缓存类型，值：REDIS/HEAP
   cache:
     type: REDIS
@@ -55,5 +62,14 @@ logging:
           core:
             # 限流日志
             ratelimiter: debug
+          # summer-admin日志
+          admin:
+            # business模块日志
+            business: info
+            # common模块日志
+            common: info
+            # open模块日志
+            open: info
+
 
 
