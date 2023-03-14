@@ -83,6 +83,7 @@ public class MessageUtil {
                 // 所有英文地区，强制为：美国（英语）
                 locale = englishLocale;
             } else {
+                // note：如果“locale.toLanguageTag()”输出为“und”，则请求头“Accept-Language”的值在java.util.Locale中未被定义
                 LOGGER.warn("中英文以外的地区【{}】，自动调整为默认地区【{}】", locale.toLanguageTag(), extraDefault);
 
                 locale = RegionSupportEnum.ZH_CN.getName().equalsIgnoreCase(extraDefault)
