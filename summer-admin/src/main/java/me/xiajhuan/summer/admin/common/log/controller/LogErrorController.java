@@ -23,7 +23,6 @@ import me.xiajhuan.summer.admin.common.log.dto.LogErrorDto;
 import me.xiajhuan.summer.admin.common.log.excel.LogErrorExcel;
 import me.xiajhuan.summer.admin.common.log.service.LogErrorService;
 import me.xiajhuan.summer.core.ratelimiter.annotation.RateLimiter;
-import me.xiajhuan.summer.core.ratelimiter.strategy.impl.IpKeyStrategy;
 import me.xiajhuan.summer.core.utils.AssertUtil;
 import me.xiajhuan.summer.core.utils.ExcelUtil;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -90,7 +89,7 @@ public class LogErrorController {
      */
     @PostMapping("excelExport")
     @RequiresPermissions("log:error:excelExport")
-    @RateLimiter(value = 0.2, keyStrategy = IpKeyStrategy.class)
+    @RateLimiter(0.2)
     @LogOperation(OperationConst.EXCEL_EXPORT)
     public void excelExport(LogErrorDto dto, HttpServletResponse response) throws FileDownloadException {
         try {

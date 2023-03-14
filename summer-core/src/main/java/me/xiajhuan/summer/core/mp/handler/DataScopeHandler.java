@@ -73,9 +73,12 @@ public class DataScopeHandler implements MultiDataPermissionHandler {
      */
     private static String[] dataScopeIgnoreArray = null;
 
+    /**
+     * 初始化 {@link dataScopeIgnoreArray}
+     */
     @PostConstruct
-    void init() {
-        String dataScopeIgnore = setting.getByGroup("dataScope.ignore", "Mp");
+    private void init() {
+        String dataScopeIgnore = setting.getByGroup("data-scope.ignore", "Mp");
 
         if (StrUtil.isNotBlank(dataScopeIgnore)) {
             dataScopeIgnoreArray = dataScopeIgnore.split(StrPool.COMMA);

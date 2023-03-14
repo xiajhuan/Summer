@@ -69,8 +69,8 @@ public class JobEnableConfig {
      */
     @Bean
     public CommonTaskJob commonTaskJob() {
-        if (setting.getBool("enable-schedule", "Schedule")
-                && setting.getBool("job.common", "Schedule")) {
+        if (setting.getBool("enable-schedule", "Schedule", true)
+                && setting.getBool("job.common", "Schedule", true)) {
             LOGGER.info("【{}】定时任务【CommonTaskJob】装载完毕", applicationName);
             return new CommonTaskJob().setLogOperationService(logOperationService)
                     .setLogErrorService(logErrorService)
@@ -86,8 +86,8 @@ public class JobEnableConfig {
      */
     @Bean
     public BusinessTaskJob businessTaskJob() {
-        if (setting.getBool("enable-schedule", "Schedule")
-                && setting.getBool("job.business", "Schedule")) {
+        if (setting.getBool("enable-schedule", "Schedule", true)
+                && setting.getBool("job.business", "Schedule", true)) {
             LOGGER.info("【{}】定时任务【BusinessTaskJob】装载完毕", applicationName);
             return new BusinessTaskJob();
         }

@@ -22,7 +22,6 @@ import me.xiajhuan.summer.admin.common.log.dto.LogOperationDto;
 import me.xiajhuan.summer.admin.common.log.excel.LogOperationExcel;
 import me.xiajhuan.summer.admin.common.log.service.LogOperationService;
 import me.xiajhuan.summer.core.ratelimiter.annotation.RateLimiter;
-import me.xiajhuan.summer.core.ratelimiter.strategy.impl.IpKeyStrategy;
 import me.xiajhuan.summer.core.utils.ExcelUtil;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -73,7 +72,7 @@ public class LogOperationController {
      */
     @PostMapping("excelExport")
     @RequiresPermissions("log:operation:excelExport")
-    @RateLimiter(value = 0.2, keyStrategy = IpKeyStrategy.class)
+    @RateLimiter(0.2)
     @LogOperation(OperationConst.EXCEL_EXPORT)
     public void excelExport(LogOperationDto dto, HttpServletResponse response) throws FileDownloadException {
         try {

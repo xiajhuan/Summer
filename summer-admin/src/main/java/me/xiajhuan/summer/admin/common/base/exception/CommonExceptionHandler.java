@@ -33,6 +33,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.util.List;
 
@@ -48,10 +49,32 @@ public class CommonExceptionHandler {
     private static final Log LOGGER = LogFactory.get();
 
     @Resource(name = SettingBeanConst.COMMON)
-    private Setting setting;
+    private Setting commonSetting;
+
+    @Resource(name = SettingBeanConst.CORE)
+    private Setting coreSetting;
 
     @Resource
     private LogErrorService logErrorService;
+
+    /**
+     * 是否记录业务异常日志（BusinessException）
+     */
+    private static boolean enableBusinessErrorLog;
+
+    /**
+     * 是否记录限流成功时抛出的BusinessException
+     */
+    private static boolean enableLimitSuccessException;
+
+    /**
+     * 初始化 {@link enableBusinessErrorLog} {@link enableLimitSuccessException}
+     */
+    @PostConstruct
+    private void init() {
+        enableBusinessErrorLog = commonSetting.getBool("error.enable-business", "Log", true);
+        enableLimitSuccessException = coreSetting.getBool("success.log-exception", "RateLimiter", false);
+    }
 
     /**
      * 异常处理（所有受检/非受检异常）
@@ -66,10 +89,9 @@ public class CommonExceptionHandler {
 
         // 处理限流切面的异常
         Exception cause = (Exception) e.getCause();
-        if (cause != null && cause instanceof BusinessException
-                && ("服务器繁忙，请稍后再试~".equals(cause.getMessage()) || "Server busy, please try again later ~".equals(cause.getMessage()))) {
+        if (cause != null && isLimitSuccessException(cause)) {
             e = cause;
-            if (!setting.getBool("error.enable-business", "Log")) {
+            if (!enableBusinessErrorLog || !enableLimitSuccessException) {
                 isSaveErrorLog = false;
             }
         }
@@ -86,7 +108,7 @@ public class CommonExceptionHandler {
     @ExceptionHandler(value = BusinessException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Result handleBusinessException(BusinessException e) {
-        return logAndResponse(e, setting.getBool("error.enable-business", "Log"));
+        return logAndResponse(e, enableBusinessErrorLog);
     }
 
     /**
@@ -142,8 +164,28 @@ public class CommonExceptionHandler {
         }
 
         String msg = e.getMessage();
-        LOGGER.error(e, msg);
+        if (isLimitSuccessException(e) && !enableLimitSuccessException) {
+            // 不记录异常堆栈信息
+            LOGGER.error(msg);
+        } else {
+            LOGGER.error(e, msg);
+        }
         return Result.ofFail(msg);
+    }
+
+    /**
+     * 是否是限流成功时抛出的BusinessException
+     *
+     * @param e {@link Exception}
+     * @return 是否是限流成功时抛出的BusinessException，true：是 false：不是
+     */
+    private boolean isLimitSuccessException(Exception e) {
+        if (e instanceof BusinessException &&
+                ("服务器繁忙，请稍后再试~".equals(e.getMessage())
+                        || "Server busy, please try again later ~".equals(e.getMessage()))) {
+            return true;
+        }
+        return false;
     }
 
 }

@@ -6,7 +6,7 @@
 # 权限相关配置
 [Security]
 # 免认证URI，以”/“开头，”,“分隔
-anonUris = /api/**,/test/**
+anon-uris = /api/**,/test/**
 
 # accessToken过期时间（h）
 token.expire = 12

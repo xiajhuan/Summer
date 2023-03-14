@@ -57,6 +57,7 @@ public class IpKeyStrategy implements KeyStrategy {
         return StrUtil.format(StrTemplateConst.RATE_LIMITER_KEY, HttpContextUtil.getInterfaceSignature(currentRequest), IpUtil.getRequestOriginIp(currentRequest));
     }
 
+    @Override
     public String limitMsgTemplate() {
         return "，Key-IP【{}】";
     }

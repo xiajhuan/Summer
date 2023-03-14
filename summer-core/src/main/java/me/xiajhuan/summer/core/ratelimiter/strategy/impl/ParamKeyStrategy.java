@@ -57,6 +57,7 @@ public class ParamKeyStrategy implements KeyStrategy {
         return StrUtil.format(StrTemplateConst.RATE_LIMITER_KEY, HttpContextUtil.getInterfaceSignature(currentRequest), HttpContextUtil.getParamValues(joinPoint, currentRequest));
     }
 
+    @Override
     public String limitMsgTemplate() {
         return "，Key-ParamValues【{}】";
     }

@@ -41,6 +41,11 @@ public class StrTemplateConst {
     public static final String RATE_LIMITER_KEY = "{}#{}";
 
     /**
+     * 限流策略Class全限定性类名
+     */
+    public static final String RATE_LIMITER_STRATEGY_CLASS = "me.xiajhuan.summer.core.ratelimiter.strategy.impl.{}";
+
+    /**
      * 匹配失败信息
      */
     public static final String MATCHES_FAIL_MSG = "{} matches {} failed!";

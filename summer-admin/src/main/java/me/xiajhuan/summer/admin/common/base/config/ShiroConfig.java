@@ -107,7 +107,7 @@ public class ShiroConfig {
         filterUriMap.put("/security/login", SECURITY_ANON);
 
         // 自定义过滤的URI
-        String anonUris = setting.getByGroup("anonUris", "Security");
+        String anonUris = setting.getByGroup("anon-uris", "Security");
         if (StrUtil.isNotBlank(anonUris)) {
             Arrays.stream(anonUris.split(StrUtil.COMMA))
                     .forEach(anonUri -> filterUriMap.put(anonUri, SECURITY_ANON));

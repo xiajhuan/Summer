@@ -16,6 +16,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.setting.Setting;
 import me.xiajhuan.summer.core.cache.factory.CacheServerFactory;
 import me.xiajhuan.summer.core.constant.SettingBeanConst;
+import me.xiajhuan.summer.core.constant.TimeUnitConst;
 import me.xiajhuan.summer.core.excel.AbstractExcelParser;
 import me.xiajhuan.summer.core.utils.SpringContextUtil;
 
@@ -37,7 +38,7 @@ public class ExcelCacheParser<T, E> extends AbstractExcelParser<T, E> {
      * 缓存过期时间（ms）
      */
     private static final Long CACHE_TTL = SpringContextUtil.getBean(SettingBeanConst.CORE, Setting.class)
-            .getLong("parser.cache.ttl", "Excel", 86400000L);
+            .getInt("parser.cache.ttl", "Excel", 24) * TimeUnitConst.HOUR;
 
     /**
      * 当前EntityClass

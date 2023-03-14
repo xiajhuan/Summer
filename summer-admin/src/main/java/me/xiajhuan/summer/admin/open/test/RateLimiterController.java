@@ -16,7 +16,7 @@ import cn.hutool.core.lang.Console;
 import cn.hutool.json.JSONUtil;
 import me.xiajhuan.summer.core.data.Result;
 import me.xiajhuan.summer.core.ratelimiter.annotation.RateLimiter;
-import me.xiajhuan.summer.core.ratelimiter.strategy.impl.IpKeyStrategy;
+import me.xiajhuan.summer.core.ratelimiter.strategy.impl.BaseKeyStrategy;
 import me.xiajhuan.summer.core.ratelimiter.strategy.impl.ParamKeyStrategy;
 import me.xiajhuan.summer.core.ratelimiter.strategy.impl.UsernameKeyStrategy;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,14 +35,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class RateLimiterController {
 
     /**
-     * 默认限流策略
+     * 基本限流策略
      *
      * @param jsonParam Json格式参数
      * @return 响应结果
      */
-    @PostMapping("default")
-    @RateLimiter(0.2)
-    public Result<String> default1(@RequestBody String jsonParam) {
+    @PostMapping("base")
+    @RateLimiter(value = 0.2, keyStrategy = BaseKeyStrategy.class)
+    public Result<String> base(@RequestBody String jsonParam) {
         return outputAndResponse(jsonParam);
     }
 
@@ -53,7 +53,7 @@ public class RateLimiterController {
      * @return 响应结果
      */
     @PostMapping("ip")
-    @RateLimiter(value = 0.2, keyStrategy = IpKeyStrategy.class)
+    @RateLimiter(0.2)
     public Result<String> ip(@RequestBody String jsonParam) {
         return outputAndResponse(jsonParam);
     }

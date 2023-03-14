@@ -12,46 +12,37 @@
 
 package me.xiajhuan.summer.core.ratelimiter.strategy.impl;
 
-import me.xiajhuan.summer.core.ratelimiter.strategy.LoadBalanceStrategy;
-
-import java.math.BigDecimal;
+import me.xiajhuan.summer.core.ratelimiter.strategy.KeyStrategy;
 
 /**
- * 默认限流负载均衡策略（轮询）
  * <p>
- * realQps = setQps / nodeNum
- * note：最好能够整除，否则会存在精度问题，默认四舍五入保留2位小数
+ * 基本限流Key策略（Key为：接口签名#），
+ * 例如：/summer-single/security/user/page[GET]#
  * </p>
  *
  * @author xiajhuan
  * @date 2022/12/5
  */
-public class DefaultLoadBalanceStrategy implements LoadBalanceStrategy {
+public class BaseKeyStrategy implements KeyStrategy {
 
     //*******************单例处理开始********************
 
-    private static volatile DefaultLoadBalanceStrategy instance = null;
+    private static volatile BaseKeyStrategy instance = null;
 
-    public static DefaultLoadBalanceStrategy getInstance() {
+    public static BaseKeyStrategy getInstance() {
         if (instance == null) {
-            synchronized (DefaultLoadBalanceStrategy.class) {
+            synchronized (BaseKeyStrategy.class) {
                 if (instance == null) {
-                    instance = new DefaultLoadBalanceStrategy();
+                    instance = new BaseKeyStrategy();
                 }
             }
         }
         return instance;
     }
 
-    private DefaultLoadBalanceStrategy() {
+    private BaseKeyStrategy() {
     }
 
     //*******************单例处理结束********************
-
-    @Override
-    public double calRealQpsBySetQpsAndNodeNum(double setQps, int nodeNum) {
-        // Polling Strategy -> realQps = setQps / nodeNum
-        return BigDecimal.valueOf(setQps / nodeNum).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
-    }
 
 }

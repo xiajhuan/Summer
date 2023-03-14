@@ -18,18 +18,32 @@ heap.capacity.list = 1000
 [Excel]
 # Excel数据解析后的最大批量操作数，note：最多每隔该数量的数据后清理List，方便GC，防止OOM
 parser.max-batch-num = 2000
-# Excel数据解析后保存到缓存的过期时间（ms），note：请谨慎使用该功能，防止OOM
-parser.cache.ttl = 86400000
+# Excel数据解析后保存到缓存的过期时间（h），note：请谨慎使用该功能，防止OOM
+parser.cache.ttl = 24
 
 
 # MybatisPlus插件配置
 [Mp]
 # 数据权限忽略的表名称配置，以“,”分隔
 # 支持通配符：“*”（任意匹配）和“?”（单值匹配）
-dataScope.ignore = log_*,*_token,security_role_*
+data-scope.ignore = log_*,*_token,security_role_*
 
 # 乐观锁控制更新失败时的重试次数
-optimisticLock.retry-times = 20
+optimistic-lock.retry-times = 20
+
+
+# 接口限流配置
+[RateLimiter]
+# 默认策略Class（简单类名）
+strategy.key = IpKeyStrategy
+strategy.load-balance = BaseLoadBalanceStrategy
+# 默认服务节点数
+node-num = 1
+# 默认超时时长（ms）
+timeout = 0
+
+# 是否记录限流成功时抛出的BusinessException，值：true/false
+success.log-exception = false
 
 
 # 树形结构配置

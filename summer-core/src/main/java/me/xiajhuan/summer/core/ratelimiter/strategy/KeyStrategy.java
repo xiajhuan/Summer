@@ -13,6 +13,7 @@
 package me.xiajhuan.summer.core.ratelimiter.strategy;
 
 import cn.hutool.core.util.StrUtil;
+import me.xiajhuan.summer.core.constant.StrTemplateConst;
 import org.aspectj.lang.JoinPoint;
 import me.xiajhuan.summer.core.utils.HttpContextUtil;
 
@@ -40,7 +41,9 @@ public interface KeyStrategy {
      * @param currentUsername 当前用户名
      * @return 限流Key
      */
-    String getRateLimiterKey(JoinPoint joinPoint, HttpServletRequest currentRequest, String currentUsername);
+    default String getRateLimiterKey(JoinPoint joinPoint, HttpServletRequest currentRequest, String currentUsername) {
+        return StrUtil.format(StrTemplateConst.RATE_LIMITER_KEY, HttpContextUtil.getInterfaceSignature(currentRequest), StrUtil.EMPTY);
+    }
 
     /**
      * 限流日志附加信息模板钩子<br>
