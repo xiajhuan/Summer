@@ -33,6 +33,7 @@ import me.xiajhuan.summer.admin.common.security.entity.SecurityUserTokenEntity;
 import me.xiajhuan.summer.admin.common.security.mapper.*;
 import me.xiajhuan.summer.admin.common.security.service.SecurityService;
 import me.xiajhuan.summer.core.data.LoginUser;
+import me.xiajhuan.summer.core.enums.CaptchaTypeEnum;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -164,10 +165,15 @@ public class SecurityServiceImpl implements SecurityService {
      * 构建图形验证码
      *
      * @return {@link AbstractCaptcha}
+     * @see CaptchaTypeEnum
      */
     private AbstractCaptcha buildGraphicCaptcha() {
         // 验证码类型
-        String type = setting.getByGroup("captcha.type", "Security");
+        String type = setting.getByGroupWithLog("captcha.type", "Security");
+        if (StrUtil.isBlank(type)) {
+            // 没有配置则默认为：Line
+            type = CaptchaTypeEnum.Line.getValue();
+        }
         // 验证码长宽
         int width = setting.getInt("captcha.width", "Security", 150);
         int height = setting.getInt("captcha.height", "Security", 40);

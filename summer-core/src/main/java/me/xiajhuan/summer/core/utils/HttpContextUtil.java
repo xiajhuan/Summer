@@ -17,10 +17,6 @@ import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
-import cn.hutool.log.Log;
-import cn.hutool.log.LogFactory;
-import cn.hutool.setting.Setting;
-import me.xiajhuan.summer.core.constant.SettingBeanConst;
 import me.xiajhuan.summer.core.enums.RegionSupportEnum;
 import org.aspectj.lang.JoinPoint;
 import org.springframework.http.HttpHeaders;
@@ -44,21 +40,6 @@ import java.util.Locale;
  * @date 2022/11/28
  */
 public class HttpContextUtil {
-
-    private static final Log LOGGER = LogFactory.get();
-
-    /**
-     * 中英文以外地区的默认语言
-     */
-    private static String extraDefault;
-
-    /**
-     * 初始化 {@link extraDefault}
-     */
-    static {
-        extraDefault = SpringContextUtil.getBean(SettingBeanConst.CORE, Setting.class)
-                .getByGroup("extra.default", "Locale");
-    }
 
     /**
      * 获取请求
@@ -127,8 +108,11 @@ public class HttpContextUtil {
     }
 
     /**
-     * 获取请求语言对应 {@link Locale}<br>
-     * Locale：表示特定的地理，政治，或文化区域
+     * 获取请求语言对应 {@link Locale}
+     * <p>
+     * Locale：表示特定的地理，政治，或文化区域，
+     * note：只支持“Accept-Language”以“zh”或“en”开头的
+     * </p>
      *
      * @param request {@link HttpServletRequest}
      * @return 请求语言对应 {@link Locale}
@@ -140,22 +124,13 @@ public class HttpContextUtil {
         }
         // 请求语言
         String languageHeader = request.getHeader(HttpHeaders.ACCEPT_LANGUAGE);
-        if (StrUtil.isNotBlank(languageHeader) && languageHeader.length() >= 2) {
-            // 默认地区，中国（中文）
-            Locale defaultLocale = RegionSupportEnum.ZH_CN.getValue();
-            // 美国（英文）
-            Locale englishLocale = RegionSupportEnum.EN_US.getValue();
+        if (languageHeader != null && languageHeader.length() >= 2) {
             if ("zh".equals(languageHeader.substring(0, 2))) {
                 // 所有中文地区，强制为：中国（中文）
-                return defaultLocale;
+                return RegionSupportEnum.ZH_CN.getValue();
             } else if ("en".equals(languageHeader.substring(0, 2))) {
                 // 所有英文地区，强制为：美国（英语）
-                return englishLocale;
-            } else {
-                LOGGER.warn("中英文以外的地区【{}】，自动调整为默认地区【{}】", languageHeader, extraDefault);
-
-                return RegionSupportEnum.ZH_CN.getName().equalsIgnoreCase(extraDefault)
-                        ? defaultLocale : englishLocale;
+                return RegionSupportEnum.EN_US.getValue();
             }
         }
         return null;
@@ -163,7 +138,7 @@ public class HttpContextUtil {
 
     /**
      * 获取请求接口唯一标识<br>
-     * 格式：URI[Method]，如：/server/common/api/open/demo[POST]
+     * 格式：URI[Method]，如：/summer-single/security/user/page[GET]
      *
      * @param request {@link HttpServletRequest}
      * @return 请求接口唯一标识

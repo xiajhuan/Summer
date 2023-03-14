@@ -12,6 +12,7 @@
 
 package me.xiajhuan.summer.core.utils;
 
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
 import cn.hutool.setting.Setting;
@@ -49,7 +50,11 @@ public class MessageUtil {
     static {
         messageSource = (MessageSource) SpringContextUtil.getBean("messageSource");
         extraDefault = SpringContextUtil.getBean(SettingBeanConst.CORE, Setting.class)
-                .getByGroup("extra.default", "Locale");
+                .getByGroupWithLog("extra.default", "Locale");
+        if (StrUtil.isBlank(extraDefault)) {
+            // 没有配置则默认为：zh_CN
+            extraDefault = RegionSupportEnum.ZH_CN.getName();
+        }
     }
 
     /**
@@ -58,6 +63,7 @@ public class MessageUtil {
      * @param code   错误编码 {@link ErrorCode}
      * @param params 消息填充参数
      * @return 国际化消息
+     * @see RegionSupportEnum
      */
     public static String getI18nMessage(int code, String... params) {
         // 优先取请求头“Accept-Language”中的设置
