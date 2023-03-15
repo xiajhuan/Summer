@@ -13,21 +13,33 @@
 package me.xiajhuan.summer.core.constant;
 
 /**
- * 树形结构扩展字段常量
+ * 树形结构常量
  *
  * @author xiajhuan
  * @date 2023/3/11
  */
-public class TreeExtraConst {
+public class TreeConst {
 
     /**
-     * 菜单树
+     * Root节点ID
      */
-    public static final String[] TREE_MENU = {"url", "permissions", "type", "openMode", "icon", "createTime", "parentName"};
+    public static final Long ROOT = 0L;
 
     /**
-     * 部门树
+     * 扩展属性
      */
-    public static final String[] TREE_DEPT = {"createTime", "parentName"};
+    public static class Extra {
+
+        /**
+         * 菜单
+         */
+        public static final String[] MENU = {"url", "permissions", "type", "openMode", "icon", "createTime", "parentName"};
+
+        /**
+         * 部门
+         */
+        public static final String[] DEPT = {"createTime", "parentName"};
+
+    }
 
 }

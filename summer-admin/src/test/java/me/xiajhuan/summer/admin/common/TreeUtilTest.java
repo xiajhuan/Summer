@@ -16,6 +16,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Console;
 import cn.hutool.json.JSONUtil;
 import me.xiajhuan.summer.admin.common.security.dto.SecurityMenuDto;
+import me.xiajhuan.summer.core.constant.TreeConst;
 import me.xiajhuan.summer.core.utils.TreeUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -45,7 +46,7 @@ public class TreeUtilTest {
     public void init() {
         menuDtoList = CollUtil.newArrayList(
                 SecurityMenuDto.builder()
-                        .id(1L).parentId(0L).name("系统管理").weight(5)
+                        .id(1L).parentId(TreeConst.ROOT).name("系统管理").weight(5)
                         .url("/sys").permissions("sys").build(),
                 SecurityMenuDto.builder()
                         .id(2L).parentId(1L).name("用户管理").weight(222222)
@@ -54,7 +55,7 @@ public class TreeUtilTest {
                         .id(3L).parentId(1L).name("用户添加").weight(0)
                         .url("/sys/userAdd").permissions("sys:userAdd").build(),
                 SecurityMenuDto.builder()
-                        .id(4L).parentId(0L).name("店铺管理").weight(1)
+                        .id(4L).parentId(TreeConst.ROOT).name("店铺管理").weight(1)
                         .url("/shop").permissions("shop").build(),
                 SecurityMenuDto.builder()
                         .id(5L).parentId(4L).name("商品管理").weight(44)
@@ -70,7 +71,7 @@ public class TreeUtilTest {
      */
     @Test
     public void test() {
-        List<SecurityMenuDto> treeNodes = TreeUtil.buildWithD(SecurityMenuDto.class, menuDtoList, 0L,
+        List<SecurityMenuDto> treeNodes = TreeUtil.buildWithD(SecurityMenuDto.class, menuDtoList, TreeConst.ROOT,
                 "url", "permissions");
         Assertions.assertTrue(treeNodes.size() == 2, "菜单树构建失败！");
         Console.log(JSONUtil.toJsonPrettyStr(treeNodes));

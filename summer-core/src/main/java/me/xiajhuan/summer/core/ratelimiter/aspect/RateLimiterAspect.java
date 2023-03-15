@@ -28,7 +28,6 @@ import me.xiajhuan.summer.core.ratelimiter.strategy.StrategyFactory;
 import me.xiajhuan.summer.core.ratelimiter.strategy.impl.SettingKeyStrategy;
 import me.xiajhuan.summer.core.ratelimiter.strategy.impl.SettingLoadBalanceStrategy;
 import me.xiajhuan.summer.core.utils.HttpContextUtil;
-import me.xiajhuan.summer.core.utils.MessageUtil;
 import me.xiajhuan.summer.core.utils.ReflectUtil;
 import me.xiajhuan.summer.core.utils.SecurityUtil;
 import org.aspectj.lang.JoinPoint;
@@ -233,7 +232,7 @@ public class RateLimiterAspect {
                             StrUtil.isNotBlank(msgTemplate) ? StrUtil.format(msgTemplate, StrUtil.subAfter(rateLimiterKey, "#", true)) : StrUtil.EMPTY);
                 }
 
-                throw BusinessException.of(MessageUtil.getI18nMessage(ErrorCode.SERVER_BUSY));
+                throw BusinessException.of(ErrorCode.SERVER_BUSY);
             }
         }
     }

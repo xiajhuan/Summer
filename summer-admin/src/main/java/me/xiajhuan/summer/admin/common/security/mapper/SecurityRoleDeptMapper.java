@@ -14,7 +14,7 @@ package me.xiajhuan.summer.admin.common.security.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import me.xiajhuan.summer.admin.common.security.entity.SecurityRoleDeptEntity;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.Set;
 
@@ -26,14 +26,6 @@ import java.util.Set;
  */
 public interface SecurityRoleDeptMapper extends BaseMapper<SecurityRoleDeptEntity> {
 
-    @Select("SELECT\n" +
-            "\tt2.dept_id \n" +
-            "FROM\n" +
-            "\tsecurity_role_user t1,\n" +
-            "\tsecurity_role_dept t2 \n" +
-            "WHERE\n" +
-            "\tt1.user_id = #{value} \n" +
-            "\tAND t1.role_id = t2.role_id")
-    Set<Long> getDeptSetByUserId(Long userId);
+    Set<Long> getDeptSetByUserId(@Param("userId") Long userId);
 
 }

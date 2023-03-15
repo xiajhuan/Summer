@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="me.xiajhuan.summer.admin.common.security.mapper.SecurityDeptMapper">
+
+    <sql id="column">
+        t1.id,
+        t1.parent_id,
+        t1.name,
+        t1.weight,
+        t1.create_time,
+        ( SELECT t2.name FROM security_dept t2 WHERE t2.id = t1.parent_id ) parentName
+    </sql>
+
+    <select id="getList" parameterType="Collection" resultType="SecurityDeptEntity">
+        SELECT
+        <include refid="column"/>
+        FROM
+        security_dept t1
+        <if test="idSet != null and idSet.size() > 0">
+            WHERE t1.id IN
+            <foreach item="id" collection="idSet" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+        </if>
+        ORDER BY
+        t1.weight
+    </select>
+
+    <select id="getById" parameterType="Long" resultType="SecurityDeptEntity">
+        SELECT
+        <include refid="column"/>
+        FROM
+        security_dept t1
+        WHERE t1.id = #{id}
+    </select>
+
+</mapper>

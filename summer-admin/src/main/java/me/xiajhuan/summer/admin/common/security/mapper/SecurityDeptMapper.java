@@ -16,7 +16,6 @@ import com.baomidou.mybatisplus.annotation.InterceptorIgnore;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import me.xiajhuan.summer.admin.common.security.entity.SecurityDeptEntity;
 import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 import java.util.Set;
@@ -30,7 +29,20 @@ import java.util.Set;
 @InterceptorIgnore
 public interface SecurityDeptMapper extends BaseMapper<SecurityDeptEntity> {
 
-    @Select("")
-    List<SecurityDeptEntity> getList(@Param("param") Set<Long> param);
+    /**
+     * 获取部门列表
+     *
+     * @param idSet ID集合
+     * @return 部门列表
+     */
+    List<SecurityDeptEntity> getList(@Param("idSet") Set<Long> idSet);
+
+    /**
+     * 根据ID获取
+     *
+     * @param id ID
+     * @return 部门
+     */
+    SecurityDeptEntity getById(@Param("id") Long id);
 
 }

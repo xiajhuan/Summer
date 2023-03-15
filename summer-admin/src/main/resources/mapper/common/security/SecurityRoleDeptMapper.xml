@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="me.xiajhuan.summer.admin.common.security.mapper.SecurityRoleDeptMapper">
+
+    <select id="getDeptSetByUserId" parameterType="Long" resultType="Long">
+        SELECT
+        t2.dept_id
+        FROM
+        security_role_user t1,security_role_dept t2
+        WHERE
+        t1.user_id = #{userId}
+        AND t1.role_id = t2.role_id
+    </select>
+
+</mapper>

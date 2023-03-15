@@ -23,7 +23,7 @@ import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
 import cn.hutool.setting.Setting;
 import me.xiajhuan.summer.core.constant.SettingBeanConst;
-import me.xiajhuan.summer.core.constant.TreeExtraConst;
+import me.xiajhuan.summer.core.constant.TreeConst;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -38,7 +38,7 @@ import java.util.stream.Collectors;
  * <pre>
  *     1.Dto类型必须继承 {@link TreeNode}
  *     2.【id,parentId】必须为 {@link Long}，【weight】必须可比较 {@link Comparable}
- *     3.【id,parentId,name,weight】以外的属性都为扩展属性 {@link TreeExtraConst}
+ *     3.【id,parentId,name,weight】以外的属性都为扩展属性 {@link TreeConst.Extra}
  * </pre>
  *
  * @author xiajhuan
