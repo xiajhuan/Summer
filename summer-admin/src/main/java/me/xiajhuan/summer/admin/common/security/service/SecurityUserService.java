@@ -32,4 +32,12 @@ public interface SecurityUserService extends IService<SecurityUserEntity> {
      */
     SecurityUserDto getByUsername(String username);
 
+    /**
+     * 根据部门ID统计用户数
+     *
+     * @param deptId 部门ID
+     * @return 用户数
+     */
+    long countByDeptId(Long deptId);
+
 }

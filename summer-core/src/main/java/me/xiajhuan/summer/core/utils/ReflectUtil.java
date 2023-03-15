@@ -54,7 +54,7 @@ public class ReflectUtil {
         Method method = getMethod(joinPoint);
 
         String paramTypeStr = Arrays.stream(method.getParameterTypes()).map(p -> p.getName())
-                .collect(Collectors.joining(StrPool.COMMA, StrUtil.EMPTY, StrUtil.EMPTY));
+                .collect(Collectors.joining(StrPool.COMMA));
 
         // 拼接格式：Xxx.xxx(Xxx,Xxx)
         return StrUtil.format("{}.{}({})", joinPoint.getTarget().getClass().getName(),
@@ -75,7 +75,7 @@ public class ReflectUtil {
         Method method = getMethod(joinPoint);
 
         String paramTypeStr = Arrays.stream(method.getParameterTypes()).map(p -> p.getSimpleName())
-                .collect(Collectors.joining(StrPool.COMMA, StrUtil.EMPTY, StrUtil.EMPTY));
+                .collect(Collectors.joining(StrPool.COMMA));
 
         // 拼接格式：Xxx.xxx(Xxx,Xxx)
         return StrUtil.format("{}.{}({})", joinPoint.getTarget().getClass().getSimpleName(),

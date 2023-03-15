@@ -99,6 +99,4 @@ public class LogErrorController {
         }
     }
 
-    //*******************Other Operation********************
-
 }

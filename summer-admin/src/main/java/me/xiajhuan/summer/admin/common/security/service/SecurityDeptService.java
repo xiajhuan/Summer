@@ -15,8 +15,10 @@ package me.xiajhuan.summer.admin.common.security.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import me.xiajhuan.summer.admin.common.security.dto.SecurityDeptDto;
 import me.xiajhuan.summer.admin.common.security.entity.SecurityDeptEntity;
+import me.xiajhuan.summer.core.exception.BusinessException;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * 部门 Service
@@ -33,10 +35,20 @@ public interface SecurityDeptService extends IService<SecurityDeptEntity> {
      */
     List<SecurityDeptDto> treeList();
 
+    SecurityDeptDto getById(Long id);
+
     void add(SecurityDeptDto dto);
 
-    void update(SecurityDeptDto dto);
+    void update(SecurityDeptDto dto) throws BusinessException;
 
-    void delete(String[] ids);
+    void delete(Long id) throws BusinessException;
+
+    /**
+     * 获取子部门ID集合
+     *
+     * @param deptId 部门ID
+     * @return 子部门ID集合
+     */
+    Set<Long> getChildIdSet(Long deptId);
 
 }

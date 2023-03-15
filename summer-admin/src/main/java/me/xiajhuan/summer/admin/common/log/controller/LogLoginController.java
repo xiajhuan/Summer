@@ -82,6 +82,4 @@ public class LogLoginController {
         }
     }
 
-    //*******************Other Operation********************
-
 }

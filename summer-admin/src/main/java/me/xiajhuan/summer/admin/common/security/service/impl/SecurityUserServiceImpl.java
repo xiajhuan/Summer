@@ -88,4 +88,11 @@ public class SecurityUserServiceImpl extends ServiceImpl<SecurityUserMapper, Sec
         return ConvertUtil.convert(getOne(queryWrapper), SecurityUserDto.class);
     }
 
+    @Override
+    public long countByDeptId(Long deptId) {
+        LambdaQueryWrapper<SecurityUserEntity> queryWrapper = Wrappers.lambdaQuery();
+        queryWrapper.eq(SecurityUserEntity::getDeptId, deptId);
+        return count(queryWrapper);
+    }
+
 }

@@ -61,6 +61,21 @@ public class SecurityDeptController {
     }
 
     /**
+     * 根据ID获取
+     *
+     * @param id ID
+     * @return 响应结果
+     */
+    @GetMapping("getById")
+    @RequiresPermissions("security:dept:getById")
+    @LogOperation(OperationConst.GET_BY_ID)
+    public Result<SecurityDeptDto> getById(Long id) throws BusinessException {
+        AssertUtil.isNotNull("id", id);
+
+        return Result.ofSuccess(mainService.getById(id));
+    }
+
+    /**
      * 新增
      *
      * @param dto 部门Dto
@@ -87,7 +102,7 @@ public class SecurityDeptController {
      * @param dto 部门Dto
      * @return 响应结果
      */
-    @PostMapping("update")
+    @PutMapping("update")
     @RequiresPermissions("security:dept:update")
     @LogOperation(OperationConst.UPDATE)
     public Result update(@Validated(UpdateGroup.class) SecurityDeptDto dto) {
@@ -105,18 +120,18 @@ public class SecurityDeptController {
     /**
      * 删除
      *
-     * @param ids ID数组
+     * @param id ID
      * @return 响应结果
      * @throws BusinessException 业务异常
      */
     @DeleteMapping("delete")
     @RequiresPermissions("security:dept:delete")
     @LogOperation(OperationConst.DELETE)
-    public Result delete(String[] ids) throws BusinessException {
-        AssertUtil.isNotEmpty("ids", ids);
+    public Result delete(Long id) throws BusinessException {
+        AssertUtil.isNotNull("id", id);
 
         try {
-            mainService.delete(ids);
+            mainService.delete(id);
 
             return Result.ofSuccess();
         } catch (Exception e) {
@@ -125,9 +140,5 @@ public class SecurityDeptController {
             return Result.ofFail();
         }
     }
-
-    //*******************Excel Operation********************
-
-    //*******************Other Operation********************
 
 }
