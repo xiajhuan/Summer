@@ -95,7 +95,7 @@ public class SecurityRoleServiceImpl extends ServiceImpl<SecurityRoleMapper, Sec
     }
 
     @Override
-    public void delete(String[] ids) {
+    public void delete(Long[] ids) {
         removeByIds(Arrays.stream(ids).collect(Collectors.toSet()));
     }
 

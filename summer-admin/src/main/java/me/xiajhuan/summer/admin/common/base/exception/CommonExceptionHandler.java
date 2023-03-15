@@ -147,7 +147,7 @@ public class CommonExceptionHandler {
     @ExceptionHandler(value = AuthorizationException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public Result handleAccessDeniedException() {
-        return Result.ofFail(MessageUtil.getI18nMessage(ErrorCode.FORBIDDEN));
+        return Result.ofFail(ErrorCode.FORBIDDEN);
     }
 
     /**

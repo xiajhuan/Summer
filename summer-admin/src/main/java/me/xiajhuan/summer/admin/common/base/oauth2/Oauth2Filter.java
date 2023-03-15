@@ -87,7 +87,7 @@ public class Oauth2Filter extends AuthenticatingFilter {
             Throwable cause = authException.getCause() == null ? authException : authException.getCause();
 
             HttpContextUtil.makeResponse(httpResponse, StrUtil.format(StrTemplateConst.MEDIA_TYPE, "application/json", "charset=utf-8"),
-                    ErrorCode.UNAUTHORIZED, Result.ofFail(ErrorCode.UNAUTHORIZED, cause.getMessage()));
+                    ErrorCode.UNAUTHORIZED, Result.ofFail(cause.getMessage()));
         } catch (IOException e) {
             LOGGER.error(e, e.getMessage());
         }

@@ -32,6 +32,6 @@ public interface SecurityRoleService extends IService<SecurityRoleEntity> {
 
     void update(SecurityRoleDto dto);
 
-    void delete(String[] ids);
+    void delete(Long[] ids);
 
 }

@@ -21,13 +21,13 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import me.xiajhuan.summer.admin.common.base.constant.CacheKeyConst;
+import me.xiajhuan.summer.admin.common.security.service.SecurityDeptService;
 import me.xiajhuan.summer.core.cache.factory.CacheServerFactory;
 import me.xiajhuan.summer.core.cache.server.CacheServer;
 import me.xiajhuan.summer.core.constant.DataSourceConst;
 import me.xiajhuan.summer.core.constant.SettingBeanConst;
 import me.xiajhuan.summer.core.constant.TimeUnitConst;
 import me.xiajhuan.summer.core.enums.UserTypeEnum;
-import me.xiajhuan.summer.admin.common.security.entity.SecurityDeptEntity;
 import me.xiajhuan.summer.admin.common.security.entity.SecurityUserEntity;
 import me.xiajhuan.summer.admin.common.security.entity.SecurityUserTokenEntity;
 import me.xiajhuan.summer.admin.common.security.mapper.*;
@@ -39,7 +39,6 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -69,7 +68,7 @@ public class SecurityServiceImpl implements SecurityService {
     private SecurityRoleDeptMapper securityRoleDeptMapper;
 
     @Resource
-    private SecurityDeptMapper securityDeptMapper;
+    private SecurityDeptService securityDeptService;
 
     //*******************认证授权********************
 
@@ -114,17 +113,10 @@ public class SecurityServiceImpl implements SecurityService {
 
     @Override
     public Set<Long> getDeptAndChildIdSet(Long deptId) {
-        Set<Long> deptIdSet = CollUtil.newHashSet(deptId);
+        // 获取子部门ID集合
+        Set<Long> deptIdSet = securityDeptService.getChildIdSet(deptId);
+        deptIdSet.add(deptId);
 
-        // 获取所有子部门ID
-        LambdaQueryWrapper<SecurityDeptEntity> queryWrapper = Wrappers.lambdaQuery();
-        queryWrapper.select(SecurityDeptEntity::getId);
-        queryWrapper.like(SecurityDeptEntity::getParentIdAll, deptId);
-        List<SecurityDeptEntity> entityList = securityDeptMapper.selectList(queryWrapper);
-
-        if (CollUtil.isNotEmpty(entityList)) {
-            entityList.forEach(d -> deptIdSet.add(d.getId()));
-        }
         return deptIdSet;
     }
 

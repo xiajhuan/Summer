@@ -115,7 +115,7 @@ public class SecurityRoleController {
     @DeleteMapping("delete")
     @RequiresPermissions("security:role:delete")
     @LogOperation(OperationConst.DELETE)
-    public Result delete(String[] ids) throws BusinessException {
+    public Result delete(Long[] ids) throws BusinessException {
         AssertUtil.isNotEmpty("ids", ids);
 
         try {

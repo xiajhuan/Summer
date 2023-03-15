@@ -37,7 +37,7 @@ public class Result<T> implements Serializable {
     }
 
     /**
-     * 响应是否成功 成功：1 失败：0
+     * 响应是否成功 成功：“1” 失败：“0”
      */
     private String code;
 
@@ -72,6 +72,18 @@ public class Result<T> implements Serializable {
     }
 
     /**
+     * 成功（不带数据）（消息国际化）<br>
+     * note：预留方法，需自定义成功消息的国际化编码，如：200
+     *
+     * @param code  成功编码
+     * @param param 消息填充参数
+     * @return 响应结果
+     */
+    public static Result ofSuccess(int code, String... param) {
+        return ofSuccess(null, MessageUtil.getI18nMessage(code, param));
+    }
+
+    /**
      * 成功（不带数据）（带消息）
      *
      * @param msg 消息
@@ -103,11 +115,11 @@ public class Result<T> implements Serializable {
      * @return 响应结果
      */
     public static Result ofFail() {
-        return ofFail(MessageUtil.getI18nMessage(ErrorCode.OPERATION_FAILURE));
+        return ofFail(ErrorCode.OPERATION_FAILURE);
     }
 
     /**
-     * 失败（不带数据）
+     * 失败（不带数据）（消息国际化）
      *
      * @param code  错误编码 {@link ErrorCode}
      * @param param 消息填充参数
