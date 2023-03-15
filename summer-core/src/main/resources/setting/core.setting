@@ -67,3 +67,25 @@ sql.exclude-replace = INSERT:log_operation,INSERT:log_error,INSERT:log_login
 # 地区语言配置
 # 中英文以外地区的默认语言，值：zh_CN/en_US
 extra.default = en_US
+
+
+[Async]
+# 异步任务线程池配置
+# 核心线程数，建议：I/O密集型任务：CPU核心数*2，CPU密集型任务：CPU核心数+1
+core-pool-size = 8
+# 是否允许核心线程空闲时退出，值：true/false
+allow-core-thread-timeout = false
+# 最大线程数
+max-pool-size = 32
+# 阻塞队列大小
+queue-capacity = 512
+# 空闲线程存活时间（s），note：如果是核心线程，则必须 allow-core-thread-timeout = true 时才生效
+keep-alive-seconds = 30
+# 服务停止时是否等待所有线程执行完，值：true/false
+wait-for-tasks-to-complete-on-shutdown = true
+# 服务停止时等待线程执行的时间（s），超时则强制销毁
+await-termination-Seconds = 30
+
+
+
+

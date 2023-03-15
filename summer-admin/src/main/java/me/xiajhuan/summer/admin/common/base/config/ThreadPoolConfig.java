@@ -40,15 +40,17 @@ public class ThreadPoolConfig {
      * @return {@link ThreadPoolTaskExecutor}
      */
     @Bean(ThreadPoolConst.ASYNC_TASK_POOL)
-    public ThreadPoolTaskExecutor threadPoolTaskExecutor() {
+    public ThreadPoolTaskExecutor threadPoolTaskExecutor(@Qualifier(SettingBeanConst.CORE) Setting setting) {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        executor.setCorePoolSize(10);
-        executor.setMaxPoolSize(20);
-        executor.setQueueCapacity(1000);
-        executor.setKeepAliveSeconds(30);
+        executor.setCorePoolSize(setting.getInt("core-pool-size", "Async", 8));
+        executor.setAllowCoreThreadTimeOut(setting.getBool("allow-core-thread-timeout", "Async", false));
+        executor.setMaxPoolSize(setting.getInt("max-pool-size", "Async", 32));
+        executor.setQueueCapacity(setting.getInt("queue-capacity", "Async", 512));
+        executor.setKeepAliveSeconds(setting.getInt("keep-alive-seconds", "Async", 30));
         executor.setThreadNamePrefix(ThreadPoolConst.ASYNC_TASK_PREFIX);
-        executor.setWaitForTasksToCompleteOnShutdown(true);
-        executor.setAwaitTerminationSeconds(60);
+        executor.setWaitForTasksToCompleteOnShutdown(setting.getBool("wait-for-tasks-to-complete-on-shutdown", "Async", true));
+        executor.setAwaitTerminationSeconds(setting.getInt("await-termination-Seconds", "Async", 30));
+        // 拒绝策略：由调用的线程处理该任务
         executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
         executor.initialize();
         return executor;
