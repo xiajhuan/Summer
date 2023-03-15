@@ -9,14 +9,14 @@
 # 堆内缓存配置，只有server.cache.type: HEAP 时会生效
 # capacity：最大缓存容量
 # remove-strategy：缓存满后对象的移除策略，值：FIF0（先入先出）/LFU（最少使用）/LRU（最近最久未使用）
-heap.string.capacity = 1000
-heap.string.remove-strategy = LRU
-heap.auto.capacity = 1000
-heap.auto.remove-strategy = LRU
-heap.hash.capacity = 1000
-heap.hash.remove-strategy = LRU
-heap.list.capacity = 1000
-heap.list.remove-strategy = LRU
+heap-string.capacity = 1000
+heap-string.remove-strategy = LRU
+heap-auto.capacity = 1000
+heap-auto.remove-strategy = LRU
+heap-hash.capacity = 1000
+heap-hash.remove-strategy = LRU
+heap-list.capacity = 1000
+heap-list.remove-strategy = LRU
 
 
 # Excel配置
@@ -24,7 +24,7 @@ heap.list.remove-strategy = LRU
 # Excel数据解析后的最大批量操作数，note：最多每隔该数量的数据后清理List，方便GC，防止OOM
 parser.max-batch-num = 2000
 # Excel数据解析后保存到缓存的过期时间（h），note：请谨慎使用该功能，防止OOM
-parser.cache.ttl = 24
+parser.cache-ttl = 24
 
 
 # MybatisPlus插件配置
@@ -48,7 +48,7 @@ node-num = 1
 timeout = 0
 
 # 是否记录限流成功时抛出的BusinessException，值：true/false
-success.log-exception = false
+log-exception-when-success = false
 
 
 # 树形结构配置
@@ -60,13 +60,13 @@ deep = 5
 [Sql]
 # Sql打印配置
 # p6spy不详细打印的Sql语句配置，替换格式：操作关键字:表名,操作关键字:表名，例如：INSERT:log_operation,INSERT:log_error
-sql.exclude-replace = INSERT:log_operation,INSERT:log_error,INSERT:log_login
+exclude-and-replace = INSERT:log_operation,INSERT:log_error,INSERT:log_login
 
 
 [Locale]
 # 地区语言配置
 # 中英文以外地区的默认语言，值：zh_CN/en_US
-extra.default = en_US
+extra-default = en_US
 
 
 [Async]

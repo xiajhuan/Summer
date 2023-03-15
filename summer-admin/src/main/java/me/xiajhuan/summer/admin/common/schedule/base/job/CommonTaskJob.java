@@ -24,7 +24,7 @@ import me.xiajhuan.summer.admin.common.log.service.LogOperationService;
 import org.springframework.scheduling.annotation.Scheduled;
 
 /**
- * 通用模块定时任务
+ * 通用模块基本定时任务
  *
  * @author xiajhuan
  * @date 2022/11/22

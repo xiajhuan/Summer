@@ -63,7 +63,7 @@ public class ThreadPoolConfig {
      */
     @Bean(ThreadPoolConst.SCHEDULE_JOB_POOL)
     public ScheduledExecutorService scheduledExecutorService(@Qualifier(SettingBeanConst.COMMON) Setting setting) {
-        return Executors.newScheduledThreadPool(setting.getInt("pool.core-size", "Schedule", 1),
+        return Executors.newScheduledThreadPool(setting.getInt("base.core-pool-size", "Schedule", 1),
                 ThreadUtil.newNamedThreadFactory(ThreadPoolConst.SCHEDULE_JOB_PREFIX, false));
     }
 

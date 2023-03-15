@@ -22,7 +22,7 @@ import javax.annotation.Resource;
 import java.util.concurrent.ScheduledExecutorService;
 
 /**
- * 定时任务线程池配置
+ * 基本定时任务线程池配置
  *
  * @author xiajhuan
  * @date 2022/11/22

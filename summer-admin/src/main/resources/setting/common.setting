@@ -9,7 +9,7 @@
 anon-uris = /api/**,/test/**
 
 # accessToken过期时间（h）
-token.expire = 12
+token-expire = 12
 
 # 图形验证码背景干扰类型，值：Line（线段干扰）Circle（圆圈干扰）Shear（扭曲干扰）
 captcha.type = Circle
@@ -26,19 +26,19 @@ captcha.height = 40
 captcha.char-num = 4
 
 # 图形验证码缓存（失效）时间（min）
-captcha.cache.ttl = 5
+captcha.cache-ttl = 5
 
 
 # 定时任务配置
 [Schedule]
-# 定时任务线程池核心线程数，note：建议和定时任务数一致
-pool.core-size = 2
+# 是否开启基本定时任务（总开关），值：true/false
+enable-base-schedule = true
+# 基本定时任务线程池核心线程数，note：建议和定时任务数一致
+base.core-pool-size = 2
 
-# 是否开启定时任务（总开关），值：true/false
-enable-schedule = true
-# 定时任务独立开关，只有总开关为true才能生效，值：true/false
-job.common = true
-job.business = true
+# 基本定时任务独立开关，只有总开关为true才能生效，值：true/false
+base.job-common = true
+base.job-business = true
 
 
 # 日志配置
@@ -46,11 +46,11 @@ job.business = true
 # 是否记录业务异常日志（BusinessException），值：true/false
 error.enable-business = true
 # 保存错误日志时，异常堆栈的最大长度，note：不能超过表字段限制的长度
-error.stacktrace.length = 65535
+error.stacktrace-length = 65535
 
 # 操作日志清理天数限制，-n则清理n天以前的日志
-operation.clear.day-limit = -30
+operation.clear-days-limit = -30
 # 错误日志清理天数限制，-n则清理n天以前的日志
-error.clear.day-limit = -90
+error.clear-days-limit = -90
 # 登录日志清理天数限制，-n则清理n天以前的日志
-login.clear.day-limit = -30
+login.clear-days-limit = -30

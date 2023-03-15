@@ -51,7 +51,7 @@ public class SecurityUserTokenServiceImpl extends ServiceImpl<SecurityUserTokenM
         SecurityUserTokenEntity tokenEntity = getOne(queryWrapper);
 
         // 计算Token过期时间
-        int expireHour = setting.getInt("token.expire", "Security", 12);
+        int expireHour = setting.getInt("token-expire", "Security", 12);
         Date expireTime = DateUtil.offsetHour(DateUtil.date(), expireHour);
 
         String accessToken;

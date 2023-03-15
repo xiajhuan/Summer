@@ -23,7 +23,7 @@ import me.xiajhuan.summer.core.constant.TimeUnitConst;
 import org.springframework.scheduling.annotation.Scheduled;
 
 /**
- * 业务模块定时任务
+ * 业务模块基本定时任务
  *
  * @author xiajhuan
  * @date 2023/3/12

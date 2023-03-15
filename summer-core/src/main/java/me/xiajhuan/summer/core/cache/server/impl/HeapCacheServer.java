@@ -91,26 +91,26 @@ public class HeapCacheServer implements CacheServer {
         // 默认移除策略
         String defaultStrategy = CacheConst.Heap.LRU;
 
-        capacityString = setting.getInt("heap.string.capacity", "Cache", 1000);
-        strategyString = setting.getByGroupWithLog("heap.string.remove-strategy", "Cache");
+        capacityString = setting.getInt("heap-string.capacity", "Cache", 1000);
+        strategyString = setting.getByGroupWithLog("heap-string.remove-strategy", "Cache");
         if (StrUtil.isBlank(strategyString)) {
             strategyString = defaultStrategy;
         }
 
-        capacityAuto = setting.getInt("heap.auto.capacity", "Cache", 1000);
-        strategyAuto = setting.getByGroupWithLog("heap.auto.remove-strategy", "Cache");
+        capacityAuto = setting.getInt("heap-auto.capacity", "Cache", 1000);
+        strategyAuto = setting.getByGroupWithLog("heap-auto.remove-strategy", "Cache");
         if (StrUtil.isBlank(strategyAuto)) {
             strategyAuto = defaultStrategy;
         }
 
-        capacityHash = setting.getInt("heap.hash.capacity", "Cache", 1000);
-        strategyHash = setting.getByGroupWithLog("heap.hash.remove-strategy", "Cache");
+        capacityHash = setting.getInt("heap-hash.capacity", "Cache", 1000);
+        strategyHash = setting.getByGroupWithLog("heap-hash.remove-strategy", "Cache");
         if (StrUtil.isBlank(strategyHash)) {
             strategyHash = defaultStrategy;
         }
 
-        capacityList = setting.getInt("heap.list.capacity", "Cache", 1000);
-        strategyList = setting.getByGroupWithLog("heap.list.remove-strategy", "Cache");
+        capacityList = setting.getInt("heap-list.capacity", "Cache", 1000);
+        strategyList = setting.getByGroupWithLog("heap-list.remove-strategy", "Cache");
         if (StrUtil.isBlank(strategyList)) {
             strategyList = defaultStrategy;
         }

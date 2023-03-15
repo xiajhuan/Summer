@@ -73,7 +73,7 @@ public class CommonExceptionHandler {
     @PostConstruct
     private void init() {
         enableBusinessErrorLog = commonSetting.getBool("error.enable-business", "Log", true);
-        enableLimitSuccessException = coreSetting.getBool("success.log-exception", "RateLimiter", false);
+        enableLimitSuccessException = coreSetting.getBool("log-exception-when-success", "RateLimiter", false);
     }
 
     /**

@@ -121,7 +121,7 @@ public class LogOperationServiceImpl extends ServiceImpl<LogOperationMapper, Log
         // 删除操作日志
         LambdaQueryWrapper<LogOperationEntity> queryWrapper = Wrappers.lambdaQuery();
         queryWrapper.select(LogOperationEntity::getId);
-        queryWrapper.lt(LogOperationEntity::getCreateTime, DateUtil.offsetDay(DateUtil.date(), setting.getInt("operation.clear.day-limit", "Log", -30)));
+        queryWrapper.lt(LogOperationEntity::getCreateTime, DateUtil.offsetDay(DateUtil.date(), setting.getInt("operation.clear-days-limit", "Log", -30)));
 
         List<LogOperationEntity> entityList = list(queryWrapper);
 

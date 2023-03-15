@@ -28,7 +28,7 @@ import org.springframework.context.annotation.Configuration;
 import javax.annotation.Resource;
 
 /**
- * 启用定时任务
+ * 启用基本定时任务
  * <pre>
  *  1.该定时任务无法提供对外暴露的接口，故不支持线上动态调整
  *  2.主要初衷是为一些基本的定时调度需求提供轻量级实现，例如：
@@ -63,15 +63,15 @@ public class JobEnableConfig {
     private LogLoginService logLoginService;
 
     /**
-     * 注册通用模块定时任务
+     * 注册通用模块基本定时任务
      *
-     * @return 通用模块定时任务
+     * @return 通用模块基本定时任务
      */
     @Bean
     public CommonTaskJob commonTaskJob() {
-        if (setting.getBool("enable-schedule", "Schedule", true)
-                && setting.getBool("job.common", "Schedule", true)) {
-            LOGGER.info("【{}】定时任务【CommonTaskJob】装载完毕", applicationName);
+        if (setting.getBool("enable-base-schedule", "Schedule", true)
+                && setting.getBool("base.job-common", "Schedule", true)) {
+            LOGGER.info("【{}】基本定时任务【CommonTaskJob】装载完毕", applicationName);
             return new CommonTaskJob().setLogOperationService(logOperationService)
                     .setLogErrorService(logErrorService)
                     .setLogLoginService(logLoginService);
@@ -80,15 +80,15 @@ public class JobEnableConfig {
     }
 
     /**
-     * 注册业务模块定时任务
+     * 注册业务模块基本定时任务
      *
-     * @return 业务模块定时任务
+     * @return 业务模块基本定时任务
      */
     @Bean
     public BusinessTaskJob businessTaskJob() {
-        if (setting.getBool("enable-schedule", "Schedule", true)
-                && setting.getBool("job.business", "Schedule", true)) {
-            LOGGER.info("【{}】定时任务【BusinessTaskJob】装载完毕", applicationName);
+        if (setting.getBool("enable-base-schedule", "Schedule", true)
+                && setting.getBool("base.job-business", "Schedule", true)) {
+            LOGGER.info("【{}】基本定时任务【BusinessTaskJob】装载完毕", applicationName);
             return new BusinessTaskJob();
         }
         return null;

@@ -136,7 +136,7 @@ public class LogErrorServiceImpl extends ServiceImpl<LogErrorMapper, LogErrorEnt
         }
 
         // 异常堆栈信息
-        log.setErrorInfo(ExceptionUtil.stacktraceToString(e, setting.getInt("error.stacktrace.length", "Log", 65535)));
+        log.setErrorInfo(ExceptionUtil.stacktraceToString(e, setting.getInt("error.stacktrace-length", "Log", 65535)));
 
         save(log);
     }
@@ -146,7 +146,7 @@ public class LogErrorServiceImpl extends ServiceImpl<LogErrorMapper, LogErrorEnt
         // 删除错误日志
         LambdaQueryWrapper<LogErrorEntity> queryWrapper = Wrappers.lambdaQuery();
         queryWrapper.select(LogErrorEntity::getId);
-        queryWrapper.lt(LogErrorEntity::getCreateTime, DateUtil.offsetDay(DateUtil.date(), setting.getInt("error.clear.day-limit", "Log", -90)));
+        queryWrapper.lt(LogErrorEntity::getCreateTime, DateUtil.offsetDay(DateUtil.date(), setting.getInt("error.clear-days-limit", "Log", -90)));
 
         List<LogErrorEntity> entityList = list(queryWrapper);
 

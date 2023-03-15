@@ -50,7 +50,7 @@ public class MessageUtil {
     static {
         messageSource = (MessageSource) SpringContextUtil.getBean("messageSource");
         extraDefault = SpringContextUtil.getBean(SettingBeanConst.CORE, Setting.class)
-                .getByGroupWithLog("extra.default", "Locale");
+                .getByGroupWithLog("extra-default", "Locale");
         if (StrUtil.isBlank(extraDefault)) {
             // 没有配置则默认为：zh_CN
             extraDefault = RegionSupportEnum.ZH_CN.getName();

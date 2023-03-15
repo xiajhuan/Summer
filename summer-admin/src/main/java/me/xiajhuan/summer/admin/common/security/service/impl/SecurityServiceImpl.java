@@ -145,7 +145,7 @@ public class SecurityServiceImpl implements SecurityService {
         // 缓存验证码
         CacheServerFactory.getInstance().getCacheServer()
                 .setStringTtl(StrUtil.format(CacheKeyConst.CAPTCHA_CODE, uuid), captcha.getCode(),
-                        setting.getInt("captcha.cache.ttl", "Security", 5) * TimeUnitConst.MINUTE);
+                        setting.getInt("captcha.cache-ttl", "Security", 5) * TimeUnitConst.MINUTE);
     }
 
     @Override
