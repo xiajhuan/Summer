@@ -7,11 +7,16 @@
 # 缓存配置
 [Cache]
 # 堆内缓存配置，只有server.cache.type: HEAP 时会生效
-# 最大缓存容量
-heap.capacity.string = 1000
-heap.capacity.auto = 1000
-heap.capacity.hash = 1000
-heap.capacity.list = 1000
+# capacity：最大缓存容量
+# remove-strategy：缓存满后对象的移除策略，值：FIF0（先入先出）/LFU（最少使用）/LRU（最近最久未使用）
+heap.string.capacity = 1000
+heap.string.remove-strategy = LRU
+heap.auto.capacity = 1000
+heap.auto.remove-strategy = LRU
+heap.hash.capacity = 1000
+heap.hash.remove-strategy = LRU
+heap.list.capacity = 1000
+heap.list.remove-strategy = LRU
 
 
 # Excel配置

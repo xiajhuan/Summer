@@ -12,11 +12,14 @@
 
 package me.xiajhuan.summer.core.cache.server.impl;
 
-import cn.hutool.cache.Cache;
-import cn.hutool.cache.CacheUtil;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.setting.Setting;
+import cn.hutool.cache.CacheUtil;
+import cn.hutool.cache.impl.AbstractCache;
+import cn.hutool.cache.impl.FIFOCache;
+import cn.hutool.cache.impl.LFUCache;
+import cn.hutool.cache.impl.LRUCache;
 import me.xiajhuan.summer.core.cache.server.CacheServer;
 import me.xiajhuan.summer.core.constant.SettingBeanConst;
 import me.xiajhuan.summer.core.utils.SpringContextUtil;
@@ -32,8 +35,11 @@ import java.util.Map;
  *
  * @author xiajhuan
  * @date 2022/11/22
- * @see Cache
  * @see CacheUtil
+ * @see AbstractCache
+ * @see FIFOCache
+ * @see LFUCache
+ * @see LRUCache
  */
 public class HeapCacheServer implements CacheServer {
 
@@ -43,9 +49,19 @@ public class HeapCacheServer implements CacheServer {
     private static int capacityString;
 
     /**
+     * 缓存满后对象的移除策略（String）
+     */
+    private static String strategyString;
+
+    /**
      * 缓存容量（Auto）
      */
     private static int capacityAuto;
+
+    /**
+     * 缓存满后对象的移除策略（Auto）
+     */
+    private static String strategyAuto;
 
     /**
      * 缓存容量（Hash）
@@ -53,19 +69,51 @@ public class HeapCacheServer implements CacheServer {
     private static int capacityHash;
 
     /**
+     * 缓存满后对象的移除策略（Hash）
+     */
+    private static String strategyHash;
+
+    /**
      * 缓存容量（List）
      */
     private static int capacityList;
 
+    /**
+     * 缓存满后对象的移除策略（List）
+     */
+    private static String strategyList;
+
     //*******************单例处理开始********************
 
     private HeapCacheServer() {
-        // 初始化缓存容量
+        // 初始化缓存容量和缓存满后对象的移除策略
         Setting setting = SpringContextUtil.getBean(SettingBeanConst.CORE, Setting.class);
-        capacityString = setting.getInt("heap.capacity.string", "Cache", 1000);
-        capacityAuto = setting.getInt("heap.capacity.auto", "Cache", 1000);
-        capacityHash = setting.getInt("heap.capacity.hash", "Cache", 1000);
-        capacityList = setting.getInt("heap.capacity.list", "Cache", 1000);
+        // 默认移除策略
+        String defaultStrategy = CacheConst.Heap.LRU;
+
+        capacityString = setting.getInt("heap.string.capacity", "Cache", 1000);
+        strategyString = setting.getByGroupWithLog("heap.string.remove-strategy", "Cache");
+        if (StrUtil.isBlank(strategyString)) {
+            strategyString = defaultStrategy;
+        }
+
+        capacityAuto = setting.getInt("heap.auto.capacity", "Cache", 1000);
+        strategyAuto = setting.getByGroupWithLog("heap.auto.remove-strategy", "Cache");
+        if (StrUtil.isBlank(strategyAuto)) {
+            strategyAuto = defaultStrategy;
+        }
+
+        capacityHash = setting.getInt("heap.hash.capacity", "Cache", 1000);
+        strategyHash = setting.getByGroupWithLog("heap.hash.remove-strategy", "Cache");
+        if (StrUtil.isBlank(strategyHash)) {
+            strategyHash = defaultStrategy;
+        }
+
+        capacityList = setting.getInt("heap.list.capacity", "Cache", 1000);
+        strategyList = setting.getByGroupWithLog("heap.list.remove-strategy", "Cache");
+        if (StrUtil.isBlank(strategyList)) {
+            strategyList = defaultStrategy;
+        }
     }
 
     private static volatile HeapCacheServer instance = null;
@@ -86,49 +134,72 @@ public class HeapCacheServer implements CacheServer {
     /**
      * String缓存
      */
-    private static Cache<String, String> cacheString;
+    private static AbstractCache<String, String> cacheString;
 
     /**
      * Auto缓存
      */
-    private static Cache<String, Long> cacheAuto;
+    private static AbstractCache<String, Long> cacheAuto;
 
     /**
      * Hash缓存
      */
-    private static Cache<String, Map<String, Object>> cacheHash;
+    private static AbstractCache<String, Map<String, Object>> cacheHash;
 
     /**
      * List缓存
      */
-    private static Cache<String, List<Object>> cacheList;
+    private static AbstractCache<String, List<Object>> cacheList;
 
     /**
-     * 初始化缓存，默认策略：FIFO
+     * 初始化缓存
      *
      * @param type 值类型
      */
-    public void initCache(String type) {
+    private void initCache(String type) {
         switch (type) {
             case CacheConst.VALUE_STRING:
                 if (cacheString == null) {
-                    cacheString = CacheUtil.newFIFOCache(capacityString);
+                    cacheString = initCacheInternal(capacityString, strategyString);
                 }
                 break;
             case CacheConst.VALUE_AUTO:
                 if (cacheAuto == null) {
-                    cacheAuto = CacheUtil.newFIFOCache(capacityAuto);
+                    cacheAuto = initCacheInternal(capacityAuto, strategyAuto);
                 }
                 break;
             case CacheConst.VALUE_HASH:
                 if (cacheHash == null) {
-                    cacheHash = CacheUtil.newFIFOCache(capacityHash);
+                    cacheHash = initCacheInternal(capacityHash, strategyHash);
+                }
+                break;
+            case CacheConst.VALUE_LIST:
+                if (cacheList == null) {
+                    cacheList = initCacheInternal(capacityList, strategyList);
                 }
                 break;
             default:
-                if (cacheList == null) {
-                    cacheList = CacheUtil.newFIFOCache(capacityList);
-                }
+                throw new IllegalArgumentException(StrUtil.format("不支持的缓存值类型【{}】", type));
+        }
+    }
+
+    /**
+     * 根据配置初始化缓存
+     *
+     * @param capacity 缓存容量
+     * @param strategy 缓存满后对象的移除策略
+     * @return {@link AbstractCache}
+     */
+    private AbstractCache initCacheInternal(int capacity, String strategy) {
+        switch (strategy) {
+            case CacheConst.Heap.FIFO:
+                return CacheUtil.newFIFOCache(capacity);
+            case CacheConst.Heap.LFU:
+                return CacheUtil.newLFUCache(capacity);
+            case CacheConst.Heap.LRU:
+                return CacheUtil.newLRUCache(capacity);
+            default:
+                throw new IllegalArgumentException(StrUtil.format("不支持的缓存移除策略【{}】", strategy));
         }
     }
 

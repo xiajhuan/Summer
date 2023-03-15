@@ -37,7 +37,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
-        <summer.version>1.0.0</summer.version>
+        <summer.version>1.0.0-SNAPSHOT</summer.version>
         <mysql.version>8.0.32</mysql.version>
         <mybatisplus.version>3.5.3.1</mybatisplus.version>
         <dynamic.datasource.version>3.6.1</dynamic.datasource.version>

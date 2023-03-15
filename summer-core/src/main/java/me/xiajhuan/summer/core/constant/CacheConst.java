@@ -54,4 +54,28 @@ public class CacheConst {
      */
     public static final String VALUE_LIST = "LIST";
 
+    /**
+     * 堆内缓存
+     */
+    public static class Heap {
+
+        //*******************缓存满后对象的移除策略********************
+
+        /**
+         * 先入先出
+         */
+        public static final String FIFO = "FIFO";
+
+        /**
+         * 最少使用
+         */
+        public static final String LFU = "LFU";
+
+        /**
+         * 最近最久未使用
+         */
+        public static final String LRU = "LRU";
+
+    }
+
 }
