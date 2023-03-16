@@ -12,11 +12,8 @@
 
 package me.xiajhuan.summer.admin.common.security.controller;
 
-import cn.hutool.log.Log;
-import cn.hutool.log.LogFactory;
 import me.xiajhuan.summer.admin.common.base.annotation.LogOperation;
 import me.xiajhuan.summer.core.constant.OperationConst;
-import me.xiajhuan.summer.core.constant.StrTemplateConst;
 import me.xiajhuan.summer.core.data.Result;
 import me.xiajhuan.summer.core.exception.BusinessException;
 import me.xiajhuan.summer.admin.common.security.dto.SecurityDeptDto;
@@ -41,8 +38,6 @@ import java.util.List;
 @RequestMapping("security/dept")
 public class SecurityDeptController {
 
-    private static final Log LOGGER = LogFactory.get();
-
     @Resource
     private SecurityDeptService mainService;
 
@@ -65,13 +60,13 @@ public class SecurityDeptController {
      *
      * @param id ID
      * @return 响应结果
+     * @throws BusinessException 业务异常
      */
     @GetMapping("getById")
     @RequiresPermissions("security:dept:getById")
     @LogOperation(OperationConst.GET_BY_ID)
     public Result<SecurityDeptDto> getById(Long id) throws BusinessException {
         AssertUtil.isNotNull("id", id);
-
         return Result.ofSuccess(mainService.getById(id));
     }
 
@@ -85,15 +80,8 @@ public class SecurityDeptController {
     @RequiresPermissions("security:dept:add")
     @LogOperation(OperationConst.ADD)
     public Result add(@Validated(AddGroup.class) SecurityDeptDto dto) {
-        try {
-            mainService.add(dto);
-
-            return Result.ofSuccess();
-        } catch (Exception e) {
-            LOGGER.error(e, StrTemplateConst.ERROR_LOG_MSG, OperationConst.ADD, e.getMessage());
-
-            return Result.ofFail();
-        }
+        mainService.add(dto);
+        return Result.ofSuccess();
     }
 
     /**
@@ -101,20 +89,14 @@ public class SecurityDeptController {
      *
      * @param dto 部门Dto
      * @return 响应结果
+     * @throws BusinessException 业务异常
      */
     @PutMapping("update")
     @RequiresPermissions("security:dept:update")
     @LogOperation(OperationConst.UPDATE)
-    public Result update(@Validated(UpdateGroup.class) SecurityDeptDto dto) {
-        try {
-            mainService.update(dto);
-
-            return Result.ofSuccess();
-        } catch (Exception e) {
-            LOGGER.error(e, StrTemplateConst.ERROR_LOG_MSG, OperationConst.UPDATE, e.getMessage());
-
-            return Result.ofFail();
-        }
+    public Result update(@Validated(UpdateGroup.class) SecurityDeptDto dto) throws BusinessException {
+        mainService.update(dto);
+        return Result.ofSuccess();
     }
 
     /**
@@ -129,16 +111,8 @@ public class SecurityDeptController {
     @LogOperation(OperationConst.DELETE)
     public Result delete(Long id) throws BusinessException {
         AssertUtil.isNotNull("id", id);
-
-        try {
-            mainService.delete(id);
-
-            return Result.ofSuccess();
-        } catch (Exception e) {
-            LOGGER.error(e, StrTemplateConst.ERROR_LOG_MSG, OperationConst.DELETE, e.getMessage());
-
-            return Result.ofFail();
-        }
+        mainService.delete(id);
+        return Result.ofSuccess();
     }
 
 }

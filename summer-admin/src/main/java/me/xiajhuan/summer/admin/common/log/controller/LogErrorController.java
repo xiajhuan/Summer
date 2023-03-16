@@ -75,7 +75,6 @@ public class LogErrorController {
     @LogOperation(OperationConst.GET_BY_ID)
     public Result<LogErrorDto> getById(Long id) throws BusinessException {
         AssertUtil.isNotNull("id", id);
-
         return Result.ofSuccess(mainService.getById(id));
     }
 
