@@ -17,6 +17,7 @@ import me.xiajhuan.summer.core.constant.OperationConst;
 import me.xiajhuan.summer.core.data.PageAndSort;
 import me.xiajhuan.summer.core.data.PageData;
 import me.xiajhuan.summer.core.data.Result;
+import me.xiajhuan.summer.core.exception.ErrorCode;
 import me.xiajhuan.summer.core.exception.FileDownloadException;
 import me.xiajhuan.summer.admin.common.log.dto.LogOperationDto;
 import me.xiajhuan.summer.admin.common.log.excel.LogOperationExcel;
@@ -78,7 +79,7 @@ public class LogOperationController {
         try {
             ExcelUtil.exportWithE(response, "操作日志", "操作日志", mainService.list(dto), LogOperationExcel.class);
         } catch (Exception e) {
-            throw FileDownloadException.of(e, "Excel导出失败");
+            throw FileDownloadException.of(e, ErrorCode.EXCEL_EXPORT_FAILURE);
         }
     }
 

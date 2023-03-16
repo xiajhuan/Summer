@@ -94,7 +94,7 @@ public class ShiroConfig {
 
         // 添加Oauth2过滤
         Map<String, Filter> filterMap = MapUtil.newHashMap(1);
-        filterMap.put("oauth2", new Oauth2Filter());
+        filterMap.put("oauth2", Oauth2Filter.of());
         shiroFilter.setFilters(filterMap);
 
         // 白名单URI过滤

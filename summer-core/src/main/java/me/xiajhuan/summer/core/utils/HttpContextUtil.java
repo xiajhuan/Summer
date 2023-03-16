@@ -164,7 +164,7 @@ public class HttpContextUtil {
             if (StrUtil.isNotBlank(queryString)) {
                 // Query参数，去除末尾的“&”
                 return queryString.endsWith("&") ? queryString.substring(0, queryString.length() - 1) : queryString;
-            } else if (args.length == 1 && args[0] instanceof String && JSONUtil.isJson(String.valueOf(args[0]))) {
+            } else if (args.length == 1 && args[0] instanceof String && JSONUtil.isTypeJSON(String.valueOf(args[0]))) {
                 // 参数为Json字符串
                 return String.valueOf(args[0]);
             } else {
@@ -186,7 +186,7 @@ public class HttpContextUtil {
         // 排除参数值为空的参数（包括空数组）
         args = Arrays.stream(args).filter(arg -> ObjectUtil.isNotEmpty(arg)).toArray();
 
-        // 标记当前参数是否为文件上传
+        // 标记当前参数是否为文件上传，true：不是 false：是
         boolean notMultipart = true;
 
         StringBuilder paramStr = StrUtil.builder();
@@ -204,7 +204,6 @@ public class HttpContextUtil {
                     paramStr.append(StrUtil.COMMA);
                 }
             }
-
         }
 
         if (!notMultipart) {

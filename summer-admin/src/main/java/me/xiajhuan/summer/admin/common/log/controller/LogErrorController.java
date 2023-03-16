@@ -18,6 +18,7 @@ import me.xiajhuan.summer.core.data.PageAndSort;
 import me.xiajhuan.summer.core.data.PageData;
 import me.xiajhuan.summer.core.data.Result;
 import me.xiajhuan.summer.core.exception.BusinessException;
+import me.xiajhuan.summer.core.exception.ErrorCode;
 import me.xiajhuan.summer.core.exception.FileDownloadException;
 import me.xiajhuan.summer.admin.common.log.dto.LogErrorDto;
 import me.xiajhuan.summer.admin.common.log.excel.LogErrorExcel;
@@ -95,7 +96,7 @@ public class LogErrorController {
         try {
             ExcelUtil.exportWithE(response, "错误日志", "错误日志", mainService.list(dto), LogErrorExcel.class);
         } catch (Exception e) {
-            throw FileDownloadException.of(e, "Excel导出失败");
+            throw FileDownloadException.of(e, ErrorCode.EXCEL_EXPORT_FAILURE);
         }
     }
 

@@ -24,7 +24,6 @@ import me.xiajhuan.summer.core.exception.ErrorCode;
 import me.xiajhuan.summer.admin.common.log.service.LogErrorService;
 import me.xiajhuan.summer.core.exception.FileDownloadException;
 import me.xiajhuan.summer.core.utils.HttpContextUtil;
-import me.xiajhuan.summer.core.utils.MessageUtil;
 import org.apache.shiro.authz.AuthorizationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
@@ -122,9 +121,9 @@ public class CommonExceptionHandler {
     public Result handleBindException(BindException e) {
         StringBuilder message = StrUtil.builder();
         List<FieldError> fieldErrors = e.getBindingResult().getFieldErrors();
-        for (FieldError error : fieldErrors) {
-            message.append(error.getField()).append("【").append(error.getDefaultMessage()).append("】").append(StrPool.COMMA);
-        }
+        fieldErrors.forEach(error -> message.append(error.getField())
+                .append("【").append(error.getDefaultMessage()).append("】")
+                .append(StrPool.COMMA));
         return Result.ofFail(message.substring(0, message.length() - 1));
     }
 
@@ -135,8 +134,11 @@ public class CommonExceptionHandler {
      */
     @ExceptionHandler(value = FileDownloadException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public void handleFileDownloadException(FileDownloadException e) {
-        LOGGER.error(e, "文件下载异常【{}】", e.getMessage());
+    public Result handleFileDownloadException(FileDownloadException e) {
+        String msg = e.getMessage();
+        LOGGER.error(e, "文件下载异常【{}】", msg);
+
+        return Result.ofFail(msg);
     }
 
     /**

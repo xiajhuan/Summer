@@ -44,6 +44,25 @@ public class FileDownloadException extends Exception {
     }
 
     /**
+     * 构建文件下载异常（作为原始异常），默认消息：“文件下载失败”
+     *
+     * @return 文件下载异常
+     */
+    public static FileDownloadException of() {
+        return of(ErrorCode.FILE_DOWNLOAD_FAILURE);
+    }
+
+    /**
+     * 构建文件下载异常（包装原始异常），默认消息：”文件下载失败“
+     *
+     * @param cause 原始异常
+     * @return 文件下载异常
+     */
+    public static FileDownloadException of(Throwable cause) {
+        return of(cause, ErrorCode.FILE_DOWNLOAD_FAILURE);
+    }
+
+    /**
      * 构建文件下载异常（作为原始异常），消息国际化
      *
      * @param code  错误编码 {@link ErrorCode}

@@ -57,7 +57,7 @@ public class Result<T> implements Serializable {
      * @return 响应结果
      */
     public static Result ofSuccess() {
-        return ofSuccess(MessageUtil.getI18nMessage(200));
+        return ofSuccess(MessageUtil.getI18nMessage(Success.OPERATION));
     }
 
     /**
@@ -73,7 +73,7 @@ public class Result<T> implements Serializable {
 
     /**
      * 成功（不带数据）（消息国际化）<br>
-     * note：预留方法，需自定义成功消息的国际化编码，如：200
+     * note：预留方法，需自定义成功消息的国际化编码，如：{@link Success#OPERATION}
      *
      * @param code  成功编码
      * @param param 消息填充参数
@@ -91,6 +91,20 @@ public class Result<T> implements Serializable {
      */
     public static Result ofSuccess(String msg) {
         return ofSuccess(null, msg);
+    }
+
+    /**
+     * 成功（带数据）（消息国际化）<br>
+     * note：预留方法，需自定义成功消息的国际化编码，如：{@link Success#OPERATION}
+     *
+     * @param data  响应数据
+     * @param code  成功编码
+     * @param param 消息填充参数
+     * @param <T>   响应数据类型
+     * @return 响应结果
+     */
+    public static <T> Result<T> ofSuccess(T data, int code, String... param) {
+        return ofSuccess(data, MessageUtil.getI18nMessage(code, param));
     }
 
     /**
@@ -140,6 +154,19 @@ public class Result<T> implements Serializable {
     }
 
     /**
+     * 失败（带数据）（消息国际化）
+     *
+     * @param data  响应数据
+     * @param code  错误编码 {@link ErrorCode}
+     * @param param 消息填充参数
+     * @param <T>   响应数据类型
+     * @return 响应结果
+     */
+    public static <T> Result<T> ofFail(T data, int code, String... param) {
+        return ofFail(data, MessageUtil.getI18nMessage(code, param));
+    }
+
+    /**
      * 失败（带数据）（带消息）
      *
      * @param data 响应数据
@@ -153,6 +180,18 @@ public class Result<T> implements Serializable {
         result.setData(data);
         result.setMsg(msg);
         return result;
+    }
+
+    /**
+     * 成功代码
+     */
+    public static class Success {
+
+        /**
+         * 操作成功
+         */
+        public static final int OPERATION = 200;
+
     }
 
 }

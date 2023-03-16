@@ -42,6 +42,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -110,12 +111,8 @@ public class DataScopeHandler implements MultiDataPermissionHandler {
      * @return 是否匹配，true：匹配 false：不匹配
      */
     private boolean ignoreMatches(String tableName) {
-        for (int i = 0; i < dataScopeIgnoreArray.length; i++) {
-            if (WildcardUtil.matches(tableName, dataScopeIgnoreArray[i])) {
-                return true;
-            }
-        }
-        return false;
+        return Arrays.stream(dataScopeIgnoreArray)
+                .anyMatch(ignore -> WildcardUtil.matches(tableName, ignore));
     }
 
     /**
@@ -165,7 +162,7 @@ public class DataScopeHandler implements MultiDataPermissionHandler {
      * 根据部门ID获取过滤条件<br>
      * 基于 角色/本部门/本部门及以下
      *
-     * @param prefix     前缀
+     * @param prefix    前缀
      * @param deptIdSet 部门ID集合
      * @return {@link Expression}
      * @see DataScopeEnum#ROLE_BASED

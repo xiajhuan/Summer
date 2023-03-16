@@ -12,6 +12,7 @@
 
 package me.xiajhuan.summer.core.ratelimiter.aspect;
 
+import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
@@ -41,7 +42,6 @@ import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.TimeUnit;
 
@@ -50,7 +50,8 @@ import java.util.concurrent.TimeUnit;
  *
  * @author xiajhuan
  * @date 2022/12/1
- * @see com.google.common.util.concurrent.RateLimiter
+ * @see com.google.common.util.concurrent.RateLimiter#create(double)
+ * @see com.google.common.util.concurrent.RateLimiter#tryAcquire(long, TimeUnit)
  */
 @Aspect
 @Component
@@ -113,7 +114,7 @@ public class RateLimiterAspect {
      * Value：{@link com.google.common.util.concurrent.RateLimiter}
      * </p>
      */
-    private static final ConcurrentMap<String, com.google.common.util.concurrent.RateLimiter> RATE_LIMITER_CACHE = new ConcurrentHashMap<>();
+    private static final ConcurrentMap<String, com.google.common.util.concurrent.RateLimiter> RATE_LIMITER_CACHE = MapUtil.newConcurrentHashMap();
 
     /**
      * 切入点

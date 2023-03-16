@@ -33,8 +33,18 @@ public class Oauth2Token implements AuthenticationToken {
      *
      * @param token accessToken
      */
-    public Oauth2Token(String token) {
+    private Oauth2Token(String token) {
         this.token = token;
+    }
+
+    /**
+     * 构建Oauth2Token
+     *
+     * @param token accessToken
+     * @return Oauth2Token
+     */
+    public static Oauth2Token of(String token) {
+        return new Oauth2Token(token);
     }
 
     @Override

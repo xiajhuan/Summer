@@ -42,15 +42,30 @@ public class Oauth2Filter extends AuthenticatingFilter {
 
     private static final Log LOGGER = LogFactory.get();
 
+    /**
+     * 构造Oauth2Filter
+     */
+    private Oauth2Filter() {
+    }
+
+    /**
+     * 构建Oauth2Filter
+     *
+     * @return Oauth2Filter
+     */
+    public static Oauth2Filter of() {
+        return new Oauth2Filter();
+    }
+
     @Override
     protected AuthenticationToken createToken(ServletRequest request, ServletResponse response) {
-        // 获取请求携带token
-        String token = getRequestToken((HttpServletRequest) request);
+        // 获取accessToken
+        String accessToken = getAccessToken((HttpServletRequest) request);
 
-        if (StrUtil.isBlank(token)) {
+        if (StrUtil.isBlank(accessToken)) {
             return null;
         }
-        return new Oauth2Token(token);
+        return Oauth2Token.of(accessToken);
     }
 
     @Override
@@ -63,8 +78,8 @@ public class Oauth2Filter extends AuthenticatingFilter {
 
     @Override
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
-        // 获取请求携带token，若token不存在则直接返回401
-        String token = getRequestToken((HttpServletRequest) request);
+        // 获取accessToken，若token不存在则直接返回401
+        String token = getAccessToken((HttpServletRequest) request);
 
         if (StrUtil.isBlank(token)) {
             HttpServletResponse httpResponse = (HttpServletResponse) response;
@@ -106,12 +121,12 @@ public class Oauth2Filter extends AuthenticatingFilter {
     }
 
     /**
-     * 获取请求携带Token
+     * 获取accessToken
      *
      * @param httpRequest {@link HttpServletRequest}
-     * @return 请求携带Token
+     * @return accessToken
      */
-    private String getRequestToken(HttpServletRequest httpRequest) {
+    private String getAccessToken(HttpServletRequest httpRequest) {
         // 从header中获取token
         String token = httpRequest.getHeader(SecurityConst.TOKEN_HEADER);
 

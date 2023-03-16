@@ -13,8 +13,8 @@
 package me.xiajhuan.summer.core.exception;
 
 /**
- * 错误编码，由5位数字组成，前2位为模块编码，后3位为业务编码<br>
- * 如：10001（10代表权限相关模块，001代表业务代码）
+ * common和business模块的错误编码，由5位数字组成，前2位为模块编码，后3位为业务编码<br>
+ * 如：10004（10代表权限相关模块，004代表具体业务）
  *
  * @author xiajhuan
  * @date 2022/11/19
@@ -22,16 +22,6 @@ package me.xiajhuan.summer.core.exception;
 public interface ErrorCode {
 
     //*******************system********************
-
-    /**
-     * 操作失败
-     */
-    int OPERATION_FAILURE = 1000;
-
-    /**
-     * 服务器内部异常
-     */
-    int INTERNAL_SERVER_ERROR = 500;
 
     /**
      * 未授权，请先登录
@@ -44,9 +34,31 @@ public interface ErrorCode {
     int FORBIDDEN = 403;
 
     /**
+     * 服务器内部异常
+     */
+    int INTERNAL_SERVER_ERROR = 500;
+
+    //*******************custom********************
+
+    /**
+     * 操作失败
+     */
+    int OPERATION_FAILURE = 1000;
+
+    /**
+     * 文件下载失败
+     */
+    int FILE_DOWNLOAD_FAILURE = 1001;
+
+    /**
+     * Excel导出失败
+     */
+    int EXCEL_EXPORT_FAILURE = 1002;
+
+    /**
      * 服务器繁忙，请稍后再试~
      */
-    int SERVER_BUSY = 800;
+    int SERVER_BUSY = 1003;
 
     //*******************common********************
 
