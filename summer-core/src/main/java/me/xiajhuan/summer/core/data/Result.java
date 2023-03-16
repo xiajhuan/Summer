@@ -15,7 +15,7 @@ package me.xiajhuan.summer.core.data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import me.xiajhuan.summer.core.utils.MessageUtil;
+import me.xiajhuan.summer.core.utils.LocaleUtil;
 import me.xiajhuan.summer.core.exception.ErrorCode;
 
 import java.io.Serializable;
@@ -57,7 +57,7 @@ public class Result<T> implements Serializable {
      * @return 响应结果
      */
     public static Result ofSuccess() {
-        return ofSuccess(MessageUtil.getI18nMessage(Success.OPERATION));
+        return ofSuccess(LocaleUtil.getI18nMessage(Success.OPERATION));
     }
 
     /**
@@ -80,7 +80,7 @@ public class Result<T> implements Serializable {
      * @return 响应结果
      */
     public static Result ofSuccess(int code, String... param) {
-        return ofSuccess(null, MessageUtil.getI18nMessage(code, param));
+        return ofSuccess(null, LocaleUtil.getI18nMessage(code, param));
     }
 
     /**
@@ -104,7 +104,7 @@ public class Result<T> implements Serializable {
      * @return 响应结果
      */
     public static <T> Result<T> ofSuccess(T data, int code, String... param) {
-        return ofSuccess(data, MessageUtil.getI18nMessage(code, param));
+        return ofSuccess(data, LocaleUtil.getI18nMessage(code, param));
     }
 
     /**
@@ -140,7 +140,7 @@ public class Result<T> implements Serializable {
      * @return 响应结果
      */
     public static Result ofFail(int code, String... param) {
-        return ofFail(null, MessageUtil.getI18nMessage(code, param));
+        return ofFail(null, LocaleUtil.getI18nMessage(code, param));
     }
 
     /**
@@ -163,7 +163,7 @@ public class Result<T> implements Serializable {
      * @return 响应结果
      */
     public static <T> Result<T> ofFail(T data, int code, String... param) {
-        return ofFail(data, MessageUtil.getI18nMessage(code, param));
+        return ofFail(data, LocaleUtil.getI18nMessage(code, param));
     }
 
     /**

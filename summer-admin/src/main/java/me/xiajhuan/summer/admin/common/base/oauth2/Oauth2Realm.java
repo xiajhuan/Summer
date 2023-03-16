@@ -17,7 +17,7 @@ import me.xiajhuan.summer.admin.common.security.entity.SecurityUserTokenEntity;
 import me.xiajhuan.summer.admin.common.security.service.SecurityService;
 import me.xiajhuan.summer.core.data.LoginUser;
 import me.xiajhuan.summer.core.utils.ConvertUtil;
-import me.xiajhuan.summer.core.utils.MessageUtil;
+import me.xiajhuan.summer.core.utils.LocaleUtil;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -70,7 +70,7 @@ public class Oauth2Realm extends AuthorizingRealm {
         SecurityUserTokenEntity tokenEntity = securityService.getByToken(accessToken);
         // token失效
         if (tokenEntity == null || tokenEntity.getExpireTime().getTime() < System.currentTimeMillis()) {
-            throw new IncorrectCredentialsException(MessageUtil.getI18nMessage(ErrorCode.TOKEN_INVALID));
+            throw new IncorrectCredentialsException(LocaleUtil.getI18nMessage(ErrorCode.TOKEN_INVALID));
         }
 
         // 查询用户信息并转换成LoginUser
@@ -84,7 +84,7 @@ public class Oauth2Realm extends AuthorizingRealm {
 
         // 账号锁定
         if (loginUser.getStatus() == 0) {
-            throw new LockedAccountException(MessageUtil.getI18nMessage(ErrorCode.ACCOUNT_LOCK));
+            throw new LockedAccountException(LocaleUtil.getI18nMessage(ErrorCode.ACCOUNT_LOCK));
         }
 
         SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(loginUser, accessToken, getName());

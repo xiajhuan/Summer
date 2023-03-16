@@ -12,7 +12,7 @@
 
 package me.xiajhuan.summer.core.exception;
 
-import me.xiajhuan.summer.core.utils.MessageUtil;
+import me.xiajhuan.summer.core.utils.LocaleUtil;
 
 /**
  * 业务异常
@@ -70,7 +70,7 @@ public class BusinessException extends Exception {
      * @return 业务异常
      */
     public static BusinessException of(int code, String... param) {
-        return of(MessageUtil.getI18nMessage(code, param));
+        return of(LocaleUtil.getI18nMessage(code, param));
     }
 
     /**
@@ -82,7 +82,7 @@ public class BusinessException extends Exception {
      * @return 业务异常
      */
     public static BusinessException of(Throwable cause, int code, String... param) {
-        return of(cause, MessageUtil.getI18nMessage(code, param));
+        return of(cause, LocaleUtil.getI18nMessage(code, param));
     }
 
     /**

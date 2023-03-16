@@ -17,7 +17,6 @@ import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
-import me.xiajhuan.summer.core.enums.RegionSupportEnum;
 import org.aspectj.lang.JoinPoint;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.context.request.RequestAttributes;
@@ -31,7 +30,6 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.Map;
-import java.util.Locale;
 
 /**
  * Http上下文工具
@@ -105,35 +103,6 @@ public class HttpContextUtil {
      */
     public static String getUserAgent(HttpServletRequest request) {
         return request.getHeader(HttpHeaders.USER_AGENT);
-    }
-
-    /**
-     * 获取请求语言对应 {@link Locale}
-     * <p>
-     * Locale：表示特定的地理，政治，或文化区域，
-     * note：只支持“Accept-Language”以“zh”或“en”开头的
-     * </p>
-     *
-     * @param request {@link HttpServletRequest}
-     * @return 请求语言对应 {@link Locale}
-     * @see RegionSupportEnum
-     */
-    public static Locale getLocale(HttpServletRequest request) {
-        if (request == null) {
-            return null;
-        }
-        // 请求语言
-        String languageHeader = request.getHeader(HttpHeaders.ACCEPT_LANGUAGE);
-        if (languageHeader != null && languageHeader.length() >= 2) {
-            if ("zh".equals(languageHeader.substring(0, 2))) {
-                // 所有中文地区，强制为：中国（中文）
-                return RegionSupportEnum.ZH_CN.getValue();
-            } else if ("en".equals(languageHeader.substring(0, 2))) {
-                // 所有英文地区，强制为：美国（英语）
-                return RegionSupportEnum.EN_US.getValue();
-            }
-        }
-        return null;
     }
 
     /**

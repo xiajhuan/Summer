@@ -25,7 +25,7 @@ import java.util.Locale;
  */
 @Getter
 @AllArgsConstructor
-public enum RegionSupportEnum {
+public enum LocaleSupportEnum {
 
     /**
      * zh_CN

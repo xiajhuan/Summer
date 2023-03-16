@@ -12,7 +12,7 @@
 
 package me.xiajhuan.summer.core.exception;
 
-import me.xiajhuan.summer.core.utils.MessageUtil;
+import me.xiajhuan.summer.core.utils.LocaleUtil;
 
 /**
  * 文件下载异常
@@ -70,7 +70,7 @@ public class FileDownloadException extends Exception {
      * @return 文件下载异常
      */
     public static FileDownloadException of(int code, String... param) {
-        return of(MessageUtil.getI18nMessage(code, param));
+        return of(LocaleUtil.getI18nMessage(code, param));
     }
 
     /**
@@ -82,7 +82,7 @@ public class FileDownloadException extends Exception {
      * @return 文件下载异常
      */
     public static FileDownloadException of(Throwable cause, int code, String... param) {
-        return of(cause, MessageUtil.getI18nMessage(code, param));
+        return of(cause, LocaleUtil.getI18nMessage(code, param));
     }
 
 
