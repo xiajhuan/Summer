@@ -78,7 +78,7 @@ public class SecurityRoleController {
      * @param dto 角色Dto
      * @return 响应结果
      */
-    @PostMapping("update")
+    @PutMapping("update")
     @RequiresPermissions("security:role:update")
     @LogOperation(OperationConst.UPDATE)
     public Result update(@Validated(UpdateGroup.class) SecurityRoleDto dto) {

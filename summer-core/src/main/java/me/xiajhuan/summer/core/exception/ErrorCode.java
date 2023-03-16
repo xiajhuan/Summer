@@ -51,14 +51,19 @@ public interface ErrorCode {
     int FILE_DOWNLOAD_FAILURE = 1001;
 
     /**
+     * Excel模板下载失败
+     */
+    int EXCEL_TEMPLATE_DOWNLOAD_FAILURE = 1002;
+
+    /**
      * Excel导出失败
      */
-    int EXCEL_EXPORT_FAILURE = 1002;
+    int EXCEL_EXPORT_FAILURE = 1003;
 
     /**
      * 服务器繁忙，请稍后再试~
      */
-    int SERVER_BUSY = 1003;
+    int SERVER_BUSY = 1004;
 
     //*******************common********************
 
