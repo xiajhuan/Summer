@@ -10,7 +10,7 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.admin.common;
+package me.xiajhuan.summer.admin.core;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Console;

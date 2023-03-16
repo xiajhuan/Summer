@@ -88,8 +88,10 @@ public class DataScopeHandler implements MultiDataPermissionHandler {
 
     @Override
     public Expression getSqlSegment(Table table, Expression where, String mappedStatementId) {
-        if (ArrayUtil.isNotEmpty(dataScopeIgnoreArray) && ignoreMatches(table.getName())) {
-            // 忽略的表
+        if (ArrayUtil.isNotEmpty(dataScopeIgnoreArray)
+                && Arrays.stream(dataScopeIgnoreArray)
+                .anyMatch(ignore -> WildcardUtil.matches(table.getName(), ignore))) {
+            // 表名匹配被忽略的表配置，则不过滤数据权限
             return null;
         }
 
@@ -102,17 +104,6 @@ public class DataScopeHandler implements MultiDataPermissionHandler {
         }
 
         return getParenthesis(prefix);
-    }
-
-    /**
-     * 检查表名是否匹配被忽略的表配置
-     *
-     * @param tableName 表名
-     * @return 是否匹配，true：匹配 false：不匹配
-     */
-    private boolean ignoreMatches(String tableName) {
-        return Arrays.stream(dataScopeIgnoreArray)
-                .anyMatch(ignore -> WildcardUtil.matches(tableName, ignore));
     }
 
     /**
