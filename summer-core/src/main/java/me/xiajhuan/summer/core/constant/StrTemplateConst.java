@@ -31,11 +31,6 @@ public class StrTemplateConst {
     public static final String OPERATION_NAME = "【{}】{}";
 
     /**
-     * 接口失败信息
-     */
-    public static final String ERROR_LOG_MSG = "{}失败【{}】";
-
-    /**
      * 限流Key
      */
     public static final String RATE_LIMITER_KEY = "{}#{}";

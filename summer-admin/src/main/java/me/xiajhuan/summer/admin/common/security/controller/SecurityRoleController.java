@@ -12,11 +12,8 @@
 
 package me.xiajhuan.summer.admin.common.security.controller;
 
-import cn.hutool.log.Log;
-import cn.hutool.log.LogFactory;
 import me.xiajhuan.summer.admin.common.base.annotation.LogOperation;
 import me.xiajhuan.summer.core.constant.OperationConst;
-import me.xiajhuan.summer.core.constant.StrTemplateConst;
 import me.xiajhuan.summer.core.data.PageAndSort;
 import me.xiajhuan.summer.core.data.PageData;
 import me.xiajhuan.summer.core.data.Result;
@@ -41,8 +38,6 @@ import javax.annotation.Resource;
 @RestController
 @RequestMapping("security/role")
 public class SecurityRoleController {
-
-    private static final Log LOGGER = LogFactory.get();
 
     @Resource
     private SecurityRoleService mainService;
@@ -73,15 +68,8 @@ public class SecurityRoleController {
     @RequiresPermissions("security:role:add")
     @LogOperation(OperationConst.ADD)
     public Result add(@Validated(AddGroup.class) SecurityRoleDto dto) {
-        try {
-            mainService.add(dto);
-
-            return Result.ofSuccess();
-        } catch (Exception e) {
-            LOGGER.error(e, StrTemplateConst.ERROR_LOG_MSG, OperationConst.ADD, e.getMessage());
-
-            return Result.ofFail();
-        }
+        mainService.add(dto);
+        return Result.ofSuccess();
     }
 
     /**
@@ -94,15 +82,8 @@ public class SecurityRoleController {
     @RequiresPermissions("security:role:update")
     @LogOperation(OperationConst.UPDATE)
     public Result update(@Validated(UpdateGroup.class) SecurityRoleDto dto) {
-        try {
-            mainService.update(dto);
-
-            return Result.ofSuccess();
-        } catch (Exception e) {
-            LOGGER.error(e, StrTemplateConst.ERROR_LOG_MSG, OperationConst.UPDATE, e.getMessage());
-
-            return Result.ofFail();
-        }
+        mainService.update(dto);
+        return Result.ofSuccess();
     }
 
     /**
@@ -117,16 +98,8 @@ public class SecurityRoleController {
     @LogOperation(OperationConst.DELETE)
     public Result delete(Long[] ids) throws BusinessException {
         AssertUtil.isNotEmpty("ids", ids);
-
-        try {
-            mainService.delete(ids);
-
-            return Result.ofSuccess();
-        } catch (Exception e) {
-            LOGGER.error(e, StrTemplateConst.ERROR_LOG_MSG, OperationConst.DELETE, e.getMessage());
-
-            return Result.ofFail();
-        }
+        mainService.delete(ids);
+        return Result.ofSuccess();
     }
 
 }
