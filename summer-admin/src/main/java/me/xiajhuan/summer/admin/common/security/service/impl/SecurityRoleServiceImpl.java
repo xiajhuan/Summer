@@ -29,9 +29,6 @@ import me.xiajhuan.summer.admin.common.security.service.SecurityRoleService;
 import me.xiajhuan.summer.core.utils.ConvertUtil;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.stream.Collectors;
-
 /**
  * 角色 ServiceImpl
  *
@@ -96,7 +93,7 @@ public class SecurityRoleServiceImpl extends ServiceImpl<SecurityRoleMapper, Sec
 
     @Override
     public void delete(Long[] ids) {
-        removeByIds(Arrays.stream(ids).collect(Collectors.toSet()));
+
     }
 
 }
