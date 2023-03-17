@@ -10,7 +10,7 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.core.sql;
+package me.xiajhuan.summer.core.config;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.text.StrPool;
@@ -24,37 +24,37 @@ import me.xiajhuan.summer.core.utils.SpringContextUtil;
 import java.util.Arrays;
 
 /**
- * p6spy sql输出格式
+ * Sql输出格式配置
  *
  * @author xiajhuan
  * @date 2022/11/26
  * @see MessageFormattingStrategy
  */
-public class P6spySqlFormatConfig implements MessageFormattingStrategy {
+public class SqlFormatConfig implements MessageFormattingStrategy {
 
     /**
-     * p6spy不详细打印的Sql语句替换数组，例如：["INSERT:log_operation","INSERT:log_error"]
+     * 不详细打印的Sql语句替换数组，例如：["INSERT:log_operation","INSERT:log_error"]
      */
-    private static String[] excludeReplaceSqlArray = null;
+    private static String[] excludeAndReplaceSqlArray = null;
 
     /**
-     * 初始化 {@link excludeReplaceSqlArray}
+     * 初始化 {@link excludeAndReplaceSqlArray}
      */
     static {
-        String excludeReplaceSql = SpringContextUtil.getBean(SettingBeanConst.CORE, Setting.class)
+        String excludeAndReplaceSql = SpringContextUtil.getBean(SettingBeanConst.CORE, Setting.class)
                 .getByGroup("exclude-and-replace", "Sql");
 
-        if (StrUtil.isNotBlank(excludeReplaceSql)) {
-            excludeReplaceSqlArray = excludeReplaceSql.split(StrPool.COMMA);
+        if (StrUtil.isNotBlank(excludeAndReplaceSql)) {
+            excludeAndReplaceSqlArray = excludeAndReplaceSql.split(StrPool.COMMA);
         }
     }
 
     @Override
     public String formatMessage(int connectionId, String now, long elapsed, String category, String prepared, String sql, String url) {
-        String replaceStr = getExcludeAndReplaceSql(sql);
+        String replace = getReplaceSql(sql);
         if (StrUtil.isNotBlank(sql)) {
-            if (StrUtil.isNotBlank(replaceStr)) {
-                return replaceStr;
+            if (StrUtil.isNotBlank(replace)) {
+                return replace;
             }
             return StrUtil.format("{} | 耗时 {} ms | SQL 语句：\n{};",
                     DateUtil.formatDateTime(DateUtil.date()), elapsed, sql.replaceAll("[\\s]+", StrUtil.SPACE));
@@ -69,13 +69,13 @@ public class P6spySqlFormatConfig implements MessageFormattingStrategy {
      * </p>
      *
      * @param sql Sql
-     * @return 替换后的Sql或空串
+     * @return 替换的字符串或空串
      */
-    private String getExcludeAndReplaceSql(String sql) {
-        if (ArrayUtil.isNotEmpty(excludeReplaceSqlArray)) {
-            return Arrays.stream(excludeReplaceSqlArray).filter(exclude -> {
-                if (exclude.indexOf(StrPool.COLON) > 0) {
-                    String[] operationAndTable = exclude.split(StrPool.COLON);
+    private String getReplaceSql(String sql) {
+        if (ArrayUtil.isNotEmpty(excludeAndReplaceSqlArray)) {
+            return Arrays.stream(excludeAndReplaceSqlArray).filter(replace -> {
+                if (replace.indexOf(StrPool.COLON) > 0) {
+                    String[] operationAndTable = replace.split(StrPool.COLON);
                     if (sql.indexOf(operationAndTable[0]) >= 0 && sql.indexOf(operationAndTable[1]) >= 0) {
                         return true;
                     }

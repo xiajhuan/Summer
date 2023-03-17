@@ -34,14 +34,16 @@ public abstract class SimpleBaseEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 主键ID，默认策略：主键自增
+     * 主键ID，默认策略：分配ID（雪花算法）
+     *
+     * @see IdType
      */
-    @TableId(value = "id", type = IdType.AUTO)
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Long id;
 
     /**
      * 创建者<br>
-     * 使用数据权限功能则必须包含此字段
+     * note：使用数据权限功能则必须包含此字段
      */
     @TableField(fill = FieldFill.INSERT, value = "create_by")
     private String createBy;

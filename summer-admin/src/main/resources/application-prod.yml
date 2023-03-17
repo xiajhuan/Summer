@@ -60,6 +60,8 @@ logging:
         summer:
           # summer-core日志
           core:
+            # Excel日志
+            excel: debug
             # 限流日志
             ratelimiter: debug
           # summer-admin日志

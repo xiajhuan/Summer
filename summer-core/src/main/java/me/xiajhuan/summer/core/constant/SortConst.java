@@ -28,7 +28,7 @@ public class SortConst {
     /**
      * 默认排序字段
      */
-    public static final String DEFAULT_SORT = "createTime";
+    public static final String DEFAULT_FIELD = "createTime";
 
     /**
      * 默认排序规则
@@ -36,13 +36,13 @@ public class SortConst {
     public static final String DEFAULT_ORDER = "descend";
 
     /**
-     * 降序字符数组
-     */
-    public static final String[] ORDER_DESC = {"desc", "descend", "descending"};
-
-    /**
      * 升序字符数组
      */
     public static final String[] ORDER_ASC = {"asc", "ascend", "ascending"};
+
+    /**
+     * 降序字符数组
+     */
+    public static final String[] ORDER_DESC = {"desc", "descend", "descending"};
 
 }

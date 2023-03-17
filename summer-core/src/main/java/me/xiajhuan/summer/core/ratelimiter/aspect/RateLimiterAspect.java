@@ -19,7 +19,7 @@ import cn.hutool.log.LogFactory;
 import cn.hutool.setting.Setting;
 import me.xiajhuan.summer.core.constant.SettingBeanConst;
 import me.xiajhuan.summer.core.constant.StrTemplateConst;
-import me.xiajhuan.summer.core.enums.DefaultUserEnum;
+import me.xiajhuan.summer.core.enums.NonLoggedUserEnum;
 import me.xiajhuan.summer.core.exception.BusinessException;
 import me.xiajhuan.summer.core.exception.ErrorCode;
 import me.xiajhuan.summer.core.ratelimiter.annotation.RateLimiter;
@@ -85,6 +85,8 @@ public class RateLimiterAspect {
     /**
      * 初始化 {@link defaultKeyStrategy} {@link defaultLoadBalanceStrategy} <br>
      * {@link defaultNodeNum} {@link defaultTimeout}
+     *
+     * @throws ClassNotFoundException 类找不到异常
      */
     @PostConstruct
     private void init() throws ClassNotFoundException {
@@ -159,11 +161,11 @@ public class RateLimiterAspect {
                 // 获取限流key策略实例
                 keyStrategy = StrategyFactory.getInstance().getKeyStrategy(keyStrategyClass);
 
-                rateLimiterKey = keyStrategy.getRateLimiterKey(point, request, SecurityUtil.getCurrentUsername(DefaultUserEnum.THIRD_PART.getValue()));
+                rateLimiterKey = keyStrategy.getKey(point, request, SecurityUtil.getCurrentUsername(NonLoggedUserEnum.THIRD_PART.getValue()));
 
-                msgTemplate = keyStrategy.limitMsgTemplate();
+                msgTemplate = keyStrategy.extraMsgTemplate();
             } catch (Exception e) {
-                LOGGER.error(e, "key-Class【{}】获取Key失败，自动切换为基本Key策略，请参照【IpKeyStrategy】编写", keyStrategyClass.getSimpleName());
+                LOGGER.error(e, "key-Class【{}】获取Key失败，自动切换为基本Key策略，请参考【KeyStrategy】编写", keyStrategyClass.getSimpleName());
 
                 rateLimiterKey = StrUtil.format(StrTemplateConst.RATE_LIMITER_KEY, HttpContextUtil.getInterfaceSignature(request), StrUtil.EMPTY);
             }
@@ -198,9 +200,9 @@ public class RateLimiterAspect {
                 // 获取限流负载均衡策略实例
                 loadBalanceStrategy = StrategyFactory.getInstance().getLoadBalanceStrategy(loadBalanceStrategyClass);
 
-                realQps = loadBalanceStrategy.calRealQpsBySetQpsAndNodeNum(setQps, nodeNum);
+                realQps = loadBalanceStrategy.calRealQps(setQps, nodeNum);
             } catch (Exception e) {
-                LOGGER.error(e, "LoadBalance-Class【{}】获取realQps失败，自动切换为基本负载均衡策略，请参照【BaseLoadBalanceStrategy】编写", loadBalanceStrategyClass.getSimpleName());
+                LOGGER.error(e, "LoadBalance-Class【{}】获取realQps失败，自动切换为基本负载均衡策略，请参考【LoadBalanceStrategy】编写", loadBalanceStrategyClass.getSimpleName());
 
                 realQps = BigDecimal.valueOf(setQps / nodeNum).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
             }
@@ -208,12 +210,12 @@ public class RateLimiterAspect {
             //*******************限流处理********************
 
             if (RATE_LIMITER_CACHE.get(rateLimiterKey) == null) {
-                // 初始化QPS
+                // 初始化Qps
                 RATE_LIMITER_CACHE.put(rateLimiterKey, com.google.common.util.concurrent.RateLimiter.create(realQps));
             }
 
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("接口【{}[{}]】设置的QPS为：【{}】，当前服务节点实际的QPS为：【{}】，key-Class【{}】，LoadBalance-Class【{}】{}",
+                LOGGER.debug("接口【{}[{}]】设置的Qps为：【{}】，当前服务节点实际的Qps为：【{}】，key-Class【{}】，LoadBalance-Class【{}】{}",
                         request.getRequestURI(), request.getMethod(), setQps, RATE_LIMITER_CACHE.get(rateLimiterKey).getRate(),
                         keyStrategyClass.getSimpleName(), loadBalanceStrategyClass.getSimpleName(),
                         StrUtil.isNotBlank(msgTemplate) ? StrUtil.format(msgTemplate, StrUtil.subAfter(rateLimiterKey, "#", true)) : StrUtil.EMPTY);

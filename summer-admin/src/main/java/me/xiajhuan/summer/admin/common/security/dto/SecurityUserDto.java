@@ -72,12 +72,14 @@ public class SecurityUserDto extends BaseDto {
     /**
      * 邮箱
      */
+//    @NotBlank(message = "{security.user.email.require}", groups = {AddGroup.class, UpdateGroup.class})
     @Email(message = "{security.user.email.error}", groups = {AddGroup.class, UpdateGroup.class})
     private String email;
 
     /**
      * 手机号
      */
+//    @NotBlank(message = "{security.user.mobile.require}", groups = {AddGroup.class, UpdateGroup.class})
     @Mobile(message = "{security.user.mobile.error}", groups = {AddGroup.class, UpdateGroup.class})
     private String mobile;
 

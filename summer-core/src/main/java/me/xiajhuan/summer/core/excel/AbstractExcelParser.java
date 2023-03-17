@@ -45,12 +45,12 @@ public abstract class AbstractExcelParser<T, E> extends AnalysisEventListener<E>
             .getInt("parser.max-batch-num", "Excel", 2000);
 
     /**
-     * Entity列表
+     * Entity类型列表
      */
     protected List<T> entityList;
 
     /**
-     * 初始化Entity列表
+     * 初始化 {@link entityList}
      */
     protected AbstractExcelParser() {
         entityList = new ArrayList<>(MAX_BATCH_NUM);
@@ -86,7 +86,7 @@ public abstract class AbstractExcelParser<T, E> extends AnalysisEventListener<E>
         handleParsedData();
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("所有Excel数据解析完成！");
+            LOGGER.debug("所有Excel数据处理完成！");
         }
     }
 

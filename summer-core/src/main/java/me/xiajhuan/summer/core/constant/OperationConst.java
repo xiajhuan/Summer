@@ -21,47 +21,56 @@ package me.xiajhuan.summer.core.constant;
 public class OperationConst {
 
     /**
-     * 分页
+     * 分页<br>
+     * GET Query
      */
     public static final String PAGE = "分页";
 
     /**
-     * 列表
+     * 列表<br>
+     * GET Query
      */
     public static final String LIST = "列表";
 
     /**
-     * 根据ID获取
+     * 根据ID获取<br>
+     * GET Query
      */
     public static final String GET_BY_ID = "根据ID获取";
 
     /**
-     * 新增
+     * 新增<br>
+     * POST application/x-www-form-urlencoded
      */
     public static final String ADD = "新增";
 
     /**
-     * 修改
+     * 修改<br>
+     * PUT application/x-www-form-urlencoded
      */
     public static final String UPDATE = "修改";
 
     /**
-     * 删除
+     * 删除<br>
+     * DELETE application/x-www-form-urlencoded
      */
     public static final String DELETE = "删除";
 
     /**
-     * Excel模板下载
+     * Excel模板下载<br>
+     * GET 无参数
      */
     public static final String EXCEL_TEMPLATE = "Excel模板下载";
 
     /**
-     * Excel导入
+     * Excel导入<br>
+     * POST multipart/form-data
      */
     public static final String EXCEL_IMPORT = "Excel导入";
 
     /**
-     * Excel导出
+     * Excel导出<br>
+     * GET application/x-www-form-urlencoded
      */
     public static final String EXCEL_EXPORT = "Excel导出";
 

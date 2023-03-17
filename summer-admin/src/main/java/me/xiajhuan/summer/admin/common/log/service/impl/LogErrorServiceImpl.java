@@ -124,7 +124,7 @@ public class LogErrorServiceImpl extends ServiceImpl<LogErrorMapper, LogErrorEnt
     public void saveLogAsync(Exception e, HttpServletRequest request) {
         // 构建错误日志Entity
         LogErrorEntity log = LogErrorEntity.builder()
-                .ip(IpUtil.getRequestOriginIp(request))
+                .ip(IpUtil.getRequestIp(request))
                 .userAgent(HttpContextUtil.getUserAgent(request))
                 .requestUri(request.getRequestURI())
                 .requestMethod(request.getMethod()).build();

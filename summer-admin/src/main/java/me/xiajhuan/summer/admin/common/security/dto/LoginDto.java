@@ -13,7 +13,7 @@
 package me.xiajhuan.summer.admin.common.security.dto;
 
 import lombok.Data;
-import me.xiajhuan.summer.admin.common.base.constant.CacheKeyConst;
+import me.xiajhuan.summer.admin.common.security.cache.SecurityCacheKey;
 
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
@@ -51,7 +51,7 @@ public class LoginDto implements Serializable {
      * uuid<br>
      * 唯一标识，作为验证码缓存Key的一部分
      *
-     * @see CacheKeyConst#CAPTCHA_CODE
+     * @see SecurityCacheKey#captchaCode(String)
      */
     @NotBlank(message = "{security.uuid.require}")
     private String uuid;

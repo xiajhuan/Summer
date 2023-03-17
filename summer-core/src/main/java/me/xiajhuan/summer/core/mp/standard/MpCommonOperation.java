@@ -24,7 +24,7 @@ import me.xiajhuan.summer.core.mp.handler.QueryParamHandler;
 
 /**
  * MybatisPlus通用操作<br>
- * note：非侵入式封装，不影响原生API使用
+ * note：非侵入式封装，可根据实际需求选择是否使用
  *
  * @author xiajhuan
  * @date 2022/11/21
@@ -49,7 +49,7 @@ public interface MpCommonOperation<D, T> {
     default Page<T> handlePageAndSort(PageAndSort pageAndSort) {
         Page<T> page = new Page<>(pageAndSort.getPageNum(), pageAndSort.getPageSize());
 
-        return QueryParamHandler.handlePageAndSort(pageAndSort, page, SortConst.DEFAULT_SORT, SortConst.DEFAULT_ORDER, true);
+        return QueryParamHandler.handlePageAndSort(pageAndSort, page, SortConst.DEFAULT_FIELD, SortConst.DEFAULT_ORDER, true);
     }
 
     /**

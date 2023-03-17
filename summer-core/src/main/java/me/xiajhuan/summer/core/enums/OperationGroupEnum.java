@@ -42,6 +42,6 @@ public enum OperationGroupEnum {
 
     private Integer value;
 
-    private String desc;
+    private String name;
 
 }

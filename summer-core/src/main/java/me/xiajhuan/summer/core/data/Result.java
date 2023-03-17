@@ -52,12 +52,12 @@ public class Result<T> implements Serializable {
     private T data;
 
     /**
-     * 成功（不带数据），默认信息：“操作成功”
+     * 成功（不带数据），默认消息：“操作成功”
      *
      * @return 响应结果
      */
     public static Result ofSuccess() {
-        return ofSuccess(LocaleUtil.getI18nMessage(Success.OPERATION));
+        return ofSuccess(LocaleUtil.getI18nMessage(SuccessCode.OPERATION));
     }
 
     /**
@@ -73,7 +73,7 @@ public class Result<T> implements Serializable {
 
     /**
      * 成功（不带数据）（消息国际化）<br>
-     * note：预留方法，需自定义成功消息的国际化编码，如：{@link Success#OPERATION}
+     * note：预留方法，需自定义成功消息的国际化编码，如：{@link SuccessCode#OPERATION}
      *
      * @param code  成功编码
      * @param param 消息填充参数
@@ -95,7 +95,7 @@ public class Result<T> implements Serializable {
 
     /**
      * 成功（带数据）（消息国际化）<br>
-     * note：预留方法，需自定义成功消息的国际化编码，如：{@link Success#OPERATION}
+     * note：预留方法，需自定义成功消息的国际化编码，如：{@link SuccessCode#OPERATION}
      *
      * @param data  响应数据
      * @param code  成功编码
@@ -124,7 +124,7 @@ public class Result<T> implements Serializable {
     }
 
     /**
-     * 失败（不带数据），默认信息：“操作失败”
+     * 失败（不带数据），默认消息：“操作失败”
      *
      * @return 响应结果
      */
@@ -185,7 +185,7 @@ public class Result<T> implements Serializable {
     /**
      * 成功代码
      */
-    public static class Success {
+    public static class SuccessCode {
 
         /**
          * 操作成功

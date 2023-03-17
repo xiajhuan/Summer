@@ -32,11 +32,11 @@ public class ReflectUtil {
     /**
      * 获取切入点方法
      *
-     * @param joinPoint {@link JoinPoint}
+     * @param point {@link JoinPoint}
      * @return {@link Method}
      */
-    public static Method getMethod(JoinPoint joinPoint) {
-        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+    public static Method getMethod(JoinPoint point) {
+        MethodSignature signature = (MethodSignature) point.getSignature();
         return signature.getMethod();
     }
 
@@ -44,42 +44,40 @@ public class ReflectUtil {
      * 获取切入点方法签名（全限定性类名）
      * <p>
      * 格式：Xxx.xxx(Xxx,Xxx)，
-     * 例如：(java.lang.String,java.lang.String)
+     * 全限定性类名例如：java.lang.String
      * </p>
      *
-     * @param joinPoint {@link JoinPoint}
+     * @param point {@link JoinPoint}
      * @return 切入点方法签名
      */
-    public static String getMethodSignature(JoinPoint joinPoint) {
-        Method method = getMethod(joinPoint);
+    public static String getMethodSignature(JoinPoint point) {
+        Method method = getMethod(point);
 
-        String paramTypeStr = Arrays.stream(method.getParameterTypes()).map(p -> p.getName())
+        String paramType = Arrays.stream(method.getParameterTypes()).map(p -> p.getName())
                 .collect(Collectors.joining(StrPool.COMMA));
 
-        // 拼接格式：Xxx.xxx(Xxx,Xxx)
-        return StrUtil.format("{}.{}({})", joinPoint.getTarget().getClass().getName(),
-                method.getName(), paramTypeStr);
+        return StrUtil.format("{}.{}({})", point.getTarget().getClass().getName(),
+                method.getName(), paramType);
     }
 
     /**
      * 获取切入点方法签名（简单类名）
      * <p>
      * 格式：Xxx.xxx(Xxx,Xxx)，
-     * 例如：(String,String)
+     * 简单类名例如：String
      * </p>
      *
-     * @param joinPoint {@link JoinPoint}
+     * @param point {@link JoinPoint}
      * @return 切入点方法签名
      */
-    public static String getMethodSignatureSimple(JoinPoint joinPoint) {
-        Method method = getMethod(joinPoint);
+    public static String getMethodSignatureSimple(JoinPoint point) {
+        Method method = getMethod(point);
 
-        String paramTypeStr = Arrays.stream(method.getParameterTypes()).map(p -> p.getSimpleName())
+        String paramType = Arrays.stream(method.getParameterTypes()).map(p -> p.getSimpleName())
                 .collect(Collectors.joining(StrPool.COMMA));
 
-        // 拼接格式：Xxx.xxx(Xxx,Xxx)
-        return StrUtil.format("{}.{}({})", joinPoint.getTarget().getClass().getSimpleName(),
-                method.getName(), paramTypeStr);
+        return StrUtil.format("{}.{}({})", point.getTarget().getClass().getSimpleName(),
+                method.getName(), paramType);
     }
 
 }

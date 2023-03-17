@@ -12,7 +12,6 @@
 
 package me.xiajhuan.summer.core.validation.annotation;
 
-import me.xiajhuan.summer.core.enums.LocaleSupportEnum;
 import me.xiajhuan.summer.core.validation.validator.subClass.MobileValidator;
 
 import javax.validation.Constraint;
@@ -38,21 +37,11 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Constraint(validatedBy = {MobileValidator.class})
 public @interface Mobile {
 
-    String message() default "手机号格式不正确";
+    String message() default "{security.user.mobile.error}";
 
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};
-
-    /**
-     * 是否必填，true：必填 false：非必填
-     */
-    boolean required() default false;
-
-    /**
-     * 号码所在地区
-     */
-    LocaleSupportEnum region() default LocaleSupportEnum.ZH_CN;
 
     @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
     @Retention(RUNTIME)

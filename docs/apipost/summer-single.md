@@ -182,21 +182,21 @@ noauth
 > 已完成
 
 #### 接口URL
-> http://localhost:6666/summer-single/log/operation/excelExport
+> http://localhost:6666/summer-single/log/operation/excelExport?operationGroup=0&status=1&params.createTimeStart=2023-03-03 12:00:00&params.createTimeEnd=2023-03-13 12:00:00
 
 #### 请求方式
-> POST
+> GET
 
 #### Content-Type
 > form-data
 
-#### 请求Body参数
+#### 请求Query参数
 参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
 --- | --- | --- | --- | ---
 operationGroup | 0 | Integer | 否 | 操作分组 0：Common Crud 1：Excel Opeation 2：Other Operation
 status | 1 | Integer | 否 | 状态  0：失败 1：成功
 params.createTimeStart | 2023-03-03 12:00:00 | Date | 否 | 创建时间区间（开始）
-params.createTimeEnd | 2023-03-04 12:00:00 | Date | 否 | 创建时间区间（结束）
+params.createTimeEnd | 2023-03-13 12:00:00 | Date | 否 | 创建时间区间（结束）
 #### 认证方式
 ```text
 noauth
@@ -314,19 +314,19 @@ noauth
 > 已完成
 
 #### 接口URL
-> http://localhost:6666/summer-single/log/error/excelExport
+> http://localhost:6666/summer-single/log/error/excelExport?params.createTimeStart=2023-03-03 12:00:00&params.createTimeEnd=2023-03-13 12:00:00
 
 #### 请求方式
-> POST
+> GET
 
 #### Content-Type
 > form-data
 
-#### 请求Body参数
+#### 请求Query参数
 参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
 --- | --- | --- | --- | ---
 params.createTimeStart | 2023-03-03 12:00:00 | Date | 否 | 创建时间区间（开始）
-params.createTimeEnd | 2023-03-04 12:00:00 | Date | 否 | 创建时间区间（结束）
+params.createTimeEnd | 2023-03-13 12:00:00 | Date | 否 | 创建时间区间（结束）
 #### 认证方式
 ```text
 noauth
@@ -414,21 +414,21 @@ noauth
 > 已完成
 
 #### 接口URL
-> http://localhost:6666/summer-single/log/login/excelExport
+> http://localhost:6666/summer-single/log/login/excelExport?operation=0&status=1&params.createTimeStart=2023-03-03 12:00:00&params.createTimeEnd=2023-03-13 12:00:00
 
 #### 请求方式
-> POST
+> GET
 
 #### Content-Type
 > form-data
 
-#### 请求Body参数
+#### 请求Query参数
 参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
 --- | --- | --- | --- | ---
 operation | 0 | Integer | 否 | 用户操作 0：用户登录 1：用户退出
 status | 1 | Integer | 否 | 登录状态 0：失败1：成功 2：账号已锁定
 params.createTimeStart | 2023-03-03 12:00:00 | Date | 否 | 创建时间区间（开始）
-params.createTimeEnd | 2023-03-04 12:00:00 | Date | 否 | 创建时间区间（结束）
+params.createTimeEnd | 2023-03-13 12:00:00 | Date | 否 | 创建时间区间（结束）
 #### 认证方式
 ```text
 noauth
@@ -684,7 +684,7 @@ noauth
 > 已完成
 
 #### 接口URL
-> http://localhost:6666/summer-single/security/dept/getById?id=1
+> http://localhost:6666/summer-single/security/dept/getById?id=1636549534884294658
 
 #### 请求方式
 > GET
@@ -695,7 +695,7 @@ noauth
 #### 请求Query参数
 参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
 --- | --- | --- | --- | ---
-id | 1 | Integer | 是 | ID
+id | 1636549534884294658 | Integer | 是 | ID
 #### 认证方式
 ```text
 noauth
@@ -727,8 +727,8 @@ noauth
 #### 请求Body参数
 参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
 --- | --- | --- | --- | ---
-parentId | 0 | Integer | 是 | 上级部门ID
-name | 罗邦洁具股份有限公司 | String | 是 | 部门名称
+parentId | 1636549260430012417 | Integer | 是 | 上级部门ID
+name | 模具造型部 | String | 是 | 部门名称
 weight | 0 | Integer | 是 | 顺序，越小优先级越高
 #### 认证方式
 ```text
@@ -761,9 +761,9 @@ noauth
 #### 请求Body参数
 参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
 --- | --- | --- | --- | ---
-id | 1 | Integer | 是 | ID
-parentId | 0 | Integer | 是 | 上级部门ID
-name | 罗邦洁具股份有限公司 | String | 是 | 部门名称
+id | 1636549534884294658 | Integer | 是 | ID
+parentId | 1636549260430012417 | Integer | 是 | 上级部门ID
+name | 模具研发部 | String | 是 | 部门名称
 weight | 0 | Integer | 是 | 顺序，越小优先级越高
 #### 认证方式
 ```text
@@ -796,7 +796,7 @@ noauth
 #### 请求Body参数
 参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
 --- | --- | --- | --- | ---
-id | 1 | Integer | 是 | ID
+id | 1636549260430012417 | Integer | 是 | ID
 #### 认证方式
 ```text
 noauth
@@ -812,6 +812,34 @@ noauth
 ## /common/security/menu
 ```text
 菜单
+```
+#### 公共Header参数
+参数名 | 示例值 | 参数描述
+--- | --- | ---
+暂无参数
+#### 公共Query参数
+参数名 | 示例值 | 参数描述
+--- | --- | ---
+暂无参数
+#### 公共Body参数
+参数名 | 示例值 | 参数描述
+--- | --- | ---
+暂无参数
+#### 公共认证信息
+```text
+noauth
+```
+#### 预执行脚本
+```javascript
+暂无预执行脚本
+```
+#### 后执行脚本
+```javascript
+暂无后执行脚本
+```
+## /common/locale
+```text
+国际化模块
 ```
 #### 公共Header参数
 参数名 | 示例值 | 参数描述

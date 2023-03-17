@@ -46,24 +46,24 @@ public interface ErrorCode {
     int OPERATION_FAILURE = 1000;
 
     /**
+     * 服务器繁忙，请稍后再试~
+     */
+    int SERVER_BUSY = 1001;
+
+    /**
      * 文件下载失败
      */
-    int FILE_DOWNLOAD_FAILURE = 1001;
+    int FILE_DOWNLOAD_FAILURE = 1002;
 
     /**
      * Excel模板下载失败
      */
-    int EXCEL_TEMPLATE_DOWNLOAD_FAILURE = 1002;
+    int EXCEL_TEMPLATE_DOWNLOAD_FAILURE = 1003;
 
     /**
      * Excel导出失败
      */
-    int EXCEL_EXPORT_FAILURE = 1003;
-
-    /**
-     * 服务器繁忙，请稍后再试~
-     */
-    int SERVER_BUSY = 1004;
+    int EXCEL_EXPORT_FAILURE = 1004;
 
     //*******************common********************
 

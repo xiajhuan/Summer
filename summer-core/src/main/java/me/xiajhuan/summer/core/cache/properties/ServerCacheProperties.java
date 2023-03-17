@@ -31,11 +31,11 @@ import me.xiajhuan.summer.core.constant.CacheConst;
 public class ServerCacheProperties {
 
     /**
-     * 缓存类型
+     * 缓存类型，默认为：REDIS
      *
      * @see CacheConst#HEAP
      * @see CacheConst#REDIS
      */
-    private String type;
+    private String type = CacheConst.REDIS;
 
 }

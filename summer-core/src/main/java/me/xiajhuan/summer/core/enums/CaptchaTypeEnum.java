@@ -42,6 +42,6 @@ public enum CaptchaTypeEnum {
 
     private String value;
 
-    private String desc;
+    private String name;
 
 }

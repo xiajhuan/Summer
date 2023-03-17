@@ -70,7 +70,7 @@ public class DataScopeHandler implements MultiDataPermissionHandler {
     private Setting setting;
 
     /**
-     * 数据权限忽略的表名称数组
+     * 数据权限忽略的表名数组
      */
     private static String[] dataScopeIgnoreArray = null;
 
@@ -150,7 +150,7 @@ public class DataScopeHandler implements MultiDataPermissionHandler {
     }
 
     /**
-     * 根据部门ID获取过滤条件<br>
+     * 根据部门ID集合获取过滤条件<br>
      * 基于 角色/本部门/本部门及以下
      *
      * @param prefix    前缀

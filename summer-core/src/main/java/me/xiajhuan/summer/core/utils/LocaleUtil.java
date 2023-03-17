@@ -65,12 +65,12 @@ public class LocaleUtil {
      * 初始化 {@link messageSource} {@link extraDefault}
      */
     static {
-        messageSource = (MessageSource) SpringContextUtil.getBean("messageSource");
+        messageSource = SpringContextUtil.getBean("messageSource", MessageSource.class);
         extraDefault = SpringContextUtil.getBean(SettingBeanConst.CORE, Setting.class)
                 .getByGroupWithLog("extra-default", "Locale");
         if (StrUtil.isBlank(extraDefault)) {
-            // 没有配置则默认为：zh_CN
-            extraDefault = LocaleSupportEnum.ZH_CN.getName();
+            // 没有配置则默认为：en_US
+            extraDefault = LocaleSupportEnum.EN_US.getName();
         }
     }
 
@@ -80,7 +80,6 @@ public class LocaleUtil {
      * @param code   错误编码 {@link ErrorCode}
      * @param params 消息填充参数
      * @return 国际化消息
-     * @see LocaleSupportEnum
      */
     public static String getI18nMessage(int code, String... params) {
         return messageSource.getMessage(String.valueOf(code), params, getLocale());
@@ -98,22 +97,22 @@ public class LocaleUtil {
         if (locale == null) {
             locale = LocaleContextHolder.getLocale();
 
-            // 默认地区，中国（中文）
-            Locale defaultLocale = LocaleSupportEnum.ZH_CN.getValue();
+            // 中国（中文）
+            Locale chineseLocale = LocaleSupportEnum.ZH_CN.getValue();
             // 美国（英文）
-            Locale englishLocale = LocaleSupportEnum.EN_US.getValue();
-            if (locale.getLanguage().equals(defaultLocale.getLanguage())) {
+            Locale americaLocale = LocaleSupportEnum.EN_US.getValue();
+            if (locale.getLanguage().equals(chineseLocale.getLanguage())) {
                 // 所有中文地区，强制为：中国（中文）
-                locale = defaultLocale;
-            } else if (locale.getLanguage().equals(englishLocale.getLanguage())) {
+                locale = chineseLocale;
+            } else if (locale.getLanguage().equals(americaLocale.getLanguage())) {
                 // 所有英文地区，强制为：美国（英语）
-                locale = englishLocale;
+                locale = americaLocale;
             } else {
                 // note：如果“locale.toLanguageTag()”输出为“und”，则请求头“Accept-Language”的值在java.util.Locale中未被定义
                 LOGGER.warn("中英文以外的地区【{}】，自动调整为默认地区【{}】", locale.toLanguageTag(), extraDefault);
 
                 locale = LocaleSupportEnum.ZH_CN.getName().equalsIgnoreCase(extraDefault)
-                        ? defaultLocale : englishLocale;
+                        ? chineseLocale : americaLocale;
             }
         }
 
@@ -133,10 +132,10 @@ public class LocaleUtil {
         // 请求语言
         String languageHeader = request.getHeader(HttpHeaders.ACCEPT_LANGUAGE);
         if (languageHeader != null && languageHeader.length() >= 2) {
-            if ("zh".equals(languageHeader.substring(0, 2))) {
+            if ("zh".equalsIgnoreCase(languageHeader.substring(0, 2))) {
                 // 所有中文地区，强制为：中国（中文）
                 return LocaleSupportEnum.ZH_CN.getValue();
-            } else if ("en".equals(languageHeader.substring(0, 2))) {
+            } else if ("en".equalsIgnoreCase(languageHeader.substring(0, 2))) {
                 // 所有英文地区，强制为：美国（英语）
                 return LocaleSupportEnum.EN_US.getValue();
             }

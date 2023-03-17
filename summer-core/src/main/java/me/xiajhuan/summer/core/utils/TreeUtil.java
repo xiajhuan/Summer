@@ -70,7 +70,7 @@ public class TreeUtil {
      *
      * @param dtoClass   DtoClass
      * @param dtoList    Dto类型列表
-     * @param rootId     根ID
+     * @param rootId     Root节点ID
      * @param extraField 扩展属性
      * @param <D>        Dto类型
      * @return 树形结构列表（DtoClass）
@@ -84,7 +84,7 @@ public class TreeUtil {
      *
      * @param dtoClass   DtoClass
      * @param dtoList    Dto类型列表
-     * @param rootId     根ID
+     * @param rootId     Root节点ID
      * @param extraField 扩展属性
      * @param <D>        Dto类型
      * @return 树形结构列表（{@link Tree}）
@@ -122,7 +122,7 @@ public class TreeUtil {
      * @param id   ID
      * @return 节点（{@link Tree}）
      */
-    public static Tree<Long> getNodeWithT(Tree<Long> node, Long id) {
+    public static Tree<Long> getNode(Tree<Long> node, Long id) {
         return cn.hutool.core.lang.tree.TreeUtil.getNode(node, id);
     }
 
@@ -135,7 +135,7 @@ public class TreeUtil {
      *
      * @param node               节点
      * @param includeCurrentNode 是否包含当前节点的名称 true：包含 false：不包含
-     * @return 所有父节点名称列表，node为null返回空List
+     * @return 所有父节点名称列表，node为 {@code null} 返回空List
      */
     public static List<CharSequence> getParentsName(Tree<Long> node, boolean includeCurrentNode) {
         return cn.hutool.core.lang.tree.TreeUtil.getParentsName(node, includeCurrentNode);

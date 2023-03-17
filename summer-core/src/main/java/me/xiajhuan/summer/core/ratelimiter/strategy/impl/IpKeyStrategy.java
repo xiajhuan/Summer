@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * <p>
- * IP限流Key策略（Key为：接口签名#接口调用者IP），
+ * IP限流Key策略（Key为：接口签名#调用者IP），
  * 例如：/summer-single/security/user/page[GET]#192.168.1.100
  * </p>
  *
@@ -53,12 +53,12 @@ public class IpKeyStrategy implements KeyStrategy {
     //*******************单例处理结束********************
 
     @Override
-    public String getRateLimiterKey(JoinPoint joinPoint, HttpServletRequest currentRequest, String currentUsername) {
-        return StrUtil.format(StrTemplateConst.RATE_LIMITER_KEY, HttpContextUtil.getInterfaceSignature(currentRequest), IpUtil.getRequestOriginIp(currentRequest));
+    public String getKey(JoinPoint point, HttpServletRequest request, String username) {
+        return StrUtil.format(StrTemplateConst.RATE_LIMITER_KEY, HttpContextUtil.getInterfaceSignature(request), IpUtil.getRequestIp(request));
     }
 
     @Override
-    public String limitMsgTemplate() {
+    public String extraMsgTemplate() {
         return "，Key-IP【{}】";
     }
 

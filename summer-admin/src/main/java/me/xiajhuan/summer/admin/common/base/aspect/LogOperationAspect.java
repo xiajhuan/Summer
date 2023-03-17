@@ -17,7 +17,7 @@ import cn.hutool.core.date.TimeInterval;
 import cn.hutool.core.util.StrUtil;
 import me.xiajhuan.summer.admin.common.base.annotation.LogOperation;
 import me.xiajhuan.summer.core.constant.StrTemplateConst;
-import me.xiajhuan.summer.core.enums.DefaultUserEnum;
+import me.xiajhuan.summer.core.enums.NonLoggedUserEnum;
 import me.xiajhuan.summer.core.enums.OperationGroupEnum;
 import me.xiajhuan.summer.admin.common.log.enums.OperationStatusEnum;
 import me.xiajhuan.summer.admin.common.log.entity.LogOperationEntity;
@@ -90,18 +90,18 @@ public class LogOperationAspect {
     /**
      * 记录日志
      *
-     * @param joinPoint {@link ProceedingJoinPoint}
+     * @param point {@link ProceedingJoinPoint}
      * @param cost      操作耗时（ms）
      * @param status    操作状态
      * @throws Exception 异常
      */
-    private void saveLog(ProceedingJoinPoint joinPoint, long cost, OperationStatusEnum status) throws Exception {
+    private void saveLog(ProceedingJoinPoint point, long cost, OperationStatusEnum status) throws Exception {
         // 获取切入点Controller上的RequestMapping注解
-        Class currentController = joinPoint.getTarget().getClass();
+        Class currentController = point.getTarget().getClass();
         RequestMapping requestMapping = AnnotationUtils.findAnnotation(currentController, RequestMapping.class);
 
         // 获取切入点方法上的LogOperation注解
-        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+        MethodSignature signature = (MethodSignature) point.getSignature();
         Method method = currentController.getDeclaredMethod(signature.getName(), signature.getParameterTypes());
         LogOperation logOperation = AnnotationUtils.findAnnotation(method, LogOperation.class);
 
@@ -112,17 +112,17 @@ public class LogOperationAspect {
         LogOperationEntity log = LogOperationEntity.builder()
                 .operation(StrUtil.format(StrTemplateConst.OPERATION_NAME, logOperation.name(), requestMapping.path()))
                 .operationGroup(getOperationGroupValue(logOperation.name()))
-                .operateBy(SecurityUtil.getCurrentUsername(DefaultUserEnum.THIRD_PART.getValue()))
+                .operateBy(SecurityUtil.getCurrentUsername(NonLoggedUserEnum.THIRD_PART.getValue()))
                 .status(status.getValue())
                 .requestTime((int) cost)
-                .ip(IpUtil.getRequestOriginIp(request))
+                .ip(IpUtil.getRequestIp(request))
                 .userAgent(HttpContextUtil.getUserAgent(request))
                 .requestUri(request.getRequestURI())
                 .requestMethod(request.getMethod()).build();
 
         if (logOperation.isSaveRequestData()) {
-            // 请求参数值
-            log.setRequestParams(HttpContextUtil.getParamValues(joinPoint, request));
+            // 请求参数
+            log.setRequestParams(HttpContextUtil.getParam(point, request));
         }
 
         // 异步保存日志

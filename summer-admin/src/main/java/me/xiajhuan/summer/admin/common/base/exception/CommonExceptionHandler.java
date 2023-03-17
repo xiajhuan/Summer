@@ -57,22 +57,22 @@ public class CommonExceptionHandler {
     private LogErrorService logErrorService;
 
     /**
-     * 是否记录业务异常日志（BusinessException）
+     * 是否记录业务异常（BusinessException）日志
      */
     private static boolean enableBusinessErrorLog;
 
     /**
      * 是否记录限流成功时抛出的BusinessException
      */
-    private static boolean enableLimitSuccessException;
+    private static boolean logExceptionWhenSuccess;
 
     /**
-     * 初始化 {@link enableBusinessErrorLog} {@link enableLimitSuccessException}
+     * 初始化 {@link enableBusinessErrorLog} {@link logExceptionWhenSuccess}
      */
     @PostConstruct
     private void init() {
         enableBusinessErrorLog = commonSetting.getBool("error.enable-business", "Log", true);
-        enableLimitSuccessException = coreSetting.getBool("log-exception-when-success", "RateLimiter", false);
+        logExceptionWhenSuccess = coreSetting.getBool("log-exception-when-success", "RateLimiter", false);
     }
 
     /**
@@ -90,7 +90,7 @@ public class CommonExceptionHandler {
         Exception cause = (Exception) e.getCause();
         if (cause != null && isLimitSuccessException(cause)) {
             e = cause;
-            if (!enableBusinessErrorLog || !enableLimitSuccessException) {
+            if (!enableBusinessErrorLog || !logExceptionWhenSuccess) {
                 isSaveErrorLog = false;
             }
         }
@@ -166,7 +166,7 @@ public class CommonExceptionHandler {
         }
 
         String msg = e.getMessage();
-        if (isLimitSuccessException(e) && !enableLimitSuccessException) {
+        if (isLimitSuccessException(e) && !logExceptionWhenSuccess) {
             // 不记录异常堆栈信息
             LOGGER.error(msg);
         } else {

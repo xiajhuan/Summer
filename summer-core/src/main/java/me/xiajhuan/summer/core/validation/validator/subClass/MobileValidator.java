@@ -12,9 +12,12 @@
 
 package me.xiajhuan.summer.core.validation.validator.subClass;
 
+import me.xiajhuan.summer.core.enums.LocaleSupportEnum;
+import me.xiajhuan.summer.core.utils.LocaleUtil;
 import me.xiajhuan.summer.core.validation.annotation.Mobile;
 import me.xiajhuan.summer.core.validation.validator.AbstractPatternValidator;
 
+import java.util.Locale;
 import java.util.regex.Pattern;
 
 /**
@@ -27,8 +30,15 @@ public class MobileValidator extends AbstractPatternValidator<Mobile> {
 
     @Override
     public void initialize(Mobile constraintAnnotation) {
-        required = constraintAnnotation.required();
-        pattern = Pattern.compile(constraintAnnotation.region().getMobileRegex());
+        // 获取地区语言
+        Locale locale = LocaleUtil.getLocale();
+        switch (locale.toString()) {
+            case "zh_CN":
+                pattern = Pattern.compile(LocaleSupportEnum.ZH_CN.getMobileRegex());
+                break;
+            default:
+                pattern = Pattern.compile(LocaleSupportEnum.EN_US.getMobileRegex());
+        }
     }
 
 }

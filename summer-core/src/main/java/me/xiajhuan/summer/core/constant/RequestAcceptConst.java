@@ -10,19 +10,24 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.admin.common.base.constant;
+package me.xiajhuan.summer.core.constant;
 
 /**
- * 缓存Key常量
+ * 请求参数格式常量（“Accept”请求头）
  *
  * @author xiajhuan
- * @date 2023/3/12
+ * @date 2023/3/17
  */
-public class CacheKeyConst {
+public class RequestAcceptConst {
 
     /**
-     * 验证码 Key
+     * Json参数
      */
-    public static final String CAPTCHA_CODE = "CAPTCHA_CODE_{}";
+    public static final String JSON = "application/json";
+
+    /**
+     * Form参数
+     */
+    public static final String[] FORM = {"application/x-www-form-urlencoded", "multipart/form-data"};
 
 }

@@ -28,7 +28,6 @@ import me.xiajhuan.summer.core.utils.AssertUtil;
 import me.xiajhuan.summer.core.utils.ExcelUtil;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -87,7 +86,7 @@ public class LogErrorController {
      * @param response {@link HttpServletResponse}
      * @throws FileDownloadException 文件下载异常
      */
-    @PostMapping("excelExport")
+    @GetMapping("excelExport")
     @RequiresPermissions("log:error:excelExport")
     @RateLimiter(0.2)
     @LogOperation(OperationConst.EXCEL_EXPORT)

@@ -25,7 +25,7 @@ import net.dreamlu.mica.xss.config.MicaXssConfiguration;
 
 /**
  * Spring容器工具<br>
- * note：这里需自定义Bean名称，否则会和 {@link MicaXssConfiguration#springContextUtil()} 注册Bean冲突
+ * note：这里需自定义 {@code Bean} 名称，否则会和 {@link MicaXssConfiguration#springContextUtil()} 注册的 {@code Bean} 冲突
  *
  * @author xiajhuan
  * @date 2022/11/22
@@ -46,40 +46,40 @@ public class SpringContextUtil implements ApplicationContextAware {
     }
 
     /**
-     * 获取Bean
+     * 获取 {@code Bean}
      *
      * @param name 名称
-     * @return Bean
+     * @return {@code Bean}
      */
     public static Object getBean(String name) {
         return context == null ? null : context.getBean(name);
     }
 
     /**
-     * 获取Bean
+     * 获取 {@code Bean}
      *
      * @param type BeanClass
      * @param <T>  Bean类型
-     * @return Bean
+     * @return {@code Bean}
      */
     public static <T> T getBean(Class<T> type) {
         return context == null ? null : context.getBean(type);
     }
 
     /**
-     * 获取Bean
+     * 获取 {@code Bean}
      *
      * @param name 名称
      * @param type BeanClass
      * @param <T>  Bean类型
-     * @return Bean
+     * @return {@code Bean}
      */
     public static <T> T getBean(String name, Class<T> type) {
         return context == null ? null : context.getBean(name, type);
     }
 
     /**
-     * 判断容器中是否存在Bean
+     * 判断容器中是否存在 {@code Bean}
      *
      * @param name 名称
      * @return 是否存在，true：存在 false：不存在
@@ -89,7 +89,7 @@ public class SpringContextUtil implements ApplicationContextAware {
     }
 
     /**
-     * 判断Bean是否是单例的
+     * 判断 {@code Bean} 是否是单例的
      *
      * @param name 名称
      * @return 是否是单例的，true：是 false：不是
@@ -109,18 +109,18 @@ public class SpringContextUtil implements ApplicationContextAware {
     }
 
     /**
-     * 获取所有Bean名称
+     * 获取所有 {@code Bean} 名称
      *
      * @param type BeanClass
      * @param <T>  Bean类型
-     * @return Bean名称数组
+     * @return {@code Bean} 名称数组
      */
     public static <T> String[] getNameArray(Class<T> type) {
         return context == null ? null : context.getBeanNamesForType(type);
     }
 
     /**
-     * 添加Bean
+     * 添加 {@code Bean}
      *
      * @param name 名称
      * @param type BeanClass
@@ -136,7 +136,7 @@ public class SpringContextUtil implements ApplicationContextAware {
     }
 
     /**
-     * 移除Bean
+     * 移除 {@code Bean}
      *
      * @param name 名称
      */
@@ -161,9 +161,9 @@ public class SpringContextUtil implements ApplicationContextAware {
     }
 
     /**
-     * 获取服务端口，server.port
+     * 获取当前服务端口，server.port
      *
-     * @return 服务端口
+     * @return 当前服务端口
      */
     public static String getServerPort() {
         return getBean(Environment.class).getProperty("server.port");

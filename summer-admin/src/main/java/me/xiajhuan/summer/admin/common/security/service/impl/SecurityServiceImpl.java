@@ -20,7 +20,7 @@ import cn.hutool.setting.Setting;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import me.xiajhuan.summer.admin.common.base.constant.CacheKeyConst;
+import me.xiajhuan.summer.admin.common.security.cache.SecurityCacheKey;
 import me.xiajhuan.summer.admin.common.security.service.SecurityDeptService;
 import me.xiajhuan.summer.core.cache.factory.CacheServerFactory;
 import me.xiajhuan.summer.core.cache.server.CacheServer;
@@ -136,7 +136,7 @@ public class SecurityServiceImpl implements SecurityService {
 
         // 缓存验证码
         CacheServerFactory.getInstance().getCacheServer()
-                .setStringTtl(StrUtil.format(CacheKeyConst.CAPTCHA_CODE, uuid), captcha.getCode(),
+                .setStringTtl(SecurityCacheKey.captchaCode(uuid), captcha.getCode(),
                         setting.getInt("captcha.cache-ttl", "Security", 5) * TimeUnitConst.MINUTE);
     }
 
@@ -145,7 +145,7 @@ public class SecurityServiceImpl implements SecurityService {
         CacheServer cacheServer = CacheServerFactory.getInstance().getCacheServer();
 
         // 获取缓存的验证码
-        String cacheKey = StrUtil.format(CacheKeyConst.CAPTCHA_CODE, uuid);
+        String cacheKey = SecurityCacheKey.captchaCode(uuid);
         String cacheCode = cacheServer.getString(cacheKey);
         if (cacheCode != null) {
             cacheServer.delete(cacheKey);

@@ -37,6 +37,6 @@ public enum StatusEnum {
 
     private Integer value;
 
-    private String desc;
+    private String name;
 
 }

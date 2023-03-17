@@ -21,7 +21,7 @@ import org.aspectj.lang.JoinPoint;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * 当前用户名限流Key策略（Key为：接口签名#接口调用者username（当前登录用户名或thirdPart（第三方用户）））<br>
+ * 用户名限流Key策略（Key为：接口签名#用户名（登录用户名或thirdPart））<br>
  * <pre>
  * 例如：
  *     /summer-single/security/user/page[GET]#16042
@@ -54,12 +54,12 @@ public class UsernameKeyStrategy implements KeyStrategy {
     //*******************单例处理结束********************
 
     @Override
-    public String getRateLimiterKey(JoinPoint joinPoint, HttpServletRequest currentRequest, String currentUsername) {
-        return StrUtil.format(StrTemplateConst.RATE_LIMITER_KEY, HttpContextUtil.getInterfaceSignature(currentRequest), currentUsername);
+    public String getKey(JoinPoint point, HttpServletRequest request, String username) {
+        return StrUtil.format(StrTemplateConst.RATE_LIMITER_KEY, HttpContextUtil.getInterfaceSignature(request), username);
     }
 
     @Override
-    public String limitMsgTemplate() {
+    public String extraMsgTemplate() {
         return "，Key-Username【{}】";
     }
 

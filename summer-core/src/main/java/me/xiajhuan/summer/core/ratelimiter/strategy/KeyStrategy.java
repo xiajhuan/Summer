@@ -16,14 +16,15 @@ import cn.hutool.core.util.StrUtil;
 import me.xiajhuan.summer.core.constant.StrTemplateConst;
 import org.aspectj.lang.JoinPoint;
 import me.xiajhuan.summer.core.utils.HttpContextUtil;
+import me.xiajhuan.summer.core.ratelimiter.aspect.RateLimiterAspect;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * 限流Key策略
  * <p>
- * note1：通过实现该接口可以个性化自己的限流Key策略
- * note2：所有策略Key必须以“接口签名#”作为前缀，接口签名见：
+ * note1：通过实现该接口覆写 {@link KeyStrategy#getKey} 可以个性化自己的限流Key策略
+ * note2：所有Key必须以“接口签名#”作为前缀，接口签名见：
  * {@link HttpContextUtil#getInterfaceSignature(HttpServletRequest)}
  * </p>
  *
@@ -34,15 +35,15 @@ public interface KeyStrategy {
 
     /**
      * 获取限流key<br>
-     * note：这里为了切面中代码通用必须包含3个参数（固定写法，即使可能用不到）
+     * note：这里为了切面 {@link RateLimiterAspect} 代码通用必须包含3个参数（固定写法）
      *
-     * @param joinPoint       {@link JoinPoint}
-     * @param currentRequest  {@link HttpServletRequest}
-     * @param currentUsername 当前用户名
+     * @param point    {@link JoinPoint}
+     * @param request  {@link HttpServletRequest}
+     * @param username 用户名
      * @return 限流Key
      */
-    default String getRateLimiterKey(JoinPoint joinPoint, HttpServletRequest currentRequest, String currentUsername) {
-        return StrUtil.format(StrTemplateConst.RATE_LIMITER_KEY, HttpContextUtil.getInterfaceSignature(currentRequest), StrUtil.EMPTY);
+    default String getKey(JoinPoint point, HttpServletRequest request, String username) {
+        return StrUtil.format(StrTemplateConst.RATE_LIMITER_KEY, HttpContextUtil.getInterfaceSignature(request), StrUtil.EMPTY);
     }
 
     /**
@@ -51,7 +52,7 @@ public interface KeyStrategy {
      *
      * @return 附加信息模板
      */
-    default String limitMsgTemplate() {
+    default String extraMsgTemplate() {
         return StrUtil.EMPTY;
     }
 

@@ -21,7 +21,7 @@ import cn.hutool.log.LogFactory;
 import me.xiajhuan.summer.core.data.LoginUser;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
-import me.xiajhuan.summer.core.enums.DefaultUserEnum;
+import me.xiajhuan.summer.core.enums.NonLoggedUserEnum;
 
 /**
  * 权限相关工具
@@ -79,10 +79,10 @@ public class SecurityUtil {
      * 获取当前用户名，若不存在则默认为：systemUser
      *
      * @return 当前用户名
-     * @see DefaultUserEnum
+     * @see NonLoggedUserEnum
      */
     public static String getCurrentUsername() {
-        return getCurrentUsername(DefaultUserEnum.SYSTEM_USER.getValue());
+        return getCurrentUsername(NonLoggedUserEnum.SYSTEM_USER.getValue());
     }
 
     /**
@@ -95,7 +95,7 @@ public class SecurityUtil {
         LoginUser loginUser = getLoginUser();
 
         if (loginUser.getId() == null) {
-            return StrUtil.isNotBlank(defaultUsername) ? defaultUsername : DefaultUserEnum.SYSTEM_USER.getValue();
+            return StrUtil.isNotBlank(defaultUsername) ? defaultUsername : NonLoggedUserEnum.SYSTEM_USER.getValue();
         } else {
             return loginUser.getUsername();
         }
@@ -105,10 +105,10 @@ public class SecurityUtil {
      * 获取当前用户真实姓名，若不存在则默认为：系统用户
      *
      * @return 当前用户真实姓名
-     * @see DefaultUserEnum
+     * @see NonLoggedUserEnum
      */
     public static String getCurrentRealName() {
-        return getCurrentRealName(DefaultUserEnum.SYSTEM_USER.getName());
+        return getCurrentRealName(NonLoggedUserEnum.SYSTEM_USER.getName());
     }
 
     /**
@@ -121,16 +121,16 @@ public class SecurityUtil {
         LoginUser loginUser = getLoginUser();
 
         if (loginUser.getId() == null) {
-            return StrUtil.isNotBlank(defaultRealName) ? defaultRealName : DefaultUserEnum.SYSTEM_USER.getName();
+            return StrUtil.isNotBlank(defaultRealName) ? defaultRealName : NonLoggedUserEnum.SYSTEM_USER.getName();
         } else {
             return loginUser.getRealName();
         }
     }
 
     /**
-     * 获取当前用户部门ID
+     * 获取当前用户所属部门ID
      *
-     * @return 当前用户部门ID
+     * @return 当前用户所属部门ID
      */
     public static Long getCurrentDeptId() {
         return getLoginUser().getDeptId();

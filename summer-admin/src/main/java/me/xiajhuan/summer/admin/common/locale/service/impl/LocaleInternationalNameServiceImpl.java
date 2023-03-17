@@ -16,6 +16,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import me.xiajhuan.summer.admin.common.locale.entity.LocaleInternationalNameEntity;
 import me.xiajhuan.summer.admin.common.locale.mapper.LocaleInternationalNameMapper;
 import me.xiajhuan.summer.admin.common.locale.service.LocaleInternationalNameService;
+import org.springframework.stereotype.Service;
 
 /**
  * 国际化名称 ServiceImpl
@@ -23,5 +24,6 @@ import me.xiajhuan.summer.admin.common.locale.service.LocaleInternationalNameSer
  * @author xiajhuan
  * @date 2023/3/16
  */
+@Service
 public class LocaleInternationalNameServiceImpl extends ServiceImpl<LocaleInternationalNameMapper, LocaleInternationalNameEntity> implements LocaleInternationalNameService {
 }

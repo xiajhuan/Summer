@@ -13,7 +13,7 @@
 package me.xiajhuan.summer.core.constant;
 
 /**
- * setting配置Bean名称
+ * setting配置Bean名称常量
  *
  * @author xiajhuan
  * @date 2022/11/26

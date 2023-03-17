@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 
 /**
  * 限流负载均衡策略<br>
- * note：通过实现该接口可以个性化自己的限流负载均衡策略
+ * note：通过实现该接口覆写 {@link LoadBalanceStrategy#calRealQps} 可以个性化自己的限流负载均衡策略
  *
  * @author xiajhuan
  * @date 2022/12/5
@@ -24,13 +24,13 @@ import java.math.BigDecimal;
 public interface LoadBalanceStrategy {
 
     /**
-     * 计算当前节点实际的Qps
+     * 计算当前服务节点实际的Qps
      *
      * @param setQps  设置的Qps
-     * @param nodeNum 节点数
+     * @param nodeNum 服务节点数
      * @return 实际的Qps
      */
-    default double calRealQpsBySetQpsAndNodeNum(double setQps, int nodeNum) {
+    default double calRealQps(double setQps, int nodeNum) {
         // Polling Strategy -> realQps = setQps / nodeNum
         return BigDecimal.valueOf(setQps / nodeNum).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
     }

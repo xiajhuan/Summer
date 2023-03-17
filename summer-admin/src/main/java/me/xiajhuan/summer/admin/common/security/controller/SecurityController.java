@@ -151,7 +151,7 @@ public class SecurityController {
                 .operation(operationEnum.getValue())
                 .status(statusEnum.getValue())
                 .userAgent(HttpContextUtil.getUserAgent(request))
-                .ip(IpUtil.getRequestOriginIp(request)).build();
+                .ip(IpUtil.getRequestIp(request)).build();
 
         // 异步保存登录日志
         logLoginService.saveLogAsync(log);

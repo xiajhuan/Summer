@@ -24,6 +24,7 @@ spring:
       max-request-size: 100MB
   # 消息国际化
   messages:
+    encoding: UTF-8
     basename: i18n/messages,i18n/validation
   # 不允许同名Bean覆盖
   main:
@@ -39,6 +40,10 @@ mybatis-plus:
   # Mapper.xml文件位置，多个location用“,”分隔
   mapperlocations: classpath*:/mapper/**/*.xml
   global-config:
+    # 数据库相关配置
+    db-config:
+      # 全局主键ID类型
+      id-type: ASSIGN_ID
     # 关闭LOGO
     banner: false
   # Mybatis原生配置

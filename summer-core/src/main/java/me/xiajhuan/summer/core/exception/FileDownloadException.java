@@ -85,7 +85,6 @@ public class FileDownloadException extends Exception {
         return of(cause, LocaleUtil.getI18nMessage(code, param));
     }
 
-
     /**
      * 构建文件下载异常（作为原始异常）
      *

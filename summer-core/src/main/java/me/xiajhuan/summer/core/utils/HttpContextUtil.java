@@ -17,6 +17,9 @@ import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
+import cn.hutool.log.Log;
+import cn.hutool.log.LogFactory;
+import me.xiajhuan.summer.core.constant.RequestAcceptConst;
 import org.aspectj.lang.JoinPoint;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.context.request.RequestAttributes;
@@ -39,6 +42,8 @@ import java.util.Map;
  */
 public class HttpContextUtil {
 
+    private static final Log LOGGER = LogFactory.get();
+
     /**
      * 获取请求
      *
@@ -54,10 +59,10 @@ public class HttpContextUtil {
     }
 
     /**
-     * 获取请求参数-Map
+     * 获取请求参数 Map
      *
      * @param request {@link HttpServletRequest}
-     * @return 请求参数-Map
+     * @return 请求参数 Map
      */
     public static Map<String, String> getParameterMap(HttpServletRequest request) {
         Map<String, String> params = MapUtil.newHashMap();
@@ -96,21 +101,21 @@ public class HttpContextUtil {
     }
 
     /**
-     * 获取请求客户端信息
+     * 获取请求代理
      *
      * @param request {@link HttpServletRequest}
-     * @return 请求客户端信息
+     * @return 请求代理
      */
     public static String getUserAgent(HttpServletRequest request) {
         return request.getHeader(HttpHeaders.USER_AGENT);
     }
 
     /**
-     * 获取请求接口唯一标识<br>
+     * 获取接口唯一标识<br>
      * 格式：URI[Method]，如：/summer-single/security/user/page[GET]
      *
      * @param request {@link HttpServletRequest}
-     * @return 请求接口唯一标识
+     * @return 接口唯一标识
      */
     public static String getInterfaceSignature(HttpServletRequest request) {
         return StrUtil.format("{}[{}]", request.getRequestURI(), request.getMethod());
@@ -119,67 +124,53 @@ public class HttpContextUtil {
     /**
      * 获取请求参数
      *
-     * @param joinPoint {@link JoinPoint}
-     * @param request   {@link HttpServletRequest}
+     * @param point   {@link JoinPoint}
+     * @param request {@link HttpServletRequest}
      * @return 请求参数
      */
-    public static String getParamValues(JoinPoint joinPoint, HttpServletRequest request) {
+    public static String getParam(JoinPoint point, HttpServletRequest request) {
         // 请求参数，note：这里如果没有参数会返回空数组
-        Object[] args = joinPoint.getArgs();
+        Object[] args = point.getArgs();
 
         if (args.length > 0) {
-            // 存在方法参数，则必然存在请求参数
+            // Path中的Query参数，note：非GET请求也可能携带Query参数
             String queryString = request.getQueryString();
+            // Query参数格式示例：Query【pageNum=1&pageSize=10】
+            String queryParam = StrUtil.EMPTY;
             if (StrUtil.isNotBlank(queryString)) {
-                // Query参数，去除末尾的“&”
-                return queryString.endsWith("&") ? queryString.substring(0, queryString.length() - 1) : queryString;
-            } else if (args.length == 1 && args[0] instanceof String && JSONUtil.isTypeJSON(String.valueOf(args[0]))) {
-                // 参数为Json字符串
-                return String.valueOf(args[0]);
+                queryParam = StrUtil.format("Query【{}】 ",
+                        queryString.endsWith("&") ? queryString.substring(0, queryString.length() - 1) : queryString);
+            }
+
+            String acceptHeader = request.getHeader(HttpHeaders.ACCEPT);
+            if (args.length == 1 && StrUtil.containsIgnoreCase(acceptHeader, RequestAcceptConst.JSON)) {
+                // Json参数格式示例：Json【{...}】
+                final String jsonParam;
+                if (args[0] instanceof CharSequence && JSONUtil.isTypeJSON(String.valueOf(args[0]))) {
+                    jsonParam = StrUtil.format("Json【{}】", args[0]);
+                } else {
+                    jsonParam = StrUtil.format("Json【{}】", JSONUtil.toJsonStr(args[0]));
+                }
+                if (StrUtil.isNotBlank(queryParam)) {
+                    return StrUtil.builder(queryParam, jsonParam).toString();
+                } else {
+                    return jsonParam;
+                }
+            } else if (args.length >= 1 && StrUtil.containsAnyIgnoreCase(acceptHeader, RequestAcceptConst.FORM)) {
+                // Form参数格式示例：Form【pageNum=1&pageSize=10】或Form【status=1】【文件上传】
+                StringBuilder formParam = getFormParam(args);
+                if (StrUtil.isNotBlank(queryParam)) {
+                    return StrUtil.builder(queryParam, formParam).toString();
+                } else {
+                    return formParam.toString();
+                }
             } else {
-                // 表单参数
-                return getFormDataParams(args);
+                // 不支持的参数格式，如：application/xml，application/javascript等
+                LOGGER.warn("不支持的参数格式【{}】", acceptHeader);
             }
         }
 
         return StrUtil.EMPTY;
-    }
-
-    /**
-     * 获取表单参数，若包含文件上传则末尾标记【文件上传】
-     *
-     * @param args 方法参数数组
-     * @return 表单参数
-     */
-    private static String getFormDataParams(Object[] args) {
-        // 排除参数值为空的参数（包括空数组）
-        args = Arrays.stream(args).filter(arg -> ObjectUtil.isNotEmpty(arg)).toArray();
-
-        // 标记当前参数是否为文件上传，true：不是 false：是
-        boolean notMultipart = true;
-
-        StringBuilder paramStr = StrUtil.builder();
-        for (int i = 0; i < args.length; i++) {
-            if (notMultipart && (args[i] instanceof MultipartFile || args[i] instanceof MultipartFile[])) {
-                notMultipart = false;
-            } else {
-                if (args[i] instanceof Object[]) {
-                    // 数组参数做输出处理，格式为：[1,2,3]
-                    paramStr.append(ArrayUtil.toString(args[i]));
-                } else {
-                    paramStr.append(args[i].toString());
-                }
-                if (i != args.length - 1) {
-                    paramStr.append(StrUtil.COMMA);
-                }
-            }
-        }
-
-        if (!notMultipart) {
-            paramStr.append("【文件上传】");
-        }
-
-        return paramStr.toString();
     }
 
     /**
@@ -188,14 +179,52 @@ public class HttpContextUtil {
      * @param response    {@link HttpServletResponse}
      * @param contentType 媒体格式
      * @param status      状态码
-     * @param value       数据
+     * @param data        数据
      * @throws IOException I/O异常
      */
     public static void makeResponse(HttpServletResponse response, String contentType,
-                                    int status, Object value) throws IOException {
+                                    int status, Object data) throws IOException {
         response.setContentType(contentType);
         response.setStatus(status);
-        response.getOutputStream().write(JSONUtil.toJsonStr(value).getBytes());
+        response.getOutputStream().write(JSONUtil.toJsonStr(data).getBytes());
+    }
+
+    /**
+     * 获取表单参数，若包含文件上传则末尾标记【文件上传】
+     *
+     * @param args 方法参数
+     * @return {@link StringBuilder}
+     * @see RequestAcceptConst#FORM
+     */
+    private static StringBuilder getFormParam(Object[] args) {
+        // 排除参数值为空的方法参数（包括空数组）
+        args = Arrays.stream(args).filter(arg -> ObjectUtil.isNotEmpty(arg)).toArray();
+
+        // 标记是否为文件上传，true：不是 false：是
+        boolean notMultipart = true;
+
+        StringBuilder formParam = StrUtil.builder();
+        for (int i = 0; i < args.length; i++) {
+            if (notMultipart && (args[i] instanceof MultipartFile || args[i] instanceof MultipartFile[])) {
+                notMultipart = false;
+            } else {
+                if (args[i] instanceof Object[]) {
+                    // 数组参数格式示例：[1,2,3]
+                    formParam.append(ArrayUtil.toString(args[i]));
+                } else {
+                    formParam.append(args[i].toString());
+                }
+                if (i != args.length - 1) {
+                    formParam.append(StrUtil.COMMA);
+                }
+            }
+        }
+
+        if (!notMultipart) {
+            formParam.append("【文件上传】");
+        }
+
+        return formParam;
     }
 
 }

@@ -16,14 +16,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * 默认用户枚举
+ * 非登录用户枚举
  *
  * @author xiajhuan
  * @date 2022/11/28
  */
 @Getter
 @AllArgsConstructor
-public enum DefaultUserEnum {
+public enum NonLoggedUserEnum {
 
     /**
      * 系统用户

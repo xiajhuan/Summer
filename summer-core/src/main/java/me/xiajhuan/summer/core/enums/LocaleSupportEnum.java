@@ -18,7 +18,7 @@ import lombok.Getter;
 import java.util.Locale;
 
 /**
- * 地区支持枚举
+ * 地区语言支持枚举
  *
  * @author xiajhuan
  * @date 2023/3/4

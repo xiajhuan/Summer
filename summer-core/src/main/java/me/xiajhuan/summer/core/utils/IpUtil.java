@@ -17,6 +17,7 @@ import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.ServletRequest;
 import java.net.Inet4Address;
 import java.net.UnknownHostException;
 
@@ -36,17 +37,17 @@ public class IpUtil {
     private static final String UNKNOWN = "unknown";
 
     /**
-     * 获取请求来源IP
+     * 获取请求IP
      * <p>
-     * 使用Nginx等反向代理软件，则不能通过request.getRemoteAddr()获取IP地址，
+     * 使用Nginx等反向代理软件，则不能通过 {@link ServletRequest#getRemoteAddr()} 获取IP地址，
      * 如果使用了多级反向代理的话，X-Forwarded-For的值并不止一个，而是一串IP地址，
      * X-Forwarded-For中第一个非unknown的有效IP字符串，为真实IP地址
      * </p>
      *
      * @param request {@link HttpServletRequest}
-     * @return 请求来源IP
+     * @return 请求IP
      */
-    public static String getRequestOriginIp(HttpServletRequest request) {
+    public static String getRequestIp(HttpServletRequest request) {
         String ip = null;
         try {
             ip = request.getHeader("x-forwarded-for");
@@ -73,15 +74,15 @@ public class IpUtil {
     }
 
     /**
-     * 获取当前节点IP
+     * 获取当前服务节点IP
      *
-     * @return 当前节点IP
+     * @return 当前服务节点IP
      */
     public static String getIpSelf() {
         try {
             return Inet4Address.getLocalHost().getHostAddress();
         } catch (UnknownHostException e) {
-            LOGGER.error(e, "获取当前节点IP失败【{}】", e.getMessage());
+            LOGGER.error(e, "获取当前服务节点IP失败【{}】", e.getMessage());
         }
         return null;
     }

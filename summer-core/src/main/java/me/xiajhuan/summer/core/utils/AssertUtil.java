@@ -31,8 +31,8 @@ public class AssertUtil {
 
     /**
      * <p>
-     * 默认参数Key，用于填充业务异常消息，
-     * 例如：default不能为空
+     * 默认参数Key，用于填充断言失败时的业务异常消息，
+     * 例如：”default不能为空“
      * </p>
      *
      * @see ErrorCode#NOT_NULL
@@ -41,20 +41,20 @@ public class AssertUtil {
 
     /**
      * 判空类型：blank<br>
-     * 支持CharSequence
+     * 支持 {@link CharSequence}
      */
     private static final String BLANK = "blank";
 
     /**
      * 判空类型：empty<br>
-     * 支持CharSequence/Iterable/Iterator/Array/Map
+     * 支持 {@link CharSequence}/{@link Iterable}/{@link Iterator}/{@code Array}/{@link Map}
      */
     private static final String EMPTY = "empty";
 
     /**
      * 判空类型：null<br>
-     * 支持除基本类型外的所有类型<br>
-     * note：如果是字符串则判断不为 null、“null”、“undefined”
+     * 支持基本类型外的所有类型<br>
+     * note：如果是字符串则判断不为：{@code null}、“null”、“undefined”
      */
     private static final String NULL = "null";
 
@@ -126,27 +126,31 @@ public class AssertUtil {
      *
      * @param paramKey   参数Key
      * @param paramValue 参数值
-     * @param type       判空类型
+     * @param judgeType  判空类型
      * @throws BusinessException 业务异常
      */
-    private static void paramValueAssert(String paramKey, Object paramValue, String type) throws BusinessException {
-        switch (type) {
+    private static void paramValueAssert(String paramKey, Object paramValue, String judgeType) throws BusinessException {
+        switch (judgeType) {
             case BLANK:
-                if (StrUtil.isBlank((CharSequence) paramValue)) {
-                    throwBusinessException(paramKey);
+                if (paramValue instanceof CharSequence) {
+                    if (StrUtil.isBlank((CharSequence) paramValue)) {
+                        throwBusinessException(paramKey);
+                    }
+                } else {
+                    throwUnsupportedOperationException(paramValue.getClass().getName(), judgeType);
                 }
                 break;
             case EMPTY:
-                if (paramValue instanceof CharSequence ||
-                        paramValue instanceof Iterable ||
-                        paramValue instanceof Iterator ||
-                        ArrayUtil.isArray(paramValue) ||
-                        paramValue instanceof Map) {
+                if (paramValue instanceof CharSequence
+                        || paramValue instanceof Iterable
+                        || paramValue instanceof Iterator
+                        || ArrayUtil.isArray(paramValue)
+                        || paramValue instanceof Map) {
                     if (ObjectUtil.isEmpty(paramValue)) {
                         throwBusinessException(paramKey);
                     }
                 } else {
-                    throw new IllegalArgumentException(StrUtil.format("类型【{}】不支持Empty判空", paramValue.getClass().getName()));
+                    throwUnsupportedOperationException(paramValue.getClass().getName(), judgeType);
                 }
                 break;
             default:
@@ -154,6 +158,16 @@ public class AssertUtil {
                     throwBusinessException(paramKey);
                 }
         }
+    }
+
+    /**
+     * 抛出 {@link UnsupportedOperationException}
+     *
+     * @param paramType 参数类型
+     * @param judgeType 判空类型
+     */
+    private static void throwUnsupportedOperationException(String paramType, String judgeType) {
+        throw new UnsupportedOperationException(StrUtil.format("类型【{}】不支持{}判空", paramType, judgeType));
     }
 
     /**

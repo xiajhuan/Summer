@@ -64,7 +64,7 @@ public interface CacheServer {
      * note：堆内缓存需指定值类型，不指定则默认STRING
      *
      * @param key Key
-     * @see CacheConst#HEAP
+     * @see CacheConst#VALUE_STRING
      */
     void delete(String key);
 
@@ -73,7 +73,10 @@ public interface CacheServer {
      *
      * @param key       Key
      * @param valueType Value类型
-     * @see CacheConst#HEAP
+     * @see CacheConst#VALUE_STRING
+     * @see CacheConst#VALUE_AUTO
+     * @see CacheConst#VALUE_HASH
+     * @see CacheConst#VALUE_LIST
      */
     void delete(String key, String valueType);
 

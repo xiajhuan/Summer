@@ -41,7 +41,7 @@ public class QueryParamHandler {
     public static <T> Page<T> handlePageAndSort(PageAndSort pageAndSort, Page<T> page, String defaultSort, String defaultOrder, boolean camelToUnderscore) {
         // 排序字段
         String sortField = pageAndSort.getField();
-        // 排序规则（升序/降序）
+        // 排序规则
         String sortOrder = pageAndSort.getOrder();
 
         // 是否驼峰转下划线

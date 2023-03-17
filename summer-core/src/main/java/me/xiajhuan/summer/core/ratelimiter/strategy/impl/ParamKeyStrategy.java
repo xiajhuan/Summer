@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * <p>
- * 参数限流Key策略（Key为：接口签名#接口方法参数）
+ * 参数限流Key策略（Key为：接口签名#方法参数）
  * 例如：/summer-single/security/user/page[GET]#pageNum=1&pageSize=10
  * </p>
  * note：入参数据量特别大时不建议使用
@@ -53,13 +53,13 @@ public class ParamKeyStrategy implements KeyStrategy {
     //*******************单例处理结束********************
 
     @Override
-    public String getRateLimiterKey(JoinPoint joinPoint, HttpServletRequest currentRequest, String currentUsername) {
-        return StrUtil.format(StrTemplateConst.RATE_LIMITER_KEY, HttpContextUtil.getInterfaceSignature(currentRequest), HttpContextUtil.getParamValues(joinPoint, currentRequest));
+    public String getKey(JoinPoint point, HttpServletRequest request, String username) {
+        return StrUtil.format(StrTemplateConst.RATE_LIMITER_KEY, HttpContextUtil.getInterfaceSignature(request), HttpContextUtil.getParam(point, request));
     }
 
     @Override
-    public String limitMsgTemplate() {
-        return "，Key-ParamValues【{}】";
+    public String extraMsgTemplate() {
+        return "，Key-Param【{}】";
     }
 
 }

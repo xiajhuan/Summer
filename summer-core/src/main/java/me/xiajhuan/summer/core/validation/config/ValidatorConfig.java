@@ -12,6 +12,7 @@
 
 package me.xiajhuan.summer.core.validation.config;
 
+import me.xiajhuan.summer.core.enums.LocaleSupportEnum;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,7 +22,6 @@ import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
 
 import javax.annotation.Resource;
 import javax.validation.Validator;
-import java.util.Locale;
 
 /**
  * 校验器配置
@@ -56,7 +56,7 @@ public class ValidatorConfig {
     public LocaleResolver localeResolver() {
         AcceptHeaderLocaleResolver acceptHeaderLocaleResolver = new AcceptHeaderLocaleResolver();
         // 设置默认的Locale为：中国（中文）
-        acceptHeaderLocaleResolver.setDefaultLocale(Locale.CHINA);
+        acceptHeaderLocaleResolver.setDefaultLocale(LocaleSupportEnum.ZH_CN.getValue());
         return acceptHeaderLocaleResolver;
     }
 

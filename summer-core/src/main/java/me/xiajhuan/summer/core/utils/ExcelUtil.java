@@ -96,8 +96,8 @@ public class ExcelUtil {
      * 导出（List<ExcelClass>）
      *
      * @param response   {@link HttpServletResponse}
-     * @param fileName   文件名称
-     * @param sheetName  sheet名称
+     * @param fileName   文件名
+     * @param sheetName  sheet名
      * @param dtoList    Dto类型列表
      * @param excelClass ExcelClass
      * @param <D>        Dto类型
@@ -113,8 +113,8 @@ public class ExcelUtil {
      * 导出（List<DtoClass>）
      *
      * @param response   {@link HttpServletResponse}
-     * @param fileName   文件名称
-     * @param sheetName  sheet名称
+     * @param fileName   文件名
+     * @param sheetName  sheet名
      * @param dtoList    Dto类型列表
      * @param excelClass ExcelClass
      * @param <D>        Dto类型

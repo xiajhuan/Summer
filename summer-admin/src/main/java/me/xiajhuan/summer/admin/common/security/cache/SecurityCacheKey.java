@@ -10,26 +10,26 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.core.validation.validator.base;
+package me.xiajhuan.summer.admin.common.security.cache;
 
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-import java.util.regex.Pattern;
+import cn.hutool.core.util.StrUtil;
 
 /**
- * 基础正则校验器（required，pattern）
+ * security模块缓存Key
  *
  * @author xiajhuan
- * @date 2023/3/4
+ * @date 2023/3/17
  */
-@NoArgsConstructor
-@Setter
-public class BasePatternValidator extends BaseRequiredValidator {
+public class SecurityCacheKey {
 
     /**
-     * {@link Pattern}
+     * 验证码 Key
+     *
+     * @param keyParam 填充参数
+     * @return 验证码 Key
      */
-    protected Pattern pattern;
+    public static String captchaCode(String keyParam) {
+        return StrUtil.format("CAPTCHA_CODE_{}", keyParam);
+    }
 
 }

@@ -10,24 +10,26 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.core.validation.validator.base;
+package me.xiajhuan.summer.core.cache.key;
 
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import cn.hutool.core.util.StrUtil;
 
 /**
- * 基础必填校验器（required）
+ * summer-core模块缓存Key
  *
  * @author xiajhuan
- * @date 2023/3/4
+ * @date 2023/3/17
  */
-@NoArgsConstructor
-@Setter
-public class BaseRequiredValidator {
+public class CoreCacheKey {
 
     /**
-     * 是否必填，true：必填 false：非必填
+     * Excel数据 Key
+     *
+     * @param keyParam 填充参数
+     * @return Excel数据 Key
      */
-    protected boolean required;
+    public static String excelData(String keyParam) {
+        return StrUtil.format("EXCEL_DATA_{}", keyParam);
+    }
 
 }

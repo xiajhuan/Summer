@@ -29,7 +29,7 @@ parser.cache-ttl = 24
 
 # MybatisPlus插件配置
 [Mp]
-# 数据权限忽略的表名称配置，以“,”分隔
+# 数据权限忽略的表名配置，以“,”分隔
 # 支持通配符：“*”（任意匹配）和“?”（单值匹配）
 data-scope.ignore = log_*,*_token,security_role_*
 

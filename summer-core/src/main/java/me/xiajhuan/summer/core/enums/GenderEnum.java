@@ -42,6 +42,6 @@ public enum GenderEnum {
 
     private Integer value;
 
-    private String desc;
+    private String name;
 
 }
