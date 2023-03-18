@@ -126,7 +126,7 @@ public class LogOperationAspect {
         }
 
         // 异步保存日志
-        logOperationService.saveLogAsync(log);
+        logOperationService.saveAsync(log);
     }
 
     /**

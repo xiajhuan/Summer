@@ -39,12 +39,12 @@ public interface LogOperationService extends IService<LogOperationEntity> {
      *
      * @param log 日志Entity
      */
-    @Async(ThreadPoolConst.ASYNC_TASK_POOL)
-    void saveLogAsync(LogOperationEntity log);
+    @Async(ThreadPoolConst.Async.COMMON)
+    void saveAsync(LogOperationEntity log);
 
     /**
      * 清理日志
      */
-    void clearLog();
+    void clear();
 
 }

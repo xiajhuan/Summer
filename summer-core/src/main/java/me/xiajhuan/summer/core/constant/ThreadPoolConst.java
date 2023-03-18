@@ -21,23 +21,32 @@ package me.xiajhuan.summer.core.constant;
 public class ThreadPoolConst {
 
     /**
-     * 异步任务线程池Bean名称
+     * 异步任务
      */
-    public static final String ASYNC_TASK_POOL = "asyncTaskThreadPool";
+    public static class Async {
+
+        /**
+         * 通用异步任务线程池Bean名称
+         */
+        public static final String COMMON = "commonAsyncThreadPool";
+
+        /**
+         * 通用异步任务线程池线程名前缀
+         */
+        public static final String COMMON_PREFIX = "Common-Async-Thread-";
+
+    }
 
     /**
-     * 异步任务线程池线程名称前缀
+     * 定时任务
      */
-    public static final String ASYNC_TASK_PREFIX = "Async-Task-Thread-";
+    public static class Schedule {
 
-    /**
-     * 定时任务线程池Bean名称
-     */
-    public static final String SCHEDULE_JOB_POOL = "scheduleJobThreadPool";
+        /**
+         * 基本定时任务线程池线程名前缀
+         */
+        public static final String BASE_PREFIX = "Base-Schedule-Thread-";
 
-    /**
-     * 定时任务线程池线程名称前缀
-     */
-    public static final String SCHEDULE_JOB_PREFIX = "Schedule-Job-Thread-";
+    }
 
 }

@@ -10,7 +10,7 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.admin.common.base.config;
+package me.xiajhuan.summer.core.config;
 
 import cn.hutool.setting.Setting;
 import me.xiajhuan.summer.core.constant.SettingBeanConst;
@@ -23,27 +23,17 @@ import org.springframework.context.annotation.Configuration;
  * @author xiajhuan
  * @date 2023/3/9
  */
-@Configuration("adminSettingConfig")
+@Configuration("coreSettingConfig")
 public class SettingConfig {
 
     /**
-     * 注册 common.setting的配置文件Bean
+     * 注册 core.setting的配置文件Bean
      *
      * @return {@link Setting}
      */
-    @Bean(SettingBeanConst.COMMON)
-    public Setting commonSetting() {
-        return new Setting("setting/common.setting");
-    }
-
-    /**
-     * 注册 business.setting的配置文件Bean
-     *
-     * @return {@link Setting}
-     */
-    @Bean(SettingBeanConst.BUSINESS)
-    public Setting businessSetting() {
-        return new Setting("setting/business.setting");
+    @Bean(SettingBeanConst.CORE)
+    public Setting coreSetting() {
+        return new Setting("setting/core.setting");
     }
 
 }

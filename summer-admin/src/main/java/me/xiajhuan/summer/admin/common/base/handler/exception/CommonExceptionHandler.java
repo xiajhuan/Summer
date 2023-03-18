@@ -10,7 +10,7 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.admin.common.base.exception;
+package me.xiajhuan.summer.admin.common.base.handler.exception;
 
 import cn.hutool.core.text.StrPool;
 import cn.hutool.core.util.StrUtil;
@@ -47,11 +47,11 @@ public class CommonExceptionHandler {
 
     private static final Log LOGGER = LogFactory.get();
 
-    @Resource(name = SettingBeanConst.COMMON)
-    private Setting commonSetting;
-
     @Resource(name = SettingBeanConst.CORE)
     private Setting coreSetting;
+
+    @Resource(name = SettingBeanConst.COMMON)
+    private Setting commonSetting;
 
     @Resource
     private LogErrorService logErrorService;
@@ -111,7 +111,7 @@ public class CommonExceptionHandler {
     }
 
     /**
-     * 参数校验（Dto类型传参）异常处理
+     * 参数校验（Dto类型参数）异常处理
      *
      * @param e {@link BindException}
      * @return 响应结果
@@ -145,10 +145,11 @@ public class CommonExceptionHandler {
      * 授权异常处理
      *
      * @return 响应结果
+     * @see AuthorizationException
      */
     @ExceptionHandler(value = AuthorizationException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
-    public Result handleAccessDeniedException() {
+    public Result handleAuthorizationException() {
         return Result.ofFail(ErrorCode.FORBIDDEN);
     }
 
@@ -162,7 +163,7 @@ public class CommonExceptionHandler {
     private Result logAndResponse(Exception e, boolean isSaveErrorLog) {
         if (isSaveErrorLog) {
             // 异步保存错误日志
-            logErrorService.saveLogAsync(e, HttpContextUtil.getHttpServletRequest());
+            logErrorService.saveAsync(e, HttpContextUtil.getHttpServletRequest());
         }
 
         String msg = e.getMessage();

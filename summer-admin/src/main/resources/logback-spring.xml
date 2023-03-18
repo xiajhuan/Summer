@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="60 seconds" debug="false">
-    <contextName>summer</contextName>
+    <contextName>summer-admin</contextName>
     <springProperty scope="context" name="springAppName" source="spring.application.name"/>
     <property name="log.path" value="log"/>
     <property name="log.maxHistory" value="15"/>
@@ -9,14 +9,14 @@
     <property name="log.pattern"
               value="%d{yyyy-MM-dd HH:mm:ss} %-5level [${springAppName:-},%X{X-B3-TraceId:-},%X{X-B3-SpanId:-},%X{X-Span-Export:-}] %thread %logger %msg%n"/>
 
-    <!--输出到控制台-->
+    <!--控制台-->
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>${log.colorPattern}</pattern>
         </encoder>
     </appender>
 
-    <!--输出到info文件-->
+    <!--info文件-->
     <appender name="file_info" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>${log.path}/info/info.%d{yyyy-MM-dd}.log</fileNamePattern>
@@ -32,7 +32,7 @@
         </filter>
     </appender>
 
-    <!--输出到error文件-->
+    <!--error文件-->
     <appender name="file_error" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>${log.path}/error/error.%d{yyyy-MM-dd}.log</fileNamePattern>

@@ -30,7 +30,7 @@ import org.springframework.scheduling.annotation.Scheduled;
  */
 @Setter
 @Accessors(chain = true)
-public class BusinessTaskJob {
+public class BusinessJob {
 
     private static final Log LOGGER = LogFactory.get();
 
@@ -41,12 +41,12 @@ public class BusinessTaskJob {
     @Scheduled(fixedRate = TimeUnitConst.MINUTE, initialDelay = 10 * TimeUnitConst.SECOND)
     public void demo() {
         TimeInterval timer = DateUtil.timer();
-        LOGGER.info("【BusinessTaskJob】【demo】Job开始执行：{}", DateUtil.date());
+        LOGGER.info("【BusinessJob】【demo】开始执行：{}", DateUtil.date());
 
         Console.log("业务 XXX 开始执行...");
         Console.log("业务 XXX 执行完毕！");
 
-        LOGGER.info("【BusinessTaskJob】【demo】Job执行结束：{}，耗时【{}】ms", DateUtil.date(), timer.interval());
+        LOGGER.info("【BusinessJob】【demo】执行结束：{}，耗时【{}】ms", DateUtil.date(), timer.interval());
     }
 
 }

@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @date 2022/3/8
  */
 @RestController
-@RequestMapping("test/rateLimiter")
+@RequestMapping("open/test/rateLimiter")
 public class RateLimiterController {
 
     /**

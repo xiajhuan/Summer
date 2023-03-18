@@ -111,12 +111,12 @@ public class LogLoginServiceImpl extends ServiceImpl<LogLoginMapper, LogLoginEnt
     }
 
     @Override
-    public void saveLogAsync(LogLoginEntity log) {
+    public void saveAsync(LogLoginEntity log) {
         save(log);
     }
 
     @Override
-    public void clearLog() {
+    public void clear() {
         // 删除登录日志
         LambdaQueryWrapper<LogLoginEntity> queryWrapper = Wrappers.lambdaQuery();
         queryWrapper.select(LogLoginEntity::getId);

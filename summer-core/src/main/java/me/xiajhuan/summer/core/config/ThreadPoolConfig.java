@@ -10,9 +10,8 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.admin.common.base.config;
+package me.xiajhuan.summer.core.config;
 
-import cn.hutool.core.thread.ThreadUtil;
 import cn.hutool.setting.Setting;
 import me.xiajhuan.summer.core.constant.SettingBeanConst;
 import me.xiajhuan.summer.core.constant.ThreadPoolConst;
@@ -21,8 +20,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ThreadPoolExecutor;
 
 /**
@@ -35,11 +32,11 @@ import java.util.concurrent.ThreadPoolExecutor;
 public class ThreadPoolConfig {
 
     /**
-     * 注册异步任务线程池
+     * 注册通用异步任务线程池
      *
      * @return {@link ThreadPoolTaskExecutor}
      */
-    @Bean(ThreadPoolConst.ASYNC_TASK_POOL)
+    @Bean(ThreadPoolConst.Async.COMMON)
     public ThreadPoolTaskExecutor threadPoolTaskExecutor(@Qualifier(SettingBeanConst.CORE) Setting setting) {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         executor.setCorePoolSize(setting.getInt("core-pool-size", "Async", 8));
@@ -47,24 +44,13 @@ public class ThreadPoolConfig {
         executor.setMaxPoolSize(setting.getInt("max-pool-size", "Async", 32));
         executor.setQueueCapacity(setting.getInt("queue-capacity", "Async", 512));
         executor.setKeepAliveSeconds(setting.getInt("keep-alive-seconds", "Async", 30));
-        executor.setThreadNamePrefix(ThreadPoolConst.ASYNC_TASK_PREFIX);
+        executor.setThreadNamePrefix(ThreadPoolConst.Async.COMMON_PREFIX);
         executor.setWaitForTasksToCompleteOnShutdown(setting.getBool("wait-for-tasks-to-complete-on-shutdown", "Async", true));
         executor.setAwaitTerminationSeconds(setting.getInt("await-termination-Seconds", "Async", 30));
-        // 拒绝策略：由调用的线程处理该任务
+        // 拒绝策略：由调用的线程处理任务
         executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
         executor.initialize();
         return executor;
-    }
-
-    /**
-     * 注册定时任务线程池
-     *
-     * @return {@link ScheduledExecutorService}
-     */
-    @Bean(ThreadPoolConst.SCHEDULE_JOB_POOL)
-    public ScheduledExecutorService scheduledExecutorService(@Qualifier(SettingBeanConst.COMMON) Setting setting) {
-        return Executors.newScheduledThreadPool(setting.getInt("base.core-pool-size", "Schedule", 1),
-                ThreadUtil.newNamedThreadFactory(ThreadPoolConst.SCHEDULE_JOB_PREFIX, false));
     }
 
 }

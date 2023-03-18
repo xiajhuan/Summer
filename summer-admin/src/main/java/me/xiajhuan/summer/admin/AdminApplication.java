@@ -18,6 +18,12 @@ import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 
+/**
+ * summer-admin启动类
+ *
+ * @author xiajhuan
+ * @date 2023/2/23
+ */
 @SpringBootConfiguration
 @EnableAutoConfiguration
 @ComponentScan("me.xiajhuan.summer")

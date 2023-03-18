@@ -154,7 +154,7 @@ public class SecurityController {
                 .ip(IpUtil.getRequestIp(request)).build();
 
         // 异步保存登录日志
-        logLoginService.saveLogAsync(log);
+        logLoginService.saveAsync(log);
     }
 
 }

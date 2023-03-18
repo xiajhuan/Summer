@@ -5,9 +5,12 @@ spring:
       p6spy: true
       # 连接池配置
       hikari:
-        connection-timeout: 30000
-        max-lifetime: 1800000
-        max-pool-size: 15
+        # 配置项说明参考 com.zaxxer.hikari.HikariConfigMXBean
+        connection-timeout: 10000
+        validation-timeout: 3000
+        idle-timeout: 60000
+        max-lifetime: 60000
+        max-pool-size: 10
         min-idle: 5
       # 默认数据源
       primary: business
@@ -25,20 +28,20 @@ spring:
           username: root
           password: jack%2021#2@6XJH
 
-  # Redis配置，只有缓存类型为 REDIS 时才会生效
+  # Redis配置，只有server.cache.type: REDIS 时会生效
   redis:
     host: 192.168.0.7
     port: 6379
     password: jack_2021
     database: 2
-    timeout: 5000
+    timeout: 6000
     lettuce:
       # 连接池配置
       pool:
-        min-idle: 8
-        max-idle: 20
+        min-idle: 5
+        max-idle: 10
         max-active: 1000
-        max-wait: 5000
+        max-wait: -1
 
 server:
   # Tomcat
@@ -58,19 +61,19 @@ logging:
     me:
       xiajhuan:
         summer:
-          # summer-core日志
+          # summer-core模块
           core:
-            # Excel日志
+            # Excel
             excel: debug
-            # 限流日志
+            # 限流
             ratelimiter: debug
-          # summer-admin日志
+          # summer-admin模块
           admin:
-            # business模块日志
+            # business模块
             business: info
-            # common模块日志
+            # common模块
             common: info
-            # open模块日志
+            # open模块
             open: info
 
 

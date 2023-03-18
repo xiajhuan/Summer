@@ -43,12 +43,12 @@ public interface LogErrorService extends IService<LogErrorEntity> {
      * @param e       {@link Exception}
      * @param request {@link HttpServletRequest}
      */
-    @Async(ThreadPoolConst.ASYNC_TASK_POOL)
-    void saveLogAsync(Exception e, HttpServletRequest request);
+    @Async(ThreadPoolConst.Async.COMMON)
+    void saveAsync(Exception e, HttpServletRequest request);
 
     /**
      * 清理日志
      */
-    void clearLog();
+    void clear();
 
 }

@@ -10,7 +10,7 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.admin.common.base.oauth2;
+package me.xiajhuan.summer.admin.common.base.shiro;
 
 import org.apache.shiro.authc.AuthenticationToken;
 

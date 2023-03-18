@@ -39,12 +39,12 @@ public interface LogLoginService extends IService<LogLoginEntity> {
      *
      * @param log 日志Entity
      */
-    @Async(ThreadPoolConst.ASYNC_TASK_POOL)
-    void saveLogAsync(LogLoginEntity log);
+    @Async(ThreadPoolConst.Async.COMMON)
+    void saveAsync(LogLoginEntity log);
 
     /**
      * 清理日志
      */
-    void clearLog();
+    void clear();
 
 }

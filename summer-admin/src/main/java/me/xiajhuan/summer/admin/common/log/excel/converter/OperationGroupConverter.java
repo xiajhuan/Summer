@@ -43,11 +43,11 @@ public class OperationGroupConverter implements Converter<Integer> {
     public WriteCellData convertToExcelData(Integer value, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration) {
         switch (value) {
             case 0:
-                return new WriteCellData(COMMON_CRUD.getDesc());
+                return new WriteCellData(COMMON_CRUD.getName());
             case 1:
-                return new WriteCellData(EXCEL_OPERATION.getDesc());
+                return new WriteCellData(EXCEL_OPERATION.getName());
             case 2:
-                return new WriteCellData(OTHER_OPERATION.getDesc());
+                return new WriteCellData(OTHER_OPERATION.getName());
             default:
                 return new WriteCellData("未知操作分组");
         }

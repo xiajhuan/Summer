@@ -31,7 +31,7 @@ import org.springframework.scheduling.annotation.Scheduled;
  */
 @Setter
 @Accessors(chain = true)
-public class CommonTaskJob {
+public class CommonJob {
 
     private static final Log LOGGER = LogFactory.get();
 
@@ -48,13 +48,13 @@ public class CommonTaskJob {
     @Scheduled(cron = "0 0 1 * * ?")
     public void clearLog() {
         TimeInterval timer = DateUtil.timer();
-        LOGGER.info("【CommonTaskJob】【clearLog】Job开始执行：{}", DateUtil.date());
+        LOGGER.info("【CommonJob】【clearLog】开始执行：{}", DateUtil.date());
 
-        logOperationService.clearLog();
-        logErrorService.clearLog();
-        logLoginService.clearLog();
+        logOperationService.clear();
+        logErrorService.clear();
+        logLoginService.clear();
 
-        LOGGER.info("【CommonTaskJob】【clearLog】Job执行结束：{}，耗时【{}】ms", DateUtil.date(), timer.interval());
+        LOGGER.info("【CommonJob】【clearLog】执行结束：{}，耗时【{}】ms", DateUtil.date(), timer.interval());
     }
 
 }

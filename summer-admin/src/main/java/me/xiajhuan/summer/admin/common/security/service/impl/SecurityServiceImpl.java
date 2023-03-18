@@ -170,7 +170,7 @@ public class SecurityServiceImpl implements SecurityService {
         int width = setting.getInt("captcha.width", "Security", 150);
         int height = setting.getInt("captcha.height", "Security", 40);
         // 验证码字符个数
-        int codeNum = setting.getInt("captcha.char-num", "Security", 4);
+        int codeNum = setting.getInt("captcha.char-num", "Security", 5);
         switch (type) {
             case "Line":
                 return CaptchaUtil.createLineCaptcha(width, height, codeNum,

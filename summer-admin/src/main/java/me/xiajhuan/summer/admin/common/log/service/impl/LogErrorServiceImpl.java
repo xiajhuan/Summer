@@ -121,7 +121,7 @@ public class LogErrorServiceImpl extends ServiceImpl<LogErrorMapper, LogErrorEnt
     }
 
     @Override
-    public void saveLogAsync(Exception e, HttpServletRequest request) {
+    public void saveAsync(Exception e, HttpServletRequest request) {
         // 构建错误日志Entity
         LogErrorEntity log = LogErrorEntity.builder()
                 .ip(IpUtil.getRequestIp(request))
@@ -142,7 +142,7 @@ public class LogErrorServiceImpl extends ServiceImpl<LogErrorMapper, LogErrorEnt
     }
 
     @Override
-    public void clearLog() {
+    public void clear() {
         // 删除错误日志
         LambdaQueryWrapper<LogErrorEntity> queryWrapper = Wrappers.lambdaQuery();
         queryWrapper.select(LogErrorEntity::getId);

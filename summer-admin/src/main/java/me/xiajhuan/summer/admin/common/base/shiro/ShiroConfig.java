@@ -10,18 +10,17 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.admin.common.base.config;
+package me.xiajhuan.summer.admin.common.base.shiro;
 
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.setting.Setting;
 import me.xiajhuan.summer.core.constant.SettingBeanConst;
-import me.xiajhuan.summer.admin.common.base.oauth2.Oauth2Filter;
-import me.xiajhuan.summer.admin.common.base.oauth2.Oauth2Realm;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
+import org.apache.shiro.web.servlet.ShiroFilter;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
@@ -45,12 +44,12 @@ public class ShiroConfig {
     /**
      * 白名单标识
      */
-    private static final String SECURITY_ANON = "anon";
+    private static final String ANON = "anon";
 
     /**
      * Oauth2标识
      */
-    private static final String SECURITY_OAUTH2 = "oauth2";
+    private static final String OAUTH2 = "oauth2";
 
     /**
      * 注册 {@link DefaultWebSessionManager}
@@ -68,7 +67,7 @@ public class ShiroConfig {
     /**
      * 注册 {@link SecurityManager}
      *
-     * @param oauth2Realm    Oauth2域
+     * @param oauth2Realm    {@link Oauth2Realm}
      * @param sessionManager {@link SessionManager}
      * @return {@link SecurityManager}
      */
@@ -82,7 +81,7 @@ public class ShiroConfig {
     }
 
     /**
-     * 注册 {@link ShiroFilterFactoryBean}
+     * 注册 {@link ShiroFilter}
      *
      * @param securityManager {@link SecurityManager}
      * @return {@link ShiroFilterFactoryBean}
@@ -100,20 +99,20 @@ public class ShiroConfig {
         // 白名单URI过滤
         Map<String, String> filterUriMap = MapUtil.newHashMap(true);
         // 默认过滤的URI
-        filterUriMap.put("/webjars/**", SECURITY_ANON);
-        filterUriMap.put("/favicon.ico", SECURITY_ANON);
-        filterUriMap.put("/actuator/**", SECURITY_ANON);
-        filterUriMap.put("/security/captcha", SECURITY_ANON);
-        filterUriMap.put("/security/login", SECURITY_ANON);
+        filterUriMap.put("/webjars/**", ANON);
+        filterUriMap.put("/favicon.ico", ANON);
+        filterUriMap.put("/actuator/**", ANON);
+        filterUriMap.put("/security/captcha", ANON);
+        filterUriMap.put("/security/login", ANON);
 
         // 自定义过滤的URI
         String anonUris = setting.getByGroup("anon-uris", "Security");
         if (StrUtil.isNotBlank(anonUris)) {
             Arrays.stream(anonUris.split(StrUtil.COMMA))
-                    .forEach(anonUri -> filterUriMap.put(anonUri, SECURITY_ANON));
+                    .forEach(anonUri -> filterUriMap.put(anonUri, ANON));
         }
 
-        filterUriMap.put("/**", SECURITY_OAUTH2);
+        filterUriMap.put("/**", OAUTH2);
         shiroFilter.setFilterChainDefinitionMap(filterUriMap);
 
         return shiroFilter;

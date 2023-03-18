@@ -63,4 +63,4 @@ mica:
     # 拦截的路由
     path-patterns: /**
     # 放行的路由
-    path-exclude-patterns: /test/**
+    path-exclude-patterns: /open/test/**

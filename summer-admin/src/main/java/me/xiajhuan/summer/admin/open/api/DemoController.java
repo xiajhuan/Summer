@@ -21,13 +21,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Demo开放 Controller
+ * Demo开放Api Controller
  *
  * @author xiajhuan
  * @date 2022/12/4
  */
 @RestController
-@RequestMapping("api/demo")
+@RequestMapping("open/api/demo")
 public class DemoController {
 
     /**
