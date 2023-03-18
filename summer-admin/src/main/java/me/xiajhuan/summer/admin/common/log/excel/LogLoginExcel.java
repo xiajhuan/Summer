@@ -48,9 +48,9 @@ public class LogLoginExcel implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 登录用户
+     * 登录用户名
      */
-    @ExcelProperty(value = "登录用户", index = 0)
+    @ExcelProperty(value = "登录用户名", index = 0)
     private String loginUser;
 
     /**

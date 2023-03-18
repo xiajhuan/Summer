@@ -88,11 +88,6 @@ public interface ErrorCode {
     int ACCOUNT_PASSWORD_ERROR = 10004;
 
     /**
-     * 账号已被停用
-     */
-    int ACCOUNT_DISABLE = 10005;
-
-    /**
      * 唯一标识不能为空
      */
     int IDENTIFIER_NOT_NULL = 10006;
@@ -173,9 +168,9 @@ public interface ErrorCode {
     int TOKEN_INVALID = 10021;
 
     /**
-     * 账号已被锁定
+     * 账号已停用
      */
-    int ACCOUNT_LOCK = 10022;
+    int ACCOUNT_DISABLE = 10022;
 
     /**
      * 请上传zip、bar、bpmn、bpmn20.xml格式文件

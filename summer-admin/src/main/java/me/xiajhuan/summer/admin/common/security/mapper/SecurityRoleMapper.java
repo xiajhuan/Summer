@@ -28,12 +28,12 @@ import org.apache.ibatis.annotations.Select;
 public interface SecurityRoleMapper extends BaseMapper<SecurityRoleEntity> {
 
     /**
-     * 根据角色名称判断角色是否存在
+     * 判断角色是否存在
      *
      * @param name 角色名称
-     * @return 返回null则不存在
+     * @return 返回 {@code null} 则不存在
      */
     @Select("SELECT 1 FROM security_role WHERE name = #{name} LIMIT 1")
-    Integer isExistByName(@Param("name") String name);
+    Integer exist(@Param("name") String name);
 
 }

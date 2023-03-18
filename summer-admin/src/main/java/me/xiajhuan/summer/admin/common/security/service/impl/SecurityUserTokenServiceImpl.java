@@ -45,17 +45,17 @@ public class SecurityUserTokenServiceImpl extends ServiceImpl<SecurityUserTokenM
     private Setting setting;
 
     @Override
-    public SecurityUserTokenDto generateToken(Long userId) {
+    public SecurityUserTokenDto generateUserToken(Long userId) {
         LambdaQueryWrapper<SecurityUserTokenEntity> queryWrapper = Wrappers.lambdaQuery();
         queryWrapper.eq(SecurityUserTokenEntity::getUserId, userId);
         SecurityUserTokenEntity tokenEntity = getOne(queryWrapper);
 
         // 计算Token过期时间
-        int expireHour = setting.getInt("token-expire", "Security", 12);
-        Date expireTime = DateUtil.offsetHour(DateUtil.date(), expireHour);
+        int tokenExpire = setting.getInt("token-expire", "Security", 12);
+        Date expireTime = DateUtil.offsetHour(DateUtil.date(), tokenExpire);
 
         String accessToken;
-        // 判断是否生成过Token
+        // 判断是否生成过用户Token
         if (tokenEntity == null) {
             accessToken = SecurityUtil.generateToken();
             // 构建用户Token
@@ -80,17 +80,17 @@ public class SecurityUserTokenServiceImpl extends ServiceImpl<SecurityUserTokenM
 
         SecurityUserTokenDto tokenDto = new SecurityUserTokenDto();
         tokenDto.setToken(accessToken);
-        tokenDto.setExpireTime(expireHour * 3600);
+        tokenDto.setExpireTime(tokenExpire * 3600);
 
         return tokenDto;
     }
 
     @Override
     public void logout(Long userId) {
-        // 将Token过期时间设值为10s前（使Token失效）
+        // 将Token过期时间设置为10s前（使Token失效）
         LambdaUpdateWrapper<SecurityUserTokenEntity> updateWrapper = Wrappers.lambdaUpdate();
         updateWrapper.set(SecurityUserTokenEntity::getExpireTime, DateUtil.offsetSecond(DateUtil.date(), -10));
-        updateWrapper.eq(SecurityUserTokenEntity::getUserId, updateWrapper);
+        updateWrapper.eq(SecurityUserTokenEntity::getUserId, userId);
 
         update(updateWrapper);
     }

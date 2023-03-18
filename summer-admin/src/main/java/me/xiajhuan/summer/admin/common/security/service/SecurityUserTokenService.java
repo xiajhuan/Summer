@@ -25,12 +25,12 @@ import me.xiajhuan.summer.admin.common.security.entity.SecurityUserTokenEntity;
 public interface SecurityUserTokenService extends IService<SecurityUserTokenEntity> {
 
     /**
-     * 生成Token
+     * 生成用户Token
      *
      * @param userId 用户ID
-     * @return 用户TokenDto
+     * @return 用户Token
      */
-    SecurityUserTokenDto generateToken(Long userId);
+    SecurityUserTokenDto generateUserToken(Long userId);
 
     /**
      * 用户退出

@@ -89,7 +89,7 @@ public class LogOperationServiceImpl extends ServiceImpl<LogOperationMapper, Log
 
     @Override
     public IPage<LogOperationEntity> customPage(Page<LogOperationEntity> page, LogOperationDto dto) {
-        // 关闭MP分页时内置的count查询
+        // 关闭MP分页内置的count查询
         page.setSearchCount(false);
 
         IPage<LogOperationEntity> pageResult = page(page, getQueryWrapper(dto, false));

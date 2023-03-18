@@ -1,7 +1,7 @@
 # summer-single
 
 #### Description
-SaaS Back-end Template Based on SpringBoot2.7 (Single Application)
+Lightweight SaaS backend template based on SpringBoot2.7
 
 #### Software Architecture
 Software architecture description

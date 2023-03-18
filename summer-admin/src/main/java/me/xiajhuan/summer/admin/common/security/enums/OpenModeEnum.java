@@ -37,6 +37,6 @@ public enum OpenModeEnum {
 
     private Integer value;
 
-    private String desc;
+    private String name;
 
 }

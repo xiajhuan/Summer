@@ -54,10 +54,10 @@ public class Oauth2Realm extends AuthorizingRealm {
         LoginUser loginUser = (LoginUser) principals.getPrimaryPrincipal();
 
         // 用户权限集合
-        Set<String> permsSet = securityService.getPermissionsOfUser(loginUser);
+        Set<String> permissions = securityService.getPermissions(loginUser);
 
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-        info.setStringPermissions(permsSet);
+        info.setStringPermissions(permissions);
         return info;
     }
 
@@ -66,25 +66,25 @@ public class Oauth2Realm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         String accessToken = (String) token.getPrincipal();
 
-        // 根据accessToken，查询用户Token
-        SecurityUserTokenEntity tokenEntity = securityService.getByToken(accessToken);
-        // token失效
+        // 根据accessToken查询用户Token
+        SecurityUserTokenEntity tokenEntity = securityService.getByAccessToken(accessToken);
+        // 没有Token或Token失效
         if (tokenEntity == null || tokenEntity.getExpireTime().getTime() < System.currentTimeMillis()) {
             throw new IncorrectCredentialsException(LocaleUtil.getI18nMessage(ErrorCode.TOKEN_INVALID));
         }
 
-        // 查询用户信息并转换成LoginUser
+        // 查询用户并转换成LoginUser
         LoginUser loginUser = ConvertUtil.convert(securityService.getUserById(tokenEntity.getUserId()), LoginUser.class);
 
         // 获取部门ID集合（这里指用户所有角色关联的所有部门ID）
-        loginUser.setDeptIdSet(securityService.getDeptIdSetOfUser(loginUser.getId()));
+        loginUser.setDeptIdSet(securityService.getDeptIdSet(loginUser.getId()));
 
         // 获取本部门及本部门下子部门ID
         loginUser.setDeptAndChildIdSet(securityService.getDeptAndChildIdSet(loginUser.getDeptId()));
 
-        // 账号锁定
+        // 账号停用
         if (loginUser.getStatus() == 0) {
-            throw new LockedAccountException(LocaleUtil.getI18nMessage(ErrorCode.ACCOUNT_LOCK));
+            throw new LockedAccountException(LocaleUtil.getI18nMessage(ErrorCode.ACCOUNT_DISABLE));
         }
 
         SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(loginUser, accessToken, getName());

@@ -88,7 +88,7 @@ public class LogLoginServiceImpl extends ServiceImpl<LogLoginMapper, LogLoginEnt
 
     @Override
     public IPage<LogLoginEntity> customPage(Page<LogLoginEntity> page, LogLoginDto dto) {
-        // 关闭MP分页时内置的count查询
+        // 关闭MP分页内置的count查询
         page.setSearchCount(false);
 
         IPage<LogLoginEntity> pageResult = page(page, getQueryWrapper(dto, false));

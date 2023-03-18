@@ -28,12 +28,12 @@ public interface SecurityUserService extends IService<SecurityUserEntity> {
      * 根据用户名获取
      *
      * @param username 用户名
-     * @return 用户Dto
+     * @return 用户
      */
     SecurityUserDto getByUsername(String username);
 
     /**
-     * 根据部门ID统计用户数
+     * 统计用户数
      *
      * @param deptId 部门ID
      * @return 用户数

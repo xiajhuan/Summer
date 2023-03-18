@@ -89,12 +89,11 @@ public class SecurityMenuController {
      *
      * @param dto 菜单Dto
      * @return 响应结果
-     * @throws BusinessException 业务异常
      */
     @PutMapping("update")
     @RequiresPermissions("security:menu:update")
     @LogOperation(OperationConst.UPDATE)
-    public Result update(@Validated(UpdateGroup.class) SecurityMenuDto dto) throws BusinessException {
+    public Result update(@Validated(UpdateGroup.class) SecurityMenuDto dto) {
         mainService.update(dto);
         return Result.ofSuccess();
     }
@@ -114,7 +113,5 @@ public class SecurityMenuController {
         mainService.delete(id);
         return Result.ofSuccess();
     }
-
-    //*******************Other Operation********************
 
 }

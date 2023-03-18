@@ -3,7 +3,7 @@
 
 <mapper namespace="me.xiajhuan.summer.admin.common.security.mapper.SecurityRoleDeptMapper">
 
-    <select id="getDeptSetByUserId" parameterType="Long" resultType="Long">
+    <select id="getDeptIdSet" parameterType="Long" resultType="Long">
         SELECT
         t2.dept_id
         FROM

@@ -13,9 +13,11 @@
 package me.xiajhuan.summer.admin.common.locale.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import me.xiajhuan.summer.admin.common.locale.dto.LocaleInternationalNameDto;
 import me.xiajhuan.summer.admin.common.locale.entity.LocaleInternationalNameEntity;
 import me.xiajhuan.summer.admin.common.locale.mapper.LocaleInternationalNameMapper;
 import me.xiajhuan.summer.admin.common.locale.service.LocaleInternationalNameService;
+import me.xiajhuan.summer.core.mp.standard.MpCommonOperation;
 import org.springframework.stereotype.Service;
 
 /**
@@ -25,5 +27,11 @@ import org.springframework.stereotype.Service;
  * @date 2023/3/16
  */
 @Service
-public class LocaleInternationalNameServiceImpl extends ServiceImpl<LocaleInternationalNameMapper, LocaleInternationalNameEntity> implements LocaleInternationalNameService {
+public class LocaleInternationalNameServiceImpl extends ServiceImpl<LocaleInternationalNameMapper, LocaleInternationalNameEntity> implements LocaleInternationalNameService, MpCommonOperation<LocaleInternationalNameDto, LocaleInternationalNameEntity> {
+
+    //*******************MpCommonOperation覆写开始********************
+
+
+    //*******************MpCommonOperation覆写结束********************
+
 }

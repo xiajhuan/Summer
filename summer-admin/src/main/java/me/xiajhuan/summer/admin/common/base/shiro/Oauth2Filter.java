@@ -124,16 +124,16 @@ public class Oauth2Filter extends AuthenticatingFilter {
     /**
      * 获取accessToken
      *
-     * @param httpRequest {@link HttpServletRequest}
+     * @param request {@link HttpServletRequest}
      * @return accessToken
      */
-    private String getAccessToken(HttpServletRequest httpRequest) {
+    private String getAccessToken(HttpServletRequest request) {
         // 从header中获取token
-        String token = httpRequest.getHeader(SecurityConst.TOKEN_HEADER);
+        String token = request.getHeader(SecurityConst.TOKEN_HEADER);
 
-        // 如果header中不存在token，则从参数中获取token
+        // 如果header中不存在token，则从参数中获取
         if (StrUtil.isBlank(token)) {
-            token = httpRequest.getParameter(SecurityConst.TOKEN_HEADER);
+            token = request.getParameter(SecurityConst.TOKEN_HEADER);
         }
         return token;
     }

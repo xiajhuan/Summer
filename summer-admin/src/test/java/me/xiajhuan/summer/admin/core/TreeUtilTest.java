@@ -40,7 +40,7 @@ public class TreeUtilTest {
     private static List<SecurityMenuDto> menuDtoList;
 
     /**
-     * 初始化菜单列表
+     * 初始化 {@link menuDtoList}
      */
     @BeforeEach
     public void init() {

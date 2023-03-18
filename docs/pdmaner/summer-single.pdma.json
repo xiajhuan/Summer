@@ -1453,7 +1453,7 @@
         },
         {
           "defKey": "mobile",
-          "defName": "电话",
+          "defName": "手机号",
           "comment": "",
           "type": "",
           "len": "",
@@ -3139,7 +3139,7 @@
         },
         {
           "defKey": "login_user",
-          "defName": "登录用户",
+          "defName": "登录用户名",
           "comment": "",
           "type": "",
           "len": "",

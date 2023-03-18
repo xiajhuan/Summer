@@ -10,33 +10,13 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.admin.common.security.enums;
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+package me.xiajhuan.summer.core.validation.group;
 
 /**
- * 组件类型枚举
+ * 默认Group
  *
  * @author xiajhuan
- * @date 2023/3/3
+ * @date 2022/11/19
  */
-@Getter
-@AllArgsConstructor
-public enum ComponentTypeEnum {
-
-    /**
-     * 菜单
-     */
-    MENU(0, "菜单"),
-
-    /**
-     * 按钮
-     */
-    BUTTON(1, "按钮");
-
-    private Integer value;
-
-    private String name;
-
+public interface DefaultGroup {
 }

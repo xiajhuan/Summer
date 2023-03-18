@@ -21,7 +21,7 @@ import com.alibaba.excel.metadata.property.ExcelContentProperty;
 import static me.xiajhuan.summer.admin.common.log.enums.OperationStatusEnum.*;
 
 /**
- * Excel操作状态 Converter
+ * 操作状态 Converter
  *
  * @author xiajhuan
  * @date 2023/3/3
@@ -43,9 +43,9 @@ public class OperationStatusConverter implements Converter<Integer> {
     public WriteCellData convertToExcelData(Integer value, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration) {
         switch (value) {
             case 0:
-                return new WriteCellData(FAIL.getDesc());
+                return new WriteCellData(FAIL.getName());
             case 1:
-                return new WriteCellData(SUCCESS.getDesc());
+                return new WriteCellData(SUCCESS.getName());
             default:
                 return new WriteCellData("未知操作状态");
         }

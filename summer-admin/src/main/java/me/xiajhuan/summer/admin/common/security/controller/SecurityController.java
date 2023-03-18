@@ -31,6 +31,7 @@ import me.xiajhuan.summer.core.utils.AssertUtil;
 import me.xiajhuan.summer.core.utils.HttpContextUtil;
 import me.xiajhuan.summer.core.utils.IpUtil;
 import me.xiajhuan.summer.core.utils.SecurityUtil;
+import me.xiajhuan.summer.core.validation.group.DefaultGroup;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -64,7 +65,7 @@ public class SecurityController {
     /**
      * 获取验证码
      *
-     * @param uuid     uuid
+     * @param uuid     唯一标识，作为验证码 Key的一部分
      * @param response {@link HttpServletResponse}
      * @throws BusinessException 业务异常
      * @throws IOException       I/O异常
@@ -72,51 +73,50 @@ public class SecurityController {
     @GetMapping("captcha")
     public void captcha(String uuid, HttpServletResponse response) throws BusinessException, IOException {
         AssertUtil.isNotBlank("uuid", uuid);
-
         mainService.buildCaptchaAndCache(response, uuid);
     }
 
     /**
      * 用户登录
      *
-     * @param loginDto 登录Dto
+     * @param loginDto 用户登录Dto
      * @param request  {@link HttpServletRequest}
      * @return 响应结果
      */
     @PostMapping("login")
-    public Result<SecurityUserTokenDto> login(@Validated LoginDto loginDto, HttpServletRequest request) {
+    public Result<SecurityUserTokenDto> login(@Validated(DefaultGroup.class) LoginDto loginDto, HttpServletRequest request) {
         // 校验验证码
         if (!mainService.validateCaptcha(loginDto.getUuid(), loginDto.getCaptcha())) {
             return Result.ofFail(ErrorCode.CAPTCHA_ERROR);
         }
 
-        // 用户信息
+        // 查询用户
         SecurityUserDto securityUserDto = securityUserService.getByUsername(loginDto.getUsername());
 
         // 登录处理
         // 用户不存在
         if (securityUserDto == null) {
-            saveLoginLog(loginDto.getUsername(), LoginOperationEnum.LOGIN, LoginStatusEnum.FAIL, request);
+            saveLog(loginDto.getUsername(), LoginOperationEnum.LOGIN, LoginStatusEnum.FAIL, request);
             return Result.ofFail(ErrorCode.ACCOUNT_PASSWORD_ERROR);
         }
 
         // 密码错误
         if (!SecurityUtil.matches(loginDto.getPassword(), securityUserDto.getPassword())) {
-            saveLoginLog(securityUserDto.getUsername(), LoginOperationEnum.LOGIN, LoginStatusEnum.FAIL, request);
+            saveLog(securityUserDto.getUsername(), LoginOperationEnum.LOGIN, LoginStatusEnum.FAIL, request);
             return Result.ofFail(ErrorCode.ACCOUNT_PASSWORD_ERROR);
         }
 
         // 用户账号已停用
         if (securityUserDto.getStatus() == StatusEnum.DISABLE.getValue()) {
-            saveLoginLog(securityUserDto.getUsername(), LoginOperationEnum.LOGIN, LoginStatusEnum.LOCK, request);
+            saveLog(securityUserDto.getUsername(), LoginOperationEnum.LOGIN, LoginStatusEnum.DISABLE, request);
             return Result.ofFail(ErrorCode.ACCOUNT_DISABLE);
         }
 
         // 登录成功
-        saveLoginLog(securityUserDto.getUsername(), LoginOperationEnum.LOGIN, LoginStatusEnum.SUCCESS, request);
+        saveLog(securityUserDto.getUsername(), LoginOperationEnum.LOGIN, LoginStatusEnum.SUCCESS, request);
 
-        // 生成accessToken
-        return Result.ofSuccess(securityUserTokenService.generateToken(securityUserDto.getId()));
+        // 生成用户Token
+        return Result.ofSuccess(securityUserTokenService.generateUserToken(securityUserDto.getId()));
     }
 
     /**
@@ -131,7 +131,7 @@ public class SecurityController {
 
         securityUserTokenService.logout(loginUser.getId());
 
-        saveLoginLog(loginUser.getUsername(), LoginOperationEnum.LOGOUT, LoginStatusEnum.SUCCESS, request);
+        saveLog(loginUser.getUsername(), LoginOperationEnum.LOGOUT, LoginStatusEnum.SUCCESS, request);
 
         return Result.ofSuccess();
     }
@@ -139,12 +139,12 @@ public class SecurityController {
     /**
      * 保存登录日志
      *
-     * @param loginUser     登录用户
+     * @param loginUser     登录用户名
      * @param operationEnum 登录操作枚举
      * @param statusEnum    登录状态枚举
      * @param request       {@link HttpServletRequest}
      */
-    private void saveLoginLog(String loginUser, LoginOperationEnum operationEnum, LoginStatusEnum statusEnum, HttpServletRequest request) {
+    private void saveLog(String loginUser, LoginOperationEnum operationEnum, LoginStatusEnum statusEnum, HttpServletRequest request) {
         // 构建登录日志
         LogLoginEntity log = LogLoginEntity.builder()
                 .loginUser(loginUser)
@@ -153,7 +153,7 @@ public class SecurityController {
                 .userAgent(HttpContextUtil.getUserAgent(request))
                 .ip(IpUtil.getRequestIp(request)).build();
 
-        // 异步保存登录日志
+        // 异步保存日志
         logLoginService.saveAsync(log);
     }
 

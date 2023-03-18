@@ -21,7 +21,7 @@ import com.alibaba.excel.metadata.property.ExcelContentProperty;
 import static me.xiajhuan.summer.admin.common.security.enums.LoginOperationEnum.*;
 
 /**
- * Excel登录操作 Converter
+ * 登录操作 Converter
  *
  * @author xiajhuan
  * @date 2023/3/3

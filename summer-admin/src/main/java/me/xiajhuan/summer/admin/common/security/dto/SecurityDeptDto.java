@@ -30,6 +30,7 @@ import java.util.List;
  *
  * @author xiajhuan
  * @date 2023/3/10
+ * @see TreeNode
  */
 @Data
 @Builder
@@ -69,7 +70,7 @@ public class SecurityDeptDto extends TreeNode {
     private Date createTime;
 
     /**
-     * 子节点列表
+     * 子节点
      */
     private List<SecurityDeptDto> children = CollUtil.newArrayList();
 

@@ -80,7 +80,7 @@ public class SecurityUserDto extends BaseDto {
      * 手机号
      */
 //    @NotBlank(message = "{security.user.mobile.require}", groups = {AddGroup.class, UpdateGroup.class})
-    @Mobile(message = "{security.user.mobile.error}", groups = {AddGroup.class, UpdateGroup.class})
+    @Mobile(groups = {AddGroup.class, UpdateGroup.class})
     private String mobile;
 
     /**
@@ -109,7 +109,7 @@ public class SecurityUserDto extends BaseDto {
      *
      * @see DataScopeEnum
      */
-    @Range(min = 0, max = 4, message = "{security.user.status.range}", groups = {AddGroup.class, UpdateGroup.class})
+    @Range(min = 0, max = 4, message = "{security.user.dataScope.range}", groups = {AddGroup.class, UpdateGroup.class})
     private Integer dataScope;
 
     /**

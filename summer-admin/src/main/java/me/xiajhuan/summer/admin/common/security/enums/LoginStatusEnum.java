@@ -36,12 +36,12 @@ public enum LoginStatusEnum {
     SUCCESS(1, "成功"),
 
     /**
-     * 账号已锁定
+     * 账号已停用
      */
-    LOCK(2, "账号已锁定");
+    DISABLE(2, "账号已停用");
 
     private Integer value;
 
-    private String desc;
+    private String name;
 
 }

@@ -21,7 +21,7 @@ import com.alibaba.excel.metadata.property.ExcelContentProperty;
 import static me.xiajhuan.summer.core.enums.OperationGroupEnum.*;
 
 /**
- * Excel操作分组 Converter
+ * 操作分组 Converter
  *
  * @author xiajhuan
  * @date 2023/3/3

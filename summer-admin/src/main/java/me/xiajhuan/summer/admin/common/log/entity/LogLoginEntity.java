@@ -33,7 +33,7 @@ import me.xiajhuan.summer.admin.common.security.enums.LoginStatusEnum;
 public class LogLoginEntity extends SimpleBaseEntity {
 
     /**
-     * 登录用户
+     * 登录用户名
      */
     private String loginUser;
 

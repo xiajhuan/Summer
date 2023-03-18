@@ -64,7 +64,7 @@ public class SecurityRoleServiceImpl extends ServiceImpl<SecurityRoleMapper, Sec
 
     @Override
     public IPage<SecurityRoleEntity> customPage(Page<SecurityRoleEntity> page, SecurityRoleDto dto) {
-        // 关闭MP分页时内置的count查询
+        // 关闭MP分页内置的count查询
         page.setSearchCount(false);
 
         IPage<SecurityRoleEntity> pageResult = page(page, getQueryWrapper(dto, false));

@@ -26,6 +26,6 @@ import java.util.Set;
  */
 public interface SecurityRoleDeptMapper extends BaseMapper<SecurityRoleDeptEntity> {
 
-    Set<Long> getDeptSetByUserId(@Param("userId") Long userId);
+    Set<Long> getDeptIdSet(@Param("userId") Long userId);
 
 }

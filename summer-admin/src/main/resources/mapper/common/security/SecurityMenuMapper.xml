@@ -3,7 +3,7 @@
 
 <mapper namespace="me.xiajhuan.summer.admin.common.security.mapper.SecurityMenuMapper">
 
-    <select id="getPermissionsOfUser" parameterType="Long" resultType="String">
+    <select id="getPermissions" parameterType="Long" resultType="String">
         SELECT
         t3.permissions
         FROM

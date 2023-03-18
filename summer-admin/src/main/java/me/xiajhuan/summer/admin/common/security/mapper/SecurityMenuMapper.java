@@ -30,19 +30,19 @@ import java.util.Set;
 public interface SecurityMenuMapper extends BaseMapper<SecurityMenuEntity> {
 
     /**
-     * 获取所有权限集合
+     * 获取所有权限
      *
-     * @return 所有权限集合
+     * @return 权限集合
      */
     @Select("SELECT permissions FROM security_menu")
     Set<String> getPermissionsAll();
 
     /**
-     * 获取用户权限集合
+     * 获取权限
      *
      * @param userId 用户ID
-     * @return 用户权限集合
+     * @return 权限集合
      */
-    Set<String> getPermissionsOfUser(@Param("userId") Long userId);
+    Set<String> getPermissions(@Param("userId") Long userId);
 
 }

@@ -21,7 +21,7 @@ import com.alibaba.excel.metadata.property.ExcelContentProperty;
 import static me.xiajhuan.summer.admin.common.security.enums.LoginStatusEnum.*;
 
 /**
- * Excel登录状态 Converter
+ * 登录状态 Converter
  *
  * @author xiajhuan
  * @date 2023/3/3
@@ -43,11 +43,11 @@ public class LoginStatusConverter implements Converter<Integer> {
     public WriteCellData convertToExcelData(Integer value, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration) {
         switch (value) {
             case 0:
-                return new WriteCellData(FAIL.getDesc());
+                return new WriteCellData(FAIL.getName());
             case 1:
-                return new WriteCellData(SUCCESS.getDesc());
+                return new WriteCellData(SUCCESS.getName());
             case 2:
-                return new WriteCellData(LOCK.getDesc());
+                return new WriteCellData(DISABLE.getName());
             default:
                 return new WriteCellData("未知登录状态");
         }

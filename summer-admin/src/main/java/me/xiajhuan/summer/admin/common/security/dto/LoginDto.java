@@ -14,12 +14,13 @@ package me.xiajhuan.summer.admin.common.security.dto;
 
 import lombok.Data;
 import me.xiajhuan.summer.admin.common.security.cache.SecurityCacheKey;
+import me.xiajhuan.summer.core.validation.group.DefaultGroup;
 
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 /**
- * 登录 Dto
+ * 用户登录 Dto
  *
  * @author xiajhuan
  * @date 2023/3/3
@@ -32,28 +33,28 @@ public class LoginDto implements Serializable {
     /**
      * 用户名
      */
-    @NotBlank(message = "{security.user.username.require}")
+    @NotBlank(message = "{security.user.username.require}", groups = DefaultGroup.class)
     private String username;
 
     /**
      * 密码
      */
-    @NotBlank(message = "{security.user.password.require}")
+    @NotBlank(message = "{security.user.password.require}", groups = DefaultGroup.class)
     private String password;
 
     /**
      * 验证码
      */
-    @NotBlank(message = "{security.captcha.require}")
+    @NotBlank(message = "{security.captcha.require}", groups = DefaultGroup.class)
     private String captcha;
 
     /**
      * uuid<br>
-     * 唯一标识，作为验证码缓存Key的一部分
+     * 唯一标识，作为验证码 Key的一部分
      *
      * @see SecurityCacheKey#captchaCode(String)
      */
-    @NotBlank(message = "{security.uuid.require}")
+    @NotBlank(message = "{security.uuid.require}", groups = DefaultGroup.class)
     private String uuid;
 
 }

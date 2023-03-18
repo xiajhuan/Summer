@@ -12,6 +12,7 @@
 
 package me.xiajhuan.summer.admin.common.security.service;
 
+import me.xiajhuan.summer.admin.common.security.cache.SecurityCacheKey;
 import me.xiajhuan.summer.admin.common.security.entity.SecurityUserEntity;
 import me.xiajhuan.summer.admin.common.security.entity.SecurityUserTokenEntity;
 import me.xiajhuan.summer.core.data.LoginUser;
@@ -31,20 +32,20 @@ public interface SecurityService {
     //*******************认证授权********************
 
     /**
-     * 获取用户菜单权限
+     * 获取用户权限集合
      *
      * @param loginUser 登录用户信息
-     * @return 用户菜单权限
+     * @return 用户权限集合
      */
-    Set<String> getPermissionsOfUser(LoginUser loginUser);
+    Set<String> getPermissions(LoginUser loginUser);
 
     /**
      * 获取用户Token
      *
-     * @param token accessToken
+     * @param accessToken accessToken
      * @return 用户Token
      */
-    SecurityUserTokenEntity getByToken(String token);
+    SecurityUserTokenEntity getByAccessToken(String accessToken);
 
     /**
      * 根据用户ID获取用户
@@ -58,15 +59,15 @@ public interface SecurityService {
      * 获取部门ID集合（这里指用户所有角色关联的所有部门ID）
      *
      * @param userId 用户ID
-     * @return 用户所有角色关联的所有部门ID
+     * @return 部门ID集合
      */
-    Set<Long> getDeptIdSetOfUser(Long userId);
+    Set<Long> getDeptIdSet(Long userId);
 
     /**
-     * 获取本部门及本部门下子部门ID
+     * 获取本部门及本部门下子部门ID集合
      *
      * @param deptId 所属部门ID
-     * @return 本部门及本部门下子部门ID
+     * @return 本部门及本部门下子部门ID集合
      */
     Set<Long> getDeptAndChildIdSet(Long deptId);
 
@@ -76,17 +77,19 @@ public interface SecurityService {
      * 构建图形验证码并缓存
      *
      * @param response {@link HttpServletResponse}
-     * @param uuid     uuid
+     * @param uuid     唯一标识，作为验证码 Key的一部分
      * @throws IOException I/O异常
+     * @see SecurityCacheKey#captchaCode(String)
      */
     void buildCaptchaAndCache(HttpServletResponse response, String uuid) throws IOException;
 
     /**
      * 校验验证码
      *
-     * @param uuid    uuid
+     * @param uuid    唯一标识，作为验证码 Key的一部分
      * @param captcha 验证码
      * @return 校验结果 true：成功 false：失败
+     * @see SecurityCacheKey#captchaCode(String)
      */
     boolean validateCaptcha(String uuid, String captcha);
 

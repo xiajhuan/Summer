@@ -957,7 +957,7 @@ noauth
 > 已完成
 
 #### 接口URL
-> http://localhost:6666/summer-single/api/demo/hello
+> http://localhost:6666/summer-single/open/api/demo/hello
 
 #### 请求方式
 > POST
@@ -1045,7 +1045,7 @@ noauth
 > 已完成
 
 #### 接口URL
-> http://localhost:6666/summer-single/test/rateLimiter/base
+> http://localhost:6666/summer-single/open/test/rateLimiter/base
 
 #### 请求方式
 > POST
@@ -1077,7 +1077,7 @@ noauth
 > 已完成
 
 #### 接口URL
-> http://localhost:6666/summer-single/test/rateLimiter/ip
+> http://localhost:6666/summer-single/open/test/rateLimiter/ip
 
 #### 请求方式
 > POST
@@ -1109,7 +1109,7 @@ noauth
 > 已完成
 
 #### 接口URL
-> http://localhost:6666/summer-single/test/rateLimiter/param
+> http://localhost:6666/summer-single/open/test/rateLimiter/param
 
 #### 请求方式
 > POST
@@ -1141,7 +1141,7 @@ noauth
 > 已完成
 
 #### 接口URL
-> http://localhost:6666/summer-single/test/rateLimiter/username
+> http://localhost:6666/summer-single/open/test/rateLimiter/username
 
 #### 请求方式
 > POST

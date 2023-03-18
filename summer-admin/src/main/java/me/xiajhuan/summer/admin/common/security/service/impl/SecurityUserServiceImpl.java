@@ -68,7 +68,7 @@ public class SecurityUserServiceImpl extends ServiceImpl<SecurityUserMapper, Sec
 
     @Override
     public IPage<SecurityUserEntity> customPage(Page<SecurityUserEntity> page, SecurityUserDto dto) {
-        // 关闭MP分页时内置的count查询
+        // 关闭MP分页内置的count查询
         page.setSearchCount(false);
 
         IPage<SecurityUserEntity> pageResult = page(page, getQueryWrapper(dto, false));
@@ -82,7 +82,9 @@ public class SecurityUserServiceImpl extends ServiceImpl<SecurityUserMapper, Sec
 
     @Override
     public SecurityUserDto getByUsername(String username) {
-        LambdaQueryWrapper<SecurityUserEntity> queryWrapper = getSelectWrapper(SecurityUserEntity.class);
+        LambdaQueryWrapper<SecurityUserEntity> queryWrapper = Wrappers.lambdaQuery();
+        queryWrapper.select(SecurityUserEntity::getId, SecurityUserEntity::getUsername, SecurityUserEntity::getPassword,
+                SecurityUserEntity::getStatus);
         queryWrapper.eq(SecurityUserEntity::getUsername, username);
 
         return ConvertUtil.convert(getOne(queryWrapper), SecurityUserDto.class);

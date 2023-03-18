@@ -42,6 +42,6 @@ public @interface LogOperation {
     /**
      * 是否保存请求参数，true：保存 false：不保存
      */
-    boolean isSaveRequestData() default true;
+    boolean saveRequestParam() default true;
 
 }

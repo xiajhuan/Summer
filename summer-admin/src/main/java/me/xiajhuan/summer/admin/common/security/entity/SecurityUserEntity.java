@@ -66,7 +66,7 @@ public class SecurityUserEntity extends CommonBaseEntity {
     private String email;
 
     /**
-     * 电话
+     * 手机号
      */
     private String mobile;
 

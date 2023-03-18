@@ -89,7 +89,7 @@ public class LogErrorServiceImpl extends ServiceImpl<LogErrorMapper, LogErrorEnt
 
     @Override
     public IPage<LogErrorEntity> customPage(Page<LogErrorEntity> page, LogErrorDto dto) {
-        // 关闭MP分页时内置的count查询
+        // 关闭MP分页内置的count查询
         page.setSearchCount(false);
 
         IPage<LogErrorEntity> pageResult = page(page, getQueryWrapper(dto, false));
@@ -122,7 +122,7 @@ public class LogErrorServiceImpl extends ServiceImpl<LogErrorMapper, LogErrorEnt
 
     @Override
     public void saveAsync(Exception e, HttpServletRequest request) {
-        // 构建错误日志Entity
+        // 构建错误日志
         LogErrorEntity log = LogErrorEntity.builder()
                 .ip(IpUtil.getRequestIp(request))
                 .userAgent(HttpContextUtil.getUserAgent(request))

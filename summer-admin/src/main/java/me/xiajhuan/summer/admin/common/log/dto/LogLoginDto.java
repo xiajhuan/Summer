@@ -31,7 +31,7 @@ import java.util.Date;
 public class LogLoginDto extends BaseDto {
 
     /**
-     * 登录用户
+     * 登录用户名
      */
     private String loginUser;
 

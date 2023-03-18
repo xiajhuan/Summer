@@ -70,22 +70,20 @@ public class SecurityServiceImpl implements SecurityService {
     @Resource
     private SecurityDeptService securityDeptService;
 
-    //*******************认证授权********************
-
     @Override
-    public Set<String> getPermissionsOfUser(LoginUser loginUser) {
-        // 用户拥有的所有权限
-        final Set<String> permissionsOfUser;
+    public Set<String> getPermissions(LoginUser loginUser) {
+        // 用户权限集合
+        final Set<String> permissions;
         if (loginUser.getUserType() == UserTypeEnum.SUPER_ADMIN.getValue()) {
             // 超级管理员
-            permissionsOfUser = securityMenuMapper.getPermissionsAll();
+            permissions = securityMenuMapper.getPermissionsAll();
         } else {
             // 普通用户
-            permissionsOfUser = securityMenuMapper.getPermissionsOfUser(loginUser.getId());
+            permissions = securityMenuMapper.getPermissions(loginUser.getId());
         }
 
-        if (CollUtil.isNotEmpty(permissionsOfUser)) {
-            return permissionsOfUser.stream().filter(p -> !StrUtil.isBlankOrUndefined(p))
+        if (CollUtil.isNotEmpty(permissions)) {
+            return permissions.stream().filter(p -> !StrUtil.isBlankOrUndefined(p))
                     .collect(Collectors.toSet());
         } else {
             return CollUtil.newHashSet();
@@ -93,10 +91,10 @@ public class SecurityServiceImpl implements SecurityService {
     }
 
     @Override
-    public SecurityUserTokenEntity getByToken(String token) {
+    public SecurityUserTokenEntity getByAccessToken(String accessToken) {
         LambdaQueryWrapper<SecurityUserTokenEntity> queryWrapper = Wrappers.lambdaQuery();
         queryWrapper.select(SecurityUserTokenEntity::getUserId, SecurityUserTokenEntity::getExpireTime);
-        queryWrapper.eq(SecurityUserTokenEntity::getToken, token);
+        queryWrapper.eq(SecurityUserTokenEntity::getToken, accessToken);
 
         return securityUserTokenMapper.selectOne(queryWrapper);
     }
@@ -107,8 +105,8 @@ public class SecurityServiceImpl implements SecurityService {
     }
 
     @Override
-    public Set<Long> getDeptIdSetOfUser(Long userId) {
-        return securityRoleDeptMapper.getDeptSetByUserId(userId);
+    public Set<Long> getDeptIdSet(Long userId) {
+        return securityRoleDeptMapper.getDeptIdSet(userId);
     }
 
     @Override
@@ -119,8 +117,6 @@ public class SecurityServiceImpl implements SecurityService {
 
         return deptIdSet;
     }
-
-    //*******************验证码********************
 
     @Override
     public void buildCaptchaAndCache(HttpServletResponse response, String uuid) throws IOException {
@@ -145,12 +141,13 @@ public class SecurityServiceImpl implements SecurityService {
         CacheServer cacheServer = CacheServerFactory.getInstance().getCacheServer();
 
         // 获取缓存的验证码
-        String cacheKey = SecurityCacheKey.captchaCode(uuid);
-        String cacheCode = cacheServer.getString(cacheKey);
-        if (cacheCode != null) {
-            cacheServer.delete(cacheKey);
+        String captchaKey = SecurityCacheKey.captchaCode(uuid);
+        String captchaCode = cacheServer.getString(captchaKey);
+        if (captchaCode != null) {
+            cacheServer.delete(captchaKey);
         }
-        return captcha.equalsIgnoreCase(cacheCode);
+        // 校验
+        return captcha.equalsIgnoreCase(captchaCode);
     }
 
     /**
@@ -166,20 +163,20 @@ public class SecurityServiceImpl implements SecurityService {
             // 没有配置则默认为：Line
             type = CaptchaTypeEnum.Line.getValue();
         }
-        // 验证码长宽
+        // 验证码宽高
         int width = setting.getInt("captcha.width", "Security", 150);
         int height = setting.getInt("captcha.height", "Security", 40);
         // 验证码字符个数
-        int codeNum = setting.getInt("captcha.char-num", "Security", 5);
+        int charNum = setting.getInt("captcha.char-num", "Security", 5);
         switch (type) {
             case "Line":
-                return CaptchaUtil.createLineCaptcha(width, height, codeNum,
+                return CaptchaUtil.createLineCaptcha(width, height, charNum,
                         setting.getInt("captcha.line-num", "Security", 10));
             case "Circle":
-                return CaptchaUtil.createCircleCaptcha(width, height, codeNum,
+                return CaptchaUtil.createCircleCaptcha(width, height, charNum,
                         setting.getInt("captcha.circle-num", "Security", 10));
             case "Shear":
-                return CaptchaUtil.createShearCaptcha(width, height, codeNum,
+                return CaptchaUtil.createShearCaptcha(width, height, charNum,
                         setting.getInt("captcha.shear-width", "Security", 4));
             default:
                 throw new IllegalArgumentException(StrUtil.format("不支持的验证码类型【{}】", type));

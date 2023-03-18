@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="60 seconds" debug="false">
-    <contextName>summer-admin</contextName>
+    <contextName>summer-single</contextName>
     <springProperty scope="context" name="springAppName" source="spring.application.name"/>
     <property name="log.path" value="log"/>
     <property name="log.maxHistory" value="15"/>

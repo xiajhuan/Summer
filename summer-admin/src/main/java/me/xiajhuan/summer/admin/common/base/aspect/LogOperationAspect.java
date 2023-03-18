@@ -24,12 +24,12 @@ import me.xiajhuan.summer.admin.common.log.entity.LogOperationEntity;
 import me.xiajhuan.summer.admin.common.log.service.LogOperationService;
 import me.xiajhuan.summer.core.utils.HttpContextUtil;
 import me.xiajhuan.summer.core.utils.IpUtil;
+import me.xiajhuan.summer.core.utils.ReflectUtil;
 import me.xiajhuan.summer.core.utils.SecurityUtil;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -69,10 +69,9 @@ public class LogOperationAspect {
      */
     @Around("pointCut()")
     public Object around(ProceedingJoinPoint point) throws Throwable {
-        // 开始计时
         TimeInterval timer = DateUtil.timer();
         try {
-            // 执行方法
+            // 执行切入点方法
             Object result = point.proceed();
 
             // 保存成功日志
@@ -88,30 +87,28 @@ public class LogOperationAspect {
     }
 
     /**
-     * 记录日志
+     * 保存日志
      *
-     * @param point {@link ProceedingJoinPoint}
-     * @param cost      操作耗时（ms）
-     * @param status    操作状态
-     * @throws Exception 异常
+     * @param point  {@link ProceedingJoinPoint}
+     * @param cost   耗时（ms）
+     * @param status 操作状态
      */
-    private void saveLog(ProceedingJoinPoint point, long cost, OperationStatusEnum status) throws Exception {
-        // 获取切入点Controller上的RequestMapping注解
-        Class currentController = point.getTarget().getClass();
-        RequestMapping requestMapping = AnnotationUtils.findAnnotation(currentController, RequestMapping.class);
+    private void saveLog(ProceedingJoinPoint point, long cost, OperationStatusEnum status) {
+        // 获取切入点方法所属Controller上的RequestMapping注解
+        Class controllerClass = point.getTarget().getClass();
+        RequestMapping requestMapping = AnnotationUtils.findAnnotation(controllerClass, RequestMapping.class);
 
         // 获取切入点方法上的LogOperation注解
-        MethodSignature signature = (MethodSignature) point.getSignature();
-        Method method = currentController.getDeclaredMethod(signature.getName(), signature.getParameterTypes());
+        Method method = ReflectUtil.getMethod(point);
         LogOperation logOperation = AnnotationUtils.findAnnotation(method, LogOperation.class);
 
         // 请求
         HttpServletRequest request = HttpContextUtil.getHttpServletRequest();
 
-        // 构建日志Entity
+        // 构建操作日志
         LogOperationEntity log = LogOperationEntity.builder()
                 .operation(StrUtil.format(StrTemplateConst.OPERATION_NAME, logOperation.name(), requestMapping.path()))
-                .operationGroup(getOperationGroupValue(logOperation.name()))
+                .operationGroup(getOperationGroup(logOperation.name()))
                 .operateBy(SecurityUtil.getCurrentUsername(NonLoggedUserEnum.THIRD_PART.getValue()))
                 .status(status.getValue())
                 .requestTime((int) cost)
@@ -120,7 +117,7 @@ public class LogOperationAspect {
                 .requestUri(request.getRequestURI())
                 .requestMethod(request.getMethod()).build();
 
-        if (logOperation.isSaveRequestData()) {
+        if (logOperation.saveRequestParam()) {
             // 请求参数
             log.setRequestParams(HttpContextUtil.getParam(point, request));
         }
@@ -130,12 +127,12 @@ public class LogOperationAspect {
     }
 
     /**
-     * 获取操作分组枚举Value
+     * 获取操作分组
      *
      * @param name 操作名称
-     * @return 操作分组枚举Value
+     * @return 操作分组
      */
-    private int getOperationGroupValue(String name) {
+    private int getOperationGroup(String name) {
         switch (name) {
             case PAGE:
             case LIST:
