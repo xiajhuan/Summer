@@ -12,8 +12,13 @@
 
 package me.xiajhuan.summer.admin.common.locale.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
+import me.xiajhuan.summer.admin.common.locale.dto.LocaleInternationalNameDto;
 import me.xiajhuan.summer.admin.common.locale.entity.LocaleInternationalNameEntity;
+import me.xiajhuan.summer.core.data.PageAndSort;
+
+import java.util.List;
 
 /**
  * 国际化名称 Service
@@ -22,4 +27,21 @@ import me.xiajhuan.summer.admin.common.locale.entity.LocaleInternationalNameEnti
  * @date 2023/3/16
  */
 public interface LocaleInternationalNameService extends IService<LocaleInternationalNameEntity> {
+
+    IPage<LocaleInternationalNameDto> page(PageAndSort pageAndSort, LocaleInternationalNameDto dto);
+
+    List<LocaleInternationalNameDto> list(LocaleInternationalNameDto dto);
+
+    LocaleInternationalNameDto getById(Long id);
+
+    void add(LocaleInternationalNameDto dto);
+
+    void update(LocaleInternationalNameDto dto);
+
+    void delete(Long[] ids);
+
+    default List<LocaleInternationalNameDto> excelTemplate() {
+        return null;
+    }
+
 }
