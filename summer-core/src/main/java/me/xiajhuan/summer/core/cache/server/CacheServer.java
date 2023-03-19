@@ -44,7 +44,7 @@ public interface CacheServer {
     boolean hasKeyAuto(String key);
 
     /**
-     * 判断是否存在key（hash）
+     * 判断是否存在key（Hash）
      *
      * @param key Key
      * @return 是否存在Key，true：存在 false：不存在
@@ -52,7 +52,7 @@ public interface CacheServer {
     boolean hasKeyHash(String key);
 
     /**
-     * 判断是否存在key（list）
+     * 判断是否存在key（List）
      *
      * @param key Key
      * @return 是否存在Key，true：存在 false：不存在

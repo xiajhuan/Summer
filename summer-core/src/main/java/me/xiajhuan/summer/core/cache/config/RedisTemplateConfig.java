@@ -139,7 +139,7 @@ public class RedisTemplateConfig {
         template.setConnectionFactory(factory);
 
         // 序列化规则配置
-        // jackson的序列化方式
+        // Jackson的序列化方式
         Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<>(Object.class);
         ObjectMapper mapper = new ObjectMapper();
         mapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
@@ -149,13 +149,13 @@ public class RedisTemplateConfig {
         // String的序列化方式
         StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
 
-        // key采用 String的序列化方式
+        // Key采用 String的序列化方式
         template.setKeySerializer(stringRedisSerializer);
-        // hash的field采用 String的序列化方式
+        // Hash的Field采用 String的序列化方式
         template.setHashKeySerializer(stringRedisSerializer);
-        // value采用 jackson的序列化方式
+        // Value采用 Jackson的序列化方式
         template.setValueSerializer(jackson2JsonRedisSerializer);
-        // hash的value采用 jackson的序列化方式
+        // Hash的Value采用 Jackson的序列化方式
         template.setHashValueSerializer(jackson2JsonRedisSerializer);
 
         template.afterPropertiesSet();
