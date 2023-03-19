@@ -24,7 +24,7 @@ import me.xiajhuan.summer.admin.common.log.entity.LogOperationEntity;
 import me.xiajhuan.summer.admin.common.log.service.LogOperationService;
 import me.xiajhuan.summer.core.utils.HttpContextUtil;
 import me.xiajhuan.summer.core.utils.IpUtil;
-import me.xiajhuan.summer.core.utils.ReflectUtil;
+import me.xiajhuan.summer.core.utils.AopUtil;
 import me.xiajhuan.summer.core.utils.SecurityUtil;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -99,7 +99,7 @@ public class LogOperationAspect {
         RequestMapping requestMapping = AnnotationUtils.findAnnotation(controllerClass, RequestMapping.class);
 
         // 获取切入点方法上的LogOperation注解
-        Method method = ReflectUtil.getMethod(point);
+        Method method = AopUtil.getMethod(point);
         LogOperation logOperation = AnnotationUtils.findAnnotation(method, LogOperation.class);
 
         // 请求

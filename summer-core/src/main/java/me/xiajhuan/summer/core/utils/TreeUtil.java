@@ -142,6 +142,16 @@ public class TreeUtil {
     }
 
     /**
+     * 创建空节点
+     *
+     * @param id ID
+     * @return 节点（{@link Tree}）
+     */
+    public static Tree<Long> createEmptyNode(Long id) {
+        return new Tree<Long>().setId(id);
+    }
+
+    /**
      * 获取扩展属性的Getter Map<br>
      * Key：扩展属性 Value：扩展属性的Getter
      *

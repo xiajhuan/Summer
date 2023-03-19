@@ -29,7 +29,7 @@ import me.xiajhuan.summer.core.ratelimiter.strategy.StrategyFactory;
 import me.xiajhuan.summer.core.ratelimiter.strategy.impl.SettingKeyStrategy;
 import me.xiajhuan.summer.core.ratelimiter.strategy.impl.SettingLoadBalanceStrategy;
 import me.xiajhuan.summer.core.utils.HttpContextUtil;
-import me.xiajhuan.summer.core.utils.ReflectUtil;
+import me.xiajhuan.summer.core.utils.AopUtil;
 import me.xiajhuan.summer.core.utils.SecurityUtil;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -134,7 +134,7 @@ public class RateLimiterAspect {
     @Before("pointcut()")
     public void before(JoinPoint point) throws BusinessException {
         // 获取切入点方法上的RateLimiter注解
-        RateLimiter rateLimiter = AnnotationUtils.findAnnotation(ReflectUtil.getMethod(point), RateLimiter.class);
+        RateLimiter rateLimiter = AnnotationUtils.findAnnotation(AopUtil.getMethod(point), RateLimiter.class);
 
         if (rateLimiter != null && rateLimiter.qps() > RateLimiter.NOT_LIMITED) {
             // 请求
