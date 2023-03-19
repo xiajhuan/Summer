@@ -92,7 +92,7 @@ public class LogErrorController {
     @LogOperation(OperationConst.EXCEL_EXPORT)
     public void excelExport(LogErrorDto dto, HttpServletResponse response) throws FileDownloadException {
         try {
-            ExcelUtil.exportWithE(response, "错误日志", "错误日志", mainService.list(dto), LogErrorExcel.class);
+            ExcelUtil.exportExcel(response, "错误日志", "错误日志", mainService.list(dto), LogErrorExcel.class);
         } catch (Exception e) {
             throw FileDownloadException.of(e, ErrorCode.EXCEL_EXPORT_FAILURE);
         }

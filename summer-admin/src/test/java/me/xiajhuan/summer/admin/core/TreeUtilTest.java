@@ -67,11 +67,11 @@ public class TreeUtilTest {
     }
 
     /**
-     * @see TreeUtil#buildWithD(Class, List, Long, String...)
+     * @see TreeUtil#buildDto(Class, List, Long, String...)
      */
     @Test
     public void test() {
-        List<SecurityMenuDto> treeNodes = TreeUtil.buildWithD(SecurityMenuDto.class, menuDtoList, TreeConst.ROOT,
+        List<SecurityMenuDto> treeNodes = TreeUtil.buildDto(SecurityMenuDto.class, menuDtoList, TreeConst.ROOT,
                 "url", "permissions");
         Assertions.assertTrue(treeNodes.size() == 2, "菜单树构建失败！");
         Console.log(JSONUtil.toJsonPrettyStr(treeNodes));

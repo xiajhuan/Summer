@@ -68,8 +68,8 @@ public class SecurityDeptServiceImpl extends ServiceImpl<SecurityDeptMapper, Sec
                 baseMapper.getList(idSet), SecurityDeptDto.class);
 
         // 构建部门树形结构列表
-        return isGeneral ? TreeUtil.buildWithD(SecurityDeptDto.class, dtoList, loginUser.getDeptId(), TreeConst.Extra.DEPT)
-                : TreeUtil.buildWithD(SecurityDeptDto.class, dtoList, TreeConst.ROOT, TreeConst.Extra.DEPT);
+        return isGeneral ? TreeUtil.buildDto(SecurityDeptDto.class, dtoList, loginUser.getDeptId(), TreeConst.Extra.DEPT)
+                : TreeUtil.buildDto(SecurityDeptDto.class, dtoList, TreeConst.ROOT, TreeConst.Extra.DEPT);
     }
 
     @Override

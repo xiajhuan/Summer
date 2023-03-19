@@ -104,9 +104,9 @@ public class ExcelUtil {
      * @param <E>        Excel类型
      * @throws IOException I/O异常
      */
-    public static <D, E> void exportWithE(HttpServletResponse response, String fileName, String sheetName, List<D> dtoList,
+    public static <D, E> void exportExcel(HttpServletResponse response, String fileName, String sheetName, List<D> dtoList,
                                           Class<E> excelClass) throws IOException {
-        exportWithD(response, fileName, sheetName, ConvertUtil.convert(dtoList, excelClass), excelClass);
+        exportDto(response, fileName, sheetName, ConvertUtil.convert(dtoList, excelClass), excelClass);
     }
 
     /**
@@ -121,8 +121,8 @@ public class ExcelUtil {
      * @param <E>        Excel类型
      * @throws IOException I/O异常
      */
-    public static <D, E> void exportWithD(HttpServletResponse response, String fileName, String sheetName, List<D> dtoList,
-                                          Class<E> excelClass) throws IOException {
+    public static <D, E> void exportDto(HttpServletResponse response, String fileName, String sheetName, List<D> dtoList,
+                                        Class<E> excelClass) throws IOException {
         if (StrUtil.isBlank(fileName)) {
             // 当前日期
             fileName = DateUtil.formatDate(DateUtil.date());

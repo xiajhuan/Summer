@@ -76,7 +76,7 @@ public class LogOperationController {
     @LogOperation(OperationConst.EXCEL_EXPORT)
     public void excelExport(LogOperationDto dto, HttpServletResponse response) throws FileDownloadException {
         try {
-            ExcelUtil.exportWithE(response, "操作日志", "操作日志", mainService.list(dto), LogOperationExcel.class);
+            ExcelUtil.exportExcel(response, "操作日志", "操作日志", mainService.list(dto), LogOperationExcel.class);
         } catch (Exception e) {
             throw FileDownloadException.of(e, ErrorCode.EXCEL_EXPORT_FAILURE);
         }
