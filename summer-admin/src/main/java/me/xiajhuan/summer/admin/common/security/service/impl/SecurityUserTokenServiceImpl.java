@@ -60,12 +60,12 @@ public class SecurityUserTokenServiceImpl extends ServiceImpl<SecurityUserTokenM
             accessToken = SecurityUtil.generateToken();
             // 构建用户Token
             tokenEntity = SecurityUserTokenEntity.builder()
-                    .userId(userId).token(accessToken)
+                    .userId(userId).accessToken(accessToken)
                     .expireTime(expireTime).build();
 
             save(tokenEntity);
         } else {
-            accessToken = tokenEntity.getToken();
+            accessToken = tokenEntity.getAccessToken();
             // 判断Token是否过期
             if (tokenEntity.getExpireTime().getTime() < System.currentTimeMillis()) {
                 accessToken = SecurityUtil.generateToken();
@@ -73,13 +73,13 @@ public class SecurityUserTokenServiceImpl extends ServiceImpl<SecurityUserTokenM
 
             // 更新用户Token
             SecurityUserTokenEntity tokenNew = SecurityUserTokenEntity.builder()
-                    .token(accessToken).expireTime(expireTime).build();
+                    .accessToken(accessToken).expireTime(expireTime).build();
 
             updateById(tokenNew);
         }
 
         SecurityUserTokenDto tokenDto = new SecurityUserTokenDto();
-        tokenDto.setToken(accessToken);
+        tokenDto.setAccessToken(accessToken);
         tokenDto.setExpireTime(tokenExpire * 3600);
 
         return tokenDto;

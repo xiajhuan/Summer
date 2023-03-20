@@ -158,12 +158,12 @@ public interface ErrorCode {
     int UPLOAD_FILE_EMPTY = 10019;
 
     /**
-     * token不能为空
+     * Token不能为空
      */
     int TOKEN_NOT_EMPTY = 10020;
 
     /**
-     * token失效，请重新登录
+     * Token失效，请重新登录
      */
     int TOKEN_INVALID = 10021;
 

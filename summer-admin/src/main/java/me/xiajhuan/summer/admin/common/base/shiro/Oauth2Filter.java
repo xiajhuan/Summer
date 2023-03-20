@@ -15,6 +15,7 @@ package me.xiajhuan.summer.admin.common.base.shiro;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
+import me.xiajhuan.summer.core.constant.ContentTypeConst;
 import me.xiajhuan.summer.core.constant.SecurityConst;
 import me.xiajhuan.summer.core.constant.StrTemplateConst;
 import me.xiajhuan.summer.core.data.Result;
@@ -78,14 +79,14 @@ public class Oauth2Filter extends AuthenticatingFilter {
 
     @Override
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
-        // 获取accessToken，若token不存在则直接返回401
-        String token = getAccessToken((HttpServletRequest) request);
+        // 获取accessToken，若accessToken不存在则直接返回401
+        String accessToken = getAccessToken((HttpServletRequest) request);
 
-        if (StrUtil.isBlank(token)) {
+        if (StrUtil.isBlank(accessToken)) {
             HttpServletResponse httpResponse = (HttpServletResponse) response;
             setResponseHeader((HttpServletRequest) request, httpResponse);
 
-            HttpContextUtil.makeResponse(httpResponse, StrUtil.format(StrTemplateConst.MEDIA_TYPE, "application/json", "charset=utf-8"),
+            HttpContextUtil.makeResponse(httpResponse, StrUtil.format(StrTemplateConst.MEDIA_TYPE, ContentTypeConst.JSON, "charset=utf-8"),
                     ErrorCode.UNAUTHORIZED, Result.ofFail(ErrorCode.UNAUTHORIZED));
 
             return false;
@@ -101,7 +102,7 @@ public class Oauth2Filter extends AuthenticatingFilter {
             // 处理登录失败的异常
             Throwable cause = authException.getCause() == null ? authException : authException.getCause();
 
-            HttpContextUtil.makeResponse(httpResponse, StrUtil.format(StrTemplateConst.MEDIA_TYPE, "application/json", "charset=utf-8"),
+            HttpContextUtil.makeResponse(httpResponse, StrUtil.format(StrTemplateConst.MEDIA_TYPE, ContentTypeConst.JSON, "charset=utf-8"),
                     ErrorCode.UNAUTHORIZED, Result.ofFail(cause.getMessage()));
         } catch (IOException e) {
             LOGGER.error(e, e.getMessage());
@@ -127,14 +128,14 @@ public class Oauth2Filter extends AuthenticatingFilter {
      * @return accessToken
      */
     private String getAccessToken(HttpServletRequest request) {
-        // 从header中获取token
-        String token = request.getHeader(SecurityConst.TOKEN_HEADER);
+        // 从header中获取accessToken
+        String accessToken = request.getHeader(SecurityConst.TOKEN_HEADER);
 
-        // 如果header中不存在token，则从参数中获取
-        if (StrUtil.isBlank(token)) {
-            token = request.getParameter(SecurityConst.TOKEN_HEADER);
+        // 如果header中不存在accessToken，则从参数中获取
+        if (StrUtil.isBlank(accessToken)) {
+            accessToken = request.getParameter(SecurityConst.TOKEN_HEADER);
         }
-        return token;
+        return accessToken;
     }
 
 }

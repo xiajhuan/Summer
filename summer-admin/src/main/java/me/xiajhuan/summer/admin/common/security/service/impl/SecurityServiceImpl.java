@@ -94,7 +94,7 @@ public class SecurityServiceImpl implements SecurityService {
     public SecurityUserTokenEntity getByAccessToken(String accessToken) {
         LambdaQueryWrapper<SecurityUserTokenEntity> queryWrapper = Wrappers.lambdaQuery();
         queryWrapper.select(SecurityUserTokenEntity::getUserId, SecurityUserTokenEntity::getExpireTime);
-        queryWrapper.eq(SecurityUserTokenEntity::getToken, accessToken);
+        queryWrapper.eq(SecurityUserTokenEntity::getAccessToken, accessToken);
 
         return securityUserTokenMapper.selectOne(queryWrapper);
     }

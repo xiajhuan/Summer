@@ -26,35 +26,35 @@ public class Oauth2Token implements AuthenticationToken {
     /**
      * accessToken
      */
-    private String token;
+    private String accessToken;
 
     /**
      * 构造Oauth2Token
      *
-     * @param token accessToken
+     * @param accessToken accessToken
      */
-    private Oauth2Token(String token) {
-        this.token = token;
+    private Oauth2Token(String accessToken) {
+        this.accessToken = accessToken;
     }
 
     /**
      * 构建Oauth2Token
      *
-     * @param token accessToken
+     * @param accessToken accessToken
      * @return Oauth2Token
      */
-    public static Oauth2Token of(String token) {
-        return new Oauth2Token(token);
+    public static Oauth2Token of(String accessToken) {
+        return new Oauth2Token(accessToken);
     }
 
     @Override
     public String getPrincipal() {
-        return token;
+        return accessToken;
     }
 
     @Override
     public Object getCredentials() {
-        return token;
+        return accessToken;
     }
 
 }

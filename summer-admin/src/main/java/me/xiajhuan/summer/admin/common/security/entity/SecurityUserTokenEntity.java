@@ -40,7 +40,7 @@ public class SecurityUserTokenEntity extends SimpleBaseEntity {
     /**
      * accessToken
      */
-    private String token;
+    private String accessToken;
 
     /**
      * 过期时间
