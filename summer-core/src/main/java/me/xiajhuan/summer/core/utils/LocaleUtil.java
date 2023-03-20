@@ -19,7 +19,6 @@ import cn.hutool.setting.Setting;
 import me.xiajhuan.summer.core.constant.SettingBeanConst;
 import me.xiajhuan.summer.core.enums.LocaleSupportEnum;
 import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
 import me.xiajhuan.summer.core.exception.ErrorCode;
 import org.springframework.http.HttpHeaders;
 
@@ -34,10 +33,9 @@ import java.util.Locale;
  * <pre>
  *     1.请求头“Accept-Language”有值且以“zh”或“en”开头，
  *       以“Accept-Language”为准
- *     2.请求头“Accept-Language”有值但不以“zh”或“en”开头，
- *       以core.setting中extra-default配置值为准
- *     3.请求头“Accept-Language”没有值，
- *       取本地操作系统默认Locale，若语言不是“zh”或“en”，
+ *     2.请求头“Accept-Language”没有值或有值但不以“zh”或“en”开头，
+ *       以服务器JVM设置的值为准 {@link Locale#getDefault()}
+ *     3.满足2但JVM设置的值语言不为“zh”或“en”，
  *       以core.setting中extra-default配置值为准
  * </pre>
  * </p>
@@ -57,7 +55,7 @@ public class LocaleUtil {
     private static MessageSource messageSource;
 
     /**
-     * 中英文以外地区的默认语言
+     * 服务器JVM设置的语言是中英文以外时的默认语言
      */
     private static String extraDefault;
 
@@ -82,20 +80,21 @@ public class LocaleUtil {
      * @return 国际化消息
      */
     public static String getI18nMessage(int code, String... params) {
-        return messageSource.getMessage(String.valueOf(code), params, getLocale());
+        return messageSource.getMessage(String.valueOf(code), params, getLocalePriority());
     }
 
     /**
-     * 获取 {@link Locale}
+     * 根据优先级获取 {@link Locale}
      *
      * @return {@link Locale}
      */
-    public static Locale getLocale() {
+    public static Locale getLocalePriority() {
         // 优先取请求头“Accept-Language”的值
         Locale locale = getLocaleAcceptLanguage(HttpContextUtil.getHttpServletRequest());
 
         if (locale == null) {
-            locale = LocaleContextHolder.getLocale();
+            // 取JVM设置的值
+            locale = Locale.getDefault();
 
             // 中国（中文）
             Locale chineseLocale = LocaleSupportEnum.ZH_CN.getValue();
@@ -108,7 +107,6 @@ public class LocaleUtil {
                 // 所有英文地区，强制为：美国（英语）
                 locale = americaLocale;
             } else {
-                // note：如果“locale.toLanguageTag()”输出为“und”，则请求头“Accept-Language”的值在java.util.Locale中未被定义
                 LOGGER.warn("中英文以外的地区【{}】，自动调整为默认地区【{}】", locale.toLanguageTag(), extraDefault);
 
                 locale = LocaleSupportEnum.ZH_CN.getName().equalsIgnoreCase(extraDefault)

@@ -65,7 +65,7 @@ exclude-and-replace = INSERT:log_operation,INSERT:log_error,INSERT:log_login
 
 [Locale]
 # 地区语言配置
-# 中英文以外地区的默认语言，值：zh_CN/en_US
+# 服务器JVM设置的语言是中英文以外时的默认语言，值：zh_CN/en_US
 extra-default = en_US
 
 
