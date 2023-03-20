@@ -12,6 +12,7 @@
 
 package me.xiajhuan.summer.admin.common.locale.mapper;
 
+import com.baomidou.mybatisplus.annotation.InterceptorIgnore;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import me.xiajhuan.summer.admin.common.locale.entity.LocaleInternationalNameEntity;
 
@@ -21,5 +22,6 @@ import me.xiajhuan.summer.admin.common.locale.entity.LocaleInternationalNameEnti
  * @author xiajhuan
  * @date 2023/3/16
  */
+@InterceptorIgnore
 public interface LocaleInternationalNameMapper extends BaseMapper<LocaleInternationalNameEntity> {
 }

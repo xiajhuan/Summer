@@ -15,7 +15,6 @@ package me.xiajhuan.summer.admin.common.base.shiro;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
-import me.xiajhuan.summer.core.constant.RequestAcceptConst;
 import me.xiajhuan.summer.core.constant.SecurityConst;
 import me.xiajhuan.summer.core.constant.StrTemplateConst;
 import me.xiajhuan.summer.core.data.Result;
@@ -86,7 +85,7 @@ public class Oauth2Filter extends AuthenticatingFilter {
             HttpServletResponse httpResponse = (HttpServletResponse) response;
             setResponseHeader((HttpServletRequest) request, httpResponse);
 
-            HttpContextUtil.makeResponse(httpResponse, StrUtil.format(StrTemplateConst.MEDIA_TYPE, RequestAcceptConst.JSON, "charset=utf-8"),
+            HttpContextUtil.makeResponse(httpResponse, StrUtil.format(StrTemplateConst.MEDIA_TYPE, "application/json", "charset=utf-8"),
                     ErrorCode.UNAUTHORIZED, Result.ofFail(ErrorCode.UNAUTHORIZED));
 
             return false;
@@ -102,7 +101,7 @@ public class Oauth2Filter extends AuthenticatingFilter {
             // 处理登录失败的异常
             Throwable cause = authException.getCause() == null ? authException : authException.getCause();
 
-            HttpContextUtil.makeResponse(httpResponse, StrUtil.format(StrTemplateConst.MEDIA_TYPE, RequestAcceptConst.JSON, "charset=utf-8"),
+            HttpContextUtil.makeResponse(httpResponse, StrUtil.format(StrTemplateConst.MEDIA_TYPE, "application/json", "charset=utf-8"),
                     ErrorCode.UNAUTHORIZED, Result.ofFail(cause.getMessage()));
         } catch (IOException e) {
             LOGGER.error(e, e.getMessage());

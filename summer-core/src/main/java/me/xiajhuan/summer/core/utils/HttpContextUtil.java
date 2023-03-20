@@ -17,9 +17,8 @@ import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
-import cn.hutool.log.Log;
-import cn.hutool.log.LogFactory;
-import me.xiajhuan.summer.core.constant.RequestAcceptConst;
+import me.xiajhuan.summer.core.constant.ContentTypeConst;
+import me.xiajhuan.summer.core.constant.StrTemplateConst;
 import org.aspectj.lang.JoinPoint;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.context.request.RequestAttributes;
@@ -41,8 +40,6 @@ import java.util.Map;
  * @date 2022/11/28
  */
 public class HttpContextUtil {
-
-    private static final Log LOGGER = LogFactory.get();
 
     /**
      * 获取请求
@@ -142,31 +139,49 @@ public class HttpContextUtil {
                         queryString.endsWith("&") ? queryString.substring(0, queryString.length() - 1) : queryString);
             }
 
-            String acceptHeader = request.getHeader(HttpHeaders.ACCEPT);
-            if (args.length == 1 && StrUtil.containsIgnoreCase(acceptHeader, RequestAcceptConst.JSON)) {
-                // Json参数格式示例：Json【{...}】
-                final String jsonParam;
-                if (args[0] instanceof CharSequence && JSONUtil.isTypeJSON(String.valueOf(args[0]))) {
-                    jsonParam = StrUtil.format("Json【{}】", args[0]);
-                } else {
-                    jsonParam = StrUtil.format("Json【{}】", JSONUtil.toJsonStr(args[0]));
+            String contentType = request.getContentType();
+            if (StrUtil.isNotBlank(contentType)) {
+                // 有请求体参数
+                // Form参数格式示例：Form-Data【pageNum=1&pageSize=10】或Form-Data【status=1【文件上传】】
+                if (StrUtil.startWithAnyIgnoreCase(contentType, ContentTypeConst.FORM)) {
+                    return getFormParam(args);
                 }
-                if (StrUtil.isNotBlank(queryParam)) {
-                    return StrUtil.builder(queryParam, jsonParam).toString();
-                } else {
-                    return jsonParam;
+
+                // Json参数格式示例：Json【...】
+                if (StrUtil.startWithIgnoreCase(contentType, ContentTypeConst.JSON)) {
+                    final String jsonParam;
+                    if (args[0] instanceof String) {
+                        jsonParam = String.valueOf(args[0]);
+                    } else {
+                        jsonParam = JSONUtil.toJsonStr(args[0]);
+                    }
+                    return concatQuery("Json", jsonParam, queryParam);
                 }
-            } else if (args.length >= 1 && StrUtil.containsAnyIgnoreCase(acceptHeader, RequestAcceptConst.FORM)) {
-                // Form参数格式示例：Form【pageNum=1&pageSize=10】或Form【status=1】【文件上传】
-                StringBuilder formParam = getFormParam(args);
-                if (StrUtil.isNotBlank(queryParam)) {
-                    return StrUtil.builder(queryParam, formParam).toString();
-                } else {
-                    return formParam.toString();
+
+                // Xml参数格式示例：Xml【...】
+                if (StrUtil.startWithIgnoreCase(contentType, ContentTypeConst.XML)) {
+                    return concatQuery("Xml", String.valueOf(args[0]), queryParam);
                 }
-            } else {
-                // 不支持的参数格式，如：application/xml，application/javascript等
-                LOGGER.warn("不支持的参数格式【{}】", acceptHeader);
+
+                // Javascript参数格式示例：Javascript【...】
+                if (StrUtil.startWithIgnoreCase(contentType, ContentTypeConst.JAVASCRIPT)) {
+                    return concatQuery("Javascript", String.valueOf(args[0]), queryParam);
+                }
+
+                // 普通文本参数格式示例：Text【...】
+                if (StrUtil.startWithIgnoreCase(contentType, ContentTypeConst.TEXT)) {
+                    return concatQuery("Text", String.valueOf(args[0]), queryParam);
+                }
+
+                // Html文本参数格式示例：Html【...】
+                if (StrUtil.startWithIgnoreCase(contentType, ContentTypeConst.HTML)) {
+                    return concatQuery("Html", String.valueOf(args[0]), queryParam);
+                }
+            }
+
+            // 无请求体参数
+            if (StrUtil.isNotBlank(queryParam)) {
+                return queryParam;
             }
         }
 
@@ -192,39 +207,56 @@ public class HttpContextUtil {
     /**
      * 获取表单参数，若包含文件上传则末尾标记【文件上传】
      *
-     * @param args 方法参数
-     * @return {@link StringBuilder}
-     * @see RequestAcceptConst#FORM
+     * @param args 参数数组
+     * @return 表单参数或 {@code null}
      */
-    private static StringBuilder getFormParam(Object[] args) {
-        // 排除参数值为空的方法参数（包括空数组）
+    private static String getFormParam(Object[] args) {
+        // 排除参数值为空的参数（包括空数组）
         args = Arrays.stream(args).filter(arg -> ObjectUtil.isNotEmpty(arg)).toArray();
 
-        // 标记是否为文件上传，true：不是 false：是
-        boolean notMultipart = true;
+        if (args.length > 0) {
+            // 标记是否为文件上传，true：不是 false：是
+            boolean notMultipart = true;
 
-        StringBuilder formParam = StrUtil.builder();
-        for (int i = 0; i < args.length; i++) {
-            if (notMultipart && (args[i] instanceof MultipartFile || args[i] instanceof MultipartFile[])) {
-                notMultipart = false;
-            } else {
-                if (args[i] instanceof Object[]) {
-                    // 数组参数格式示例：[1,2,3]
-                    formParam.append(ArrayUtil.toString(args[i]));
+            StringBuilder formParam = StrUtil.builder();
+            for (int i = 0; i < args.length; i++) {
+                if (notMultipart && (args[i] instanceof MultipartFile || args[i] instanceof MultipartFile[])) {
+                    notMultipart = false;
                 } else {
-                    formParam.append(args[i].toString());
-                }
-                if (i != args.length - 1) {
-                    formParam.append(StrUtil.COMMA);
+                    if (args[i] instanceof Object[]) {
+                        // 数组参数格式示例：[1,2,3]
+                        formParam.append(ArrayUtil.toString(args[i]));
+                    } else {
+                        formParam.append(args[i].toString());
+                    }
+                    if (i != args.length - 1) {
+                        formParam.append(StrUtil.COMMA);
+                    }
                 }
             }
-        }
 
-        if (!notMultipart) {
-            formParam.append("【文件上传】");
-        }
+            if (!notMultipart) {
+                formParam.append("【文件上传】");
+            }
 
-        return formParam;
+            return StrUtil.format("Form-Data【{}】", formParam);
+        }
+        return null;
+    }
+
+    /**
+     * 拼接Query参数<br>
+     * 例如：Query【...】 Json【...】
+     *
+     * @param prefix     前缀
+     * @param bodyParam  请求体参数
+     * @param queryParam Query参数
+     * @return 拼接后的参数
+     */
+    private static String concatQuery(String prefix, String bodyParam, String queryParam) {
+        return StrUtil.isNotBlank(queryParam)
+                ? StrUtil.builder(queryParam, StrUtil.format(StrTemplateConst.BODY_PARAM, prefix, bodyParam)).toString()
+                : StrUtil.format(StrTemplateConst.BODY_PARAM, prefix, bodyParam);
     }
 
 }

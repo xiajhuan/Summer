@@ -13,41 +13,41 @@
 package me.xiajhuan.summer.core.constant;
 
 /**
- * 字符串模板常量
+ * 请求体类型常量
  *
  * @author xiajhuan
- * @date 2022/11/29
+ * @date 2023/3/20
  */
-public class StrTemplateConst {
+public class ContentTypeConst {
 
     /**
-     * 响应媒体格式
+     * 表单
      */
-    public static final String MEDIA_TYPE = "{};{}";
+    public static final String[] FORM = {"application/x-www-form-urlencoded", "multipart/form-data"};
 
     /**
-     * 接口操作名称
+     * Json
      */
-    public static final String OPERATION_NAME = "【{}】{}";
+    public static final String JSON = "application/json";
 
     /**
-     * 限流Key
+     * Xml
      */
-    public static final String RATE_LIMITER_KEY = "{}#{}";
+    public static final String XML = "application/xml";
 
     /**
-     * 限流策略Class全限定性类名
+     * Javascript
      */
-    public static final String RATE_LIMITER_STRATEGY_CLASS = "me.xiajhuan.summer.core.ratelimiter.strategy.impl.{}";
+    public static final String JAVASCRIPT = "application/javascript";
 
     /**
-     * 请求体参数
+     * 普通文本
      */
-    public static final String BODY_PARAM = "{}【{}】";
+    public static final String TEXT = "text/plain";
 
     /**
-     * 匹配失败消息
+     * Html文本
      */
-    public static final String MATCHES_FAIL_MSG = "{} matches {} failed!";
+    public static final String HTML = "text/html";
 
 }
