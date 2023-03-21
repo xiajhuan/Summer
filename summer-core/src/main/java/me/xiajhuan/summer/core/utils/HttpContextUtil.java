@@ -19,6 +19,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import me.xiajhuan.summer.core.constant.ContentTypeConst;
 import me.xiajhuan.summer.core.constant.StrTemplateConst;
+import net.dreamlu.mica.core.utils.JsonUtil;
 import org.aspectj.lang.JoinPoint;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.context.request.RequestAttributes;
@@ -56,20 +57,33 @@ public class HttpContextUtil {
     }
 
     /**
-     * 获取请求参数 Map
+     * 获取请求参数 Map（Query/FORM-DATA/JSON）
      *
      * @param request {@link HttpServletRequest}
      * @return 请求参数 Map
+     * @throws IOException I/O异常
+     * @see ContentTypeConst#FORM_DATA
+     * @see ContentTypeConst#JSON
      */
-    public static Map<String, String> getParameterMap(HttpServletRequest request) {
-        Map<String, String> params = MapUtil.newHashMap();
+    public static Map<String, String> getParamMap(HttpServletRequest request) throws IOException {
+        Map<String, String> params = MapUtil.newHashMap(true);
 
+        // Query/FORM-DATA
         Enumeration<String> parameters = request.getParameterNames();
         while (parameters.hasMoreElements()) {
             String parameter = parameters.nextElement();
             String value = request.getParameter(parameter);
             if (StrUtil.isNotBlank(value)) {
                 params.put(parameter, value);
+            }
+        }
+
+        String contentType = request.getContentType();
+        if (StrUtil.isNotBlank(contentType) && StrUtil.startWithIgnoreCase(contentType, ContentTypeConst.JSON)) {
+            // JSON
+            Map<String, String> jsonParam = JsonUtil.readMap(request.getInputStream(), String.class);
+            if (MapUtil.isNotEmpty(jsonParam)) {
+                jsonParam.forEach((k, v) -> params.put(k, v));
             }
         }
 
@@ -119,7 +133,7 @@ public class HttpContextUtil {
     }
 
     /**
-     * 获取请求参数
+     * 获取请求参数（切入点方法）
      *
      * @param point   {@link JoinPoint}
      * @param request {@link HttpServletRequest}
@@ -143,7 +157,7 @@ public class HttpContextUtil {
             if (StrUtil.isNotBlank(contentType)) {
                 // 有请求体参数
                 // Form参数格式示例：Form-Data【pageNum=1&pageSize=10】或Form-Data【status=1【文件上传】】
-                if (StrUtil.startWithAnyIgnoreCase(contentType, ContentTypeConst.FORM)) {
+                if (StrUtil.startWithAnyIgnoreCase(contentType, ContentTypeConst.FORM_DATA)) {
                     return getFormParam(args);
                 }
 

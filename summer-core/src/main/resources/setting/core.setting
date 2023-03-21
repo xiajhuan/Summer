@@ -27,6 +27,12 @@ parser.max-batch-num = 2000
 parser.cache-ttl = 24
 
 
+# Http请求配置
+[Http]
+# 支持的请求体类型，以”,“分隔，值：FORM-DATA/JSON/XML/JAVASCRIPT/TEXT/HTML
+content-type-support = FORM-DATA,JSON
+
+
 # MybatisPlus插件配置
 [Mp]
 # 数据权限忽略的表名配置，以“,”分隔
@@ -47,9 +53,6 @@ node-num = 1
 # 默认超时时长（ms）
 timeout = 0
 
-# 是否记录限流成功时抛出的BusinessException，值：true/false
-log-exception-when-success = false
-
 
 # 树形结构配置
 [Tree]
@@ -61,6 +64,11 @@ deep = 5
 # Sql打印配置
 # p6spy不详细打印的Sql语句配置，替换格式：操作关键字:表名,操作关键字:表名，例如：INSERT:log_operation,INSERT:log_error
 exclude-and-replace = INSERT:log_operation,INSERT:log_error,INSERT:log_login
+
+# 是否开启Sql注入过滤，值：true/false
+enable-injection-filter = true
+# Sql注入非法关键字（不区分大小写），以“,”分隔
+injection.illegal-key-word = SELECT,UPDATE,AND,OR,DELETE,INSERT,TRUNCATE,SUBSTR,DECLARE,MASTER,DROP,EXECUTE,UNION
 
 
 [Locale]
@@ -85,6 +93,3 @@ keep-alive-seconds = 30
 wait-for-tasks-to-complete-on-shutdown = true
 # 服务停止时等待线程执行的时间（s），超时则强制销毁
 await-termination-Seconds = 30
-
-
-

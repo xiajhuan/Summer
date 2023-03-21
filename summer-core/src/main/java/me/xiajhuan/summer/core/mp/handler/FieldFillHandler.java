@@ -30,6 +30,36 @@ import org.springframework.stereotype.Component;
 public class FieldFillHandler implements MetaObjectHandler {
 
     /**
+     * 创建者
+     */
+    private static final String CREATE_BY = "createBy";
+
+    /**
+     * 创建时间
+     */
+    private static final String CREATE_TIME = "createTime";
+
+    /**
+     * 修改者
+     */
+    private static final String UPDATE_BY = "updateBy";
+
+    /**
+     * 修改时间
+     */
+    private static final String UPDATE_TIME = "updateTime";
+
+    /**
+     * 部门ID
+     */
+    private static final String DEPT_ID = "deptId";
+
+    /**
+     * 乐观锁控制
+     */
+    private static final String VERSION = "version";
+
+    /**
      * 新增时自动填充
      *
      * @param metaObject {@link MetaObject}
@@ -39,18 +69,18 @@ public class FieldFillHandler implements MetaObjectHandler {
         Object[] array = currentUsernameAndDateTime();
 
         // 创建者和修改者
-        setFieldValByName("createBy", array[0], metaObject);
-        setFieldValByName("updateBy", array[0], metaObject);
+        setFieldValByName(CREATE_BY, array[0], metaObject);
+        setFieldValByName(UPDATE_BY, array[0], metaObject);
 
         // 创建时间和修改时间
-        setFieldValByName("createTime", array[1], metaObject);
-        setFieldValByName("updateTime", array[1], metaObject);
+        setFieldValByName(CREATE_TIME, array[1], metaObject);
+        setFieldValByName(UPDATE_TIME, array[1], metaObject);
 
         // 部门ID
-        setFieldValByName("deptId", SecurityUtil.getCurrentDeptId(), metaObject);
+        setFieldValByName(DEPT_ID, SecurityUtil.getCurrentDeptId(), metaObject);
 
         // 乐观锁控制
-        setFieldValByName("version", 0, metaObject);
+        setFieldValByName(VERSION, 0, metaObject);
     }
 
     /**
@@ -63,8 +93,8 @@ public class FieldFillHandler implements MetaObjectHandler {
         Object[] array = currentUsernameAndDateTime();
 
         // 修改者和修改时间
-        setFieldValByName("updateBy", array[0], metaObject);
-        setFieldValByName("updateTime", array[1], metaObject);
+        setFieldValByName(UPDATE_BY, array[0], metaObject);
+        setFieldValByName(UPDATE_TIME, array[1], metaObject);
     }
 
     /**

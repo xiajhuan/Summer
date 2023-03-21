@@ -10,11 +10,16 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.admin.common.base.config;
+package me.xiajhuan.summer.core.config;
 
+import me.xiajhuan.summer.core.interceptor.ContentTypeInterceptor;
+import me.xiajhuan.summer.core.interceptor.SqlInjectionInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import javax.annotation.Resource;
 
 /**
  * SpringMvc配置
@@ -26,6 +31,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 
+    @Resource
+    private ContentTypeInterceptor contentTypeInterceptor;
+
+    @Resource
+    private SqlInjectionInterceptor sqlInjectionInterceptor;
+
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
@@ -33,6 +44,17 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .allowCredentials(true)
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .maxAge(3600);
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        // 注册请求体类型 拦截器
+        registry.addInterceptor(contentTypeInterceptor).order(Integer.MIN_VALUE)
+                .addPathPatterns("/**").excludePathPatterns("/open/test/**");
+
+        // 注册Sql注入 拦截器
+        registry.addInterceptor(sqlInjectionInterceptor).order(Integer.MIN_VALUE + 1)
+                .addPathPatterns("/**").excludePathPatterns("/open/test/**");
     }
 
 }

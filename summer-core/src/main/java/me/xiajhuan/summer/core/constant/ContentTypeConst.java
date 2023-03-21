@@ -23,7 +23,7 @@ public class ContentTypeConst {
     /**
      * 表单
      */
-    public static final String[] FORM = {"application/x-www-form-urlencoded", "multipart/form-data"};
+    public static final String[] FORM_DATA = {"application/x-www-form-urlencoded", "multipart/form-data"};
 
     /**
      * Json

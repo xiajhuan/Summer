@@ -24,7 +24,12 @@ import me.xiajhuan.summer.core.exception.ErrorCode;
 import me.xiajhuan.summer.admin.common.log.service.LogErrorService;
 import me.xiajhuan.summer.core.exception.FileDownloadException;
 import me.xiajhuan.summer.core.utils.HttpContextUtil;
+import me.xiajhuan.summer.core.ratelimiter.aspect.RateLimiterAspect;
+import me.xiajhuan.summer.core.interceptor.ContentTypeInterceptor;
+import me.xiajhuan.summer.core.interceptor.SqlInjectionInterceptor;
+import me.xiajhuan.summer.core.utils.LocaleUtil;
 import org.apache.shiro.authz.AuthorizationException;
+import org.aspectj.lang.JoinPoint;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
@@ -34,7 +39,10 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * 通用全局异常处理
@@ -46,9 +54,6 @@ import java.util.List;
 public class CommonExceptionHandler {
 
     private static final Log LOGGER = LogFactory.get();
-
-    @Resource(name = SettingBeanConst.CORE)
-    private Setting coreSetting;
 
     @Resource(name = SettingBeanConst.COMMON)
     private Setting commonSetting;
@@ -62,17 +67,11 @@ public class CommonExceptionHandler {
     private static boolean enableBusinessErrorLog;
 
     /**
-     * 是否记录限流成功时抛出的BusinessException
-     */
-    private static boolean logExceptionWhenSuccess;
-
-    /**
-     * 初始化 {@link enableBusinessErrorLog} {@link logExceptionWhenSuccess}
+     * 初始化 {@link enableBusinessErrorLog}
      */
     @PostConstruct
     private void init() {
         enableBusinessErrorLog = commonSetting.getBool("error.enable-business", "Log", true);
-        logExceptionWhenSuccess = coreSetting.getBool("log-exception-when-success", "RateLimiter", false);
     }
 
     /**
@@ -84,18 +83,13 @@ public class CommonExceptionHandler {
     @ExceptionHandler(value = Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Result handleException(Exception e) {
-        boolean isSaveErrorLog = true;
-
         // 处理限流切面的异常
         Exception cause = (Exception) e.getCause();
-        if (cause != null && isLimitSuccessException(cause)) {
+        if (cause != null) {
             e = cause;
-            if (!enableBusinessErrorLog || !logExceptionWhenSuccess) {
-                isSaveErrorLog = false;
-            }
         }
 
-        return logAndResponse(e, isSaveErrorLog);
+        return logAndResponse(e, enableBusinessErrorLog);
     }
 
     /**
@@ -161,13 +155,14 @@ public class CommonExceptionHandler {
      * @return 响应结果
      */
     private Result logAndResponse(Exception e, boolean isSaveErrorLog) {
-        if (isSaveErrorLog) {
+        boolean isSpecialBusinessException = isSpecialBusinessException(e);
+        if (isSaveErrorLog && !isSpecialBusinessException) {
             // 异步保存错误日志
             logErrorService.saveAsync(e, HttpContextUtil.getHttpServletRequest());
         }
 
         String msg = e.getMessage();
-        if (isLimitSuccessException(e) && !logExceptionWhenSuccess) {
+        if (isSpecialBusinessException) {
             // 不记录异常堆栈信息
             LOGGER.error(msg);
         } else {
@@ -177,16 +172,30 @@ public class CommonExceptionHandler {
     }
 
     /**
-     * 是否是限流成功时抛出的BusinessException
+     * 是否是特殊指定的BusinessException
      *
      * @param e {@link Exception}
-     * @return 是否是限流成功时抛出的BusinessException，true：是 false：不是
+     * @return 是否是特殊指定的BusinessException，true：是 false：不是
+     * @see RateLimiterAspect#before(JoinPoint)
+     * @see ContentTypeInterceptor#preHandle(HttpServletRequest, HttpServletResponse, Object)
+     * @see SqlInjectionInterceptor#preHandle(HttpServletRequest, HttpServletResponse, Object)
      */
-    private boolean isLimitSuccessException(Exception e) {
-        if (e instanceof BusinessException &&
-                ("服务器繁忙，请稍后再试~".equals(e.getMessage())
-                        || "Server busy, please try again later ~".equals(e.getMessage()))) {
-            return true;
+    private boolean isSpecialBusinessException(Exception e) {
+        if (e instanceof BusinessException) {
+            String msg = e.getMessage();
+            Locale locale = LocaleUtil.getLocalePriority();
+            // 限流成功时抛出的异常
+            if (msg.equals(LocaleUtil.getI18nMessage(locale, ErrorCode.SERVER_BUSY))) {
+                return true;
+            }
+            // 请求体参数不支持时抛出的异常
+            if (msg.equals(LocaleUtil.getI18nMessage(locale, ErrorCode.UNSUPPORTED_CONTENT_TYPE))) {
+                return true;
+            }
+            // Sql注入过滤时抛出的异常
+            if (msg.equals(LocaleUtil.getI18nMessage(locale, ErrorCode.INVALID_SYMBOL))) {
+                return true;
+            }
         }
         return false;
     }

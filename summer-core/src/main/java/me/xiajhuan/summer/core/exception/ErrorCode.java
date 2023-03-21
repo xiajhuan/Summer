@@ -41,29 +41,34 @@ public interface ErrorCode {
     //*******************custom********************
 
     /**
+     * 不支持的参数类型
+     */
+    int UNSUPPORTED_CONTENT_TYPE = 1000;
+
+    /**
      * 操作失败
      */
-    int OPERATION_FAILURE = 1000;
+    int OPERATION_FAILURE = 1001;
 
     /**
      * 服务器繁忙，请稍后再试~
      */
-    int SERVER_BUSY = 1001;
+    int SERVER_BUSY = 1002;
 
     /**
      * 文件下载失败
      */
-    int FILE_DOWNLOAD_FAILURE = 1002;
+    int FILE_DOWNLOAD_FAILURE = 1003;
 
     /**
      * Excel模板下载失败
      */
-    int EXCEL_TEMPLATE_DOWNLOAD_FAILURE = 1003;
+    int EXCEL_TEMPLATE_DOWNLOAD_FAILURE = 1004;
 
     /**
      * Excel导出失败
      */
-    int EXCEL_EXPORT_FAILURE = 1004;
+    int EXCEL_EXPORT_FAILURE = 1005;
 
     //*******************common********************
 

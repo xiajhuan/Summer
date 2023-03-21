@@ -80,7 +80,19 @@ public class LocaleUtil {
      * @return 国际化消息
      */
     public static String getI18nMessage(int code, String... params) {
-        return messageSource.getMessage(String.valueOf(code), params, getLocalePriority());
+        return getI18nMessage(getLocalePriority(), code, params);
+    }
+
+    /**
+     * 获取国际化消息
+     *
+     * @param locale {@link Locale}
+     * @param code   错误编码 {@link ErrorCode}
+     * @param params 消息填充参数
+     * @return 国际化消息
+     */
+    public static String getI18nMessage(Locale locale, int code, String... params) {
+        return messageSource.getMessage(String.valueOf(code), params, locale);
     }
 
     /**
