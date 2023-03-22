@@ -15,6 +15,7 @@ package me.xiajhuan.summer.core.config;
 import me.xiajhuan.summer.core.interceptor.ContentTypeInterceptor;
 import me.xiajhuan.summer.core.interceptor.SqlInjectionInterceptor;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -49,11 +50,11 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         // 注册请求体类型 拦截器
-        registry.addInterceptor(contentTypeInterceptor).order(Integer.MIN_VALUE)
+        registry.addInterceptor(contentTypeInterceptor).order(Ordered.HIGHEST_PRECEDENCE)
                 .addPathPatterns("/**").excludePathPatterns("/open/test/**");
 
         // 注册Sql注入 拦截器
-        registry.addInterceptor(sqlInjectionInterceptor).order(Integer.MIN_VALUE + 1)
+        registry.addInterceptor(sqlInjectionInterceptor).order(Ordered.LOWEST_PRECEDENCE - 1)
                 .addPathPatterns("/**").excludePathPatterns("/open/test/**");
     }
 

@@ -16,7 +16,6 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.exceptions.ExceptionUtil;
 import cn.hutool.core.map.MapUtil;
-import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
@@ -42,7 +41,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -136,12 +134,7 @@ public class LogErrorServiceImpl extends ServiceImpl<LogErrorMapper, LogErrorEnt
                 .requestMethod(request.getMethod()).build();
 
         // 请求参数
-        Map<String, String> params = null;
-        try {
-            params = HttpContextUtil.getParamMap(request);
-        } catch (IOException ioException) {
-            LOGGER.error(ioException, StrUtil.format("获取请求参数失败【{}】", ioException.getMessage()));
-        }
+        Map<String, String> params = HttpContextUtil.getParamMap(request);
         if (MapUtil.isNotEmpty(params)) {
             log.setRequestParams(JSONUtil.toJsonStr(params));
         }

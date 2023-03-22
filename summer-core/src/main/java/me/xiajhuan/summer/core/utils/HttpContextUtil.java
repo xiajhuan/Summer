@@ -19,7 +19,6 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import me.xiajhuan.summer.core.constant.ContentTypeConst;
 import me.xiajhuan.summer.core.constant.StrTemplateConst;
-import net.dreamlu.mica.core.utils.JsonUtil;
 import org.aspectj.lang.JoinPoint;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.context.request.RequestAttributes;
@@ -57,15 +56,13 @@ public class HttpContextUtil {
     }
 
     /**
-     * 获取请求参数 Map（Query/FORM-DATA/JSON）
+     * 获取请求参数 Map（Query/FORM-DATA）
      *
      * @param request {@link HttpServletRequest}
      * @return 请求参数 Map
-     * @throws IOException I/O异常
      * @see ContentTypeConst#FORM_DATA
-     * @see ContentTypeConst#JSON
      */
-    public static Map<String, String> getParamMap(HttpServletRequest request) throws IOException {
+    public static Map<String, String> getParamMap(HttpServletRequest request) {
         Map<String, String> params = MapUtil.newHashMap(true);
 
         // Query/FORM-DATA
@@ -75,15 +72,6 @@ public class HttpContextUtil {
             String value = request.getParameter(parameter);
             if (StrUtil.isNotBlank(value)) {
                 params.put(parameter, value);
-            }
-        }
-
-        String contentType = request.getContentType();
-        if (StrUtil.isNotBlank(contentType) && StrUtil.startWithIgnoreCase(contentType, ContentTypeConst.JSON)) {
-            // JSON
-            Map<String, String> jsonParam = JsonUtil.readMap(request.getInputStream(), String.class);
-            if (MapUtil.isNotEmpty(jsonParam)) {
-                jsonParam.forEach((k, v) -> params.put(k, v));
             }
         }
 
