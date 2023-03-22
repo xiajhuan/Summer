@@ -27,12 +27,11 @@ import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.Map;
 
 /**
  * Sql注入 拦截器<br>
- * note：目前仅支持 Query/FORM-DATA/JSON 参数的过滤
+ * note：仅支持Query/FORM-DATA参数值的过滤
  *
  * @author xiajhuan
  * @date 2023/3/21
@@ -65,14 +64,14 @@ public class SqlInjectionInterceptor implements HandlerInterceptor {
             String illegalKeyWord = setting.getByGroupWithLog("injection.illegal-key-word", "Sql");
             if (StrUtil.isBlank(illegalKeyWord)) {
                 // 没有配置时的默认关键字
-                illegalKeyWord = "SELECT,UPDATE,AND,OR,DELETE,INSERT,TRUNCATE,SUBSTR,DECLARE,MASTER,DROP,EXECUTE,UNION";
+                illegalKeyWord = "SELECT,UPDATE,AND,OR,DELETE,INSERT,TRUNCATE,SUBSTR,DECLARE,MASTER,DROP,EXECUTE,UNION,',\",;,\\";
             }
             illegalKeyWordArray = illegalKeyWord.split(StrPool.COMMA);
         }
     }
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws BusinessException, IOException {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws BusinessException {
         if (enable) {
             Map<String, String> paramMap = HttpContextUtil.getParamMap(request);
             if (MapUtil.isNotEmpty(paramMap)) {
@@ -90,11 +89,9 @@ public class SqlInjectionInterceptor implements HandlerInterceptor {
      */
     private void filter(Map<String, String> paramMap) throws BusinessException {
         for (String value : paramMap.values()) {
-            for (int i = 0; i < illegalKeyWordArray.length; i++) {
-                if (StrUtil.containsIgnoreCase(value, illegalKeyWordArray[i])) {
-                    // 参数值包含非法关键字
-                    throw BusinessException.of(ErrorCode.INVALID_SYMBOL);
-                }
+            if (StrUtil.containsAnyIgnoreCase(value, illegalKeyWordArray)) {
+                // 参数值包含非法字符
+                throw BusinessException.of(ErrorCode.INVALID_SYMBOL);
             }
         }
     }

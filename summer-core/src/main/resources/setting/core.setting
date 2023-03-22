@@ -67,8 +67,8 @@ exclude-and-replace = INSERT:log_operation,INSERT:log_error,INSERT:log_login
 
 # 是否开启Sql注入过滤，值：true/false
 enable-injection-filter = true
-# Sql注入非法关键字（不区分大小写），以“,”分隔
-injection.illegal-key-word = SELECT,UPDATE,AND,OR,DELETE,INSERT,TRUNCATE,SUBSTR,DECLARE,MASTER,DROP,EXECUTE,UNION
+# 非法关键字（不区分大小写），以“,”分隔
+injection.illegal-key-word = SELECT,UPDATE,AND,OR,DELETE,INSERT,TRUNCATE,SUBSTR,DECLARE,MASTER,DROP,EXECUTE,UNION,',",;,\
 
 
 [Locale]

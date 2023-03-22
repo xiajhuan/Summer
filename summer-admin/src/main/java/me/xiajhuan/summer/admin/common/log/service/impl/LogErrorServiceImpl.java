@@ -17,8 +17,6 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.exceptions.ExceptionUtil;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.json.JSONUtil;
-import cn.hutool.log.Log;
-import cn.hutool.log.LogFactory;
 import cn.hutool.setting.Setting;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -55,8 +53,6 @@ import java.util.stream.Collectors;
 @Service
 @DS(DataSourceConst.COMMON)
 public class LogErrorServiceImpl extends ServiceImpl<LogErrorMapper, LogErrorEntity> implements LogErrorService, MpCommonOperation<LogErrorDto, LogErrorEntity> {
-
-    private static final Log LOGGER = LogFactory.get();
 
     @Resource(name = SettingBeanConst.COMMON)
     private Setting setting;
@@ -133,7 +129,7 @@ public class LogErrorServiceImpl extends ServiceImpl<LogErrorMapper, LogErrorEnt
                 .requestUri(request.getRequestURI())
                 .requestMethod(request.getMethod()).build();
 
-        // 请求参数
+        // 请求参数，note：这里只能获取Query/FORM-DATA参数
         Map<String, String> params = HttpContextUtil.getParamMap(request);
         if (MapUtil.isNotEmpty(params)) {
             log.setRequestParams(JSONUtil.toJsonStr(params));
