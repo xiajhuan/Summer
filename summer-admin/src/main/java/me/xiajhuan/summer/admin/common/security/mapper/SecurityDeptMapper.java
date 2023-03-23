@@ -12,7 +12,6 @@
 
 package me.xiajhuan.summer.admin.common.security.mapper;
 
-import com.baomidou.mybatisplus.annotation.InterceptorIgnore;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import me.xiajhuan.summer.admin.common.security.entity.SecurityDeptEntity;
 import org.apache.ibatis.annotations.Param;
@@ -26,7 +25,6 @@ import java.util.Set;
  * @author xiajhuan
  * @date 2023/3/7
  */
-@InterceptorIgnore
 public interface SecurityDeptMapper extends BaseMapper<SecurityDeptEntity> {
 
     /**

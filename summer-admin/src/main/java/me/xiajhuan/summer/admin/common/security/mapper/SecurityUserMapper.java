@@ -12,7 +12,6 @@
 
 package me.xiajhuan.summer.admin.common.security.mapper;
 
-import com.baomidou.mybatisplus.annotation.InterceptorIgnore;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import me.xiajhuan.summer.admin.common.security.entity.SecurityUserEntity;
 
@@ -22,6 +21,5 @@ import me.xiajhuan.summer.admin.common.security.entity.SecurityUserEntity;
  * @author xiajhuan
  * @date 2023/2/28
  */
-@InterceptorIgnore
 public interface SecurityUserMapper extends BaseMapper<SecurityUserEntity> {
 }
