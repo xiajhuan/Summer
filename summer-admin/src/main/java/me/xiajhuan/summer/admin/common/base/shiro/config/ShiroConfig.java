@@ -10,11 +10,13 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.admin.common.base.shiro;
+package me.xiajhuan.summer.admin.common.base.shiro.config;
 
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.setting.Setting;
+import me.xiajhuan.summer.admin.common.base.shiro.oauth2.Oauth2Filter;
+import me.xiajhuan.summer.admin.common.base.shiro.oauth2.Oauth2Realm;
 import me.xiajhuan.summer.core.constant.SettingBeanConst;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.session.mgt.SessionManager;
@@ -59,8 +61,10 @@ public class ShiroConfig {
     @Bean
     public DefaultWebSessionManager sessionManager() {
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
+        // 不使用JSESSIONID
+        sessionManager.setSessionIdCookieEnabled(false);
+        // 不开启Session定时校验
         sessionManager.setSessionValidationSchedulerEnabled(false);
-        sessionManager.setSessionIdUrlRewritingEnabled(false);
         return sessionManager;
     }
 

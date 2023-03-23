@@ -13,7 +13,7 @@
 package me.xiajhuan.summer.admin.common.base.config;
 
 import cn.hutool.setting.Setting;
-import me.xiajhuan.summer.admin.common.base.shiro.ShiroConfig;
+import me.xiajhuan.summer.admin.common.base.shiro.config.ShiroConfig;
 import org.apache.shiro.mgt.SecurityManager;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;

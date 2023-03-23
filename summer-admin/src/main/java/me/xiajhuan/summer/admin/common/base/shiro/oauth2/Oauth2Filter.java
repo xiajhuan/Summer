@@ -10,7 +10,7 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.admin.common.base.shiro;
+package me.xiajhuan.summer.admin.common.base.shiro.oauth2;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.log.Log;
