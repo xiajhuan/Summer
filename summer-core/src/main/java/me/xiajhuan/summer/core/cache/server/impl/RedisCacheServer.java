@@ -205,29 +205,29 @@ public class RedisCacheServer implements CacheServer {
     //*******************Value-List********************
 
     @Override
-    public void setList(String key, List<Object> list) {
+    public void setList(String key, List<String> list) {
         redisTemplate.opsForList().rightPushAll(key, list);
     }
 
     @Override
-    public void setListRPush(String key, Object element) {
+    public void setListRPush(String key, String element) {
         redisTemplate.opsForList().rightPush(key, element);
     }
 
     @Override
-    public void setListTtl(String key, List<Object> list, long ttl) {
+    public void setListTtl(String key, List<String> list, long ttl) {
         setList(key, list);
         expire(key, ttl);
     }
 
     @Override
-    public void setListRPushTtl(String key, Object element, long ttl) {
+    public void setListRPushTtl(String key, String element, long ttl) {
         setListRPush(key, element);
         expire(key, ttl);
     }
 
     @Override
-    public List<Object> getList(String key) {
+    public List<String> getList(String key) {
         if (hasKeyList(key)) {
             return redisTemplate.opsForList().range(key, 0, -1);
         }
@@ -235,9 +235,9 @@ public class RedisCacheServer implements CacheServer {
     }
 
     @Override
-    public Object getListElement(String key, int index) {
+    public String getListElement(String key, int index) {
         if (hasKeyList(key) && index >= 0 && index < redisTemplate.opsForList().size(key)) {
-            return redisTemplate.opsForList().index(key, index);
+            return String.valueOf(redisTemplate.opsForList().index(key, index));
         }
         return null;
     }

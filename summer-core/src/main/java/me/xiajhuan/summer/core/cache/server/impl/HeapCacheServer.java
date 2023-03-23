@@ -149,7 +149,7 @@ public class HeapCacheServer implements CacheServer {
     /**
      * List缓存
      */
-    private static AbstractCache<String, List<Object>> cacheList;
+    private static AbstractCache<String, List<String>> cacheList;
 
     /**
      * 初始化缓存
@@ -390,17 +390,17 @@ public class HeapCacheServer implements CacheServer {
     //*******************Value-List********************
 
     @Override
-    public void setList(String key, List<Object> list) {
+    public void setList(String key, List<String> list) {
         setListTtl(key, list, -1);
     }
 
     @Override
-    public void setListRPush(String key, Object element) {
+    public void setListRPush(String key, String element) {
         setListRPushTtl(key, element, -1);
     }
 
     @Override
-    public void setListTtl(String key, List<Object> list, long ttl) {
+    public void setListTtl(String key, List<String> list, long ttl) {
         initCache(CacheConst.VALUE_LIST);
 
         if (ttl == -1) {
@@ -411,10 +411,10 @@ public class HeapCacheServer implements CacheServer {
     }
 
     @Override
-    public void setListRPushTtl(String key, Object element, long ttl) {
+    public void setListRPushTtl(String key, String element, long ttl) {
         initCache(CacheConst.VALUE_LIST);
 
-        final List<Object> elementList;
+        final List<String> elementList;
         if (hasKeyList(key)) {
             elementList = getList(key);
         } else {
@@ -429,7 +429,7 @@ public class HeapCacheServer implements CacheServer {
     }
 
     @Override
-    public List<Object> getList(String key) {
+    public List<String> getList(String key) {
         if (hasKeyList(key)) {
             return cacheList.get(key);
         }
@@ -437,9 +437,9 @@ public class HeapCacheServer implements CacheServer {
     }
 
     @Override
-    public Object getListElement(String key, int index) {
+    public String getListElement(String key, int index) {
         if (hasKeyList(key) && index >= 0) {
-            List<Object> elementList = getList(key);
+            List<String> elementList = getList(key);
             if (elementList != null && index < elementList.size()) {
                 return elementList.get(index);
             }

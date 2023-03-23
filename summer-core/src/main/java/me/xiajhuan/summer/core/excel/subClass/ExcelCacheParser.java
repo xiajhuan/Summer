@@ -12,6 +12,7 @@
 
 package me.xiajhuan.summer.core.excel.subClass;
 
+import cn.hutool.json.JSONUtil;
 import cn.hutool.setting.Setting;
 import me.xiajhuan.summer.core.cache.factory.CacheServerFactory;
 import me.xiajhuan.summer.core.cache.key.CoreCacheKey;
@@ -21,6 +22,7 @@ import me.xiajhuan.summer.core.excel.AbstractExcelParser;
 import me.xiajhuan.summer.core.utils.SpringContextUtil;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Excel数据解析（缓存）
@@ -74,8 +76,9 @@ public class ExcelCacheParser<T, E> extends AbstractExcelParser<T, E> {
     protected void handleParsedData() {
         LOGGER.info("解析到【{}】条Excel数据，开始缓存！", entityList.size());
 
+        List<String> excelList = entityList.stream().map(JSONUtil::toJsonStr).collect(Collectors.toList());
         CacheServerFactory.getInstance().getCacheServer()
-                .setListTtl(CoreCacheKey.excelData(currentEntityClass.getSimpleName()), (List<Object>) entityList, CACHE_TTL);
+                .setListTtl(CoreCacheKey.excelData(currentEntityClass.getSimpleName()), excelList, CACHE_TTL);
 
         LOGGER.info("缓存成功！");
     }

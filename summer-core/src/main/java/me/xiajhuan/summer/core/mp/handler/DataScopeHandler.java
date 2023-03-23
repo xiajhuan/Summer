@@ -127,7 +127,7 @@ public class DataScopeHandler implements MultiDataPermissionHandler {
         final Expression filterCondition;
         switch (loginUser.getDataScope()) {
             case 1:
-                filterCondition = getFilterConditionByDeptIds(prefix, loginUser.getDeptIdSet());
+                filterCondition = getFilterConditionByDeptIds(prefix, loginUser.getDeptIdRoleBasedSet());
                 break;
             case 2:
                 filterCondition = getFilterConditionByDeptIds(prefix, CollUtil.newHashSet(loginUser.getDeptId()));

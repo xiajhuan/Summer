@@ -20,13 +20,27 @@ package me.xiajhuan.summer.core.constant;
  */
 public class SecurityConst {
 
+    //*******************内部接口********************
+
     /**
-     * 携带accessToken的请求头名称（内部接口）
+     * 携带accessToken的请求头名称
      */
     public static final String TOKEN_HEADER = "AccessToken";
 
     /**
-     * 携带签名的请求头名称（开放接口）
+     * loginInfo-accessToken
+     */
+    public static final String ACCESS_TOKEN = "accessToken";
+
+    /**
+     * loginInfo-登录用户信息
+     */
+    public static final String LOGIN_USER = "loginUser";
+
+    //*******************开放接口********************
+
+    /**
+     * 携带签名的请求头名称
      */
     public static final String SIGNATURE_HEADER = "Signature";
 

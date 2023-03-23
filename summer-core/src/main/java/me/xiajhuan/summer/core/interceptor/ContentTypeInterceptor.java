@@ -84,7 +84,7 @@ public class ContentTypeInterceptor implements HandlerInterceptor {
      */
     private void initInternal(String contentType) {
         if (StrUtil.containsIgnoreCase(contentType, "FORM-DATA")) {
-            contentTypeSet.addAll(ListUtil.toList(ContentTypeConst.FORM_DATA));
+            contentTypeSet.addAll(ListUtil.of(ContentTypeConst.FORM_DATA));
         }
         if (StrUtil.containsIgnoreCase(contentType, "JSON")) {
             contentTypeSet.add(ContentTypeConst.JSON);

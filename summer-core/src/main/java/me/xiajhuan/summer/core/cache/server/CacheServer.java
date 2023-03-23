@@ -236,7 +236,7 @@ public interface CacheServer {
      * @param key  Key
      * @param list Value（List）
      */
-    void setList(String key, List<Object> list);
+    void setList(String key, List<String> list);
 
     /**
      * 设值（Value（List-Element）->rPush（往列表末尾添加））
@@ -244,7 +244,7 @@ public interface CacheServer {
      * @param key     Key
      * @param element Value（List-Element）
      */
-    void setListRPush(String key, Object element);
+    void setListRPush(String key, String element);
 
     /**
      * 设值（List）,有过期时间
@@ -253,7 +253,7 @@ public interface CacheServer {
      * @param list Value（List）
      * @param ttl  过期时间（ms）
      */
-    void setListTtl(String key, List<Object> list, long ttl);
+    void setListTtl(String key, List<String> list, long ttl);
 
     /**
      * 设值（Value（List-Element）->rPush（往列表末尾添加））,有过期时间
@@ -262,7 +262,7 @@ public interface CacheServer {
      * @param element Value（List-Element）
      * @param ttl     过期时间（ms）
      */
-    void setListRPushTtl(String key, Object element, long ttl);
+    void setListRPushTtl(String key, String element, long ttl);
 
     /**
      * 获取值（List）
@@ -270,7 +270,7 @@ public interface CacheServer {
      * @param key Key
      * @return Value（List）
      */
-    List<Object> getList(String key);
+    List<String> getList(String key);
 
     /**
      * 获取值Value（List-Element）（根据索引下标）
@@ -279,6 +279,6 @@ public interface CacheServer {
      * @param index 索引下标
      * @return Value（List-Element）
      */
-    Object getListElement(String key, int index);
+    String getListElement(String key, int index);
 
 }
