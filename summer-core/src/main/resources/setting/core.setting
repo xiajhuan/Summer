@@ -37,7 +37,7 @@ content-type-support = FORM-DATA,JSON
 [Mp]
 # 数据权限忽略的表名配置，以“,”分隔
 # 支持通配符：“*”（任意匹配）和“?”（单值匹配）
-data-scope.ignore = log_*,*_token,security_role_*
+data-scope.ignore = log_*,security_*
 
 # 乐观锁控制更新失败时的重试次数
 optimistic-lock.retry-times = 20

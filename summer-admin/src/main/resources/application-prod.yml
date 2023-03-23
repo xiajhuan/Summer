@@ -52,6 +52,7 @@ server:
       # 最小工作线程
       min-spare: 30
   # 缓存类型，值：REDIS/HEAP
+  # note：HEAP（堆内缓存）在服务多节点部署时数据无法共享，请只在单节点部署时使用
   cache:
     type: REDIS
 
