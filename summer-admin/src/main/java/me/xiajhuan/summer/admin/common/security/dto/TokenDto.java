@@ -17,13 +17,13 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * 用户Token Dto
+ * Token Dto
  *
  * @author xiajhuan
  * @date 2023/3/4
  */
 @Data
-public class SecurityUserTokenDto implements Serializable {
+public class TokenDto implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

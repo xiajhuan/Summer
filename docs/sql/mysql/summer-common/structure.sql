@@ -250,25 +250,4 @@ CREATE TABLE `security_user`
   COLLATE = utf8mb4_general_ci COMMENT = '用户'
   ROW_FORMAT = Dynamic;
 
--- ----------------------------
--- Table structure for security_user_token
--- ----------------------------
-DROP TABLE IF EXISTS `security_user_token`;
-CREATE TABLE `security_user_token`
-(
-    `id`           bigint(20)                                                   NOT NULL COMMENT '主键ID',
-    `create_by`    varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '创建者',
-    `create_time`  datetime(0)                                                  NULL DEFAULT NULL COMMENT '创建时间',
-    `update_time`  datetime(0)                                                  NULL DEFAULT NULL COMMENT '更新时间',
-    `user_id`      bigint(20)                                                   NULL DEFAULT NULL COMMENT '用户ID',
-    `access_token` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'accessToken',
-    `expire_time`  datetime(0)                                                  NULL DEFAULT NULL COMMENT '过期时间',
-    PRIMARY KEY (`id`) USING BTREE,
-    UNIQUE INDEX `uk_user_id` (`user_id`) USING BTREE,
-    UNIQUE INDEX `uk_access_token` (`access_token`) USING BTREE
-) ENGINE = InnoDB
-  CHARACTER SET = utf8mb4
-  COLLATE = utf8mb4_general_ci COMMENT = '用户Token'
-  ROW_FORMAT = Dynamic;
-
 SET FOREIGN_KEY_CHECKS = 1;

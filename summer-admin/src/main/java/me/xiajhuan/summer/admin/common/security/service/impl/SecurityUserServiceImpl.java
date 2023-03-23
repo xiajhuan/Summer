@@ -83,8 +83,9 @@ public class SecurityUserServiceImpl extends ServiceImpl<SecurityUserMapper, Sec
     @Override
     public SecurityUserDto getByUsername(String username) {
         LambdaQueryWrapper<SecurityUserEntity> queryWrapper = Wrappers.lambdaQuery();
-        queryWrapper.select(SecurityUserEntity::getId, SecurityUserEntity::getUsername, SecurityUserEntity::getPassword,
-                SecurityUserEntity::getStatus);
+        queryWrapper.select(SecurityUserEntity::getId, SecurityUserEntity::getDeptId, SecurityUserEntity::getUsername,
+                SecurityUserEntity::getPassword, SecurityUserEntity::getRealName, SecurityUserEntity::getStatus,
+                SecurityUserEntity::getUserType, SecurityUserEntity::getDataScope);
         queryWrapper.eq(SecurityUserEntity::getUsername, username);
 
         return ConvertUtil.convert(getOne(queryWrapper), SecurityUserDto.class);

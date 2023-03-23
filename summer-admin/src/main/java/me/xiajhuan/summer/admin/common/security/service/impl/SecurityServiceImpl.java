@@ -15,30 +15,33 @@ package me.xiajhuan.summer.admin.common.security.service.impl;
 import cn.hutool.captcha.AbstractCaptcha;
 import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.collection.ListUtil;
+import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.setting.Setting;
 import com.baomidou.dynamic.datasource.annotation.DS;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import me.xiajhuan.summer.admin.common.security.cache.SecurityCacheKey;
+import me.xiajhuan.summer.admin.common.security.dto.SecurityUserDto;
+import me.xiajhuan.summer.admin.common.security.dto.TokenDto;
 import me.xiajhuan.summer.admin.common.security.service.SecurityDeptService;
 import me.xiajhuan.summer.core.cache.factory.CacheServerFactory;
 import me.xiajhuan.summer.core.cache.server.CacheServer;
-import me.xiajhuan.summer.core.constant.DataSourceConst;
-import me.xiajhuan.summer.core.constant.SettingBeanConst;
-import me.xiajhuan.summer.core.constant.TimeUnitConst;
+import me.xiajhuan.summer.core.constant.*;
 import me.xiajhuan.summer.core.enums.UserTypeEnum;
-import me.xiajhuan.summer.admin.common.security.entity.SecurityUserEntity;
-import me.xiajhuan.summer.admin.common.security.entity.SecurityUserTokenEntity;
 import me.xiajhuan.summer.admin.common.security.mapper.*;
 import me.xiajhuan.summer.admin.common.security.service.SecurityService;
 import me.xiajhuan.summer.core.data.LoginUser;
 import me.xiajhuan.summer.core.enums.CaptchaTypeEnum;
+import me.xiajhuan.summer.core.utils.ConvertUtil;
+import me.xiajhuan.summer.core.utils.SecurityUtil;
+
+import static me.xiajhuan.summer.admin.common.security.cache.SecurityCacheKey.*;
+
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -59,63 +62,73 @@ public class SecurityServiceImpl implements SecurityService {
     private SecurityMenuMapper securityMenuMapper;
 
     @Resource
-    private SecurityUserTokenMapper securityUserTokenMapper;
-
-    @Resource
-    private SecurityUserMapper securityUserMapper;
-
-    @Resource
     private SecurityRoleDeptMapper securityRoleDeptMapper;
 
     @Resource
     private SecurityDeptService securityDeptService;
 
     @Override
-    public Set<String> getPermissions(LoginUser loginUser) {
-        // 用户权限集合
-        final Set<String> permissions;
-        if (loginUser.getUserType() == UserTypeEnum.SUPER_ADMIN.getValue()) {
-            // 超级管理员
-            permissions = securityMenuMapper.getPermissionsAll();
+    public TokenDto generateTokenAndCache(SecurityUserDto dto) {
+        CacheServer cacheServer = CacheServerFactory.getInstance().getCacheServer();
+
+        // 生成accessToken
+        String accessToken = SecurityUtil.generateToken();
+        // Token过期时间（h）
+        int tokenExpire = setting.getInt("token-expire", "Security", 12);
+        // 缓存过期时间（ms）
+        long cacheTtl = tokenExpire * TimeUnitConst.HOUR;
+        // 缓存用户ID
+        String userIdStr = String.valueOf(dto.getId());
+        cacheServer.setStringTtl(userId(accessToken), userIdStr, cacheTtl);
+
+        // 获取登录信息
+        String loginInfoKey = loginInfo(userIdStr);
+        Map<String, Object> loginInfo = cacheServer.getHash(loginInfoKey);
+        if (loginInfo == null) {
+            // 未登录或登录失效
+            loginInfo = MapUtil.newHashMap(2, true);
         } else {
-            // 普通用户
-            permissions = securityMenuMapper.getPermissions(loginUser.getId());
+            // 让原来的accessToken失效
+            cacheServer.delete(userId(String.valueOf(loginInfo.get(SecurityConst.ACCESS_TOKEN))));
         }
+        // 缓存登录信息（覆盖刷新）
+        loginInfo.put(SecurityConst.ACCESS_TOKEN, accessToken);
+        LoginUser loginUser = getLoginUser(dto);
+        loginInfo.put(SecurityConst.LOGIN_USER, loginUser);
+        cacheServer.setHashTtl(loginInfoKey, loginInfo, cacheTtl);
 
-        if (CollUtil.isNotEmpty(permissions)) {
-            return permissions.stream().filter(p -> !StrUtil.isBlankOrUndefined(p))
-                    .collect(Collectors.toSet());
-        } else {
-            return CollUtil.newHashSet();
+        // 缓存用户权限集合（覆盖刷新）
+        Set<String> permissions = getPermissions(loginUser);
+        if (permissions == null) {
+            permissions = CollUtil.newHashSet(StrUtil.EMPTY);
         }
+        cacheServer.setListTtl(permissions(userIdStr),
+                ListUtil.toList(permissions), cacheTtl);
+
+        TokenDto tokenDto = new TokenDto();
+        tokenDto.setAccessToken(accessToken);
+        tokenDto.setExpireTime(tokenExpire);
+
+        return tokenDto;
     }
 
     @Override
-    public SecurityUserTokenEntity getByAccessToken(String accessToken) {
-        LambdaQueryWrapper<SecurityUserTokenEntity> queryWrapper = Wrappers.lambdaQuery();
-        queryWrapper.select(SecurityUserTokenEntity::getUserId, SecurityUserTokenEntity::getExpireTime);
-        queryWrapper.eq(SecurityUserTokenEntity::getAccessToken, accessToken);
+    public void logout(Long userId) {
+        CacheServer cacheServer = CacheServerFactory.getInstance().getCacheServer();
 
-        return securityUserTokenMapper.selectOne(queryWrapper);
-    }
+        String userIdStr = String.valueOf(userId);
+        String loginInfoKey = loginInfo(userIdStr);
+        // 获取accessToken
+        String accessToken = String.valueOf(cacheServer.getHash(loginInfoKey, SecurityConst.ACCESS_TOKEN));
 
-    @Override
-    public SecurityUserEntity getUserById(Long userId) {
-        return securityUserMapper.selectById(userId);
-    }
+        // 删除用户ID
+        cacheServer.delete(userId(accessToken));
 
-    @Override
-    public Set<Long> getDeptIdSet(Long userId) {
-        return securityRoleDeptMapper.getDeptIdSet(userId);
-    }
+        // 删除登录信息
+        cacheServer.delete(loginInfoKey, CacheConst.VALUE_HASH);
 
-    @Override
-    public Set<Long> getDeptAndChildIdSet(Long deptId) {
-        // 获取子部门ID集合
-        Set<Long> deptIdSet = securityDeptService.getChildIdSet(deptId);
-        deptIdSet.add(deptId);
-
-        return deptIdSet;
+        // 删除用户权限集合
+        cacheServer.delete(permissions(userIdStr), CacheConst.VALUE_LIST);
     }
 
     @Override
@@ -132,7 +145,7 @@ public class SecurityServiceImpl implements SecurityService {
 
         // 缓存验证码
         CacheServerFactory.getInstance().getCacheServer()
-                .setStringTtl(SecurityCacheKey.captchaCode(uuid), captcha.getCode(),
+                .setStringTtl(captchaCode(uuid), captcha.getCode(),
                         setting.getInt("captcha.cache-ttl", "Security", 5) * TimeUnitConst.MINUTE);
     }
 
@@ -141,13 +154,78 @@ public class SecurityServiceImpl implements SecurityService {
         CacheServer cacheServer = CacheServerFactory.getInstance().getCacheServer();
 
         // 获取缓存的验证码
-        String captchaKey = SecurityCacheKey.captchaCode(uuid);
+        String captchaKey = captchaCode(uuid);
         String captchaCode = cacheServer.getString(captchaKey);
         if (captchaCode != null) {
             cacheServer.delete(captchaKey);
         }
         // 校验
         return captcha.equalsIgnoreCase(captchaCode);
+    }
+
+    /**
+     * 获取登录用户信息
+     *
+     * @param dto 用户Dto
+     * @return 登录用户信息
+     */
+    private LoginUser getLoginUser(SecurityUserDto dto) {
+        LoginUser loginUser = ConvertUtil.convert(dto, LoginUser.class);
+
+        loginUser.setDeptIdRoleBasedSet(getDeptIdRoleBasedSet(loginUser.getId()));
+
+        loginUser.setDeptAndChildIdSet(getDeptAndChildIdSet(loginUser.getDeptId()));
+
+        return loginUser;
+    }
+
+    /**
+     * 获取部门ID集合（这里指用户所有角色关联的所有部门ID）
+     *
+     * @param userId 用户ID
+     * @return 部门ID集合
+     */
+    private Set<Long> getDeptIdRoleBasedSet(Long userId) {
+        return securityRoleDeptMapper.getDeptIdRoleBasedSet(userId);
+    }
+
+    /**
+     * 获取本部门及本部门下子部门ID集合
+     *
+     * @param deptId 所属部门ID
+     * @return 本部门及本部门下子部门ID集合
+     */
+    private Set<Long> getDeptAndChildIdSet(Long deptId) {
+        // 获取子部门ID集合
+        Set<Long> deptIdSet = securityDeptService.getChildIdSet(deptId);
+        deptIdSet.add(deptId);
+
+        return deptIdSet;
+    }
+
+    /**
+     * 获取用户权限集合
+     *
+     * @param loginUser 登录用户信息
+     * @return 用户权限集合
+     */
+    private Set<String> getPermissions(LoginUser loginUser) {
+        // 用户权限集合
+        final Set<String> permissions;
+        if (loginUser.getUserType() == UserTypeEnum.SUPER_ADMIN.getValue()) {
+            // 超级管理员
+            permissions = securityMenuMapper.getPermissionsAll();
+        } else {
+            // 普通用户
+            permissions = securityMenuMapper.getPermissions(loginUser.getId());
+        }
+
+        if (CollUtil.isNotEmpty(permissions)) {
+            return permissions.stream().filter(p -> !StrUtil.isBlankOrUndefined(p))
+                    .collect(Collectors.toSet());
+        } else {
+            return null;
+        }
     }
 
     /**

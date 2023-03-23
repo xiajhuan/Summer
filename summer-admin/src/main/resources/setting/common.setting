@@ -11,12 +11,6 @@ anon-uris = /open/api/**,/open/test/**
 # accessToken过期时间（h）
 token-expire = 12
 
-# 账号登录模式，值：EXCLUSIVE/MULTIPLE
-# EXCLUSIVE：同一账号只能同时登录一次（后登录会让前面登录的自动下线） MULTIPLE：同一账号可以同时登录多次
-login.mode = EXCLUSIVE
-# 同一账号可以同时登录的次数，只有login.mode = MULTIPLE 时会生效
-login.multiple-num = 10 
-
 # 图形验证码背景干扰类型，值：Line（线段干扰）/Circle（圆圈干扰）/Shear（扭曲干扰）
 captcha.type = Line
 # 干扰线个数，note：只有captcha.type = Line 时会生效

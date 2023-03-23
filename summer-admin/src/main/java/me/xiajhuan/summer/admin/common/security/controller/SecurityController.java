@@ -21,12 +21,11 @@ import me.xiajhuan.summer.core.exception.ErrorCode;
 import me.xiajhuan.summer.admin.common.log.entity.LogLoginEntity;
 import me.xiajhuan.summer.admin.common.log.service.LogLoginService;
 import me.xiajhuan.summer.admin.common.security.dto.SecurityUserDto;
-import me.xiajhuan.summer.admin.common.security.dto.SecurityUserTokenDto;
+import me.xiajhuan.summer.admin.common.security.dto.TokenDto;
 import me.xiajhuan.summer.admin.common.security.dto.LoginDto;
 import me.xiajhuan.summer.core.data.LoginUser;
 import me.xiajhuan.summer.admin.common.security.service.SecurityService;
 import me.xiajhuan.summer.admin.common.security.service.SecurityUserService;
-import me.xiajhuan.summer.admin.common.security.service.SecurityUserTokenService;
 import me.xiajhuan.summer.core.utils.AssertUtil;
 import me.xiajhuan.summer.core.utils.HttpContextUtil;
 import me.xiajhuan.summer.core.utils.IpUtil;
@@ -57,9 +56,6 @@ public class SecurityController {
     private SecurityUserService securityUserService;
 
     @Resource
-    private SecurityUserTokenService securityUserTokenService;
-
-    @Resource
     private LogLoginService logLoginService;
 
     /**
@@ -84,7 +80,7 @@ public class SecurityController {
      * @return 响应结果
      */
     @PostMapping("login")
-    public Result<SecurityUserTokenDto> login(@Validated(DefaultGroup.class) LoginDto loginDto, HttpServletRequest request) {
+    public Result<TokenDto> login(@Validated(DefaultGroup.class) LoginDto loginDto, HttpServletRequest request) {
         // 校验验证码
         if (!mainService.validateCaptcha(loginDto.getUuid(), loginDto.getCaptcha())) {
             return Result.ofFail(ErrorCode.CAPTCHA_ERROR);
@@ -115,8 +111,8 @@ public class SecurityController {
         // 登录成功
         saveLog(securityUserDto.getUsername(), LoginOperationEnum.LOGIN, LoginStatusEnum.SUCCESS, request);
 
-        // 生成用户Token
-        return Result.ofSuccess(securityUserTokenService.generateUserToken(securityUserDto.getId()));
+        // 生成Token并缓存
+        return Result.ofSuccess(mainService.generateTokenAndCache(securityUserDto));
     }
 
     /**
@@ -129,7 +125,7 @@ public class SecurityController {
     public Result logout(HttpServletRequest request) {
         LoginUser loginUser = SecurityUtil.getLoginUser();
 
-        securityUserTokenService.logout(loginUser.getId());
+        mainService.logout(loginUser.getId());
 
         saveLog(loginUser.getUsername(), LoginOperationEnum.LOGOUT, LoginStatusEnum.SUCCESS, request);
 

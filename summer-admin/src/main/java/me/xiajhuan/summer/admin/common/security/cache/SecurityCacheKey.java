@@ -32,4 +32,34 @@ public class SecurityCacheKey {
         return StrUtil.format("CAPTCHA_CODE_{}", keyParam);
     }
 
+    /**
+     * 用户ID Key
+     *
+     * @param keyParam 填充参数
+     * @return 用户ID Key
+     */
+    public static String userId(String keyParam) {
+        return StrUtil.format("USER_ID_{}", keyParam);
+    }
+
+    /**
+     * 登录信息 Key
+     *
+     * @param keyParam 填充参数
+     * @return 登录信息 Key
+     */
+    public static String loginInfo(String keyParam) {
+        return StrUtil.format("LOGIN_INFO_{}", keyParam);
+    }
+
+    /**
+     * 用户权限集合 Key
+     *
+     * @param keyParam 填充参数
+     * @return 用户权限集合 Key
+     */
+    public static String permissions(String keyParam) {
+        return StrUtil.format("PERMISSIONS_{}", keyParam);
+    }
+
 }
