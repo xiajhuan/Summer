@@ -67,7 +67,7 @@ public class IpUtil {
                 ip = request.getRemoteAddr();
             }
         } catch (Exception e) {
-            LOGGER.error(e, "IPUtil ERROR【{}】", e.getMessage());
+            LOGGER.error(e, "获取请求IP失败【{}】", e.getMessage());
         }
 
         return ip;

@@ -175,7 +175,7 @@ public class TreeUtil {
                 if (extraGetter != null) {
                     extraGetters.put(extra, extraGetter);
                 } else {
-                    LOGGER.warn("TreeUtil WARN【[{}]不存在扩展属性[{}]】", dtoClass.getSimpleName(), extra);
+                    LOGGER.warn("【[{}]不存在扩展属性[{}]】", dtoClass.getSimpleName(), extra);
                 }
             });
         }

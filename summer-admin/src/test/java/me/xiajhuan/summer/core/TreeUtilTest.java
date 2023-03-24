@@ -10,17 +10,17 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.admin.core;
+package me.xiajhuan.summer.core;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Console;
 import cn.hutool.json.JSONUtil;
+import me.xiajhuan.summer.BaseTest;
+import me.xiajhuan.summer.admin.AdminApplication;
 import me.xiajhuan.summer.admin.common.security.dto.SecurityMenuDto;
 import me.xiajhuan.summer.core.constant.TreeConst;
 import me.xiajhuan.summer.core.utils.TreeUtil;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
@@ -31,8 +31,9 @@ import java.util.List;
  * @author xiajhuan
  * @date 2023/3/11
  */
-@SpringBootTest
-public class TreeUtilTest {
+@DisplayName("TreeUtil")
+@SpringBootTest(classes = AdminApplication.class, webEnvironment = SpringBootTest.WebEnvironment.NONE)
+public class TreeUtilTest extends BaseTest {
 
     /**
      * 菜单列表
@@ -43,7 +44,7 @@ public class TreeUtilTest {
      * 初始化 {@link menuDtoList}
      */
     @BeforeEach
-    public void init() {
+    void init() {
         menuDtoList = CollUtil.newArrayList(
                 SecurityMenuDto.builder()
                         .id(1L).parentId(TreeConst.ROOT).name("系统管理").weight(5)
@@ -70,13 +71,16 @@ public class TreeUtilTest {
      * @see TreeUtil#buildDto(Class, List, Long, String...)
      */
     @Test
-    public void test() {
+    void buildDto() {
+        String methodSignature = "TreeUtil#buildDto(Class, List, Long, String...)";
+        Console.log(startMsg(methodSignature));
+
         List<SecurityMenuDto> treeNodes = TreeUtil.buildDto(SecurityMenuDto.class, menuDtoList, TreeConst.ROOT,
                 "url", "permissions");
         Assertions.assertTrue(treeNodes.size() == 2, "菜单树构建失败！");
         Console.log(JSONUtil.toJsonPrettyStr(treeNodes));
 
-        Console.log("Successful test!");
+        Console.log(successMsg(methodSignature));
     }
 
 }

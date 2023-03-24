@@ -10,14 +10,15 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.admin.core;
+package me.xiajhuan.summer.core;
 
 import cn.hutool.core.lang.Console;
 import cn.hutool.core.util.StrUtil;
+import me.xiajhuan.summer.BaseTest;
 import me.xiajhuan.summer.core.constant.StrTemplateConst;
 import me.xiajhuan.summer.core.utils.WildcardUtil;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -27,30 +28,28 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * @author xiajhuan
  * @date 2023/3/11
  */
-@SpringBootTest
-public class WildcardUtilTest {
+@DisplayName("WildcardUtil")
+public class WildcardUtilTest extends BaseTest {
 
     /**
      * @see WildcardUtil#matches(String, String)
      */
     @Test
-    public void test() {
+    void matches() {
+        String methodSignature = "WildcardUtil#matches(String, String)";
+        Console.log(startMsg(methodSignature));
+
         String source1 = "log_operation";
         String pattern1 = "log_*";
         assertTrue(WildcardUtil.matches(source1, pattern1),
                 StrUtil.format(StrTemplateConst.MATCHES_FAIL_MSG, source1, pattern1));
 
-        String source2 = "security_user_token";
-        String pattern2 = "*_token";
+        String source2 = "security_role_dept";
+        String pattern2 = "security_*";
         assertTrue(WildcardUtil.matches(source2, pattern2),
                 StrUtil.format(StrTemplateConst.MATCHES_FAIL_MSG, source2, pattern2));
 
-        String source3 = "security_role_user";
-        String pattern3 = "security_role_*";
-        assertTrue(WildcardUtil.matches(source3, pattern3),
-                StrUtil.format(StrTemplateConst.MATCHES_FAIL_MSG, source3, pattern3));
-
-        Console.log("Successful test!");
+        Console.log(successMsg(methodSignature));
     }
 
 }
