@@ -42,10 +42,7 @@
         <mybatisplus.version>3.5.3.1</mybatisplus.version>
         <dynamic.datasource.version>3.6.1</dynamic.datasource.version>
         <shiro.version>1.11.0</shiro.version>
-        <commons.lang3.version>3.12.0</commons.lang3.version>
         <commons.pool2.version>2.11.1</commons.pool2.version>
-        <commons.io.version>2.11.0</commons.io.version>
-        <commons.fileupload.version>1.5</commons.fileupload.version>
         <guava.version>31.1-jre</guava.version>
         <hutool.version>5.8.15</hutool.version>
         <mica.xss.version>2.7.9</mica.xss.version>
@@ -91,26 +88,11 @@
                 <artifactId>shiro-spring</artifactId>
                 <version>${shiro.version}</version>
             </dependency>
-            <!--apache-commons-->
-            <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-lang3</artifactId>
-                <version>${commons.lang3.version}</version>
-            </dependency>
+            <!--commons-pool2-->
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-pool2</artifactId>
                 <version>${commons.pool2.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>commons-fileupload</groupId>
-                <artifactId>commons-fileupload</artifactId>
-                <version>${commons.fileupload.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>commons-io</groupId>
-                <artifactId>commons-io</artifactId>
-                <version>${commons.io.version}</version>
             </dependency>
             <!--google-guava-->
             <dependency>
@@ -121,7 +103,27 @@
             <!--hutool-->
             <dependency>
                 <groupId>cn.hutool</groupId>
-                <artifactId>hutool-all</artifactId>
+                <artifactId>hutool-cache</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-captcha</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-crypto</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-json</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-setting</artifactId>
                 <version>${hutool.version}</version>
             </dependency>
             <!--mica-xss-->
