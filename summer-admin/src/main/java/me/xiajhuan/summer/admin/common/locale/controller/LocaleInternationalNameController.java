@@ -15,7 +15,6 @@ package me.xiajhuan.summer.admin.common.locale.controller;
 import me.xiajhuan.summer.admin.common.base.annotation.LogOperation;
 import me.xiajhuan.summer.admin.common.locale.dto.LocaleInternationalNameDto;
 import me.xiajhuan.summer.admin.common.locale.entity.LocaleInternationalNameEntity;
-import me.xiajhuan.summer.admin.common.locale.excel.LocaleInternationalNameExcel;
 import me.xiajhuan.summer.admin.common.locale.excel.parser.LocaleInternationalNameExcelDbParser;
 import me.xiajhuan.summer.admin.common.locale.service.LocaleInternationalNameService;
 import me.xiajhuan.summer.core.constant.OperationConst;
@@ -62,7 +61,7 @@ public class LocaleInternationalNameController {
      * @return 响应结果
      */
     @GetMapping("page")
-    @RequiresPermissions("locale:internationalName:page")
+//    @RequiresPermissions("locale:internationalName:page")
     @LogOperation(OperationConst.PAGE)
     public Result<PageData<LocaleInternationalNameDto>> page(PageAndSort pageAndSort, LocaleInternationalNameDto dto) {
         return Result.ofSuccess(PageData.of(mainService.page(pageAndSort, dto)));
@@ -76,7 +75,7 @@ public class LocaleInternationalNameController {
      * @throws BusinessException 业务异常
      */
     @GetMapping("getById")
-    @RequiresPermissions("locale:internationalName:getById")
+//    @RequiresPermissions("locale:internationalName:getById")
     @LogOperation(OperationConst.GET_BY_ID)
     public Result<LocaleInternationalNameDto> getById(Long id) throws BusinessException {
         AssertUtil.isNotNull("id", id);
@@ -90,7 +89,7 @@ public class LocaleInternationalNameController {
      * @return 响应结果
      */
     @PostMapping("add")
-    @RequiresPermissions("locale:internationalName:add")
+//    @RequiresPermissions("locale:internationalName:add")
     @LogOperation(OperationConst.ADD)
     public Result add(@Validated(AddGroup.class) LocaleInternationalNameDto dto) {
         mainService.add(dto);
@@ -104,7 +103,7 @@ public class LocaleInternationalNameController {
      * @return 响应结果
      */
     @PutMapping("update")
-    @RequiresPermissions("locale:internationalName:update")
+//    @RequiresPermissions("locale:internationalName:update")
     @LogOperation(OperationConst.UPDATE)
     public Result update(@Validated(UpdateGroup.class) LocaleInternationalNameDto dto) {
         mainService.update(dto);
@@ -119,7 +118,7 @@ public class LocaleInternationalNameController {
      * @throws BusinessException 业务异常
      */
     @DeleteMapping("delete")
-    @RequiresPermissions("locale:internationalName:delete")
+//    @RequiresPermissions("locale:internationalName:delete")
     @LogOperation(OperationConst.DELETE)
     public Result delete(Long[] ids) throws BusinessException {
         AssertUtil.isNotEmpty("ids", ids);
@@ -136,12 +135,12 @@ public class LocaleInternationalNameController {
      * @throws FileDownloadException 文件下载异常
      */
     @GetMapping("excelTemplate")
-    @RequiresPermissions("locale:internationalName:excelTemplate")
+//    @RequiresPermissions("locale:internationalName:excelTemplate")
     @RateLimiter(0.2)
     @LogOperation(OperationConst.EXCEL_TEMPLATE)
     public void excelTemplate(HttpServletResponse response) throws FileDownloadException {
         try {
-            ExcelUtil.exportExcel(response, "国际化名称模板", "国际化名称", mainService.excelTemplate(), LocaleInternationalNameExcel.class);
+            ExcelUtil.export(response, "国际化名称模板", "国际化名称", mainService.excelTemplate(), LocaleInternationalNameDto.class);
         } catch (Exception e) {
             throw FileDownloadException.of(e, ErrorCode.EXCEL_TEMPLATE_DOWNLOAD_FAILURE);
         }
@@ -155,11 +154,11 @@ public class LocaleInternationalNameController {
      * @throws IOException I/O异常
      */
     @PostMapping("excelImport")
-    @RequiresPermissions("locale:internationalName:excelImport")
+//    @RequiresPermissions("locale:internationalName:excelImport")
     @RateLimiter(0.2)
     @LogOperation(OperationConst.EXCEL_IMPORT)
     public Result excelImport(@RequestParam("file") MultipartFile file) throws IOException {
-        ExcelUtil.importToDb(file, LocaleInternationalNameExcel.class, LocaleInternationalNameExcelDbParser.of(mainService, LocaleInternationalNameEntity.class));
+        ExcelUtil.importDb(file, LocaleInternationalNameDto.class, LocaleInternationalNameExcelDbParser.of(mainService, LocaleInternationalNameEntity.class));
         return Result.ofSuccess();
     }
 
@@ -171,12 +170,12 @@ public class LocaleInternationalNameController {
      * @throws FileDownloadException 文件下载异常
      */
     @GetMapping("excelExport")
-    @RequiresPermissions("locale:internationalName:excelExport")
+//    @RequiresPermissions("locale:internationalName:excelExport")
     @RateLimiter(0.2)
     @LogOperation(OperationConst.EXCEL_EXPORT)
     public void excelExport(LocaleInternationalNameDto dto, HttpServletResponse response) throws FileDownloadException {
         try {
-            ExcelUtil.exportExcel(response, "国际化名称", "国际化名称", mainService.list(dto), LocaleInternationalNameExcel.class);
+            ExcelUtil.export(response, "国际化名称", "国际化名称", mainService.list(dto), LocaleInternationalNameDto.class);
         } catch (Exception e) {
             throw FileDownloadException.of(e, ErrorCode.EXCEL_EXPORT_FAILURE);
         }

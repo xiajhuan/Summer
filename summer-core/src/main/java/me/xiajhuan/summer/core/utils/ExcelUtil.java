@@ -39,90 +39,72 @@ public class ExcelUtil {
      * 导入（保存到Db）
      *
      * @param file        {@link MultipartFile}
-     * @param excelClass  ExcelClass
+     * @param dtoClass    DtoClass
      * @param service     {@link IService}
      * @param entityClass EntityClass
-     * @param <E>         Excel类型
+     * @param <D>         Dto类型
      * @param <T>         Entity类型
      * @throws IOException I/O异常
      */
-    public static <E, T> void importToDb(MultipartFile file, Class<E> excelClass, IService<T> service, Class<T> entityClass) throws IOException {
-        importToDb(file, excelClass, ExcelDbParser.build(service, entityClass));
+    public static <D, T> void importDb(MultipartFile file, Class<D> dtoClass, IService<T> service, Class<T> entityClass) throws IOException {
+        importDb(file, dtoClass, ExcelDbParser.build(service, entityClass));
     }
 
     /**
      * 导入（保存到Db，自定义前置处理）
      *
      * @param file           {@link MultipartFile}
-     * @param excelClass     ExcelClass
+     * @param dtoClass       DtoClass
      * @param customDbParser 自定义DbParser，需继承 {@link ExcelDbParser}，覆写 {@link AbstractExcelParser#handleParsedDataBefore()}
-     * @param <E>            Excel类型
+     * @param <D>            Dto类型
      * @param <T>            Entity类型
      * @throws IOException I/O异常
      */
-    public static <E, T> void importToDb(MultipartFile file, Class<E> excelClass, ExcelDbParser<T, E> customDbParser) throws IOException {
-        EasyExcel.read(file.getInputStream(), excelClass, customDbParser).sheet().doRead();
+    public static <D, T> void importDb(MultipartFile file, Class<D> dtoClass, ExcelDbParser<D, T> customDbParser) throws IOException {
+        EasyExcel.read(file.getInputStream(), dtoClass, customDbParser).sheet().doRead();
     }
 
     /**
      * 导入（缓存）
      *
      * @param file        {@link MultipartFile}
-     * @param excelClass  ExcelClass
+     * @param dtoClass    DtoClass
      * @param entityClass EntityClass
-     * @param <E>         Excel类型
+     * @param <D>         Dto类型
      * @param <T>         Entity类型
      * @throws IOException I/O异常
      */
-    public static <E, T> void importToCache(MultipartFile file, Class<E> excelClass, Class<T> entityClass) throws IOException {
-        importToCache(file, excelClass, ExcelCacheParser.build(entityClass));
+    public static <D, T> void importCache(MultipartFile file, Class<D> dtoClass, Class<T> entityClass) throws IOException {
+        importCache(file, dtoClass, ExcelCacheParser.build(entityClass));
     }
 
     /**
      * 导入（缓存，自定义前置处理）
      *
      * @param file              {@link MultipartFile}
-     * @param excelClass        ExcelClass
+     * @param dtoClass          DtoClass
      * @param customCacheParser 自定义CacheParser，需继承 {@link ExcelCacheParser}，覆写 {@link AbstractExcelParser#handleParsedDataBefore()}
-     * @param <E>               Excel类型
+     * @param <D>               Dto类型
      * @param <T>               Entity类型
      * @throws IOException I/O异常
      */
-    public static <E, T> void importToCache(MultipartFile file, Class<E> excelClass, ExcelCacheParser<T, E> customCacheParser) throws IOException {
-        EasyExcel.read(file.getInputStream(), excelClass, customCacheParser).sheet().doRead();
+    public static <D, T> void importCache(MultipartFile file, Class<D> dtoClass, ExcelCacheParser<D, T> customCacheParser) throws IOException {
+        EasyExcel.read(file.getInputStream(), dtoClass, customCacheParser).sheet().doRead();
     }
 
     /**
-     * 导出（List<ExcelClass>）
+     * 导出
      *
-     * @param response   {@link HttpServletResponse}
-     * @param fileName   文件名
-     * @param sheetName  sheet名
-     * @param dtoList    Dto类型列表
-     * @param excelClass ExcelClass
-     * @param <D>        Dto类型
-     * @param <E>        Excel类型
+     * @param response  {@link HttpServletResponse}
+     * @param fileName  文件名
+     * @param sheetName sheet名
+     * @param dtoList   Dto类型列表
+     * @param dtoClass  DtoClass
+     * @param <D>       Dto类型
      * @throws IOException I/O异常
      */
-    public static <D, E> void exportExcel(HttpServletResponse response, String fileName, String sheetName, List<D> dtoList,
-                                          Class<E> excelClass) throws IOException {
-        exportDto(response, fileName, sheetName, ConvertUtil.convert(dtoList, excelClass), excelClass);
-    }
-
-    /**
-     * 导出（List<DtoClass>）
-     *
-     * @param response   {@link HttpServletResponse}
-     * @param fileName   文件名
-     * @param sheetName  sheet名
-     * @param dtoList    Dto类型列表
-     * @param excelClass ExcelClass
-     * @param <D>        Dto类型
-     * @param <E>        Excel类型
-     * @throws IOException I/O异常
-     */
-    public static <D, E> void exportDto(HttpServletResponse response, String fileName, String sheetName, List<D> dtoList,
-                                        Class<E> excelClass) throws IOException {
+    public static <D> void export(HttpServletResponse response, String fileName, String sheetName, List<D> dtoList,
+                                  Class<D> dtoClass) throws IOException {
         if (StrUtil.isBlank(fileName)) {
             // 当前日期
             fileName = DateUtil.formatDate(DateUtil.date());
@@ -134,7 +116,7 @@ public class ExcelUtil {
         fileName = URLEncoder.encode(fileName, "UTF-8");
         response.setHeader("Content-disposition", StrUtil.format("attachment;filename={}.xlsx", fileName));
 
-        EasyExcel.write(response.getOutputStream(), excelClass).sheet(sheetName).doWrite(dtoList);
+        EasyExcel.write(response.getOutputStream(), dtoClass).sheet(sheetName).doWrite(dtoList);
     }
 
 }

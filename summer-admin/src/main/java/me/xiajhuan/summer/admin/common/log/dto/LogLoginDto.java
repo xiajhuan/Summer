@@ -12,8 +12,13 @@
 
 package me.xiajhuan.summer.admin.common.log.dto;
 
+import com.alibaba.excel.annotation.ExcelProperty;
+import com.alibaba.excel.annotation.format.DateTimeFormat;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import me.xiajhuan.summer.admin.common.log.excel.converter.LoginOperationConverter;
+import me.xiajhuan.summer.admin.common.log.excel.converter.LoginStatusConverter;
+import me.xiajhuan.summer.core.constant.DateFormatConst;
 import me.xiajhuan.summer.core.dto.BaseDto;
 import me.xiajhuan.summer.admin.common.security.enums.LoginOperationEnum;
 import me.xiajhuan.summer.admin.common.security.enums.LoginStatusEnum;
@@ -33,6 +38,7 @@ public class LogLoginDto extends BaseDto {
     /**
      * 登录用户名
      */
+    @ExcelProperty(value = "登录用户名", index = 0)
     private String loginUser;
 
     /**
@@ -40,6 +46,7 @@ public class LogLoginDto extends BaseDto {
      *
      * @see LoginOperationEnum
      */
+    @ExcelProperty(value = "用户操作", index = 1, converter = LoginOperationConverter.class)
     private Integer operation;
 
     /**
@@ -47,21 +54,26 @@ public class LogLoginDto extends BaseDto {
      *
      * @see LoginStatusEnum
      */
+    @ExcelProperty(value = "登录状态", index = 2, converter = LoginStatusConverter.class)
     private Integer status;
 
     /**
      * 用户代理
      */
+    @ExcelProperty(value = "用户代理", index = 3)
     private String userAgent;
 
     /**
      * 操作IP
      */
+    @ExcelProperty(value = "操作IP", index = 4)
     private String ip;
 
     /**
      * 创建时间
      */
+    @ExcelProperty(value = "创建时间", index = 5)
+    @DateTimeFormat(DateFormatConst.DATE_TIME_PATTERN)
     private Date createTime;
 
 }

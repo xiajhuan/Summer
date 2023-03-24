@@ -22,7 +22,7 @@ import me.xiajhuan.summer.core.excel.AbstractExcelParser;
  * @author xiajhuan
  * @date 2022/12/1
  */
-public class ExcelDbParser<T, E> extends AbstractExcelParser<T, E> {
+public class ExcelDbParser<D, T> extends AbstractExcelParser<D, T> {
 
     /**
      * {@link IService}<br>

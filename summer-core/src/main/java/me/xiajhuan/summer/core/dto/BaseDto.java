@@ -13,6 +13,10 @@
 package me.xiajhuan.summer.core.dto;
 
 import cn.hutool.core.lang.Dict;
+import com.alibaba.excel.annotation.ExcelIgnoreUnannotated;
+import com.alibaba.excel.annotation.write.style.ColumnWidth;
+import com.alibaba.excel.annotation.write.style.ContentRowHeight;
+import com.alibaba.excel.annotation.write.style.HeadRowHeight;
 import lombok.Data;
 import me.xiajhuan.summer.core.validation.group.AddGroup;
 import me.xiajhuan.summer.core.validation.group.UpdateGroup;
@@ -28,6 +32,10 @@ import java.io.Serializable;
  * @date 2022/3/6
  */
 @Data
+@ExcelIgnoreUnannotated
+@ContentRowHeight(20)
+@HeadRowHeight(20)
+@ColumnWidth(25)
 public abstract class BaseDto implements Serializable {
 
     private static final long serialVersionUID = 1L;

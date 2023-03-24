@@ -34,7 +34,7 @@ import java.util.stream.Collectors;
  * @author xiajhuan
  * @date 2022/12/1
  */
-public class ExcelCacheParser<T, E> extends AbstractExcelParser<T, E> {
+public class ExcelCacheParser<D, T> extends AbstractExcelParser<D, T> {
 
     /**
      * 缓存过期时间（h）

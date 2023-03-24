@@ -12,8 +12,13 @@
 
 package me.xiajhuan.summer.admin.common.log.dto;
 
+import com.alibaba.excel.annotation.ExcelProperty;
+import com.alibaba.excel.annotation.format.DateTimeFormat;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import me.xiajhuan.summer.admin.common.log.excel.converter.OperationGroupConverter;
+import me.xiajhuan.summer.admin.common.log.excel.converter.OperationStatusConverter;
+import me.xiajhuan.summer.core.constant.DateFormatConst;
 import me.xiajhuan.summer.core.dto.BaseDto;
 import me.xiajhuan.summer.core.enums.OperationGroupEnum;
 import me.xiajhuan.summer.admin.common.log.enums.OperationStatusEnum;
@@ -33,6 +38,7 @@ public class LogOperationDto extends BaseDto {
     /**
      * 用户操作
      */
+    @ExcelProperty(value = "用户操作", index = 0)
     private String operation;
 
     /**
@@ -40,36 +46,43 @@ public class LogOperationDto extends BaseDto {
      *
      * @see OperationGroupEnum
      */
+    @ExcelProperty(value = "操作分组", index = 1, converter = OperationGroupConverter.class)
     private Integer operationGroup;
 
     /**
      * 请求URI
      */
+    @ExcelProperty(value = "请求URI", index = 2)
     private String requestUri;
 
     /**
      * 请求方式
      */
+    @ExcelProperty(value = "请求方式", index = 3)
     private String requestMethod;
 
     /**
      * 请求参数
      */
+    @ExcelProperty(value = "请求参数", index = 4)
     private String requestParams;
 
     /**
      * 请求时长（ms）
      */
+    @ExcelProperty(value = "请求时长（ms）", index = 5)
     private Integer requestTime;
 
     /**
      * 用户代理
      */
+    @ExcelProperty(value = "用户代理", index = 6)
     private String userAgent;
 
     /**
      * 操作IP
      */
+    @ExcelProperty(value = "操作IP", index = 7)
     private String ip;
 
     /**
@@ -77,16 +90,20 @@ public class LogOperationDto extends BaseDto {
      *
      * @see OperationStatusEnum
      */
+    @ExcelProperty(value = "状态", index = 8, converter = OperationStatusConverter.class)
     private Integer status;
 
     /**
      * 操作人
      */
+    @ExcelProperty(value = "操作人", index = 9)
     private String operateBy;
 
     /**
      * 创建时间
      */
+    @ExcelProperty(value = "创建时间", index = 10)
+    @DateTimeFormat(DateFormatConst.DATE_TIME_PATTERN)
     private Date createTime;
 
 }

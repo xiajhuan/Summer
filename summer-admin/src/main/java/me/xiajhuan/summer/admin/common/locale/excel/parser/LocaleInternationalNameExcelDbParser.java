@@ -13,8 +13,8 @@
 package me.xiajhuan.summer.admin.common.locale.excel.parser;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import me.xiajhuan.summer.admin.common.locale.dto.LocaleInternationalNameDto;
 import me.xiajhuan.summer.admin.common.locale.entity.LocaleInternationalNameEntity;
-import me.xiajhuan.summer.admin.common.locale.excel.LocaleInternationalNameExcel;
 import me.xiajhuan.summer.core.excel.subClass.ExcelDbParser;
 
 /**
@@ -23,7 +23,7 @@ import me.xiajhuan.summer.core.excel.subClass.ExcelDbParser;
  * @author xiajhuan
  * @date 2023/3/16
  */
-public class LocaleInternationalNameExcelDbParser extends ExcelDbParser<LocaleInternationalNameEntity, LocaleInternationalNameExcel> {
+public class LocaleInternationalNameExcelDbParser extends ExcelDbParser<LocaleInternationalNameDto, LocaleInternationalNameEntity> {
 
     /**
      * 构造LocaleInternationalNameExcelDbParser

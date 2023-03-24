@@ -20,7 +20,6 @@ import me.xiajhuan.summer.core.data.Result;
 import me.xiajhuan.summer.core.exception.ErrorCode;
 import me.xiajhuan.summer.core.exception.FileDownloadException;
 import me.xiajhuan.summer.admin.common.log.dto.LogOperationDto;
-import me.xiajhuan.summer.admin.common.log.excel.LogOperationExcel;
 import me.xiajhuan.summer.admin.common.log.service.LogOperationService;
 import me.xiajhuan.summer.core.ratelimiter.annotation.RateLimiter;
 import me.xiajhuan.summer.core.utils.ExcelUtil;
@@ -76,7 +75,7 @@ public class LogOperationController {
     @LogOperation(OperationConst.EXCEL_EXPORT)
     public void excelExport(LogOperationDto dto, HttpServletResponse response) throws FileDownloadException {
         try {
-            ExcelUtil.exportExcel(response, "操作日志", "操作日志", mainService.list(dto), LogOperationExcel.class);
+            ExcelUtil.export(response, "操作日志", "操作日志", mainService.list(dto), LogOperationDto.class);
         } catch (Exception e) {
             throw FileDownloadException.of(e, ErrorCode.EXCEL_EXPORT_FAILURE);
         }

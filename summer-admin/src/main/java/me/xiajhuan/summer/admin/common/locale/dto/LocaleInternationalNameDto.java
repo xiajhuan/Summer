@@ -12,6 +12,8 @@
 
 package me.xiajhuan.summer.admin.common.locale.dto;
 
+import com.alibaba.excel.annotation.ExcelProperty;
+import com.alibaba.excel.annotation.write.style.ColumnWidth;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import me.xiajhuan.summer.core.dto.BaseDto;
@@ -36,18 +38,22 @@ public class LocaleInternationalNameDto extends BaseDto {
      * 表名
      */
     @NotBlank(message = "{locale.internationalName.tableName.require}", groups = {AddGroup.class, UpdateGroup.class})
+    @ExcelProperty(value = "表名", index = 0)
     private String tableName;
 
     /**
      * 字段名
      */
     @NotBlank(message = "{locale.internationalName.fieldName.require}", groups = {AddGroup.class, UpdateGroup.class})
+    @ExcelProperty(value = "字段名", index = 1)
     private String fieldName;
 
     /**
      * 字段值
      */
     @NotBlank(message = "{locale.internationalName.fieldValue.require}", groups = {AddGroup.class, UpdateGroup.class})
+    @ColumnWidth(50)
+    @ExcelProperty(value = "字段值", index = 2)
     private String fieldValue;
 
     /**
@@ -56,6 +62,7 @@ public class LocaleInternationalNameDto extends BaseDto {
      * @see LocaleSupportEnum
      */
     @NotBlank(message = "{locale.internationalName.locale.require}", groups = {AddGroup.class, UpdateGroup.class})
+    @ExcelProperty(value = "地区语言", index = 3)
     private String locale;
 
     /**

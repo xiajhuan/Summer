@@ -33,7 +33,7 @@ import java.util.List;
  * @date 2022/12/1
  * @see AnalysisEventListener
  */
-public abstract class AbstractExcelParser<T, E> extends AnalysisEventListener<E> {
+public abstract class AbstractExcelParser<D, T> extends AnalysisEventListener<D> {
 
     protected static final Log LOGGER = LogFactory.get();
 
@@ -57,7 +57,7 @@ public abstract class AbstractExcelParser<T, E> extends AnalysisEventListener<E>
     }
 
     @Override
-    public final void invoke(E data, AnalysisContext context) {
+    public final void invoke(D data, AnalysisContext context) {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("解析到一条Excel数据：{}", JSONUtil.toJsonStr(data));
         }
