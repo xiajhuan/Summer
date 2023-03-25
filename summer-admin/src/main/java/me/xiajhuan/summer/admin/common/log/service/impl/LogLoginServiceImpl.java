@@ -65,7 +65,7 @@ public class LogLoginServiceImpl extends ServiceImpl<LogLoginMapper, LogLoginEnt
 
     @Override
     public LambdaQueryWrapper<LogLoginEntity> getQueryWrapper(LogLoginDto dto, boolean isCount) {
-        LambdaQueryWrapper<LogLoginEntity> queryWrapper = getQueryWrapperUnconditional(dto, isCount);
+        LambdaQueryWrapper<LogLoginEntity> queryWrapper = getQueryWrapperUnconditional(isCount);
         // 动态Sql查询条件
         // 用户操作
         Integer operation = dto.getOperation();

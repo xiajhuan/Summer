@@ -72,7 +72,7 @@ public class LogErrorServiceImpl extends ServiceImpl<LogErrorMapper, LogErrorEnt
 
     @Override
     public LambdaQueryWrapper<LogErrorEntity> getQueryWrapper(LogErrorDto dto, boolean isCount) {
-        LambdaQueryWrapper<LogErrorEntity> queryWrapper = getQueryWrapperUnconditional(dto, isCount);
+        LambdaQueryWrapper<LogErrorEntity> queryWrapper = getQueryWrapperUnconditional(isCount);
         // 动态Sql查询条件
         // 创建时间（闭区间）
         Date createTimeStart = dto.getCreateTimeStart();

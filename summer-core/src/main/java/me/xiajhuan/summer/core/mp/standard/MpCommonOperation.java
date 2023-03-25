@@ -72,17 +72,16 @@ public interface MpCommonOperation<D, T> {
      * @return {@link LambdaQueryWrapper}
      */
     default LambdaQueryWrapper<T> getQueryWrapper(D dto, boolean isCount) {
-        return getQueryWrapperUnconditional(dto, isCount);
+        return getQueryWrapperUnconditional(isCount);
     }
 
     /**
      * 获取 {@link LambdaQueryWrapper}（无条件）
      *
-     * @param dto     Dto类型对象
      * @param isCount 是否是count查询，是则不加入查询字段，true：是 false：否
      * @return {@link LambdaQueryWrapper}
      */
-    default LambdaQueryWrapper<T> getQueryWrapperUnconditional(D dto, boolean isCount) {
+    default LambdaQueryWrapper<T> getQueryWrapperUnconditional(boolean isCount) {
         if (isCount) {
             return Wrappers.lambdaQuery();
         } else {

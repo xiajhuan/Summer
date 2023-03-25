@@ -54,7 +54,7 @@ public class SecurityUserServiceImpl extends ServiceImpl<SecurityUserMapper, Sec
 
     @Override
     public LambdaQueryWrapper<SecurityUserEntity> getQueryWrapper(SecurityUserDto dto, boolean isCount) {
-        LambdaQueryWrapper<SecurityUserEntity> queryWrapper = getQueryWrapperUnconditional(dto, isCount);
+        LambdaQueryWrapper<SecurityUserEntity> queryWrapper = getQueryWrapperUnconditional(isCount);
         // 动态Sql查询条件
         // 用户名
         String username = dto.getUsername();

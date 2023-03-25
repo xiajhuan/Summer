@@ -57,7 +57,7 @@ public class LocaleInternationalNameServiceImpl extends ServiceImpl<LocaleIntern
 
     @Override
     public LambdaQueryWrapper<LocaleInternationalNameEntity> getQueryWrapper(LocaleInternationalNameDto dto, boolean isCount) {
-        LambdaQueryWrapper<LocaleInternationalNameEntity> queryWrapper = getQueryWrapperUnconditional(dto, isCount);
+        LambdaQueryWrapper<LocaleInternationalNameEntity> queryWrapper = getQueryWrapperUnconditional(isCount);
         // 动态Sql查询条件
         // 表名
         String tableName = dto.getTableName();
