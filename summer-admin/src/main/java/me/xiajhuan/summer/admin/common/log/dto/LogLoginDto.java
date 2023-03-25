@@ -14,6 +14,8 @@ package me.xiajhuan.summer.admin.common.log.dto;
 
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.annotation.format.DateTimeFormat;
+import com.alibaba.excel.annotation.write.style.ColumnWidth;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import me.xiajhuan.summer.admin.common.log.excel.converter.LoginOperationConverter;
@@ -60,6 +62,7 @@ public class LogLoginDto extends BaseDto {
     /**
      * 用户代理
      */
+    @ColumnWidth(40)
     @ExcelProperty(value = "用户代理", index = 3)
     private String userAgent;
 
@@ -81,11 +84,13 @@ public class LogLoginDto extends BaseDto {
     /**
      * 创建时间区间（开始）
      */
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Date createTimeStart;
 
     /**
      * 创建时间区间（结束）
      */
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Date createTimeEnd;
 
 }

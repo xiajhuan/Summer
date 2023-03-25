@@ -15,6 +15,7 @@ package me.xiajhuan.summer.admin.common.log.dto;
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.annotation.format.DateTimeFormat;
 import com.alibaba.excel.annotation.write.style.ColumnWidth;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import me.xiajhuan.summer.core.constant.DateFormatConst;
@@ -35,6 +36,7 @@ public class LogErrorDto extends BaseDto {
     /**
      * 请求URI
      */
+    @ColumnWidth(40)
     @ExcelProperty(value = "请求URI", index = 0)
     private String requestUri;
 
@@ -47,12 +49,14 @@ public class LogErrorDto extends BaseDto {
     /**
      * 请求参数
      */
+    @ColumnWidth(100)
     @ExcelProperty(value = "请求参数", index = 2)
     private String requestParams;
 
     /**
      * 用户代理
      */
+    @ColumnWidth(40)
     @ExcelProperty(value = "用户代理", index = 3)
     private String userAgent;
 
@@ -72,8 +76,6 @@ public class LogErrorDto extends BaseDto {
     /**
      * 异常堆栈信息
      */
-    @ColumnWidth(150)
-    @ExcelProperty(value = "异常堆栈信息", index = 6)
     private String errorInfo;
 
     //*******************查询参数********************
@@ -81,11 +83,13 @@ public class LogErrorDto extends BaseDto {
     /**
      * 创建时间区间（开始）
      */
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Date createTimeStart;
 
     /**
      * 创建时间区间（结束）
      */
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Date createTimeEnd;
 
 }
