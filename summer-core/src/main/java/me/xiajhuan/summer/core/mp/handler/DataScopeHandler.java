@@ -22,7 +22,6 @@ import me.xiajhuan.summer.core.data.LoginUser;
 import me.xiajhuan.summer.core.entity.CommonBaseEntity;
 import me.xiajhuan.summer.core.constant.DataScopeConst;
 import me.xiajhuan.summer.core.constant.SettingBeanConst;
-import me.xiajhuan.summer.core.enums.DataScopeEnum;
 import me.xiajhuan.summer.core.enums.UserTypeEnum;
 import me.xiajhuan.summer.core.utils.SecurityUtil;
 import me.xiajhuan.summer.core.utils.WildcardUtil;
@@ -118,7 +117,7 @@ public class DataScopeHandler implements MultiDataPermissionHandler {
 
         // 超级管理员或拥有所有数据权限的用户不做处理
         if (UserTypeEnum.SUPER_ADMIN.getValue() == loginUser.getUserType()
-                || DataScopeEnum.ALL.getValue() == loginUser.getDataScope()) {
+                || DataScopeConst.Type.ALL.getValue() == loginUser.getDataScope()) {
             return null;
         }
 
@@ -139,7 +138,7 @@ public class DataScopeHandler implements MultiDataPermissionHandler {
                 // 仅本人
                 // Sql片段示例：t.create_by = '16042'
                 filterCondition = new EqualsTo()
-                        .withLeftExpression(new Column(prefix + DataScopeConst.USERNAME_RECORDER))
+                        .withLeftExpression(new Column(prefix + DataScopeConst.Recorder.USERNAME))
                         .withRightExpression(new StringValue(loginUser.getUsername()));
                 break;
             default:
@@ -156,14 +155,14 @@ public class DataScopeHandler implements MultiDataPermissionHandler {
      * @param prefix    前缀
      * @param deptIdSet 部门ID集合
      * @return {@link Expression}
-     * @see DataScopeEnum#ROLE_BASED
-     * @see DataScopeEnum#DEPT_SELF
-     * @see DataScopeEnum#DEPT_AND_CHILD
+     * @see DataScopeConst.Type#ROLE_BASED
+     * @see DataScopeConst.Type#DEPT_SELF
+     * @see DataScopeConst.Type#DEPT_AND_CHILD
      */
     private Expression getFilterConditionByDeptIds(String prefix, Set<Long> deptIdSet) {
         // Sql片段示例：dept_id IN (1,2,3)
         return new InExpression()
-                .withLeftExpression(new Column(prefix + DataScopeConst.DEPT_ID_RECORDER))
+                .withLeftExpression(new Column(prefix + DataScopeConst.Recorder.DEPT_ID))
                 .withRightItemsList(new ExpressionList(deptIdSet.stream().map(LongValue::new).collect(Collectors.toList())));
     }
 

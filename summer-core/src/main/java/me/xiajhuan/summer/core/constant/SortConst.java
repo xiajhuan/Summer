@@ -21,28 +21,37 @@ package me.xiajhuan.summer.core.constant;
 public class SortConst {
 
     /**
-     * "null"和"undefined"
+     * 字段
      */
-    public static final String[] NULL_AND_UNDEFINED = {"null", "undefined"};
+    public static class Field {
+
+        /**
+         * 默认
+         */
+        public static final String DEFAULT = "createTime";
+
+    }
 
     /**
-     * 默认排序字段
+     * 规则
      */
-    public static final String DEFAULT_FIELD = "createTime";
+    public static class Order {
 
-    /**
-     * 默认排序规则
-     */
-    public static final String DEFAULT_ORDER = "descend";
+        /**
+         * 默认
+         */
+        public static final String DEFAULT = "descend";
 
-    /**
-     * 升序字符数组
-     */
-    public static final String[] ORDER_ASC = {"asc", "ascend", "ascending"};
+        /**
+         * 升序
+         */
+        public static final String[] ASC = {"asc", "ascend", "ascending"};
 
-    /**
-     * 降序字符数组
-     */
-    public static final String[] ORDER_DESC = {"desc", "descend", "descending"};
+        /**
+         * 降序
+         */
+        public static final String[] DESC = {"desc", "descend", "descending"};
+
+    }
 
 }

@@ -15,7 +15,6 @@ package me.xiajhuan.summer.core;
 import cn.hutool.core.lang.Console;
 import cn.hutool.core.util.StrUtil;
 import me.xiajhuan.summer.BaseTest;
-import me.xiajhuan.summer.core.constant.StrTemplateConst;
 import me.xiajhuan.summer.core.utils.SecurityUtil;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -84,7 +83,7 @@ public class SecurityUtilTest extends BaseTest {
         Console.log(startMsg(methodSignature));
 
         assertTrue(SecurityUtil.matches(PLAIN_TEXT, HASHED),
-                StrUtil.format(StrTemplateConst.MATCHES_FAIL_MSG, PLAIN_TEXT, HASHED));
+                StrUtil.format(MATCHES_FAIL_MSG, PLAIN_TEXT, HASHED));
 
         Console.log(successMsg(methodSignature));
     }

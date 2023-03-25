@@ -4,7 +4,7 @@ project:
 
 server:
   # 最大请求头大小
-  max-http-header-size: 1024000
+  max-http-header-size: 10KB
   # Servlet
   servlet:
     context-path: /summer-single
@@ -16,7 +16,7 @@ spring:
   # Jackson
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
-    time-zone: GMT+8
+    time-zone: Asia/Shanghai
   # 文件上传
   servlet:
     multipart:

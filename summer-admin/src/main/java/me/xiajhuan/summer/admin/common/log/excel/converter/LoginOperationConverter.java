@@ -18,7 +18,7 @@ import com.alibaba.excel.metadata.GlobalConfiguration;
 import com.alibaba.excel.metadata.data.WriteCellData;
 import com.alibaba.excel.metadata.property.ExcelContentProperty;
 
-import static me.xiajhuan.summer.admin.common.security.enums.LoginOperationEnum.*;
+import static me.xiajhuan.summer.core.enums.LoginOperationEnum.*;
 
 /**
  * 登录操作 Converter

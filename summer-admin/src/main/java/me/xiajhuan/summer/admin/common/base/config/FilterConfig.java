@@ -18,6 +18,7 @@ import org.apache.shiro.mgt.SecurityManager;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
 import org.springframework.web.filter.DelegatingFilterProxy;
 
 /**
@@ -43,7 +44,7 @@ public class FilterConfig {
         // 该值缺省为false，表示生命周期由Spring容器管理，设置为true则表示由Servlet容器管理
         registration.addInitParameter("targetFilterLifecycle", "true");
         registration.setEnabled(true);
-        registration.setOrder(Integer.MAX_VALUE);
+        registration.setOrder(Ordered.LOWEST_PRECEDENCE);
         registration.addUrlPatterns("/*");
         return registration;
     }

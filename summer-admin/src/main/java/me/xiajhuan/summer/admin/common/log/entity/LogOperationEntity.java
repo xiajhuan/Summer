@@ -17,7 +17,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
 import me.xiajhuan.summer.core.entity.SimpleBaseEntity;
 import me.xiajhuan.summer.core.enums.OperationGroupEnum;
-import me.xiajhuan.summer.admin.common.log.enums.OperationStatusEnum;
+import me.xiajhuan.summer.core.enums.OperationStatusEnum;
 
 /**
  * 操作日志 Entity

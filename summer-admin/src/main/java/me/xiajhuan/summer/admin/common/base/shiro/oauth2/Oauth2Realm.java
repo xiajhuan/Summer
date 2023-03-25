@@ -60,7 +60,7 @@ public class Oauth2Realm extends AuthorizingRealm {
         }
 
         // 获取登录用户信息
-        final LoginUser loginUser = (LoginUser) cacheServer.getHash(loginInfo(userIdStr), SecurityConst.LOGIN_USER);
+        final LoginUser loginUser = (LoginUser) cacheServer.getHash(loginInfo(userIdStr), SecurityConst.LoginInfo.LOGIN_USER);
 
         SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(loginUser, accessToken, getName());
         return info;

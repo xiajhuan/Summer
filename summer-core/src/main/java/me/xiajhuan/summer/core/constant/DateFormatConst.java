@@ -13,7 +13,7 @@
 package me.xiajhuan.summer.core.constant;
 
 /**
- * 日期时间格式常量
+ * 日期格式常量
  *
  * @author xiajhuan
  * @date 2022/11/28
@@ -21,18 +21,28 @@ package me.xiajhuan.summer.core.constant;
 public class DateFormatConst {
 
     /**
-     * 日期格式
+     * 年-月
      */
-    public static final String DATE_PATTERN = "yyyy-MM-dd";
+    public static final String YEAR_MONTH = "yyyy-MM";
 
     /**
-     * 日期时间格式
+     * 年-月-日
      */
-    public static final String DATE_TIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
+    public static final String DATE = "yyyy-MM-dd";
 
     /**
-     * ISO_8601格式
+     * 年-月-日 时:分
      */
-    public static final String ISO_8601 = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+    public static final String HOUR_MINUTE = "yyyy-MM-dd HH:mm";
+
+    /**
+     * 年-月-日 时:分:秒
+     */
+    public static final String DATE_TIME = "yyyy-MM-dd HH:mm:ss";
+
+    /**
+     * 年-月-日 时:分:秒.毫秒
+     */
+    public static final String MILLISECOND = "yyyy-MM-dd HH:mm:ss.SSS";
 
 }

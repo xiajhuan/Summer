@@ -47,9 +47,7 @@ public class PageAndSort implements Serializable {
     /**
      * 排序规则
      *
-     * @see SortConst#DEFAULT_ORDER
-     * @see SortConst#ORDER_ASC
-     * @see SortConst#ORDER_DESC
+     * @see SortConst.Order
      */
     private String order;
 

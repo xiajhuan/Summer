@@ -12,6 +12,9 @@
 
 package me.xiajhuan.summer.core.constant;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 /**
  * 数据权限常量
  *
@@ -21,13 +24,60 @@ package me.xiajhuan.summer.core.constant;
 public class DataScopeConst {
 
     /**
-     * 记录部门ID的字段
+     * 记录字段
      */
-    public static final String DEPT_ID_RECORDER = "dept_id";
+    public static class Recorder {
+
+        /**
+         * 部门ID
+         */
+        public static final String DEPT_ID = "dept_id";
+
+        /**
+         * 用户名
+         */
+        public static final String USERNAME = "create_by";
+
+    }
 
     /**
-     * 记录用户名的字段
+     * 类型枚举
      */
-    public static final String USERNAME_RECORDER = "create_by";
+    @Getter
+    @AllArgsConstructor
+    public enum Type {
+
+        /**
+         * 全部
+         */
+        ALL(0, "全部", "所有的数据"),
+
+        /**
+         * 基于角色
+         */
+        ROLE_BASED(1, "基于角色", "用户所有角色关联的所有部门的数据"),
+
+        /**
+         * 本部门
+         */
+        DEPT_SELF(2, "本部门", "用户本部门的数据"),
+
+        /**
+         * 本部门及以下
+         */
+        DEPT_AND_CHILD(3, "本部门及以下", "用户本部门及本部门下子部门的数据"),
+
+        /**
+         * 仅本人
+         */
+        SELF(4, "仅本人", "用户自己的数据");
+
+        private Integer value;
+
+        private String name;
+
+        private String desc;
+
+    }
 
 }

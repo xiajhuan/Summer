@@ -12,7 +12,6 @@
 
 package me.xiajhuan.summer.core.dto;
 
-import cn.hutool.core.lang.Dict;
 import com.alibaba.excel.annotation.ExcelIgnoreUnannotated;
 import com.alibaba.excel.annotation.write.style.ColumnWidth;
 import com.alibaba.excel.annotation.write.style.ContentRowHeight;
@@ -46,12 +45,5 @@ public abstract class BaseDto implements Serializable {
     @Null(message = "{id.null}", groups = AddGroup.class)
     @NotNull(message = "{id.require}", groups = UpdateGroup.class)
     private Long id;
-
-    /**
-     * 参数
-     *
-     * @see Dict
-     */
-    private Dict params = Dict.create();
 
 }

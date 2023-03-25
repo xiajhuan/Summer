@@ -15,7 +15,6 @@ package me.xiajhuan.summer.core;
 import cn.hutool.core.lang.Console;
 import cn.hutool.core.util.StrUtil;
 import me.xiajhuan.summer.BaseTest;
-import me.xiajhuan.summer.core.constant.StrTemplateConst;
 import me.xiajhuan.summer.core.utils.WildcardUtil;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -42,12 +41,12 @@ public class WildcardUtilTest extends BaseTest {
         String source1 = "log_operation";
         String pattern1 = "log_*";
         assertTrue(WildcardUtil.matches(source1, pattern1),
-                StrUtil.format(StrTemplateConst.MATCHES_FAIL_MSG, source1, pattern1));
+                StrUtil.format(MATCHES_FAIL_MSG, source1, pattern1));
 
         String source2 = "security_role_dept";
         String pattern2 = "security_*";
         assertTrue(WildcardUtil.matches(source2, pattern2),
-                StrUtil.format(StrTemplateConst.MATCHES_FAIL_MSG, source2, pattern2));
+                StrUtil.format(MATCHES_FAIL_MSG, source2, pattern2));
 
         Console.log(successMsg(methodSignature));
     }

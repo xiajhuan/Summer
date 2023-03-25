@@ -20,8 +20,8 @@ import me.xiajhuan.summer.admin.common.log.excel.converter.LoginOperationConvert
 import me.xiajhuan.summer.admin.common.log.excel.converter.LoginStatusConverter;
 import me.xiajhuan.summer.core.constant.DateFormatConst;
 import me.xiajhuan.summer.core.dto.BaseDto;
-import me.xiajhuan.summer.admin.common.security.enums.LoginOperationEnum;
-import me.xiajhuan.summer.admin.common.security.enums.LoginStatusEnum;
+import me.xiajhuan.summer.core.enums.LoginOperationEnum;
+import me.xiajhuan.summer.core.enums.LoginStatusEnum;
 
 import java.util.Date;
 
@@ -73,7 +73,19 @@ public class LogLoginDto extends BaseDto {
      * 创建时间
      */
     @ExcelProperty(value = "创建时间", index = 5)
-    @DateTimeFormat(DateFormatConst.DATE_TIME_PATTERN)
+    @DateTimeFormat(DateFormatConst.DATE_TIME)
     private Date createTime;
+
+    //*******************查询参数********************
+
+    /**
+     * 创建时间区间（开始）
+     */
+    private Date createTimeStart;
+
+    /**
+     * 创建时间区间（结束）
+     */
+    private Date createTimeEnd;
 
 }

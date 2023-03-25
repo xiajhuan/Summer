@@ -10,30 +10,35 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.admin.common.log.enums;
+package me.xiajhuan.summer.admin.common.security.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * 操作状态枚举
+ * 性别枚举
  *
  * @author xiajhuan
- * @date 2022/11/28
+ * @date 2023/3/3
  */
 @Getter
 @AllArgsConstructor
-public enum OperationStatusEnum {
+public enum GenderEnum {
 
     /**
-     * 失败
+     * 男
      */
-    FAIL(0, "失败"),
+    MALE(0, "男"),
 
     /**
-     * 成功
+     * 女
      */
-    SUCCESS(1, "成功");
+    FEMALE(1, "女"),
+
+    /**
+     * 保密
+     */
+    SECRET(2, "保密");
 
     private Integer value;
 

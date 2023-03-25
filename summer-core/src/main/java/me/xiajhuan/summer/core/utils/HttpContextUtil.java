@@ -18,7 +18,6 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import me.xiajhuan.summer.core.constant.ContentTypeConst;
-import me.xiajhuan.summer.core.constant.StrTemplateConst;
 import org.aspectj.lang.JoinPoint;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.context.request.RequestAttributes;
@@ -40,6 +39,11 @@ import java.util.Map;
  * @date 2022/11/28
  */
 public class HttpContextUtil {
+
+    /**
+     * 请求体参数格式
+     */
+    private static final String BODY_PARAM_FORMAT = "{}【{}】";
 
     /**
      * 获取请求
@@ -257,8 +261,8 @@ public class HttpContextUtil {
      */
     private static String concatQuery(String prefix, String bodyParam, String queryParam) {
         return StrUtil.isNotBlank(queryParam)
-                ? StrUtil.builder(queryParam, StrUtil.format(StrTemplateConst.BODY_PARAM, prefix, bodyParam)).toString()
-                : StrUtil.format(StrTemplateConst.BODY_PARAM, prefix, bodyParam);
+                ? StrUtil.builder(queryParam, StrUtil.format(BODY_PARAM_FORMAT, prefix, bodyParam)).toString()
+                : StrUtil.format(BODY_PARAM_FORMAT, prefix, bodyParam);
     }
 
 }

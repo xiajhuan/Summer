@@ -16,10 +16,9 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.date.TimeInterval;
 import cn.hutool.core.util.StrUtil;
 import me.xiajhuan.summer.admin.common.base.annotation.LogOperation;
-import me.xiajhuan.summer.core.constant.StrTemplateConst;
 import me.xiajhuan.summer.core.enums.NonLoggedUserEnum;
 import me.xiajhuan.summer.core.enums.OperationGroupEnum;
-import me.xiajhuan.summer.admin.common.log.enums.OperationStatusEnum;
+import me.xiajhuan.summer.core.enums.OperationStatusEnum;
 import me.xiajhuan.summer.admin.common.log.entity.LogOperationEntity;
 import me.xiajhuan.summer.admin.common.log.service.LogOperationService;
 import me.xiajhuan.summer.core.utils.HttpContextUtil;
@@ -107,7 +106,7 @@ public class LogOperationAspect {
 
         // 构建操作日志
         LogOperationEntity log = LogOperationEntity.builder()
-                .operation(StrUtil.format(StrTemplateConst.OPERATION_NAME, logOperation.name(), requestMapping.path()))
+                .operation(StrUtil.format("【{}】{}", logOperation.name(), requestMapping.path()))
                 .operationGroup(getOperationGroup(logOperation.name()))
                 .operateBy(SecurityUtil.getCurrentUsername(NonLoggedUserEnum.THIRD_PART.getValue()))
                 .status(status.getValue())

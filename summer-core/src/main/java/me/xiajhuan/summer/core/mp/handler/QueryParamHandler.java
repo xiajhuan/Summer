@@ -27,6 +27,11 @@ import me.xiajhuan.summer.core.data.PageAndSort;
 public class QueryParamHandler {
 
     /**
+     * 空值和未定义
+     */
+    private static final String[] NULL_AND_UNDEFINED = {"null", "undefined"};
+
+    /**
      * 处理分页排序参数<br>
      * note:只支持单字段排序
      *
@@ -51,21 +56,25 @@ public class QueryParamHandler {
         }
 
         if (StrUtil.isAllNotBlank(sortField, sortOrder)
-                && !StrUtil.equalsAnyIgnoreCase(sortField, SortConst.NULL_AND_UNDEFINED)
-                && !StrUtil.equalsAnyIgnoreCase(sortOrder, SortConst.NULL_AND_UNDEFINED)) {
+                && !StrUtil.equalsAnyIgnoreCase(sortField, NULL_AND_UNDEFINED)
+                && !StrUtil.equalsAnyIgnoreCase(sortOrder, NULL_AND_UNDEFINED)) {
             // 按照请求传递参数排序
-            if (StrUtil.equalsAnyIgnoreCase(sortOrder, SortConst.ORDER_DESC)) {
+            if (StrUtil.equalsAnyIgnoreCase(sortOrder, SortConst.Order.ASC)) {
+                page.addOrder(OrderItem.asc(sortField));
+            } else if (StrUtil.equalsAnyIgnoreCase(sortOrder, SortConst.Order.DESC)) {
                 page.addOrder(OrderItem.desc(sortField));
             } else {
-                page.addOrder(OrderItem.asc(sortField));
+                throwIllegalArgumentException(sortOrder);
             }
         } else {
             // 按照默认字段和规则排序
             if (StrUtil.isNotBlank(defaultSort)) {
-                if (StrUtil.equalsAnyIgnoreCase(defaultOrder, SortConst.ORDER_DESC)) {
+                if (StrUtil.equalsAnyIgnoreCase(defaultOrder, SortConst.Order.ASC)) {
+                    page.addOrder(OrderItem.asc(defaultSort));
+                } else if (StrUtil.equalsAnyIgnoreCase(defaultOrder, SortConst.Order.DESC)) {
                     page.addOrder(OrderItem.desc(defaultSort));
                 } else {
-                    page.addOrder(OrderItem.asc(defaultSort));
+                    throwIllegalArgumentException(defaultOrder);
                 }
             }
         }
@@ -82,6 +91,15 @@ public class QueryParamHandler {
      */
     public static int getPageOffset(int pageNum, int pageSize) {
         return (pageNum - 1) * pageSize;
+    }
+
+    /**
+     * 抛出 {@link IllegalArgumentException}
+     *
+     * @param sortOrder 排序规则
+     */
+    private static void throwIllegalArgumentException(String sortOrder) {
+        throw new IllegalArgumentException(StrUtil.format("不支持的排序规则【{}】", sortOrder));
     }
 
 }

@@ -26,12 +26,12 @@ public class ThreadPoolConst {
     public static class Async {
 
         /**
-         * 通用异步任务线程池Bean名称
+         * 通用线程池Bean名称
          */
         public static final String COMMON = "commonAsyncThreadPool";
 
         /**
-         * 通用异步任务线程池线程名前缀
+         * 通用线程池线程名前缀
          */
         public static final String COMMON_PREFIX = "Common-Async-Thread-";
 
@@ -43,7 +43,7 @@ public class ThreadPoolConst {
     public static class Schedule {
 
         /**
-         * 基本定时任务线程池线程名前缀
+         * 基本线程池线程名前缀
          */
         public static final String BASE_PREFIX = "Base-Schedule-Thread-";
 

@@ -20,46 +20,54 @@ package me.xiajhuan.summer.core.constant;
  */
 public class CacheConst {
 
-    //*******************缓存类型********************
+    /**
+     * 缓存类型
+     */
+    public static class Type {
+
+        /**
+         * Redis
+         */
+        public static final String REDIS = "REDIS";
+
+        /**
+         * 堆内缓存
+         */
+        public static final String HEAP = "HEAP";
+
+    }
 
     /**
-     * 缓存类型：堆内缓存
+     * 缓存值类型
      */
-    public static final String HEAP = "HEAP";
+    public static class Value {
 
-    /**
-     * 缓存类型：Redis
-     */
-    public static final String REDIS = "REDIS";
+        /**
+         * String
+         */
+        public static final String STRING = "STRING";
 
-    //*******************缓存值类型********************
+        /**
+         * Auto
+         */
+        public static final String AUTO = "AUTO";
 
-    /**
-     * 缓存值类型：String
-     */
-    public static final String VALUE_STRING = "STRING";
+        /**
+         * Hash
+         */
+        public static final String HASH = "HASH";
 
-    /**
-     * 缓存值类型：Auto
-     */
-    public static final String VALUE_AUTO = "AUTO";
+        /**
+         * List
+         */
+        public static final String LIST = "LIST";
 
-    /**
-     * 缓存值类型：Hash
-     */
-    public static final String VALUE_HASH = "HASH";
-
-    /**
-     * 缓存值类型：List
-     */
-    public static final String VALUE_LIST = "LIST";
+    }
 
     /**
      * 堆内缓存
      */
     public static class Heap {
-
-        //*******************缓存满后对象的移除策略********************
 
         /**
          * 先入先出

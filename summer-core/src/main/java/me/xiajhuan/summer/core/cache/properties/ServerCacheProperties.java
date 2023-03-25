@@ -33,9 +33,9 @@ public class ServerCacheProperties {
     /**
      * 缓存类型，默认为：REDIS
      *
-     * @see CacheConst#HEAP
-     * @see CacheConst#REDIS
+     * @see CacheConst.Type#HEAP
+     * @see CacheConst.Type#REDIS
      */
-    private String type = CacheConst.REDIS;
+    private String type = CacheConst.Type.REDIS;
 
 }

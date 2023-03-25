@@ -56,9 +56,9 @@ public class CacheServerFactory {
     public CacheServer getCacheServer() {
         String cacheType = SpringContextUtil.getBean("serverCacheProperties", ServerCacheProperties.class).getType();
 
-        if (cacheType.equals(CacheConst.HEAP)) {
+        if (cacheType.equals(CacheConst.Type.HEAP)) {
             return HeapCacheServer.getInstance();
-        } else if (cacheType.equals(CacheConst.REDIS)) {
+        } else if (cacheType.equals(CacheConst.Type.REDIS)) {
             return RedisCacheServer.getInstance();
         } else {
             throw new IllegalArgumentException(StrUtil.format("获取缓存服务失败，不支持的缓存类型【{}】", cacheType));

@@ -18,7 +18,6 @@ import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
 import cn.hutool.setting.Setting;
 import me.xiajhuan.summer.core.constant.SettingBeanConst;
-import me.xiajhuan.summer.core.constant.StrTemplateConst;
 import me.xiajhuan.summer.core.enums.NonLoggedUserEnum;
 import me.xiajhuan.summer.core.exception.BusinessException;
 import me.xiajhuan.summer.core.exception.ErrorCode;
@@ -63,6 +62,11 @@ public class RateLimiterAspect {
     private Setting setting;
 
     /**
+     * 策略类全限定性类名格式
+     */
+    private static final String STRATEGY_CLASS_FORMAT = "me.xiajhuan.summer.core.ratelimiter.strategy.impl.{}";
+
+    /**
      * 默认限流key策略Class
      */
     private static Class<? extends KeyStrategy> defaultKeyStrategy = null;
@@ -95,14 +99,14 @@ public class RateLimiterAspect {
             // 没有配置则默认为：BaseKeyStrategy
             keySetting = "BaseKeyStrategy";
         }
-        defaultKeyStrategy = (Class<? extends KeyStrategy>) Class.forName(StrUtil.format(StrTemplateConst.RATE_LIMITER_STRATEGY_CLASS, keySetting));
+        defaultKeyStrategy = (Class<? extends KeyStrategy>) Class.forName(StrUtil.format(STRATEGY_CLASS_FORMAT, keySetting));
 
         String loadBalanceSetting = setting.getByGroupWithLog("strategy.load-balance", "RateLimiter");
         if (StrUtil.isBlank(loadBalanceSetting)) {
             // 没有配置则默认为：BaseLoadBalanceStrategy
             loadBalanceSetting = "BaseLoadBalanceStrategy";
         }
-        defaultLoadBalanceStrategy = (Class<? extends LoadBalanceStrategy>) Class.forName(StrUtil.format(StrTemplateConst.RATE_LIMITER_STRATEGY_CLASS, loadBalanceSetting));
+        defaultLoadBalanceStrategy = (Class<? extends LoadBalanceStrategy>) Class.forName(StrUtil.format(STRATEGY_CLASS_FORMAT, loadBalanceSetting));
 
         defaultNodeNum = setting.getInt("node-num", "RateLimiter", 1);
 
@@ -167,7 +171,7 @@ public class RateLimiterAspect {
             } catch (Exception e) {
                 LOGGER.error(e, "key-Class【{}】获取Key失败，自动切换为基本Key策略，请参考【KeyStrategy】编写", keyStrategyClass.getSimpleName());
 
-                rateLimiterKey = StrUtil.format(StrTemplateConst.RATE_LIMITER_KEY, HttpContextUtil.getInterfaceSignature(request), StrUtil.EMPTY);
+                rateLimiterKey = StrUtil.format(KeyStrategy.FORMAT, HttpContextUtil.getInterfaceSignature(request), StrUtil.EMPTY);
             }
 
             //*******************实际Qps获取********************

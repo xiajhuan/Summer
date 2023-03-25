@@ -13,7 +13,7 @@
 package me.xiajhuan.summer.core.data;
 
 import lombok.Data;
-import me.xiajhuan.summer.core.enums.DataScopeEnum;
+import me.xiajhuan.summer.core.constant.DataScopeConst;
 import me.xiajhuan.summer.core.enums.UserTypeEnum;
 
 import java.io.Serializable;
@@ -61,7 +61,7 @@ public class LoginUser implements Serializable {
     /**
      * 数据权限
      *
-     * @see DataScopeEnum
+     * @see DataScopeConst.Type
      */
     private Integer dataScope;
 

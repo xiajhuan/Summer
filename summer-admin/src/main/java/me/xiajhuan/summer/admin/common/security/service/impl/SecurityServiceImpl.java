@@ -30,7 +30,7 @@ import me.xiajhuan.summer.core.enums.UserTypeEnum;
 import me.xiajhuan.summer.admin.common.security.mapper.*;
 import me.xiajhuan.summer.admin.common.security.service.SecurityService;
 import me.xiajhuan.summer.core.data.LoginUser;
-import me.xiajhuan.summer.core.enums.CaptchaTypeEnum;
+import me.xiajhuan.summer.admin.common.security.enums.CaptchaTypeEnum;
 import me.xiajhuan.summer.core.utils.ConvertUtil;
 import me.xiajhuan.summer.core.utils.SecurityUtil;
 
@@ -89,12 +89,12 @@ public class SecurityServiceImpl implements SecurityService {
             loginInfo = MapUtil.newHashMap(2, true);
         } else {
             // 让原来的accessToken失效
-            cacheServer.delete(userId(String.valueOf(loginInfo.get(SecurityConst.ACCESS_TOKEN))));
+            cacheServer.delete(userId(String.valueOf(loginInfo.get(SecurityConst.LoginInfo.ACCESS_TOKEN))));
         }
         // 缓存登录信息（覆盖刷新）
-        loginInfo.put(SecurityConst.ACCESS_TOKEN, accessToken);
+        loginInfo.put(SecurityConst.LoginInfo.ACCESS_TOKEN, accessToken);
         LoginUser loginUser = getLoginUser(dto);
-        loginInfo.put(SecurityConst.LOGIN_USER, loginUser);
+        loginInfo.put(SecurityConst.LoginInfo.LOGIN_USER, loginUser);
         cacheServer.setHashTtl(loginInfoKey, loginInfo, cacheTtl);
 
         // 缓存用户权限集合（覆盖刷新）
@@ -119,16 +119,16 @@ public class SecurityServiceImpl implements SecurityService {
         String userIdStr = String.valueOf(userId);
         String loginInfoKey = loginInfo(userIdStr);
         // 获取accessToken
-        String accessToken = String.valueOf(cacheServer.getHash(loginInfoKey, SecurityConst.ACCESS_TOKEN));
+        String accessToken = String.valueOf(cacheServer.getHash(loginInfoKey, SecurityConst.LoginInfo.ACCESS_TOKEN));
 
         // 删除用户ID
         cacheServer.delete(userId(accessToken));
 
         // 删除登录信息
-        cacheServer.delete(loginInfoKey, CacheConst.VALUE_HASH);
+        cacheServer.delete(loginInfoKey, CacheConst.Value.HASH);
 
         // 删除用户权限集合
-        cacheServer.delete(permissions(userIdStr), CacheConst.VALUE_LIST);
+        cacheServer.delete(permissions(userIdStr), CacheConst.Value.LIST);
     }
 
     @Override

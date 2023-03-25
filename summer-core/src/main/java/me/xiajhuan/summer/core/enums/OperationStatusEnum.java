@@ -16,44 +16,27 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * 数据权限枚举
+ * 操作状态枚举
  *
  * @author xiajhuan
- * @date 2023/3/6
+ * @date 2022/11/28
  */
 @Getter
 @AllArgsConstructor
-public enum DataScopeEnum {
+public enum OperationStatusEnum {
 
     /**
-     * 全部
+     * 失败
      */
-    ALL(0, "全部", "所有的数据"),
+    FAIL(0, "失败"),
 
     /**
-     * 基于角色
+     * 成功
      */
-    ROLE_BASED(1, "基于角色", "用户所有角色关联的所有部门的数据"),
-
-    /**
-     * 本部门
-     */
-    DEPT_SELF(2, "本部门", "用户本部门的数据"),
-
-    /**
-     * 本部门及以下
-     */
-    DEPT_AND_CHILD(3, "本部门及以下", "用户本部门及本部门下子部门的数据"),
-
-    /**
-     * 仅本人
-     */
-    SELF(4, "仅本人", "用户自己的数据");
+    SUCCESS(1, "成功");
 
     private Integer value;
 
     private String name;
-
-    private String desc;
 
 }

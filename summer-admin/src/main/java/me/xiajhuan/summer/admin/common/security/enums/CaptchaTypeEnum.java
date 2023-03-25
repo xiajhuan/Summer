@@ -10,7 +10,7 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.core.enums;
+package me.xiajhuan.summer.admin.common.security.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

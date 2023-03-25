@@ -14,8 +14,8 @@ package me.xiajhuan.summer.admin.common.security.controller;
 
 import me.xiajhuan.summer.core.data.Result;
 import me.xiajhuan.summer.core.enums.StatusEnum;
-import me.xiajhuan.summer.admin.common.security.enums.LoginOperationEnum;
-import me.xiajhuan.summer.admin.common.security.enums.LoginStatusEnum;
+import me.xiajhuan.summer.core.enums.LoginOperationEnum;
+import me.xiajhuan.summer.core.enums.LoginStatusEnum;
 import me.xiajhuan.summer.core.exception.BusinessException;
 import me.xiajhuan.summer.core.exception.ErrorCode;
 import me.xiajhuan.summer.admin.common.log.entity.LogLoginEntity;

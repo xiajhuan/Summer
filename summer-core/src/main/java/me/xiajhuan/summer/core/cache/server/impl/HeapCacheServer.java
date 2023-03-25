@@ -158,22 +158,22 @@ public class HeapCacheServer implements CacheServer {
      */
     private void initCache(String type) {
         switch (type) {
-            case CacheConst.VALUE_STRING:
+            case CacheConst.Value.STRING:
                 if (cacheString == null) {
                     cacheString = initCacheInternal(capacityString, strategyString);
                 }
                 break;
-            case CacheConst.VALUE_AUTO:
+            case CacheConst.Value.AUTO:
                 if (cacheAuto == null) {
                     cacheAuto = initCacheInternal(capacityAuto, strategyAuto);
                 }
                 break;
-            case CacheConst.VALUE_HASH:
+            case CacheConst.Value.HASH:
                 if (cacheHash == null) {
                     cacheHash = initCacheInternal(capacityHash, strategyHash);
                 }
                 break;
-            case CacheConst.VALUE_LIST:
+            case CacheConst.Value.LIST:
                 if (cacheList == null) {
                     cacheList = initCacheInternal(capacityList, strategyList);
                 }
@@ -227,22 +227,22 @@ public class HeapCacheServer implements CacheServer {
 
     @Override
     public void delete(String key) {
-        delete(key, CacheConst.VALUE_STRING);
+        delete(key, CacheConst.Value.STRING);
     }
 
     @Override
     public void delete(String key, String valueType) {
         switch (valueType) {
-            case CacheConst.VALUE_STRING:
+            case CacheConst.Value.STRING:
                 cacheString.remove(key);
                 break;
-            case CacheConst.VALUE_AUTO:
+            case CacheConst.Value.AUTO:
                 cacheAuto.remove(key);
                 break;
-            case CacheConst.VALUE_HASH:
+            case CacheConst.Value.HASH:
                 cacheHash.remove(key);
                 break;
-            case CacheConst.VALUE_LIST:
+            case CacheConst.Value.LIST:
                 cacheList.remove(key);
                 break;
             default:
@@ -259,7 +259,7 @@ public class HeapCacheServer implements CacheServer {
 
     @Override
     public void setStringTtl(String key, String value, long ttl) {
-        initCache(CacheConst.VALUE_STRING);
+        initCache(CacheConst.Value.STRING);
 
         if (ttl == -1) {
             cacheString.put(key, value);
@@ -295,7 +295,7 @@ public class HeapCacheServer implements CacheServer {
 
     @Override
     public void increment(String key, int step, long ttl) {
-        initCache(CacheConst.VALUE_AUTO);
+        initCache(CacheConst.Value.AUTO);
 
         if (hasKeyAuto(key)) {
             if (ttl == -1) {
@@ -346,7 +346,7 @@ public class HeapCacheServer implements CacheServer {
 
     @Override
     public void setHashTtl(String key, Map<String, Object> hash, long ttl) {
-        initCache(CacheConst.VALUE_HASH);
+        initCache(CacheConst.Value.HASH);
 
         if (ttl == -1) {
             cacheHash.put(key, hash);
@@ -357,7 +357,7 @@ public class HeapCacheServer implements CacheServer {
 
     @Override
     public void setHashTtl(String key, String field, Object value, long ttl) {
-        initCache(CacheConst.VALUE_HASH);
+        initCache(CacheConst.Value.HASH);
 
         Map<String, Object> hash = MapUtil.newHashMap(1);
         hash.put(field, value);
@@ -401,7 +401,7 @@ public class HeapCacheServer implements CacheServer {
 
     @Override
     public void setListTtl(String key, List<String> list, long ttl) {
-        initCache(CacheConst.VALUE_LIST);
+        initCache(CacheConst.Value.LIST);
 
         if (ttl == -1) {
             cacheList.put(key, list);
@@ -412,7 +412,7 @@ public class HeapCacheServer implements CacheServer {
 
     @Override
     public void setListRPushTtl(String key, String element, long ttl) {
-        initCache(CacheConst.VALUE_LIST);
+        initCache(CacheConst.Value.LIST);
 
         final List<String> elementList;
         if (hasKeyList(key)) {

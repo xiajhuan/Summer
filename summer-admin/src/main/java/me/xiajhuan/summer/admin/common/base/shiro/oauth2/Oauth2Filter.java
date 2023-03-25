@@ -17,7 +17,6 @@ import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
 import me.xiajhuan.summer.core.constant.ContentTypeConst;
 import me.xiajhuan.summer.core.constant.SecurityConst;
-import me.xiajhuan.summer.core.constant.StrTemplateConst;
 import me.xiajhuan.summer.core.data.Result;
 import me.xiajhuan.summer.core.exception.ErrorCode;
 import me.xiajhuan.summer.core.utils.HttpContextUtil;
@@ -86,7 +85,7 @@ public class Oauth2Filter extends AuthenticatingFilter {
             HttpServletResponse httpResponse = (HttpServletResponse) response;
             setResponseHeader((HttpServletRequest) request, httpResponse);
 
-            HttpContextUtil.makeResponse(httpResponse, StrUtil.format(StrTemplateConst.MEDIA_TYPE, ContentTypeConst.JSON, "charset=utf-8"),
+            HttpContextUtil.makeResponse(httpResponse, StrUtil.format("{};{}", ContentTypeConst.JSON, "charset=utf-8"),
                     ErrorCode.UNAUTHORIZED, Result.ofFail(ErrorCode.UNAUTHORIZED));
 
             return false;
@@ -102,7 +101,7 @@ public class Oauth2Filter extends AuthenticatingFilter {
             // 处理登录失败的异常
             Throwable cause = authException.getCause() == null ? authException : authException.getCause();
 
-            HttpContextUtil.makeResponse(httpResponse, StrUtil.format(StrTemplateConst.MEDIA_TYPE, ContentTypeConst.JSON, "charset=utf-8"),
+            HttpContextUtil.makeResponse(httpResponse, StrUtil.format("{};{}", ContentTypeConst.JSON, "charset=utf-8"),
                     ErrorCode.UNAUTHORIZED, Result.ofFail(cause.getMessage()));
         } catch (IOException e) {
             LOGGER.error(e, e.getMessage());
@@ -129,11 +128,11 @@ public class Oauth2Filter extends AuthenticatingFilter {
      */
     private String getAccessToken(HttpServletRequest request) {
         // 从header中获取accessToken
-        String accessToken = request.getHeader(SecurityConst.TOKEN_HEADER);
+        String accessToken = request.getHeader(SecurityConst.Inner.TOKEN_HEADER);
 
         // 如果header中不存在accessToken，则从参数中获取
         if (StrUtil.isBlank(accessToken)) {
-            accessToken = request.getParameter(SecurityConst.TOKEN_HEADER);
+            accessToken = request.getParameter(SecurityConst.Inner.TOKEN_HEADER);
         }
         return accessToken;
     }

@@ -13,7 +13,6 @@
 package me.xiajhuan.summer.core.ratelimiter.strategy.impl;
 
 import cn.hutool.core.util.StrUtil;
-import me.xiajhuan.summer.core.constant.StrTemplateConst;
 import me.xiajhuan.summer.core.ratelimiter.strategy.KeyStrategy;
 import me.xiajhuan.summer.core.utils.HttpContextUtil;
 import org.aspectj.lang.JoinPoint;
@@ -55,7 +54,7 @@ public class UsernameKeyStrategy implements KeyStrategy {
 
     @Override
     public String getKey(JoinPoint point, HttpServletRequest request, String username) {
-        return StrUtil.format(StrTemplateConst.RATE_LIMITER_KEY, HttpContextUtil.getInterfaceSignature(request), username);
+        return StrUtil.format(FORMAT, HttpContextUtil.getInterfaceSignature(request), username);
     }
 
     @Override

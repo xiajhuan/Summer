@@ -49,7 +49,7 @@ public interface MpCommonOperation<D, T> {
     default Page<T> handlePageAndSort(PageAndSort pageAndSort) {
         Page<T> page = new Page<>(pageAndSort.getPageNum(), pageAndSort.getPageSize());
 
-        return QueryParamHandler.handlePageAndSort(pageAndSort, page, SortConst.DEFAULT_FIELD, SortConst.DEFAULT_ORDER, true);
+        return QueryParamHandler.handlePageAndSort(pageAndSort, page, SortConst.Field.DEFAULT, SortConst.Order.DEFAULT, true);
     }
 
     /**

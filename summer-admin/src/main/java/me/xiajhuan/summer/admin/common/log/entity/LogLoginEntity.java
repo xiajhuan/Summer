@@ -15,8 +15,8 @@ package me.xiajhuan.summer.admin.common.log.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
 import me.xiajhuan.summer.core.entity.SimpleBaseEntity;
-import me.xiajhuan.summer.admin.common.security.enums.LoginOperationEnum;
-import me.xiajhuan.summer.admin.common.security.enums.LoginStatusEnum;
+import me.xiajhuan.summer.core.enums.LoginOperationEnum;
+import me.xiajhuan.summer.core.enums.LoginStatusEnum;
 
 /**
  * 登录日志 Entity

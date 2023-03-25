@@ -17,8 +17,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import me.xiajhuan.summer.core.entity.CommonBaseEntity;
-import me.xiajhuan.summer.core.enums.DataScopeEnum;
-import me.xiajhuan.summer.core.enums.GenderEnum;
+import me.xiajhuan.summer.core.constant.DataScopeConst;
+import me.xiajhuan.summer.admin.common.security.enums.GenderEnum;
 import me.xiajhuan.summer.core.enums.StatusEnum;
 import me.xiajhuan.summer.core.enums.UserTypeEnum;
 
@@ -87,7 +87,7 @@ public class SecurityUserEntity extends CommonBaseEntity {
     /**
      * 数据权限
      *
-     * @see DataScopeEnum
+     * @see DataScopeConst.Type
      */
     private Integer dataScope;
 

@@ -66,7 +66,7 @@ public class LogErrorDto extends BaseDto {
      * 创建时间
      */
     @ExcelProperty(value = "创建时间", index = 5)
-    @DateTimeFormat(DateFormatConst.DATE_TIME_PATTERN)
+    @DateTimeFormat(DateFormatConst.DATE_TIME)
     private Date createTime;
 
     /**
@@ -75,5 +75,17 @@ public class LogErrorDto extends BaseDto {
     @ColumnWidth(150)
     @ExcelProperty(value = "异常堆栈信息", index = 6)
     private String errorInfo;
+
+    //*******************查询参数********************
+
+    /**
+     * 创建时间区间（开始）
+     */
+    private Date createTimeStart;
+
+    /**
+     * 创建时间区间（结束）
+     */
+    private Date createTimeEnd;
 
 }

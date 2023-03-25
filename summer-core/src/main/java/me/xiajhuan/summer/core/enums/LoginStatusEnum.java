@@ -16,29 +16,29 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * 性别枚举
+ * 登录状态枚举
  *
  * @author xiajhuan
  * @date 2023/3/3
  */
 @Getter
 @AllArgsConstructor
-public enum GenderEnum {
+public enum LoginStatusEnum {
 
     /**
-     * 男
+     * 失败
      */
-    MALE(0, "男"),
+    FAIL(0, "失败"),
 
     /**
-     * 女
+     * 成功
      */
-    FEMALE(1, "女"),
+    SUCCESS(1, "成功"),
 
     /**
-     * 保密
+     * 账号已停用
      */
-    SECRET(2, "保密");
+    DISABLE(2, "账号已停用");
 
     private Integer value;
 

@@ -23,6 +23,11 @@ import cn.hutool.core.util.StrUtil;
 public abstract class BaseTest {
 
     /**
+     * 匹配失败消息
+     */
+    protected static final String MATCHES_FAIL_MSG = "{} matches {} failed!";
+
+    /**
      * 开始消息
      *
      * @param methodSignature 方法签名
