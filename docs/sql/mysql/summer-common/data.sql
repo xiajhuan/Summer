@@ -14,4 +14,18 @@ INSERT INTO `security_dept` VALUES (1636549260430012417, 'systemUser', '2023-03-
 INSERT INTO `security_dept` VALUES (1636549294890414082, 'systemUser', '2023-03-17 10:05:32', 'systemUser', '2023-03-17 10:05:32', 1636548808003022850, '1636548808003022850,1636548298722242561', '销售部', 2);
 INSERT INTO `security_dept` VALUES (1636549534884294658, 'systemUser', '2023-03-17 10:06:29', 'systemUser', '2023-03-17 10:08:10', 1636549260430012417, '1636548808003022850,1636548298722242561,1636549260430012417', '模具研发部', 0);
 
+-- ----------------------------
+-- Records of locale_international_name
+-- ----------------------------
+INSERT INTO `locale_international_name` VALUES (1637653692089552898, 'systemUser', '2023-03-20 11:14:01', 'systemUser', '2023-03-20 11:14:01', NULL, 'security_menu', 'name', '部门管理', 'zh_CN');
+INSERT INTO `locale_international_name` VALUES (1637653834494562306, 'systemUser', '2023-03-20 11:14:35', 'systemUser', '2023-03-20 11:14:35', NULL, 'security_menu', 'name', 'Department Management', 'en_US');
+INSERT INTO `locale_international_name` VALUES (1637654261814448130, 'systemUser', '2023-03-20 11:16:17', 'systemUser', '2023-03-20 11:16:17', NULL, 'security_menu', 'name', '查看', 'zh_CN');
+INSERT INTO `locale_international_name` VALUES (1637654312922042370, 'systemUser', '2023-03-20 11:16:29', 'systemUser', '2023-03-20 11:16:29', NULL, 'security_menu', 'name', 'View', 'en_US');
+INSERT INTO `locale_international_name` VALUES (1637654466978828290, 'systemUser', '2023-03-20 11:17:06', 'systemUser', '2023-03-20 11:17:06', NULL, 'security_menu', 'name', '新增', 'zh_CN');
+INSERT INTO `locale_international_name` VALUES (1637654533332717570, 'systemUser', '2023-03-20 11:17:22', 'systemUser', '2023-03-20 11:17:22', NULL, 'security_menu', 'name', 'Add', 'en_US');
+INSERT INTO `locale_international_name` VALUES (1637654587099500545, 'systemUser', '2023-03-20 11:17:34', 'systemUser', '2023-03-20 11:17:34', NULL, 'security_menu', 'name', '修改', 'zh_CN');
+INSERT INTO `locale_international_name` VALUES (1637654647296151554, 'systemUser', '2023-03-20 11:17:49', 'systemUser', '2023-03-20 11:17:49', NULL, 'security_menu', 'name', 'Edit', 'en_US');
+INSERT INTO `locale_international_name` VALUES (1637654712052011010, 'systemUser', '2023-03-20 11:18:04', 'systemUser', '2023-03-20 11:18:04', NULL, 'security_menu', 'name', '删除', 'zh_CN');
+INSERT INTO `locale_international_name` VALUES (1637654766259195906, 'systemUser', '2023-03-20 11:18:17', 'systemUser', '2023-03-20 16:18:13', NULL, 'security_menu', 'name', 'Delete', 'en_US');
+
 SET FOREIGN_KEY_CHECKS = 1;
