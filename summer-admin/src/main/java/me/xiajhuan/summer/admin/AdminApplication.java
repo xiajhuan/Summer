@@ -12,11 +12,8 @@
 
 package me.xiajhuan.summer.admin;
 
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.SpringBootConfiguration;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * summer-admin启动类
@@ -24,10 +21,7 @@ import org.springframework.context.annotation.ComponentScan;
  * @author xiajhuan
  * @date 2023/2/23
  */
-@SpringBootConfiguration
-@EnableAutoConfiguration
-@ComponentScan("me.xiajhuan.summer")
-@MapperScan("me.xiajhuan.summer.**.mapper")
+@SpringBootApplication(scanBasePackages = "me.xiajhuan.summer")
 public class AdminApplication {
 
     public static void main(String[] args) {

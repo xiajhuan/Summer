@@ -69,7 +69,7 @@ public class SecurityServiceImpl implements SecurityService {
 
     @Override
     public TokenDto generateTokenAndCache(SecurityUserDto dto) {
-        CacheServer cacheServer = CacheServerFactory.getInstance().getCacheServer();
+        CacheServer cacheServer = CacheServerFactory.getCacheServer();
 
         // 生成accessToken
         String accessToken = SecurityUtil.generateToken();
@@ -114,7 +114,7 @@ public class SecurityServiceImpl implements SecurityService {
 
     @Override
     public void logout(Long userId) {
-        CacheServer cacheServer = CacheServerFactory.getInstance().getCacheServer();
+        CacheServer cacheServer = CacheServerFactory.getCacheServer();
 
         String userIdStr = String.valueOf(userId);
         String loginInfoKey = loginInfo(userIdStr);
@@ -144,14 +144,14 @@ public class SecurityServiceImpl implements SecurityService {
         captcha.write(response.getOutputStream());
 
         // 缓存验证码
-        CacheServerFactory.getInstance().getCacheServer()
+        CacheServerFactory.getCacheServer()
                 .setStringTtl(captchaCode(uuid), captcha.getCode(),
                         setting.getInt("captcha.cache-ttl", "Security", 5) * TimeUnitConst.MINUTE);
     }
 
     @Override
     public boolean validateCaptcha(String uuid, String captcha) {
-        CacheServer cacheServer = CacheServerFactory.getInstance().getCacheServer();
+        CacheServer cacheServer = CacheServerFactory.getCacheServer();
 
         // 获取缓存的验证码
         String captchaKey = captchaCode(uuid);

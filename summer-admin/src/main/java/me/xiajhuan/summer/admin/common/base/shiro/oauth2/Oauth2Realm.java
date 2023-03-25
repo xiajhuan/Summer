@@ -52,7 +52,7 @@ public class Oauth2Realm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         String accessToken = String.valueOf(token.getPrincipal());
 
-        CacheServer cacheServer = CacheServerFactory.getInstance().getCacheServer();
+        CacheServer cacheServer = CacheServerFactory.getCacheServer();
         // 获取用户ID
         String userIdStr = cacheServer.getString(userId(accessToken));
         if (userIdStr == null) {
@@ -72,7 +72,7 @@ public class Oauth2Realm extends AuthorizingRealm {
         LoginUser loginUser = (LoginUser) principals.getPrimaryPrincipal();
 
         // 用户权限集合
-        List<String> permissions = CacheServerFactory.getInstance().getCacheServer()
+        List<String> permissions = CacheServerFactory.getCacheServer()
                 .getList(permissions(String.valueOf(loginUser.getId())));
 
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();

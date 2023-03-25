@@ -28,40 +28,24 @@ import me.xiajhuan.summer.core.utils.SpringContextUtil;
  */
 public class CacheServerFactory {
 
-    //*******************单例处理开始********************
-
-    private CacheServerFactory() {
-    }
-
-    private static volatile CacheServerFactory factory = null;
-
-    public static CacheServerFactory getInstance() {
-        if (factory == null) {
-            synchronized (CacheServerFactory.class) {
-                if (factory == null) {
-                    factory = new CacheServerFactory();
-                }
-            }
-        }
-        return factory;
-    }
-
-    //*******************单例处理结束********************
-
     /**
      * 获取缓存服务
      *
      * @return 缓存服务
      */
-    public CacheServer getCacheServer() {
+    public static CacheServer getCacheServer() {
         String cacheType = SpringContextUtil.getBean("serverCacheProperties", ServerCacheProperties.class).getType();
+        if (StrUtil.isBlank(cacheType)) {
+            // 没有配置则默认为：REDIS
+            cacheType = "REDIS";
+        }
 
-        if (cacheType.equals(CacheConst.Type.HEAP)) {
-            return HeapCacheServer.getInstance();
-        } else if (cacheType.equals(CacheConst.Type.REDIS)) {
+        if (cacheType.equalsIgnoreCase(CacheConst.Type.REDIS)) {
             return RedisCacheServer.getInstance();
+        } else if (cacheType.equalsIgnoreCase(CacheConst.Type.HEAP)) {
+            return HeapCacheServer.getInstance();
         } else {
-            throw new IllegalArgumentException(StrUtil.format("获取缓存服务失败，不支持的缓存类型【{}】", cacheType));
+            throw new IllegalArgumentException(StrUtil.format("不支持的缓存类型【{}】", cacheType));
         }
     }
 

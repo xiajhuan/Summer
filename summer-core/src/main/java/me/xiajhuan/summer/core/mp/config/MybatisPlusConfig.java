@@ -18,6 +18,7 @@ import com.baomidou.mybatisplus.extension.plugins.inner.DataPermissionIntercepto
 import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import me.xiajhuan.summer.core.mp.handler.DataScopeHandler;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -28,6 +29,7 @@ import org.springframework.context.annotation.Configuration;
  * @date 2022/11/26
  */
 @Configuration
+@MapperScan("me.xiajhuan.summer.**.mapper")
 public class MybatisPlusConfig {
 
     /**

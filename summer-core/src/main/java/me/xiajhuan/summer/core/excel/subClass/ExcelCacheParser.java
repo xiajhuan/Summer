@@ -77,7 +77,7 @@ public class ExcelCacheParser<D, T> extends AbstractExcelParser<D, T> {
         LOGGER.info("解析到【{}】条Excel数据，开始缓存！", entityList.size());
 
         List<String> excelList = entityList.stream().map(JSONUtil::toJsonStr).collect(Collectors.toList());
-        CacheServerFactory.getInstance().getCacheServer()
+        CacheServerFactory.getCacheServer()
                 .setListTtl(CoreCacheKey.excelData(currentEntityClass.getSimpleName()), excelList, CACHE_TTL);
 
         LOGGER.info("缓存成功！");

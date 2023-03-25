@@ -163,7 +163,7 @@ public class RateLimiterAspect {
 
             try {
                 // 获取限流key策略实例
-                keyStrategy = StrategyFactory.getInstance().getKeyStrategy(keyStrategyClass);
+                keyStrategy = StrategyFactory.getKeyStrategy(keyStrategyClass);
 
                 rateLimiterKey = keyStrategy.getKey(point, request, SecurityUtil.getCurrentUsername(NonLoggedUserEnum.THIRD_PART.getValue()));
 
@@ -202,7 +202,7 @@ public class RateLimiterAspect {
 
             try {
                 // 获取限流负载均衡策略实例
-                loadBalanceStrategy = StrategyFactory.getInstance().getLoadBalanceStrategy(loadBalanceStrategyClass);
+                loadBalanceStrategy = StrategyFactory.getLoadBalanceStrategy(loadBalanceStrategyClass);
 
                 realQps = loadBalanceStrategy.calRealQps(setQps, nodeNum);
             } catch (Exception e) {

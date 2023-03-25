@@ -23,26 +23,6 @@ import java.lang.reflect.Method;
  */
 public class StrategyFactory {
 
-    //*******************单例处理开始********************
-
-    private StrategyFactory() {
-    }
-
-    private static volatile StrategyFactory factory = null;
-
-    public static StrategyFactory getInstance() {
-        if (factory == null) {
-            synchronized (StrategyFactory.class) {
-                if (factory == null) {
-                    factory = new StrategyFactory();
-                }
-            }
-        }
-        return factory;
-    }
-
-    //*******************单例处理结束********************
-
     /**
      * 获取限流Key策略实例
      *
@@ -52,7 +32,7 @@ public class StrategyFactory {
      * @throws InvocationTargetException 执行目标方法异常
      * @throws IllegalAccessException    非法访问异常
      */
-    public KeyStrategy getKeyStrategy(Class<? extends KeyStrategy> keyStrategyClass) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    public static KeyStrategy getKeyStrategy(Class<? extends KeyStrategy> keyStrategyClass) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         Method method = keyStrategyClass.getMethod("getInstance");
         // 执行静态方法
         return (KeyStrategy) method.invoke(null);
@@ -67,7 +47,7 @@ public class StrategyFactory {
      * @throws InvocationTargetException 执行目标方法异常
      * @throws IllegalAccessException    非法访问异常
      */
-    public LoadBalanceStrategy getLoadBalanceStrategy(Class<? extends LoadBalanceStrategy> loadBalanceStrategy) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    public static LoadBalanceStrategy getLoadBalanceStrategy(Class<? extends LoadBalanceStrategy> loadBalanceStrategy) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         Method method = loadBalanceStrategy.getMethod("getInstance");
         // 执行静态方法
         return (LoadBalanceStrategy) method.invoke(null);
