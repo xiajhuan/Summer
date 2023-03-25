@@ -26,6 +26,7 @@ import me.xiajhuan.summer.admin.common.security.dto.LoginDto;
 import me.xiajhuan.summer.core.data.LoginUser;
 import me.xiajhuan.summer.admin.common.security.service.SecurityService;
 import me.xiajhuan.summer.admin.common.security.service.SecurityUserService;
+import me.xiajhuan.summer.core.ratelimiter.annotation.RateLimiter;
 import me.xiajhuan.summer.core.utils.AssertUtil;
 import me.xiajhuan.summer.core.utils.HttpContextUtil;
 import me.xiajhuan.summer.core.utils.IpUtil;
@@ -67,6 +68,7 @@ public class SecurityController {
      * @throws IOException       I/O异常
      */
     @GetMapping("captcha")
+    @RateLimiter(1)
     public void captcha(String uuid, HttpServletResponse response) throws BusinessException, IOException {
         AssertUtil.isNotBlank("uuid", uuid);
         mainService.buildCaptchaAndCache(response, uuid);
@@ -80,6 +82,7 @@ public class SecurityController {
      * @return 响应结果
      */
     @PostMapping("login")
+    @RateLimiter(0.2)
     public Result<TokenDto> login(@Validated(DefaultGroup.class) LoginDto loginDto, HttpServletRequest request) {
         // 校验验证码
         if (!mainService.validateCaptcha(loginDto.getUuid(), loginDto.getCaptcha())) {

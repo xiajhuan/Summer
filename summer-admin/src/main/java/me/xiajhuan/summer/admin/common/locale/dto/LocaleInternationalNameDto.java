@@ -13,7 +13,6 @@
 package me.xiajhuan.summer.admin.common.locale.dto;
 
 import com.alibaba.excel.annotation.ExcelProperty;
-import com.alibaba.excel.annotation.write.style.ColumnWidth;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import me.xiajhuan.summer.core.dto.BaseDto;
@@ -52,7 +51,6 @@ public class LocaleInternationalNameDto extends BaseDto {
      * 字段值
      */
     @NotBlank(message = "{locale.internationalName.fieldValue.require}", groups = {AddGroup.class, UpdateGroup.class})
-    @ColumnWidth(50)
     @ExcelProperty(value = "字段值", index = 2)
     private String fieldValue;
 
