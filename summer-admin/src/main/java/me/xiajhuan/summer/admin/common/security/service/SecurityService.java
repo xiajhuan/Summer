@@ -59,7 +59,7 @@ public interface SecurityService {
      *
      * @param uuid    唯一标识，作为验证码 Key的一部分
      * @param captcha 验证码
-     * @return 校验结果 true：成功 false：失败
+     * @return 校验结果，true：成功 false：失败
      */
     boolean validateCaptcha(String uuid, String captcha);
 

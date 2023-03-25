@@ -91,6 +91,15 @@ public interface CacheServer {
     void setString(String key, String value);
 
     /**
+     * 设值（String）（禁止覆盖）
+     *
+     * @param key   Key
+     * @param value Value（String）
+     * @return 是否设值成功，true：成功 false：失败
+     */
+    boolean setStringAbsent(String key, String value);
+
+    /**
      * 设值（String）,有过期时间
      *
      * @param key   Key
@@ -98,6 +107,16 @@ public interface CacheServer {
      * @param ttl   过期时间（ms）
      */
     void setStringTtl(String key, String value, long ttl);
+
+    /**
+     * 设值（String）,有过期时间（禁止覆盖）
+     *
+     * @param key   Key
+     * @param value Value（String）
+     * @param ttl   过期时间（ms）
+     * @return 是否设值成功，true：成功 false：失败
+     */
+    boolean setStringTtlAbsent(String key, String value, long ttl);
 
     /**
      * 获取值（String）
@@ -184,6 +203,15 @@ public interface CacheServer {
     void setHash(String key, Map<String, Object> hash);
 
     /**
+     * 设值（Hash）（禁止覆盖）
+     *
+     * @param key  Key
+     * @param hash Value（Hash）
+     * @return 是否设值成功，true：成功 false：失败
+     */
+    boolean setHashAbsent(String key, Map<String, Object> hash);
+
+    /**
      * 设值（Field->Hash）
      *
      * @param key   Key
@@ -191,6 +219,16 @@ public interface CacheServer {
      * @param value Value（String）
      */
     void setHash(String key, String field, Object value);
+
+    /**
+     * 设值（Field->Hash）（禁止覆盖）
+     *
+     * @param key   Key
+     * @param field Field（String）
+     * @param value Value（String）
+     * @return 是否设值成功，true：成功 false：失败
+     */
+    boolean setHashAbsent(String key, String field, Object value);
 
     /**
      * 设值（Hash）,有过期时间
@@ -202,6 +240,16 @@ public interface CacheServer {
     void setHashTtl(String key, Map<String, Object> hash, long ttl);
 
     /**
+     * 设值（Hash）,有过期时间（禁止覆盖）
+     *
+     * @param key  Key
+     * @param hash Value（Hash）
+     * @param ttl  过期时间（ms）
+     * @return 是否设值成功，true：成功 false：失败
+     */
+    boolean setHashTtlAbsent(String key, Map<String, Object> hash, long ttl);
+
+    /**
      * 设值（Field->Hash）,有过期时间
      *
      * @param key   Key
@@ -210,6 +258,17 @@ public interface CacheServer {
      * @param ttl   过期时间（ms）
      */
     void setHashTtl(String key, String field, Object value, long ttl);
+
+    /**
+     * 设值（Field->Hash）,有过期时间（禁止覆盖）
+     *
+     * @param key   Key
+     * @param field Field（String）
+     * @param value Value（String）
+     * @param ttl   过期时间（ms）
+     * @return 是否设值成功，true：成功 false：失败
+     */
+    boolean setHashTtlAbsent(String key, String field, Object value, long ttl);
 
     /**
      * 获取值（Hash）
@@ -239,6 +298,15 @@ public interface CacheServer {
     void setList(String key, List<String> list);
 
     /**
+     * 设值（List）（禁止覆盖）
+     *
+     * @param key  Key
+     * @param list Value（List）
+     * @return 是否设值成功，true：成功 false：失败
+     */
+    boolean setListAbsent(String key, List<String> list);
+
+    /**
      * 设值（Value（List-Element）->rPush（往列表末尾添加））
      *
      * @param key     Key
@@ -254,6 +322,16 @@ public interface CacheServer {
      * @param ttl  过期时间（ms）
      */
     void setListTtl(String key, List<String> list, long ttl);
+
+    /**
+     * 设值（List）,有过期时间（禁止覆盖）
+     *
+     * @param key  Key
+     * @param list Value（List）
+     * @param ttl  过期时间（ms）
+     * @return 是否设值成功，true：成功 false：失败
+     */
+    boolean setListTtlAbsent(String key, List<String> list, long ttl);
 
     /**
      * 设值（Value（List-Element）->rPush（往列表末尾添加））,有过期时间

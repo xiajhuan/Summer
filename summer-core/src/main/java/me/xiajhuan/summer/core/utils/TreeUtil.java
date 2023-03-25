@@ -134,7 +134,7 @@ public class TreeUtil {
      * </p>
      *
      * @param node               节点
-     * @param includeCurrentNode 是否包含当前节点的名称 true：包含 false：不包含
+     * @param includeCurrentNode 是否包含当前节点的名称，true：包含 false：不包含
      * @return 所有父节点名称列表，node为 {@code null} 返回空List
      */
     public static List<CharSequence> getParentsName(Tree<Long> node, boolean includeCurrentNode) {

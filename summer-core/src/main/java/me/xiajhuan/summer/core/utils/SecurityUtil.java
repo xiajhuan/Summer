@@ -60,7 +60,7 @@ public class SecurityUtil {
      *
      * @param plaintext 明文
      * @param hashed    密文
-     * @return 是否匹配 true：匹配 false：不匹配
+     * @return 是否匹配，true：匹配 false：不匹配
      */
     public static boolean matches(String plaintext, String hashed) {
         return BCrypt.checkpw(plaintext, hashed);
