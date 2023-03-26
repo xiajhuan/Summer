@@ -11,11 +11,11 @@
 # remove-strategy：缓存满后对象的移除策略，值：FIF0（先入先出）/LFU（最少使用）/LRU（最近最久未使用）
 heap-string.capacity = 2000
 heap-string.remove-strategy = LRU
-heap-auto.capacity = 1000
+heap-auto.capacity = 2000
 heap-auto.remove-strategy = LRU
-heap-hash.capacity = 500
+heap-hash.capacity = 2000
 heap-hash.remove-strategy = LRU
-heap-list.capacity = 500
+heap-list.capacity = 2000
 heap-list.remove-strategy = LRU
 
 
