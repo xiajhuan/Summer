@@ -60,12 +60,11 @@ public class SecurityDeptController {
      *
      * @param id ID
      * @return 响应结果
-     * @throws BusinessException 业务异常
      */
     @GetMapping("getById")
     @RequiresPermissions("security:dept:getById")
     @LogOperation(OperationConst.GET_BY_ID)
-    public Result<SecurityDeptDto> getById(Long id) throws BusinessException {
+    public Result<SecurityDeptDto> getById(Long id) {
         AssertUtil.isNotNull("id", id);
         return Result.ofSuccess(mainService.getById(id));
     }

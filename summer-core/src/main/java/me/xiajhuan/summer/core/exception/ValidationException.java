@@ -12,6 +12,8 @@
 
 package me.xiajhuan.summer.core.exception;
 
+import me.xiajhuan.summer.core.utils.LocaleUtil;
+
 /**
  * 校验异常
  *
@@ -27,6 +29,17 @@ public class ValidationException extends RuntimeException {
      */
     private ValidationException(String message) {
         super(message);
+    }
+
+    /**
+     * 构建校验异常，消息国际化
+     *
+     * @param code  错误编码 {@link ErrorCode}
+     * @param param 消息填充参数
+     * @return 校验异常
+     */
+    public static ValidationException of(int code, String... param) {
+        return of(LocaleUtil.getI18nMessage(code, param));
     }
 
     /**

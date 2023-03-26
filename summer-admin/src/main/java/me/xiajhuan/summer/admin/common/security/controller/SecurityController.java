@@ -19,7 +19,6 @@ import me.xiajhuan.summer.core.data.Result;
 import me.xiajhuan.summer.core.enums.StatusEnum;
 import me.xiajhuan.summer.core.enums.LoginOperationEnum;
 import me.xiajhuan.summer.core.enums.LoginStatusEnum;
-import me.xiajhuan.summer.core.exception.BusinessException;
 import me.xiajhuan.summer.core.exception.ErrorCode;
 import me.xiajhuan.summer.admin.common.log.entity.LogLoginEntity;
 import me.xiajhuan.summer.admin.common.log.service.LogLoginService;
@@ -70,12 +69,11 @@ public class SecurityController {
      *
      * @param uuid     唯一标识，作为验证码 Key的一部分
      * @param response {@link HttpServletResponse}
-     * @throws BusinessException 业务异常
-     * @throws IOException       I/O异常
+     * @throws IOException I/O异常
      */
     @GetMapping("captcha")
     @RateLimiter(1)
-    public void captcha(String uuid, HttpServletResponse response) throws BusinessException, IOException {
+    public void captcha(String uuid, HttpServletResponse response) throws IOException {
         AssertUtil.isNotBlank("uuid", uuid);
         mainService.buildCaptchaAndCache(response, uuid);
     }
@@ -86,11 +84,10 @@ public class SecurityController {
      * @param loginDto 用户登录Dto
      * @param request  {@link HttpServletRequest}
      * @return 响应结果
-     * @throws BusinessException 业务异常
      */
     @PostMapping("login")
     @RateLimiter(0.5)
-    public Result<TokenDto> login(@Validated(DefaultGroup.class) LoginDto loginDto, HttpServletRequest request) throws BusinessException {
+    public Result<TokenDto> login(@Validated(DefaultGroup.class) LoginDto loginDto, HttpServletRequest request) {
         if (setting.getBool("enable-captcha", "Security", true)) {
             // 校验验证码
             AssertUtil.isNotBlank("uuid", loginDto.getUuid());

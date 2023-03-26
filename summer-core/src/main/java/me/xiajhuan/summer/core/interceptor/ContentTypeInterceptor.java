@@ -19,8 +19,8 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.setting.Setting;
 import me.xiajhuan.summer.core.constant.ContentTypeConst;
 import me.xiajhuan.summer.core.constant.SettingBeanConst;
-import me.xiajhuan.summer.core.exception.BusinessException;
 import me.xiajhuan.summer.core.exception.ErrorCode;
+import me.xiajhuan.summer.core.exception.ValidationException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -63,13 +63,13 @@ public class ContentTypeInterceptor implements HandlerInterceptor {
     }
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws BusinessException {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         String contentType = request.getContentType();
         if (StrUtil.isNotBlank(contentType)) {
             if (StrUtil.startWithAnyIgnoreCase(contentType, ArrayUtil.toArray(contentTypeSet, String.class))) {
                 return true;
             } else {
-                throw BusinessException.of(ErrorCode.UNSUPPORTED_CONTENT_TYPE);
+                throw ValidationException.of(ErrorCode.UNSUPPORTED_CONTENT_TYPE);
             }
         } else {
             // 没有请求体参数

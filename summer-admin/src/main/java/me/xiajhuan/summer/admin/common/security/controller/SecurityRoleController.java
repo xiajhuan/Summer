@@ -17,7 +17,6 @@ import me.xiajhuan.summer.core.constant.OperationConst;
 import me.xiajhuan.summer.core.data.PageAndSort;
 import me.xiajhuan.summer.core.data.PageData;
 import me.xiajhuan.summer.core.data.Result;
-import me.xiajhuan.summer.core.exception.BusinessException;
 import me.xiajhuan.summer.admin.common.security.dto.SecurityRoleDto;
 import me.xiajhuan.summer.admin.common.security.service.SecurityRoleService;
 import me.xiajhuan.summer.core.utils.AssertUtil;
@@ -91,12 +90,11 @@ public class SecurityRoleController {
      *
      * @param ids ID数组
      * @return 响应结果
-     * @throws BusinessException 业务异常
      */
     @DeleteMapping("delete")
     @RequiresPermissions("security:role:delete")
     @LogOperation(OperationConst.DELETE)
-    public Result delete(Long[] ids) throws BusinessException {
+    public Result delete(Long[] ids) {
         AssertUtil.isNotEmpty("ids", ids);
         mainService.delete(ids);
         return Result.ofSuccess();

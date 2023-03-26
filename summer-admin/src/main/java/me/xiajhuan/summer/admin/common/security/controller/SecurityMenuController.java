@@ -17,7 +17,6 @@ import me.xiajhuan.summer.admin.common.security.dto.SecurityMenuDto;
 import me.xiajhuan.summer.admin.common.security.service.SecurityMenuService;
 import me.xiajhuan.summer.core.constant.OperationConst;
 import me.xiajhuan.summer.core.data.Result;
-import me.xiajhuan.summer.core.exception.BusinessException;
 import me.xiajhuan.summer.core.utils.AssertUtil;
 import me.xiajhuan.summer.core.validation.group.AddGroup;
 import me.xiajhuan.summer.core.validation.group.UpdateGroup;
@@ -60,12 +59,11 @@ public class SecurityMenuController {
      *
      * @param id ID
      * @return 响应结果
-     * @throws BusinessException 业务异常
      */
     @GetMapping("getById")
     @RequiresPermissions("security:menu:getById")
     @LogOperation(OperationConst.GET_BY_ID)
-    public Result<SecurityMenuDto> getById(Long id) throws BusinessException {
+    public Result<SecurityMenuDto> getById(Long id) {
         AssertUtil.isNotNull("id", id);
         return Result.ofSuccess(mainService.getById(id));
     }
@@ -103,12 +101,11 @@ public class SecurityMenuController {
      *
      * @param id ID
      * @return 响应结果
-     * @throws BusinessException 业务异常
      */
     @DeleteMapping("delete")
     @RequiresPermissions("security:menu:delete")
     @LogOperation(OperationConst.DELETE)
-    public Result delete(Long id) throws BusinessException {
+    public Result delete(Long id) {
         AssertUtil.isNotNull("id", id);
         mainService.delete(id);
         return Result.ofSuccess();

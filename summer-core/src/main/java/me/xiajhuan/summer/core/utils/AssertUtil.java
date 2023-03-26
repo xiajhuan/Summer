@@ -15,8 +15,8 @@ package me.xiajhuan.summer.core.utils;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
-import me.xiajhuan.summer.core.exception.BusinessException;
 import me.xiajhuan.summer.core.exception.ErrorCode;
+import me.xiajhuan.summer.core.exception.ValidationException;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -62,9 +62,8 @@ public class AssertUtil {
      * 非空断言（Blank），默认参数key：default
      *
      * @param paramValue 参数值
-     * @throws BusinessException 业务异常
      */
-    public static void isNotBlank(CharSequence paramValue) throws BusinessException {
+    public static void isNotBlank(CharSequence paramValue) {
         isNotBlank(DEFAULT_PARAM_KEY, paramValue);
     }
 
@@ -73,9 +72,8 @@ public class AssertUtil {
      *
      * @param paramKey   参数Key
      * @param paramValue 参数值
-     * @throws BusinessException 业务异常
      */
-    public static void isNotBlank(String paramKey, CharSequence paramValue) throws BusinessException {
+    public static void isNotBlank(String paramKey, CharSequence paramValue) {
         paramValueAssert(paramKey, paramValue, BLANK);
     }
 
@@ -83,9 +81,8 @@ public class AssertUtil {
      * 非空断言（Empty），默认参数key：default
      *
      * @param paramValue 参数值
-     * @throws BusinessException 业务异常
      */
-    public static void isNotEmpty(Object paramValue) throws BusinessException {
+    public static void isNotEmpty(Object paramValue) {
         isNotEmpty(DEFAULT_PARAM_KEY, paramValue);
     }
 
@@ -94,9 +91,8 @@ public class AssertUtil {
      *
      * @param paramKey   参数Key
      * @param paramValue 参数值
-     * @throws BusinessException 业务异常
      */
-    public static void isNotEmpty(String paramKey, Object paramValue) throws BusinessException {
+    public static void isNotEmpty(String paramKey, Object paramValue) {
         paramValueAssert(paramKey, paramValue, EMPTY);
     }
 
@@ -104,9 +100,8 @@ public class AssertUtil {
      * 非空断言（Null），默认参数key：default
      *
      * @param paramValue 参数值
-     * @throws BusinessException 业务异常
      */
-    public static void isNotNull(Object paramValue) throws BusinessException {
+    public static void isNotNull(Object paramValue) {
         isNotNull(DEFAULT_PARAM_KEY, paramValue);
     }
 
@@ -115,9 +110,8 @@ public class AssertUtil {
      *
      * @param paramKey   参数Key
      * @param paramValue 参数值
-     * @throws BusinessException 业务异常
      */
-    public static void isNotNull(String paramKey, Object paramValue) throws BusinessException {
+    public static void isNotNull(String paramKey, Object paramValue) {
         paramValueAssert(paramKey, paramValue, NULL);
     }
 
@@ -127,14 +121,13 @@ public class AssertUtil {
      * @param paramKey   参数Key
      * @param paramValue 参数值
      * @param judgeType  判空类型
-     * @throws BusinessException 业务异常
      */
-    private static void paramValueAssert(String paramKey, Object paramValue, String judgeType) throws BusinessException {
+    private static void paramValueAssert(String paramKey, Object paramValue, String judgeType) {
         switch (judgeType) {
             case BLANK:
                 if (paramValue instanceof CharSequence) {
                     if (StrUtil.isBlank((CharSequence) paramValue)) {
-                        throwBusinessException(paramKey);
+                        throwValidationException(paramKey);
                     }
                 } else {
                     throwUnsupportedOperationException(paramValue.getClass().getName(), judgeType);
@@ -147,7 +140,7 @@ public class AssertUtil {
                         || ArrayUtil.isArray(paramValue)
                         || paramValue instanceof Map) {
                     if (ObjectUtil.isEmpty(paramValue)) {
-                        throwBusinessException(paramKey);
+                        throwValidationException(paramKey);
                     }
                 } else {
                     throwUnsupportedOperationException(paramValue.getClass().getName(), judgeType);
@@ -155,7 +148,7 @@ public class AssertUtil {
                 break;
             default:
                 if (paramValue == null) {
-                    throwBusinessException(paramKey);
+                    throwValidationException(paramKey);
                 }
         }
     }
@@ -171,13 +164,12 @@ public class AssertUtil {
     }
 
     /**
-     * 抛出业务异常
+     * 抛出校验异常
      *
      * @param paramKey 参数Key
-     * @throws BusinessException 业务异常
      */
-    private static void throwBusinessException(String paramKey) throws BusinessException {
-        throw BusinessException.of(ErrorCode.NOT_NULL, paramKey);
+    private static void throwValidationException(String paramKey) {
+        throw ValidationException.of(ErrorCode.NOT_NULL, paramKey);
     }
 
 }

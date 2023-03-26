@@ -17,8 +17,8 @@ import cn.hutool.core.text.StrPool;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.setting.Setting;
 import me.xiajhuan.summer.core.constant.SettingBeanConst;
-import me.xiajhuan.summer.core.exception.BusinessException;
 import me.xiajhuan.summer.core.exception.ErrorCode;
+import me.xiajhuan.summer.core.exception.ValidationException;
 import me.xiajhuan.summer.core.utils.HttpContextUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -71,7 +71,7 @@ public class SqlInjectionInterceptor implements HandlerInterceptor {
     }
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws BusinessException {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         if (enable) {
             Map<String, String> paramMap = HttpContextUtil.getParamMap(request);
             if (MapUtil.isNotEmpty(paramMap)) {
@@ -85,13 +85,12 @@ public class SqlInjectionInterceptor implements HandlerInterceptor {
      * 过滤
      *
      * @param paramMap 参数 Map
-     * @throws BusinessException 业务异常
      */
-    private void filter(Map<String, String> paramMap) throws BusinessException {
+    private void filter(Map<String, String> paramMap) {
         for (String value : paramMap.values()) {
             if (StrUtil.containsAnyIgnoreCase(value, illegalKeyWordArray)) {
                 // 参数值包含非法字符
-                throw BusinessException.of(ErrorCode.INVALID_SYMBOL);
+                throw ValidationException.of(ErrorCode.INVALID_SYMBOL);
             }
         }
     }

@@ -17,7 +17,6 @@ import me.xiajhuan.summer.core.constant.OperationConst;
 import me.xiajhuan.summer.core.data.PageAndSort;
 import me.xiajhuan.summer.core.data.PageData;
 import me.xiajhuan.summer.core.data.Result;
-import me.xiajhuan.summer.core.exception.BusinessException;
 import me.xiajhuan.summer.core.exception.ErrorCode;
 import me.xiajhuan.summer.core.exception.FileDownloadException;
 import me.xiajhuan.summer.admin.common.log.dto.LogErrorDto;
@@ -71,7 +70,7 @@ public class LogErrorController {
     @GetMapping("getById")
     @RequiresPermissions("log:error:getById")
     @LogOperation(OperationConst.GET_BY_ID)
-    public Result<LogErrorDto> getById(Long id) throws BusinessException {
+    public Result<LogErrorDto> getById(Long id) {
         AssertUtil.isNotNull("id", id);
         return Result.ofSuccess(mainService.getById(id));
     }

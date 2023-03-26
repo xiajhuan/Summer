@@ -21,7 +21,6 @@ import me.xiajhuan.summer.core.constant.OperationConst;
 import me.xiajhuan.summer.core.data.PageAndSort;
 import me.xiajhuan.summer.core.data.PageData;
 import me.xiajhuan.summer.core.data.Result;
-import me.xiajhuan.summer.core.exception.BusinessException;
 import me.xiajhuan.summer.core.exception.ErrorCode;
 import me.xiajhuan.summer.core.exception.FileDownloadException;
 import me.xiajhuan.summer.core.ratelimiter.annotation.RateLimiter;
@@ -72,12 +71,11 @@ public class LocaleInternationalNameController {
      *
      * @param id ID
      * @return 响应结果
-     * @throws BusinessException 业务异常
      */
     @GetMapping("getById")
     @RequiresPermissions("locale:internationalName:getById")
     @LogOperation(OperationConst.GET_BY_ID)
-    public Result<LocaleInternationalNameDto> getById(Long id) throws BusinessException {
+    public Result<LocaleInternationalNameDto> getById(Long id) {
         AssertUtil.isNotNull("id", id);
         return Result.ofSuccess(mainService.getById(id));
     }
@@ -115,12 +113,11 @@ public class LocaleInternationalNameController {
      *
      * @param ids ID数组
      * @return 响应结果
-     * @throws BusinessException 业务异常
      */
     @DeleteMapping("delete")
     @RequiresPermissions("locale:internationalName:delete")
     @LogOperation(OperationConst.DELETE)
-    public Result delete(Long[] ids) throws BusinessException {
+    public Result delete(Long[] ids) {
         AssertUtil.isNotEmpty("ids", ids);
         mainService.delete(ids);
         return Result.ofSuccess();
