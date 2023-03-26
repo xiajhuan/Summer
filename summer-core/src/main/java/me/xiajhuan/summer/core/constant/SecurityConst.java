@@ -29,6 +29,7 @@ public class SecurityConst {
          * 携带accessToken的请求头名称
          */
         public static final String TOKEN_HEADER = "AccessToken";
+
     }
 
     /**

@@ -57,23 +57,23 @@ public class RedisCacheServer implements CacheServer {
     //*******************Key********************
 
     @Override
-    public boolean hasKeyString(String key) {
+    public boolean hasString(String key) {
         return redisTemplate.hasKey(key);
     }
 
     @Override
-    public boolean hasKeyAuto(String key) {
-        return hasKeyString(key);
+    public boolean hasAuto(String key) {
+        return hasString(key);
     }
 
     @Override
-    public boolean hasKeyHash(String key) {
-        return hasKeyString(key);
+    public boolean hasHash(String key) {
+        return hasString(key);
     }
 
     @Override
-    public boolean hasKeyList(String key) {
-        return hasKeyString(key);
+    public boolean hasList(String key) {
+        return hasString(key);
     }
 
     @Override
@@ -93,7 +93,7 @@ public class RedisCacheServer implements CacheServer {
      * @param ttl 过期时间（ms）
      */
     private void expire(String key, long ttl) {
-        if (ttl > 0) {
+        if (ttl > 0L) {
             redisTemplate.expire(key, ttl, TimeUnit.MILLISECONDS);
         }
     }
@@ -102,16 +102,16 @@ public class RedisCacheServer implements CacheServer {
 
     @Override
     public void setString(String key, String value) {
-        setStringTtl(key, value, -1L);
+        setString(key, value, -1L);
     }
 
     @Override
     public boolean setStringAbsent(String key, String value) {
-        return setStringTtlAbsent(key, value, -1L);
+        return setStringAbsent(key, value, -1L);
     }
 
     @Override
-    public void setStringTtl(String key, String value, long ttl) {
+    public void setString(String key, String value, long ttl) {
         if (ttl == -1L) {
             redisTemplate.opsForValue().set(key, value);
         } else {
@@ -120,7 +120,7 @@ public class RedisCacheServer implements CacheServer {
     }
 
     @Override
-    public boolean setStringTtlAbsent(String key, String value, long ttl) {
+    public boolean setStringAbsent(String key, String value, long ttl) {
         if (ttl == -1L) {
             return redisTemplate.opsForValue().setIfAbsent(key, value);
         } else {
@@ -130,7 +130,7 @@ public class RedisCacheServer implements CacheServer {
 
     @Override
     public String getString(String key) {
-        if (hasKeyString(key)) {
+        if (hasString(key)) {
             return String.valueOf(redisTemplate.opsForValue().get(key));
         }
         return null;
@@ -186,47 +186,47 @@ public class RedisCacheServer implements CacheServer {
 
     @Override
     public void setHash(String key, Map<String, Object> hash) {
-        setHashTtl(key, hash, -1L);
+        setHash(key, hash, -1L);
     }
 
     @Override
     public boolean setHashAbsent(String key, Map<String, Object> hash) {
-        return setHashTtlAbsent(key, hash, -1L);
+        return setHashAbsent(key, hash, -1L);
     }
 
     @Override
     public void setHash(String key, String field, Object value) {
-        setHashTtl(key, field, value, -1L);
+        setHash(key, field, value, -1L);
     }
 
     @Override
     public boolean setHashAbsent(String key, String field, Object value) {
-        return setHashTtlAbsent(key, field, value, -1L);
+        return setHashAbsent(key, field, value, -1L);
     }
 
     @Override
-    public void setHashTtl(String key, Map<String, Object> hash, long ttl) {
+    public void setHash(String key, Map<String, Object> hash, long ttl) {
         redisTemplate.opsForHash().putAll(key, hash);
         expire(key, ttl);
     }
 
     @Override
-    public boolean setHashTtlAbsent(String key, Map<String, Object> hash, long ttl) {
-        if (hasKeyHash(key)) {
+    public boolean setHashAbsent(String key, Map<String, Object> hash, long ttl) {
+        if (hasHash(key)) {
             return false;
         }
-        setHashTtl(key, hash, ttl);
+        setHash(key, hash, ttl);
         return true;
     }
 
     @Override
-    public void setHashTtl(String key, String field, Object value, long ttl) {
+    public void setHash(String key, String field, Object value, long ttl) {
         redisTemplate.opsForHash().put(key, field, value);
         expire(key, ttl);
     }
 
     @Override
-    public boolean setHashTtlAbsent(String key, String field, Object value, long ttl) {
+    public boolean setHashAbsent(String key, String field, Object value, long ttl) {
         boolean flag = redisTemplate.opsForHash().putIfAbsent(key, field, value);
         if (flag) {
             expire(key, ttl);
@@ -237,7 +237,7 @@ public class RedisCacheServer implements CacheServer {
 
     @Override
     public Map<String, Object> getHash(String key) {
-        if (hasKeyHash(key)) {
+        if (hasHash(key)) {
             return redisTemplate.opsForHash().entries(key);
         }
         return null;
@@ -255,43 +255,43 @@ public class RedisCacheServer implements CacheServer {
 
     @Override
     public void setList(String key, List<String> list) {
-        setListTtl(key, list, -1L);
+        setList(key, list, -1L);
     }
 
     @Override
     public boolean setListAbsent(String key, List<String> list) {
-        return setListTtlAbsent(key, list, -1L);
+        return setListAbsent(key, list, -1L);
     }
 
     @Override
     public void setListRPush(String key, String element) {
-        setListRPushTtl(key, element, -1L);
+        setListRPush(key, element, -1L);
     }
 
     @Override
-    public void setListTtl(String key, List<String> list, long ttl) {
+    public void setList(String key, List<String> list, long ttl) {
         redisTemplate.opsForList().rightPushAll(key, list);
         expire(key, ttl);
     }
 
     @Override
-    public boolean setListTtlAbsent(String key, List<String> list, long ttl) {
-        if (hasKeyList(key)) {
+    public boolean setListAbsent(String key, List<String> list, long ttl) {
+        if (hasList(key)) {
             return false;
         }
-        setListTtl(key, list, ttl);
+        setList(key, list, ttl);
         return true;
     }
 
     @Override
-    public void setListRPushTtl(String key, String element, long ttl) {
+    public void setListRPush(String key, String element, long ttl) {
         redisTemplate.opsForList().rightPush(key, element);
         expire(key, ttl);
     }
 
     @Override
     public List<String> getList(String key) {
-        if (hasKeyList(key)) {
+        if (hasList(key)) {
             return redisTemplate.opsForList().range(key, 0, -1);
         }
         return null;
@@ -299,7 +299,7 @@ public class RedisCacheServer implements CacheServer {
 
     @Override
     public String getListElement(String key, int index) {
-        if (hasKeyList(key) && index >= 0 && index < redisTemplate.opsForList().size(key)) {
+        if (hasList(key) && index >= 0 && index < redisTemplate.opsForList().size(key)) {
             return String.valueOf(redisTemplate.opsForList().index(key, index));
         }
         return null;

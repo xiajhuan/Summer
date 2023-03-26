@@ -79,7 +79,7 @@ public class SecurityServiceImpl implements SecurityService {
         long cacheTtl = tokenExpire * TimeUnitConst.HOUR;
         // 缓存用户ID
         String userIdStr = String.valueOf(dto.getId());
-        cacheServer.setStringTtl(userId(accessToken), userIdStr, cacheTtl);
+        cacheServer.setString(userId(accessToken), userIdStr, cacheTtl);
 
         // 获取登录信息
         String loginInfoKey = loginInfo(userIdStr);
@@ -95,14 +95,14 @@ public class SecurityServiceImpl implements SecurityService {
         loginInfo.put(SecurityConst.LoginInfo.ACCESS_TOKEN, accessToken);
         LoginUser loginUser = getLoginUser(dto);
         loginInfo.put(SecurityConst.LoginInfo.LOGIN_USER, loginUser);
-        cacheServer.setHashTtl(loginInfoKey, loginInfo, cacheTtl);
+        cacheServer.setHash(loginInfoKey, loginInfo, cacheTtl);
 
         // 缓存用户权限集合（覆盖刷新）
         Set<String> permissions = getPermissions(loginUser);
         if (permissions == null) {
             permissions = CollUtil.newHashSet(StrUtil.EMPTY);
         }
-        cacheServer.setListTtl(permissions(userIdStr),
+        cacheServer.setList(permissions(userIdStr),
                 ListUtil.toList(permissions), cacheTtl);
 
         TokenDto tokenDto = new TokenDto();
@@ -145,7 +145,7 @@ public class SecurityServiceImpl implements SecurityService {
 
         // 缓存验证码
         CacheServerFactory.getCacheServer()
-                .setStringTtl(captchaCode(uuid), captcha.getCode(),
+                .setString(captchaCode(uuid), captcha.getCode(),
                         setting.getInt("captcha.cache-ttl", "Security", 5) * TimeUnitConst.MINUTE);
     }
 

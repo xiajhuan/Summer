@@ -205,22 +205,22 @@ public class HeapCacheServer implements CacheServer {
     //*******************Key********************
 
     @Override
-    public boolean hasKeyString(String key) {
+    public boolean hasString(String key) {
         return cacheString != null && cacheString.containsKey(key);
     }
 
     @Override
-    public boolean hasKeyAuto(String key) {
+    public boolean hasAuto(String key) {
         return cacheAuto != null && cacheAuto.containsKey(key);
     }
 
     @Override
-    public boolean hasKeyHash(String key) {
+    public boolean hasHash(String key) {
         return cacheHash != null && cacheHash.containsKey(key);
     }
 
     @Override
-    public boolean hasKeyList(String key) {
+    public boolean hasList(String key) {
         return cacheList != null && cacheList.containsKey(key);
     }
 
@@ -253,16 +253,16 @@ public class HeapCacheServer implements CacheServer {
 
     @Override
     public void setString(String key, String value) {
-        setStringTtl(key, value, -1L);
+        setString(key, value, -1L);
     }
 
     @Override
     public boolean setStringAbsent(String key, String value) {
-        return setStringTtlAbsent(key, value, -1L);
+        return setStringAbsent(key, value, -1L);
     }
 
     @Override
-    public void setStringTtl(String key, String value, long ttl) {
+    public void setString(String key, String value, long ttl) {
         initCache(CacheConst.Value.STRING);
 
         if (ttl == -1L) {
@@ -273,17 +273,17 @@ public class HeapCacheServer implements CacheServer {
     }
 
     @Override
-    public boolean setStringTtlAbsent(String key, String value, long ttl) {
-        if (hasKeyString(key)) {
+    public boolean setStringAbsent(String key, String value, long ttl) {
+        if (hasString(key)) {
             return false;
         }
-        setStringTtl(key, value, ttl);
+        setString(key, value, ttl);
         return true;
     }
 
     @Override
     public String getString(String key) {
-        if (hasKeyString(key)) {
+        if (hasString(key)) {
             return cacheString.get(key);
         }
         return null;
@@ -310,7 +310,7 @@ public class HeapCacheServer implements CacheServer {
     public void increment(String key, int step, long ttl) {
         initCache(CacheConst.Value.AUTO);
 
-        if (hasKeyAuto(key)) {
+        if (hasAuto(key)) {
             if (ttl == -1L) {
                 cacheAuto.put(key, cacheAuto.get(key).longValue() + step);
             } else {
@@ -349,26 +349,26 @@ public class HeapCacheServer implements CacheServer {
 
     @Override
     public void setHash(String key, Map<String, Object> hash) {
-        setHashTtl(key, hash, -1L);
+        setHash(key, hash, -1L);
     }
 
     @Override
     public boolean setHashAbsent(String key, Map<String, Object> hash) {
-        return setHashTtlAbsent(key, hash, -1L);
+        return setHashAbsent(key, hash, -1L);
     }
 
     @Override
     public void setHash(String key, String field, Object value) {
-        setHashTtl(key, field, value, -1L);
+        setHash(key, field, value, -1L);
     }
 
     @Override
     public boolean setHashAbsent(String key, String field, Object value) {
-        return setHashTtlAbsent(key, field, value, -1L);
+        return setHashAbsent(key, field, value, -1L);
     }
 
     @Override
-    public void setHashTtl(String key, Map<String, Object> hash, long ttl) {
+    public void setHash(String key, Map<String, Object> hash, long ttl) {
         initCache(CacheConst.Value.HASH);
 
         if (ttl == -1L) {
@@ -379,16 +379,16 @@ public class HeapCacheServer implements CacheServer {
     }
 
     @Override
-    public boolean setHashTtlAbsent(String key, Map<String, Object> hash, long ttl) {
-        if (hasKeyHash(key)) {
+    public boolean setHashAbsent(String key, Map<String, Object> hash, long ttl) {
+        if (hasHash(key)) {
             return false;
         }
-        setHashTtl(key, hash, ttl);
+        setHash(key, hash, ttl);
         return true;
     }
 
     @Override
-    public void setHashTtl(String key, String field, Object value, long ttl) {
+    public void setHash(String key, String field, Object value, long ttl) {
         initCache(CacheConst.Value.HASH);
 
         Map<String, Object> hash = MapUtil.newHashMap(1);
@@ -401,17 +401,17 @@ public class HeapCacheServer implements CacheServer {
     }
 
     @Override
-    public boolean setHashTtlAbsent(String key, String field, Object value, long ttl) {
+    public boolean setHashAbsent(String key, String field, Object value, long ttl) {
         if (getHash(key, field) != null) {
             return false;
         }
-        setHashTtl(key, field, value, ttl);
+        setHash(key, field, value, ttl);
         return true;
     }
 
     @Override
     public Map<String, Object> getHash(String key) {
-        if (hasKeyHash(key)) {
+        if (hasHash(key)) {
             return cacheHash.get(key);
         }
         return null;
@@ -419,7 +419,7 @@ public class HeapCacheServer implements CacheServer {
 
     @Override
     public Object getHash(String key, String field) {
-        if (hasKeyHash(key)) {
+        if (hasHash(key)) {
             Map<String, Object> map = cacheHash.get(key);
             if (MapUtil.isNotEmpty(map)) {
                 return map.get(field);
@@ -432,21 +432,21 @@ public class HeapCacheServer implements CacheServer {
 
     @Override
     public void setList(String key, List<String> list) {
-        setListTtl(key, list, -1L);
+        setList(key, list, -1L);
     }
 
     @Override
     public boolean setListAbsent(String key, List<String> list) {
-        return setListTtlAbsent(key, list, -1L);
+        return setListAbsent(key, list, -1L);
     }
 
     @Override
     public void setListRPush(String key, String element) {
-        setListRPushTtl(key, element, -1L);
+        setListRPush(key, element, -1L);
     }
 
     @Override
-    public void setListTtl(String key, List<String> list, long ttl) {
+    public void setList(String key, List<String> list, long ttl) {
         initCache(CacheConst.Value.LIST);
 
         if (ttl == -1L) {
@@ -457,20 +457,20 @@ public class HeapCacheServer implements CacheServer {
     }
 
     @Override
-    public boolean setListTtlAbsent(String key, List<String> list, long ttl) {
-        if (hasKeyList(key)) {
+    public boolean setListAbsent(String key, List<String> list, long ttl) {
+        if (hasList(key)) {
             return false;
         }
-        setListTtl(key, list, ttl);
+        setList(key, list, ttl);
         return true;
     }
 
     @Override
-    public void setListRPushTtl(String key, String element, long ttl) {
+    public void setListRPush(String key, String element, long ttl) {
         initCache(CacheConst.Value.LIST);
 
         final List<String> elementList;
-        if (hasKeyList(key)) {
+        if (hasList(key)) {
             elementList = getList(key);
         } else {
             elementList = new ArrayList<>(1);
@@ -485,7 +485,7 @@ public class HeapCacheServer implements CacheServer {
 
     @Override
     public List<String> getList(String key) {
-        if (hasKeyList(key)) {
+        if (hasList(key)) {
             return cacheList.get(key);
         }
         return null;
@@ -493,7 +493,7 @@ public class HeapCacheServer implements CacheServer {
 
     @Override
     public String getListElement(String key, int index) {
-        if (hasKeyList(key) && index >= 0) {
+        if (hasList(key) && index >= 0) {
             List<String> elementList = getList(key);
             if (elementList != null && index < elementList.size()) {
                 return elementList.get(index);
