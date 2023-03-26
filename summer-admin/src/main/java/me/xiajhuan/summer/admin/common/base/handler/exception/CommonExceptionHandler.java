@@ -64,7 +64,7 @@ public class CommonExceptionHandler {
     /**
      * 是否记录业务异常（BusinessException）日志
      */
-    private static boolean enableBusinessErrorLog;
+    private boolean enableBusinessErrorLog;
 
     /**
      * 初始化 {@link enableBusinessErrorLog}

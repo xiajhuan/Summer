@@ -62,29 +62,38 @@ public class RateLimiterAspect {
     private Setting setting;
 
     /**
+     * 限流规则缓存
+     * <p>
+     * Key：限流策略Key
+     * Value：{@link com.google.common.util.concurrent.RateLimiter}
+     * </p>
+     */
+    private final ConcurrentMap<String, com.google.common.util.concurrent.RateLimiter> RATE_LIMITER_CACHE = MapUtil.newConcurrentHashMap();
+
+    /**
      * 策略类全限定性类名格式
      */
-    private static final String STRATEGY_CLASS_FORMAT = "me.xiajhuan.summer.core.ratelimiter.strategy.impl.{}";
+    private final String STRATEGY_CLASS_FORMAT = "me.xiajhuan.summer.core.ratelimiter.strategy.impl.{}";
 
     /**
      * 默认限流key策略Class
      */
-    private static Class<? extends KeyStrategy> defaultKeyStrategy = null;
+    private Class<? extends KeyStrategy> defaultKeyStrategy;
 
     /**
      * 默认限流负载均衡策略Class
      */
-    private static Class<? extends LoadBalanceStrategy> defaultLoadBalanceStrategy = null;
+    private Class<? extends LoadBalanceStrategy> defaultLoadBalanceStrategy;
 
     /**
      * 默认服务节点数
      */
-    private static int defaultNodeNum;
+    private int defaultNodeNum;
 
     /**
      * 默认尝试获取令牌的超时时长（ms）
      */
-    private static long defaultTimeout;
+    private long defaultTimeout;
 
     /**
      * 初始化 {@link defaultKeyStrategy} {@link defaultLoadBalanceStrategy} <br>
@@ -112,15 +121,6 @@ public class RateLimiterAspect {
 
         defaultTimeout = setting.getLong("timeout", "RateLimiter", 0L);
     }
-
-    /**
-     * 限流规则缓存
-     * <p>
-     * Key：限流策略Key
-     * Value：{@link com.google.common.util.concurrent.RateLimiter}
-     * </p>
-     */
-    private static final ConcurrentMap<String, com.google.common.util.concurrent.RateLimiter> RATE_LIMITER_CACHE = MapUtil.newConcurrentHashMap();
 
     /**
      * 切入点

@@ -71,7 +71,7 @@ public class DataScopeHandler implements MultiDataPermissionHandler {
     /**
      * 数据权限忽略的表名数组
      */
-    private static String[] dataScopeIgnoreArray = null;
+    private String[] dataScopeIgnoreArray;
 
     /**
      * 初始化 {@link dataScopeIgnoreArray}
