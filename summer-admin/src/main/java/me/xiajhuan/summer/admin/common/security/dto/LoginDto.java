@@ -45,7 +45,6 @@ public class LoginDto implements Serializable {
     /**
      * 验证码
      */
-    @NotBlank(message = "{security.captcha.require}", groups = DefaultGroup.class)
     private String captcha;
 
     /**
@@ -54,7 +53,6 @@ public class LoginDto implements Serializable {
      *
      * @see SecurityCacheKey#captchaCode(String)
      */
-    @NotBlank(message = "{security.uuid.require}", groups = DefaultGroup.class)
     private String uuid;
 
 }

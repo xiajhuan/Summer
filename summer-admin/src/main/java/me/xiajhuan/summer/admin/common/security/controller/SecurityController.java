@@ -12,6 +12,9 @@
 
 package me.xiajhuan.summer.admin.common.security.controller;
 
+import cn.hutool.core.util.StrUtil;
+import cn.hutool.setting.Setting;
+import me.xiajhuan.summer.core.constant.SettingBeanConst;
 import me.xiajhuan.summer.core.data.Result;
 import me.xiajhuan.summer.core.enums.StatusEnum;
 import me.xiajhuan.summer.core.enums.LoginOperationEnum;
@@ -50,6 +53,9 @@ import java.io.IOException;
 @RequestMapping("security")
 public class SecurityController {
 
+    @Resource(name = SettingBeanConst.COMMON)
+    private Setting setting;
+
     @Resource
     private SecurityService mainService;
 
@@ -80,13 +86,20 @@ public class SecurityController {
      * @param loginDto 用户登录Dto
      * @param request  {@link HttpServletRequest}
      * @return 响应结果
+     * @throws BusinessException 业务异常
      */
     @PostMapping("login")
-    @RateLimiter(0.2)
-    public Result<TokenDto> login(@Validated(DefaultGroup.class) LoginDto loginDto, HttpServletRequest request) {
-        // 校验验证码
-        if (!mainService.validateCaptcha(loginDto.getUuid(), loginDto.getCaptcha())) {
-            return Result.ofFail(ErrorCode.CAPTCHA_ERROR);
+    @RateLimiter(0.5)
+    public Result<TokenDto> login(@Validated(DefaultGroup.class) LoginDto loginDto, HttpServletRequest request) throws BusinessException {
+        if (setting.getBool("enable-captcha", "Security", true)) {
+            // 校验验证码
+            AssertUtil.isNotBlank("uuid", loginDto.getUuid());
+            if (StrUtil.isBlank(loginDto.getCaptcha())) {
+                return Result.ofFail(ErrorCode.CAPTCHA_NOT_NULL);
+            }
+            if (!mainService.validateCaptcha(loginDto.getUuid(), loginDto.getCaptcha())) {
+                return Result.ofFail(ErrorCode.CAPTCHA_ERROR);
+            }
         }
 
         // 查询用户

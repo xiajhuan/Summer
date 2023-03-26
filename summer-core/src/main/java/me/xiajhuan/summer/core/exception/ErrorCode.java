@@ -93,9 +93,9 @@ public interface ErrorCode {
     int ACCOUNT_PASSWORD_ERROR = 10004;
 
     /**
-     * 唯一标识不能为空
+     * 验证码不能为空
      */
-    int IDENTIFIER_NOT_NULL = 10006;
+    int CAPTCHA_NOT_NULL = 10006;
 
     /**
      * 验证码不正确
@@ -196,11 +196,6 @@ public interface ErrorCode {
      * 邮件模板不存在
      */
     int MAIL_TEMPLATE_NOT_EXISTS = 10026;
-
-    /**
-     * Redis服务异常
-     */
-    int REDIS_ERROR = 10027;
 
     /**
      * 定时任务失败
