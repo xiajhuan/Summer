@@ -19,15 +19,18 @@ import cn.hutool.log.LogFactory;
 import cn.hutool.setting.Setting;
 import me.xiajhuan.summer.core.constant.SettingBeanConst;
 import me.xiajhuan.summer.core.data.Result;
+import me.xiajhuan.summer.core.dto.BaseDto;
 import me.xiajhuan.summer.core.exception.BusinessException;
 import me.xiajhuan.summer.core.exception.ErrorCode;
 import me.xiajhuan.summer.admin.common.log.service.LogErrorService;
 import me.xiajhuan.summer.core.exception.FileDownloadException;
+import me.xiajhuan.summer.core.exception.ValidationException;
 import me.xiajhuan.summer.core.utils.HttpContextUtil;
 import me.xiajhuan.summer.core.ratelimiter.aspect.RateLimiterAspect;
 import me.xiajhuan.summer.core.interceptor.ContentTypeInterceptor;
 import me.xiajhuan.summer.core.interceptor.SqlInjectionInterceptor;
 import me.xiajhuan.summer.core.utils.LocaleUtil;
+import me.xiajhuan.summer.core.utils.ValidationUtil;
 import org.apache.shiro.authz.AuthorizationException;
 import org.aspectj.lang.JoinPoint;
 import org.springframework.http.HttpStatus;
@@ -36,6 +39,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.validation.annotation.Validated;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -105,10 +109,11 @@ public class CommonExceptionHandler {
     }
 
     /**
-     * 参数校验（Dto类型参数）异常处理
+     * 参数校验（Dto类型）异常处理（注解校验）
      *
      * @param e {@link BindException}
      * @return 响应结果
+     * @see Validated
      */
     @ExceptionHandler(BindException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -119,6 +124,20 @@ public class CommonExceptionHandler {
                 .append("【").append(error.getDefaultMessage()).append("】")
                 .append(StrPool.COMMA));
         return Result.ofFail(message.substring(0, message.length() - 1));
+    }
+
+    /**
+     * 参数校验（Dto类型）异常处理（api校验）
+     *
+     * @param e 校验异常
+     * @return 响应结果
+     * @see ValidationUtil#validate(List, Class[])
+     * @see ValidationUtil#validate(BaseDto, Class[])
+     */
+    @ExceptionHandler(ValidationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Result handleValidationException(ValidationException e) {
+        return Result.ofFail(e.getMessage());
     }
 
     /**
