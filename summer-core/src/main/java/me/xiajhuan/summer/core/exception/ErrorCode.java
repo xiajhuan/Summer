@@ -56,19 +56,24 @@ public interface ErrorCode {
     int SERVER_BUSY = 1002;
 
     /**
+     * 文件上传失败
+     */
+    int FILE_UPLOAD_FAILURE = 1003;
+
+    /**
      * 文件下载失败
      */
-    int FILE_DOWNLOAD_FAILURE = 1003;
+    int FILE_DOWNLOAD_FAILURE = 1004;
 
     /**
      * Excel模板下载失败
      */
-    int EXCEL_TEMPLATE_DOWNLOAD_FAILURE = 1004;
+    int EXCEL_TEMPLATE_DOWNLOAD_FAILURE = 1005;
 
     /**
      * Excel导出失败
      */
-    int EXCEL_EXPORT_FAILURE = 1005;
+    int EXCEL_EXPORT_FAILURE = 1006;
 
     //*******************common********************
 

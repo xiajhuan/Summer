@@ -18,7 +18,6 @@ import me.xiajhuan.summer.core.data.PageAndSort;
 import me.xiajhuan.summer.core.data.PageData;
 import me.xiajhuan.summer.core.data.Result;
 import me.xiajhuan.summer.core.exception.ErrorCode;
-import me.xiajhuan.summer.core.exception.FileDownloadException;
 import me.xiajhuan.summer.admin.common.log.dto.LogErrorDto;
 import me.xiajhuan.summer.admin.common.log.service.LogErrorService;
 import me.xiajhuan.summer.core.ratelimiter.annotation.RateLimiter;
@@ -82,18 +81,14 @@ public class LogErrorController {
      *
      * @param dto      错误日志Dto
      * @param response {@link HttpServletResponse}
-     * @throws FileDownloadException 文件下载异常
      */
     @GetMapping("excelExport")
     @RequiresPermissions("log:error:excelExport")
     @RateLimiter(0.2)
     @LogOperation(OperationConst.EXCEL_EXPORT)
-    public void excelExport(LogErrorDto dto, HttpServletResponse response) throws FileDownloadException {
-        try {
-            ExcelUtil.export(response, "错误日志", "错误日志", mainService.list(dto), LogErrorDto.class);
-        } catch (Exception e) {
-            throw FileDownloadException.of(e, ErrorCode.EXCEL_EXPORT_FAILURE);
-        }
+    public void excelExport(LogErrorDto dto, HttpServletResponse response) {
+        ExcelUtil.export(response, "错误日志", "错误日志", mainService.list(dto),
+                LogErrorDto.class, ErrorCode.EXCEL_EXPORT_FAILURE);
     }
 
 }

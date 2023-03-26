@@ -133,10 +133,9 @@ public class RateLimiterAspect {
      * 前置通知
      *
      * @param point {@link JoinPoint}
-     * @throws BusinessException 业务异常
      */
     @Before("pointcut()")
-    public void before(JoinPoint point) throws BusinessException {
+    public void before(JoinPoint point) {
         // 获取切入点方法上的RateLimiter注解
         RateLimiter rateLimiter = AnnotationUtils.findAnnotation(AopUtil.getMethod(point), RateLimiter.class);
 

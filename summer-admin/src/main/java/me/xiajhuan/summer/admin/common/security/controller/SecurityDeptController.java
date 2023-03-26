@@ -15,7 +15,6 @@ package me.xiajhuan.summer.admin.common.security.controller;
 import me.xiajhuan.summer.admin.common.base.annotation.LogOperation;
 import me.xiajhuan.summer.core.constant.OperationConst;
 import me.xiajhuan.summer.core.data.Result;
-import me.xiajhuan.summer.core.exception.BusinessException;
 import me.xiajhuan.summer.admin.common.security.dto.SecurityDeptDto;
 import me.xiajhuan.summer.admin.common.security.service.SecurityDeptService;
 import me.xiajhuan.summer.core.utils.AssertUtil;
@@ -88,12 +87,11 @@ public class SecurityDeptController {
      *
      * @param dto 部门Dto
      * @return 响应结果
-     * @throws BusinessException 业务异常
      */
     @PutMapping("update")
     @RequiresPermissions("security:dept:update")
     @LogOperation(OperationConst.UPDATE)
-    public Result update(@Validated(UpdateGroup.class) SecurityDeptDto dto) throws BusinessException {
+    public Result update(@Validated(UpdateGroup.class) SecurityDeptDto dto) {
         mainService.update(dto);
         return Result.ofSuccess();
     }
@@ -103,12 +101,11 @@ public class SecurityDeptController {
      *
      * @param id ID
      * @return 响应结果
-     * @throws BusinessException 业务异常
      */
     @DeleteMapping("delete")
     @RequiresPermissions("security:dept:delete")
     @LogOperation(OperationConst.DELETE)
-    public Result delete(Long id) throws BusinessException {
+    public Result delete(Long id) {
         AssertUtil.isNotNull("id", id);
         mainService.delete(id);
         return Result.ofSuccess();

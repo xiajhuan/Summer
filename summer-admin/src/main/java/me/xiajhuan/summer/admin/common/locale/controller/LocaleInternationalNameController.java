@@ -22,7 +22,6 @@ import me.xiajhuan.summer.core.data.PageAndSort;
 import me.xiajhuan.summer.core.data.PageData;
 import me.xiajhuan.summer.core.data.Result;
 import me.xiajhuan.summer.core.exception.ErrorCode;
-import me.xiajhuan.summer.core.exception.FileDownloadException;
 import me.xiajhuan.summer.core.ratelimiter.annotation.RateLimiter;
 import me.xiajhuan.summer.core.utils.AssertUtil;
 import me.xiajhuan.summer.core.utils.ExcelUtil;
@@ -129,18 +128,14 @@ public class LocaleInternationalNameController {
      * Excel模板下载
      *
      * @param response {@link HttpServletResponse}
-     * @throws FileDownloadException 文件下载异常
      */
     @GetMapping("excelTemplate")
     @RequiresPermissions("locale:internationalName:excelTemplate")
     @RateLimiter(0.2)
     @LogOperation(OperationConst.EXCEL_TEMPLATE)
-    public void excelTemplate(HttpServletResponse response) throws FileDownloadException {
-        try {
-            ExcelUtil.export(response, "国际化名称模板", "国际化名称", mainService.excelTemplate(), LocaleInternationalNameDto.class);
-        } catch (Exception e) {
-            throw FileDownloadException.of(e, ErrorCode.EXCEL_TEMPLATE_DOWNLOAD_FAILURE);
-        }
+    public void excelTemplate(HttpServletResponse response) {
+        ExcelUtil.export(response, "国际化名称模板", "国际化名称", mainService.excelTemplate(),
+                LocaleInternationalNameDto.class, ErrorCode.EXCEL_TEMPLATE_DOWNLOAD_FAILURE);
     }
 
     /**
@@ -155,7 +150,8 @@ public class LocaleInternationalNameController {
     @RateLimiter(0.2)
     @LogOperation(OperationConst.EXCEL_IMPORT)
     public Result excelImport(@RequestParam("file") MultipartFile file) throws IOException {
-        ExcelUtil.importDb(file, LocaleInternationalNameDto.class, LocaleInternationalNameExcelDbParser.of(mainService, LocaleInternationalNameEntity.class));
+        ExcelUtil.importDb(file, LocaleInternationalNameDto.class,
+                LocaleInternationalNameExcelDbParser.of(mainService, LocaleInternationalNameEntity.class));
         return Result.ofSuccess();
     }
 
@@ -164,18 +160,14 @@ public class LocaleInternationalNameController {
      *
      * @param dto      国际化名称Dto
      * @param response {@link HttpServletResponse}
-     * @throws FileDownloadException 文件下载异常
      */
     @GetMapping("excelExport")
     @RequiresPermissions("locale:internationalName:excelExport")
     @RateLimiter(0.2)
     @LogOperation(OperationConst.EXCEL_EXPORT)
-    public void excelExport(LocaleInternationalNameDto dto, HttpServletResponse response) throws FileDownloadException {
-        try {
-            ExcelUtil.export(response, "国际化名称", "国际化名称", mainService.list(dto), LocaleInternationalNameDto.class);
-        } catch (Exception e) {
-            throw FileDownloadException.of(e, ErrorCode.EXCEL_EXPORT_FAILURE);
-        }
+    public void excelExport(LocaleInternationalNameDto dto, HttpServletResponse response) {
+        ExcelUtil.export(response, "国际化名称", "国际化名称", mainService.list(dto),
+                LocaleInternationalNameDto.class, ErrorCode.EXCEL_EXPORT_FAILURE);
     }
 
 }

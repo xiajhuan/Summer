@@ -19,6 +19,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import me.xiajhuan.summer.core.excel.AbstractExcelParser;
 import me.xiajhuan.summer.core.excel.subClass.ExcelCacheParser;
 import me.xiajhuan.summer.core.excel.subClass.ExcelDbParser;
+import me.xiajhuan.summer.core.exception.ErrorCode;
+import me.xiajhuan.summer.core.exception.FileDownloadException;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -100,11 +102,11 @@ public class ExcelUtil {
      * @param sheetName sheet名
      * @param dtoList   Dto类型列表
      * @param dtoClass  DtoClass
+     * @param code      错误编码 {@link ErrorCode#EXCEL_TEMPLATE_DOWNLOAD_FAILURE} {@link ErrorCode#EXCEL_EXPORT_FAILURE}
      * @param <D>       Dto类型
-     * @throws IOException I/O异常
      */
-    public static <D> void export(HttpServletResponse response, String fileName, String sheetName, List<D> dtoList,
-                                  Class<D> dtoClass) throws IOException {
+    public static <D> void export(HttpServletResponse response, String fileName, String sheetName,
+                                  List<D> dtoList, Class<D> dtoClass, int code) {
         if (StrUtil.isBlank(fileName)) {
             // 当前日期
             fileName = DateUtil.formatDate(DateUtil.date());
@@ -113,10 +115,15 @@ public class ExcelUtil {
         // 设置响应头
         response.setContentType("application/vnd.ms-excel");
         response.setCharacterEncoding("UTF-8");
-        fileName = URLEncoder.encode(fileName, "UTF-8");
-        response.setHeader("Content-disposition", StrUtil.format("attachment;filename={}.xlsx", fileName));
 
-        EasyExcel.write(response.getOutputStream(), dtoClass).sheet(sheetName).doWrite(dtoList);
+        try {
+            fileName = URLEncoder.encode(fileName, "UTF-8");
+            response.setHeader("Content-disposition", StrUtil.format("attachment;filename={}.xlsx", fileName));
+
+            EasyExcel.write(response.getOutputStream(), dtoClass).sheet(sheetName).doWrite(dtoList);
+        } catch (IOException e) {
+            throw FileDownloadException.of(e, code);
+        }
     }
 
 }

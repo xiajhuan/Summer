@@ -87,7 +87,7 @@ public class SecurityDeptServiceImpl extends ServiceImpl<SecurityDeptMapper, Sec
     }
 
     @Override
-    public void update(SecurityDeptDto dto) throws BusinessException {
+    public void update(SecurityDeptDto dto) {
         SecurityDeptEntity entity = ConvertUtil.convert(dto, SecurityDeptEntity.class);
 
         long id = entity.getId().longValue();
@@ -104,7 +104,7 @@ public class SecurityDeptServiceImpl extends ServiceImpl<SecurityDeptMapper, Sec
     }
 
     @Override
-    public void delete(Long id) throws BusinessException {
+    public void delete(Long id) {
         // 判断是否存在子部门或用户
         if (getChildIdSet(id).size() > 0 || securityUserService.countByDeptId(id) > 0) {
             throw BusinessException.of(ErrorCode.DEPT_SUB_DELETE_ERROR);

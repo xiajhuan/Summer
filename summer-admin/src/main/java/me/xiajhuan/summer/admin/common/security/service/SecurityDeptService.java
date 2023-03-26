@@ -15,7 +15,6 @@ package me.xiajhuan.summer.admin.common.security.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import me.xiajhuan.summer.admin.common.security.dto.SecurityDeptDto;
 import me.xiajhuan.summer.admin.common.security.entity.SecurityDeptEntity;
-import me.xiajhuan.summer.core.exception.BusinessException;
 
 import java.util.List;
 import java.util.Set;
@@ -39,9 +38,9 @@ public interface SecurityDeptService extends IService<SecurityDeptEntity> {
 
     void add(SecurityDeptDto dto);
 
-    void update(SecurityDeptDto dto) throws BusinessException;
+    void update(SecurityDeptDto dto);
 
-    void delete(Long id) throws BusinessException;
+    void delete(Long id);
 
     /**
      * 获取子部门ID集合

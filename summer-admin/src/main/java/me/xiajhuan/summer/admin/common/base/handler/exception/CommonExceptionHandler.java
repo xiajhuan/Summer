@@ -20,11 +20,8 @@ import cn.hutool.setting.Setting;
 import me.xiajhuan.summer.core.constant.SettingBeanConst;
 import me.xiajhuan.summer.core.data.Result;
 import me.xiajhuan.summer.core.dto.BaseDto;
-import me.xiajhuan.summer.core.exception.BusinessException;
-import me.xiajhuan.summer.core.exception.ErrorCode;
+import me.xiajhuan.summer.core.exception.*;
 import me.xiajhuan.summer.admin.common.log.service.LogErrorService;
-import me.xiajhuan.summer.core.exception.FileDownloadException;
-import me.xiajhuan.summer.core.exception.ValidationException;
 import me.xiajhuan.summer.core.utils.HttpContextUtil;
 import me.xiajhuan.summer.core.ratelimiter.aspect.RateLimiterAspect;
 import me.xiajhuan.summer.core.interceptor.ContentTypeInterceptor;
@@ -84,7 +81,7 @@ public class CommonExceptionHandler {
      * @param e {@link Exception}
      * @return 响应结果
      */
-    @ExceptionHandler(value = Exception.class)
+    @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Result handleException(Exception e) {
         // 处理限流切面的异常
@@ -102,7 +99,7 @@ public class CommonExceptionHandler {
      * @param e 业务异常
      * @return 响应结果
      */
-    @ExceptionHandler(value = BusinessException.class)
+    @ExceptionHandler(BusinessException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Result handleBusinessException(BusinessException e) {
         return logAndResponse(e, enableBusinessErrorLog);
@@ -141,15 +138,22 @@ public class CommonExceptionHandler {
     }
 
     /**
-     * 文件下载异常处理
+     * 文件上传/下载异常处理
      *
-     * @param e 文件下载异常
+     * @param uploadException   文件上传异常
+     * @param downloadException 文件下载异常
      */
-    @ExceptionHandler(value = FileDownloadException.class)
+    @ExceptionHandler({FileUploadException.class, FileDownloadException.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public Result handleFileDownloadException(FileDownloadException e) {
-        String msg = e.getMessage();
-        LOGGER.error(e, "文件下载异常【{}】", msg);
+    public Result handleFileUploadOrDownloadException(FileUploadException uploadException, FileDownloadException downloadException) {
+        final String msg;
+        if (uploadException != null) {
+            msg = uploadException.getMessage();
+            LOGGER.error(uploadException, msg);
+        } else {
+            msg = downloadException.getMessage();
+            LOGGER.error(downloadException, msg);
+        }
 
         return Result.ofFail(msg);
     }
@@ -160,7 +164,7 @@ public class CommonExceptionHandler {
      * @return 响应结果
      * @see AuthorizationException
      */
-    @ExceptionHandler(value = AuthorizationException.class)
+    @ExceptionHandler(AuthorizationException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public Result handleAuthorizationException() {
         return Result.ofFail(ErrorCode.FORBIDDEN);

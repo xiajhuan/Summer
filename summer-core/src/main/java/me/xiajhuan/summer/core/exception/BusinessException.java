@@ -20,7 +20,7 @@ import me.xiajhuan.summer.core.utils.LocaleUtil;
  * @author xiajhuan
  * @date 2022/11/26
  */
-public class BusinessException extends Exception {
+public class BusinessException extends RuntimeException {
 
     /**
      * 构造业务异常<br>
