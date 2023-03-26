@@ -259,6 +259,11 @@ public class RedisCacheServer implements CacheServer {
     }
 
     @Override
+    public void setListAppend(String key, List<String> list) {
+        setListAppend(key, list, -1L);
+    }
+
+    @Override
     public boolean setListAbsent(String key, List<String> list) {
         return setListAbsent(key, list, -1L);
     }
@@ -270,6 +275,12 @@ public class RedisCacheServer implements CacheServer {
 
     @Override
     public void setList(String key, List<String> list, long ttl) {
+        delete(key);
+        setListAppend(key, list, ttl);
+    }
+
+    @Override
+    public void setListAppend(String key, List<String> list, long ttl) {
         redisTemplate.opsForList().rightPushAll(key, list);
         expire(key, ttl);
     }
@@ -279,7 +290,7 @@ public class RedisCacheServer implements CacheServer {
         if (hasList(key)) {
             return false;
         }
-        setList(key, list, ttl);
+        setListAppend(key, list, ttl);
         return true;
     }
 
@@ -292,7 +303,7 @@ public class RedisCacheServer implements CacheServer {
     @Override
     public List<String> getList(String key) {
         if (hasList(key)) {
-            return redisTemplate.opsForList().range(key, 0, -1);
+            return redisTemplate.opsForList().range(key, 0L, -1L);
         }
         return null;
     }

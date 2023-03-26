@@ -298,6 +298,14 @@ public interface CacheServer {
     void setList(String key, List<String> list);
 
     /**
+     * 设值（List）（追加）
+     *
+     * @param key  Key
+     * @param list Value（List）
+     */
+    void setListAppend(String key, List<String> list);
+
+    /**
      * 设值（List）（禁止覆盖）
      *
      * @param key  Key
@@ -322,6 +330,15 @@ public interface CacheServer {
      * @param ttl  过期时间（ms）
      */
     void setList(String key, List<String> list, long ttl);
+
+    /**
+     * 设值（List）,有过期时间（追加）
+     *
+     * @param key  Key
+     * @param list Value（List）
+     * @param ttl  过期时间（ms）
+     */
+    void setListAppend(String key, List<String> list, long ttl);
 
     /**
      * 设值（List）,有过期时间（禁止覆盖）

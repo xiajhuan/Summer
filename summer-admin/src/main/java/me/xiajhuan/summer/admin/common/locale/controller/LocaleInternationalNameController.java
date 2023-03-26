@@ -149,7 +149,7 @@ public class LocaleInternationalNameController {
     @RequiresPermissions("locale:internationalName:excelImport")
     @RateLimiter(0.2)
     @LogOperation(OperationConst.EXCEL_IMPORT)
-    public Result excelImport(@RequestParam("file") MultipartFile file) throws IOException {
+    public Result excelImport(MultipartFile file) throws IOException {
         ExcelUtil.importDb(file, LocaleInternationalNameDto.class,
                 LocaleInternationalNameExcelDbParser.of(mainService, LocaleInternationalNameEntity.class));
         return Result.ofSuccess();

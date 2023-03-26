@@ -12,6 +12,7 @@
 
 package me.xiajhuan.summer.core.cache.server.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.setting.Setting;
@@ -371,11 +372,7 @@ public class HeapCacheServer implements CacheServer {
     public void setHash(String key, Map<String, Object> hash, long ttl) {
         initCache(CacheConst.Value.HASH);
 
-        if (ttl == -1L) {
-            cacheHash.put(key, hash);
-        } else {
-            cacheHash.put(key, hash, ttl);
-        }
+        cacheHash(key, hash, ttl);
     }
 
     @Override
@@ -393,11 +390,8 @@ public class HeapCacheServer implements CacheServer {
 
         Map<String, Object> hash = MapUtil.newHashMap(1);
         hash.put(field, value);
-        if (ttl == -1L) {
-            cacheHash.put(key, hash);
-        } else {
-            cacheHash.put(key, hash, ttl);
-        }
+
+        cacheHash(key, hash, ttl);
     }
 
     @Override
@@ -428,11 +422,31 @@ public class HeapCacheServer implements CacheServer {
         return null;
     }
 
+    /**
+     * 缓存Hash
+     *
+     * @param key  Key
+     * @param hash Value（Hash）
+     * @param ttl  过期时间（ms）
+     */
+    private void cacheHash(String key, Map<String, Object> hash, long ttl) {
+        if (ttl == -1L) {
+            cacheHash.put(key, hash);
+        } else {
+            cacheHash.put(key, hash, ttl);
+        }
+    }
+
     //*******************Value-List********************
 
     @Override
     public void setList(String key, List<String> list) {
         setList(key, list, -1L);
+    }
+
+    @Override
+    public void setListAppend(String key, List<String> list) {
+        setListAppend(key, list, -1L);
     }
 
     @Override
@@ -449,11 +463,22 @@ public class HeapCacheServer implements CacheServer {
     public void setList(String key, List<String> list, long ttl) {
         initCache(CacheConst.Value.LIST);
 
-        if (ttl == -1L) {
-            cacheList.put(key, list);
+        cacheList(key, list, ttl);
+    }
+
+    @Override
+    public void setListAppend(String key, List<String> list, long ttl) {
+        initCache(CacheConst.Value.LIST);
+
+        final List<String> elementList;
+        if (hasList(key)) {
+            elementList = getList(key);
+            elementList.addAll(list);
         } else {
-            cacheList.put(key, list, ttl);
+            elementList = CollUtil.newArrayList(list);
         }
+
+        cacheList(key, elementList, ttl);
     }
 
     @Override
@@ -476,11 +501,8 @@ public class HeapCacheServer implements CacheServer {
             elementList = new ArrayList<>(1);
         }
         elementList.add(element);
-        if (ttl == -1L) {
-            cacheList.put(key, elementList);
-        } else {
-            cacheList.put(key, elementList, ttl);
-        }
+
+        cacheList(key, elementList, ttl);
     }
 
     @Override
@@ -500,6 +522,21 @@ public class HeapCacheServer implements CacheServer {
             }
         }
         return null;
+    }
+
+    /**
+     * 缓存List
+     *
+     * @param key  Key
+     * @param list Value（List）
+     * @param ttl  过期时间（ms）
+     */
+    private void cacheList(String key, List<String> list, long ttl) {
+        if (ttl == -1L) {
+            cacheList.put(key, list);
+        } else {
+            cacheList.put(key, list, ttl);
+        }
     }
 
 }
