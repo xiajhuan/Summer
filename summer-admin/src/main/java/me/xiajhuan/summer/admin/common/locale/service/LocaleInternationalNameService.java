@@ -44,4 +44,12 @@ public interface LocaleInternationalNameService extends IService<LocaleInternati
         return null;
     }
 
+    /**
+     * 判断是否存在
+     *
+     * @param entity 国际化名称Entity
+     * @return 返回 {@code null} 则不存在
+     */
+    Integer exist(LocaleInternationalNameEntity entity);
+
 }

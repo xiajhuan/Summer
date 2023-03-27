@@ -27,12 +27,6 @@ import org.apache.ibatis.annotations.Select;
 @InterceptorIgnore
 public interface LocaleInternationalNameMapper extends BaseMapper<LocaleInternationalNameEntity> {
 
-    /**
-     * 判断是否存在
-     *
-     * @param entity 国际化名称Entity
-     * @return 返回 {@code null} 则不存在
-     */
     @Select("SELECT 1 FROM locale_international_name WHERE" +
             " table_name = #{param.tableName} AND field_name = #{param.fieldName} AND" +
             " field_value = #{param.fieldValue} AND locale = #{param.locale} LIMIT 1")

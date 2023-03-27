@@ -113,4 +113,9 @@ public class LocaleInternationalNameServiceImpl extends ServiceImpl<LocaleIntern
         removeByIds(Arrays.stream(ids).collect(Collectors.toSet()));
     }
 
+    @Override
+    public Integer exist(LocaleInternationalNameEntity entity) {
+        return baseMapper.exist(entity);
+    }
+
 }
