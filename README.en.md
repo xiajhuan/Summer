@@ -1,19 +1,19 @@
 # summer-single
 
 #### Description
-Lightweight Background Management System Based on SpringBoot2.7 (Back-end)
-Main features:
-1. Rich personalized configuration items and tool sets, and detailed code comments
-2. Interface normalization, provide ApiPost/PDManer tool documentation
-3. Standardize unified exception/log handling
-4. Lightweight RBAC Permission architecture practice based on Shiro
-5. In-depth practice of Hutool class library and uniform tool call throughout the project
-6. Customize the cache service api, which can be used without Redis in single-node deployment
-7. The extensible interface supports the traffic limiting function and comes with a variety of basic traffic limiting policies
-8. Standard internationalization implementation, including exception message/check message internationalization function
-9.EasyExcel extensible tool encapsulation, one line of code to achieve import and export function
+##### Lightweight Background Management System Based on SpringBoot2.7 (Back-end)
+##### Main features:
+1.  Rich personalized configuration items and tool sets, and detailed code comments
+2.  Interface normalization, provide ApiPost/PDManer tool documentation
+3.  Standardize unified exception/log handling
+4.  Lightweight RBAC Permission architecture practice based on Shiro
+5.  In-depth practice of Hutool class library and uniform tool call throughout the project
+6.  Customize the cache service api, which can be used without Redis in single-node deployment
+7.  The extensible interface supports the traffic limiting function and comes with a variety of basic traffic limiting policies
+8.  Standard internationalization implementation, including exception message/check message internationalization function
+9.  EasyExcel extensible tool encapsulation, one line of code to achieve import and export function
 10. New data permission implementation based on MybatisPlus3.5.2+
-11.StreamAPI practices
+11. StreamAPI practices
 
 #### Software Architecture
 Software architecture description
