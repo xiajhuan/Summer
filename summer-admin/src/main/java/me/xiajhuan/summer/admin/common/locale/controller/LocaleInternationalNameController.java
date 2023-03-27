@@ -34,7 +34,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 /**
  * 国际化名称 Controller
@@ -143,13 +142,12 @@ public class LocaleInternationalNameController {
      *
      * @param file {@link MultipartFile}
      * @return 响应结果
-     * @throws IOException I/O异常
      */
     @PostMapping("excelImport")
     @RequiresPermissions("locale:internationalName:excelImport")
     @RateLimiter(0.2)
     @LogOperation(OperationConst.EXCEL_IMPORT)
-    public Result excelImport(MultipartFile file) throws IOException {
+    public Result excelImport(MultipartFile file) {
         ExcelUtil.importDb(file, LocaleInternationalNameDto.class,
                 LocaleInternationalNameExcelDbParser.of(mainService, LocaleInternationalNameEntity.class));
         return Result.ofSuccess();

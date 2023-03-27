@@ -47,7 +47,7 @@ public class LocaleInternationalNameExcelDbParser extends ExcelDbParser<LocaleIn
     }
 
     @Override
-    protected void handleParsedDataBefore() {
+    protected void handleEntityListBefore() {
 
     }
 

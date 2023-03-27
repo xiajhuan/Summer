@@ -12,12 +12,18 @@
 
 package me.xiajhuan.summer.core.excel.subClass;
 
+import com.alibaba.excel.context.AnalysisContext;
 import com.baomidou.mybatisplus.extension.service.IService;
 import me.xiajhuan.summer.core.excel.AbstractExcelParser;
 
 /**
- * Excel数据解析（保存到Db）<br>
- * note：想个性化前置处理，请自定义Parser继承当前类覆写 {@link AbstractExcelParser#handleParsedDataBefore}
+ * Excel数据解析（保存到Db）
+ * <p>
+ * note：想个性化前/后置处理，请自定义Parser继承当前类，可覆写：
+ * {@link AbstractExcelParser#handleDtoBefore(Object, AnalysisContext)}，
+ * {@link AbstractExcelParser#handleEntityListBefore()}，
+ * {@link AbstractExcelParser#handleEntityListAfter()}
+ * </p>
  *
  * @author xiajhuan
  * @date 2022/12/1
@@ -64,7 +70,7 @@ public class ExcelDbParser<D, T> extends AbstractExcelParser<D, T> {
     }
 
     @Override
-    protected void handleParsedData() {
+    protected void handleEntityList() {
         LOGGER.info("解析到【{}】条Excel数据，开始保存到Db！", entityList.size());
 
         service.saveBatch(entityList);

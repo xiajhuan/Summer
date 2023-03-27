@@ -15,12 +15,14 @@ package me.xiajhuan.summer.core.utils;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.context.AnalysisContext;
 import com.baomidou.mybatisplus.extension.service.IService;
 import me.xiajhuan.summer.core.excel.AbstractExcelParser;
 import me.xiajhuan.summer.core.excel.subClass.ExcelCacheParser;
 import me.xiajhuan.summer.core.excel.subClass.ExcelDbParser;
 import me.xiajhuan.summer.core.exception.ErrorCode;
 import me.xiajhuan.summer.core.exception.FileDownloadException;
+import me.xiajhuan.summer.core.exception.FileUploadException;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -53,17 +55,23 @@ public class ExcelUtil {
     }
 
     /**
-     * 导入（保存到Db，自定义前置处理）
+     * 导入（保存到Db，自定义前/后置处理）
      *
      * @param file           {@link MultipartFile}
      * @param dtoClass       DtoClass
-     * @param customDbParser 自定义DbParser，需继承 {@link ExcelDbParser}，覆写 {@link AbstractExcelParser#handleParsedDataBefore()}
+     * @param customDbParser 自定义DbParser，需继承 {@link ExcelDbParser}，可覆写：
+     *                       {@link AbstractExcelParser#handleDtoBefore(Object, AnalysisContext)}，
+     *                       {@link AbstractExcelParser#handleEntityListBefore()}，
+     *                       {@link AbstractExcelParser#handleEntityListAfter()}
      * @param <D>            Dto类型
      * @param <T>            Entity类型
-     * @throws IOException I/O异常
      */
-    public static <D, T> void importDb(MultipartFile file, Class<D> dtoClass, ExcelDbParser<D, T> customDbParser) throws IOException {
-        EasyExcel.read(file.getInputStream(), dtoClass, customDbParser).sheet().doRead();
+    public static <D, T> void importDb(MultipartFile file, Class<D> dtoClass, ExcelDbParser<D, T> customDbParser) {
+        try {
+            EasyExcel.read(file.getInputStream(), dtoClass, customDbParser).sheet().doRead();
+        } catch (IOException e) {
+            throw FileUploadException.of(e, ErrorCode.FILE_UPLOAD_FAILURE);
+        }
     }
 
     /**
@@ -81,17 +89,23 @@ public class ExcelUtil {
     }
 
     /**
-     * 导入（缓存，自定义前置处理）
+     * 导入（缓存，自定义前/后置处理）
      *
      * @param file              {@link MultipartFile}
      * @param dtoClass          DtoClass
-     * @param customCacheParser 自定义CacheParser，需继承 {@link ExcelCacheParser}，覆写 {@link AbstractExcelParser#handleParsedDataBefore()}
+     * @param customCacheParser 自定义CacheParser，需继承 {@link ExcelCacheParser}，可覆写：
+     *                          {@link AbstractExcelParser#handleDtoBefore(Object, AnalysisContext)}，
+     *                          {@link AbstractExcelParser#handleEntityListBefore()}，
+     *                          {@link AbstractExcelParser#handleEntityListAfter()}
      * @param <D>               Dto类型
      * @param <T>               Entity类型
-     * @throws IOException I/O异常
      */
-    public static <D, T> void importCache(MultipartFile file, Class<D> dtoClass, ExcelCacheParser<D, T> customCacheParser) throws IOException {
-        EasyExcel.read(file.getInputStream(), dtoClass, customCacheParser).sheet().doRead();
+    public static <D, T> void importCache(MultipartFile file, Class<D> dtoClass, ExcelCacheParser<D, T> customCacheParser) {
+        try {
+            EasyExcel.read(file.getInputStream(), dtoClass, customCacheParser).sheet().doRead();
+        } catch (IOException e) {
+            throw FileUploadException.of(e, ErrorCode.FILE_UPLOAD_FAILURE);
+        }
     }
 
     /**

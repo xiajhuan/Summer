@@ -75,6 +75,11 @@ public interface ErrorCode {
      */
     int EXCEL_EXPORT_FAILURE = 1006;
 
+    /**
+     * Excel导入失败，第{0}行：
+     */
+    int EXCEL_IMPORT_FAILURE_PREFIX = 1007;
+
     //*******************common********************
 
     /**

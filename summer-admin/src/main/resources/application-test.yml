@@ -65,9 +65,9 @@ logging:
           # summer-core模块
           core:
             # Excel
-            excel: debug
+            excel: info
             # 限流
-            ratelimiter: debug
+            ratelimiter: info
           # summer-admin模块
           admin:
             # business模块

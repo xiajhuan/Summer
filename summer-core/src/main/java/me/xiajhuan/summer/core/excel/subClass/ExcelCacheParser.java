@@ -14,6 +14,7 @@ package me.xiajhuan.summer.core.excel.subClass;
 
 import cn.hutool.json.JSONUtil;
 import cn.hutool.setting.Setting;
+import com.alibaba.excel.context.AnalysisContext;
 import me.xiajhuan.summer.core.cache.factory.CacheServerFactory;
 import me.xiajhuan.summer.core.cache.key.CoreCacheKey;
 import me.xiajhuan.summer.core.constant.SettingBeanConst;
@@ -28,7 +29,10 @@ import java.util.stream.Collectors;
  * Excel数据解析（缓存）
  * <p>
  * note1：通常情况下不建议将Excel数据缓存，如确有需求，应注意防止OOM
- * note2：想个性化前置处理，请自定义Parser继承当前类覆写 {@link AbstractExcelParser#handleParsedDataBefore}
+ * note2：想个性化前/后置处理，请自定义Parser继承当前类，可覆写：
+ * {@link AbstractExcelParser#handleDtoBefore(Object, AnalysisContext)}，
+ * {@link AbstractExcelParser#handleEntityListBefore()}，
+ * {@link AbstractExcelParser#handleEntityListAfter()}
  * </p>
  *
  * @author xiajhuan
@@ -73,7 +77,7 @@ public class ExcelCacheParser<D, T> extends AbstractExcelParser<D, T> {
     }
 
     @Override
-    protected void handleParsedData() {
+    protected void handleEntityList() {
         LOGGER.info("解析到【{}】条Excel数据，开始缓存！", entityList.size());
 
         List<String> excelList = entityList.stream().map(JSONUtil::toJsonStr).collect(Collectors.toList());
