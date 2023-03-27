@@ -16,7 +16,9 @@ import com.alibaba.excel.annotation.ExcelIgnoreUnannotated;
 import com.alibaba.excel.annotation.write.style.ColumnWidth;
 import com.alibaba.excel.annotation.write.style.ContentRowHeight;
 import com.alibaba.excel.annotation.write.style.HeadRowHeight;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+import me.xiajhuan.summer.core.validation.annotation.Json;
 import me.xiajhuan.summer.core.validation.group.AddGroup;
 import me.xiajhuan.summer.core.validation.group.UpdateGroup;
 
@@ -45,5 +47,12 @@ public abstract class BaseDto implements Serializable {
     @Null(message = "{id.null}", groups = AddGroup.class)
     @NotNull(message = "{id.require}", groups = UpdateGroup.class)
     private Long id;
+
+    /**
+     * Json参数
+     */
+    @Json(groups = {AddGroup.class, UpdateGroup.class})
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String json;
 
 }
