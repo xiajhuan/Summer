@@ -19,7 +19,6 @@ import cn.hutool.log.LogFactory;
 import cn.hutool.setting.Setting;
 import me.xiajhuan.summer.core.constant.SettingBeanConst;
 import me.xiajhuan.summer.core.data.Result;
-import me.xiajhuan.summer.core.dto.BaseDto;
 import me.xiajhuan.summer.core.exception.*;
 import me.xiajhuan.summer.admin.common.log.service.LogErrorService;
 import me.xiajhuan.summer.core.utils.HttpContextUtil;
@@ -120,7 +119,10 @@ public class CommonExceptionHandler {
         fieldErrors.forEach(error -> message.append(error.getField())
                 .append("【").append(error.getDefaultMessage()).append("】")
                 .append(StrPool.COMMA));
-        return Result.ofFail(message.substring(0, message.length() - 1));
+
+        String msg = message.substring(0, message.length() - 1);
+        logDebug(e, msg);
+        return Result.ofFail(msg);
     }
 
     /**
@@ -129,12 +131,14 @@ public class CommonExceptionHandler {
      * @param e 校验异常
      * @return 响应结果
      * @see ValidationUtil#validate(List, Class[])
-     * @see ValidationUtil#validate(BaseDto, Class[])
+     * @see ValidationUtil#validate(Object, Class[])
      */
     @ExceptionHandler(ValidationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Result handleValidationException(ValidationException e) {
-        return Result.ofFail(e.getMessage());
+        String msg = e.getMessage();
+        logDebug(e, msg);
+        return Result.ofFail(msg);
     }
 
     /**
@@ -161,12 +165,13 @@ public class CommonExceptionHandler {
     /**
      * 授权异常处理
      *
+     * @param e {@link AuthorizationException}
      * @return 响应结果
-     * @see AuthorizationException
      */
     @ExceptionHandler(AuthorizationException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
-    public Result handleAuthorizationException() {
+    public Result handleAuthorizationException(AuthorizationException e) {
+        logDebug(e, null);
         return Result.ofFail(ErrorCode.FORBIDDEN);
     }
 
@@ -187,7 +192,8 @@ public class CommonExceptionHandler {
         String msg = e.getMessage();
         if (isSpecialBusinessException) {
             // 不记录异常堆栈信息
-            LOGGER.error(msg);
+            LOGGER.info(msg);
+            logDebug(e, null);
         } else {
             LOGGER.error(e, msg);
         }
@@ -221,6 +227,22 @@ public class CommonExceptionHandler {
             }
         }
         return false;
+    }
+
+    /**
+     * 记录debug日志
+     *
+     * @param e   {@link Exception}
+     * @param msg 消息
+     */
+    private void logDebug(Exception e, String msg) {
+        if (LOGGER.isDebugEnabled()) {
+            if (StrUtil.isNotBlank(msg)) {
+                LOGGER.debug(e, msg);
+            } else {
+                LOGGER.debug(e);
+            }
+        }
     }
 
 }

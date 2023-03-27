@@ -73,7 +73,11 @@ logging:
             # business模块
             business: info
             # common模块
-            common: info
+            common:
+              base:
+                handler:
+                  # 异常处理
+                  exception: info
             # open模块
             open: info
 

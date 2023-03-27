@@ -14,7 +14,6 @@ package me.xiajhuan.summer.core.utils;
 
 import cn.hutool.core.text.StrPool;
 import cn.hutool.core.util.StrUtil;
-import me.xiajhuan.summer.core.dto.BaseDto;
 import me.xiajhuan.summer.core.exception.ValidationException;
 import me.xiajhuan.summer.core.validation.group.AddGroup;
 import me.xiajhuan.summer.core.validation.group.UpdateGroup;
@@ -52,7 +51,7 @@ public class ValidationUtil {
      * @param group   校验分组 {@link AddGroup} {@link UpdateGroup} {@link DefaultGroup}
      * @param <D>     Dto类型
      */
-    public static <D extends BaseDto> void validate(List<D> dtoList, Class<?>... group) {
+    public static <D> void validate(List<D> dtoList, Class<?>... group) {
         for (D dto : dtoList) {
             validate(dto, group);
         }
@@ -65,7 +64,7 @@ public class ValidationUtil {
      * @param group 校验分组 {@link AddGroup} {@link UpdateGroup} {@link DefaultGroup}
      * @param <D>   Dto类型
      */
-    public static <D extends BaseDto> void validate(D dto, Class<?>... group) {
+    public static <D> void validate(D dto, Class<?>... group) {
         Set<ConstraintViolation<D>> constraintViolations = validator.validate(dto, group);
         if (constraintViolations.size() > 0) {
             StringBuilder message = StrUtil.builder();
