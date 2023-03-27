@@ -20,7 +20,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import me.xiajhuan.summer.core.constant.DataSourceConst;
-import me.xiajhuan.summer.core.mp.standard.MpCommonOperation;
+import me.xiajhuan.summer.core.mp.custom.MpHelper;
 import me.xiajhuan.summer.admin.common.security.dto.SecurityUserDto;
 import me.xiajhuan.summer.admin.common.security.entity.SecurityUserEntity;
 import me.xiajhuan.summer.admin.common.security.mapper.SecurityUserMapper;
@@ -36,9 +36,9 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @DS(DataSourceConst.COMMON)
-public class SecurityUserServiceImpl extends ServiceImpl<SecurityUserMapper, SecurityUserEntity> implements SecurityUserService, MpCommonOperation<SecurityUserDto, SecurityUserEntity> {
+public class SecurityUserServiceImpl extends ServiceImpl<SecurityUserMapper, SecurityUserEntity> implements SecurityUserService, MpHelper<SecurityUserDto, SecurityUserEntity> {
 
-    //*******************MpCommonOperation覆写开始********************
+    //*******************MpHelper覆写开始********************
 
     @Override
     public LambdaQueryWrapper<SecurityUserEntity> getSelectWrapper(Class<SecurityUserEntity> entityClass) {
@@ -78,7 +78,7 @@ public class SecurityUserServiceImpl extends ServiceImpl<SecurityUserMapper, Sec
         return pageResult;
     }
 
-    //*******************MpCommonOperation覆写结束********************
+    //*******************MpHelper覆写结束********************
 
     @Override
     public SecurityUserDto getByUsername(String username) {

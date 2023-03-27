@@ -19,7 +19,7 @@ import cn.hutool.setting.Setting;
 import me.xiajhuan.summer.core.constant.SettingBeanConst;
 import me.xiajhuan.summer.core.enums.LocaleSupportEnum;
 import org.springframework.context.MessageSource;
-import me.xiajhuan.summer.core.exception.ErrorCode;
+import me.xiajhuan.summer.core.exception.code.ErrorCode;
 import org.springframework.http.HttpHeaders;
 
 import javax.servlet.http.HttpServletRequest;

@@ -18,7 +18,7 @@ import cn.hutool.log.LogFactory;
 import me.xiajhuan.summer.core.constant.ContentTypeConst;
 import me.xiajhuan.summer.core.constant.SecurityConst;
 import me.xiajhuan.summer.core.data.Result;
-import me.xiajhuan.summer.core.exception.ErrorCode;
+import me.xiajhuan.summer.core.exception.code.ErrorCode;
 import me.xiajhuan.summer.core.utils.HttpContextUtil;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;

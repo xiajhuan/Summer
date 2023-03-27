@@ -10,7 +10,7 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.core.exception;
+package me.xiajhuan.summer.core.exception.code;
 
 /**
  * common和business模块的错误编码，由5位数字组成，前2位为模块编码，后3位为业务编码<br>

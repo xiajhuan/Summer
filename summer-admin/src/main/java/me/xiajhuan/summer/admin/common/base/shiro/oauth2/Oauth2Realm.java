@@ -16,7 +16,7 @@ import cn.hutool.core.collection.CollUtil;
 import me.xiajhuan.summer.core.cache.factory.CacheServerFactory;
 import me.xiajhuan.summer.core.cache.server.CacheServer;
 import me.xiajhuan.summer.core.constant.SecurityConst;
-import me.xiajhuan.summer.core.exception.ErrorCode;
+import me.xiajhuan.summer.core.exception.code.ErrorCode;
 import me.xiajhuan.summer.core.data.LoginUser;
 import me.xiajhuan.summer.core.utils.LocaleUtil;
 import org.apache.shiro.authc.*;

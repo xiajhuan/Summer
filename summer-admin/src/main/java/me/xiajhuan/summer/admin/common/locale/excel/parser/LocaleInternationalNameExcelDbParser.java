@@ -15,7 +15,11 @@ package me.xiajhuan.summer.admin.common.locale.excel.parser;
 import com.baomidou.mybatisplus.extension.service.IService;
 import me.xiajhuan.summer.admin.common.locale.dto.LocaleInternationalNameDto;
 import me.xiajhuan.summer.admin.common.locale.entity.LocaleInternationalNameEntity;
+import me.xiajhuan.summer.admin.common.locale.mapper.LocaleInternationalNameMapper;
 import me.xiajhuan.summer.core.excel.subClass.ExcelDbParser;
+import me.xiajhuan.summer.core.utils.SpringContextUtil;
+
+import java.util.stream.Collectors;
 
 /**
  * 国际化名称Excel数据解析（保存到Db）
@@ -25,6 +29,8 @@ import me.xiajhuan.summer.core.excel.subClass.ExcelDbParser;
  */
 public class LocaleInternationalNameExcelDbParser extends ExcelDbParser<LocaleInternationalNameDto, LocaleInternationalNameEntity> {
 
+    private LocaleInternationalNameMapper localeInternationalNameMapper;
+
     /**
      * 构造LocaleInternationalNameExcelDbParser
      *
@@ -33,6 +39,8 @@ public class LocaleInternationalNameExcelDbParser extends ExcelDbParser<LocaleIn
      */
     private LocaleInternationalNameExcelDbParser(IService<LocaleInternationalNameEntity> service, Class<LocaleInternationalNameEntity> currentEntityClass) {
         super(service, currentEntityClass);
+
+        localeInternationalNameMapper = SpringContextUtil.getBean("localeInternationalNameMapper", LocaleInternationalNameMapper.class);
     }
 
     /**
@@ -48,7 +56,10 @@ public class LocaleInternationalNameExcelDbParser extends ExcelDbParser<LocaleIn
 
     @Override
     protected void handleEntityListBefore() {
-
+        // 去重/过滤
+        entityList = entityList.stream().distinct()
+                .filter(entity -> localeInternationalNameMapper.exist(entity) == null)
+                .collect(Collectors.toList());
     }
 
 }

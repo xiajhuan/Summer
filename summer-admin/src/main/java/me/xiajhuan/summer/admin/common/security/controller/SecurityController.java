@@ -19,7 +19,7 @@ import me.xiajhuan.summer.core.data.Result;
 import me.xiajhuan.summer.core.enums.StatusEnum;
 import me.xiajhuan.summer.core.enums.LoginOperationEnum;
 import me.xiajhuan.summer.core.enums.LoginStatusEnum;
-import me.xiajhuan.summer.core.exception.ErrorCode;
+import me.xiajhuan.summer.core.exception.code.ErrorCode;
 import me.xiajhuan.summer.admin.common.log.entity.LogLoginEntity;
 import me.xiajhuan.summer.admin.common.log.service.LogLoginService;
 import me.xiajhuan.summer.admin.common.security.dto.SecurityUserDto;
@@ -155,7 +155,7 @@ public class SecurityController {
      */
     private void saveLog(String loginUser, LoginOperationEnum operationEnum, LoginStatusEnum statusEnum, HttpServletRequest request) {
         // 构建登录日志
-        LogLoginEntity log = LogLoginEntity.builder()
+        LogLoginEntity entity = LogLoginEntity.builder()
                 .loginUser(loginUser)
                 .operation(operationEnum.getValue())
                 .status(statusEnum.getValue())
@@ -163,7 +163,7 @@ public class SecurityController {
                 .ip(IpUtil.getRequestIp(request)).build();
 
         // 异步保存日志
-        logLoginService.saveAsync(log);
+        logLoginService.saveAsync(entity);
     }
 
 }

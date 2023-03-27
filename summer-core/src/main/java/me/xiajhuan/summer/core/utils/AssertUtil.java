@@ -15,7 +15,7 @@ package me.xiajhuan.summer.core.utils;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
-import me.xiajhuan.summer.core.exception.ErrorCode;
+import me.xiajhuan.summer.core.exception.code.ErrorCode;
 import me.xiajhuan.summer.core.exception.ValidationException;
 
 import java.util.Iterator;

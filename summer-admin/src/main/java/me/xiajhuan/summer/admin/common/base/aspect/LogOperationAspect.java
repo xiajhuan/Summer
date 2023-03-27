@@ -105,7 +105,7 @@ public class LogOperationAspect {
         HttpServletRequest request = HttpContextUtil.getHttpServletRequest();
 
         // 构建操作日志
-        LogOperationEntity log = LogOperationEntity.builder()
+        LogOperationEntity entity = LogOperationEntity.builder()
                 .operation(StrUtil.format("【{}】{}", logOperation.name(), requestMapping.path()))
                 .operationGroup(getOperationGroup(logOperation.name()))
                 .operateBy(SecurityUtil.getCurrentUsername(NonLoggedUserEnum.THIRD_PART.getValue()))
@@ -118,11 +118,11 @@ public class LogOperationAspect {
 
         if (logOperation.saveRequestParam()) {
             // 请求参数
-            log.setRequestParams(HttpContextUtil.getParam(point, request));
+            entity.setRequestParams(HttpContextUtil.getParam(point, request));
         }
 
         // 异步保存日志
-        logOperationService.saveAsync(log);
+        logOperationService.saveAsync(entity);
     }
 
     /**

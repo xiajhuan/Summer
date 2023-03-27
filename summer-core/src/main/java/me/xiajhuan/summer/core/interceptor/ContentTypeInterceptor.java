@@ -19,7 +19,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.setting.Setting;
 import me.xiajhuan.summer.core.constant.ContentTypeConst;
 import me.xiajhuan.summer.core.constant.SettingBeanConst;
-import me.xiajhuan.summer.core.exception.ErrorCode;
+import me.xiajhuan.summer.core.exception.code.ErrorCode;
 import me.xiajhuan.summer.core.exception.ValidationException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;

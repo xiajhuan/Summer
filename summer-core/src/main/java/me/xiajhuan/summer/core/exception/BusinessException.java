@@ -12,6 +12,7 @@
 
 package me.xiajhuan.summer.core.exception;
 
+import me.xiajhuan.summer.core.exception.code.ErrorCode;
 import me.xiajhuan.summer.core.utils.LocaleUtil;
 
 /**

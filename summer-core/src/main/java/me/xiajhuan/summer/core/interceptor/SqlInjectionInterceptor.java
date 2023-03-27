@@ -17,7 +17,7 @@ import cn.hutool.core.text.StrPool;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.setting.Setting;
 import me.xiajhuan.summer.core.constant.SettingBeanConst;
-import me.xiajhuan.summer.core.exception.ErrorCode;
+import me.xiajhuan.summer.core.exception.code.ErrorCode;
 import me.xiajhuan.summer.core.exception.ValidationException;
 import me.xiajhuan.summer.core.utils.HttpContextUtil;
 import org.springframework.stereotype.Component;

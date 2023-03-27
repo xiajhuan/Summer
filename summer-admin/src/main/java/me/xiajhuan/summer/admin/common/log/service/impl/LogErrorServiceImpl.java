@@ -31,7 +31,7 @@ import me.xiajhuan.summer.admin.common.log.dto.LogErrorDto;
 import me.xiajhuan.summer.admin.common.log.entity.LogErrorEntity;
 import me.xiajhuan.summer.admin.common.log.mapper.LogErrorMapper;
 import me.xiajhuan.summer.admin.common.log.service.LogErrorService;
-import me.xiajhuan.summer.core.mp.standard.MpCommonOperation;
+import me.xiajhuan.summer.core.mp.custom.MpHelper;
 import me.xiajhuan.summer.core.utils.ConvertUtil;
 import me.xiajhuan.summer.core.utils.HttpContextUtil;
 import me.xiajhuan.summer.core.utils.IpUtil;
@@ -52,12 +52,12 @@ import java.util.stream.Collectors;
  */
 @Service
 @DS(DataSourceConst.COMMON)
-public class LogErrorServiceImpl extends ServiceImpl<LogErrorMapper, LogErrorEntity> implements LogErrorService, MpCommonOperation<LogErrorDto, LogErrorEntity> {
+public class LogErrorServiceImpl extends ServiceImpl<LogErrorMapper, LogErrorEntity> implements LogErrorService, MpHelper<LogErrorDto, LogErrorEntity> {
 
     @Resource(name = SettingBeanConst.COMMON)
     private Setting setting;
 
-    //*******************MpCommonOperation覆写开始********************
+    //*******************MpHelper覆写开始********************
 
     @Override
     public LambdaQueryWrapper<LogErrorEntity> getSelectWrapper(Class<LogErrorEntity> entityClass) {
@@ -99,7 +99,7 @@ public class LogErrorServiceImpl extends ServiceImpl<LogErrorMapper, LogErrorEnt
         return pageResult;
     }
 
-    //*******************MpCommonOperation覆写结束********************
+    //*******************MpHelper覆写结束********************
 
     @Override
     public IPage<LogErrorDto> page(PageAndSort pageAndSort, LogErrorDto dto) {
@@ -123,7 +123,7 @@ public class LogErrorServiceImpl extends ServiceImpl<LogErrorMapper, LogErrorEnt
     @Override
     public void saveAsync(Exception e, HttpServletRequest request) {
         // 构建错误日志
-        LogErrorEntity log = LogErrorEntity.builder()
+        LogErrorEntity entity = LogErrorEntity.builder()
                 .ip(IpUtil.getRequestIp(request))
                 .userAgent(HttpContextUtil.getUserAgent(request))
                 .requestUri(request.getRequestURI())
@@ -132,13 +132,14 @@ public class LogErrorServiceImpl extends ServiceImpl<LogErrorMapper, LogErrorEnt
         // 请求参数，note：这里只能获取Query/FORM-DATA参数
         Map<String, String> params = HttpContextUtil.getParamMap(request);
         if (MapUtil.isNotEmpty(params)) {
-            log.setRequestParams(JSONUtil.toJsonStr(params));
+            entity.setRequestParams(JSONUtil.toJsonStr(params));
         }
 
         // 异常堆栈信息
-        log.setErrorInfo(ExceptionUtil.stacktraceToString(e, setting.getInt("error.stacktrace-length", "Log", 65535)));
+        entity.setErrorInfo(ExceptionUtil.stacktraceToString(e,
+                setting.getInt("error.stacktrace-length", "Log", 65535)));
 
-        save(log);
+        save(entity);
     }
 
     @Override
@@ -146,7 +147,8 @@ public class LogErrorServiceImpl extends ServiceImpl<LogErrorMapper, LogErrorEnt
         // 删除错误日志
         LambdaQueryWrapper<LogErrorEntity> queryWrapper = Wrappers.lambdaQuery();
         queryWrapper.select(LogErrorEntity::getId);
-        queryWrapper.lt(LogErrorEntity::getCreateTime, DateUtil.offsetDay(DateUtil.date(), setting.getInt("error.clear-days-limit", "Log", -90)));
+        queryWrapper.lt(LogErrorEntity::getCreateTime, DateUtil.offsetDay(DateUtil.date(),
+                setting.getInt("error.clear-days-limit", "Log", -90)));
 
         List<LogErrorEntity> entityList = list(queryWrapper);
 

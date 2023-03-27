@@ -34,8 +34,8 @@ captcha.cache-ttl = 5
 
 # 定时任务配置
 [Schedule]
+# note：定时任务在服务多节点部署时会重复执行，请注意避免多节点同时开启相同的任务
 # 是否开启基本定时任务（总开关），值：true/false
-# note：基本定时任务在服务多节点部署时会重复执行，请注意避免多节点同时开启相同的任务
 enable-base = false
 # 基本定时任务线程池核心线程数，note：建议和任务数一致
 base.core-pool-size = 2

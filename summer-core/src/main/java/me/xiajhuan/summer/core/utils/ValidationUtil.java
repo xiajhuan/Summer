@@ -15,7 +15,7 @@ package me.xiajhuan.summer.core.utils;
 import cn.hutool.core.lang.Dict;
 import cn.hutool.core.text.StrPool;
 import cn.hutool.core.util.StrUtil;
-import me.xiajhuan.summer.core.exception.ErrorCode;
+import me.xiajhuan.summer.core.exception.code.ErrorCode;
 import me.xiajhuan.summer.core.exception.ValidationException;
 import me.xiajhuan.summer.core.validation.group.AddGroup;
 import me.xiajhuan.summer.core.validation.group.UpdateGroup;

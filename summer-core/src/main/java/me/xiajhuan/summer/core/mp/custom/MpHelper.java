@@ -10,7 +10,7 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.core.mp.standard;
+package me.xiajhuan.summer.core.mp.custom;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -23,13 +23,16 @@ import me.xiajhuan.summer.core.entity.SimpleBaseEntity;
 import me.xiajhuan.summer.core.mp.handler.QueryParamHandler;
 
 /**
- * MybatisPlus通用操作<br>
- * note：非侵入式封装，可根据实际需求选择是否使用
+ * MybatisPlus Helper
+ * <p>
+ * 非侵入式封装了MybatisPlus的一些通用操作，
+ * 可根据实际需求自行选择是否使用
+ * </p>
  *
  * @author xiajhuan
  * @date 2022/11/21
  */
-public interface MpCommonOperation<D, T> {
+public interface MpHelper<D, T> {
 
     /**
      * 当前EntityClass

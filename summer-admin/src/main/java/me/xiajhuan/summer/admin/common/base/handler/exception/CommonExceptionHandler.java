@@ -21,6 +21,7 @@ import me.xiajhuan.summer.core.constant.SettingBeanConst;
 import me.xiajhuan.summer.core.data.Result;
 import me.xiajhuan.summer.core.exception.*;
 import me.xiajhuan.summer.admin.common.log.service.LogErrorService;
+import me.xiajhuan.summer.core.exception.code.ErrorCode;
 import me.xiajhuan.summer.core.utils.HttpContextUtil;
 import me.xiajhuan.summer.core.ratelimiter.aspect.RateLimiterAspect;
 import me.xiajhuan.summer.core.interceptor.ContentTypeInterceptor;

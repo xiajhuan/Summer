@@ -28,7 +28,7 @@ import me.xiajhuan.summer.admin.common.log.dto.LogLoginDto;
 import me.xiajhuan.summer.admin.common.log.entity.LogLoginEntity;
 import me.xiajhuan.summer.admin.common.log.mapper.LogLoginMapper;
 import me.xiajhuan.summer.admin.common.log.service.LogLoginService;
-import me.xiajhuan.summer.core.mp.standard.MpCommonOperation;
+import me.xiajhuan.summer.core.mp.custom.MpHelper;
 import me.xiajhuan.summer.core.utils.ConvertUtil;
 import org.springframework.stereotype.Service;
 
@@ -45,12 +45,12 @@ import java.util.stream.Collectors;
  */
 @Service
 @DS(DataSourceConst.COMMON)
-public class LogLoginServiceImpl extends ServiceImpl<LogLoginMapper, LogLoginEntity> implements LogLoginService, MpCommonOperation<LogLoginDto, LogLoginEntity> {
+public class LogLoginServiceImpl extends ServiceImpl<LogLoginMapper, LogLoginEntity> implements LogLoginService, MpHelper<LogLoginDto, LogLoginEntity> {
 
     @Resource(name = SettingBeanConst.COMMON)
     private Setting setting;
 
-    //*******************MpCommonOperation覆写开始********************
+    //*******************MpHelper覆写开始********************
 
     @Override
     public LambdaQueryWrapper<LogLoginEntity> getSelectWrapper(Class<LogLoginEntity> entityClass) {
@@ -98,7 +98,7 @@ public class LogLoginServiceImpl extends ServiceImpl<LogLoginMapper, LogLoginEnt
         return pageResult;
     }
 
-    //*******************MpCommonOperation覆写结束********************
+    //*******************MpHelper覆写结束********************
 
     @Override
     public IPage<LogLoginDto> page(PageAndSort pageAndSort, LogLoginDto dto) {
@@ -111,8 +111,8 @@ public class LogLoginServiceImpl extends ServiceImpl<LogLoginMapper, LogLoginEnt
     }
 
     @Override
-    public void saveAsync(LogLoginEntity log) {
-        save(log);
+    public void saveAsync(LogLoginEntity entity) {
+        save(entity);
     }
 
     @Override
@@ -120,7 +120,8 @@ public class LogLoginServiceImpl extends ServiceImpl<LogLoginMapper, LogLoginEnt
         // 删除登录日志
         LambdaQueryWrapper<LogLoginEntity> queryWrapper = Wrappers.lambdaQuery();
         queryWrapper.select(LogLoginEntity::getId);
-        queryWrapper.lt(LogLoginEntity::getCreateTime, DateUtil.offsetDay(DateUtil.date(), setting.getInt("login.clear-days-limit", "Log", -30)));
+        queryWrapper.lt(LogLoginEntity::getCreateTime, DateUtil.offsetDay(DateUtil.date(),
+                setting.getInt("login.clear-days-limit", "Log", -30)));
 
         List<LogLoginEntity> entityList = list(queryWrapper);
 

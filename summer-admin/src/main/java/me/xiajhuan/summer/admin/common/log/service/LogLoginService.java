@@ -37,10 +37,10 @@ public interface LogLoginService extends IService<LogLoginEntity> {
     /**
      * 异步保存日志
      *
-     * @param log 日志Entity
+     * @param entity 登录日志Entity
      */
     @Async(ThreadPoolConst.Async.COMMON)
-    void saveAsync(LogLoginEntity log);
+    void saveAsync(LogLoginEntity entity);
 
     /**
      * 清理日志

@@ -21,7 +21,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import me.xiajhuan.summer.core.constant.DataSourceConst;
 import me.xiajhuan.summer.core.data.PageAndSort;
-import me.xiajhuan.summer.core.mp.standard.MpCommonOperation;
+import me.xiajhuan.summer.core.mp.custom.MpHelper;
 import me.xiajhuan.summer.admin.common.security.dto.SecurityRoleDto;
 import me.xiajhuan.summer.admin.common.security.entity.SecurityRoleEntity;
 import me.xiajhuan.summer.admin.common.security.mapper.SecurityRoleMapper;
@@ -37,9 +37,9 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @DS(DataSourceConst.COMMON)
-public class SecurityRoleServiceImpl extends ServiceImpl<SecurityRoleMapper, SecurityRoleEntity> implements SecurityRoleService, MpCommonOperation<SecurityRoleDto, SecurityRoleEntity> {
+public class SecurityRoleServiceImpl extends ServiceImpl<SecurityRoleMapper, SecurityRoleEntity> implements SecurityRoleService, MpHelper<SecurityRoleDto, SecurityRoleEntity> {
 
-    //*******************MpCommonOperation覆写开始********************
+    //*******************MpHelper覆写开始********************
 
     @Override
     public LambdaQueryWrapper<SecurityRoleEntity> getSelectWrapper(Class<SecurityRoleEntity> entityClass) {
@@ -74,7 +74,7 @@ public class SecurityRoleServiceImpl extends ServiceImpl<SecurityRoleMapper, Sec
         return pageResult;
     }
 
-    //*******************MpCommonOperation覆写结束********************
+    //*******************MpHelper覆写结束********************
 
     @Override
     public IPage<SecurityRoleDto> page(PageAndSort pageAndSort, SecurityRoleDto dto) {

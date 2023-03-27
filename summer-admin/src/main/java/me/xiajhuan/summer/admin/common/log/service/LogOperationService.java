@@ -37,10 +37,10 @@ public interface LogOperationService extends IService<LogOperationEntity> {
     /**
      * 异步保存日志
      *
-     * @param log 日志Entity
+     * @param entity 操作日志Entity
      */
     @Async(ThreadPoolConst.Async.COMMON)
-    void saveAsync(LogOperationEntity log);
+    void saveAsync(LogOperationEntity entity);
 
     /**
      * 清理日志

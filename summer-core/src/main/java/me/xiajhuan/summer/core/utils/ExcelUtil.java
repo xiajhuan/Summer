@@ -20,7 +20,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import me.xiajhuan.summer.core.excel.AbstractExcelParser;
 import me.xiajhuan.summer.core.excel.subClass.ExcelCacheParser;
 import me.xiajhuan.summer.core.excel.subClass.ExcelDbParser;
-import me.xiajhuan.summer.core.exception.ErrorCode;
+import me.xiajhuan.summer.core.exception.code.ErrorCode;
 import me.xiajhuan.summer.core.exception.FileDownloadException;
 import me.xiajhuan.summer.core.exception.FileUploadException;
 import org.springframework.web.multipart.MultipartFile;

@@ -25,7 +25,7 @@ import me.xiajhuan.summer.admin.common.locale.mapper.LocaleInternationalNameMapp
 import me.xiajhuan.summer.admin.common.locale.service.LocaleInternationalNameService;
 import me.xiajhuan.summer.core.constant.DataSourceConst;
 import me.xiajhuan.summer.core.data.PageAndSort;
-import me.xiajhuan.summer.core.mp.standard.MpCommonOperation;
+import me.xiajhuan.summer.core.mp.custom.MpHelper;
 import me.xiajhuan.summer.core.utils.ConvertUtil;
 import org.springframework.stereotype.Service;
 
@@ -41,9 +41,9 @@ import java.util.stream.Collectors;
  */
 @Service
 @DS(DataSourceConst.COMMON)
-public class LocaleInternationalNameServiceImpl extends ServiceImpl<LocaleInternationalNameMapper, LocaleInternationalNameEntity> implements LocaleInternationalNameService, MpCommonOperation<LocaleInternationalNameDto, LocaleInternationalNameEntity> {
+public class LocaleInternationalNameServiceImpl extends ServiceImpl<LocaleInternationalNameMapper, LocaleInternationalNameEntity> implements LocaleInternationalNameService, MpHelper<LocaleInternationalNameDto, LocaleInternationalNameEntity> {
 
-    //*******************MpCommonOperation覆写开始********************
+    //*******************MpHelper覆写开始********************
 
     @Override
     public LambdaQueryWrapper<LocaleInternationalNameEntity> getSelectWrapper(Class<LocaleInternationalNameEntity> entityClass) {
@@ -78,7 +78,7 @@ public class LocaleInternationalNameServiceImpl extends ServiceImpl<LocaleIntern
         return pageResult;
     }
 
-    //*******************MpCommonOperation覆写结束********************
+    //*******************MpHelper覆写结束********************
 
     @Override
     public IPage<LocaleInternationalNameDto> page(PageAndSort pageAndSort, LocaleInternationalNameDto dto) {

@@ -28,7 +28,7 @@ import me.xiajhuan.summer.admin.common.log.dto.LogOperationDto;
 import me.xiajhuan.summer.admin.common.log.entity.LogOperationEntity;
 import me.xiajhuan.summer.admin.common.log.mapper.LogOperationMapper;
 import me.xiajhuan.summer.admin.common.log.service.LogOperationService;
-import me.xiajhuan.summer.core.mp.standard.MpCommonOperation;
+import me.xiajhuan.summer.core.mp.custom.MpHelper;
 import me.xiajhuan.summer.core.utils.ConvertUtil;
 import org.springframework.stereotype.Service;
 
@@ -45,12 +45,12 @@ import java.util.stream.Collectors;
  */
 @Service
 @DS(DataSourceConst.COMMON)
-public class LogOperationServiceImpl extends ServiceImpl<LogOperationMapper, LogOperationEntity> implements LogOperationService, MpCommonOperation<LogOperationDto, LogOperationEntity> {
+public class LogOperationServiceImpl extends ServiceImpl<LogOperationMapper, LogOperationEntity> implements LogOperationService, MpHelper<LogOperationDto, LogOperationEntity> {
 
     @Resource(name = SettingBeanConst.COMMON)
     private Setting setting;
 
-    //*******************MpCommonOperation覆写开始********************
+    //*******************MpHelper覆写开始********************
 
     @Override
     public LambdaQueryWrapper<LogOperationEntity> getSelectWrapper(Class<LogOperationEntity> entityClass) {
@@ -99,7 +99,7 @@ public class LogOperationServiceImpl extends ServiceImpl<LogOperationMapper, Log
         return pageResult;
     }
 
-    //*******************MpCommonOperation覆写结束********************
+    //*******************MpHelper覆写结束********************
 
     @Override
     public IPage<LogOperationDto> page(PageAndSort pageAndSort, LogOperationDto dto) {
@@ -112,8 +112,8 @@ public class LogOperationServiceImpl extends ServiceImpl<LogOperationMapper, Log
     }
 
     @Override
-    public void saveAsync(LogOperationEntity log) {
-        save(log);
+    public void saveAsync(LogOperationEntity entity) {
+        save(entity);
     }
 
     @Override
@@ -121,7 +121,8 @@ public class LogOperationServiceImpl extends ServiceImpl<LogOperationMapper, Log
         // 删除操作日志
         LambdaQueryWrapper<LogOperationEntity> queryWrapper = Wrappers.lambdaQuery();
         queryWrapper.select(LogOperationEntity::getId);
-        queryWrapper.lt(LogOperationEntity::getCreateTime, DateUtil.offsetDay(DateUtil.date(), setting.getInt("operation.clear-days-limit", "Log", -30)));
+        queryWrapper.lt(LogOperationEntity::getCreateTime, DateUtil.offsetDay(DateUtil.date(),
+                setting.getInt("operation.clear-days-limit", "Log", -30)));
 
         List<LogOperationEntity> entityList = list(queryWrapper);
 

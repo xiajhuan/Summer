@@ -20,7 +20,7 @@ import cn.hutool.setting.Setting;
 import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.event.AnalysisEventListener;
 import me.xiajhuan.summer.core.constant.SettingBeanConst;
-import me.xiajhuan.summer.core.exception.ErrorCode;
+import me.xiajhuan.summer.core.exception.code.ErrorCode;
 import me.xiajhuan.summer.core.utils.ConvertUtil;
 import me.xiajhuan.summer.core.utils.SpringContextUtil;
 import me.xiajhuan.summer.core.utils.ValidationUtil;

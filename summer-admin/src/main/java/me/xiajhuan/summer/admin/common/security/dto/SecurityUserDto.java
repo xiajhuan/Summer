@@ -12,6 +12,7 @@
 
 package me.xiajhuan.summer.admin.common.security.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import me.xiajhuan.summer.core.dto.BaseDto;
@@ -48,6 +49,7 @@ public class SecurityUserDto extends BaseDto {
      * 密码
      */
     @NotBlank(message = "{security.user.password.require}", groups = AddGroup.class)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     /**

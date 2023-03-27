@@ -44,7 +44,7 @@ import java.util.concurrent.ScheduledExecutorService;
  *      2.2 定期清理日志
  *      2.3 固定的业务批处理
  *  3.可通过common.setting下Schedule组进行配置
- *  4.如需服务多节点部署或线上动态调整，请使用xxl包下基于xxl-job的实现
+ *  4.如需线上动态调整并记录详细执行日志，请使用quartz包下基于quartz的实现
  * </pre>
  *
  * @author xiajhuan

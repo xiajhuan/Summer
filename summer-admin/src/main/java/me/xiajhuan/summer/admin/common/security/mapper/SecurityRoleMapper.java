@@ -26,7 +26,7 @@ import org.apache.ibatis.annotations.Select;
 public interface SecurityRoleMapper extends BaseMapper<SecurityRoleEntity> {
 
     /**
-     * 判断角色是否存在
+     * 判断是否存在
      *
      * @param name 角色名称
      * @return 返回 {@code null} 则不存在

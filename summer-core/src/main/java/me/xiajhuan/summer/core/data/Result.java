@@ -16,7 +16,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import me.xiajhuan.summer.core.utils.LocaleUtil;
-import me.xiajhuan.summer.core.exception.ErrorCode;
+import me.xiajhuan.summer.core.exception.code.ErrorCode;
 
 import java.io.Serializable;
 

@@ -20,7 +20,7 @@ import cn.hutool.setting.Setting;
 import me.xiajhuan.summer.core.constant.SettingBeanConst;
 import me.xiajhuan.summer.core.enums.NonLoggedUserEnum;
 import me.xiajhuan.summer.core.exception.BusinessException;
-import me.xiajhuan.summer.core.exception.ErrorCode;
+import me.xiajhuan.summer.core.exception.code.ErrorCode;
 import me.xiajhuan.summer.core.ratelimiter.annotation.RateLimiter;
 import me.xiajhuan.summer.core.ratelimiter.strategy.KeyStrategy;
 import me.xiajhuan.summer.core.ratelimiter.strategy.LoadBalanceStrategy;
