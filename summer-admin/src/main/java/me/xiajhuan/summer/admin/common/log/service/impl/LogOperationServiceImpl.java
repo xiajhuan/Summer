@@ -108,7 +108,9 @@ public class LogOperationServiceImpl extends ServiceImpl<LogOperationMapper, Log
 
     @Override
     public List<LogOperationDto> list(LogOperationDto dto) {
-        return ConvertUtil.convert(list(getQueryWrapper(dto, false)), LogOperationDto.class);
+        LambdaQueryWrapper<LogOperationEntity> queryWrapper = getQueryWrapper(dto, false);
+        queryWrapper.orderByDesc(LogOperationEntity::getCreateTime);
+        return ConvertUtil.convert(list(queryWrapper), LogOperationDto.class);
     }
 
     @Override

@@ -87,7 +87,9 @@ public class LocaleInternationalNameServiceImpl extends ServiceImpl<LocaleIntern
 
     @Override
     public List<LocaleInternationalNameDto> list(LocaleInternationalNameDto dto) {
-        return ConvertUtil.convert(list(getQueryWrapper(dto, false)), LocaleInternationalNameDto.class);
+        LambdaQueryWrapper<LocaleInternationalNameEntity> queryWrapper = getQueryWrapper(dto, false);
+        queryWrapper.orderByDesc(LocaleInternationalNameEntity::getCreateTime);
+        return ConvertUtil.convert(list(queryWrapper), LocaleInternationalNameDto.class);
     }
 
     @Override

@@ -108,7 +108,9 @@ public class LogErrorServiceImpl extends ServiceImpl<LogErrorMapper, LogErrorEnt
 
     @Override
     public List<LogErrorDto> list(LogErrorDto dto) {
-        return ConvertUtil.convert(list(getQueryWrapper(dto, false)), LogErrorDto.class);
+        LambdaQueryWrapper<LogErrorEntity> queryWrapper = getQueryWrapper(dto, false);
+        queryWrapper.orderByDesc(LogErrorEntity::getCreateTime);
+        return ConvertUtil.convert(list(queryWrapper), LogErrorDto.class);
     }
 
     @Override
