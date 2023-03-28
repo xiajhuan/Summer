@@ -55,7 +55,7 @@ public class LocaleInternationalNameServiceImpl extends ServiceImpl<LocaleIntern
 
     @Override
     public LambdaQueryWrapper<LocaleInternationalNameEntity> getQueryWrapper(LocaleInternationalNameDto dto) {
-        LambdaQueryWrapper<LocaleInternationalNameEntity> queryWrapper = getSelectWrapper(currentEntityClass());
+        LambdaQueryWrapper<LocaleInternationalNameEntity> queryWrapper = getSelectWrapper(currentModelClass());
         // 动态Sql查询条件
         // 表名
         String tableName = dto.getTableName();

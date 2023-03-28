@@ -63,7 +63,7 @@ public class LogLoginServiceImpl extends ServiceImpl<LogLoginMapper, LogLoginEnt
 
     @Override
     public LambdaQueryWrapper<LogLoginEntity> getQueryWrapper(LogLoginDto dto) {
-        LambdaQueryWrapper<LogLoginEntity> queryWrapper = getSelectWrapper(currentEntityClass());
+        LambdaQueryWrapper<LogLoginEntity> queryWrapper = getSelectWrapper(currentModelClass());
         // 动态Sql查询条件
         // 用户操作
         Integer operation = dto.getOperation();

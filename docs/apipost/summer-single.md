@@ -2,7 +2,8 @@
 #### 全局Header参数
 参数名 | 示例值 | 参数描述
 --- | --- | ---
-AccessToken | eee4eb696457036abaadb38f6fd4c1df | accessToken
+AccessToken | a3d8c73b75ac032da1e6d193bd94f44a | accessToken
+Accept-Language | zh_CN | 地区语言
 #### 全局Query参数
 参数名 | 示例值 | 参数描述
 --- | --- | ---
@@ -156,8 +157,8 @@ noauth
 --- | --- | --- | --- | ---
 pageNum | 1 | Integer | 否 | 当前页码
 pageSize | 10 | Integer | 否 | 每页记录数
-field | createTime | String | 否 | 排序字段
-order | desc | String | 否 | 排序规则
+field | createTime | String | 否 | 排序字段，以“,”分隔
+order | desc | String | 否 | 排序规则，以“,”分隔
 operationGroup | 0 | Integer | 否 | 操作分组 0：Common Crud 1：Excel Opeation 2：Other Operation
 status | 1 | Integer | 否 | 状态  0：失败 1：成功
 createTimeStart | 2023-03-21 11:22:22 | Date | 否 | 创建时间区间（开始）
@@ -342,7 +343,7 @@ noauth
 > 已完成
 
 #### 接口URL
-> http://localhost:6666/summer-single/log/operation/excelExport?operationGroup=0&status=1&createTimeStart=2023-03-21 12:00:00&createTimeEnd=2023-03-28 12:00:00
+> http://localhost:6666/summer-single/log/operation/excelExport?field=createTime&order=desc&operationGroup=0&status=1&createTimeStart=2023-03-21 12:00:00&createTimeEnd=2023-03-28 12:00:00
 
 #### 请求方式
 > GET
@@ -353,6 +354,8 @@ noauth
 #### 请求Query参数
 参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
 --- | --- | --- | --- | ---
+field | createTime | String | 否 | 排序字段，以“,”分隔
+order | desc | String | 否 | 排序规则，以“,”分隔
 operationGroup | 0 | Integer | 否 | 操作分组 0：Common Crud 1：Excel Opeation 2：Other Operation
 status | 1 | Integer | 否 | 状态  0：失败 1：成功
 createTimeStart | 2023-03-21 12:00:00 | Date | 否 | 创建时间区间（开始）
@@ -426,8 +429,8 @@ noauth
 --- | --- | --- | --- | ---
 pageNum | 1 | Integer | 否 | 当前页码
 pageSize | 10 | Integer | 否 | 每页记录数
-field | createTime | String | 否 | 排序字段
-order | desc | String | 否 | 排序规则
+field | createTime | String | 否 | 排序字段，以“,”分隔
+order | desc | String | 否 | 排序规则，以“,”分隔
 createTimeStart | 2023-03-21 12:00:00 | Date | 否 | 创建时间区间（开始）
 createTimeEnd | 2023-03-28 12:00:00 | Date | 否 | 创建时间区间（结束）
 #### 认证方式
@@ -627,7 +630,7 @@ noauth
 > 已完成
 
 #### 接口URL
-> http://localhost:6666/summer-single/log/error/excelExport?createTimeStart=2023-03-21 12:00:00&createTimeEnd=2023-03-28 12:00:00
+> http://localhost:6666/summer-single/log/error/excelExport?field=create_time&order=desc&createTimeStart=2023-03-21 12:00:00&createTimeEnd=2023-03-28 12:00:00
 
 #### 请求方式
 > GET
@@ -638,6 +641,8 @@ noauth
 #### 请求Query参数
 参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
 --- | --- | --- | --- | ---
+field | create_time | String | 否 | 排序字段，以“,”分隔
+order | desc | String | 否 | 排序规则，以“,”分隔
 createTimeStart | 2023-03-21 12:00:00 | Date | 否 | 创建时间区间（开始）
 createTimeEnd | 2023-03-28 12:00:00 | Date | 否 | 创建时间区间（结束）
 #### 认证方式
@@ -709,8 +714,8 @@ noauth
 --- | --- | --- | --- | ---
 pageNum | 1 | Integer | 否 | 当前页码
 pageSize | 10 | Integer | 否 | 每页记录数
-field | createTime | String | 否 | 排序字段
-order | desc | String | 否 | 排序规则
+field | createTime | String | 否 | 排序字段，以“,”分隔
+order | desc | String | 否 | 排序规则，以“,”分隔
 operation | 0 | Integer | 否 | 用户操作 0：用户登录 1：用户退出
 status | 1 | Integer | 否 | 登录状态 0：失败1：成功 2：账号已锁定
 createTimeStart | 2023-03-21 12:00:00 | Date | 否 | 创建时间区间（开始）
@@ -845,7 +850,7 @@ noauth
 > 已完成
 
 #### 接口URL
-> http://localhost:6666/summer-single/log/login/excelExport?operation=0&status=1&createTimeStart=2023-03-21 12:00:00&createTimeEnd=2023-03-28 12:00:00
+> http://localhost:6666/summer-single/log/login/excelExport?field=create_time&order=desc&operation=0&status=1&createTimeStart=2023-03-21 12:00:00&createTimeEnd=2023-03-28 12:00:00
 
 #### 请求方式
 > GET
@@ -856,6 +861,8 @@ noauth
 #### 请求Query参数
 参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
 --- | --- | --- | --- | ---
+field | create_time | String | 否 | 排序字段，以“,”分隔
+order | desc | String | 否 | 排序规则，以“,”分隔
 operation | 0 | Integer | 否 | 用户操作 0：用户登录 1：用户退出
 status | 1 | Integer | 否 | 登录状态 0：失败1：成功 2：账号已锁定
 createTimeStart | 2023-03-21 12:00:00 | Date | 否 | 创建时间区间（开始）
@@ -1566,7 +1573,7 @@ noauth
 > 已完成
 
 #### 接口URL
-> http://localhost:6666/summer-single/locale/internationalName/page?pageNum=1&pageSize=10&field=createTime&order=desc&tableName=security_menu
+> http://localhost:6666/summer-single/locale/internationalName/page?pageNum=1&pageSize=10&field=createTime,fieldValue&order=desc,asc&tableName=security_menu
 
 #### 请求方式
 > GET
@@ -1579,8 +1586,8 @@ noauth
 --- | --- | --- | --- | ---
 pageNum | 1 | Integer | 否 | 当前页码
 pageSize | 10 | Integer | 否 | 每页记录数
-field | createTime | String | 否 | 排序字段
-order | desc | String | 否 | 排序规则
+field | createTime,fieldValue | String | 否 | 排序字段，以“,”分隔
+order | desc,asc | String | 否 | 排序规则，以“,”分隔
 tableName | security_menu | String | 否 | 表名
 #### 认证方式
 ```text
@@ -1992,7 +1999,7 @@ noauth
 > 已完成
 
 #### 接口URL
-> http://localhost:6666/summer-single/locale/internationalName/excelExport?tableName=security_menu
+> http://localhost:6666/summer-single/locale/internationalName/excelExport?field=create_time&order=desc&tableName=security_menu
 
 #### 请求方式
 > GET
@@ -2003,6 +2010,8 @@ noauth
 #### 请求Query参数
 参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
 --- | --- | --- | --- | ---
+field | create_time | String | 否 | 排序字段，以“,”分隔
+order | desc | String | 否 | 排序规则，以“,”分隔
 tableName | security_menu | String | 否 | 表名
 #### 认证方式
 ```text

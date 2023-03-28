@@ -64,7 +64,7 @@ public class LogOperationServiceImpl extends ServiceImpl<LogOperationMapper, Log
 
     @Override
     public LambdaQueryWrapper<LogOperationEntity> getQueryWrapper(LogOperationDto dto) {
-        LambdaQueryWrapper<LogOperationEntity> queryWrapper = getSelectWrapper(currentEntityClass());
+        LambdaQueryWrapper<LogOperationEntity> queryWrapper = getSelectWrapper(currentModelClass());
         // 动态Sql查询条件
         // 操作分组
         Integer operationGroup = dto.getOperationGroup();

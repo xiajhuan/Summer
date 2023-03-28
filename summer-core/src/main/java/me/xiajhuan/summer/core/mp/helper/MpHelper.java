@@ -34,16 +34,6 @@ import me.xiajhuan.summer.core.utils.PageSortUtil;
 public interface MpHelper<D extends PageSortDto, T> {
 
     /**
-     * 当前EntityClass
-     *
-     * @return EntityClass
-     * @see ServiceImpl#currentModelClass()
-     */
-    default Class<T> currentEntityClass() {
-        return (Class<T>) ReflectionKit.getSuperClassGenericType(getClass(), ServiceImpl.class, 1);
-    }
-
-    /**
      * 分页排序参数处理
      *
      * @param dto Dto类型对象
@@ -73,11 +63,11 @@ public interface MpHelper<D extends PageSortDto, T> {
      */
     default LambdaQueryWrapper<T> getQueryWrapper(D dto) {
         // 查询条件（无）
-        return getSelectWrapper(currentEntityClass());
+        return getSelectWrapper((Class<T>) ReflectionKit.getSuperClassGenericType(getClass(), ServiceImpl.class, 1));
     }
 
     /**
-     * Dto类型对象前置处理钩子，可重写该钩子个性化前置处理
+     * Dto类型对象前置处理钩子，可重写该钩子个性化前置处理，如属性运算/填充等
      *
      * @param dto Dto类型对象
      */
@@ -85,7 +75,7 @@ public interface MpHelper<D extends PageSortDto, T> {
     }
 
     /**
-     * Entity类型对象后置处理钩子，可重写该钩子个性化后置处理
+     * Entity类型对象后置处理钩子，可重写该钩子个性化后置处理，如属性运算/填充等
      *
      * @param entity Entity类型对象
      */

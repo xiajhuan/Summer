@@ -51,7 +51,7 @@ public class SecurityRoleServiceImpl extends ServiceImpl<SecurityRoleMapper, Sec
 
     @Override
     public LambdaQueryWrapper<SecurityRoleEntity> getQueryWrapper(SecurityRoleDto dto) {
-        LambdaQueryWrapper<SecurityRoleEntity> queryWrapper = getSelectWrapper(currentEntityClass());
+        LambdaQueryWrapper<SecurityRoleEntity> queryWrapper = getSelectWrapper(currentModelClass());
         // 动态Sql查询条件
         // 角色名称
         String name = dto.getName();
