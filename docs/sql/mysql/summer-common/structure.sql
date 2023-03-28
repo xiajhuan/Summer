@@ -18,7 +18,8 @@ CREATE TABLE `locale_international_name`
     `field_value` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '字段值',
     `locale`      varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL COMMENT '地区语言',
     PRIMARY KEY (`id`) USING BTREE,
-    INDEX `idx_table_name` (`table_name`) USING BTREE
+    INDEX `idx_table_name` (`table_name`) USING BTREE,
+    INDEX `idx_create_time` (`create_time`) USING BTREE
 ) ENGINE = InnoDB
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_general_ci COMMENT = '国际化名称'
@@ -57,11 +58,10 @@ CREATE TABLE `log_login`
     `create_time` datetime(0)                                                   NULL DEFAULT NULL COMMENT '创建时间',
     `login_user`  varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL COMMENT '登录用户名',
     `operation`   tinyint(1)                                                    NULL DEFAULT NULL COMMENT '用户操作 0：用户登录 1：用户退出',
-    `status`      tinyint(1)                                                    NULL DEFAULT NULL COMMENT '登录状态 0：失败1：成功 2：账号已锁定',
+    `status`      tinyint(1)                                                    NULL DEFAULT NULL COMMENT '登录状态 0：失败1：成功 2：账号已停用',
     `user_agent`  varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '用户代理',
     `ip`          varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL COMMENT '操作IP',
     PRIMARY KEY (`id`) USING BTREE,
-    INDEX `idx_status` (`status`) USING BTREE,
     INDEX `idx_create_time` (`create_time`) USING BTREE
 ) ENGINE = InnoDB
   CHARACTER SET = utf8mb4
@@ -158,7 +158,8 @@ CREATE TABLE `security_role`
     `name`        varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL COMMENT '角色名称',
     `desc`        varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
     PRIMARY KEY (`id`) USING BTREE,
-    INDEX `idx_dept_id` (`dept_id`) USING BTREE
+    INDEX `idx_dept_id` (`dept_id`) USING BTREE,
+    INDEX `idx_create_time` (`create_time`) USING BTREE
 ) ENGINE = InnoDB
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_general_ci COMMENT = '角色'
@@ -176,7 +177,8 @@ CREATE TABLE `security_role_dept`
     `role_id`     bigint(20)                                                   NULL DEFAULT NULL COMMENT '角色ID',
     `dept_id`     bigint(20)                                                   NULL DEFAULT NULL COMMENT '部门ID',
     PRIMARY KEY (`id`) USING BTREE,
-    INDEX `idx_role_id` (`role_id`) USING BTREE
+    INDEX `idx_role_id` (`role_id`) USING BTREE,
+    INDEX `idx_dept_id` (`dept_id`) USING BTREE
 ) ENGINE = InnoDB
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_general_ci COMMENT = '角色部门关联'
