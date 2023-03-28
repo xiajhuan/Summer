@@ -44,7 +44,7 @@
         <shiro.version>1.11.0</shiro.version>
         <commons.pool2.version>2.11.1</commons.pool2.version>
         <guava.version>31.1-jre</guava.version>
-        <hutool.version>5.8.15</hutool.version>
+        <hutool.version>5.8.16</hutool.version>
         <mica.xss.version>2.7.10</mica.xss.version>
         <easy.excel.version>3.2.1</easy.excel.version>
         <p6spy.version>3.9.1</p6spy.version>
