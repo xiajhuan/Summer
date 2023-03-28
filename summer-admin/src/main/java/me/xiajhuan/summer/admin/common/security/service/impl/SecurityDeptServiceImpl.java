@@ -14,7 +14,7 @@ package me.xiajhuan.summer.admin.common.security.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.map.MapUtil;
-import cn.hutool.core.util.StrUtil;
+import cn.hutool.core.text.StrPool;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -154,7 +154,7 @@ public class SecurityDeptServiceImpl extends ServiceImpl<SecurityDeptMapper, Sec
         getParentIdSetRecursion(parentId, idToDeptMap, parentIdSet);
 
         return parentIdSet.stream().map(String::valueOf)
-                .collect(Collectors.joining(StrUtil.COMMA));
+                .collect(Collectors.joining(StrPool.COMMA));
     }
 
     /**

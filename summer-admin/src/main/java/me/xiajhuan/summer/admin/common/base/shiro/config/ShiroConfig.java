@@ -13,6 +13,7 @@
 package me.xiajhuan.summer.admin.common.base.shiro.config;
 
 import cn.hutool.core.map.MapUtil;
+import cn.hutool.core.text.StrPool;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.setting.Setting;
 import me.xiajhuan.summer.admin.common.base.shiro.oauth2.Oauth2Filter;
@@ -112,7 +113,7 @@ public class ShiroConfig {
         // 自定义过滤的URI
         String anonUris = setting.getByGroup("anon-uris", "Security");
         if (StrUtil.isNotBlank(anonUris)) {
-            Arrays.stream(anonUris.split(StrUtil.COMMA))
+            Arrays.stream(anonUris.split(StrPool.COMMA))
                     .forEach(anonUri -> filterUriMap.put(anonUri, ANON));
         }
 

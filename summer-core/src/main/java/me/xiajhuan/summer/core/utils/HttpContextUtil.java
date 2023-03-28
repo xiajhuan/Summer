@@ -13,6 +13,7 @@
 package me.xiajhuan.summer.core.utils;
 
 import cn.hutool.core.map.MapUtil;
+import cn.hutool.core.text.StrPool;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
@@ -236,7 +237,7 @@ public class HttpContextUtil {
                         formParam.append(args[i].toString());
                     }
                     if (i != args.length - 1) {
-                        formParam.append(StrUtil.COMMA);
+                        formParam.append(StrPool.COMMA);
                     }
                 }
             }

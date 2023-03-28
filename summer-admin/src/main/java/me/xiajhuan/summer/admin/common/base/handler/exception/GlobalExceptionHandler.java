@@ -13,6 +13,7 @@
 package me.xiajhuan.summer.admin.common.base.handler.exception;
 
 import cn.hutool.core.text.StrPool;
+import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
@@ -23,13 +24,9 @@ import me.xiajhuan.summer.core.exception.*;
 import me.xiajhuan.summer.admin.common.log.service.LogErrorService;
 import me.xiajhuan.summer.core.exception.code.ErrorCode;
 import me.xiajhuan.summer.core.utils.HttpContextUtil;
-import me.xiajhuan.summer.core.ratelimiter.aspect.RateLimiterAspect;
-import me.xiajhuan.summer.core.interceptor.ContentTypeInterceptor;
-import me.xiajhuan.summer.core.interceptor.SqlInjectionInterceptor;
 import me.xiajhuan.summer.core.utils.LocaleUtil;
 import me.xiajhuan.summer.core.utils.ValidationUtil;
 import org.apache.shiro.authz.AuthorizationException;
-import org.aspectj.lang.JoinPoint;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
@@ -40,39 +37,52 @@ import org.springframework.validation.annotation.Validated;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
 /**
- * 通用全局异常处理
+ * 全局异常处理
  *
  * @author xiajhuan
  * @date 2022/11/26
  */
 @RestControllerAdvice
-public class CommonExceptionHandler {
+public class GlobalExceptionHandler {
 
     private static final Log LOGGER = LogFactory.get();
 
     @Resource(name = SettingBeanConst.COMMON)
-    private Setting commonSetting;
+    private Setting setting;
 
     @Resource
     private LogErrorService logErrorService;
 
     /**
-     * 是否记录业务异常（BusinessException）日志
+     * 是否保存业务异常（BusinessException）日志
      */
     private boolean enableBusinessErrorLog;
 
     /**
-     * 初始化 {@link enableBusinessErrorLog}
+     * 忽略的消息代码数组
+     *
+     * @see ErrorCode
+     */
+    private int[] ignoreBusinessCodeArray;
+
+    /**
+     * 初始化 {@link enableBusinessErrorLog} {@link ignoreBusinessCodeArray}
      */
     @PostConstruct
     private void init() {
-        enableBusinessErrorLog = commonSetting.getBool("error.enable-business", "Log", true);
+        enableBusinessErrorLog = setting.getBool("enable-business", "Log", true);
+        if (enableBusinessErrorLog) {
+            String ignoreBusinessCodes = setting.getByGroup("ignore-business-codes", "Log");
+            if (StrUtil.isNotBlank(ignoreBusinessCodes)) {
+                ignoreBusinessCodeArray = Arrays.stream(ignoreBusinessCodes.split(StrPool.COMMA))
+                        .mapToInt(Integer::parseInt).toArray();
+            }
+        }
     }
 
     /**
@@ -90,7 +100,7 @@ public class CommonExceptionHandler {
             e = cause;
         }
 
-        return logAndResponse(e, enableBusinessErrorLog);
+        return logAndResponse(e, true);
     }
 
     /**
@@ -122,7 +132,7 @@ public class CommonExceptionHandler {
                 .append(StrPool.COMMA));
 
         String msg = message.substring(0, message.length() - 1);
-        logDebug(e, msg);
+        logInfoOrDebugStacktrace(e, msg);
         return Result.ofFail(msg);
     }
 
@@ -131,14 +141,13 @@ public class CommonExceptionHandler {
      *
      * @param e 校验异常
      * @return 响应结果
-     * @see ValidationUtil#validate(List, Class[])
-     * @see ValidationUtil#validate(Object, Class[])
+     * @see ValidationUtil
      */
     @ExceptionHandler(ValidationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Result handleValidationException(ValidationException e) {
         String msg = e.getMessage();
-        logDebug(e, msg);
+        logInfoOrDebugStacktrace(e, msg);
         return Result.ofFail(msg);
     }
 
@@ -172,7 +181,7 @@ public class CommonExceptionHandler {
     @ExceptionHandler(AuthorizationException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public Result handleAuthorizationException(AuthorizationException e) {
-        logDebug(e, null);
+        logInfoOrDebugStacktrace(e, null);
         return Result.ofFail(ErrorCode.FORBIDDEN);
     }
 
@@ -184,17 +193,15 @@ public class CommonExceptionHandler {
      * @return 响应结果
      */
     private Result logAndResponse(Exception e, boolean isSaveErrorLog) {
-        boolean isSpecialBusinessException = isSpecialBusinessException(e);
-        if (isSaveErrorLog && !isSpecialBusinessException) {
+        boolean isIgnore = isIgnoreBusinessException(e);
+        if (isSaveErrorLog && !isIgnore) {
             // 异步保存错误日志
             logErrorService.saveAsync(e, HttpContextUtil.getHttpServletRequest());
         }
 
         String msg = e.getMessage();
-        if (isSpecialBusinessException) {
-            // 不记录异常堆栈信息
-            LOGGER.info(msg);
-            logDebug(e, null);
+        if (isIgnore) {
+            logInfoOrDebugStacktrace(e, msg);
         } else {
             LOGGER.error(e, msg);
         }
@@ -202,47 +209,36 @@ public class CommonExceptionHandler {
     }
 
     /**
-     * 是否是特殊指定的BusinessException
+     * 是否是忽略的BusinessException
      *
      * @param e {@link Exception}
-     * @return 是否是特殊指定的BusinessException，true：是 false：不是
-     * @see RateLimiterAspect#before(JoinPoint)
-     * @see ContentTypeInterceptor#preHandle(HttpServletRequest, HttpServletResponse, Object)
-     * @see SqlInjectionInterceptor#preHandle(HttpServletRequest, HttpServletResponse, Object)
+     * @return 是否是忽略的BusinessException，true：是 false：不是
      */
-    private boolean isSpecialBusinessException(Exception e) {
-        if (e instanceof BusinessException) {
+    private boolean isIgnoreBusinessException(Exception e) {
+        if (e instanceof BusinessException && ArrayUtil.isNotEmpty(ignoreBusinessCodeArray)) {
             String msg = e.getMessage();
             Locale locale = LocaleUtil.getLocalePriority();
-            // 限流成功时抛出的异常
-            if (msg.equals(LocaleUtil.getI18nMessage(locale, ErrorCode.SERVER_BUSY))) {
-                return true;
-            }
-            // 请求体参数不支持时抛出的异常
-            if (msg.equals(LocaleUtil.getI18nMessage(locale, ErrorCode.UNSUPPORTED_CONTENT_TYPE))) {
-                return true;
-            }
-            // Sql注入过滤时抛出的异常
-            if (msg.equals(LocaleUtil.getI18nMessage(locale, ErrorCode.INVALID_SYMBOL))) {
-                return true;
-            }
+            return Arrays.stream(ignoreBusinessCodeArray)
+                    .anyMatch(code -> msg.equals(LocaleUtil.getI18nMessage(locale, code)));
         }
         return false;
     }
 
     /**
-     * 记录debug日志
+     * 记录info日志（不含异常堆栈信息）或debug日志（包含异常堆栈信息）
      *
      * @param e   {@link Exception}
      * @param msg 消息
      */
-    private void logDebug(Exception e, String msg) {
+    private void logInfoOrDebugStacktrace(Exception e, String msg) {
+        if (msg == null) {
+            msg = e.getMessage();
+        }
+
         if (LOGGER.isDebugEnabled()) {
-            if (StrUtil.isNotBlank(msg)) {
-                LOGGER.debug(e, msg);
-            } else {
-                LOGGER.debug(e);
-            }
+            LOGGER.debug(e, msg);
+        } else {
+            LOGGER.info(msg);
         }
     }
 

@@ -47,14 +47,19 @@ base.business = true
 
 # 日志配置
 [Log]
-# 是否记录业务异常日志（BusinessException），值：true/false
-error.enable-business = true
-# 保存错误日志时，异常堆栈的最大长度，note：不能超过表字段限制的长度
-error.stacktrace-length = 65535
+# 是否保存业务异常日志（BusinessException），值：true/false
+enable-business = true
+# 当 enable-business = true 时忽略的消息代码，以“,”分隔，值参考 ErrorCode
+# note：当BusinessException的消息为该消息代码对应消息时将不会“保存错误日志”和“打印异常堆栈信息（开启debug日志级别除外）”
+ignore-business-codes = 1002
 
 # 操作日志清理天数限制，-n则清理n天以前的日志
 operation.clear-days-limit = -30
+
+# 保存错误日志时，异常堆栈的最大长度，note：不能超过表字段限制的长度
+error.stacktrace-length = 65535
 # 错误日志清理天数限制，-n则清理n天以前的日志
 error.clear-days-limit = -90
+
 # 登录日志清理天数限制，-n则清理n天以前的日志
 login.clear-days-limit = -30
