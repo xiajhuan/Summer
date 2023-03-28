@@ -19,16 +19,14 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import me.xiajhuan.summer.core.constant.DataSourceConst;
 import me.xiajhuan.summer.core.constant.SettingBeanConst;
-import me.xiajhuan.summer.core.data.PageAndSort;
 import me.xiajhuan.summer.admin.common.log.dto.LogOperationDto;
 import me.xiajhuan.summer.admin.common.log.entity.LogOperationEntity;
 import me.xiajhuan.summer.admin.common.log.mapper.LogOperationMapper;
 import me.xiajhuan.summer.admin.common.log.service.LogOperationService;
-import me.xiajhuan.summer.core.mp.custom.MpHelper;
+import me.xiajhuan.summer.core.mp.helper.MpHelper;
 import me.xiajhuan.summer.core.utils.ConvertUtil;
 import org.springframework.stereotype.Service;
 
@@ -65,8 +63,8 @@ public class LogOperationServiceImpl extends ServiceImpl<LogOperationMapper, Log
     }
 
     @Override
-    public LambdaQueryWrapper<LogOperationEntity> getQueryWrapper(LogOperationDto dto, boolean isCount) {
-        LambdaQueryWrapper<LogOperationEntity> queryWrapper = getQueryWrapperUnconditional(isCount);
+    public LambdaQueryWrapper<LogOperationEntity> getQueryWrapper(LogOperationDto dto) {
+        LambdaQueryWrapper<LogOperationEntity> queryWrapper = getSelectWrapper(currentEntityClass());
         // 动态Sql查询条件
         // 操作分组
         Integer operationGroup = dto.getOperationGroup();
@@ -87,28 +85,16 @@ public class LogOperationServiceImpl extends ServiceImpl<LogOperationMapper, Log
         return queryWrapper;
     }
 
-    @Override
-    public IPage<LogOperationEntity> customPage(Page<LogOperationEntity> page, LogOperationDto dto) {
-        // 关闭MP分页内置的count查询
-        page.setSearchCount(false);
-
-        IPage<LogOperationEntity> pageResult = page(page, getQueryWrapper(dto, false));
-
-        pageResult.setTotal(count(getQueryWrapper(dto, true)));
-
-        return pageResult;
-    }
-
     //*******************MpHelper覆写结束********************
 
     @Override
-    public IPage<LogOperationDto> page(PageAndSort pageAndSort, LogOperationDto dto) {
-        return ConvertUtil.convert(customPage(handlePageAndSort(pageAndSort), dto), LogOperationDto.class);
+    public IPage<LogOperationDto> page(LogOperationDto dto) {
+        return ConvertUtil.convert(page(handlePageSort(dto), getQueryWrapper(dto)), LogOperationDto.class);
     }
 
     @Override
     public List<LogOperationDto> list(LogOperationDto dto) {
-        LambdaQueryWrapper<LogOperationEntity> queryWrapper = getQueryWrapper(dto, false);
+        LambdaQueryWrapper<LogOperationEntity> queryWrapper = getQueryWrapper(dto);
         queryWrapper.orderByDesc(LogOperationEntity::getCreateTime);
         return ConvertUtil.convert(list(queryWrapper), LogOperationDto.class);
     }

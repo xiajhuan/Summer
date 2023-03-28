@@ -21,7 +21,7 @@ import lombok.EqualsAndHashCode;
 import me.xiajhuan.summer.admin.common.log.excel.converter.OperationGroupConverter;
 import me.xiajhuan.summer.admin.common.log.excel.converter.OperationStatusConverter;
 import me.xiajhuan.summer.core.constant.DateFormatConst;
-import me.xiajhuan.summer.core.dto.BaseDto;
+import me.xiajhuan.summer.core.dto.PageSortDto;
 import me.xiajhuan.summer.core.enums.OperationGroupEnum;
 import me.xiajhuan.summer.core.enums.OperationStatusEnum;
 
@@ -35,7 +35,7 @@ import java.util.Date;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class LogOperationDto extends BaseDto {
+public class LogOperationDto extends PageSortDto {
 
     /**
      * 用户操作

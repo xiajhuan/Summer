@@ -15,7 +15,6 @@ package me.xiajhuan.summer.admin.common.log.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import me.xiajhuan.summer.core.constant.ThreadPoolConst;
-import me.xiajhuan.summer.core.data.PageAndSort;
 import me.xiajhuan.summer.admin.common.log.dto.LogErrorDto;
 import me.xiajhuan.summer.admin.common.log.entity.LogErrorEntity;
 import org.springframework.scheduling.annotation.Async;
@@ -31,7 +30,7 @@ import java.util.List;
  */
 public interface LogErrorService extends IService<LogErrorEntity> {
 
-    IPage<LogErrorDto> page(PageAndSort pageAndSort, LogErrorDto dto);
+    IPage<LogErrorDto> page(LogErrorDto dto);
 
     List<LogErrorDto> list(LogErrorDto dto);
 

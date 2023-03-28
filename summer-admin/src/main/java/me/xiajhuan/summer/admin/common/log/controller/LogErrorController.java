@@ -14,7 +14,6 @@ package me.xiajhuan.summer.admin.common.log.controller;
 
 import me.xiajhuan.summer.admin.common.base.annotation.LogOperation;
 import me.xiajhuan.summer.core.constant.OperationConst;
-import me.xiajhuan.summer.core.data.PageAndSort;
 import me.xiajhuan.summer.core.data.PageData;
 import me.xiajhuan.summer.core.data.Result;
 import me.xiajhuan.summer.core.exception.code.ErrorCode;
@@ -49,15 +48,14 @@ public class LogErrorController {
     /**
      * 分页
      *
-     * @param pageAndSort 分页排序参数
-     * @param dto         错误日志Dto
+     * @param dto 错误日志Dto
      * @return 响应结果
      */
     @GetMapping("page")
     @RequiresPermissions("log:error:page")
     @LogOperation(OperationConst.PAGE)
-    public Result<PageData<LogErrorDto>> page(PageAndSort pageAndSort, LogErrorDto dto) {
-        return Result.ofSuccess(PageData.of(mainService.page(pageAndSort, dto)));
+    public Result<PageData<LogErrorDto>> page(LogErrorDto dto) {
+        return Result.ofSuccess(PageData.of(mainService.page(dto)));
     }
 
     /**

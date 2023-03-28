@@ -14,7 +14,6 @@ package me.xiajhuan.summer.admin.common.security.controller;
 
 import me.xiajhuan.summer.admin.common.base.annotation.LogOperation;
 import me.xiajhuan.summer.core.constant.OperationConst;
-import me.xiajhuan.summer.core.data.PageAndSort;
 import me.xiajhuan.summer.core.data.PageData;
 import me.xiajhuan.summer.core.data.Result;
 import me.xiajhuan.summer.admin.common.security.dto.SecurityRoleDto;
@@ -46,15 +45,14 @@ public class SecurityRoleController {
     /**
      * 分页
      *
-     * @param pageAndSort 分页排序参数
-     * @param dto         角色Dto
+     * @param dto 角色Dto
      * @return 响应结果
      */
     @GetMapping("page")
     @RequiresPermissions("security:role:page")
     @LogOperation(OperationConst.PAGE)
-    public Result<PageData<SecurityRoleDto>> page(PageAndSort pageAndSort, SecurityRoleDto dto) {
-        return Result.ofSuccess(PageData.of(mainService.page(pageAndSort, dto)));
+    public Result<PageData<SecurityRoleDto>> page(SecurityRoleDto dto) {
+        return Result.ofSuccess(PageData.of(mainService.page(dto)));
     }
 
     /**

@@ -18,7 +18,6 @@ import me.xiajhuan.summer.admin.common.locale.entity.LocaleInternationalNameEnti
 import me.xiajhuan.summer.admin.common.locale.excel.parser.LocaleInternationalNameExcelDbParser;
 import me.xiajhuan.summer.admin.common.locale.service.LocaleInternationalNameService;
 import me.xiajhuan.summer.core.constant.OperationConst;
-import me.xiajhuan.summer.core.data.PageAndSort;
 import me.xiajhuan.summer.core.data.PageData;
 import me.xiajhuan.summer.core.data.Result;
 import me.xiajhuan.summer.core.exception.code.ErrorCode;
@@ -53,15 +52,14 @@ public class LocaleInternationalNameController {
     /**
      * 分页
      *
-     * @param pageAndSort 分页排序参数
-     * @param dto         国际化名称Dto
+     * @param dto 国际化名称Dto
      * @return 响应结果
      */
     @GetMapping("page")
     @RequiresPermissions("locale:internationalName:page")
     @LogOperation(OperationConst.PAGE)
-    public Result<PageData<LocaleInternationalNameDto>> page(PageAndSort pageAndSort, LocaleInternationalNameDto dto) {
-        return Result.ofSuccess(PageData.of(mainService.page(pageAndSort, dto)));
+    public Result<PageData<LocaleInternationalNameDto>> page(LocaleInternationalNameDto dto) {
+        return Result.ofSuccess(PageData.of(mainService.page(dto)));
     }
 
     /**

@@ -15,7 +15,7 @@ package me.xiajhuan.summer.admin.common.locale.dto;
 import com.alibaba.excel.annotation.ExcelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import me.xiajhuan.summer.core.dto.BaseDto;
+import me.xiajhuan.summer.core.dto.PageSortDto;
 import me.xiajhuan.summer.core.enums.LocaleSupportEnum;
 import me.xiajhuan.summer.core.validation.group.AddGroup;
 import me.xiajhuan.summer.core.validation.group.UpdateGroup;
@@ -31,7 +31,7 @@ import java.util.Date;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class LocaleInternationalNameDto extends BaseDto {
+public class LocaleInternationalNameDto extends PageSortDto {
 
     /**
      * 表名

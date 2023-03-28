@@ -21,7 +21,7 @@ import lombok.EqualsAndHashCode;
 import me.xiajhuan.summer.admin.common.log.excel.converter.LoginOperationConverter;
 import me.xiajhuan.summer.admin.common.log.excel.converter.LoginStatusConverter;
 import me.xiajhuan.summer.core.constant.DateFormatConst;
-import me.xiajhuan.summer.core.dto.BaseDto;
+import me.xiajhuan.summer.core.dto.PageSortDto;
 import me.xiajhuan.summer.core.enums.LoginOperationEnum;
 import me.xiajhuan.summer.core.enums.LoginStatusEnum;
 
@@ -35,7 +35,7 @@ import java.util.Date;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class LogLoginDto extends BaseDto {
+public class LogLoginDto extends PageSortDto {
 
     /**
      * 登录用户名

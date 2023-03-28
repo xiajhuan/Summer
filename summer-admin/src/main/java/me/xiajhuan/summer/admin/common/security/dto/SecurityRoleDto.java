@@ -14,7 +14,7 @@ package me.xiajhuan.summer.admin.common.security.dto;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import me.xiajhuan.summer.core.dto.BaseDto;
+import me.xiajhuan.summer.core.dto.PageSortDto;
 import me.xiajhuan.summer.core.validation.group.AddGroup;
 import me.xiajhuan.summer.core.validation.group.UpdateGroup;
 
@@ -30,7 +30,7 @@ import java.util.Set;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class SecurityRoleDto extends BaseDto {
+public class SecurityRoleDto extends PageSortDto {
 
     /**
      * 角色名称

@@ -17,11 +17,9 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import me.xiajhuan.summer.core.constant.DataSourceConst;
-import me.xiajhuan.summer.core.data.PageAndSort;
-import me.xiajhuan.summer.core.mp.custom.MpHelper;
+import me.xiajhuan.summer.core.mp.helper.MpHelper;
 import me.xiajhuan.summer.admin.common.security.dto.SecurityRoleDto;
 import me.xiajhuan.summer.admin.common.security.entity.SecurityRoleEntity;
 import me.xiajhuan.summer.admin.common.security.mapper.SecurityRoleMapper;
@@ -52,8 +50,8 @@ public class SecurityRoleServiceImpl extends ServiceImpl<SecurityRoleMapper, Sec
     }
 
     @Override
-    public LambdaQueryWrapper<SecurityRoleEntity> getQueryWrapper(SecurityRoleDto dto, boolean isCount) {
-        LambdaQueryWrapper<SecurityRoleEntity> queryWrapper = getQueryWrapperUnconditional(isCount);
+    public LambdaQueryWrapper<SecurityRoleEntity> getQueryWrapper(SecurityRoleDto dto) {
+        LambdaQueryWrapper<SecurityRoleEntity> queryWrapper = getSelectWrapper(currentEntityClass());
         // 动态Sql查询条件
         // 角色名称
         String name = dto.getName();
@@ -62,23 +60,11 @@ public class SecurityRoleServiceImpl extends ServiceImpl<SecurityRoleMapper, Sec
         return queryWrapper;
     }
 
-    @Override
-    public IPage<SecurityRoleEntity> customPage(Page<SecurityRoleEntity> page, SecurityRoleDto dto) {
-        // 关闭MP分页内置的count查询
-        page.setSearchCount(false);
-
-        IPage<SecurityRoleEntity> pageResult = page(page, getQueryWrapper(dto, false));
-
-        pageResult.setTotal(count(getQueryWrapper(dto, true)));
-
-        return pageResult;
-    }
-
     //*******************MpHelper覆写结束********************
 
     @Override
-    public IPage<SecurityRoleDto> page(PageAndSort pageAndSort, SecurityRoleDto dto) {
-        return ConvertUtil.convert(customPage(handlePageAndSort(pageAndSort), dto), SecurityRoleDto.class);
+    public IPage<SecurityRoleDto> page(SecurityRoleDto dto) {
+        return ConvertUtil.convert(page(handlePageSort(dto), getQueryWrapper(dto)), SecurityRoleDto.class);
     }
 
     @Override

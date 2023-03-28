@@ -14,7 +14,6 @@ package me.xiajhuan.summer.admin.common.log.controller;
 
 import me.xiajhuan.summer.admin.common.base.annotation.LogOperation;
 import me.xiajhuan.summer.core.constant.OperationConst;
-import me.xiajhuan.summer.core.data.PageAndSort;
 import me.xiajhuan.summer.core.data.PageData;
 import me.xiajhuan.summer.core.data.Result;
 import me.xiajhuan.summer.core.exception.code.ErrorCode;
@@ -48,15 +47,14 @@ public class LogLoginController {
     /**
      * 分页
      *
-     * @param pageAndSort 分页排序参数
-     * @param dto         登录日志Dto
+     * @param dto 登录日志Dto
      * @return 响应结果
      */
     @GetMapping("page")
     @RequiresPermissions("log:login:page")
     @LogOperation(OperationConst.PAGE)
-    public Result<PageData<LogLoginDto>> page(PageAndSort pageAndSort, LogLoginDto dto) {
-        return Result.ofSuccess(PageData.of(mainService.page(pageAndSort, dto)));
+    public Result<PageData<LogLoginDto>> page(LogLoginDto dto) {
+        return Result.ofSuccess(PageData.of(mainService.page(dto)));
     }
 
     //*******************Excel Operation********************

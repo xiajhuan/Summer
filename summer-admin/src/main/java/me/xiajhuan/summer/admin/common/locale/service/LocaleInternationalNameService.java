@@ -16,7 +16,6 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import me.xiajhuan.summer.admin.common.locale.dto.LocaleInternationalNameDto;
 import me.xiajhuan.summer.admin.common.locale.entity.LocaleInternationalNameEntity;
-import me.xiajhuan.summer.core.data.PageAndSort;
 
 import java.util.List;
 
@@ -28,7 +27,7 @@ import java.util.List;
  */
 public interface LocaleInternationalNameService extends IService<LocaleInternationalNameEntity> {
 
-    IPage<LocaleInternationalNameDto> page(PageAndSort pageAndSort, LocaleInternationalNameDto dto);
+    IPage<LocaleInternationalNameDto> page(LocaleInternationalNameDto dto);
 
     List<LocaleInternationalNameDto> list(LocaleInternationalNameDto dto);
 

@@ -17,15 +17,13 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import me.xiajhuan.summer.admin.common.locale.dto.LocaleInternationalNameDto;
 import me.xiajhuan.summer.admin.common.locale.entity.LocaleInternationalNameEntity;
 import me.xiajhuan.summer.admin.common.locale.mapper.LocaleInternationalNameMapper;
 import me.xiajhuan.summer.admin.common.locale.service.LocaleInternationalNameService;
 import me.xiajhuan.summer.core.constant.DataSourceConst;
-import me.xiajhuan.summer.core.data.PageAndSort;
-import me.xiajhuan.summer.core.mp.custom.MpHelper;
+import me.xiajhuan.summer.core.mp.helper.MpHelper;
 import me.xiajhuan.summer.core.utils.ConvertUtil;
 import org.springframework.stereotype.Service;
 
@@ -56,8 +54,8 @@ public class LocaleInternationalNameServiceImpl extends ServiceImpl<LocaleIntern
     }
 
     @Override
-    public LambdaQueryWrapper<LocaleInternationalNameEntity> getQueryWrapper(LocaleInternationalNameDto dto, boolean isCount) {
-        LambdaQueryWrapper<LocaleInternationalNameEntity> queryWrapper = getQueryWrapperUnconditional(isCount);
+    public LambdaQueryWrapper<LocaleInternationalNameEntity> getQueryWrapper(LocaleInternationalNameDto dto) {
+        LambdaQueryWrapper<LocaleInternationalNameEntity> queryWrapper = getSelectWrapper(currentEntityClass());
         // 动态Sql查询条件
         // 表名
         String tableName = dto.getTableName();
@@ -66,28 +64,16 @@ public class LocaleInternationalNameServiceImpl extends ServiceImpl<LocaleIntern
         return queryWrapper;
     }
 
-    @Override
-    public IPage<LocaleInternationalNameEntity> customPage(Page<LocaleInternationalNameEntity> page, LocaleInternationalNameDto dto) {
-        // 关闭MP分页内置的count查询
-        page.setSearchCount(false);
-
-        IPage<LocaleInternationalNameEntity> pageResult = page(page, getQueryWrapper(dto, false));
-
-        pageResult.setTotal(count(getQueryWrapper(dto, true)));
-
-        return pageResult;
-    }
-
     //*******************MpHelper覆写结束********************
 
     @Override
-    public IPage<LocaleInternationalNameDto> page(PageAndSort pageAndSort, LocaleInternationalNameDto dto) {
-        return ConvertUtil.convert(customPage(handlePageAndSort(pageAndSort), dto), LocaleInternationalNameDto.class);
+    public IPage<LocaleInternationalNameDto> page(LocaleInternationalNameDto dto) {
+        return ConvertUtil.convert(page(handlePageSort(dto), getQueryWrapper(dto)), LocaleInternationalNameDto.class);
     }
 
     @Override
     public List<LocaleInternationalNameDto> list(LocaleInternationalNameDto dto) {
-        LambdaQueryWrapper<LocaleInternationalNameEntity> queryWrapper = getQueryWrapper(dto, false);
+        LambdaQueryWrapper<LocaleInternationalNameEntity> queryWrapper = getQueryWrapper(dto);
         queryWrapper.orderByDesc(LocaleInternationalNameEntity::getCreateTime);
         return ConvertUtil.convert(list(queryWrapper), LocaleInternationalNameDto.class);
     }

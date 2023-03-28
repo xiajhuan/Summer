@@ -14,7 +14,6 @@ package me.xiajhuan.summer.admin.common.security.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import me.xiajhuan.summer.core.data.PageAndSort;
 import me.xiajhuan.summer.admin.common.security.dto.SecurityRoleDto;
 import me.xiajhuan.summer.admin.common.security.entity.SecurityRoleEntity;
 
@@ -26,7 +25,7 @@ import me.xiajhuan.summer.admin.common.security.entity.SecurityRoleEntity;
  */
 public interface SecurityRoleService extends IService<SecurityRoleEntity> {
 
-    IPage<SecurityRoleDto> page(PageAndSort pageAndSort, SecurityRoleDto dto);
+    IPage<SecurityRoleDto> page(SecurityRoleDto dto);
 
     void add(SecurityRoleDto dto);
 

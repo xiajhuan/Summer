@@ -15,12 +15,10 @@ package me.xiajhuan.summer.admin.common.security.service.impl;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import me.xiajhuan.summer.core.constant.DataSourceConst;
-import me.xiajhuan.summer.core.mp.custom.MpHelper;
+import me.xiajhuan.summer.core.mp.helper.MpHelper;
 import me.xiajhuan.summer.admin.common.security.dto.SecurityUserDto;
 import me.xiajhuan.summer.admin.common.security.entity.SecurityUserEntity;
 import me.xiajhuan.summer.admin.common.security.mapper.SecurityUserMapper;
@@ -53,8 +51,8 @@ public class SecurityUserServiceImpl extends ServiceImpl<SecurityUserMapper, Sec
     }
 
     @Override
-    public LambdaQueryWrapper<SecurityUserEntity> getQueryWrapper(SecurityUserDto dto, boolean isCount) {
-        LambdaQueryWrapper<SecurityUserEntity> queryWrapper = getQueryWrapperUnconditional(isCount);
+    public LambdaQueryWrapper<SecurityUserEntity> getQueryWrapper(SecurityUserDto dto) {
+        LambdaQueryWrapper<SecurityUserEntity> queryWrapper = getSelectWrapper(currentEntityClass());
         // 动态Sql查询条件
         // 用户名
         String username = dto.getUsername();
@@ -64,18 +62,6 @@ public class SecurityUserServiceImpl extends ServiceImpl<SecurityUserMapper, Sec
         queryWrapper.eq(gender != null, SecurityUserEntity::getGender, gender);
 
         return queryWrapper;
-    }
-
-    @Override
-    public IPage<SecurityUserEntity> customPage(Page<SecurityUserEntity> page, SecurityUserDto dto) {
-        // 关闭MP分页内置的count查询
-        page.setSearchCount(false);
-
-        IPage<SecurityUserEntity> pageResult = page(page, getQueryWrapper(dto, false));
-
-        pageResult.setTotal(count(getQueryWrapper(dto, true)));
-
-        return pageResult;
     }
 
     //*******************MpHelper覆写结束********************

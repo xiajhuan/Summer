@@ -15,7 +15,7 @@ package me.xiajhuan.summer.admin.common.security.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import me.xiajhuan.summer.core.dto.BaseDto;
+import me.xiajhuan.summer.core.dto.PageSortDto;
 import me.xiajhuan.summer.core.enums.StatusEnum;
 import me.xiajhuan.summer.admin.common.security.enums.GenderEnum;
 import me.xiajhuan.summer.core.constant.DataScopeConst;
@@ -37,7 +37,7 @@ import java.util.Set;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class SecurityUserDto extends BaseDto {
+public class SecurityUserDto extends PageSortDto {
 
     /**
      * 用户名

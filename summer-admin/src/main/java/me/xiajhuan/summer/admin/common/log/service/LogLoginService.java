@@ -15,7 +15,6 @@ package me.xiajhuan.summer.admin.common.log.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import me.xiajhuan.summer.core.constant.ThreadPoolConst;
-import me.xiajhuan.summer.core.data.PageAndSort;
 import me.xiajhuan.summer.admin.common.log.dto.LogLoginDto;
 import me.xiajhuan.summer.admin.common.log.entity.LogLoginEntity;
 import org.springframework.scheduling.annotation.Async;
@@ -30,7 +29,7 @@ import java.util.List;
  */
 public interface LogLoginService extends IService<LogLoginEntity> {
 
-    IPage<LogLoginDto> page(PageAndSort pageAndSort, LogLoginDto dto);
+    IPage<LogLoginDto> page(LogLoginDto dto);
 
     List<LogLoginDto> list(LogLoginDto dto);
 
