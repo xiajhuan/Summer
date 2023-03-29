@@ -12,7 +12,7 @@
 
 package me.xiajhuan.summer.core.validation.config;
 
-import me.xiajhuan.summer.core.validation.resolver.CustomLocaleResolver;
+import me.xiajhuan.summer.core.validation.resolver.MyLocaleResolver;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -53,7 +53,7 @@ public class ValidatorConfig {
      */
     @Bean
     public LocaleResolver localeResolver() {
-        return CustomLocaleResolver.of();
+        return MyLocaleResolver.of();
     }
 
 }

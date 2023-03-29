@@ -12,7 +12,7 @@
 
 package me.xiajhuan.summer.core.converter;
 
-import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import me.xiajhuan.summer.core.constant.DateFormatConst;
@@ -45,7 +45,7 @@ public class DateConverter implements Converter<String, Date> {
      */
     @PostConstruct
     private void init() {
-        patternList = CollUtil.newArrayList(
+        patternList = ListUtil.of(
                 Pattern.compile("^\\d{4}-\\d{2}$"),
                 Pattern.compile("^\\d{4}-\\d{2}-\\d{2}$"),
                 Pattern.compile("^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}$"),

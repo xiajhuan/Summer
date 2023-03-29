@@ -12,7 +12,6 @@
 
 package me.xiajhuan.summer.core.cache.server.impl;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
@@ -475,7 +474,7 @@ public class HeapCacheServer implements CacheServer {
             elementList = getList(key);
             elementList.addAll(list);
         } else {
-            elementList = CollUtil.newArrayList(list);
+            elementList = list;
         }
 
         cacheList(key, elementList, ttl);

@@ -12,7 +12,7 @@
 
 package me.xiajhuan.summer.admin.common.security.dto;
 
-import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.lang.tree.TreeNode;
 import lombok.*;
 import me.xiajhuan.summer.core.validation.group.AddGroup;
@@ -72,7 +72,7 @@ public class SecurityDeptDto extends TreeNode {
     /**
      * 子节点
      */
-    private List<SecurityDeptDto> children = CollUtil.newArrayList();
+    private List<SecurityDeptDto> children = ListUtil.of();
 
     /**
      * 上级部门名称

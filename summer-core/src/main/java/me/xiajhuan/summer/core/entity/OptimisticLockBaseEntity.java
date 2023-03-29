@@ -17,7 +17,6 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.Version;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import me.xiajhuan.summer.core.entity.CommonBaseEntity;
 
 /**
  * 乐观锁控制 Entity基类<br>
@@ -31,7 +30,8 @@ import me.xiajhuan.summer.core.entity.CommonBaseEntity;
 public abstract class OptimisticLockBaseEntity extends CommonBaseEntity {
 
     /**
-     * 乐观锁控制
+     * 乐观锁控制<br>
+     * note：表字段“version”默认值应为0
      */
     @Version
     @TableField(fill = FieldFill.INSERT, value = "version")

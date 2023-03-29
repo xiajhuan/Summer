@@ -18,6 +18,7 @@ import com.baomidou.mybatisplus.extension.plugins.inner.DataPermissionIntercepto
 import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import me.xiajhuan.summer.core.mp.handler.DataScopeHandler;
+import me.xiajhuan.summer.core.mp.injector.MySqlInjector;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -54,6 +55,16 @@ public class MybatisPlusConfig {
         mybatisPlusInterceptor.addInnerInterceptor(dataPermissionInterceptor);
 
         return mybatisPlusInterceptor;
+    }
+
+    /**
+     * 注册 自定义Sql注入器
+     *
+     * @return 自定义Sql注入器
+     */
+    @Bean
+    public MySqlInjector customSqlInjector() {
+        return MySqlInjector.of();
     }
 
 }

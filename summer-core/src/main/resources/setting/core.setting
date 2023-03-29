@@ -44,6 +44,9 @@ sort.default-order = desc
 # 排序字段是否驼峰转下划线
 sort.field-camelToUnderscore = true
 
+# 每次批量插入数（JDBC批量提交）
+batch-num-every-time = 100
+
 # 数据权限忽略的表名配置，以“,”分隔
 # 支持通配符：“*”（任意匹配）和“?”（单值匹配）
 data-scope.ignore = log_*,security_*

@@ -12,7 +12,7 @@
 
 package me.xiajhuan.summer.core;
 
-import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.lang.Console;
 import cn.hutool.json.JSONUtil;
 import me.xiajhuan.summer.BaseTest;
@@ -45,7 +45,7 @@ public class TreeUtilTest extends BaseTest {
      */
     @BeforeEach
     void init() {
-        menuDtoList = CollUtil.newArrayList(
+        menuDtoList = ListUtil.of(
                 SecurityMenuDto.builder()
                         .id(1L).parentId(TreeConst.ROOT).name("系统管理").weight(5)
                         .url("/sys").permissions("sys").build(),

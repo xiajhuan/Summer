@@ -10,28 +10,27 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.core.entity;
+package me.xiajhuan.summer.core.mp.mapper;
 
-import com.baomidou.mybatisplus.annotation.TableLogic;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
+import java.util.List;
 
 /**
- * 逻辑删除 Entity基类<br>
- * 包含【id,create_by,create_time,update_by,update_time,dept_id,is_del】字段
+ * 自定义 BaseMapper
  *
  * @author xiajhuan
- * @date 2022/11/19
+ * @date 2023/3/29
+ * @see BaseMapper
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
-public abstract class LogicBaseEntity extends CommonBaseEntity {
+public interface MyBaseMapper<T> extends BaseMapper<T> {
 
     /**
-     * 逻辑删除标识（0：未删除 1：已删除）<br>
-     * note：表字段“is_del”默认值应为0
+     * 批量插入（JDBC批量提交）
+     *
+     * @param entityList Entity类型列表
+     * @return 插入数量
      */
-    @TableLogic
-    private Integer isDel;
+    int realSaveBatch(List<T> entityList);
 
 }

@@ -27,21 +27,21 @@ import java.util.Locale;
  * @see LocaleResolver
  * @see LocaleUtil#getLocalePriority()
  */
-public class CustomLocaleResolver implements LocaleResolver {
+public class MyLocaleResolver implements LocaleResolver {
 
     /**
-     * 构造CustomLocaleResolver
+     * 构造MyLocaleResolver
      */
-    private CustomLocaleResolver() {
+    private MyLocaleResolver() {
     }
 
     /**
-     * 构建CustomLocaleResolver
+     * 构建MyLocaleResolver
      *
-     * @return CustomLocaleResolver
+     * @return MyLocaleResolver
      */
-    public static CustomLocaleResolver of() {
-        return new CustomLocaleResolver();
+    public static MyLocaleResolver of() {
+        return new MyLocaleResolver();
     }
 
     @Override

@@ -55,11 +55,6 @@ public class FieldFillHandler implements MetaObjectHandler {
     private static final String DEPT_ID = "deptId";
 
     /**
-     * 乐观锁控制
-     */
-    private static final String VERSION = "version";
-
-    /**
      * 新增时自动填充
      *
      * @param metaObject {@link MetaObject}
@@ -78,9 +73,6 @@ public class FieldFillHandler implements MetaObjectHandler {
 
         // 部门ID
         setFieldValByName(DEPT_ID, SecurityUtil.getCurrentDeptId(), metaObject);
-
-        // 乐观锁控制
-        setFieldValByName(VERSION, 0, metaObject);
     }
 
     /**

@@ -12,7 +12,7 @@
 
 package me.xiajhuan.summer.admin.common.security.dto;
 
-import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.lang.tree.TreeNode;
 import lombok.*;
 import me.xiajhuan.summer.admin.common.security.enums.ComponentTypeEnum;
@@ -109,7 +109,7 @@ public class SecurityMenuDto extends TreeNode {
     /**
      * 子节点
      */
-    private List<SecurityMenuDto> children = CollUtil.newArrayList();
+    private List<SecurityMenuDto> children = ListUtil.of();
 
     /**
      * 上级菜单名称

@@ -13,8 +13,8 @@
 package me.xiajhuan.summer.admin.common.locale.mapper;
 
 import com.baomidou.mybatisplus.annotation.InterceptorIgnore;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import me.xiajhuan.summer.admin.common.locale.entity.LocaleInternationalNameEntity;
+import me.xiajhuan.summer.core.mp.mapper.MyBaseMapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
@@ -25,7 +25,7 @@ import org.apache.ibatis.annotations.Select;
  * @date 2023/3/16
  */
 @InterceptorIgnore
-public interface LocaleInternationalNameMapper extends BaseMapper<LocaleInternationalNameEntity> {
+public interface LocaleInternationalNameMapper extends MyBaseMapper<LocaleInternationalNameEntity> {
 
     @Select("SELECT 1 FROM locale_international_name WHERE" +
             " table_name = #{param.tableName} AND field_name = #{param.fieldName} AND" +
