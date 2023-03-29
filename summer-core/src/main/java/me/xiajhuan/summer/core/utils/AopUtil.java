@@ -53,7 +53,7 @@ public class AopUtil {
     public static String getMethodSignature(JoinPoint point) {
         Method method = getMethod(point);
 
-        String paramType = Arrays.stream(method.getParameterTypes()).map(p -> p.getName())
+        String paramType = Arrays.stream(method.getParameterTypes()).map(Class::getName)
                 .collect(Collectors.joining(StrPool.COMMA));
 
         return StrUtil.format("{}.{}({})", point.getTarget().getClass().getName(),
@@ -73,7 +73,7 @@ public class AopUtil {
     public static String getMethodSignatureSimple(JoinPoint point) {
         Method method = getMethod(point);
 
-        String paramType = Arrays.stream(method.getParameterTypes()).map(p -> p.getSimpleName())
+        String paramType = Arrays.stream(method.getParameterTypes()).map(Class::getSimpleName)
                 .collect(Collectors.joining(StrPool.COMMA));
 
         return StrUtil.format("{}.{}({})", point.getTarget().getClass().getSimpleName(),

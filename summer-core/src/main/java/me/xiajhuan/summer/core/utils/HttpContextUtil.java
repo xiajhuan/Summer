@@ -219,7 +219,7 @@ public class HttpContextUtil {
      */
     private static String getFormParam(Object[] args) {
         // 排除参数值为空的参数（包括空数组）
-        args = Arrays.stream(args).filter(arg -> ObjectUtil.isNotEmpty(arg)).toArray();
+        args = Arrays.stream(args).filter(ObjectUtil::isNotEmpty).toArray();
 
         if (args.length > 0) {
             // 标记是否为文件上传，true：不是 false：是

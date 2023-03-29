@@ -16,10 +16,10 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.text.StrPool;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.extra.spring.SpringUtil;
 import cn.hutool.setting.Setting;
 import com.p6spy.engine.spy.appender.MessageFormattingStrategy;
 import me.xiajhuan.summer.core.constant.SettingBeanConst;
-import me.xiajhuan.summer.core.utils.SpringContextUtil;
 
 import java.util.Arrays;
 
@@ -41,7 +41,7 @@ public class SqlFormatConfig implements MessageFormattingStrategy {
      * 初始化 {@link excludeAndReplaceSqlArray}
      */
     static {
-        String excludeAndReplaceSql = SpringContextUtil.getBean(SettingBeanConst.CORE, Setting.class)
+        String excludeAndReplaceSql = SpringUtil.getBean(SettingBeanConst.CORE, Setting.class)
                 .getByGroup("exclude-and-replace", "Sql");
 
         if (StrUtil.isNotBlank(excludeAndReplaceSql)) {

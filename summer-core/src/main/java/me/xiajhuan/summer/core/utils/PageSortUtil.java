@@ -15,6 +15,7 @@ package me.xiajhuan.summer.core.utils;
 import cn.hutool.core.text.StrPool;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.extra.spring.SpringUtil;
 import cn.hutool.setting.Setting;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -65,7 +66,7 @@ public class PageSortUtil {
      * 初始化 {@link defaultFieldArray} {@link defaultOrderArray} {@link camelToUnderscore}
      */
     static {
-        Setting setting = SpringContextUtil.getBean(SettingBeanConst.CORE, Setting.class);
+        Setting setting = SpringUtil.getBean(SettingBeanConst.CORE, Setting.class);
 
         String defaultField = setting.getByGroup("sort.default-field", "Mp");
         if (StrUtil.isNotBlank(defaultField)) {

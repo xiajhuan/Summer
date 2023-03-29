@@ -25,7 +25,7 @@ import java.util.List;
  * @date 2022/11/21
  * @see BeanUtil
  */
-public class ConvertUtil {
+public class ConvertUtil extends BeanUtil {
 
     /**
      * 单一对象转换
@@ -36,7 +36,7 @@ public class ConvertUtil {
      * @return 目标对象
      */
     public static <T> T convert(Object source, Class<T> target) {
-        return BeanUtil.copyProperties(source, target);
+        return copyProperties(source, target);
     }
 
     /**
@@ -48,7 +48,7 @@ public class ConvertUtil {
      * @return 目标列表
      */
     public static <T> List<T> convert(List<?> sourceList, Class<T> target) {
-        return BeanUtil.copyToList(sourceList, target);
+        return copyToList(sourceList, target);
     }
 
     /**

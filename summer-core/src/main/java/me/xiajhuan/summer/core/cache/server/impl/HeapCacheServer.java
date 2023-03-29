@@ -15,6 +15,7 @@ package me.xiajhuan.summer.core.cache.server.impl;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.extra.spring.SpringUtil;
 import cn.hutool.setting.Setting;
 import cn.hutool.cache.CacheUtil;
 import cn.hutool.cache.impl.AbstractCache;
@@ -23,7 +24,6 @@ import cn.hutool.cache.impl.LFUCache;
 import cn.hutool.cache.impl.LRUCache;
 import me.xiajhuan.summer.core.cache.server.CacheServer;
 import me.xiajhuan.summer.core.constant.SettingBeanConst;
-import me.xiajhuan.summer.core.utils.SpringContextUtil;
 import me.xiajhuan.summer.core.constant.CacheConst;
 
 import java.util.ArrayList;
@@ -87,7 +87,7 @@ public class HeapCacheServer implements CacheServer {
 
     private HeapCacheServer() {
         // 初始化缓存容量和缓存满后对象的移除策略
-        Setting setting = SpringContextUtil.getBean(SettingBeanConst.CORE, Setting.class);
+        Setting setting = SpringUtil.getBean(SettingBeanConst.CORE, Setting.class);
         // 默认移除策略
         String defaultStrategy = CacheConst.Heap.LRU;
 

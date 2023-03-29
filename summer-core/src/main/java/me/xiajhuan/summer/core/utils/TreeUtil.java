@@ -19,6 +19,7 @@ import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.extra.spring.SpringUtil;
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
 import cn.hutool.setting.Setting;
@@ -45,7 +46,7 @@ import java.util.stream.Collectors;
  * @date 2023/3/10
  * @see cn.hutool.core.lang.tree.TreeUtil
  */
-public class TreeUtil {
+public class TreeUtil extends cn.hutool.core.lang.tree.TreeUtil {
 
     private static final Log LOGGER = LogFactory.get();
 
@@ -58,7 +59,7 @@ public class TreeUtil {
      * 初始化 {@link treeNodeConfig}
      */
     static {
-        int deep = SpringContextUtil.getBean(SettingBeanConst.CORE, Setting.class)
+        int deep = SpringUtil.getBean(SettingBeanConst.CORE, Setting.class)
                 .getInt("deep", "Tree", 5);
         deep = Math.max(deep, 0);
 
@@ -93,7 +94,7 @@ public class TreeUtil {
         // 获取扩展属性的Getter
         final Map<String, Method> extraGetters = getExtraGetters(dtoClass, extraField);
 
-        return cn.hutool.core.lang.tree.TreeUtil.build(dtoList, rootId, treeNodeConfig,
+        return build(dtoList, rootId, treeNodeConfig,
                 (treeNode, tree) -> {
                     tree.setId((Long) treeNode.getId());
                     tree.setParentId((Long) treeNode.getParentId());
@@ -112,43 +113,6 @@ public class TreeUtil {
                         });
                     }
                 });
-    }
-
-    /**
-     * 获取ID对应的节点，如果有多个ID相同的节点，只返回第一个<br>
-     * 此方法只查找此节点及子节点，采用递归深度优先遍历
-     *
-     * @param node 要查找的节点
-     * @param id   ID
-     * @return 节点（{@link Tree}）
-     */
-    public static Tree<Long> getNode(Tree<Long> node, Long id) {
-        return cn.hutool.core.lang.tree.TreeUtil.getNode(node, id);
-    }
-
-    /**
-     * 获取所有父节点名称列表
-     * <p>
-     * 比如有个人在研发一部，他上面有研发部，接着上面有技术中心，若包含自己，
-     * 返回结果就是：[研发一部, 研发中心, 技术中心]
-     * </p>
-     *
-     * @param node               节点
-     * @param includeCurrentNode 是否包含当前节点的名称，true：包含 false：不包含
-     * @return 所有父节点名称列表，node为 {@code null} 返回空List
-     */
-    public static List<CharSequence> getParentsName(Tree<Long> node, boolean includeCurrentNode) {
-        return cn.hutool.core.lang.tree.TreeUtil.getParentsName(node, includeCurrentNode);
-    }
-
-    /**
-     * 创建空节点
-     *
-     * @param id ID
-     * @return 节点（{@link Tree}）
-     */
-    public static Tree<Long> createEmptyNode(Long id) {
-        return new Tree<Long>().setId(id);
     }
 
     /**

@@ -14,7 +14,7 @@ package me.xiajhuan.summer.core.utils;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
-import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.EasyExcelFactory;
 import com.alibaba.excel.context.AnalysisContext;
 import com.baomidou.mybatisplus.extension.service.IService;
 import me.xiajhuan.summer.core.excel.AbstractExcelParser;
@@ -35,9 +35,9 @@ import java.util.List;
  *
  * @author xiajhuan
  * @date 2022/12/1
- * @see EasyExcel
+ * @see EasyExcelFactory
  */
-public class ExcelUtil {
+public class ExcelUtil extends EasyExcelFactory {
 
     /**
      * 导入（保存到Db）
@@ -68,7 +68,7 @@ public class ExcelUtil {
      */
     public static <D, T> void importDb(MultipartFile file, Class<D> dtoClass, ExcelDbParser<D, T> customDbParser) {
         try {
-            EasyExcel.read(file.getInputStream(), dtoClass, customDbParser).sheet().doRead();
+            read(file.getInputStream(), dtoClass, customDbParser).sheet().doRead();
         } catch (IOException e) {
             throw FileUploadException.of(e, ErrorCode.FILE_UPLOAD_FAILURE);
         }
@@ -102,7 +102,7 @@ public class ExcelUtil {
      */
     public static <D, T> void importCache(MultipartFile file, Class<D> dtoClass, ExcelCacheParser<D, T> customCacheParser) {
         try {
-            EasyExcel.read(file.getInputStream(), dtoClass, customCacheParser).sheet().doRead();
+            read(file.getInputStream(), dtoClass, customCacheParser).sheet().doRead();
         } catch (IOException e) {
             throw FileUploadException.of(e, ErrorCode.FILE_UPLOAD_FAILURE);
         }
@@ -134,7 +134,7 @@ public class ExcelUtil {
             fileName = URLEncoder.encode(fileName, "UTF-8");
             response.setHeader("Content-disposition", StrUtil.format("attachment;filename={}.xlsx", fileName));
 
-            EasyExcel.write(response.getOutputStream(), dtoClass).sheet(sheetName).doWrite(dtoList);
+            write(response.getOutputStream(), dtoClass).sheet(sheetName).doWrite(dtoList);
         } catch (IOException e) {
             throw FileDownloadException.of(e, code);
         }

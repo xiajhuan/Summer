@@ -15,6 +15,7 @@ package me.xiajhuan.summer.core.utils;
 import cn.hutool.core.lang.Dict;
 import cn.hutool.core.text.StrPool;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.extra.spring.SpringUtil;
 import me.xiajhuan.summer.core.exception.code.ErrorCode;
 import me.xiajhuan.summer.core.exception.ValidationException;
 import me.xiajhuan.summer.core.validation.group.AddGroup;
@@ -43,7 +44,7 @@ public class ValidationUtil {
      * 初始化 {@link validator}
      */
     static {
-        validator = SpringContextUtil.getBean("getValidator", Validator.class);
+        validator = SpringUtil.getBean("getValidator", Validator.class);
     }
 
     /**

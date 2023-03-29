@@ -28,11 +28,11 @@ import me.xiajhuan.summer.core.enums.NonLoggedUserEnum;
  *
  * @author xiajhuan
  * @date 2023/02/27
+ * @see SecurityUtils
  * @see SecureUtil
  * @see BCrypt
- * @see SecurityUtils
  */
-public class SecurityUtil {
+public class SecurityUtil extends SecurityUtils {
 
     private static final Log LOGGER = LogFactory.get();
 
@@ -142,7 +142,7 @@ public class SecurityUtil {
      * @return 登录用户信息
      */
     public static LoginUser getLoginUser() {
-        Subject subject = getSubject();
+        Subject subject = acquireSubject();
         if (subject == null) {
             return new LoginUser();
         }
@@ -161,9 +161,9 @@ public class SecurityUtil {
      *
      * @return {@link Subject}
      */
-    private static Subject getSubject() {
+    private static Subject acquireSubject() {
         try {
-            return SecurityUtils.getSubject();
+            return getSubject();
         } catch (Exception e) {
             LOGGER.error(e, "获取Subject失败【{}】", e.getMessage());
 

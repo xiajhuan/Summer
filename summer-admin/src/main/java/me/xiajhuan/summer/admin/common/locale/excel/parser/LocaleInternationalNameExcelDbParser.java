@@ -12,12 +12,12 @@
 
 package me.xiajhuan.summer.admin.common.locale.excel.parser;
 
+import cn.hutool.extra.spring.SpringUtil;
 import com.baomidou.mybatisplus.extension.service.IService;
 import me.xiajhuan.summer.admin.common.locale.dto.LocaleInternationalNameDto;
 import me.xiajhuan.summer.admin.common.locale.entity.LocaleInternationalNameEntity;
 import me.xiajhuan.summer.admin.common.locale.service.LocaleInternationalNameService;
 import me.xiajhuan.summer.core.excel.subClass.ExcelDbParser;
-import me.xiajhuan.summer.core.utils.SpringContextUtil;
 
 import java.util.stream.Collectors;
 
@@ -40,7 +40,7 @@ public class LocaleInternationalNameExcelDbParser extends ExcelDbParser<LocaleIn
     private LocaleInternationalNameExcelDbParser(IService<LocaleInternationalNameEntity> service, Class<LocaleInternationalNameEntity> currentEntityClass) {
         super(service, currentEntityClass);
 
-        localeInternationalNameService = SpringContextUtil.getBean("localeInternationalNameServiceImpl", LocaleInternationalNameService.class);
+        localeInternationalNameService = SpringUtil.getBean("localeInternationalNameServiceImpl", LocaleInternationalNameService.class);
     }
 
     /**

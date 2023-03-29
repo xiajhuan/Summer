@@ -12,8 +12,8 @@
 
 package me.xiajhuan.summer.core.cache.server.impl;
 
+import cn.hutool.extra.spring.SpringUtil;
 import me.xiajhuan.summer.core.cache.server.CacheServer;
-import me.xiajhuan.summer.core.utils.SpringContextUtil;
 import org.springframework.data.redis.core.RedisTemplate;
 
 import java.util.List;
@@ -36,7 +36,7 @@ public class RedisCacheServer implements CacheServer {
     //*******************单例处理开始********************
 
     private RedisCacheServer() {
-        redisTemplate = SpringContextUtil.getBean("redisTemplate", RedisTemplate.class);
+        redisTemplate = SpringUtil.getBean("redisTemplate", RedisTemplate.class);
     }
 
     private static volatile RedisCacheServer instance = null;
