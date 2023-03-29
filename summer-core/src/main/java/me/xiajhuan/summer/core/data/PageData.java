@@ -12,7 +12,7 @@
 
 package me.xiajhuan.summer.core.data;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -49,12 +49,12 @@ public class PageData<T> implements Serializable {
     /**
      * 构建分页数据
      *
-     * @param pageInfo {@link IPage}
-     * @param <T>      列表数据类型
+     * @param page {@link Page}
+     * @param <T>  列表数据类型
      * @return 分页数据
      */
-    public static <T> PageData<T> of(IPage<T> pageInfo) {
-        return of(pageInfo.getTotal(), pageInfo.getRecords());
+    public static <T> PageData<T> of(Page<T> page) {
+        return of(page.getTotal(), page.getRecords());
     }
 
     /**

@@ -12,7 +12,7 @@
 
 package me.xiajhuan.summer.admin.common.log.service;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import me.xiajhuan.summer.core.constant.ThreadPoolConst;
 import me.xiajhuan.summer.admin.common.log.dto.LogErrorDto;
@@ -30,7 +30,7 @@ import java.util.List;
  */
 public interface LogErrorService extends IService<LogErrorEntity> {
 
-    IPage<LogErrorDto> page(LogErrorDto dto);
+    Page<LogErrorDto> page(LogErrorDto dto);
 
     List<LogErrorDto> list(LogErrorDto dto);
 

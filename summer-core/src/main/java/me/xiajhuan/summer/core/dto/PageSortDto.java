@@ -32,13 +32,13 @@ public abstract class PageSortDto extends BaseDto {
      * 当前页码，默认1
      */
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private Integer pageNum = 1;
+    private Long pageNum = 1L;
 
     /**
      * 每页记录数，默认10
      */
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private Integer pageSize = 10;
+    private Long pageSize = 10L;
 
     //*******************排序********************
 

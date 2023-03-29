@@ -12,7 +12,7 @@
 
 package me.xiajhuan.summer.admin.common.log.service;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import me.xiajhuan.summer.core.constant.ThreadPoolConst;
 import me.xiajhuan.summer.admin.common.log.dto.LogLoginDto;
@@ -29,7 +29,7 @@ import java.util.List;
  */
 public interface LogLoginService extends IService<LogLoginEntity> {
 
-    IPage<LogLoginDto> page(LogLoginDto dto);
+    Page<LogLoginDto> page(LogLoginDto dto);
 
     List<LogLoginDto> list(LogLoginDto dto);
 

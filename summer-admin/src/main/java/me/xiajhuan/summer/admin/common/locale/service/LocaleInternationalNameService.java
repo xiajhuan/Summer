@@ -12,7 +12,7 @@
 
 package me.xiajhuan.summer.admin.common.locale.service;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import me.xiajhuan.summer.admin.common.locale.dto.LocaleInternationalNameDto;
 import me.xiajhuan.summer.admin.common.locale.entity.LocaleInternationalNameEntity;
@@ -27,7 +27,7 @@ import java.util.List;
  */
 public interface LocaleInternationalNameService extends IService<LocaleInternationalNameEntity> {
 
-    IPage<LocaleInternationalNameDto> page(LocaleInternationalNameDto dto);
+    Page<LocaleInternationalNameDto> page(LocaleInternationalNameDto dto);
 
     List<LocaleInternationalNameDto> list(LocaleInternationalNameDto dto);
 

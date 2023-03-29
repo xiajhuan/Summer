@@ -20,8 +20,8 @@ import cn.hutool.json.JSONUtil;
 import cn.hutool.setting.Setting;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import me.xiajhuan.summer.core.constant.DataSourceConst;
 import me.xiajhuan.summer.core.constant.SettingBeanConst;
@@ -88,15 +88,13 @@ public class LogErrorServiceImpl extends ServiceImpl<LogErrorMapper, LogErrorEnt
     //*******************MpHelper覆写结束********************
 
     @Override
-    public IPage<LogErrorDto> page(LogErrorDto dto) {
+    public Page<LogErrorDto> page(LogErrorDto dto) {
         return ConvertUtil.convert(page(handlePageSort(dto), getQueryWrapper(dto)), LogErrorDto.class);
     }
 
     @Override
     public List<LogErrorDto> list(LogErrorDto dto) {
-        LambdaQueryWrapper<LogErrorEntity> queryWrapper = getQueryWrapper(dto);
-        queryWrapper.orderByDesc(LogErrorEntity::getCreateTime);
-        return ConvertUtil.convert(list(queryWrapper), LogErrorDto.class);
+        return ConvertUtil.convert(list(getSortWrapper(dto)), LogErrorDto.class);
     }
 
     @Override

@@ -34,16 +34,6 @@ import me.xiajhuan.summer.core.utils.PageSortUtil;
 public interface MpHelper<D extends PageSortDto, T> {
 
     /**
-     * 分页排序参数处理
-     *
-     * @param dto Dto类型对象
-     * @return {@link Page}
-     */
-    default Page<T> handlePageSort(D dto) {
-        return PageSortUtil.handlePageSort(dto);
-    }
-
-    /**
      * 获取 {@link LambdaQueryWrapper}（指定查询字段，默认所有Entity字段）
      *
      * @param entityClass EntityClass
@@ -64,6 +54,42 @@ public interface MpHelper<D extends PageSortDto, T> {
     default LambdaQueryWrapper<T> getQueryWrapper(D dto) {
         // 查询条件（无）
         return getSelectWrapper((Class<T>) ReflectionKit.getSuperClassGenericType(getClass(), ServiceImpl.class, 1));
+    }
+
+    /**
+     * <p>
+     * 获取 {@link LambdaQueryWrapper}（指定排序条件），默认依据
+     * {@link PageSortDto#field} {@link PageSortDto#order} 的值指定
+     * note：{@link PageSortUtil#handleSort(PageSortDto, LambdaQueryWrapper)}
+     * 有Sql注入风险！推荐根据实际需求覆写
+     * </p>
+     *
+     * @param dto Dto类型对象
+     * @return {@link LambdaQueryWrapper}
+     */
+    default LambdaQueryWrapper<T> getSortWrapper(D dto) {
+        return PageSortUtil.handleSort(dto, getQueryWrapper(dto));
+    }
+
+    /**
+     * 分页排序参数处理，默认 count 总记录数
+     *
+     * @param dto Dto类型对象
+     * @return {@link Page}
+     */
+    default Page<T> handlePageSort(D dto) {
+        return PageSortUtil.handlePageSort(dto);
+    }
+
+    /**
+     * 自定义分页钩子<br>
+     * note：必须覆写该方法才能调用！否则将抛出 {@link UnsupportedOperationException}，
+     *
+     * @param dto Dto类型对象
+     * @return {@link Page}
+     */
+    default Page<T> customPage(D dto) {
+        throw new UnsupportedOperationException("必须覆写该方法才能调用！");
     }
 
     /**

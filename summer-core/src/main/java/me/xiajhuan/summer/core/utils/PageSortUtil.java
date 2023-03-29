@@ -12,11 +12,13 @@
 
 package me.xiajhuan.summer.core.utils;
 
+import cn.hutool.core.lang.Dict;
 import cn.hutool.core.text.StrPool;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import cn.hutool.setting.Setting;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import me.xiajhuan.summer.core.constant.SettingBeanConst;
@@ -48,6 +50,11 @@ public class PageSortUtil {
     private static final String[] DESC = {"desc", "descend", "descending"};
 
     /**
+     * 单页分页条数限制
+     */
+    private static long maxLimit;
+
+    /**
      * 默认排序字段数组
      */
     private static String[] defaultFieldArray;
@@ -63,10 +70,13 @@ public class PageSortUtil {
     private static boolean camelToUnderscore;
 
     /**
-     * 初始化 {@link defaultFieldArray} {@link defaultOrderArray} {@link camelToUnderscore}
+     * 初始化 {@link maxLimit} {@link defaultFieldArray}
+     * {@link defaultOrderArray} {@link camelToUnderscore}
      */
     static {
         Setting setting = SpringUtil.getBean(SettingBeanConst.CORE, Setting.class);
+
+        maxLimit = setting.getLong("page.max-limit", "Mp", 2000L);
 
         String defaultField = setting.getByGroup("sort.default-field", "Mp");
         if (StrUtil.isNotBlank(defaultField)) {
@@ -81,6 +91,47 @@ public class PageSortUtil {
     }
 
     /**
+     * 处理排序参数<br>
+     * note：拼接排序条件至最后，有Sql注入风险，谨慎使用！
+     *
+     * @param pageSortDto  分页排序Dto
+     * @param queryWrapper {@link LambdaQueryWrapper}
+     * @param <D>          Dto类型
+     * @param <T>          Entity类型
+     * @return {@link LambdaQueryWrapper}
+     */
+    public static <D extends PageSortDto, T> LambdaQueryWrapper<T> handleSort(D pageSortDto, LambdaQueryWrapper<T> queryWrapper) {
+        Dict sortDesc = handleSortInternal(pageSortDto.getField(), pageSortDto.getOrder());
+
+        if (sortDesc != null) {
+            // 添加排序条件
+            int num = sortDesc.getInt("num");
+            String[] fieldArray = (String[]) sortDesc.get("field");
+            String[] orderArray = (String[]) sortDesc.get("order");
+
+            // Sql片段示例：ORDER BY create_time DESC,create_by ASC
+            StringBuilder sqlSegment = StrUtil.builder(" ORDER BY ");
+            for (int i = 0; i < num; i++) {
+                if (StrUtil.equalsAnyIgnoreCase(orderArray[i], ASC)) {
+                    // 升序
+                    sqlSegment.append(fieldArray[i]).append(StrUtil.SPACE)
+                            .append("ASC").append(StrPool.COMMA);
+                } else if (StrUtil.equalsAnyIgnoreCase(orderArray[i], DESC)) {
+                    // 降序
+                    sqlSegment.append(fieldArray[i]).append(StrUtil.SPACE)
+                            .append("DESC").append(StrPool.COMMA);
+                } else {
+                    throw new IllegalArgumentException(StrUtil.format("不支持的排序规则【{}】", orderArray[i]));
+                }
+            }
+            // 拼接排序条件至最后
+            queryWrapper.last(sqlSegment.substring(0, sqlSegment.length() - 1));
+        }
+
+        return queryWrapper;
+    }
+
+    /**
      * 处理分页排序参数
      *
      * @param pageSortDto 分页排序Dto
@@ -89,22 +140,55 @@ public class PageSortUtil {
      * @return {@link Page}
      */
     public static <D extends PageSortDto, T> Page<T> handlePageSort(D pageSortDto) {
-        Page<T> page = Page.of(pageSortDto.getPageNum(), pageSortDto.getPageSize());
+        return handlePageSort(pageSortDto, 0L);
+    }
+
+    /**
+     * 处理分页排序参数
+     *
+     * @param pageSortDto 分页排序Dto
+     * @param customTotal 自定义分页总记录数（值不等于0时不 count）
+     * @param <D>         Dto类型
+     * @param <T>         Entity类型
+     * @return {@link Page}
+     */
+    public static <D extends PageSortDto, T> Page<T> handlePageSort(D pageSortDto, long customTotal) {
+        final Page<T> page;
+
+        //*******************分页处理********************
+
+        long pageNum = pageSortDto.getPageNum();
+        long pageSize = pageSortDto.getPageSize();
+
+        if (customTotal == 0L) {
+            // count查询分页总记录数
+            page = Page.of(pageNum, pageSize);
+        } else {
+            // 自定义分页总记录数
+            page = Page.of(pageNum, pageSize, customTotal, false);
+        }
+        page.setMaxLimit(maxLimit);
 
         //*******************排序处理********************
 
-        String field = pageSortDto.getField();
-        String order = pageSortDto.getOrder();
+        Dict sortDesc = handleSortInternal(pageSortDto.getField(), pageSortDto.getOrder());
 
-        if (StrUtil.isAllNotBlank(field, order)
-                && !StrUtil.equalsAnyIgnoreCase(field, NULL_AND_UNDEFINED)
-                && !StrUtil.equalsAnyIgnoreCase(order, NULL_AND_UNDEFINED)) {
-            // 按照请求参数排序
-            handleSortInternal(page, field.split(StrPool.COMMA), order.split(StrPool.COMMA));
-        } else {
-            // 按照默认字段和规则排序
-            if (ArrayUtil.isNotEmpty(defaultFieldArray) && ArrayUtil.isNotEmpty(defaultOrderArray)) {
-                handleSortInternal(page, defaultFieldArray, defaultOrderArray);
+        if (sortDesc != null) {
+            // 添加排序条件
+            int num = sortDesc.getInt("num");
+            String[] fieldArray = (String[]) sortDesc.get("field");
+            String[] orderArray = (String[]) sortDesc.get("order");
+
+            for (int i = 0; i < num; i++) {
+                if (StrUtil.equalsAnyIgnoreCase(orderArray[i], ASC)) {
+                    // 升序
+                    page.addOrder(OrderItem.asc(fieldArray[i]));
+                } else if (StrUtil.equalsAnyIgnoreCase(orderArray[i], DESC)) {
+                    // 降序
+                    page.addOrder(OrderItem.desc(fieldArray[i]));
+                } else {
+                    throw new IllegalArgumentException(StrUtil.format("不支持的排序规则【{}】", orderArray[i]));
+                }
             }
         }
 
@@ -118,38 +202,40 @@ public class PageSortUtil {
      * @param pageSize 每页记录数
      * @return 分页起始位置
      */
-    public static int getPageOffset(int pageNum, int pageSize) {
+    public static long getPageOffset(long pageNum, long pageSize) {
         return (pageNum - 1) * pageSize;
     }
 
     /**
      * 处理排序参数
      *
-     * @param page       {@link Page}
-     * @param fieldArray 字段数组
-     * @param orderArray 规则数组
-     * @param <T>        Entity类型
+     * @param field 字段
+     * @param order 规则
+     * @return {@link Dict}
      */
-    private static <T> void handleSortInternal(Page<T> page, String[] fieldArray, String[] orderArray) {
-        int num = checkFieldAndOrder(fieldArray, orderArray);
+    private static Dict handleSortInternal(String field, String order) {
+        // 默认字段和规则
+        String[] fieldArray = defaultFieldArray;
+        String[] orderArray = defaultOrderArray;
 
-        if (camelToUnderscore) {
-            // 驼峰转下划线
-            fieldArray = Arrays.stream(fieldArray)
-                    .map(StrUtil::toUnderlineCase).toArray(String[]::new);
+        if (StrUtil.isAllNotBlank(field, order)
+                && !StrUtil.equalsAnyIgnoreCase(field, NULL_AND_UNDEFINED)
+                && !StrUtil.equalsAnyIgnoreCase(order, NULL_AND_UNDEFINED)) {
+            // 按照请求参数排序
+            fieldArray = field.split(StrPool.COMMA);
+            orderArray = order.split(StrPool.COMMA);
         }
 
-        for (int i = 0; i < num; i++) {
-            if (StrUtil.equalsAnyIgnoreCase(orderArray[i], ASC)) {
-                // 升序
-                page.addOrder(OrderItem.asc(fieldArray[i]));
-            } else if (StrUtil.equalsAnyIgnoreCase(orderArray[i], DESC)) {
-                // 降序
-                page.addOrder(OrderItem.desc(fieldArray[i]));
-            } else {
-                throw new IllegalArgumentException(StrUtil.format("不支持的排序规则【{}】", orderArray[i]));
+        if (ArrayUtil.isNotEmpty(fieldArray) && ArrayUtil.isNotEmpty(orderArray)) {
+            int num = checkFieldAndOrder(fieldArray, orderArray);
+            if (camelToUnderscore) {
+                // 驼峰转下划线
+                fieldArray = Arrays.stream(fieldArray)
+                        .map(StrUtil::toUnderlineCase).toArray(String[]::new);
             }
+            return Dict.of("num", num, "field", fieldArray, "order", orderArray);
         }
+        return null;
     }
 
     /**

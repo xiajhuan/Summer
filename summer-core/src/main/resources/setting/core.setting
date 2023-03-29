@@ -35,6 +35,8 @@ content-type-support = FORM-DATA,JSON
 
 # MybatisPlus配置
 [Mp]
+# 单页分页条数限制
+page.max-limit = 2000
 # 默认排序字段，以“,”分隔，为空则不排序
 sort.default-field = create_time
 # 默认排序规则，以“,”分隔（必须与 sort.default-field 匹配），为空则不排序

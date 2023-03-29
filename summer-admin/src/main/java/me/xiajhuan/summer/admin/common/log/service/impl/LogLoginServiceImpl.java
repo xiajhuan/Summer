@@ -17,8 +17,8 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.setting.Setting;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import me.xiajhuan.summer.core.constant.DataSourceConst;
 import me.xiajhuan.summer.core.constant.SettingBeanConst;
@@ -87,15 +87,13 @@ public class LogLoginServiceImpl extends ServiceImpl<LogLoginMapper, LogLoginEnt
     //*******************MpHelper覆写结束********************
 
     @Override
-    public IPage<LogLoginDto> page(LogLoginDto dto) {
+    public Page<LogLoginDto> page(LogLoginDto dto) {
         return ConvertUtil.convert(page(handlePageSort(dto), getQueryWrapper(dto)), LogLoginDto.class);
     }
 
     @Override
     public List<LogLoginDto> list(LogLoginDto dto) {
-        LambdaQueryWrapper<LogLoginEntity> queryWrapper = getQueryWrapper(dto);
-        queryWrapper.orderByDesc(LogLoginEntity::getCreateTime);
-        return ConvertUtil.convert(list(queryWrapper), LogLoginDto.class);
+        return ConvertUtil.convert(list(getSortWrapper(dto)), LogLoginDto.class);
     }
 
     @Override

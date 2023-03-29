@@ -15,8 +15,8 @@ package me.xiajhuan.summer.admin.common.locale.service.impl;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import me.xiajhuan.summer.admin.common.locale.dto.LocaleInternationalNameDto;
 import me.xiajhuan.summer.admin.common.locale.entity.LocaleInternationalNameEntity;
@@ -67,15 +67,13 @@ public class LocaleInternationalNameServiceImpl extends ServiceImpl<LocaleIntern
     //*******************MpHelper覆写结束********************
 
     @Override
-    public IPage<LocaleInternationalNameDto> page(LocaleInternationalNameDto dto) {
+    public Page<LocaleInternationalNameDto> page(LocaleInternationalNameDto dto) {
         return ConvertUtil.convert(page(handlePageSort(dto), getQueryWrapper(dto)), LocaleInternationalNameDto.class);
     }
 
     @Override
     public List<LocaleInternationalNameDto> list(LocaleInternationalNameDto dto) {
-        LambdaQueryWrapper<LocaleInternationalNameEntity> queryWrapper = getQueryWrapper(dto);
-        queryWrapper.orderByDesc(LocaleInternationalNameEntity::getCreateTime);
-        return ConvertUtil.convert(list(queryWrapper), LocaleInternationalNameDto.class);
+        return ConvertUtil.convert(list(getSortWrapper(dto)), LocaleInternationalNameDto.class);
     }
 
     @Override

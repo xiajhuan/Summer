@@ -13,7 +13,6 @@
 package me.xiajhuan.summer.core.utils;
 
 import cn.hutool.core.bean.BeanUtil;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 import java.util.List;
@@ -54,13 +53,13 @@ public class ConvertUtil extends BeanUtil {
     /**
      * 分页对象转换
      *
-     * @param page   {@link IPage}
+     * @param page   {@link Page}
      * @param target 目标Class
      * @param <T>    目标类型
-     * @return {@link IPage}
+     * @return {@link Page}
      */
-    public static <T> IPage<T> convert(IPage<?> page, Class<T> target) {
-        IPage<T> pageResult = new Page<>();
+    public static <T> Page<T> convert(Page<?> page, Class<T> target) {
+        Page<T> pageResult = new Page<>();
         pageResult.setRecords(convert(page.getRecords(), target));
         pageResult.setTotal(page.getTotal());
         return pageResult;

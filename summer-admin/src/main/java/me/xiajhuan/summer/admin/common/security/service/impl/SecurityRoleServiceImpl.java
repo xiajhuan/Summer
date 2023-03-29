@@ -15,8 +15,8 @@ package me.xiajhuan.summer.admin.common.security.service.impl;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import me.xiajhuan.summer.core.constant.DataSourceConst;
 import me.xiajhuan.summer.core.mp.helper.MpHelper;
@@ -63,7 +63,7 @@ public class SecurityRoleServiceImpl extends ServiceImpl<SecurityRoleMapper, Sec
     //*******************MpHelper覆写结束********************
 
     @Override
-    public IPage<SecurityRoleDto> page(SecurityRoleDto dto) {
+    public Page<SecurityRoleDto> page(SecurityRoleDto dto) {
         return ConvertUtil.convert(page(handlePageSort(dto), getQueryWrapper(dto)), SecurityRoleDto.class);
     }
 
