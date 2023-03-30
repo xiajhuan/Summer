@@ -31,8 +31,7 @@ import me.xiajhuan.summer.admin.common.log.mapper.LogErrorMapper;
 import me.xiajhuan.summer.admin.common.log.service.LogErrorService;
 import me.xiajhuan.summer.core.mp.helper.MpHelper;
 import me.xiajhuan.summer.core.utils.ConvertUtil;
-import me.xiajhuan.summer.core.utils.HttpContextUtil;
-import me.xiajhuan.summer.core.utils.IpUtil;
+import me.xiajhuan.summer.core.utils.ServletUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -110,13 +109,13 @@ public class LogErrorServiceImpl extends ServiceImpl<LogErrorMapper, LogErrorEnt
     public void saveAsync(Exception e, HttpServletRequest request) {
         // 构建错误日志
         LogErrorEntity entity = LogErrorEntity.builder()
-                .ip(IpUtil.getRequestIp(request))
-                .userAgent(HttpContextUtil.getUserAgent(request))
+                .ip(ServletUtil.getClientIP(request))
+                .userAgent(ServletUtil.getUserAgent(request))
                 .requestUri(request.getRequestURI())
                 .requestMethod(request.getMethod()).build();
 
         // 请求参数，note：这里只能获取Query/FORM-DATA参数
-        Map<String, String> params = HttpContextUtil.getParamMap(request);
+        Map<String, String> params = ServletUtil.getParamMap(request);
         if (MapUtil.isNotEmpty(params)) {
             entity.setRequestParams(JSONUtil.toJsonStr(params));
         }

@@ -13,13 +13,11 @@
 package me.xiajhuan.summer.admin.common.base.shiro.oauth2;
 
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.log.Log;
-import cn.hutool.log.LogFactory;
 import me.xiajhuan.summer.core.constant.ContentTypeConst;
 import me.xiajhuan.summer.core.constant.SecurityConst;
 import me.xiajhuan.summer.core.data.Result;
 import me.xiajhuan.summer.core.exception.code.ErrorCode;
-import me.xiajhuan.summer.core.utils.HttpContextUtil;
+import me.xiajhuan.summer.core.utils.ServletUtil;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.web.filter.authc.AuthenticatingFilter;
@@ -29,7 +27,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 /**
  * Oauth2Filter
@@ -39,8 +36,6 @@ import java.io.IOException;
  * @see AuthenticatingFilter
  */
 public class Oauth2Filter extends AuthenticatingFilter {
-
-    private static final Log LOGGER = LogFactory.get();
 
     /**
      * 构造Oauth2Filter
@@ -85,7 +80,7 @@ public class Oauth2Filter extends AuthenticatingFilter {
             HttpServletResponse httpResponse = (HttpServletResponse) response;
             setResponseHeader((HttpServletRequest) request, httpResponse);
 
-            HttpContextUtil.makeResponse(httpResponse, StrUtil.format("{};{}", ContentTypeConst.JSON, "charset=utf-8"),
+            ServletUtil.response(httpResponse, StrUtil.format("{};{}", ContentTypeConst.JSON, "charset=utf-8"),
                     ErrorCode.UNAUTHORIZED, Result.ofFail(ErrorCode.UNAUTHORIZED));
 
             return false;
@@ -97,15 +92,11 @@ public class Oauth2Filter extends AuthenticatingFilter {
     protected boolean onLoginFailure(AuthenticationToken token, AuthenticationException authException, ServletRequest request, ServletResponse response) {
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         setResponseHeader((HttpServletRequest) request, httpResponse);
-        try {
-            // 处理登录失败的异常
-            Throwable cause = authException.getCause() == null ? authException : authException.getCause();
+        // 处理登录失败的异常
+        Throwable cause = authException.getCause() == null ? authException : authException.getCause();
 
-            HttpContextUtil.makeResponse(httpResponse, StrUtil.format("{};{}", ContentTypeConst.JSON, "charset=utf-8"),
-                    ErrorCode.UNAUTHORIZED, Result.ofFail(cause.getMessage()));
-        } catch (IOException e) {
-            LOGGER.error(e, e.getMessage());
-        }
+        ServletUtil.response(httpResponse, StrUtil.format("{};{}", ContentTypeConst.JSON, "charset=utf-8"),
+                ErrorCode.UNAUTHORIZED, Result.ofFail(cause.getMessage()));
         return false;
     }
 
@@ -117,7 +108,7 @@ public class Oauth2Filter extends AuthenticatingFilter {
      */
     private void setResponseHeader(HttpServletRequest request, HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Credentials", "true");
-        response.setHeader("Access-Control-Allow-Origin", HttpContextUtil.getOrigin(request));
+        response.setHeader("Access-Control-Allow-Origin", ServletUtil.getOrigin(request));
     }
 
     /**

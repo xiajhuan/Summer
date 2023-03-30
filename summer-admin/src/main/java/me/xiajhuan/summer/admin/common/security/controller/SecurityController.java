@@ -29,10 +29,7 @@ import me.xiajhuan.summer.core.data.LoginUser;
 import me.xiajhuan.summer.admin.common.security.service.SecurityService;
 import me.xiajhuan.summer.admin.common.security.service.SecurityUserService;
 import me.xiajhuan.summer.core.ratelimiter.annotation.RateLimiter;
-import me.xiajhuan.summer.core.utils.AssertUtil;
-import me.xiajhuan.summer.core.utils.HttpContextUtil;
-import me.xiajhuan.summer.core.utils.IpUtil;
-import me.xiajhuan.summer.core.utils.SecurityUtil;
+import me.xiajhuan.summer.core.utils.*;
 import me.xiajhuan.summer.core.validation.group.DefaultGroup;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -159,8 +156,8 @@ public class SecurityController {
                 .loginUser(loginUser)
                 .operation(operationEnum.getValue())
                 .status(statusEnum.getValue())
-                .userAgent(HttpContextUtil.getUserAgent(request))
-                .ip(IpUtil.getRequestIp(request)).build();
+                .userAgent(ServletUtil.getUserAgent(request))
+                .ip(ServletUtil.getClientIP(request)).build();
 
         // 异步保存日志
         logLoginService.saveAsync(entity);

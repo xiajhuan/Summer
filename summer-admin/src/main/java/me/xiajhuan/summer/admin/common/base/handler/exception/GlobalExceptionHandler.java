@@ -23,8 +23,8 @@ import me.xiajhuan.summer.core.data.Result;
 import me.xiajhuan.summer.core.exception.*;
 import me.xiajhuan.summer.admin.common.log.service.LogErrorService;
 import me.xiajhuan.summer.core.exception.code.ErrorCode;
-import me.xiajhuan.summer.core.utils.HttpContextUtil;
 import me.xiajhuan.summer.core.utils.LocaleUtil;
+import me.xiajhuan.summer.core.utils.ServletUtil;
 import me.xiajhuan.summer.core.utils.ValidationUtil;
 import org.apache.shiro.authz.AuthorizationException;
 import org.springframework.http.HttpStatus;
@@ -196,7 +196,7 @@ public class GlobalExceptionHandler {
         boolean isIgnore = isIgnoreBusinessException(e);
         if (isSaveErrorLog && !isIgnore) {
             // 异步保存错误日志
-            logErrorService.saveAsync(e, HttpContextUtil.getHttpServletRequest());
+            logErrorService.saveAsync(e, ServletUtil.getHttpServletRequest());
         }
 
         String msg = e.getMessage();

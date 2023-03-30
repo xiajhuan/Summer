@@ -14,8 +14,7 @@ package me.xiajhuan.summer.core.ratelimiter.strategy.impl;
 
 import cn.hutool.core.util.StrUtil;
 import me.xiajhuan.summer.core.ratelimiter.strategy.KeyStrategy;
-import me.xiajhuan.summer.core.utils.HttpContextUtil;
-import me.xiajhuan.summer.core.utils.IpUtil;
+import me.xiajhuan.summer.core.utils.ServletUtil;
 import org.aspectj.lang.JoinPoint;
 
 import javax.servlet.http.HttpServletRequest;
@@ -53,7 +52,7 @@ public class IpKeyStrategy implements KeyStrategy {
 
     @Override
     public String getKey(JoinPoint point, HttpServletRequest request, String username) {
-        return StrUtil.format(FORMAT, HttpContextUtil.getInterfaceSignature(request), IpUtil.getRequestIp(request));
+        return StrUtil.format(FORMAT, ServletUtil.getInterfaceSignature(request), ServletUtil.getClientIP(request));
     }
 
     @Override

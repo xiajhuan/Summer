@@ -12,6 +12,10 @@
 
 package me.xiajhuan.summer.core.config;
 
+import cn.hutool.core.text.StrPool;
+import cn.hutool.core.util.StrUtil;
+import cn.hutool.setting.Setting;
+import me.xiajhuan.summer.core.constant.SettingBeanConst;
 import me.xiajhuan.summer.core.interceptor.ContentTypeInterceptor;
 import me.xiajhuan.summer.core.interceptor.SqlInjectionInterceptor;
 import org.springframework.context.annotation.Configuration;
@@ -20,6 +24,7 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
 /**
@@ -32,19 +37,46 @@ import javax.annotation.Resource;
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 
+    @Resource(name = SettingBeanConst.CORE)
+    private Setting setting;
+
     @Resource
     private ContentTypeInterceptor contentTypeInterceptor;
 
     @Resource
     private SqlInjectionInterceptor sqlInjectionInterceptor;
 
+    /**
+     * 允许的跨域请求方式数组
+     */
+    private String[] allowedMethodArray;
+
+    /**
+     * 跨域请求可被客户端缓存的时间（s）
+     */
+    private int maxAge;
+
+    /**
+     * 初始化 {@link allowedMethodArray} {@link maxAge}
+     */
+    @PostConstruct
+    private void init() {
+        String allowedMethod = setting.getByGroupWithLog("cors.allowed-method", "Http");
+        if (StrUtil.isBlank(allowedMethod)) {
+            // 没有配置时的默认请求方式
+            allowedMethod = "GET,POST,PUT,DELETE,OPTIONS";
+        }
+        allowedMethodArray = allowedMethod.split(StrPool.COMMA);
+        maxAge = setting.getInt("cors.max-age", "Http", 3600);
+    }
+
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOriginPatterns("*")
                 .allowCredentials(true)
-                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                .maxAge(3600);
+                .allowedMethods(allowedMethodArray)
+                .maxAge(maxAge);
     }
 
     @Override

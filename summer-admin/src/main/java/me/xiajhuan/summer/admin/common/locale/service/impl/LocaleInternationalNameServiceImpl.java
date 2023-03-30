@@ -113,7 +113,7 @@ public class LocaleInternationalNameServiceImpl extends ServiceImpl<LocaleIntern
 
     @Override
     public void update(LocaleInternationalNameDto dto) {
-        updateById(ConvertUtil.convert(dto, LocaleInternationalNameEntity.class));
+        baseMapper.alwaysUpdateById(ConvertUtil.convert(dto, LocaleInternationalNameEntity.class));
     }
 
     @Override

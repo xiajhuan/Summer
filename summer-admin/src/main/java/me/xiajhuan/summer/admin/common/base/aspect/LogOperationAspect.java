@@ -21,10 +21,7 @@ import me.xiajhuan.summer.core.enums.OperationGroupEnum;
 import me.xiajhuan.summer.core.enums.OperationStatusEnum;
 import me.xiajhuan.summer.admin.common.log.entity.LogOperationEntity;
 import me.xiajhuan.summer.admin.common.log.service.LogOperationService;
-import me.xiajhuan.summer.core.utils.HttpContextUtil;
-import me.xiajhuan.summer.core.utils.IpUtil;
-import me.xiajhuan.summer.core.utils.AopUtil;
-import me.xiajhuan.summer.core.utils.SecurityUtil;
+import me.xiajhuan.summer.core.utils.*;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -102,7 +99,7 @@ public class LogOperationAspect {
         LogOperation logOperation = AnnotationUtils.findAnnotation(method, LogOperation.class);
 
         // 请求
-        HttpServletRequest request = HttpContextUtil.getHttpServletRequest();
+        HttpServletRequest request = ServletUtil.getHttpServletRequest();
 
         // 构建操作日志
         LogOperationEntity entity = LogOperationEntity.builder()
@@ -111,14 +108,14 @@ public class LogOperationAspect {
                 .operateBy(SecurityUtil.getCurrentUsername(NonLoggedUserEnum.THIRD_PART.getValue()))
                 .status(status.getValue())
                 .requestTime((int) cost)
-                .ip(IpUtil.getRequestIp(request))
-                .userAgent(HttpContextUtil.getUserAgent(request))
+                .ip(ServletUtil.getClientIP(request))
+                .userAgent(ServletUtil.getUserAgent(request))
                 .requestUri(request.getRequestURI())
                 .requestMethod(request.getMethod()).build();
 
         if (logOperation.saveRequestParam()) {
             // 请求参数
-            entity.setRequestParams(HttpContextUtil.getParam(point, request));
+            entity.setRequestParams(ServletUtil.getParamPoint(point, request));
         }
 
         // 异步保存日志

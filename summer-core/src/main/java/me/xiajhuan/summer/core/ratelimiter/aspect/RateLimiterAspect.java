@@ -27,9 +27,9 @@ import me.xiajhuan.summer.core.ratelimiter.strategy.LoadBalanceStrategy;
 import me.xiajhuan.summer.core.ratelimiter.strategy.StrategyFactory;
 import me.xiajhuan.summer.core.ratelimiter.strategy.impl.SettingKeyStrategy;
 import me.xiajhuan.summer.core.ratelimiter.strategy.impl.SettingLoadBalanceStrategy;
-import me.xiajhuan.summer.core.utils.HttpContextUtil;
 import me.xiajhuan.summer.core.utils.AopUtil;
 import me.xiajhuan.summer.core.utils.SecurityUtil;
+import me.xiajhuan.summer.core.utils.ServletUtil;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -141,7 +141,7 @@ public class RateLimiterAspect {
 
         if (rateLimiter != null && rateLimiter.qps() > RateLimiter.NOT_LIMITED) {
             // 请求
-            HttpServletRequest request = HttpContextUtil.getHttpServletRequest();
+            HttpServletRequest request = ServletUtil.getHttpServletRequest();
 
             //*******************限流Key获取********************
 
@@ -170,7 +170,7 @@ public class RateLimiterAspect {
             } catch (Exception e) {
                 LOGGER.error(e, "key-Class【{}】获取Key失败，自动切换为基本Key策略，请参考【KeyStrategy】编写", keyStrategyClass.getSimpleName());
 
-                rateLimiterKey = StrUtil.format(KeyStrategy.FORMAT, HttpContextUtil.getInterfaceSignature(request), StrUtil.EMPTY);
+                rateLimiterKey = StrUtil.format(KeyStrategy.FORMAT, ServletUtil.getInterfaceSignature(request), StrUtil.EMPTY);
             }
 
             //*******************实际Qps获取********************

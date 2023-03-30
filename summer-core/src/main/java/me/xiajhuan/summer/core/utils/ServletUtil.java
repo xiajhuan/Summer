@@ -12,7 +12,6 @@
 
 package me.xiajhuan.summer.core.utils;
 
-import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.text.StrPool;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.ObjectUtil;
@@ -28,18 +27,16 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.Arrays;
-import java.util.Enumeration;
-import java.util.Map;
 
 /**
- * Http上下文工具
+ * Servlet相关工具
  *
  * @author xiajhuan
- * @date 2022/11/28
+ * @date 2023/3/30
+ * @see cn.hutool.extra.servlet.ServletUtil
  */
-public class HttpContextUtil {
+public class ServletUtil extends cn.hutool.extra.servlet.ServletUtil {
 
     /**
      * 请求体参数格式
@@ -47,7 +44,7 @@ public class HttpContextUtil {
     private static final String BODY_PARAM_FORMAT = "{}【{}】";
 
     /**
-     * 获取请求
+     * 获取HTTP请求
      *
      * @return {@link HttpServletRequest}
      */
@@ -58,29 +55,6 @@ public class HttpContextUtil {
         }
 
         return ((ServletRequestAttributes) requestAttributes).getRequest();
-    }
-
-    /**
-     * 获取请求参数 Map（Query/FORM-DATA）
-     *
-     * @param request {@link HttpServletRequest}
-     * @return 请求参数 Map
-     * @see ContentTypeConst#FORM_DATA
-     */
-    public static Map<String, String> getParamMap(HttpServletRequest request) {
-        Map<String, String> params = MapUtil.newHashMap(true);
-
-        // Query/FORM-DATA
-        Enumeration<String> parameters = request.getParameterNames();
-        while (parameters.hasMoreElements()) {
-            String parameter = parameters.nextElement();
-            String value = request.getParameter(parameter);
-            if (StrUtil.isNotBlank(value)) {
-                params.put(parameter, value);
-            }
-        }
-
-        return params;
     }
 
     /**
@@ -101,7 +75,7 @@ public class HttpContextUtil {
      * @return 请求来源
      */
     public static String getOrigin(HttpServletRequest request) {
-        return request.getHeader(HttpHeaders.ORIGIN);
+        return getHeaderIgnoreCase(request, HttpHeaders.ORIGIN);
     }
 
     /**
@@ -111,7 +85,7 @@ public class HttpContextUtil {
      * @return 请求代理
      */
     public static String getUserAgent(HttpServletRequest request) {
-        return request.getHeader(HttpHeaders.USER_AGENT);
+        return getHeaderIgnoreCase(request, HttpHeaders.USER_AGENT);
     }
 
     /**
@@ -132,7 +106,7 @@ public class HttpContextUtil {
      * @param request {@link HttpServletRequest}
      * @return 请求参数
      */
-    public static String getParam(JoinPoint point, HttpServletRequest request) {
+    public static String getParamPoint(JoinPoint point, HttpServletRequest request) {
         // 请求参数，note：这里如果没有参数会返回空数组
         Object[] args = point.getArgs();
 
@@ -199,16 +173,14 @@ public class HttpContextUtil {
      * 响应
      *
      * @param response    {@link HttpServletResponse}
-     * @param contentType 媒体格式
+     * @param contentType 响应体类型
      * @param status      状态码
      * @param data        数据
-     * @throws IOException I/O异常
      */
-    public static void makeResponse(HttpServletResponse response, String contentType,
-                                    int status, Object data) throws IOException {
-        response.setContentType(contentType);
+    public static void response(HttpServletResponse response, String contentType,
+                                int status, Object data) {
         response.setStatus(status);
-        response.getOutputStream().write(JSONUtil.toJsonStr(data).getBytes());
+        write(response, JSONUtil.toJsonStr(data), contentType);
     }
 
     /**

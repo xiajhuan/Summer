@@ -19,12 +19,13 @@ import cn.hutool.setting.Setting;
 import me.xiajhuan.summer.core.constant.SettingBeanConst;
 import me.xiajhuan.summer.core.exception.code.ErrorCode;
 import me.xiajhuan.summer.core.exception.ValidationException;
-import me.xiajhuan.summer.core.utils.HttpContextUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
+import me.xiajhuan.summer.core.utils.ServletUtil;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
@@ -36,7 +37,7 @@ import java.util.Map;
  * @author xiajhuan
  * @date 2023/3/21
  * @see HandlerInterceptor
- * @see HttpContextUtil#getParamMap(HttpServletRequest)
+ * @see ServletUtil#getParamMap(ServletRequest)
  */
 @Component
 public class SqlInjectionInterceptor implements HandlerInterceptor {
@@ -73,7 +74,7 @@ public class SqlInjectionInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         if (enable) {
-            Map<String, String> paramMap = HttpContextUtil.getParamMap(request);
+            Map<String, String> paramMap = ServletUtil.getParamMap(request);
             if (MapUtil.isNotEmpty(paramMap)) {
                 filter(paramMap);
             }

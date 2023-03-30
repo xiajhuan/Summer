@@ -29,6 +29,11 @@ parser.cache-ttl = 24
 
 # Http请求配置
 [Http]
+# 允许的跨域请求方式，以”,“分隔
+cors.allowed-method = GET,POST,PUT,DELETE,OPTIONS
+# 跨域请求可被客户端缓存的时间（s）
+cors.max-age = 3600
+
 # 支持的请求体类型，以”,“分隔，值：FORM-DATA/JSON/XML/JAVASCRIPT/TEXT/HTML
 content-type-support = FORM-DATA,JSON
 
