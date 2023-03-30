@@ -48,22 +48,22 @@ public class ValidationUtil {
     }
 
     /**
-     * 校验
+     * 校验List<Dto>
      *
      * @param dtoList Dto类型列表
      * @param group   校验分组 {@link AddGroup} {@link UpdateGroup} {@link DefaultGroup}
      * @param <D>     Dto类型
      */
     public static <D> void validate(List<D> dtoList, Class<?>... group) {
-        validate(dtoList, null, group);
+        validate(dtoList, Dict.create(), group);
     }
 
     /**
-     * 校验
+     * 校验List<Dto>，带消息前缀
      *
      * @param dtoList    Dto类型列表
-     * @param prefixDesc 消息前缀描述，必须包含“code”（{@link Integer}），如有消息填充参数，
-     *                   则还应包含“params”（{@code String[]}） {@link ErrorCode}
+     * @param prefixDesc 消息前缀描述，必须包含“code”（{@link ErrorCode}），如有消息填充参数，
+     *                   则还应包含“params”（{@code String[]}）
      * @param group      校验分组 {@link AddGroup} {@link UpdateGroup} {@link DefaultGroup}
      * @param <D>        Dto类型
      */
@@ -74,56 +74,93 @@ public class ValidationUtil {
     }
 
     /**
-     * 校验
+     * 校验Dto
      *
      * @param dto   Dto类型对象
      * @param group 校验分组 {@link AddGroup} {@link UpdateGroup} {@link DefaultGroup}
      * @param <D>   Dto类型
      */
     public static <D> void validate(D dto, Class<?>... group) {
-        validate(dto, null, group);
+        validate(dto, Dict.create(), group);
+    }
+
+    /**
+     * 校验Dto，带消息前缀
+     *
+     * @param dto        Dto类型对象
+     * @param prefixDesc 消息前缀描述，必须包含“code”（{@link ErrorCode}），如有消息填充参数，
+     *                   则还应包含“params”（{@code String[]}）
+     * @param group      校验分组 {@link AddGroup} {@link UpdateGroup} {@link DefaultGroup}
+     * @param <D>        Dto类型
+     */
+    public static <D> void validate(D dto, Dict prefixDesc, Class<?>... group) {
+        validateInternal(dto, null, prefixDesc, group);
+    }
+
+    /**
+     * 校验Dto属性
+     *
+     * @param dto       Dto类型对象
+     * @param fieldName 属性名
+     * @param group     校验分组 {@link AddGroup} {@link UpdateGroup} {@link DefaultGroup}
+     * @param <D>       Dto类型
+     */
+    public static <D> void validate(D dto, String fieldName, Class<?>... group) {
+        validate(dto, fieldName, Dict.create(), group);
+    }
+
+    /**
+     * 校验Dto属性，带消息前缀
+     *
+     * @param dto        Dto类型对象
+     * @param fieldName  属性名
+     * @param prefixDesc 消息前缀描述，必须包含“code”（{@link ErrorCode}），如有消息填充参数，
+     *                   则还应包含“params”（{@code String[]}）
+     * @param group      校验分组 {@link AddGroup} {@link UpdateGroup} {@link DefaultGroup}
+     * @param <D>        Dto类型
+     */
+    public static <D> void validate(D dto, String fieldName, Dict prefixDesc, Class<?>... group) {
+        validateInternal(dto, fieldName, prefixDesc, group);
     }
 
     /**
      * 校验
      *
      * @param dto        Dto类型对象
-     * @param prefixDesc 消息前缀描述，必须包含“code”（{@link Integer}），如有消息填充参数，
-     *                   则还应包含“params”（{@code String[]}） {@link ErrorCode}
+     * @param fieldName  属性名
+     * @param prefixDesc 消息前缀描述，必须包含“code”（{@link ErrorCode}），如有消息填充参数，
+     *                   则还应包含“params”（{@code String[]}）
      * @param group      校验分组 {@link AddGroup} {@link UpdateGroup} {@link DefaultGroup}
      * @param <D>        Dto类型
      */
-    public static <D> void validate(D dto, Dict prefixDesc, Class<?>... group) {
-        String validateMsg = getValidateMsg(dto, group);
-        if (validateMsg != null) {
-            if (prefixDesc != null && prefixDesc.containsKey("code")) {
-                // 获取消息前缀
-                String prefix = LocaleUtil.getI18nMessage(prefixDesc.getInt("code"),
-                        prefixDesc.get("params", new String[0]));
-                throw ValidationException.of(StrUtil.format(prefix + StrPool.EMPTY_JSON, validateMsg));
-            }
-            throw ValidationException.of(validateMsg);
-        }
-    }
-
-    /**
-     * @param dto   Dto类型对象
-     * @param group 校验分组 {@link AddGroup} {@link UpdateGroup} {@link DefaultGroup}
-     * @param <D>   Dto类型
-     * @return 校验失败消息或 {@code null}
-     */
-    private static <D> String getValidateMsg(D dto, Class<?>... group) {
+    private static <D> void validateInternal(D dto, String fieldName, Dict prefixDesc, Class<?>... group) {
+        String validateMsg = null;
+        final Set<ConstraintViolation<D>> constraintViolations;
         // 校验
-        Set<ConstraintViolation<D>> constraintViolations = validator.validate(dto, group);
+        if (fieldName != null) {
+            constraintViolations = validator.validateProperty(dto, fieldName, group);
+        } else {
+            constraintViolations = validator.validate(dto, group);
+        }
 
+        // 校验消息
         if (constraintViolations.size() > 0) {
             StringBuilder message = StrUtil.builder();
             constraintViolations.forEach(c -> message.append(c.getPropertyPath())
                     .append("【").append(c.getMessage()).append("】")
                     .append(StrPool.COMMA));
-            return message.substring(0, message.length() - 1);
+            validateMsg = message.substring(0, message.length() - 1);
         }
-        return null;
+
+        if (validateMsg != null) {
+            if (prefixDesc.containsKey("code")) {
+                // 获取消息前缀
+                String prefixMsg = LocaleUtil.getI18nMessage(prefixDesc.getInt("code"),
+                        prefixDesc.get("params", new String[0]));
+                throw ValidationException.of(StrUtil.format(prefixMsg + StrPool.EMPTY_JSON, validateMsg));
+            }
+            throw ValidationException.of(validateMsg);
+        }
     }
 
 }

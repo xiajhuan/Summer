@@ -95,7 +95,7 @@ public class LogOperationAspect {
         RequestMapping requestMapping = AnnotationUtils.findAnnotation(controllerClass, RequestMapping.class);
 
         // 获取切入点方法上的LogOperation注解
-        Method method = AopUtil.getMethod(point);
+        Method method = JoinPointUtil.getMethod(point);
         LogOperation logOperation = AnnotationUtils.findAnnotation(method, LogOperation.class);
 
         // 请求

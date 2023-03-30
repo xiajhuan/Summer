@@ -22,12 +22,12 @@ import java.util.Arrays;
 import java.util.stream.Collectors;
 
 /**
- * Aop工具
+ * 切入点工具
  *
  * @author xiajhuan
  * @date 2022/12/5
  */
-public class AopUtil {
+public class JoinPointUtil {
 
     /**
      * 获取切入点方法
