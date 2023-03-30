@@ -17,9 +17,11 @@
 
 ## 软件架构
 ### 模块说明
+```lua
 summer-single
-├── summer-admin -- 管理模块
-└── summer-core -- 核心模块
+├─ summer-admin -- 管理模块
+└─ summer-core -- 核心模块
+```
 
 ## 快速开始
 ### 先决条件
@@ -29,6 +31,8 @@ summer-single
 - [maven](http://maven.apache.org/) 
 
 ## 学习交流
+如果觉得还不错麻烦点个Star支持作者~
+
 email：xiaJhuan@163.com
 wx：ASDA-xiajhuan
 
