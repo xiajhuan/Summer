@@ -13,6 +13,9 @@
 package me.xiajhuan.summer.core.mp.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.toolkit.Constants;
+import me.xiajhuan.summer.core.mp.injector.MySqlInjector;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -30,7 +33,26 @@ public interface MyBaseMapper<T> extends BaseMapper<T> {
      *
      * @param entityList Entity类型列表
      * @return 插入数量
+     * @see MySqlInjector#realSaveBatch()
      */
     int realSaveBatch(List<T> entityList);
+
+    /**
+     * 根据ID更新固定的几个字段（不忽略值为 {@code null} 的字段）
+     *
+     * @param entity Entity类型对象
+     * @return 更新数量
+     * @see MySqlInjector#alwaysUpdateById()
+     */
+    int alwaysUpdateById(@Param(Constants.ENTITY) T entity);
+
+    /**
+     * 逻辑批量删除（更新时填充字段以第一条记录为准）
+     *
+     * @param entityList Entity类型列表
+     * @return 逻辑删除数量
+     * @see MySqlInjector#logicDeleteBatchByIds()
+     */
+    int logicDeleteBatchByIds(@Param(Constants.COLL) List<T> entityList);
 
 }
