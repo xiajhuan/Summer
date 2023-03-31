@@ -49,4 +49,18 @@ public class CacheServerFactory {
         }
     }
 
+    /**
+     * 获取堆内缓存服务，note：
+     * <pre>
+     *     1.当缓存类型为“REDIS”时，若有分级缓存需求，可以通过该方法获取堆内缓存服务
+     *     2.当缓存类型为“HEAP”时，推荐使用 {@link CacheServerFactory#getCacheServer()}，
+     *       这将便于在缓存类型切换时保证代码通用
+     * </pre>
+     *
+     * @return 缓存服务
+     */
+    public static CacheServer getHeapCacheServer() {
+        return HeapCacheServer.getInstance();
+    }
+
 }
