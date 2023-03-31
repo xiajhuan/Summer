@@ -22,12 +22,12 @@ import org.springframework.core.annotation.AnnotationUtils;
 import java.lang.annotation.*;
 
 /**
- * 限流注解<br>
- * note：添加了 {@link AliasFor} 必须通过 {@link AnnotationUtils} 获取，才会生效
- * <p>
- * keyStrategy/loadBalanceStrategy/nodeNum/timeout的生效优先级为：
- * 注解中设置的 > core.setting中配置的
- * </p>
+ * 限流注解，note：
+ * <pre>
+ *     1.添加了 {@link AliasFor} 必须通过 {@link AnnotationUtils} 获取，才会生效
+ *     2.keyStrategy/loadBalanceStrategy/nodeNum/timeout的生效优先级为：
+ *       注解中设置的 > core.setting中配置的
+ * </pre>
  *
  * @author xiajhuan
  * @date 2022/12/1

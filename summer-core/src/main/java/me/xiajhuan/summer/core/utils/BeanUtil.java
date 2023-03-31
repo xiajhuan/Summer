@@ -12,19 +12,18 @@
 
 package me.xiajhuan.summer.core.utils;
 
-import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 import java.util.List;
 
 /**
- * 类型转换工具
+ * Bean工具
  *
  * @author xiajhuan
  * @date 2022/11/21
- * @see BeanUtil
+ * @see cn.hutool.core.bean.BeanUtil
  */
-public class ConvertUtil extends BeanUtil {
+public class BeanUtil extends cn.hutool.core.bean.BeanUtil {
 
     /**
      * 单一对象转换

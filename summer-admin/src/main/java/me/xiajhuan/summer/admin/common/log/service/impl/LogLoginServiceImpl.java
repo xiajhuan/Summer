@@ -27,7 +27,7 @@ import me.xiajhuan.summer.admin.common.log.entity.LogLoginEntity;
 import me.xiajhuan.summer.admin.common.log.mapper.LogLoginMapper;
 import me.xiajhuan.summer.admin.common.log.service.LogLoginService;
 import me.xiajhuan.summer.core.mp.helper.MpHelper;
-import me.xiajhuan.summer.core.utils.ConvertUtil;
+import me.xiajhuan.summer.core.utils.BeanUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -88,12 +88,12 @@ public class LogLoginServiceImpl extends ServiceImpl<LogLoginMapper, LogLoginEnt
 
     @Override
     public Page<LogLoginDto> page(LogLoginDto dto) {
-        return ConvertUtil.convert(page(handlePageSort(dto), getQueryWrapper(dto)), LogLoginDto.class);
+        return BeanUtil.convert(page(handlePageSort(dto), getQueryWrapper(dto)), LogLoginDto.class);
     }
 
     @Override
     public List<LogLoginDto> list(LogLoginDto dto) {
-        return ConvertUtil.convert(list(getSortWrapper(dto)), LogLoginDto.class);
+        return BeanUtil.convert(list(getSortWrapper(dto)), LogLoginDto.class);
     }
 
     @Override

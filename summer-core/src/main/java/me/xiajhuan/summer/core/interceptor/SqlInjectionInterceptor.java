@@ -88,12 +88,12 @@ public class SqlInjectionInterceptor implements HandlerInterceptor {
      * @param paramMap 参数 Map
      */
     private void filter(Map<String, String> paramMap) {
-        for (String value : paramMap.values()) {
+        paramMap.values().forEach(value -> {
             if (StrUtil.containsAnyIgnoreCase(value, illegalKeyWordArray)) {
                 // 参数值包含非法字符
                 throw ValidationException.of(ErrorCode.INVALID_SYMBOL);
             }
-        }
+        });
     }
 
 }

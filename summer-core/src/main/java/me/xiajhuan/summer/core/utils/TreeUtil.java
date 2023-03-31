@@ -77,7 +77,7 @@ public class TreeUtil extends cn.hutool.core.lang.tree.TreeUtil {
      * @return 树形结构列表（DtoClass）
      */
     public static <D extends TreeNode> List<D> buildDto(Class<D> dtoClass, List<D> dtoList, Long rootId, String... extraField) {
-        return ConvertUtil.convert(build(dtoClass, dtoList, rootId, extraField), dtoClass);
+        return BeanUtil.convert(build(dtoClass, dtoList, rootId, extraField), dtoClass);
     }
 
     /**

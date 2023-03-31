@@ -53,8 +53,7 @@ public class AssertUtil {
 
     /**
      * 判空类型：null<br>
-     * 支持基本类型外的所有类型<br>
-     * note：如果是字符串则判断不为：{@code null}、“null”、“undefined”
+     * 支持基本类型外的所有类型，如果是字符串则判断不为：{@code null}、“null”、“undefined”
      */
     private static final String NULL = "null";
 

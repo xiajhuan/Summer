@@ -22,7 +22,7 @@ import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.event.AnalysisEventListener;
 import me.xiajhuan.summer.core.constant.SettingBeanConst;
 import me.xiajhuan.summer.core.exception.code.ErrorCode;
-import me.xiajhuan.summer.core.utils.ConvertUtil;
+import me.xiajhuan.summer.core.utils.BeanUtil;
 import me.xiajhuan.summer.core.utils.ValidationUtil;
 import me.xiajhuan.summer.core.validation.group.AddGroup;
 
@@ -69,7 +69,7 @@ public abstract class AbstractExcelParser<D, T> extends AnalysisEventListener<D>
         // dto前置处理
         handleDtoBefore(data, context);
 
-        T entity = ConvertUtil.convert(data, currentEntityClass());
+        T entity = BeanUtil.convert(data, currentEntityClass());
         entityList.add(entity);
 
         // 达到MAX_BATCH_NUM了，需要去处理一次数据，防止过多的数据在内存中，导致OOM

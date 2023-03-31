@@ -62,11 +62,8 @@ public class RateLimiterAspect {
     private Setting setting;
 
     /**
-     * 限流规则缓存
-     * <p>
-     * Key：限流策略Key
-     * Value：{@link com.google.common.util.concurrent.RateLimiter}
-     * </p>
+     * 限流规则缓存<br>
+     * Key：限流策略Key Value：{@link com.google.common.util.concurrent.RateLimiter}
      */
     private final ConcurrentMap<String, com.google.common.util.concurrent.RateLimiter> RATE_LIMITER_CACHE = MapUtil.newConcurrentHashMap();
 
@@ -96,7 +93,7 @@ public class RateLimiterAspect {
     private long defaultTimeout;
 
     /**
-     * 初始化 {@link defaultKeyStrategy} {@link defaultLoadBalanceStrategy} <br>
+     * 初始化 {@link defaultKeyStrategy} {@link defaultLoadBalanceStrategy}<br>
      * {@link defaultNodeNum} {@link defaultTimeout}
      *
      * @throws ClassNotFoundException 类找不到异常

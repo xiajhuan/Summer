@@ -30,7 +30,7 @@ import me.xiajhuan.summer.admin.common.log.entity.LogErrorEntity;
 import me.xiajhuan.summer.admin.common.log.mapper.LogErrorMapper;
 import me.xiajhuan.summer.admin.common.log.service.LogErrorService;
 import me.xiajhuan.summer.core.mp.helper.MpHelper;
-import me.xiajhuan.summer.core.utils.ConvertUtil;
+import me.xiajhuan.summer.core.utils.BeanUtil;
 import me.xiajhuan.summer.core.utils.ServletUtil;
 import org.springframework.stereotype.Service;
 
@@ -88,12 +88,12 @@ public class LogErrorServiceImpl extends ServiceImpl<LogErrorMapper, LogErrorEnt
 
     @Override
     public Page<LogErrorDto> page(LogErrorDto dto) {
-        return ConvertUtil.convert(page(handlePageSort(dto), getQueryWrapper(dto)), LogErrorDto.class);
+        return BeanUtil.convert(page(handlePageSort(dto), getQueryWrapper(dto)), LogErrorDto.class);
     }
 
     @Override
     public List<LogErrorDto> list(LogErrorDto dto) {
-        return ConvertUtil.convert(list(getSortWrapper(dto)), LogErrorDto.class);
+        return BeanUtil.convert(list(getSortWrapper(dto)), LogErrorDto.class);
     }
 
     @Override
@@ -102,7 +102,7 @@ public class LogErrorServiceImpl extends ServiceImpl<LogErrorMapper, LogErrorEnt
         queryWrapper.select(LogErrorEntity::getId, LogErrorEntity::getErrorInfo);
         queryWrapper.eq(LogErrorEntity::getId, id);
 
-        return ConvertUtil.convert(getOne(queryWrapper), LogErrorDto.class);
+        return BeanUtil.convert(getOne(queryWrapper), LogErrorDto.class);
     }
 
     @Override

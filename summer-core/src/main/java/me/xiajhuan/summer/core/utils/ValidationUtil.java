@@ -68,9 +68,7 @@ public class ValidationUtil {
      * @param <D>        Dto类型
      */
     public static <D> void validate(List<D> dtoList, Dict prefixDesc, Class<?>... group) {
-        for (D dto : dtoList) {
-            validate(dto, prefixDesc, group);
-        }
+        dtoList.forEach(dto -> validate(dto, prefixDesc, group));
     }
 
     /**
@@ -134,9 +132,8 @@ public class ValidationUtil {
      * @param <D>        Dto类型
      */
     private static <D> void validateInternal(D dto, String fieldName, Dict prefixDesc, Class<?>... group) {
-        String validateMsg = null;
-        final Set<ConstraintViolation<D>> constraintViolations;
         // 校验
+        final Set<ConstraintViolation<D>> constraintViolations;
         if (fieldName != null) {
             constraintViolations = validator.validateProperty(dto, fieldName, group);
         } else {
@@ -144,6 +141,7 @@ public class ValidationUtil {
         }
 
         // 校验消息
+        String validateMsg = null;
         if (constraintViolations.size() > 0) {
             StringBuilder message = StrUtil.builder();
             constraintViolations.forEach(c -> message.append(c.getPropertyPath())

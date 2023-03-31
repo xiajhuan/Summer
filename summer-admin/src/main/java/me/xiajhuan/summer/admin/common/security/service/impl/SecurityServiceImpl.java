@@ -31,7 +31,7 @@ import me.xiajhuan.summer.admin.common.security.mapper.*;
 import me.xiajhuan.summer.admin.common.security.service.SecurityService;
 import me.xiajhuan.summer.core.data.LoginUser;
 import me.xiajhuan.summer.admin.common.security.enums.CaptchaTypeEnum;
-import me.xiajhuan.summer.core.utils.ConvertUtil;
+import me.xiajhuan.summer.core.utils.BeanUtil;
 import me.xiajhuan.summer.core.utils.SecurityUtil;
 
 import static me.xiajhuan.summer.admin.common.security.cache.SecurityCacheKey.*;
@@ -170,7 +170,7 @@ public class SecurityServiceImpl implements SecurityService {
      * @return 登录用户信息
      */
     private LoginUser getLoginUser(SecurityUserDto dto) {
-        LoginUser loginUser = ConvertUtil.convert(dto, LoginUser.class);
+        LoginUser loginUser = BeanUtil.convert(dto, LoginUser.class);
 
         loginUser.setDeptIdRoleBasedSet(getDeptIdRoleBasedSet(loginUser.getId()));
 

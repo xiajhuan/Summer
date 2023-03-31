@@ -39,11 +39,6 @@ import java.util.Arrays;
 public class ServletUtil extends cn.hutool.extra.servlet.ServletUtil {
 
     /**
-     * 请求体参数格式
-     */
-    private static final String BODY_PARAM_FORMAT = "{}【{}】";
-
-    /**
      * 获取HTTP请求
      *
      * @return {@link HttpServletRequest}
@@ -100,11 +95,21 @@ public class ServletUtil extends cn.hutool.extra.servlet.ServletUtil {
     }
 
     /**
-     * 获取请求参数（切入点方法）
+     * 获取请求参数（切入点方法），参数格式示例：
+     * <pre>
+     *     1.Query -> Query【pageNum=1&pageSize=10】
+     *     2.Form-Data -> Form-Data【pageNum=1&pageSize=10】 或 Form-Data【status=1【文件上传】】
+     *     3.Json -> Json【{...}】 或 Json【[...]】
+     *     4.Xml -> Xml【...】
+     *     5.Javascript -> Javascript【...】
+     *     6.Text -> Text【...】
+     *     7.Html -> Html【...】
+     * </pre>
      *
      * @param point   {@link JoinPoint}
      * @param request {@link HttpServletRequest}
      * @return 请求参数
+     * @see ContentTypeConst
      */
     public static String getParamPoint(JoinPoint point, HttpServletRequest request) {
         // 请求参数，note：这里如果没有参数会返回空数组
@@ -128,7 +133,7 @@ public class ServletUtil extends cn.hutool.extra.servlet.ServletUtil {
                     return getFormParam(args);
                 }
 
-                // Json参数格式示例：Json【...】
+                // Json参数格式示例：Json【{...}】或Json【[...]】
                 if (StrUtil.startWithIgnoreCase(contentType, ContentTypeConst.JSON)) {
                     final String jsonParam;
                     if (args[0] instanceof String) {
@@ -136,27 +141,27 @@ public class ServletUtil extends cn.hutool.extra.servlet.ServletUtil {
                     } else {
                         jsonParam = JSONUtil.toJsonStr(args[0]);
                     }
-                    return concatQuery("Json", jsonParam, queryParam);
+                    return concatQueryPrefix("Json", jsonParam, queryParam);
                 }
 
                 // Xml参数格式示例：Xml【...】
                 if (StrUtil.startWithIgnoreCase(contentType, ContentTypeConst.XML)) {
-                    return concatQuery("Xml", String.valueOf(args[0]), queryParam);
+                    return concatQueryPrefix("Xml", String.valueOf(args[0]), queryParam);
                 }
 
                 // Javascript参数格式示例：Javascript【...】
                 if (StrUtil.startWithIgnoreCase(contentType, ContentTypeConst.JAVASCRIPT)) {
-                    return concatQuery("Javascript", String.valueOf(args[0]), queryParam);
+                    return concatQueryPrefix("Javascript", String.valueOf(args[0]), queryParam);
                 }
 
                 // 普通文本参数格式示例：Text【...】
                 if (StrUtil.startWithIgnoreCase(contentType, ContentTypeConst.TEXT)) {
-                    return concatQuery("Text", String.valueOf(args[0]), queryParam);
+                    return concatQueryPrefix("Text", String.valueOf(args[0]), queryParam);
                 }
 
                 // Html文本参数格式示例：Html【...】
                 if (StrUtil.startWithIgnoreCase(contentType, ContentTypeConst.HTML)) {
-                    return concatQuery("Html", String.valueOf(args[0]), queryParam);
+                    return concatQueryPrefix("Html", String.valueOf(args[0]), queryParam);
                 }
             }
 
@@ -170,7 +175,7 @@ public class ServletUtil extends cn.hutool.extra.servlet.ServletUtil {
     }
 
     /**
-     * 响应
+     * 响应，指定状态码
      *
      * @param response    {@link HttpServletResponse}
      * @param contentType 响应体类型
@@ -184,7 +189,8 @@ public class ServletUtil extends cn.hutool.extra.servlet.ServletUtil {
     }
 
     /**
-     * 获取表单参数，若包含文件上传则末尾标记【文件上传】
+     * 获取表单参数，若包含文件上传则末尾标记【文件上传】<br>
+     * 参数格式示例：Form-Data【pageNum=1&pageSize=10】 或 Form-Data【status=1【文件上传】】
      *
      * @param args 参数数组
      * @return 表单参数或 {@code null}
@@ -224,18 +230,18 @@ public class ServletUtil extends cn.hutool.extra.servlet.ServletUtil {
     }
 
     /**
-     * 拼接Query参数<br>
-     * 例如：Query【...】 Json【...】
+     * 拼接Query参数作为前缀<br>
+     * 例如：Query【...】 Json【{...}】
      *
-     * @param prefix     前缀
+     * @param bodyType   请求体类型
      * @param bodyParam  请求体参数
      * @param queryParam Query参数
      * @return 拼接后的参数
      */
-    private static String concatQuery(String prefix, String bodyParam, String queryParam) {
+    private static String concatQueryPrefix(String bodyType, String bodyParam, String queryParam) {
         return StrUtil.isNotBlank(queryParam)
-                ? StrUtil.builder(queryParam, StrUtil.format(BODY_PARAM_FORMAT, prefix, bodyParam)).toString()
-                : StrUtil.format(BODY_PARAM_FORMAT, prefix, bodyParam);
+                ? StrUtil.builder(queryParam, StrUtil.format("{}【{}】", bodyType, bodyParam)).toString()
+                : StrUtil.format("{}【{}】", bodyType, bodyParam);
     }
 
 }

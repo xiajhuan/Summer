@@ -25,11 +25,11 @@ import java.util.Arrays;
 public class WildcardUtil {
 
     /**
-     * 检查源字符串是否匹配指定的通配符模板字符串数组中的任意一个
-     * <p>
-     * note1：仅支持“*”（任意匹配）和“?”（单值匹配）
-     * note2：数组为空时，源为 {@code null} 则返回“true”，否则返回“false”
-     * </p>
+     * 检查源字符串是否匹配指定的通配符模板字符串数组中的任意一个，note：
+     * <pre>
+     *     1.仅支持“*”（任意匹配）和“?”（单值匹配）
+     *     2.数组为空时，源为 {@code null} 则返回“true”，否则返回“false”
+     * </pre>
      *
      * @param source       待匹配源字符串
      * @param patternArray 通配符模板字符串数组
@@ -45,10 +45,12 @@ public class WildcardUtil {
     }
 
     /**
-     * 检查源字符串是否匹配指定的通配符模板字符串
-     * <p>
-     * note1：仅支持“*”（任意匹配）和“?”（单值匹配）
-     * note2：都为 {@code null} 则返回“true”，任一为 {@code null} 则返回“false”
+     * 检查源字符串是否匹配指定的通配符模板字符串，note：
+     * <pre>
+     *     1.仅支持“*”（任意匹配）和“?”（单值匹配）
+     *     2.都为 {@code null} 则返回“true”，任一为 {@code null} 则返回“false”
+     * </pre>
+     * 
      * 失效回溯法：
      * <pre>
      *     1.对于通配符匹配方案，我们主要的难点问题是在于通配符*的匹配，
@@ -84,7 +86,6 @@ public class WildcardUtil {
      *        在我们判断目标串中某个字符和模板串中的某个字符是否相等时，如果模板串中的字符是单值通配符，直接按照匹配成功，放行即可。
      *        至此，所有的疑点都已经一一击破，真相已经水落石出。
      * </pre>
-     * </p>
      *
      * @param source  待匹配源字符串
      * @param pattern 通配符模板字符串

@@ -21,8 +21,8 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * <p>
- * 参数限流Key策略（Key为：接口签名#方法参数）
- * 例如：/summer-single/security/user/page[GET]#pageNum=1&pageSize=10
+ * 参数限流Key策略（Key为：接口签名#方法参数），例如：
+ * /summer-single/security/user/page[GET]#pageNum=1&pageSize=10
  * </p>
  * note：入参数据量特别大时不建议使用
  *

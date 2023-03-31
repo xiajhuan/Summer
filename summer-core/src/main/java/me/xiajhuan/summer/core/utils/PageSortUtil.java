@@ -70,7 +70,7 @@ public class PageSortUtil {
     private static boolean camelToUnderscore;
 
     /**
-     * 初始化 {@link maxLimit} {@link defaultFieldArray}
+     * 初始化 {@link maxLimit} {@link defaultFieldArray}<br>
      * {@link defaultOrderArray} {@link camelToUnderscore}
      */
     static {

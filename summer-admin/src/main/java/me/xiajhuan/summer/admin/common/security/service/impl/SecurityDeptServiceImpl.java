@@ -30,7 +30,7 @@ import me.xiajhuan.summer.admin.common.security.entity.SecurityDeptEntity;
 import me.xiajhuan.summer.core.data.LoginUser;
 import me.xiajhuan.summer.admin.common.security.mapper.SecurityDeptMapper;
 import me.xiajhuan.summer.admin.common.security.service.SecurityDeptService;
-import me.xiajhuan.summer.core.utils.ConvertUtil;
+import me.xiajhuan.summer.core.utils.BeanUtil;
 import me.xiajhuan.summer.core.utils.SecurityUtil;
 import me.xiajhuan.summer.core.utils.TreeUtil;
 import org.springframework.stereotype.Service;
@@ -64,7 +64,7 @@ public class SecurityDeptServiceImpl extends ServiceImpl<SecurityDeptMapper, Sec
         }
 
         // 部门列表
-        List<SecurityDeptDto> dtoList = ConvertUtil.convert(
+        List<SecurityDeptDto> dtoList = BeanUtil.convert(
                 baseMapper.getList(idSet), SecurityDeptDto.class);
 
         // 构建部门树形结构列表
@@ -74,12 +74,12 @@ public class SecurityDeptServiceImpl extends ServiceImpl<SecurityDeptMapper, Sec
 
     @Override
     public SecurityDeptDto getById(Long id) {
-        return ConvertUtil.convert(baseMapper.getById(id), SecurityDeptDto.class);
+        return BeanUtil.convert(baseMapper.getById(id), SecurityDeptDto.class);
     }
 
     @Override
     public void add(SecurityDeptDto dto) {
-        SecurityDeptEntity entity = ConvertUtil.convert(dto, SecurityDeptEntity.class);
+        SecurityDeptEntity entity = BeanUtil.convert(dto, SecurityDeptEntity.class);
         // 所有上级部门ID
         entity.setParentIdAll(getParentIdAll(entity.getParentId()));
 
@@ -88,7 +88,7 @@ public class SecurityDeptServiceImpl extends ServiceImpl<SecurityDeptMapper, Sec
 
     @Override
     public void update(SecurityDeptDto dto) {
-        SecurityDeptEntity entity = ConvertUtil.convert(dto, SecurityDeptEntity.class);
+        SecurityDeptEntity entity = BeanUtil.convert(dto, SecurityDeptEntity.class);
 
         long id = entity.getId().longValue();
         long parentId = entity.getParentId().longValue();

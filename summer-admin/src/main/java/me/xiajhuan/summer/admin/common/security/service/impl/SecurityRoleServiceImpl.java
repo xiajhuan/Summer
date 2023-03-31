@@ -24,7 +24,7 @@ import me.xiajhuan.summer.admin.common.security.dto.SecurityRoleDto;
 import me.xiajhuan.summer.admin.common.security.entity.SecurityRoleEntity;
 import me.xiajhuan.summer.admin.common.security.mapper.SecurityRoleMapper;
 import me.xiajhuan.summer.admin.common.security.service.SecurityRoleService;
-import me.xiajhuan.summer.core.utils.ConvertUtil;
+import me.xiajhuan.summer.core.utils.BeanUtil;
 import org.springframework.stereotype.Service;
 
 /**
@@ -64,7 +64,7 @@ public class SecurityRoleServiceImpl extends ServiceImpl<SecurityRoleMapper, Sec
 
     @Override
     public Page<SecurityRoleDto> page(SecurityRoleDto dto) {
-        return ConvertUtil.convert(page(handlePageSort(dto), getQueryWrapper(dto)), SecurityRoleDto.class);
+        return BeanUtil.convert(page(handlePageSort(dto), getQueryWrapper(dto)), SecurityRoleDto.class);
     }
 
     @Override

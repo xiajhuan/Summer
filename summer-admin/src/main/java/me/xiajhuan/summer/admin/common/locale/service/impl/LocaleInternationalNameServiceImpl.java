@@ -27,8 +27,9 @@ import me.xiajhuan.summer.admin.common.locale.service.LocaleInternationalNameSer
 import me.xiajhuan.summer.core.constant.DataSourceConst;
 import me.xiajhuan.summer.core.constant.SettingBeanConst;
 import me.xiajhuan.summer.core.mp.helper.MpHelper;
-import me.xiajhuan.summer.core.utils.ConvertUtil;
+import me.xiajhuan.summer.core.utils.BeanUtil;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -90,12 +91,12 @@ public class LocaleInternationalNameServiceImpl extends ServiceImpl<LocaleIntern
 
     @Override
     public Page<LocaleInternationalNameDto> page(LocaleInternationalNameDto dto) {
-        return ConvertUtil.convert(page(handlePageSort(dto), getQueryWrapper(dto)), LocaleInternationalNameDto.class);
+        return BeanUtil.convert(page(handlePageSort(dto), getQueryWrapper(dto)), LocaleInternationalNameDto.class);
     }
 
     @Override
     public List<LocaleInternationalNameDto> list(LocaleInternationalNameDto dto) {
-        return ConvertUtil.convert(list(getSortWrapper(dto)), LocaleInternationalNameDto.class);
+        return BeanUtil.convert(list(getSortWrapper(dto)), LocaleInternationalNameDto.class);
     }
 
     @Override
@@ -103,17 +104,17 @@ public class LocaleInternationalNameServiceImpl extends ServiceImpl<LocaleIntern
         LambdaQueryWrapper<LocaleInternationalNameEntity> queryWrapper = getSelectWrapper(LocaleInternationalNameEntity.class);
         queryWrapper.eq(LocaleInternationalNameEntity::getId, id);
 
-        return ConvertUtil.convert(getOne(queryWrapper), LocaleInternationalNameDto.class);
+        return BeanUtil.convert(getOne(queryWrapper), LocaleInternationalNameDto.class);
     }
 
     @Override
     public void add(LocaleInternationalNameDto dto) {
-        save(ConvertUtil.convert(dto, LocaleInternationalNameEntity.class));
+        save(BeanUtil.convert(dto, LocaleInternationalNameEntity.class));
     }
 
     @Override
     public void update(LocaleInternationalNameDto dto) {
-        baseMapper.alwaysUpdateById(ConvertUtil.convert(dto, LocaleInternationalNameEntity.class));
+        baseMapper.alwaysUpdateById(BeanUtil.convert(dto, LocaleInternationalNameEntity.class));
     }
 
     @Override
@@ -127,6 +128,7 @@ public class LocaleInternationalNameServiceImpl extends ServiceImpl<LocaleIntern
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public boolean saveBatch(Collection<LocaleInternationalNameEntity> entityList) {
         ListUtil.split(ListUtil.toList(entityList), batchNumEveryTime)
                 .forEach(list -> baseMapper.realSaveBatch(list));

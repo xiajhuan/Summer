@@ -23,7 +23,7 @@ import me.xiajhuan.summer.admin.common.security.dto.SecurityUserDto;
 import me.xiajhuan.summer.admin.common.security.entity.SecurityUserEntity;
 import me.xiajhuan.summer.admin.common.security.mapper.SecurityUserMapper;
 import me.xiajhuan.summer.admin.common.security.service.SecurityUserService;
-import me.xiajhuan.summer.core.utils.ConvertUtil;
+import me.xiajhuan.summer.core.utils.BeanUtil;
 import org.springframework.stereotype.Service;
 
 /**
@@ -74,7 +74,7 @@ public class SecurityUserServiceImpl extends ServiceImpl<SecurityUserMapper, Sec
                 SecurityUserEntity::getUserType, SecurityUserEntity::getDataScope);
         queryWrapper.eq(SecurityUserEntity::getUsername, username);
 
-        return ConvertUtil.convert(getOne(queryWrapper), SecurityUserDto.class);
+        return BeanUtil.convert(getOne(queryWrapper), SecurityUserDto.class);
     }
 
     @Override

@@ -20,12 +20,12 @@ import me.xiajhuan.summer.core.ratelimiter.aspect.RateLimiterAspect;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * 限流Key策略
- * <p>
- * note1：通过实现该接口覆写 {@link KeyStrategy#getKey} 可以个性化自己的限流Key策略
- * note2：所有Key必须以“接口签名#”作为前缀，接口签名见：
- * {@link ServletUtil#getInterfaceSignature(HttpServletRequest)}
- * </p>
+ * 限流Key策略，note：
+ * <pre>
+ *     1.通过实现该接口覆写 {@link KeyStrategy#getKey} 可以个性化自己的限流Key策略
+ *     2.所有Key必须以“接口签名#”作为前缀，接口签名见：
+ *       {@link ServletUtil#getInterfaceSignature(HttpServletRequest)}
+ * </pre>
  *
  * @author xiajhuan
  * @date 2022/12/4

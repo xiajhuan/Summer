@@ -27,7 +27,7 @@ import me.xiajhuan.summer.admin.common.log.entity.LogOperationEntity;
 import me.xiajhuan.summer.admin.common.log.mapper.LogOperationMapper;
 import me.xiajhuan.summer.admin.common.log.service.LogOperationService;
 import me.xiajhuan.summer.core.mp.helper.MpHelper;
-import me.xiajhuan.summer.core.utils.ConvertUtil;
+import me.xiajhuan.summer.core.utils.BeanUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -89,12 +89,12 @@ public class LogOperationServiceImpl extends ServiceImpl<LogOperationMapper, Log
 
     @Override
     public Page<LogOperationDto> page(LogOperationDto dto) {
-        return ConvertUtil.convert(page(handlePageSort(dto), getQueryWrapper(dto)), LogOperationDto.class);
+        return BeanUtil.convert(page(handlePageSort(dto), getQueryWrapper(dto)), LogOperationDto.class);
     }
 
     @Override
     public List<LogOperationDto> list(LogOperationDto dto) {
-        return ConvertUtil.convert(list(getSortWrapper(dto)), LogOperationDto.class);
+        return BeanUtil.convert(list(getSortWrapper(dto)), LogOperationDto.class);
     }
 
     @Override

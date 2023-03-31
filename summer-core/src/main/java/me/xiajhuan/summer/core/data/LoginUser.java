@@ -21,7 +21,7 @@ import java.util.Set;
 
 /**
  * 登录用户信息<br>
- * note：登录后Shiro持有的用户信息，只包含必要字段
+ * note：只包含必要字段
  *
  * @author xiajhuan
  * @date 2023/02/27
