@@ -23,7 +23,7 @@ import me.xiajhuan.summer.admin.common.security.service.SecurityUserService;
 import me.xiajhuan.summer.core.constant.DataSourceConst;
 import me.xiajhuan.summer.core.constant.TreeConst;
 import me.xiajhuan.summer.core.enums.UserTypeEnum;
-import me.xiajhuan.summer.core.exception.BusinessException;
+import me.xiajhuan.summer.core.exception.custom.BusinessException;
 import me.xiajhuan.summer.core.exception.code.ErrorCode;
 import me.xiajhuan.summer.admin.common.security.dto.SecurityDeptDto;
 import me.xiajhuan.summer.admin.common.security.entity.SecurityDeptEntity;

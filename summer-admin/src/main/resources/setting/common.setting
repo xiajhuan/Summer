@@ -3,7 +3,7 @@
 
 # common模块配置
 
-# 权限相关配置
+# *******************权限相关配置********************
 [Security]
 # 免认证URI，以”/“开头，”,“分隔
 anon-uris = /open/api/**,/open/test/**
@@ -32,7 +32,7 @@ captcha.char-num = 5
 captcha.cache-ttl = 5
 
 
-# 定时任务配置
+# *******************定时任务配置********************
 [Schedule]
 # note：定时任务在服务多节点部署时会重复执行，请注意避免多节点同时开启相同的任务
 # 是否开启基本定时任务（总开关），值：true/false
@@ -45,7 +45,7 @@ base.common = true
 base.business = true
 
 
-# 日志配置
+# *******************日志配置********************
 [Log]
 # 是否保存业务异常日志（BusinessException），值：true/false
 enable-business = true

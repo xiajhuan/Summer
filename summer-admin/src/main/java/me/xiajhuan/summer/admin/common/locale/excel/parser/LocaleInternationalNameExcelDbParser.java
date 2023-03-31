@@ -17,7 +17,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import me.xiajhuan.summer.admin.common.locale.dto.LocaleInternationalNameDto;
 import me.xiajhuan.summer.admin.common.locale.entity.LocaleInternationalNameEntity;
 import me.xiajhuan.summer.admin.common.locale.service.LocaleInternationalNameService;
-import me.xiajhuan.summer.core.excel.subClass.ExcelDbParser;
+import me.xiajhuan.summer.core.excel.parser.subClass.ExcelDbParser;
 
 import java.util.stream.Collectors;
 

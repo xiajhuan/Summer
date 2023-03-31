@@ -25,7 +25,7 @@ import me.xiajhuan.summer.admin.common.locale.entity.LocaleInternationalNameEnti
 import me.xiajhuan.summer.admin.common.locale.mapper.LocaleInternationalNameMapper;
 import me.xiajhuan.summer.admin.common.locale.service.LocaleInternationalNameService;
 import me.xiajhuan.summer.core.constant.DataSourceConst;
-import me.xiajhuan.summer.core.constant.SettingBeanConst;
+import me.xiajhuan.summer.core.constant.SettingConst;
 import me.xiajhuan.summer.core.mp.helper.MpHelper;
 import me.xiajhuan.summer.core.utils.BeanUtil;
 import org.springframework.stereotype.Service;
@@ -48,7 +48,7 @@ import java.util.stream.Collectors;
 @DS(DataSourceConst.COMMON)
 public class LocaleInternationalNameServiceImpl extends ServiceImpl<LocaleInternationalNameMapper, LocaleInternationalNameEntity> implements LocaleInternationalNameService, MpHelper<LocaleInternationalNameDto, LocaleInternationalNameEntity> {
 
-    @Resource(name = SettingBeanConst.CORE)
+    @Resource(name = SettingConst.CORE)
     private Setting setting;
 
     /**

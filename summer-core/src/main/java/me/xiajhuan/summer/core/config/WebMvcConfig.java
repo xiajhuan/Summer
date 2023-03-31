@@ -15,7 +15,7 @@ package me.xiajhuan.summer.core.config;
 import cn.hutool.core.text.StrPool;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.setting.Setting;
-import me.xiajhuan.summer.core.constant.SettingBeanConst;
+import me.xiajhuan.summer.core.constant.SettingConst;
 import me.xiajhuan.summer.core.interceptor.ContentTypeInterceptor;
 import me.xiajhuan.summer.core.interceptor.SqlInjectionInterceptor;
 import org.springframework.context.annotation.Configuration;
@@ -37,7 +37,7 @@ import javax.annotation.Resource;
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 
-    @Resource(name = SettingBeanConst.CORE)
+    @Resource(name = SettingConst.CORE)
     private Setting setting;
 
     @Resource

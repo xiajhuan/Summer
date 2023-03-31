@@ -13,7 +13,7 @@
 package me.xiajhuan.summer.core.config;
 
 import cn.hutool.setting.Setting;
-import me.xiajhuan.summer.core.constant.SettingBeanConst;
+import me.xiajhuan.summer.core.constant.SettingConst;
 import me.xiajhuan.summer.core.constant.ThreadPoolConst;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -37,7 +37,7 @@ public class ThreadPoolConfig {
      * @return {@link ThreadPoolTaskExecutor}
      */
     @Bean(ThreadPoolConst.Async.COMMON)
-    public ThreadPoolTaskExecutor threadPoolTaskExecutor(@Qualifier(SettingBeanConst.CORE) Setting setting) {
+    public ThreadPoolTaskExecutor threadPoolTaskExecutor(@Qualifier(SettingConst.CORE) Setting setting) {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         executor.setCorePoolSize(setting.getInt("core-pool-size", "Async", 8));
         executor.setAllowCoreThreadTimeOut(setting.getBool("allow-core-thread-timeout", "Async", false));

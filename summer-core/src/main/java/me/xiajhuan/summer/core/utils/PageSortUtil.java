@@ -21,7 +21,7 @@ import cn.hutool.setting.Setting;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import me.xiajhuan.summer.core.constant.SettingBeanConst;
+import me.xiajhuan.summer.core.constant.SettingConst;
 import me.xiajhuan.summer.core.dto.PageSortDto;
 
 import java.util.Arrays;
@@ -74,7 +74,7 @@ public class PageSortUtil {
      * {@link defaultOrderArray} {@link camelToUnderscore}
      */
     static {
-        Setting setting = SpringUtil.getBean(SettingBeanConst.CORE, Setting.class);
+        Setting setting = SpringUtil.getBean(SettingConst.CORE, Setting.class);
 
         maxLimit = setting.getLong("page.max-limit", "Mp", 2000L);
 

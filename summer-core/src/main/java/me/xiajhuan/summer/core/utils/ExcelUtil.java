@@ -17,12 +17,12 @@ import cn.hutool.core.util.StrUtil;
 import com.alibaba.excel.EasyExcelFactory;
 import com.alibaba.excel.context.AnalysisContext;
 import com.baomidou.mybatisplus.extension.service.IService;
-import me.xiajhuan.summer.core.excel.AbstractExcelParser;
-import me.xiajhuan.summer.core.excel.subClass.ExcelCacheParser;
-import me.xiajhuan.summer.core.excel.subClass.ExcelDbParser;
+import me.xiajhuan.summer.core.excel.parser.AbstractExcelParser;
+import me.xiajhuan.summer.core.excel.parser.subClass.ExcelCacheParser;
+import me.xiajhuan.summer.core.excel.parser.subClass.ExcelDbParser;
 import me.xiajhuan.summer.core.exception.code.ErrorCode;
-import me.xiajhuan.summer.core.exception.FileDownloadException;
-import me.xiajhuan.summer.core.exception.FileUploadException;
+import me.xiajhuan.summer.core.exception.custom.FileDownloadException;
+import me.xiajhuan.summer.core.exception.custom.FileUploadException;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -48,9 +48,8 @@ public class ExcelUtil extends EasyExcelFactory {
      * @param entityClass EntityClass
      * @param <D>         Dto类型
      * @param <T>         Entity类型
-     * @throws IOException I/O异常
      */
-    public static <D, T> void importDb(MultipartFile file, Class<D> dtoClass, IService<T> service, Class<T> entityClass) throws IOException {
+    public static <D, T> void importDb(MultipartFile file, Class<D> dtoClass, IService<T> service, Class<T> entityClass) {
         importDb(file, dtoClass, ExcelDbParser.build(service, entityClass));
     }
 
@@ -82,9 +81,8 @@ public class ExcelUtil extends EasyExcelFactory {
      * @param entityClass EntityClass
      * @param <D>         Dto类型
      * @param <T>         Entity类型
-     * @throws IOException I/O异常
      */
-    public static <D, T> void importCache(MultipartFile file, Class<D> dtoClass, Class<T> entityClass) throws IOException {
+    public static <D, T> void importCache(MultipartFile file, Class<D> dtoClass, Class<T> entityClass) {
         importCache(file, dtoClass, ExcelCacheParser.build(entityClass));
     }
 

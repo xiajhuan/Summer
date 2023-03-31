@@ -18,7 +18,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.setting.Setting;
 import me.xiajhuan.summer.admin.common.base.shiro.oauth2.Oauth2Filter;
 import me.xiajhuan.summer.admin.common.base.shiro.oauth2.Oauth2Realm;
-import me.xiajhuan.summer.core.constant.SettingBeanConst;
+import me.xiajhuan.summer.core.constant.SettingConst;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
@@ -92,7 +92,7 @@ public class ShiroConfig {
      * @return {@link ShiroFilterFactoryBean}
      */
     @Bean
-    public ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager, @Qualifier(SettingBeanConst.COMMON) Setting setting) {
+    public ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager, @Qualifier(SettingConst.COMMON) Setting setting) {
         ShiroFilterFactoryBean shiroFilter = new ShiroFilterFactoryBean();
         shiroFilter.setSecurityManager(securityManager);
 

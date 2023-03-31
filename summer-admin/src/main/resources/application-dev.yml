@@ -62,13 +62,13 @@ logging:
     me:
       xiajhuan:
         summer:
-          # summer-core模块
+          # core模块
           core:
             # Excel
             excel: debug
             # 限流
             ratelimiter: debug
-          # summer-admin模块
+          # admin模块
           admin:
             # business模块
             business: info

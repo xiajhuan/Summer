@@ -17,9 +17,9 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
 import cn.hutool.setting.Setting;
-import me.xiajhuan.summer.core.constant.SettingBeanConst;
+import me.xiajhuan.summer.core.constant.SettingConst;
 import me.xiajhuan.summer.core.enums.NonLoggedUserEnum;
-import me.xiajhuan.summer.core.exception.BusinessException;
+import me.xiajhuan.summer.core.exception.custom.BusinessException;
 import me.xiajhuan.summer.core.exception.code.ErrorCode;
 import me.xiajhuan.summer.core.ratelimiter.annotation.RateLimiter;
 import me.xiajhuan.summer.core.ratelimiter.strategy.KeyStrategy;
@@ -58,7 +58,7 @@ public class RateLimiterAspect {
 
     private static final Log LOGGER = LogFactory.get();
 
-    @Resource(name = SettingBeanConst.CORE)
+    @Resource(name = SettingConst.CORE)
     private Setting setting;
 
     /**

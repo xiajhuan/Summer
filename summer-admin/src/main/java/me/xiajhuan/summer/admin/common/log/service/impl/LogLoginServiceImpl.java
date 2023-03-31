@@ -21,7 +21,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import me.xiajhuan.summer.core.constant.DataSourceConst;
-import me.xiajhuan.summer.core.constant.SettingBeanConst;
+import me.xiajhuan.summer.core.constant.SettingConst;
 import me.xiajhuan.summer.admin.common.log.dto.LogLoginDto;
 import me.xiajhuan.summer.admin.common.log.entity.LogLoginEntity;
 import me.xiajhuan.summer.admin.common.log.mapper.LogLoginMapper;
@@ -45,7 +45,7 @@ import java.util.stream.Collectors;
 @DS(DataSourceConst.COMMON)
 public class LogLoginServiceImpl extends ServiceImpl<LogLoginMapper, LogLoginEntity> implements LogLoginService, MpHelper<LogLoginDto, LogLoginEntity> {
 
-    @Resource(name = SettingBeanConst.COMMON)
+    @Resource(name = SettingConst.COMMON)
     private Setting setting;
 
     //*******************MpHelper覆写开始********************

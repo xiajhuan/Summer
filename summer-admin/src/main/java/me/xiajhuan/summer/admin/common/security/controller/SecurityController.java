@@ -14,7 +14,7 @@ package me.xiajhuan.summer.admin.common.security.controller;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.setting.Setting;
-import me.xiajhuan.summer.core.constant.SettingBeanConst;
+import me.xiajhuan.summer.core.constant.SettingConst;
 import me.xiajhuan.summer.core.data.Result;
 import me.xiajhuan.summer.core.enums.StatusEnum;
 import me.xiajhuan.summer.core.enums.LoginOperationEnum;
@@ -49,7 +49,7 @@ import java.io.IOException;
 @RequestMapping("security")
 public class SecurityController {
 
-    @Resource(name = SettingBeanConst.COMMON)
+    @Resource(name = SettingConst.COMMON)
     private Setting setting;
 
     @Resource

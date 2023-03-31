@@ -13,7 +13,7 @@
 package me.xiajhuan.summer.admin.common.base.config;
 
 import cn.hutool.setting.Setting;
-import me.xiajhuan.summer.core.constant.SettingBeanConst;
+import me.xiajhuan.summer.core.constant.SettingConst;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -31,7 +31,7 @@ public class SettingConfig {
      *
      * @return {@link Setting}
      */
-    @Bean(SettingBeanConst.COMMON)
+    @Bean(SettingConst.COMMON)
     public Setting commonSetting() {
         return new Setting("setting/common.setting");
     }
@@ -41,7 +41,7 @@ public class SettingConfig {
      *
      * @return {@link Setting}
      */
-    @Bean(SettingBeanConst.BUSINESS)
+    @Bean(SettingConst.BUSINESS)
     public Setting businessSetting() {
         return new Setting("setting/business.setting");
     }

@@ -16,9 +16,9 @@ import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.text.StrPool;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.setting.Setting;
-import me.xiajhuan.summer.core.constant.SettingBeanConst;
+import me.xiajhuan.summer.core.constant.SettingConst;
 import me.xiajhuan.summer.core.exception.code.ErrorCode;
-import me.xiajhuan.summer.core.exception.ValidationException;
+import me.xiajhuan.summer.core.exception.custom.ValidationException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import me.xiajhuan.summer.core.utils.ServletUtil;
@@ -42,7 +42,7 @@ import java.util.Map;
 @Component
 public class SqlInjectionInterceptor implements HandlerInterceptor {
 
-    @Resource(name = SettingBeanConst.CORE)
+    @Resource(name = SettingConst.CORE)
     private Setting setting;
 
     /**

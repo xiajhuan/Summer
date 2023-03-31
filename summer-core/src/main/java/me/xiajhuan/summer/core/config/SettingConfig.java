@@ -13,7 +13,7 @@
 package me.xiajhuan.summer.core.config;
 
 import cn.hutool.setting.Setting;
-import me.xiajhuan.summer.core.constant.SettingBeanConst;
+import me.xiajhuan.summer.core.constant.SettingConst;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -31,7 +31,7 @@ public class SettingConfig {
      *
      * @return {@link Setting}
      */
-    @Bean(SettingBeanConst.CORE)
+    @Bean(SettingConst.CORE)
     public Setting coreSetting() {
         return new Setting("setting/core.setting");
     }

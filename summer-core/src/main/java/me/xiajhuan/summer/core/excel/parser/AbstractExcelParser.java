@@ -10,7 +10,7 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.core.excel;
+package me.xiajhuan.summer.core.excel.parser;
 
 import cn.hutool.core.lang.Dict;
 import cn.hutool.extra.spring.SpringUtil;
@@ -20,7 +20,7 @@ import cn.hutool.log.LogFactory;
 import cn.hutool.setting.Setting;
 import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.event.AnalysisEventListener;
-import me.xiajhuan.summer.core.constant.SettingBeanConst;
+import me.xiajhuan.summer.core.constant.SettingConst;
 import me.xiajhuan.summer.core.exception.code.ErrorCode;
 import me.xiajhuan.summer.core.utils.BeanUtil;
 import me.xiajhuan.summer.core.utils.ValidationUtil;
@@ -45,7 +45,7 @@ public abstract class AbstractExcelParser<D, T> extends AnalysisEventListener<D>
      * Excel数据解析后的最大批量操作数<br>
      * 最多每隔该数量的数据后清理List，方便GC
      */
-    private static final int MAX_BATCH_NUM = SpringUtil.getBean(SettingBeanConst.CORE, Setting.class)
+    private static final int MAX_BATCH_NUM = SpringUtil.getBean(SettingConst.CORE, Setting.class)
             .getInt("parser.max-batch-num", "Excel", 2000);
 
     /**

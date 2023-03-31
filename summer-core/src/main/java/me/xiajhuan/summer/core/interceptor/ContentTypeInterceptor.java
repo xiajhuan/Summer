@@ -18,9 +18,9 @@ import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.setting.Setting;
 import me.xiajhuan.summer.core.constant.ContentTypeConst;
-import me.xiajhuan.summer.core.constant.SettingBeanConst;
+import me.xiajhuan.summer.core.constant.SettingConst;
 import me.xiajhuan.summer.core.exception.code.ErrorCode;
-import me.xiajhuan.summer.core.exception.ValidationException;
+import me.xiajhuan.summer.core.exception.custom.ValidationException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -41,7 +41,7 @@ import java.util.Set;
 @Component
 public class ContentTypeInterceptor implements HandlerInterceptor {
 
-    @Resource(name = SettingBeanConst.CORE)
+    @Resource(name = SettingConst.CORE)
     private Setting setting;
 
     /**

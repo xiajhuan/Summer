@@ -17,7 +17,7 @@ import cn.hutool.extra.spring.SpringUtil;
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
 import cn.hutool.setting.Setting;
-import me.xiajhuan.summer.core.constant.SettingBeanConst;
+import me.xiajhuan.summer.core.constant.SettingConst;
 import me.xiajhuan.summer.core.enums.LocaleSupportEnum;
 import org.springframework.context.MessageSource;
 import me.xiajhuan.summer.core.exception.code.ErrorCode;
@@ -65,7 +65,7 @@ public class LocaleUtil {
      */
     static {
         messageSource = SpringUtil.getBean("messageSource", MessageSource.class);
-        extraDefault = SpringUtil.getBean(SettingBeanConst.CORE, Setting.class)
+        extraDefault = SpringUtil.getBean(SettingConst.CORE, Setting.class)
                 .getByGroupWithLog("extra-default", "Locale");
         if (StrUtil.isBlank(extraDefault)) {
             // 没有配置则默认为：en_US

@@ -21,7 +21,7 @@ import com.baomidou.mybatisplus.extension.plugins.handler.MultiDataPermissionHan
 import me.xiajhuan.summer.core.data.LoginUser;
 import me.xiajhuan.summer.core.entity.CommonBaseEntity;
 import me.xiajhuan.summer.core.constant.DataScopeConst;
-import me.xiajhuan.summer.core.constant.SettingBeanConst;
+import me.xiajhuan.summer.core.constant.SettingConst;
 import me.xiajhuan.summer.core.enums.UserTypeEnum;
 import me.xiajhuan.summer.core.utils.SecurityUtil;
 import me.xiajhuan.summer.core.utils.WildcardUtil;
@@ -63,7 +63,7 @@ import java.util.stream.Collectors;
 @Component
 public class DataScopeHandler implements MultiDataPermissionHandler {
 
-    @Resource(name = SettingBeanConst.CORE)
+    @Resource(name = SettingConst.CORE)
     private Setting setting;
 
     /**

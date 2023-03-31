@@ -13,12 +13,12 @@
 package me.xiajhuan.summer.core.constant;
 
 /**
- * setting配置Bean名称常量
+ * setting配置常量
  *
  * @author xiajhuan
  * @date 2022/11/26
  */
-public class SettingBeanConst {
+public class SettingConst {
 
     /**
      * core.setting配置Bean名称

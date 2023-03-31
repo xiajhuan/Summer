@@ -16,7 +16,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * summer-admin启动类
+ * admin模块启动类
  *
  * @author xiajhuan
  * @date 2023/2/23

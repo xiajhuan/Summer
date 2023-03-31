@@ -15,7 +15,7 @@ package me.xiajhuan.summer.core.cache.key;
 import cn.hutool.core.util.StrUtil;
 
 /**
- * summer-core模块缓存Key
+ * core模块缓存Key
  *
  * @author xiajhuan
  * @date 2023/3/17

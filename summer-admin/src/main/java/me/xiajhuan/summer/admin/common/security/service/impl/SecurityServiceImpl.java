@@ -55,7 +55,7 @@ import java.util.stream.Collectors;
 @DS(DataSourceConst.COMMON)
 public class SecurityServiceImpl implements SecurityService {
 
-    @Resource(name = SettingBeanConst.COMMON)
+    @Resource(name = SettingConst.COMMON)
     private Setting setting;
 
     @Resource

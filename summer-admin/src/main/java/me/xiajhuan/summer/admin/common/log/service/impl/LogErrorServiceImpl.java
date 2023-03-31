@@ -24,7 +24,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import me.xiajhuan.summer.core.constant.DataSourceConst;
-import me.xiajhuan.summer.core.constant.SettingBeanConst;
+import me.xiajhuan.summer.core.constant.SettingConst;
 import me.xiajhuan.summer.admin.common.log.dto.LogErrorDto;
 import me.xiajhuan.summer.admin.common.log.entity.LogErrorEntity;
 import me.xiajhuan.summer.admin.common.log.mapper.LogErrorMapper;
@@ -51,7 +51,7 @@ import java.util.stream.Collectors;
 @DS(DataSourceConst.COMMON)
 public class LogErrorServiceImpl extends ServiceImpl<LogErrorMapper, LogErrorEntity> implements LogErrorService, MpHelper<LogErrorDto, LogErrorEntity> {
 
-    @Resource(name = SettingBeanConst.COMMON)
+    @Resource(name = SettingConst.COMMON)
     private Setting setting;
 
     //*******************MpHelper覆写开始********************

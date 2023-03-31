@@ -18,11 +18,14 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
 import cn.hutool.setting.Setting;
-import me.xiajhuan.summer.core.constant.SettingBeanConst;
+import me.xiajhuan.summer.core.constant.SettingConst;
 import me.xiajhuan.summer.core.data.Result;
-import me.xiajhuan.summer.core.exception.*;
 import me.xiajhuan.summer.admin.common.log.service.LogErrorService;
 import me.xiajhuan.summer.core.exception.code.ErrorCode;
+import me.xiajhuan.summer.core.exception.custom.BusinessException;
+import me.xiajhuan.summer.core.exception.custom.FileDownloadException;
+import me.xiajhuan.summer.core.exception.custom.FileUploadException;
+import me.xiajhuan.summer.core.exception.custom.ValidationException;
 import me.xiajhuan.summer.core.utils.LocaleUtil;
 import me.xiajhuan.summer.core.utils.ServletUtil;
 import me.xiajhuan.summer.core.utils.ValidationUtil;
@@ -52,7 +55,7 @@ public class GlobalExceptionHandler {
 
     private static final Log LOGGER = LogFactory.get();
 
-    @Resource(name = SettingBeanConst.COMMON)
+    @Resource(name = SettingConst.COMMON)
     private Setting setting;
 
     @Resource

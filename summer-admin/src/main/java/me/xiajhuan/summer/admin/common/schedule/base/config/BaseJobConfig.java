@@ -17,7 +17,7 @@ import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
 import cn.hutool.setting.Setting;
 import me.xiajhuan.summer.admin.common.schedule.base.job.BusinessJob;
-import me.xiajhuan.summer.core.constant.SettingBeanConst;
+import me.xiajhuan.summer.core.constant.SettingConst;
 import me.xiajhuan.summer.admin.common.log.service.LogErrorService;
 import me.xiajhuan.summer.admin.common.log.service.LogLoginService;
 import me.xiajhuan.summer.admin.common.log.service.LogOperationService;
@@ -60,7 +60,7 @@ public class BaseJobConfig implements SchedulingConfigurer {
     @Value("${spring.application.name}")
     private String applicationName;
 
-    @Resource(name = SettingBeanConst.COMMON)
+    @Resource(name = SettingConst.COMMON)
     private Setting setting;
 
     /**

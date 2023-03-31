@@ -22,7 +22,7 @@ import cn.hutool.cache.impl.FIFOCache;
 import cn.hutool.cache.impl.LFUCache;
 import cn.hutool.cache.impl.LRUCache;
 import me.xiajhuan.summer.core.cache.server.CacheServer;
-import me.xiajhuan.summer.core.constant.SettingBeanConst;
+import me.xiajhuan.summer.core.constant.SettingConst;
 import me.xiajhuan.summer.core.constant.CacheConst;
 
 import java.util.ArrayList;
@@ -86,7 +86,7 @@ public class HeapCacheServer implements CacheServer {
 
     private HeapCacheServer() {
         // 初始化缓存容量和缓存满后对象的移除策略
-        Setting setting = SpringUtil.getBean(SettingBeanConst.CORE, Setting.class);
+        Setting setting = SpringUtil.getBean(SettingConst.CORE, Setting.class);
         // 默认移除策略
         String defaultStrategy = CacheConst.Heap.LRU;
 
