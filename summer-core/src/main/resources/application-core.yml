@@ -1,5 +1,5 @@
-# note：这里主要放置不常修改的配置项
 project:
+  # 项目版本
   version: "@project.version@"
 
 server:

@@ -56,6 +56,14 @@ server:
   cache:
     type: REDIS
 
+limit:
+  # 批量操作限制
+  batch:
+    # 每次批量插入数（JDBC批量提交）
+    real-save-num-every-time: 100
+    # Excel最大导出数
+    excel-max-export: 40000
+
 # 日志级别
 logging:
   level:

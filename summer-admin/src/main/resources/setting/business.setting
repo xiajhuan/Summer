@@ -1,4 +1,4 @@
-# Hutool setting配置文件
-# https://hutool.cn/docs/#/setting/%E6%A6%82%E8%BF%B0
+# Hutool setting配置文件（主要放置不常修改的配置项）
+# https://hutool.cn/docs/#/setting/%E8%AE%BE%E7%BD%AE%E6%96%87%E4%BB%B6-Setting
 
 # business模块配置

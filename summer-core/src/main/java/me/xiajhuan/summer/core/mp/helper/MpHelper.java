@@ -24,7 +24,7 @@ import me.xiajhuan.summer.core.utils.PageSortUtil;
  * MybatisPlus Helper，note：
  * <pre>
  *     1.非侵入式api，提供Mp的一些通用操作模板，可根据实际需求自行选择是否引入
- *     2.Dto必须继承 {@link PageSortDto}，ServiceImpl类示例：
+ *     2.Dto必须继承 {@link PageSortDto}，ServiceImpl类写法示例：
  *      {@code public class LogErrorServiceImpl extends ... implements LogErrorService, MpHelper<LogErrorDto, LogErrorEntity>}
  * </pre>
  *
@@ -34,41 +34,68 @@ import me.xiajhuan.summer.core.utils.PageSortUtil;
 public interface MpHelper<D extends PageSortDto, T> {
 
     /**
-     * 获取 {@link LambdaQueryWrapper}（指定查询字段，默认所有Entity字段）
+     * 当前EntityClass
      *
-     * @param entityClass EntityClass
+     * @return EntityClass
+     */
+    default Class<T> currentEntityClass() {
+        return (Class<T>) ReflectionKit.getSuperClassGenericType(this.getClass(), ServiceImpl.class, 1);
+    }
+
+    //*******************模板方法钩子，执行顺序从上到下依次********************
+
+    // note：覆写时第一行代码一定要调用上面的一个方法！！！
+
+    /**
+     * 获取空 {@link LambdaQueryWrapper}
+     *
      * @return {@link LambdaQueryWrapper}
      */
-    default LambdaQueryWrapper<T> getSelectWrapper(Class<T> entityClass) {
-        LambdaQueryWrapper<T> queryWrapper = Wrappers.lambdaQuery();
-        // 查询字段（所有Entity字段）
-        return queryWrapper.select(entityClass, i -> true);
+    default LambdaQueryWrapper<T> getEmptyWrapper() {
+        return Wrappers.lambdaQuery(currentEntityClass());
     }
 
     /**
-     * 获取 {@link LambdaQueryWrapper}（指定查询条件，默认无条件）
+     * 获取 {@link LambdaQueryWrapper}（指定查询条件，默认无条件）<br>
+     * note：调用后包含【查询条件】
      *
      * @param dto Dto类型对象
      * @return {@link LambdaQueryWrapper}
      */
     default LambdaQueryWrapper<T> getQueryWrapper(D dto) {
         // 查询条件（无）
-        return getSelectWrapper((Class<T>) ReflectionKit.getSuperClassGenericType(getClass(), ServiceImpl.class, 1));
+        return getEmptyWrapper();
     }
 
     /**
-     * 获取 {@link LambdaQueryWrapper}（指定排序条件），note：
+     * 获取 {@link LambdaQueryWrapper}（指定查询条件/查询字段，默认无条件/所有Entity字段）<br>
+     * note：调用后包含【查询条件,查询字段】
+     *
+     * @param dto Dto类型对象
+     * @return {@link LambdaQueryWrapper}
+     */
+    default LambdaQueryWrapper<T> getSelectWrapper(D dto) {
+        // 查询条件（无），查询字段（所有Entity字段）
+        return getQueryWrapper(dto).select(currentEntityClass(), i -> true);
+    }
+
+    /**
+     * 获取 {@link LambdaQueryWrapper}（指定查询条件/查询字段/排序条件），note：
      * <pre>
-     *     1.默认依据 {@link PageSortDto#field} {@link PageSortDto#order} 的值指定
-     *     2.{@link PageSortUtil#handleSort(PageSortDto, LambdaQueryWrapper)} 有Sql注入风险！推荐根据实际需求覆写
+     *     1.调用后包含【查询条件,查询字段，排序条件】
+     *     2.默认无条件/所有Entity字段
+     *     3.默认排序条件依据 {@link PageSortDto#field} {@link PageSortDto#order} 的值指定
+     *     4.{@link PageSortUtil#handleSort(PageSortDto, LambdaQueryWrapper)} 有Sql注入风险！推荐根据实际需求覆写
      * </pre>
      *
      * @param dto Dto类型对象
      * @return {@link LambdaQueryWrapper}
      */
     default LambdaQueryWrapper<T> getSortWrapper(D dto) {
-        return PageSortUtil.handleSort(dto, getQueryWrapper(dto));
+        return PageSortUtil.handleSort(dto, getSelectWrapper(dto));
     }
+
+    //*******************分页排序参数统一处理********************
 
     /**
      * 分页排序参数处理，默认 count 总记录数
@@ -79,6 +106,8 @@ public interface MpHelper<D extends PageSortDto, T> {
     default Page<T> handlePageSort(D dto) {
         return PageSortUtil.handlePageSort(dto);
     }
+
+    //*******************扩展自选钩子********************
 
     /**
      * 自定义分页钩子<br>

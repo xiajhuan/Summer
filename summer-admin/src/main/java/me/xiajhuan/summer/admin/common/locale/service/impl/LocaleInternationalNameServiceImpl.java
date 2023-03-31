@@ -14,24 +14,21 @@ package me.xiajhuan.summer.admin.common.locale.service.impl;
 
 import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.setting.Setting;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import me.xiajhuan.summer.admin.common.base.properties.LimitBatchProperties;
 import me.xiajhuan.summer.admin.common.locale.dto.LocaleInternationalNameDto;
 import me.xiajhuan.summer.admin.common.locale.entity.LocaleInternationalNameEntity;
 import me.xiajhuan.summer.admin.common.locale.mapper.LocaleInternationalNameMapper;
 import me.xiajhuan.summer.admin.common.locale.service.LocaleInternationalNameService;
 import me.xiajhuan.summer.core.constant.DataSourceConst;
-import me.xiajhuan.summer.core.constant.SettingConst;
 import me.xiajhuan.summer.core.mp.helper.MpHelper;
 import me.xiajhuan.summer.core.utils.BeanUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.Collection;
@@ -48,41 +45,28 @@ import java.util.stream.Collectors;
 @DS(DataSourceConst.COMMON)
 public class LocaleInternationalNameServiceImpl extends ServiceImpl<LocaleInternationalNameMapper, LocaleInternationalNameEntity> implements LocaleInternationalNameService, MpHelper<LocaleInternationalNameDto, LocaleInternationalNameEntity> {
 
-    @Resource(name = SettingConst.CORE)
-    private Setting setting;
-
-    /**
-     * 每次批量插入数（JDBC批量提交）
-     */
-    private int batchNumEveryTime;
-
-    /**
-     * 初始化 {@link batchNumEveryTime}
-     */
-    @PostConstruct
-    private void init() {
-        batchNumEveryTime = setting.getInt("batch-num-every-time", "Mp", 100);
-    }
+    @Resource
+    private LimitBatchProperties limitBatchProperties;
 
     //*******************MpHelper覆写开始********************
 
     @Override
-    public LambdaQueryWrapper<LocaleInternationalNameEntity> getSelectWrapper(Class<LocaleInternationalNameEntity> entityClass) {
-        LambdaQueryWrapper<LocaleInternationalNameEntity> queryWrapper = Wrappers.lambdaQuery();
-        // 查询字段
-        queryWrapper.select(LocaleInternationalNameEntity::getId, LocaleInternationalNameEntity::getTableName, LocaleInternationalNameEntity::getFieldName,
-                LocaleInternationalNameEntity::getFieldValue, LocaleInternationalNameEntity::getLocale, LocaleInternationalNameEntity::getCreateTime);
+    public LambdaQueryWrapper<LocaleInternationalNameEntity> getQueryWrapper(LocaleInternationalNameDto dto) {
+        LambdaQueryWrapper<LocaleInternationalNameEntity> queryWrapper = getEmptyWrapper();
+        // 查询条件
+        // 表名
+        String tableName = dto.getTableName();
+        queryWrapper.eq(StrUtil.isNotBlank(tableName), LocaleInternationalNameEntity::getTableName, tableName);
 
         return queryWrapper;
     }
 
     @Override
-    public LambdaQueryWrapper<LocaleInternationalNameEntity> getQueryWrapper(LocaleInternationalNameDto dto) {
-        LambdaQueryWrapper<LocaleInternationalNameEntity> queryWrapper = getSelectWrapper(currentModelClass());
-        // 动态Sql查询条件
-        // 表名
-        String tableName = dto.getTableName();
-        queryWrapper.eq(StrUtil.isNotBlank(tableName), LocaleInternationalNameEntity::getTableName, tableName);
+    public LambdaQueryWrapper<LocaleInternationalNameEntity> getSelectWrapper(LocaleInternationalNameDto dto) {
+        LambdaQueryWrapper<LocaleInternationalNameEntity> queryWrapper = getQueryWrapper(dto);
+        // 查询字段
+        queryWrapper.select(LocaleInternationalNameEntity::getId, LocaleInternationalNameEntity::getTableName, LocaleInternationalNameEntity::getFieldName,
+                LocaleInternationalNameEntity::getFieldValue, LocaleInternationalNameEntity::getLocale, LocaleInternationalNameEntity::getCreateTime);
 
         return queryWrapper;
     }
@@ -91,7 +75,7 @@ public class LocaleInternationalNameServiceImpl extends ServiceImpl<LocaleIntern
 
     @Override
     public Page<LocaleInternationalNameDto> page(LocaleInternationalNameDto dto) {
-        return BeanUtil.convert(page(handlePageSort(dto), getQueryWrapper(dto)), LocaleInternationalNameDto.class);
+        return BeanUtil.convert(page(handlePageSort(dto), getSelectWrapper(dto)), LocaleInternationalNameDto.class);
     }
 
     @Override
@@ -101,8 +85,10 @@ public class LocaleInternationalNameServiceImpl extends ServiceImpl<LocaleIntern
 
     @Override
     public LocaleInternationalNameDto getById(Long id) {
-        LambdaQueryWrapper<LocaleInternationalNameEntity> queryWrapper = getSelectWrapper(LocaleInternationalNameEntity.class);
+        LambdaQueryWrapper<LocaleInternationalNameEntity> queryWrapper = getEmptyWrapper();
         queryWrapper.eq(LocaleInternationalNameEntity::getId, id);
+        queryWrapper.select(LocaleInternationalNameEntity::getId, LocaleInternationalNameEntity::getTableName, LocaleInternationalNameEntity::getFieldName,
+                LocaleInternationalNameEntity::getFieldValue, LocaleInternationalNameEntity::getLocale, LocaleInternationalNameEntity::getCreateTime);
 
         return BeanUtil.convert(getOne(queryWrapper), LocaleInternationalNameDto.class);
     }
@@ -123,6 +109,11 @@ public class LocaleInternationalNameServiceImpl extends ServiceImpl<LocaleIntern
     }
 
     @Override
+    public long count(LocaleInternationalNameDto dto) {
+        return count(getQueryWrapper(dto));
+    }
+
+    @Override
     public Integer exist(LocaleInternationalNameEntity entity) {
         return baseMapper.exist(entity);
     }
@@ -130,7 +121,7 @@ public class LocaleInternationalNameServiceImpl extends ServiceImpl<LocaleIntern
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean saveBatch(Collection<LocaleInternationalNameEntity> entityList) {
-        ListUtil.split(ListUtil.toList(entityList), batchNumEveryTime)
+        ListUtil.split(ListUtil.toList(entityList), limitBatchProperties.getRealSaveNumEveryTime())
                 .forEach(list -> baseMapper.realSaveBatch(list));
         return true;
     }

@@ -1,8 +1,7 @@
-# Hutool setting配置文件
-# https://hutool.cn/docs/#/setting/%E6%A6%82%E8%BF%B0
+# Hutool setting配置文件（主要放置不常修改的配置项）
+# https://hutool.cn/docs/#/setting/%E8%AE%BE%E7%BD%AE%E6%96%87%E4%BB%B6-Setting
 
 # core模块配置
-# note：这里主要放置不常修改的配置项
 
 # *******************缓存配置********************
 [Cache]
@@ -48,9 +47,6 @@ sort.default-field = create_time
 sort.default-order = desc
 # 排序字段是否驼峰转下划线
 sort.field-camelToUnderscore = true
-
-# 每次批量插入数（JDBC批量提交）
-batch-num-every-time = 100
 
 # 数据权限忽略的表名配置，以“,”分隔
 # 支持通配符：“*”（任意匹配）和“?”（单值匹配）

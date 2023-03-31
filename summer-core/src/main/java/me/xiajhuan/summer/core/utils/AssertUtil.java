@@ -12,6 +12,7 @@
 
 package me.xiajhuan.summer.core.utils;
 
+import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
@@ -22,12 +23,12 @@ import java.util.Iterator;
 import java.util.Map;
 
 /**
- * 非空断言工具
+ * 断言工具
  *
  * @author xiajhuan
  * @date 2022/11/29
  */
-public class AssertUtil {
+public class AssertUtil extends Assert {
 
     /**
      * <p>

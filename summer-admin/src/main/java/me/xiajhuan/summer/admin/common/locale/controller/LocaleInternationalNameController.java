@@ -13,6 +13,7 @@
 package me.xiajhuan.summer.admin.common.locale.controller;
 
 import me.xiajhuan.summer.admin.common.base.annotation.LogOperation;
+import me.xiajhuan.summer.admin.common.base.properties.LimitBatchProperties;
 import me.xiajhuan.summer.admin.common.locale.dto.LocaleInternationalNameDto;
 import me.xiajhuan.summer.admin.common.locale.entity.LocaleInternationalNameEntity;
 import me.xiajhuan.summer.admin.common.locale.excel.parser.LocaleInternationalNameExcelDbParser;
@@ -21,6 +22,7 @@ import me.xiajhuan.summer.core.constant.OperationConst;
 import me.xiajhuan.summer.core.data.PageData;
 import me.xiajhuan.summer.core.data.Result;
 import me.xiajhuan.summer.core.exception.code.ErrorCode;
+import me.xiajhuan.summer.core.exception.custom.ValidationException;
 import me.xiajhuan.summer.core.ratelimiter.annotation.RateLimiter;
 import me.xiajhuan.summer.core.utils.AssertUtil;
 import me.xiajhuan.summer.core.utils.ExcelUtil;
@@ -43,6 +45,9 @@ import javax.servlet.http.HttpServletResponse;
 @RestController
 @RequestMapping("locale/internationalName")
 public class LocaleInternationalNameController {
+
+    @Resource
+    private LimitBatchProperties limitBatchProperties;
 
     @Resource
     private LocaleInternationalNameService mainService;
@@ -162,6 +167,8 @@ public class LocaleInternationalNameController {
     @RateLimiter(0.2)
     @LogOperation(OperationConst.EXCEL_EXPORT)
     public void excelExport(LocaleInternationalNameDto dto, HttpServletResponse response) {
+        AssertUtil.checkBetween(mainService.count(dto), 0L, limitBatchProperties.getExcelMaxExport(),
+                () -> ValidationException.of(ErrorCode.EXCEL_EXPORT_MAXIMUM_LIMIT));
         ExcelUtil.export(response, "国际化名称", "国际化名称", mainService.list(dto),
                 LocaleInternationalNameDto.class, ErrorCode.EXCEL_EXPORT_FAILURE);
     }

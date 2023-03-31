@@ -76,9 +76,14 @@ public interface ErrorCode {
     int EXCEL_EXPORT_FAILURE = 1006;
 
     /**
+     * 最多导出{0}条记录
+     */
+    int EXCEL_EXPORT_MAXIMUM_LIMIT = 1007;
+
+    /**
      * Excel导入失败，第{0}行：
      */
-    int EXCEL_IMPORT_FAILURE_PREFIX = 1007;
+    int EXCEL_IMPORT_FAILURE_PREFIX = 1008;
 
     //*******************common********************
 

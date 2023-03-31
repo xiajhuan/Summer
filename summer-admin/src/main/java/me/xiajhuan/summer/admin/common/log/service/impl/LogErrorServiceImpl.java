@@ -20,7 +20,6 @@ import cn.hutool.json.JSONUtil;
 import cn.hutool.setting.Setting;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import me.xiajhuan.summer.core.constant.DataSourceConst;
@@ -57,20 +56,9 @@ public class LogErrorServiceImpl extends ServiceImpl<LogErrorMapper, LogErrorEnt
     //*******************MpHelper覆写开始********************
 
     @Override
-    public LambdaQueryWrapper<LogErrorEntity> getSelectWrapper(Class<LogErrorEntity> entityClass) {
-        LambdaQueryWrapper<LogErrorEntity> queryWrapper = Wrappers.lambdaQuery();
-        // 查询字段
-        queryWrapper.select(LogErrorEntity::getId, LogErrorEntity::getRequestUri, LogErrorEntity::getRequestMethod,
-                LogErrorEntity::getRequestParams, LogErrorEntity::getUserAgent, LogErrorEntity::getIp,
-                LogErrorEntity::getCreateTime);
-
-        return queryWrapper;
-    }
-
-    @Override
     public LambdaQueryWrapper<LogErrorEntity> getQueryWrapper(LogErrorDto dto) {
-        LambdaQueryWrapper<LogErrorEntity> queryWrapper = getSelectWrapper(currentModelClass());
-        // 动态Sql查询条件
+        LambdaQueryWrapper<LogErrorEntity> queryWrapper = getEmptyWrapper();
+        // 查询条件
         // 创建时间（闭区间）
         Date createTimeStart = dto.getCreateTimeStart();
         if (createTimeStart != null) {
@@ -84,11 +72,22 @@ public class LogErrorServiceImpl extends ServiceImpl<LogErrorMapper, LogErrorEnt
         return queryWrapper;
     }
 
+    @Override
+    public LambdaQueryWrapper<LogErrorEntity> getSelectWrapper(LogErrorDto dto) {
+        LambdaQueryWrapper<LogErrorEntity> queryWrapper = getQueryWrapper(dto);
+        // 查询字段
+        queryWrapper.select(LogErrorEntity::getId, LogErrorEntity::getRequestUri, LogErrorEntity::getRequestMethod,
+                LogErrorEntity::getRequestParams, LogErrorEntity::getUserAgent, LogErrorEntity::getIp,
+                LogErrorEntity::getCreateTime);
+
+        return queryWrapper;
+    }
+
     //*******************MpHelper覆写结束********************
 
     @Override
     public Page<LogErrorDto> page(LogErrorDto dto) {
-        return BeanUtil.convert(page(handlePageSort(dto), getQueryWrapper(dto)), LogErrorDto.class);
+        return BeanUtil.convert(page(handlePageSort(dto), getSelectWrapper(dto)), LogErrorDto.class);
     }
 
     @Override
@@ -98,9 +97,9 @@ public class LogErrorServiceImpl extends ServiceImpl<LogErrorMapper, LogErrorEnt
 
     @Override
     public LogErrorDto getById(Long id) {
-        LambdaQueryWrapper<LogErrorEntity> queryWrapper = Wrappers.lambdaQuery();
-        queryWrapper.select(LogErrorEntity::getId, LogErrorEntity::getErrorInfo);
+        LambdaQueryWrapper<LogErrorEntity> queryWrapper = getEmptyWrapper();
         queryWrapper.eq(LogErrorEntity::getId, id);
+        queryWrapper.select(LogErrorEntity::getId, LogErrorEntity::getErrorInfo);
 
         return BeanUtil.convert(getOne(queryWrapper), LogErrorDto.class);
     }
@@ -130,10 +129,10 @@ public class LogErrorServiceImpl extends ServiceImpl<LogErrorMapper, LogErrorEnt
     @Override
     public void clear() {
         // 删除错误日志
-        LambdaQueryWrapper<LogErrorEntity> queryWrapper = Wrappers.lambdaQuery();
-        queryWrapper.select(LogErrorEntity::getId);
+        LambdaQueryWrapper<LogErrorEntity> queryWrapper = getEmptyWrapper();
         queryWrapper.lt(LogErrorEntity::getCreateTime, DateUtil.offsetDay(DateUtil.date(),
                 setting.getInt("error.clear-days-limit", "Log", -90)));
+        queryWrapper.select(LogErrorEntity::getId);
 
         List<LogErrorEntity> entityList = list(queryWrapper);
 

@@ -15,7 +15,6 @@ package me.xiajhuan.summer.admin.common.security.service.impl;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import me.xiajhuan.summer.core.constant.DataSourceConst;
 import me.xiajhuan.summer.core.mp.helper.MpHelper;
@@ -39,21 +38,9 @@ public class SecurityUserServiceImpl extends ServiceImpl<SecurityUserMapper, Sec
     //*******************MpHelper覆写开始********************
 
     @Override
-    public LambdaQueryWrapper<SecurityUserEntity> getSelectWrapper(Class<SecurityUserEntity> entityClass) {
-        LambdaQueryWrapper<SecurityUserEntity> queryWrapper = Wrappers.lambdaQuery();
-        // 查询字段
-        queryWrapper.select(SecurityUserEntity::getId, SecurityUserEntity::getUsername, SecurityUserEntity::getRealName,
-                SecurityUserEntity::getHeadUrl, SecurityUserEntity::getGender, SecurityUserEntity::getEmail,
-                SecurityUserEntity::getMobile, SecurityUserEntity::getDeptId, SecurityUserEntity::getStatus,
-                SecurityUserEntity::getUserType, SecurityUserEntity::getCreateTime);
-
-        return queryWrapper;
-    }
-
-    @Override
     public LambdaQueryWrapper<SecurityUserEntity> getQueryWrapper(SecurityUserDto dto) {
-        LambdaQueryWrapper<SecurityUserEntity> queryWrapper = getSelectWrapper(currentModelClass());
-        // 动态Sql查询条件
+        LambdaQueryWrapper<SecurityUserEntity> queryWrapper = getEmptyWrapper();
+        // 查询条件
         // 用户名
         String username = dto.getUsername();
         queryWrapper.eq(StrUtil.isNotBlank(username), SecurityUserEntity::getUsername, username);
@@ -64,22 +51,34 @@ public class SecurityUserServiceImpl extends ServiceImpl<SecurityUserMapper, Sec
         return queryWrapper;
     }
 
+    @Override
+    public LambdaQueryWrapper<SecurityUserEntity> getSelectWrapper(SecurityUserDto dto) {
+        LambdaQueryWrapper<SecurityUserEntity> queryWrapper = getQueryWrapper(dto);
+        // 查询字段
+        queryWrapper.select(SecurityUserEntity::getId, SecurityUserEntity::getUsername, SecurityUserEntity::getRealName,
+                SecurityUserEntity::getHeadUrl, SecurityUserEntity::getGender, SecurityUserEntity::getEmail,
+                SecurityUserEntity::getMobile, SecurityUserEntity::getDeptId, SecurityUserEntity::getStatus,
+                SecurityUserEntity::getUserType, SecurityUserEntity::getCreateTime);
+
+        return queryWrapper;
+    }
+
     //*******************MpHelper覆写结束********************
 
     @Override
     public SecurityUserDto getByUsername(String username) {
-        LambdaQueryWrapper<SecurityUserEntity> queryWrapper = Wrappers.lambdaQuery();
+        LambdaQueryWrapper<SecurityUserEntity> queryWrapper = getEmptyWrapper();
+        queryWrapper.eq(SecurityUserEntity::getUsername, username);
         queryWrapper.select(SecurityUserEntity::getId, SecurityUserEntity::getDeptId, SecurityUserEntity::getUsername,
                 SecurityUserEntity::getPassword, SecurityUserEntity::getRealName, SecurityUserEntity::getStatus,
                 SecurityUserEntity::getUserType, SecurityUserEntity::getDataScope);
-        queryWrapper.eq(SecurityUserEntity::getUsername, username);
 
         return BeanUtil.convert(getOne(queryWrapper), SecurityUserDto.class);
     }
 
     @Override
     public long countByDeptId(Long deptId) {
-        LambdaQueryWrapper<SecurityUserEntity> queryWrapper = Wrappers.lambdaQuery();
+        LambdaQueryWrapper<SecurityUserEntity> queryWrapper = getEmptyWrapper();
         queryWrapper.eq(SecurityUserEntity::getDeptId, deptId);
         return count(queryWrapper);
     }

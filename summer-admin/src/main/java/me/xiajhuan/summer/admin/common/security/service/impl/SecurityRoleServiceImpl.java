@@ -15,7 +15,6 @@ package me.xiajhuan.summer.admin.common.security.service.impl;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import me.xiajhuan.summer.core.constant.DataSourceConst;
@@ -40,22 +39,22 @@ public class SecurityRoleServiceImpl extends ServiceImpl<SecurityRoleMapper, Sec
     //*******************MpHelper覆写开始********************
 
     @Override
-    public LambdaQueryWrapper<SecurityRoleEntity> getSelectWrapper(Class<SecurityRoleEntity> entityClass) {
-        LambdaQueryWrapper<SecurityRoleEntity> queryWrapper = Wrappers.lambdaQuery();
-        // 查询字段
-        queryWrapper.select(SecurityRoleEntity::getId, SecurityRoleEntity::getName, SecurityRoleEntity::getDesc,
-                SecurityRoleEntity::getCreateTime);
+    public LambdaQueryWrapper<SecurityRoleEntity> getQueryWrapper(SecurityRoleDto dto) {
+        LambdaQueryWrapper<SecurityRoleEntity> queryWrapper = getEmptyWrapper();
+        // 查询条件
+        // 角色名称
+        String name = dto.getName();
+        queryWrapper.eq(StrUtil.isNotBlank(name), SecurityRoleEntity::getName, name);
 
         return queryWrapper;
     }
 
     @Override
-    public LambdaQueryWrapper<SecurityRoleEntity> getQueryWrapper(SecurityRoleDto dto) {
-        LambdaQueryWrapper<SecurityRoleEntity> queryWrapper = getSelectWrapper(currentModelClass());
-        // 动态Sql查询条件
-        // 角色名称
-        String name = dto.getName();
-        queryWrapper.eq(StrUtil.isNotBlank(name), SecurityRoleEntity::getName, name);
+    public LambdaQueryWrapper<SecurityRoleEntity> getSelectWrapper(SecurityRoleDto dto) {
+        LambdaQueryWrapper<SecurityRoleEntity> queryWrapper = getQueryWrapper(dto);
+        // 查询字段
+        queryWrapper.select(SecurityRoleEntity::getId, SecurityRoleEntity::getName, SecurityRoleEntity::getDesc,
+                SecurityRoleEntity::getCreateTime);
 
         return queryWrapper;
     }
@@ -64,7 +63,7 @@ public class SecurityRoleServiceImpl extends ServiceImpl<SecurityRoleMapper, Sec
 
     @Override
     public Page<SecurityRoleDto> page(SecurityRoleDto dto) {
-        return BeanUtil.convert(page(handlePageSort(dto), getQueryWrapper(dto)), SecurityRoleDto.class);
+        return BeanUtil.convert(page(handlePageSort(dto), getSelectWrapper(dto)), SecurityRoleDto.class);
     }
 
     @Override

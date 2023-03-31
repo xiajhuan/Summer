@@ -29,6 +29,7 @@ import me.xiajhuan.summer.core.exception.custom.ValidationException;
 import me.xiajhuan.summer.core.utils.LocaleUtil;
 import me.xiajhuan.summer.core.utils.ServletUtil;
 import me.xiajhuan.summer.core.utils.ValidationUtil;
+import me.xiajhuan.summer.core.utils.AssertUtil;
 import org.apache.shiro.authz.AuthorizationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
@@ -140,11 +141,15 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * 参数校验（Dto类型）异常处理（api校验）
+     * 校验异常处理，note：
+     * <pre>
+     *     1.参数校验（Dto类型）（{@link ValidationUtil} api校验）
+     *     2.{@link AssertUtil} 断言失败
+     *     3.直接抛出 {@link ValidationException}
+     * </pre>
      *
      * @param e 校验异常
      * @return 响应结果
-     * @see ValidationUtil
      */
     @ExceptionHandler(ValidationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)

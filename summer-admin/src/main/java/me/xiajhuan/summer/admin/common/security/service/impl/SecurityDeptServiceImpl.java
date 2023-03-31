@@ -118,8 +118,8 @@ public class SecurityDeptServiceImpl extends ServiceImpl<SecurityDeptMapper, Sec
         Set<Long> childIdSet = CollUtil.newHashSet();
 
         LambdaQueryWrapper<SecurityDeptEntity> queryWrapper = Wrappers.lambdaQuery();
-        queryWrapper.select(SecurityDeptEntity::getId);
         queryWrapper.like(SecurityDeptEntity::getParentIdAll, deptId);
+        queryWrapper.select(SecurityDeptEntity::getId);
         List<SecurityDeptEntity> entityList = list(queryWrapper);
 
         if (CollUtil.isNotEmpty(entityList)) {

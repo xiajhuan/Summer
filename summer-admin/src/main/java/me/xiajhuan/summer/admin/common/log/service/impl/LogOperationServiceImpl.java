@@ -17,7 +17,6 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.setting.Setting;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import me.xiajhuan.summer.core.constant.DataSourceConst;
@@ -51,21 +50,9 @@ public class LogOperationServiceImpl extends ServiceImpl<LogOperationMapper, Log
     //*******************MpHelper覆写开始********************
 
     @Override
-    public LambdaQueryWrapper<LogOperationEntity> getSelectWrapper(Class<LogOperationEntity> entityClass) {
-        LambdaQueryWrapper<LogOperationEntity> queryWrapper = Wrappers.lambdaQuery();
-        // 查询字段
-        queryWrapper.select(LogOperationEntity::getId, LogOperationEntity::getOperation, LogOperationEntity::getOperationGroup,
-                LogOperationEntity::getRequestUri, LogOperationEntity::getRequestMethod, LogOperationEntity::getRequestParams,
-                LogOperationEntity::getRequestTime, LogOperationEntity::getUserAgent, LogOperationEntity::getIp,
-                LogOperationEntity::getStatus, LogOperationEntity::getOperateBy, LogOperationEntity::getCreateTime);
-
-        return queryWrapper;
-    }
-
-    @Override
     public LambdaQueryWrapper<LogOperationEntity> getQueryWrapper(LogOperationDto dto) {
-        LambdaQueryWrapper<LogOperationEntity> queryWrapper = getSelectWrapper(currentModelClass());
-        // 动态Sql查询条件
+        LambdaQueryWrapper<LogOperationEntity> queryWrapper = getEmptyWrapper();
+        // 查询条件
         // 操作分组
         Integer operationGroup = dto.getOperationGroup();
         queryWrapper.eq(operationGroup != null, LogOperationEntity::getOperationGroup, operationGroup);
@@ -85,11 +72,23 @@ public class LogOperationServiceImpl extends ServiceImpl<LogOperationMapper, Log
         return queryWrapper;
     }
 
+    @Override
+    public LambdaQueryWrapper<LogOperationEntity> getSelectWrapper(LogOperationDto dto) {
+        LambdaQueryWrapper<LogOperationEntity> queryWrapper = getQueryWrapper(dto);
+        // 查询字段
+        queryWrapper.select(LogOperationEntity::getId, LogOperationEntity::getOperation, LogOperationEntity::getOperationGroup,
+                LogOperationEntity::getRequestUri, LogOperationEntity::getRequestMethod, LogOperationEntity::getRequestParams,
+                LogOperationEntity::getRequestTime, LogOperationEntity::getUserAgent, LogOperationEntity::getIp,
+                LogOperationEntity::getStatus, LogOperationEntity::getOperateBy, LogOperationEntity::getCreateTime);
+
+        return queryWrapper;
+    }
+
     //*******************MpHelper覆写结束********************
 
     @Override
     public Page<LogOperationDto> page(LogOperationDto dto) {
-        return BeanUtil.convert(page(handlePageSort(dto), getQueryWrapper(dto)), LogOperationDto.class);
+        return BeanUtil.convert(page(handlePageSort(dto), getSelectWrapper(dto)), LogOperationDto.class);
     }
 
     @Override
@@ -105,10 +104,10 @@ public class LogOperationServiceImpl extends ServiceImpl<LogOperationMapper, Log
     @Override
     public void clear() {
         // 删除操作日志
-        LambdaQueryWrapper<LogOperationEntity> queryWrapper = Wrappers.lambdaQuery();
-        queryWrapper.select(LogOperationEntity::getId);
+        LambdaQueryWrapper<LogOperationEntity> queryWrapper = getEmptyWrapper();
         queryWrapper.lt(LogOperationEntity::getCreateTime, DateUtil.offsetDay(DateUtil.date(),
                 setting.getInt("operation.clear-days-limit", "Log", -30)));
+        queryWrapper.select(LogOperationEntity::getId);
 
         List<LogOperationEntity> entityList = list(queryWrapper);
 

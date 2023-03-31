@@ -44,6 +44,14 @@ public interface LocaleInternationalNameService extends IService<LocaleInternati
     }
 
     /**
+     * 统计记录数
+     *
+     * @param dto 国际化名称Dto
+     * @return 记录数
+     */
+    long count(LocaleInternationalNameDto dto);
+
+    /**
      * 判断是否存在
      *
      * @param entity 国际化名称Entity
