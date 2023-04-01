@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2023-2033 xiajhuan(xiaJhuan@163.com)
- * summer-single is licensed under Mulan PSL v2.
+ * Summer is licensed under Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
  *          http://license.coscl.org.cn/MulanPSL2

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2023-2033 xiajhuan(xiaJhuan@163.com)
- * summer-single is licensed under Mulan PSL v2.
+ * Summer is licensed under Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
  *          http://license.coscl.org.cn/MulanPSL2
@@ -83,11 +83,11 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         // 注册请求体类型 拦截器
         registry.addInterceptor(contentTypeInterceptor).order(Ordered.HIGHEST_PRECEDENCE)
-                .addPathPatterns("/**").excludePathPatterns("/open/test/**");
+                .addPathPatterns("/**").excludePathPatterns("/api/test/**");
 
         // 注册Sql注入 拦截器
         registry.addInterceptor(sqlInjectionInterceptor).order(Ordered.LOWEST_PRECEDENCE - 1)
-                .addPathPatterns("/**").excludePathPatterns("/open/test/**");
+                .addPathPatterns("/**").excludePathPatterns("/api/test/**");
     }
 
 }

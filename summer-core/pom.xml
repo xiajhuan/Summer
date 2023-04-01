@@ -6,11 +6,11 @@
     <packaging>jar</packaging>
 
     <name>summer-core</name>
-    <description>summer-single 核心模块</description>
+    <description>Summer核心模块</description>
 
     <parent>
         <groupId>me.xiajhuan</groupId>
-        <artifactId>summer-single</artifactId>
+        <artifactId>Summer</artifactId>
         <version>1.0.0-Alpha</version>
         <relativePath>../pom.xml</relativePath>
     </parent>

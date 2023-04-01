@@ -8,7 +8,7 @@ server:
   max-http-header-size: 10KB
   # Servlet
   servlet:
-    context-path: /summer-single
+    context-path: /summer
     session:
       cookie:
         http-only: true
@@ -64,4 +64,4 @@ mica:
     # 拦截的路由
     path-patterns: /**
     # 放行的路由
-    path-exclude-patterns: /open/test/**
+    path-exclude-patterns: /api/test/**

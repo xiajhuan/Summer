@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2023-2033 xiajhuan(xiaJhuan@163.com)
- * summer-single is licensed under Mulan PSL v2.
+ * Summer is licensed under Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
  *          http://license.coscl.org.cn/MulanPSL2
@@ -16,7 +16,7 @@ import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.lang.Console;
 import cn.hutool.json.JSONUtil;
 import me.xiajhuan.summer.CommonMsg;
-import me.xiajhuan.summer.SummerSingleApplication;
+import me.xiajhuan.summer.AdminApplication;
 import me.xiajhuan.summer.system.security.dto.SecurityMenuDto;
 import me.xiajhuan.summer.core.constant.TreeConst;
 import org.junit.jupiter.api.*;
@@ -31,7 +31,7 @@ import java.util.List;
  * @date 2023/3/11
  */
 @DisplayName("TreeUtil")
-@SpringBootTest(classes = SummerSingleApplication.class, webEnvironment = SpringBootTest.WebEnvironment.NONE)
+@SpringBootTest(classes = AdminApplication.class, webEnvironment = SpringBootTest.WebEnvironment.NONE)
 public class TreeUtilTest implements CommonMsg {
 
     /**

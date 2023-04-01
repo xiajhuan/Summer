@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2023-2033 xiajhuan(xiaJhuan@163.com)
- * summer-single is licensed under Mulan PSL v2.
+ * Summer is licensed under Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
  *          http://license.coscl.org.cn/MulanPSL2
@@ -85,7 +85,7 @@ public class ServletUtil extends cn.hutool.extra.servlet.ServletUtil {
 
     /**
      * 获取接口唯一标识<br>
-     * 格式：URI[Method]，如：/summer-single/security/user/page[GET]
+     * 格式：URI[Method]，如：/summer/security/user/page[GET]
      *
      * @param request {@link HttpServletRequest}
      * @return 接口唯一标识

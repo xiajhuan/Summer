@@ -7,7 +7,7 @@ spring:
     name: summer-admin
   profiles:
     # 包含其他配置，多个用“,”分隔
-    include: fixed,business,api
+    include: fixed,custom
     # 环境 dev/test/prod
     active: dev
 

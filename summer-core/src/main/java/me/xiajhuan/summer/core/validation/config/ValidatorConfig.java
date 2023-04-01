@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2023-2033 xiajhuan(xiaJhuan@163.com)
- * summer-single is licensed under Mulan PSL v2.
+ * Summer is licensed under Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
  *          http://license.coscl.org.cn/MulanPSL2
@@ -12,7 +12,7 @@
 
 package me.xiajhuan.summer.core.validation.config;
 
-import me.xiajhuan.summer.core.validation.resolver.MyLocaleResolver;
+import me.xiajhuan.summer.core.validation.resolver.CustomLocaleResolver;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -53,7 +53,7 @@ public class ValidatorConfig {
      */
     @Bean
     public LocaleResolver localeResolver() {
-        return MyLocaleResolver.of();
+        return CustomLocaleResolver.of();
     }
 
 }

@@ -2,13 +2,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>me.xiajhuan</groupId>
-    <artifactId>summer-single</artifactId>
+    <artifactId>Summer</artifactId>
     <version>1.0.0-Alpha</version>
     <packaging>pom</packaging>
 
-    <name>summer-single</name>
-    <description>summer-single 权限管理系统</description>
-    <url>https://gitee.com/xiajhuan/summer-single</url>
+    <name>Summer</name>
+    <description>Summer权限管理系统</description>
+    <url>https://gitee.com/xiajhuan/Summer</url>
     <licenses>
         <license>
             <name>Mulan Permissive Software License，Version 2</name>
@@ -24,8 +24,6 @@
 
     <modules>
         <module>summer-admin</module>
-        <module>summer-api</module>
-        <module>summer-business</module>
         <module>summer-system</module>
         <module>summer-core</module>
     </modules>
@@ -60,31 +58,19 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <!--summer-single 管理模块-->
+            <!--Summer管理模块-->
             <dependency>
                 <groupId>me.xiajhuan</groupId>
                 <artifactId>summer-admin</artifactId>
                 <version>${summer.version}</version>
             </dependency>
-            <!--summer-single api模块-->
-            <dependency>
-                <groupId>me.xiajhuan</groupId>
-                <artifactId>summer-api</artifactId>
-                <version>${summer.version}</version>
-            </dependency>
-            <!--summer-single 业务模块-->
-            <dependency>
-                <groupId>me.xiajhuan</groupId>
-                <artifactId>summer-business</artifactId>
-                <version>${summer.version}</version>
-            </dependency>
-            <!--summer-single 系统模块-->
+            <!--Summer系统模块-->
             <dependency>
                 <groupId>me.xiajhuan</groupId>
                 <artifactId>summer-system</artifactId>
                 <version>${summer.version}</version>
             </dependency>
-            <!--summer-single 核心模块-->
+            <!--Summer核心模块-->
             <dependency>
                 <groupId>me.xiajhuan</groupId>
                 <artifactId>summer-core</artifactId>

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2023-2033 xiajhuan(xiaJhuan@163.com)
- * summer-single is licensed under Mulan PSL v2.
+ * Summer is licensed under Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
  *          http://license.coscl.org.cn/MulanPSL2
@@ -14,7 +14,7 @@ package me.xiajhuan.summer.core.properties;
 
 import lombok.Getter;
 import lombok.Setter;
-import me.xiajhuan.summer.core.mp.mapper.MyBaseMapper;
+import me.xiajhuan.summer.core.mp.mapper.CustomBaseMapper;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -35,7 +35,7 @@ public class LimitBatchProperties {
     /**
      * 每次批量插入数（JDBC批量提交）
      *
-     * @see MyBaseMapper#realSaveBatch(List)
+     * @see CustomBaseMapper#realSaveBatch(List)
      */
     private int realSaveNumEveryTime = 100;
 

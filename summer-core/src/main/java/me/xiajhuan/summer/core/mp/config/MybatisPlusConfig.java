@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2023-2033 xiajhuan(xiaJhuan@163.com)
- * summer-single is licensed under Mulan PSL v2.
+ * Summer is licensed under Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
  *          http://license.coscl.org.cn/MulanPSL2
@@ -18,7 +18,7 @@ import com.baomidou.mybatisplus.extension.plugins.inner.DataPermissionIntercepto
 import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import me.xiajhuan.summer.core.mp.handler.DataScopeHandler;
-import me.xiajhuan.summer.core.mp.injector.MySqlInjector;
+import me.xiajhuan.summer.core.mp.injector.CustomSqlInjector;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -63,8 +63,8 @@ public class MybatisPlusConfig {
      * @return 自定义Sql注入器
      */
     @Bean
-    public MySqlInjector customSqlInjector() {
-        return MySqlInjector.of();
+    public CustomSqlInjector customSqlInjector() {
+        return CustomSqlInjector.of();
     }
 
 }

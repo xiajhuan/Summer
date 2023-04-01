@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2023-2033 xiajhuan(xiaJhuan@163.com)
- * summer-single is licensed under Mulan PSL v2.
+ * Summer is licensed under Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
  *          http://license.coscl.org.cn/MulanPSL2
@@ -14,7 +14,7 @@ package me.xiajhuan.summer.core.mp.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
-import me.xiajhuan.summer.core.mp.injector.MySqlInjector;
+import me.xiajhuan.summer.core.mp.injector.CustomSqlInjector;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -26,14 +26,14 @@ import java.util.List;
  * @date 2023/3/29
  * @see BaseMapper
  */
-public interface MyBaseMapper<T> extends BaseMapper<T> {
+public interface CustomBaseMapper<T> extends BaseMapper<T> {
 
     /**
      * 批量插入（JDBC批量提交）
      *
      * @param entityList Entity类型列表
      * @return 插入数量
-     * @see MySqlInjector#realSaveBatch()
+     * @see CustomSqlInjector#realSaveBatch()
      */
     int realSaveBatch(List<T> entityList);
 
@@ -42,7 +42,7 @@ public interface MyBaseMapper<T> extends BaseMapper<T> {
      *
      * @param entity Entity类型对象
      * @return 更新数量
-     * @see MySqlInjector#alwaysUpdateById()
+     * @see CustomSqlInjector#alwaysUpdateById()
      */
     int alwaysUpdateById(@Param(Constants.ENTITY) T entity);
 
@@ -51,7 +51,7 @@ public interface MyBaseMapper<T> extends BaseMapper<T> {
      *
      * @param entityList Entity类型列表
      * @return 逻辑删除数量
-     * @see MySqlInjector#logicDeleteBatchByIds()
+     * @see CustomSqlInjector#logicDeleteBatchByIds()
      */
     int logicDeleteBatchByIds(@Param(Constants.COLL) List<T> entityList);
 

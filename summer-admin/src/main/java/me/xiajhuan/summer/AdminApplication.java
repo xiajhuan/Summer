@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2023-2033 xiajhuan(xiaJhuan@163.com)
- * summer-single is licensed under Mulan PSL v2.
+ * Summer is licensed under Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
  *          http://license.coscl.org.cn/MulanPSL2
@@ -16,16 +16,16 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * 项目启动类
+ * admin模块启动类
  *
  * @author xiajhuan
  * @date 2023/2/23
  */
 @SpringBootApplication
-public class SummerSingleApplication {
+public class AdminApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(SummerSingleApplication.class, args);
+        SpringApplication.run(AdminApplication.class, args);
     }
 
 }

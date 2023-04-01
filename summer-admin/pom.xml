@@ -6,20 +6,25 @@
     <packaging>jar</packaging>
 
     <name>summer-admin</name>
-    <description>summer-single 管理模块</description>
+    <description>Summer管理模块</description>
 
     <parent>
         <groupId>me.xiajhuan</groupId>
-        <artifactId>summer-single</artifactId>
+        <artifactId>Summer</artifactId>
         <version>1.0.0-Alpha</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <dependencies>
-        <!--summer-single api模块-->
+        <!--Summer系统模块-->
         <dependency>
             <groupId>me.xiajhuan</groupId>
-            <artifactId>summer-api</artifactId>
+            <artifactId>summer-system</artifactId>
+        </dependency>
+        <!--configuration-processor-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
         </dependency>
         <!--actuator-->
         <dependency>

@@ -1,4 +1,4 @@
-# summer-single
+# Summer
 
 ## 介绍
 ### 基于SpringBoot2.7的轻量级权限管理系统（后端）
@@ -18,12 +18,10 @@
 ## 软件架构
 ### 模块说明
 ```lua
-summer-single
+Summer
  ├─ summer-admin -- 管理模块
-     ├─ summer-api -- api模块
-         ├─ summer-business -- 业务模块
-             ├─ summer-system -- 系统模块
-                 ├─ summer-core -- 核心模块
+     ├─ summer-system -- 系统模块
+         ├─ summer-core -- 核心模块
 ```
 
 ## 快速开始

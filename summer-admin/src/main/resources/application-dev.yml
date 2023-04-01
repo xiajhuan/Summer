@@ -76,15 +76,18 @@ logging:
             excel: debug
             # 限流
             ratelimiter: debug
+          # system模块
+          system:
+            # common
+            common:
+              handler:
+                # 异常处理
+                exception: info
           # admin模块
           admin:
-            # business模块
+            # api
+            api: info
+            # business
             business: info
-            # common模块
-            common:
-              base:
-                handler:
-                  # 异常处理
-                  exception: info
-            # open模块
-            open: info
+            # task
+            task: info

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2023-2033 xiajhuan(xiaJhuan@163.com)
- * summer-single is licensed under Mulan PSL v2.
+ * Summer is licensed under Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
  *          http://license.coscl.org.cn/MulanPSL2
@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * <p>
  * 参数限流Key策略（Key为：接口签名#方法参数），例如：
- * /summer-single/security/user/page[GET]#pageNum=1&pageSize=10
+ * /summer/security/user/page[GET]#pageNum=1&pageSize=10
  * </p>
  * note：入参数据量特别大时不建议使用
  *
