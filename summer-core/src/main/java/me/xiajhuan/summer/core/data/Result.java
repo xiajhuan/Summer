@@ -37,7 +37,7 @@ public class Result<T> implements Serializable {
     }
 
     /**
-     * 响应是否成功 成功：“1” 失败：“0”
+     * 响应是否成功，成功：“1” 失败：“0”
      */
     private String code;
 

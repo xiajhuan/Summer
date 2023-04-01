@@ -10,16 +10,15 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.core;
+package me.xiajhuan.summer.core.utils;
 
 import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.lang.Console;
 import cn.hutool.json.JSONUtil;
-import me.xiajhuan.summer.BaseTest;
+import me.xiajhuan.summer.BaseMsg;
 import me.xiajhuan.summer.admin.AdminApplication;
 import me.xiajhuan.summer.admin.common.security.dto.SecurityMenuDto;
 import me.xiajhuan.summer.core.constant.TreeConst;
-import me.xiajhuan.summer.core.utils.TreeUtil;
 import org.junit.jupiter.api.*;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -33,7 +32,7 @@ import java.util.List;
  */
 @DisplayName("TreeUtil")
 @SpringBootTest(classes = AdminApplication.class, webEnvironment = SpringBootTest.WebEnvironment.NONE)
-public class TreeUtilTest extends BaseTest {
+public class TreeUtilTest implements BaseMsg {
 
     /**
      * 菜单列表

@@ -10,12 +10,11 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.core;
+package me.xiajhuan.summer.core.utils;
 
 import cn.hutool.core.lang.Console;
 import cn.hutool.core.util.StrUtil;
-import me.xiajhuan.summer.BaseTest;
-import me.xiajhuan.summer.core.utils.WildcardUtil;
+import me.xiajhuan.summer.BaseMsg;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -28,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * @date 2023/3/11
  */
 @DisplayName("WildcardUtil")
-public class WildcardUtilTest extends BaseTest {
+public class WildcardUtilTest implements BaseMsg {
 
     /**
      * @see WildcardUtil#matches(String, String)

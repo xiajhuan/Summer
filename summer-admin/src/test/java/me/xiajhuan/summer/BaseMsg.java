@@ -15,17 +15,17 @@ package me.xiajhuan.summer;
 import cn.hutool.core.util.StrUtil;
 
 /**
- * 基本 Test
+ * 基本消息
  *
  * @author xiajhuan
  * @date 2023/3/24
  */
-public abstract class BaseTest {
+public interface BaseMsg {
 
     /**
      * 匹配失败消息
      */
-    protected static final String MATCHES_FAIL_MSG = "{} matches {} failed!";
+    String MATCHES_FAIL_MSG = "{} matches {} failed!";
 
     /**
      * 开始消息
@@ -33,7 +33,7 @@ public abstract class BaseTest {
      * @param methodSignature 方法签名
      * @return 开始消息
      */
-    protected String startMsg(String methodSignature) {
+    default String startMsg(String methodSignature) {
         return StrUtil.format("{} start!\n", methodSignature);
     }
 
@@ -43,7 +43,7 @@ public abstract class BaseTest {
      * @param methodSignature 方法签名
      * @return 成功消息
      */
-    protected String successMsg(String methodSignature) {
+    default String successMsg(String methodSignature) {
         return StrUtil.format("\n{} success!", methodSignature);
     }
 

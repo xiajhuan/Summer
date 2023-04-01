@@ -44,8 +44,6 @@ public interface MpHelper<D extends PageSortDto, T> {
 
     //*******************模板方法钩子，执行顺序从上到下依次********************
 
-    // note：覆写时第一行代码一定要调用上面的一个方法！！！
-
     /**
      * 获取空 {@link LambdaQueryWrapper}
      *
@@ -54,6 +52,8 @@ public interface MpHelper<D extends PageSortDto, T> {
     default LambdaQueryWrapper<T> getEmptyWrapper() {
         return Wrappers.lambdaQuery(currentEntityClass());
     }
+
+    // note：以下三个方法覆写时一定要先调用上面的一个方法！
 
     /**
      * 获取 {@link LambdaQueryWrapper}（指定查询条件，默认无条件）<br>
