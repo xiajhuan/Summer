@@ -2,7 +2,7 @@
 #### 全局Header参数
 参数名 | 示例值 | 参数描述
 --- | --- | ---
-AccessToken | a3d8c73b75ac032da1e6d193bd94f44a | accessToken
+AccessToken | d327ed5d987b0caaeeb5674489d01c2f | accessToken
 Accept-Language | zh_CN | 地区语言
 #### 全局Query参数
 参数名 | 示例值 | 参数描述
@@ -23,6 +23,386 @@ noauth
 #### 全局后执行脚本
 ```javascript
 暂无后执行脚本
+```
+## /api
+```text
+api模块
+```
+#### Header参数
+参数名 | 示例值 | 参数描述
+--- | --- | ---
+暂无参数
+#### Query参数
+参数名 | 示例值 | 参数描述
+--- | --- | ---
+暂无参数
+#### Body参数
+参数名 | 示例值 | 参数描述
+--- | --- | ---
+暂无参数
+#### 认证方式
+```text
+noauth
+```
+#### 预执行脚本
+```javascript
+暂无预执行脚本
+```
+#### 后执行脚本
+```javascript
+暂无后执行脚本
+```
+## /api/open
+```text
+开放模块
+```
+#### Header参数
+参数名 | 示例值 | 参数描述
+--- | --- | ---
+暂无参数
+#### Query参数
+参数名 | 示例值 | 参数描述
+--- | --- | ---
+暂无参数
+#### Body参数
+参数名 | 示例值 | 参数描述
+--- | --- | ---
+暂无参数
+#### 认证方式
+```text
+noauth
+```
+#### 预执行脚本
+```javascript
+暂无预执行脚本
+```
+#### 后执行脚本
+```javascript
+暂无后执行脚本
+```
+## /api/open/demo
+```text
+demo
+```
+#### Header参数
+参数名 | 示例值 | 参数描述
+--- | --- | ---
+暂无参数
+#### Query参数
+参数名 | 示例值 | 参数描述
+--- | --- | ---
+暂无参数
+#### Body参数
+参数名 | 示例值 | 参数描述
+--- | --- | ---
+暂无参数
+#### 认证方式
+```text
+noauth
+```
+#### 预执行脚本
+```javascript
+暂无预执行脚本
+```
+#### 后执行脚本
+```javascript
+暂无后执行脚本
+```
+## /api/open/demo/hello
+```text
+暂无描述
+```
+#### 接口状态
+> 已完成
+
+#### 接口URL
+> http://localhost:6666/summer-single/api/open/demo/hello
+
+#### 请求方式
+> POST
+
+#### Content-Type
+> json
+
+#### 请求Body参数
+```javascript
+{"greet": "Hellow summer-single", "author": "xiajhuan"}
+```
+#### 认证方式
+```text
+noauth
+```
+#### 预执行脚本
+```javascript
+暂无预执行脚本
+```
+#### 后执行脚本
+```javascript
+暂无后执行脚本
+```
+#### 成功响应示例
+```javascript
+{
+	"code": "1",
+	"msg": "成功接收到数据",
+	"data": "{\"greet\":\"Hellow summer-single\",\"author\":\"xiajhuan\"}"
+}
+```
+#### 错误响应示例
+```javascript
+{
+	"code": "0",
+	"msg": "参数必须是Json格式",
+	"data": null
+}
+```
+## /api/test
+```text
+测试模块
+```
+#### Header参数
+参数名 | 示例值 | 参数描述
+--- | --- | ---
+暂无参数
+#### Query参数
+参数名 | 示例值 | 参数描述
+--- | --- | ---
+暂无参数
+#### Body参数
+参数名 | 示例值 | 参数描述
+--- | --- | ---
+暂无参数
+#### 认证方式
+```text
+noauth
+```
+#### 预执行脚本
+```javascript
+暂无预执行脚本
+```
+#### 后执行脚本
+```javascript
+暂无后执行脚本
+```
+## /api/test/rateLimiter
+```text
+限流
+```
+#### Header参数
+参数名 | 示例值 | 参数描述
+--- | --- | ---
+暂无参数
+#### Query参数
+参数名 | 示例值 | 参数描述
+--- | --- | ---
+暂无参数
+#### Body参数
+参数名 | 示例值 | 参数描述
+--- | --- | ---
+暂无参数
+#### 认证方式
+```text
+noauth
+```
+#### 预执行脚本
+```javascript
+暂无预执行脚本
+```
+#### 后执行脚本
+```javascript
+暂无后执行脚本
+```
+## /api/test/rateLimiter/基本限流策略
+```text
+暂无描述
+```
+#### 接口状态
+> 已完成
+
+#### 接口URL
+> http://localhost:6666/summer-single/api/test/rateLimiter/base
+
+#### 请求方式
+> POST
+
+#### Content-Type
+> json
+
+#### 请求Body参数
+```javascript
+{"greet": "Hellow summer-single", "author": "xiajhuan"}
+```
+#### 认证方式
+```text
+noauth
+```
+#### 预执行脚本
+```javascript
+暂无预执行脚本
+```
+#### 后执行脚本
+```javascript
+暂无后执行脚本
+```
+#### 成功响应示例
+```javascript
+{
+	"code": "1",
+	"msg": "成功接收到数据",
+	"data": "{\"greet\":\"Hellow summer-single\",\"author\":\"xiajhuan\"}"
+}
+```
+#### 错误响应示例
+```javascript
+{
+	"code": "0",
+	"msg": "服务器繁忙，请稍后再试~",
+	"data": null
+}
+```
+## /api/test/rateLimiter/IP限流策略
+```text
+暂无描述
+```
+#### 接口状态
+> 已完成
+
+#### 接口URL
+> http://localhost:6666/summer-single/api/test/rateLimiter/ip
+
+#### 请求方式
+> POST
+
+#### Content-Type
+> json
+
+#### 请求Body参数
+```javascript
+{"greet": "Hellow summer-single", "author": "xiajhuan"}
+```
+#### 认证方式
+```text
+noauth
+```
+#### 预执行脚本
+```javascript
+暂无预执行脚本
+```
+#### 后执行脚本
+```javascript
+暂无后执行脚本
+```
+#### 成功响应示例
+```javascript
+{
+	"code": "1",
+	"msg": "成功接收到数据",
+	"data": "{\"greet\":\"Hellow summer-single\",\"author\":\"xiajhuan\"}"
+}
+```
+#### 错误响应示例
+```javascript
+{
+	"code": "0",
+	"msg": "服务器繁忙，请稍后再试~",
+	"data": null
+}
+```
+## /api/test/rateLimiter/参数限流策略
+```text
+暂无描述
+```
+#### 接口状态
+> 已完成
+
+#### 接口URL
+> http://localhost:6666/summer-single/api/test/rateLimiter/param
+
+#### 请求方式
+> POST
+
+#### Content-Type
+> json
+
+#### 请求Body参数
+```javascript
+{"greet": "Hellow summer-single", "author": "xiajhuan"}
+```
+#### 认证方式
+```text
+noauth
+```
+#### 预执行脚本
+```javascript
+暂无预执行脚本
+```
+#### 后执行脚本
+```javascript
+暂无后执行脚本
+```
+#### 成功响应示例
+```javascript
+{
+	"code": "1",
+	"msg": "成功接收到数据",
+	"data": "{\"greet\":\"Hellow summer-single\",\"author\":\"xiajhuan\"}"
+}
+```
+#### 错误响应示例
+```javascript
+{
+	"code": "0",
+	"msg": "服务器繁忙，请稍后再试~",
+	"data": null
+}
+```
+## /api/test/rateLimiter/用户名限流策略
+```text
+暂无描述
+```
+#### 接口状态
+> 已完成
+
+#### 接口URL
+> http://localhost:6666/summer-single/api/test/rateLimiter/username
+
+#### 请求方式
+> POST
+
+#### Content-Type
+> json
+
+#### 请求Body参数
+```javascript
+{"greet": "Hellow summer-single", "author": "xiajhuan"}
+```
+#### 认证方式
+```text
+noauth
+```
+#### 预执行脚本
+```javascript
+暂无预执行脚本
+```
+#### 后执行脚本
+```javascript
+暂无后执行脚本
+```
+#### 成功响应示例
+```javascript
+{
+	"code": "1",
+	"msg": "成功接收到数据",
+	"data": "{\"greet\":\"Hellow summer-single\",\"author\":\"xiajhuan\"}"
+}
+```
+#### 错误响应示例
+```javascript
+{
+	"code": "0",
+	"msg": "服务器繁忙，请稍后再试~",
+	"data": null
+}
 ```
 ## /business
 ```text
@@ -52,9 +432,9 @@ noauth
 ```javascript
 暂无后执行脚本
 ```
-## /common
+## /system
 ```text
-通用模块
+系统模块
 ```
 #### Header参数
 参数名 | 示例值 | 参数描述
@@ -80,7 +460,7 @@ noauth
 ```javascript
 暂无后执行脚本
 ```
-## /common/log
+## /system/log
 ```text
 日志模块
 ```
@@ -108,7 +488,7 @@ noauth
 ```javascript
 暂无后执行脚本
 ```
-## /common/log/operation
+## /system/log/operation
 ```text
 操作日志
 ```
@@ -136,7 +516,7 @@ noauth
 ```javascript
 暂无后执行脚本
 ```
-## /common/log/operation/分页
+## /system/log/operation/分页
 ```text
 暂无描述
 ```
@@ -335,7 +715,7 @@ noauth
 	"data": null
 }
 ```
-## /common/log/operation/Excel导出
+## /system/log/operation/Excel导出
 ```text
 暂无描述
 ```
@@ -380,7 +760,7 @@ noauth
 	"data": null
 }
 ```
-## /common/log/error
+## /system/log/error
 ```text
 错误日志
 ```
@@ -408,7 +788,7 @@ noauth
 ```javascript
 暂无后执行脚本
 ```
-## /common/log/error/分页
+## /system/log/error/分页
 ```text
 暂无描述
 ```
@@ -565,7 +945,7 @@ noauth
 	"data": null
 }
 ```
-## /common/log/error/根据ID获取
+## /system/log/error/根据ID获取
 ```text
 暂无描述
 ```
@@ -622,7 +1002,7 @@ noauth
 	"data": null
 }
 ```
-## /common/log/error/Excel导出
+## /system/log/error/Excel导出
 ```text
 暂无描述
 ```
@@ -665,7 +1045,7 @@ noauth
 	"data": null
 }
 ```
-## /common/log/login
+## /system/log/login
 ```text
 登录日志
 ```
@@ -693,7 +1073,7 @@ noauth
 ```javascript
 暂无后执行脚本
 ```
-## /common/log/login/分页
+## /system/log/login/分页
 ```text
 暂无描述
 ```
@@ -842,7 +1222,7 @@ noauth
 	"data": null
 }
 ```
-## /common/log/login/Excel导出
+## /system/log/login/Excel导出
 ```text
 暂无描述
 ```
@@ -887,7 +1267,7 @@ noauth
 	"data": null
 }
 ```
-## /common/security
+## /system/security
 ```text
 权限相关模块
 ```
@@ -915,7 +1295,7 @@ noauth
 ```javascript
 暂无后执行脚本
 ```
-## /common/security/获取验证码
+## /system/security/获取验证码
 ```text
 暂无描述
 ```
@@ -955,7 +1335,7 @@ noauth
 	"data": null
 }
 ```
-## /common/security/用户登录
+## /system/security/用户登录
 ```text
 暂无描述
 ```
@@ -1009,7 +1389,7 @@ noauth
 	"data": null
 }
 ```
-## /common/security/用户退出
+## /system/security/用户退出
 ```text
 暂无描述
 ```
@@ -1052,7 +1432,7 @@ noauth
 	"msg": "Token失效，请重新登录"
 }
 ```
-## /common/security/user
+## /system/security/user
 ```text
 用户
 ```
@@ -1080,7 +1460,7 @@ noauth
 ```javascript
 暂无后执行脚本
 ```
-## /common/security/role
+## /system/security/role
 ```text
 角色
 ```
@@ -1108,7 +1488,7 @@ noauth
 ```javascript
 暂无后执行脚本
 ```
-## /common/security/dept
+## /system/security/dept
 ```text
 部门
 ```
@@ -1136,7 +1516,7 @@ noauth
 ```javascript
 暂无后执行脚本
 ```
-## /common/security/dept/列表
+## /system/security/dept/列表
 ```text
 暂无描述
 ```
@@ -1275,7 +1655,7 @@ noauth
 	"data": null
 }
 ```
-## /common/security/dept/根据ID获取
+## /system/security/dept/根据ID获取
 ```text
 暂无描述
 ```
@@ -1332,7 +1712,7 @@ noauth
 	"data": null
 }
 ```
-## /common/security/dept/新增
+## /system/security/dept/新增
 ```text
 暂无描述
 ```
@@ -1382,7 +1762,7 @@ noauth
 	"data": null
 }
 ```
-## /common/security/dept/修改
+## /system/security/dept/修改
 ```text
 暂无描述
 ```
@@ -1433,7 +1813,7 @@ noauth
 	"data": null
 }
 ```
-## /common/security/dept/删除
+## /system/security/dept/删除
 ```text
 暂无描述
 ```
@@ -1481,7 +1861,7 @@ noauth
 	"data": null
 }
 ```
-## /common/security/menu
+## /system/security/menu
 ```text
 菜单
 ```
@@ -1509,7 +1889,7 @@ noauth
 ```javascript
 暂无后执行脚本
 ```
-## /common/locale
+## /system/locale
 ```text
 国际化模块
 ```
@@ -1537,7 +1917,7 @@ noauth
 ```javascript
 暂无后执行脚本
 ```
-## /common/locale/internationalName
+## /system/locale/internationalName
 ```text
 国际化名称
 ```
@@ -1565,7 +1945,7 @@ noauth
 ```javascript
 暂无后执行脚本
 ```
-## /common/locale/internationalName/分页
+## /system/locale/internationalName/分页
 ```text
 暂无描述
 ```
@@ -1701,7 +2081,7 @@ noauth
 	"data": null
 }
 ```
-## /common/locale/internationalName/根据ID获取
+## /system/locale/internationalName/根据ID获取
 ```text
 暂无描述
 ```
@@ -1756,7 +2136,7 @@ noauth
 	"data": null
 }
 ```
-## /common/locale/internationalName/新增
+## /system/locale/internationalName/新增
 ```text
 暂无描述
 ```
@@ -1807,7 +2187,7 @@ noauth
 	"data": null
 }
 ```
-## /common/locale/internationalName/修改
+## /system/locale/internationalName/修改
 ```text
 暂无描述
 ```
@@ -1826,7 +2206,7 @@ noauth
 #### 请求Body参数
 参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
 --- | --- | --- | --- | ---
-id | 1639541338105655298 | Integer | 是 | ID
+id | 1641040580263530498 | Integer | 是 | ID
 tableName | security_menu | String | 是 | 表名
 fieldName | name | String | 是 | 字段名
 fieldValue | Role Management | String | 是 | 字段值
@@ -1859,7 +2239,7 @@ noauth
 	"data": null
 }
 ```
-## /common/locale/internationalName/删除
+## /system/locale/internationalName/删除
 ```text
 暂无描述
 ```
@@ -1907,7 +2287,7 @@ noauth
 	"data": null
 }
 ```
-## /common/locale/internationalName/Excel模板下载
+## /system/locale/internationalName/Excel模板下载
 ```text
 暂无描述
 ```
@@ -1943,7 +2323,7 @@ noauth
 	"data": null
 }
 ```
-## /common/locale/internationalName/Excel导入
+## /system/locale/internationalName/Excel导入
 ```text
 暂无描述
 ```
@@ -1991,7 +2371,7 @@ noauth
 	"data": null
 }
 ```
-## /common/locale/internationalName/Excel导出
+## /system/locale/internationalName/Excel导出
 ```text
 暂无描述
 ```
@@ -2030,386 +2410,6 @@ noauth
 {
 	"code": "0",
 	"msg": "拒绝访问，没有权限",
-	"data": null
-}
-```
-## /open
-```text
-开放模块
-```
-#### Header参数
-参数名 | 示例值 | 参数描述
---- | --- | ---
-暂无参数
-#### Query参数
-参数名 | 示例值 | 参数描述
---- | --- | ---
-暂无参数
-#### Body参数
-参数名 | 示例值 | 参数描述
---- | --- | ---
-暂无参数
-#### 认证方式
-```text
-noauth
-```
-#### 预执行脚本
-```javascript
-暂无预执行脚本
-```
-#### 后执行脚本
-```javascript
-暂无后执行脚本
-```
-## /open/api
-```text
-api模块
-```
-#### Header参数
-参数名 | 示例值 | 参数描述
---- | --- | ---
-暂无参数
-#### Query参数
-参数名 | 示例值 | 参数描述
---- | --- | ---
-暂无参数
-#### Body参数
-参数名 | 示例值 | 参数描述
---- | --- | ---
-暂无参数
-#### 认证方式
-```text
-noauth
-```
-#### 预执行脚本
-```javascript
-暂无预执行脚本
-```
-#### 后执行脚本
-```javascript
-暂无后执行脚本
-```
-## /open/api/demo
-```text
-demo
-```
-#### Header参数
-参数名 | 示例值 | 参数描述
---- | --- | ---
-暂无参数
-#### Query参数
-参数名 | 示例值 | 参数描述
---- | --- | ---
-暂无参数
-#### Body参数
-参数名 | 示例值 | 参数描述
---- | --- | ---
-暂无参数
-#### 认证方式
-```text
-noauth
-```
-#### 预执行脚本
-```javascript
-暂无预执行脚本
-```
-#### 后执行脚本
-```javascript
-暂无后执行脚本
-```
-## /open/api/demo/hello
-```text
-暂无描述
-```
-#### 接口状态
-> 已完成
-
-#### 接口URL
-> http://localhost:6666/summer-single/open/api/demo/hello
-
-#### 请求方式
-> POST
-
-#### Content-Type
-> json
-
-#### 请求Body参数
-```javascript
-{"greet": "Hellow summer-single", "author": "xiajhuan"}
-```
-#### 认证方式
-```text
-noauth
-```
-#### 预执行脚本
-```javascript
-暂无预执行脚本
-```
-#### 后执行脚本
-```javascript
-暂无后执行脚本
-```
-#### 成功响应示例
-```javascript
-{
-	"code": "1",
-	"msg": "成功接收到数据",
-	"data": "{\"greet\":\"Hellow summer-single\",\"author\":\"xiajhuan\"}"
-}
-```
-#### 错误响应示例
-```javascript
-{
-	"code": "0",
-	"msg": "参数必须是Json格式",
-	"data": null
-}
-```
-## /open/test
-```text
-测试模块
-```
-#### Header参数
-参数名 | 示例值 | 参数描述
---- | --- | ---
-暂无参数
-#### Query参数
-参数名 | 示例值 | 参数描述
---- | --- | ---
-暂无参数
-#### Body参数
-参数名 | 示例值 | 参数描述
---- | --- | ---
-暂无参数
-#### 认证方式
-```text
-noauth
-```
-#### 预执行脚本
-```javascript
-暂无预执行脚本
-```
-#### 后执行脚本
-```javascript
-暂无后执行脚本
-```
-## /open/test/rateLimiter
-```text
-限流
-```
-#### Header参数
-参数名 | 示例值 | 参数描述
---- | --- | ---
-暂无参数
-#### Query参数
-参数名 | 示例值 | 参数描述
---- | --- | ---
-暂无参数
-#### Body参数
-参数名 | 示例值 | 参数描述
---- | --- | ---
-暂无参数
-#### 认证方式
-```text
-noauth
-```
-#### 预执行脚本
-```javascript
-暂无预执行脚本
-```
-#### 后执行脚本
-```javascript
-暂无后执行脚本
-```
-## /open/test/rateLimiter/基本限流策略
-```text
-暂无描述
-```
-#### 接口状态
-> 已完成
-
-#### 接口URL
-> http://localhost:6666/summer-single/open/test/rateLimiter/base
-
-#### 请求方式
-> POST
-
-#### Content-Type
-> json
-
-#### 请求Body参数
-```javascript
-{"greet": "Hellow summer-single", "author": "xiajhuan"}
-```
-#### 认证方式
-```text
-noauth
-```
-#### 预执行脚本
-```javascript
-暂无预执行脚本
-```
-#### 后执行脚本
-```javascript
-暂无后执行脚本
-```
-#### 成功响应示例
-```javascript
-{
-	"code": "1",
-	"msg": "成功接收到数据",
-	"data": "{\"greet\":\"Hellow summer-single\",\"author\":\"xiajhuan\"}"
-}
-```
-#### 错误响应示例
-```javascript
-{
-	"code": "0",
-	"msg": "服务器繁忙，请稍后再试~",
-	"data": null
-}
-```
-## /open/test/rateLimiter/IP限流策略
-```text
-暂无描述
-```
-#### 接口状态
-> 已完成
-
-#### 接口URL
-> http://localhost:6666/summer-single/open/test/rateLimiter/ip
-
-#### 请求方式
-> POST
-
-#### Content-Type
-> json
-
-#### 请求Body参数
-```javascript
-{"greet": "Hellow summer-single", "author": "xiajhuan"}
-```
-#### 认证方式
-```text
-noauth
-```
-#### 预执行脚本
-```javascript
-暂无预执行脚本
-```
-#### 后执行脚本
-```javascript
-暂无后执行脚本
-```
-#### 成功响应示例
-```javascript
-{
-	"code": "1",
-	"msg": "成功接收到数据",
-	"data": "{\"greet\":\"Hellow summer-single\",\"author\":\"xiajhuan\"}"
-}
-```
-#### 错误响应示例
-```javascript
-{
-	"code": "0",
-	"msg": "服务器繁忙，请稍后再试~",
-	"data": null
-}
-```
-## /open/test/rateLimiter/参数限流策略
-```text
-暂无描述
-```
-#### 接口状态
-> 已完成
-
-#### 接口URL
-> http://localhost:6666/summer-single/open/test/rateLimiter/param
-
-#### 请求方式
-> POST
-
-#### Content-Type
-> json
-
-#### 请求Body参数
-```javascript
-{"greet": "Hellow summer-single", "author": "xiajhuan"}
-```
-#### 认证方式
-```text
-noauth
-```
-#### 预执行脚本
-```javascript
-暂无预执行脚本
-```
-#### 后执行脚本
-```javascript
-暂无后执行脚本
-```
-#### 成功响应示例
-```javascript
-{
-	"code": "1",
-	"msg": "成功接收到数据",
-	"data": "{\"greet\":\"Hellow summer-single\",\"author\":\"xiajhuan\"}"
-}
-```
-#### 错误响应示例
-```javascript
-{
-	"code": "0",
-	"msg": "服务器繁忙，请稍后再试~",
-	"data": null
-}
-```
-## /open/test/rateLimiter/用户名限流策略
-```text
-暂无描述
-```
-#### 接口状态
-> 已完成
-
-#### 接口URL
-> http://localhost:6666/summer-single/open/test/rateLimiter/username
-
-#### 请求方式
-> POST
-
-#### Content-Type
-> json
-
-#### 请求Body参数
-```javascript
-{"greet": "Hellow summer-single", "author": "xiajhuan"}
-```
-#### 认证方式
-```text
-noauth
-```
-#### 预执行脚本
-```javascript
-暂无预执行脚本
-```
-#### 后执行脚本
-```javascript
-暂无后执行脚本
-```
-#### 成功响应示例
-```javascript
-{
-	"code": "1",
-	"msg": "成功接收到数据",
-	"data": "{\"greet\":\"Hellow summer-single\",\"author\":\"xiajhuan\"}"
-}
-```
-#### 错误响应示例
-```javascript
-{
-	"code": "0",
-	"msg": "服务器繁忙，请稍后再试~",
 	"data": null
 }
 ```

@@ -21,9 +21,9 @@ package me.xiajhuan.summer.core.constant;
 public class DataSourceConst {
 
     /**
-     * common模块数据源，summer-common
+     * system模块数据源，summer-system
      */
-    public static final String COMMON = "common";
+    public static final String SYSTEM = "system";
 
     /**
      * business模块数据源，summer-business

@@ -14,7 +14,7 @@ package me.xiajhuan.summer.core.utils;
 
 import cn.hutool.core.lang.Console;
 import cn.hutool.core.util.StrUtil;
-import me.xiajhuan.summer.BaseMsg;
+import me.xiajhuan.summer.CommonMsg;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -28,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * @date 2023/3/11
  */
 @DisplayName("SecurityUtil")
-public class SecurityUtilTest implements BaseMsg {
+public class SecurityUtilTest implements CommonMsg {
 
     /**
      * 明文

@@ -14,11 +14,11 @@ package me.xiajhuan.summer.core.cache.factory;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
-import me.xiajhuan.summer.core.cache.properties.ServerCacheProperties;
 import me.xiajhuan.summer.core.cache.server.CacheServer;
 import me.xiajhuan.summer.core.cache.server.impl.HeapCacheServer;
 import me.xiajhuan.summer.core.cache.server.impl.RedisCacheServer;
 import me.xiajhuan.summer.core.constant.CacheConst;
+import me.xiajhuan.summer.core.properties.ServerCacheProperties;
 
 /**
  * 缓存服务工厂

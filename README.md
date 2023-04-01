@@ -19,11 +19,11 @@
 ### 模块说明
 ```lua
 summer-single
-├── summer-admin -- 管理模块
-├     ├── business -- 业务模块
-├     ├── common -- 通用模块
-├     ├── open -- 开放接口模块
-└── summer-core -- 核心模块
+ ├─ summer-admin -- 管理模块
+     ├─ summer-api -- api模块
+         ├─ summer-business -- 业务模块
+             ├─ summer-system -- 系统模块
+                 ├─ summer-core -- 核心模块
 ```
 
 ## 快速开始

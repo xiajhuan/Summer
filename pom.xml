@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>me.xiajhuan</groupId>
     <artifactId>summer-single</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0-Alpha</version>
     <packaging>pom</packaging>
 
     <name>summer-single</name>
-    <description>summer-single</description>
+    <description>summer-single 权限管理系统</description>
     <url>https://gitee.com/xiajhuan/summer-single</url>
     <licenses>
         <license>
@@ -22,14 +22,11 @@
         </developer>
     </developers>
 
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.10</version>
-    </parent>
-
     <modules>
         <module>summer-admin</module>
+        <module>summer-api</module>
+        <module>summer-business</module>
+        <module>summer-system</module>
         <module>summer-core</module>
     </modules>
 
@@ -37,7 +34,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
-        <summer.version>1.0.0-SNAPSHOT</summer.version>
+        <spring.boot.version>2.7.10</spring.boot.version>
+        <summer.version>1.0.0-Alpha</summer.version>
         <mysql.version>8.0.32</mysql.version>
         <mybatisplus.version>3.5.3.1</mybatisplus.version>
         <dynamic.datasource.version>3.6.1</dynamic.datasource.version>
@@ -49,11 +47,44 @@
         <easy.excel.version>3.2.1</easy.excel.version>
         <p6spy.version>3.9.1</p6spy.version>
         <lombok.version>1.18.26</lombok.version>
+        <compiler.plugin.version>3.11.0</compiler.plugin.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
-            <!--summer-single核心模块-->
+            <!--springBoot依赖-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring.boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!--summer-single 管理模块-->
+            <dependency>
+                <groupId>me.xiajhuan</groupId>
+                <artifactId>summer-admin</artifactId>
+                <version>${summer.version}</version>
+            </dependency>
+            <!--summer-single api模块-->
+            <dependency>
+                <groupId>me.xiajhuan</groupId>
+                <artifactId>summer-api</artifactId>
+                <version>${summer.version}</version>
+            </dependency>
+            <!--summer-single 业务模块-->
+            <dependency>
+                <groupId>me.xiajhuan</groupId>
+                <artifactId>summer-business</artifactId>
+                <version>${summer.version}</version>
+            </dependency>
+            <!--summer-single 系统模块-->
+            <dependency>
+                <groupId>me.xiajhuan</groupId>
+                <artifactId>summer-system</artifactId>
+                <version>${summer.version}</version>
+            </dependency>
+            <!--summer-single 核心模块-->
             <dependency>
                 <groupId>me.xiajhuan</groupId>
                 <artifactId>summer-core</artifactId>
@@ -157,6 +188,27 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${compiler.plugin.version}</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+        </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+    </build>
 
     <!--阿里云maven仓库-->
     <repositories>

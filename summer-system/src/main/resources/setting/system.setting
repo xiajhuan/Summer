@@ -1,0 +1,64 @@
+# Hutool setting配置文件（主要放置相对固定的配置项）
+# https://hutool.cn/docs/#/setting/%E8%AE%BE%E7%BD%AE%E6%96%87%E4%BB%B6-Setting
+
+# system模块配置
+
+# *******************权限相关配置********************
+[Security]
+# 免认证URI，以”/“开头，”,“分隔
+anon-uris = /api/**
+
+# accessToken过期时间（h）
+token-expire = 12
+
+# 是否开启登录验证码校验，值：true/false
+enable-captcha = true
+
+# 图形验证码背景干扰类型，值：Line（线段干扰）/Circle（圆圈干扰）/Shear（扭曲干扰）
+captcha.type = Line
+# 干扰线个数，note：只有captcha.type = Line 时会生效
+captcha.line-num = 10
+# 干扰元素个数，note：只有captcha.type = Circle 时会生效
+captcha.circle-num = 10
+# 干扰线宽度，note：只有captcha.type = Shear 时会生效
+captcha.shear-width = 4
+# 图形验证码宽/高
+captcha.width = 150
+captcha.height = 40
+# 图形验证码字符个数
+captcha.char-num = 5
+
+# 图形验证码缓存（失效）时间（min）
+captcha.cache-ttl = 5
+
+
+# *******************定时任务配置********************
+[Schedule]
+# note：定时任务在服务多节点部署时会重复执行，请注意避免多节点同时开启相同的任务
+# 是否开启系统定时任务（总开关），值：true/false
+enable-system = true
+# 系统定时任务线程池核心线程数，note：建议和任务数一致
+system.core-pool-size = 3
+
+# 系统定时任务独立开关，只有总开关为true时才能生效，值：true/false
+system.log-job = true
+
+
+# *******************日志配置********************
+[Log]
+# 是否保存业务异常日志（BusinessException），值：true/false
+enable-business = true
+# 当 enable-business = true 时忽略的消息代码，以“,”分隔，值参考 ErrorCode
+# note：当BusinessException的消息为该消息代码匹配消息时将不会“保存错误日志”和“打印异常堆栈信息（开启debug日志级别除外）”
+ignore-business-codes = 1002
+
+# 操作日志清理天数限制，-n则清理n天以前的日志
+operation.clear-days-limit = -30
+
+# 保存错误日志时，异常堆栈的最大长度，note：不能超过表字段限制的长度
+error.stacktrace-length = 65535
+# 错误日志清理天数限制，-n则清理n天以前的日志
+error.clear-days-limit = -90
+
+# 登录日志清理天数限制，-n则清理n天以前的日志
+login.clear-days-limit = -30

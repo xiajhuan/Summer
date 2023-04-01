@@ -21,10 +21,10 @@ spring:
           url: jdbc:mysql://192.168.0.142:3306/summer-business?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true
           username: root
           password: jack%2021#2@6XJH
-        # common模块数据源
+        # system模块数据源
         common:
           driver-class-name: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://192.168.0.142:3306/summer-common?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true
+          url: jdbc:mysql://192.168.0.142:3306/summer-system?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true
           username: root
           password: jack%2021#2@6XJH
 
@@ -44,6 +44,10 @@ spring:
         max-wait: -1
 
 server:
+  # 缓存类型，值：REDIS/HEAP
+  # note：HEAP（堆内缓存）在服务多节点部署时数据无法共享！
+  cache:
+    type: REDIS
   # Tomcat
   tomcat:
     threads:
@@ -51,10 +55,6 @@ server:
       max: 1000
       # 最小工作线程
       min-spare: 30
-  # 缓存类型，值：REDIS/HEAP
-  # note：HEAP（堆内缓存）在服务多节点部署时数据无法共享，请只在单节点部署时使用
-  cache:
-    type: REDIS
 
 limit:
   # 批量操作限制
@@ -88,6 +88,3 @@ logging:
                   exception: info
             # open模块
             open: info
-
-
-

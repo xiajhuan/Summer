@@ -6,12 +6,12 @@
     <packaging>jar</packaging>
 
     <name>summer-core</name>
-    <description>summer-single核心模块</description>
+    <description>summer-single 核心模块</description>
 
     <parent>
         <groupId>me.xiajhuan</groupId>
         <artifactId>summer-single</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>1.0.0-Alpha</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -35,6 +35,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
         </dependency>
         <!--validation-->
         <dependency>

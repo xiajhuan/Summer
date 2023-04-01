@@ -26,13 +26,8 @@ public class SettingConst {
     public static final String CORE = "coreSetting";
 
     /**
-     * common.setting配置Bean名称
+     * system.setting配置Bean名称
      */
-    public static final String COMMON = "commonSetting";
-
-    /**
-     * business.setting配置Bean名称
-     */
-    public static final String BUSINESS = "businessSetting";
+    public static final String SYSTEM = "systemSetting";
 
 }

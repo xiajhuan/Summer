@@ -1,12 +1,13 @@
 server:
+  # 服务端口
   port: 6666
 
 spring:
   application:
     name: summer-admin
   profiles:
-    # 包含 application-core.yml
-    include: core
+    # 包含其他配置，多个用“,”分隔
+    include: fixed,business,api
     # 环境 dev/test/prod
     active: dev
 

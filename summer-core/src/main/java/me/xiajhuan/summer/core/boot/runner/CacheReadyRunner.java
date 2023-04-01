@@ -14,7 +14,7 @@ package me.xiajhuan.summer.core.boot.runner;
 
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
-import me.xiajhuan.summer.core.cache.properties.ServerCacheProperties;
+import me.xiajhuan.summer.core.properties.ServerCacheProperties;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;

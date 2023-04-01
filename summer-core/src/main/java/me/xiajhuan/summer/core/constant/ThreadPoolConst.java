@@ -43,9 +43,9 @@ public class ThreadPoolConst {
     public static class Schedule {
 
         /**
-         * 基本线程池线程名前缀
+         * 系统线程池线程名前缀
          */
-        public static final String BASE_PREFIX = "Base-Schedule-Thread-";
+        public static final String SYSTEM_PREFIX = "System-Schedule-Thread-";
 
     }
 
