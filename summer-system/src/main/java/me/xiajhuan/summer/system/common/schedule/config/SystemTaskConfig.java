@@ -18,7 +18,7 @@ import cn.hutool.log.LogFactory;
 import cn.hutool.setting.Setting;
 import me.xiajhuan.summer.core.constant.SettingConst;
 import me.xiajhuan.summer.core.constant.ThreadPoolConst;
-import me.xiajhuan.summer.system.common.schedule.job.LogJob;
+import me.xiajhuan.summer.system.common.schedule.task.LogTask;
 import me.xiajhuan.summer.system.log.service.LogErrorService;
 import me.xiajhuan.summer.system.log.service.LogLoginService;
 import me.xiajhuan.summer.system.log.service.LogOperationService;
@@ -51,7 +51,7 @@ import java.util.concurrent.ScheduledExecutorService;
  * @see ScheduledExecutorService
  */
 @Configuration
-public class SystemJobConfig implements SchedulingConfigurer {
+public class SystemTaskConfig implements SchedulingConfigurer {
 
     private static final Log LOGGER = LogFactory.get();
 
@@ -64,14 +64,14 @@ public class SystemJobConfig implements SchedulingConfigurer {
     /**
      * 是否开启系统定时任务
      */
-    private boolean enableSystemSchedule;
+    private boolean enableSystemTask;
 
     /**
-     * 初始化 {@link enableSystemSchedule}
+     * 初始化 {@link enableSystemTask}
      */
     @PostConstruct
     private void init() {
-        enableSystemSchedule = setting.getBool("enable-system", "Schedule", true);
+        enableSystemTask = setting.getBool("enable-system-task", "Schedule", true);
     }
 
     @Override
@@ -86,14 +86,14 @@ public class SystemJobConfig implements SchedulingConfigurer {
      * @return {@link ScheduledExecutorService}
      */
     private ScheduledExecutorService buildScheduledExecutorService() {
-        if (enableSystemSchedule) {
+        if (enableSystemTask) {
             return Executors.newScheduledThreadPool(setting.getInt("system.core-pool-size", "Schedule", 3),
                     ThreadUtil.newNamedThreadFactory(ThreadPoolConst.Schedule.SYSTEM_PREFIX, false));
         }
         return null;
     }
 
-    //*******************Jobs********************
+    //*******************Task********************
 
     @Resource
     private LogOperationService logOperationService;
@@ -110,10 +110,10 @@ public class SystemJobConfig implements SchedulingConfigurer {
      * @return 日志定时任务
      */
     @Bean
-    public LogJob logJob() {
-        if (enableSystemSchedule && setting.getBool("system.log-job", "Schedule", true)) {
-            LOGGER.info("【{}】系统定时任务【LogJob】装载完毕", applicationName);
-            return new LogJob().setLogOperationService(logOperationService)
+    public LogTask logTask() {
+        if (enableSystemTask && setting.getBool("system.log-task", "Schedule", true)) {
+            LOGGER.info("【{}】系统定时任务【LogTask】装载完毕", applicationName);
+            return new LogTask().setLogOperationService(logOperationService)
                     .setLogErrorService(logErrorService)
                     .setLogLoginService(logLoginService);
         }

@@ -10,7 +10,7 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.system.common.schedule.job;
+package me.xiajhuan.summer.system.common.schedule.task;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.date.TimeInterval;
@@ -31,7 +31,7 @@ import org.springframework.scheduling.annotation.Scheduled;
  */
 @Setter
 @Accessors(chain = true)
-public class LogJob {
+public class LogTask {
 
     private static final Log LOGGER = LogFactory.get();
 
@@ -48,11 +48,11 @@ public class LogJob {
     @Scheduled(cron = "0 30 0 * * ?")
     public void clearOperationLog() {
         TimeInterval timer = DateUtil.timer();
-        LOGGER.info("【LogJob】【clearOperationLog】开始执行：{}", DateUtil.date());
+        LOGGER.info("【LogTask】【clearOperationLog】开始执行：{}", DateUtil.date());
 
         logOperationService.clear();
 
-        LOGGER.info("【LogJob】【clearOperationLog】执行结束：{}，耗时【{}】ms", DateUtil.date(), timer.interval());
+        LOGGER.info("【LogTask】【clearOperationLog】执行结束：{}，耗时【{}】ms", DateUtil.date(), timer.interval());
     }
 
     /**
@@ -62,11 +62,11 @@ public class LogJob {
     @Scheduled(cron = "0 0 1 * * ?")
     public void clearErrorLog() {
         TimeInterval timer = DateUtil.timer();
-        LOGGER.info("【LogJob】【clearErrorLog】开始执行：{}", DateUtil.date());
+        LOGGER.info("【LogTask】【clearErrorLog】开始执行：{}", DateUtil.date());
 
         logErrorService.clear();
 
-        LOGGER.info("【LogJob】【clearErrorLog】执行结束：{}，耗时【{}】ms", DateUtil.date(), timer.interval());
+        LOGGER.info("【LogTask】【clearErrorLog】执行结束：{}，耗时【{}】ms", DateUtil.date(), timer.interval());
     }
 
     /**
@@ -76,11 +76,11 @@ public class LogJob {
     @Scheduled(cron = "0 30 1 * * ?")
     public void clearLoginLog() {
         TimeInterval timer = DateUtil.timer();
-        LOGGER.info("【LogJob】【clearLoginLog】开始执行：{}", DateUtil.date());
+        LOGGER.info("【LogTask】【clearLoginLog】开始执行：{}", DateUtil.date());
 
         logLoginService.clear();
 
-        LOGGER.info("【LogJob】【clearLoginLog】执行结束：{}，耗时【{}】ms", DateUtil.date(), timer.interval());
+        LOGGER.info("【LogTask】【clearLoginLog】执行结束：{}，耗时【{}】ms", DateUtil.date(), timer.interval());
     }
 
 }
