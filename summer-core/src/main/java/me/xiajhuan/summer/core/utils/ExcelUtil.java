@@ -74,7 +74,7 @@ public class ExcelUtil extends EasyExcelFactory {
     }
 
     /**
-     * 导入（缓存）
+     * 导入（缓存），谨慎使用！
      *
      * @param file        {@link MultipartFile}
      * @param dtoClass    DtoClass
@@ -87,7 +87,7 @@ public class ExcelUtil extends EasyExcelFactory {
     }
 
     /**
-     * 导入（缓存，自定义前/后置处理）
+     * 导入（缓存，自定义前/后置处理），谨慎使用！
      *
      * @param file              {@link MultipartFile}
      * @param dtoClass          DtoClass

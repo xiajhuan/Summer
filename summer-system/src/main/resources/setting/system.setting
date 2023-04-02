@@ -6,7 +6,7 @@
 # *******************权限相关配置********************
 [Security]
 # 免认证URI，以”/“开头，”,“分隔
-anon-uris = /api/**
+anon-uris = /api/open/**,/api/test/**
 
 # accessToken过期时间（h）
 token-expire = 12
@@ -38,7 +38,7 @@ captcha.cache-ttl = 5
 # 是否开启系统定时任务（总开关），值：true/false
 enable-system-task = true
 # 系统定时任务线程池核心线程数，note：建议和任务数一致
-system.core-pool-size = 3
+system.core-pool-size = 1
 
 # 系统定时任务独立开关，只有总开关为true时才能生效，值：true/false
 # 日志定时任务

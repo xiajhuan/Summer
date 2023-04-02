@@ -41,9 +41,9 @@ Summer
 ## 学习交流
 如果觉得还不错麻烦点个Star支持作者~
 
-- email：xiaJhuan@163.com
-- wx：ASDA-xiajhuan
+- Email：xiaJhuan@163.com
+- Wechat：ASDA-xiajhuan
 
 
 ## 参与贡献
-本项目还处于孵化阶段，暂不支持PR,欢迎各类Feature Issue/Bug Issue
+本项目还处于孵化阶段，暂不接受PR,欢迎各类Feature Issue/Bug Issue

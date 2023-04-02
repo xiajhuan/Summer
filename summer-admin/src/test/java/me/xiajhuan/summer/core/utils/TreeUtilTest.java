@@ -16,7 +16,7 @@ import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.lang.Console;
 import cn.hutool.json.JSONUtil;
 import me.xiajhuan.summer.CommonMsg;
-import me.xiajhuan.summer.AdminApplication;
+import me.xiajhuan.summer.SummerApplication;
 import me.xiajhuan.summer.system.security.dto.SecurityMenuDto;
 import me.xiajhuan.summer.core.constant.TreeConst;
 import org.junit.jupiter.api.*;
@@ -31,7 +31,7 @@ import java.util.List;
  * @date 2023/3/11
  */
 @DisplayName("TreeUtil")
-@SpringBootTest(classes = AdminApplication.class, webEnvironment = SpringBootTest.WebEnvironment.NONE)
+@SpringBootTest(classes = SummerApplication.class, webEnvironment = SpringBootTest.WebEnvironment.NONE)
 public class TreeUtilTest implements CommonMsg {
 
     /**

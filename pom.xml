@@ -29,11 +29,11 @@
     </modules>
 
     <properties>
+        <summer.version>1.0.0-Alpha</summer.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <spring.boot.version>2.7.10</spring.boot.version>
-        <summer.version>1.0.0-Alpha</summer.version>
         <mysql.version>8.0.32</mysql.version>
         <mybatisplus.version>3.5.3.1</mybatisplus.version>
         <dynamic.datasource.version>3.6.1</dynamic.datasource.version>
@@ -50,14 +50,6 @@
 
     <dependencyManagement>
         <dependencies>
-            <!--springBoot依赖-->
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>${spring.boot.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
             <!--Summer管理模块-->
             <dependency>
                 <groupId>me.xiajhuan</groupId>
@@ -75,6 +67,14 @@
                 <groupId>me.xiajhuan</groupId>
                 <artifactId>summer-core</artifactId>
                 <version>${summer.version}</version>
+            </dependency>
+            <!--springBoot依赖-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring.boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
             <!--mysql驱动-->
             <dependency>

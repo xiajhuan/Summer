@@ -12,14 +12,21 @@
 
 package me.xiajhuan.summer.core.config;
 
+import cn.hutool.core.util.ArrayUtil;
+import cn.hutool.core.util.StrUtil;
+import cn.hutool.log.Log;
+import cn.hutool.log.LogFactory;
 import cn.hutool.setting.Setting;
 import me.xiajhuan.summer.core.constant.SettingConst;
 import me.xiajhuan.summer.core.constant.ThreadPoolConst;
+import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.AsyncConfigurer;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
+import java.lang.reflect.Method;
 import java.util.concurrent.ThreadPoolExecutor;
 
 /**
@@ -27,12 +34,15 @@ import java.util.concurrent.ThreadPoolExecutor;
  *
  * @author xiajhuan
  * @date 2022/11/25
+ * @see ThreadPoolTaskExecutor
  */
 @Configuration
 public class ThreadPoolConfig {
 
+    private static final Log LOGGER = LogFactory.get();
+
     /**
-     * 注册通用异步任务线程池
+     * 注册通用异步任务线程池（Spring）
      *
      * @return {@link ThreadPoolTaskExecutor}
      */
@@ -51,6 +61,32 @@ public class ThreadPoolConfig {
         executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
         executor.initialize();
         return executor;
+    }
+
+    /**
+     * Spring异步任务异常配置
+     *
+     * @see AsyncConfigurer
+     */
+    @Configuration
+    public static class AsyncExceptionConfig implements AsyncConfigurer {
+        @Override
+        public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
+            return new CustomAsyncExceptionHandler();
+        }
+    }
+
+    /**
+     * 自定义异步任务异常处理
+     *
+     * @see AsyncUncaughtExceptionHandler
+     */
+    public static class CustomAsyncExceptionHandler implements AsyncUncaughtExceptionHandler {
+        @Override
+        public void handleUncaughtException(Throwable e, Method method, Object... param) {
+            LOGGER.error(e, "异步任务【{}】执行异常, 参数【{}】", StrUtil.format("{}.{}",
+                    method.getDeclaringClass().getSimpleName(), method.getName()), ArrayUtil.toString(param));
+        }
     }
 
 }

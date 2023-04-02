@@ -16,16 +16,16 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * admin模块启动类
+ * Summer项目启动类
  *
  * @author xiajhuan
  * @date 2023/2/23
  */
 @SpringBootApplication
-public class AdminApplication {
+public class SummerApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(AdminApplication.class, args);
+        SpringApplication.run(SummerApplication.class, args);
     }
 
 }

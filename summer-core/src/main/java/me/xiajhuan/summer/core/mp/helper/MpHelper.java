@@ -37,12 +37,16 @@ public interface MpHelper<D extends PageSortDto, T> {
      * 当前EntityClass
      *
      * @return EntityClass
+     * @see ServiceImpl#currentModelClass()
      */
     default Class<T> currentEntityClass() {
-        return (Class<T>) ReflectionKit.getSuperClassGenericType(this.getClass(), ServiceImpl.class, 1);
+        return (Class<T>) ReflectionKit.getSuperClassGenericType(getClass(), ServiceImpl.class, 1);
     }
 
     //*******************模板方法钩子，执行顺序从上到下依次********************
+
+    // getEmptyWrapper->getQueryWrapper->getSelectWrapper->getSortWrapper
+    // 获取空Wrapper->获取查询条件Wrapper->获取查询条件+查询字段Wrapper->获取查询条件+查询字段+排序条件Wrapper
 
     /**
      * 获取空 {@link LambdaQueryWrapper}
@@ -107,7 +111,7 @@ public interface MpHelper<D extends PageSortDto, T> {
         return PageSortUtil.handlePageSort(dto);
     }
 
-    //*******************扩展自选钩子********************
+    //*******************自选扩展钩子********************
 
     /**
      * 自定义分页钩子<br>

@@ -38,7 +38,7 @@ public class BeanUtil extends cn.hutool.core.bean.BeanUtil {
     }
 
     /**
-     * 对象列表转换
+     * 列表对象转换
      *
      * @param sourceList 源列表
      * @param target     目标Class
