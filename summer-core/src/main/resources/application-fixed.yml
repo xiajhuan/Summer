@@ -21,7 +21,9 @@ spring:
   # 文件上传
   servlet:
     multipart:
-      max-file-size: 100MB
+      # 单个文件最大限制
+      max-file-size: 30MB
+      # 请求最大限制
       max-request-size: 100MB
   # 消息国际化
   messages:

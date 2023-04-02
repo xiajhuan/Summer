@@ -27,7 +27,7 @@ import org.springframework.stereotype.Component;
 @Setter
 @Getter
 @Component
-@ConfigurationProperties(prefix = "server.cache")
+@ConfigurationProperties("server.cache")
 public class ServerCacheProperties {
 
     /**

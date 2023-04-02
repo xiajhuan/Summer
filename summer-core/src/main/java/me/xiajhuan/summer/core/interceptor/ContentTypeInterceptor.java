@@ -31,7 +31,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Set;
 
 /**
- * 请求体类型 拦截器
+ * 请求体类型拦截器
  *
  * @author xiajhuan
  * @date 2023/3/21

@@ -70,10 +70,12 @@ public class ThreadPoolConfig {
      */
     @Configuration
     public static class AsyncExceptionConfig implements AsyncConfigurer {
+
         @Override
         public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
             return new CustomAsyncExceptionHandler();
         }
+
     }
 
     /**
@@ -82,11 +84,13 @@ public class ThreadPoolConfig {
      * @see AsyncUncaughtExceptionHandler
      */
     public static class CustomAsyncExceptionHandler implements AsyncUncaughtExceptionHandler {
+
         @Override
         public void handleUncaughtException(Throwable e, Method method, Object... param) {
             LOGGER.error(e, "异步任务【{}】执行异常, 参数【{}】", StrUtil.format("{}.{}",
                     method.getDeclaringClass().getSimpleName(), method.getName()), ArrayUtil.toString(param));
         }
+
     }
 
 }

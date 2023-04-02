@@ -87,7 +87,7 @@ public class PageSortUtil {
             defaultOrderArray = defaultOrder.split(StrPool.COMMA);
         }
 
-        camelToUnderscore = setting.getBool("sort.field-camelToUnderscore", "Mp", true);
+        camelToUnderscore = setting.getBool("sort.field-camel-to-underscore", "Mp", true);
     }
 
     /**

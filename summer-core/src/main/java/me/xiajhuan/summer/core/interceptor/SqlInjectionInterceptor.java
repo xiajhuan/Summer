@@ -31,7 +31,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 /**
- * Sql注入 拦截器<br>
+ * Sql注入拦截器<br>
  * note：仅支持Query/FORM-DATA参数值的过滤
  *
  * @author xiajhuan
