@@ -1,0 +1,23 @@
+{
+  ".csv": "5MB",
+  ".xls": "5MB",
+  ".xlsx": "5MB",
+
+  ".jpg": "10MB",
+  ".jpeg": "10MB",
+  ".png": "10MB",
+  ".gif": "10MB",
+  ".svg": "10MB",
+
+  ".txt": "20MB",
+  ".md": "20MB",
+  ".pdf": "20MB",
+  ".docs": "20MB",
+  ".pptx": "20MB",
+
+  ".zip": "30MB",
+  ".rar": "30MB",
+  ".7z": "30MB",
+  ".tar": "30MB",
+  ".gz": "30MB"
+}

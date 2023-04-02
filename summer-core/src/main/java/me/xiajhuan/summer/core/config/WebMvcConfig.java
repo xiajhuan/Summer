@@ -17,6 +17,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.setting.Setting;
 import me.xiajhuan.summer.core.constant.SettingConst;
 import me.xiajhuan.summer.core.interceptor.ContentTypeInterceptor;
+import me.xiajhuan.summer.core.interceptor.FileUploadInterceptor;
 import me.xiajhuan.summer.core.interceptor.SqlInjectionInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
@@ -42,6 +43,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Resource
     private ContentTypeInterceptor contentTypeInterceptor;
+
+    @Resource
+    private FileUploadInterceptor fileUploadInterceptor;
 
     @Resource
     private SqlInjectionInterceptor sqlInjectionInterceptor;
@@ -81,11 +85,15 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        // 注册请求体类型 拦截器
+        // 注册请求体类型拦截器
         registry.addInterceptor(contentTypeInterceptor).order(Ordered.HIGHEST_PRECEDENCE)
                 .addPathPatterns("/**").excludePathPatterns("/api/test/**");
 
-        // 注册Sql注入 拦截器
+        // 注册文件上传拦截器
+        registry.addInterceptor(fileUploadInterceptor).order(Ordered.HIGHEST_PRECEDENCE + 1)
+                .addPathPatterns("/**").excludePathPatterns("/api/test/**");
+
+        // 注册Sql注入拦截器
         registry.addInterceptor(sqlInjectionInterceptor).order(Ordered.LOWEST_PRECEDENCE - 1)
                 .addPathPatterns("/**").excludePathPatterns("/api/test/**");
     }

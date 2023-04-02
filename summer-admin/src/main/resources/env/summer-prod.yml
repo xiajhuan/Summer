@@ -1,0 +1,94 @@
+# 生产环境
+spring:
+  datasource:
+    # 多数据源
+    dynamic:
+      p6spy: true
+      # 连接池配置
+      hikari:
+        # 配置项说明参考 com.zaxxer.hikari.HikariConfigMXBean
+        connection-timeout: 10000
+        validation-timeout: 3000
+        idle-timeout: 60000
+        max-lifetime: 180000
+        max-pool-size: 10
+        min-idle: 5
+      # 默认数据源
+      primary: business
+      datasource:
+        # business模块数据源
+        business:
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          url: jdbc:mysql://192.168.0.142:3306/summer-business?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true
+          username: root
+          password: jack%2021#2@6XJH
+        # system模块数据源
+        system:
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          url: jdbc:mysql://192.168.0.142:3306/summer-system?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true
+          username: root
+          password: jack%2021#2@6XJH
+
+  # Redis配置，只有server.cache.type: REDIS 时会生效
+  redis:
+    host: 192.168.0.7
+    port: 6379
+    password: jack_2021
+    database: 2
+    timeout: 6000
+    lettuce:
+      # 连接池配置
+      pool:
+        min-idle: 5
+        max-idle: 10
+        max-active: 1000
+        max-wait: -1
+
+server:
+  # 缓存类型，值：REDIS/HEAP
+  # note：HEAP（堆内缓存）在服务多节点部署时数据无法共享！
+  cache:
+    type: REDIS
+  # Tomcat
+  tomcat:
+    threads:
+      # 最大工作线程（并发）
+      max: 1000
+      # 最小工作线程
+      min-spare: 30
+
+limit:
+  # 批量操作限制
+  batch:
+    # 每次批量插入数（JDBC批量提交）
+    real-save-num-every-time: 100
+    # Excel最大导出数
+    excel-max-export: 40000
+
+# 日志级别
+logging:
+  level:
+    me:
+      xiajhuan:
+        summer:
+          # core模块
+          core:
+            # Excel
+            excel: info
+            # 限流
+            ratelimiter: info
+          # system模块
+          system:
+            # common
+            common:
+              handler:
+                # 异常处理
+                exception: info
+          # admin模块
+          admin:
+            # api
+            api: info
+            # business
+            business: info
+            # task
+            task: info

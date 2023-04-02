@@ -1,3 +1,4 @@
+# 测试环境
 spring:
   datasource:
     # 多数据源
@@ -9,7 +10,7 @@ spring:
         connection-timeout: 10000
         validation-timeout: 3000
         idle-timeout: 60000
-        max-lifetime: 60000
+        max-lifetime: 180000
         max-pool-size: 10
         min-idle: 5
       # 默认数据源
@@ -22,7 +23,7 @@ spring:
           username: root
           password: jack%2021#2@6XJH
         # system模块数据源
-        common:
+        system:
           driver-class-name: com.mysql.cj.jdbc.Driver
           url: jdbc:mysql://192.168.0.142:3306/summer-system?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true
           username: root

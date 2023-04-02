@@ -204,22 +204,22 @@ public class ServletUtil extends cn.hutool.extra.servlet.ServletUtil {
             boolean notMultipart = true;
 
             StringBuilder formParam = StrUtil.builder();
-            for (int i = 0; i < args.length; i++) {
-                if (notMultipart && (args[i] instanceof MultipartFile || args[i] instanceof MultipartFile[])) {
+            for (Object arg : args) {
+                if (notMultipart && (arg instanceof MultipartFile || arg instanceof MultipartFile[])) {
                     notMultipart = false;
                 } else {
-                    if (args[i] instanceof Object[]) {
+                    if (arg instanceof Object[]) {
                         // 数组参数格式示例：[1,2,3]
-                        formParam.append(ArrayUtil.toString(args[i]));
+                        formParam.append(ArrayUtil.toString(arg));
                     } else {
-                        formParam.append(args[i].toString());
+                        formParam.append(arg.toString());
                     }
-                    if (i != args.length - 1) {
-                        formParam.append(StrPool.COMMA);
-                    }
+                    formParam.append(StrPool.COMMA);
                 }
             }
-
+            if (formParam.length() > 0) {
+                formParam.deleteCharAt(formParam.length() - 1);
+            }
             if (!notMultipart) {
                 formParam.append("【文件上传】");
             }

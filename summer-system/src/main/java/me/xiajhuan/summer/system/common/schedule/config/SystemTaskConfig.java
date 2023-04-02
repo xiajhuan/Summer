@@ -112,7 +112,7 @@ public class SystemTaskConfig implements SchedulingConfigurer {
     @Bean
     public LogTask logTask() {
         if (enableSystemTask && setting.getBool("system.log-task", "Schedule", true)) {
-            LOGGER.info("【{}】系统定时任务【LogTask】装载完毕", applicationName);
+            LOGGER.info("【{}】系统定时任务【LogTask】加载完毕", applicationName);
             return new LogTask().setLogOperationService(logOperationService)
                     .setLogErrorService(logErrorService)
                     .setLogLoginService(logLoginService);

@@ -23,7 +23,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 
 /**
- * ApplicationRunner（缓存设施装载完毕）
+ * ApplicationRunner（缓存设施加载完毕）
  *
  * @author xiajhuan
  * @date 2022/11/28
@@ -42,7 +42,7 @@ public class CacheReadyRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
-        LOGGER.info("【{}】缓存设施装载完毕，缓存类型【{}】", applicationName, serverCacheProperties.getType());
+        LOGGER.info("【{}】缓存设施加载完毕，缓存类型【{}】", applicationName, serverCacheProperties.getType());
     }
 
 }

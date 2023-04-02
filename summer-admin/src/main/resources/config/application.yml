@@ -4,11 +4,11 @@ server:
 
 spring:
   application:
-    name: summer-admin
+    name: Summer
   profiles:
     # 包含其他配置，多个用“,”分隔
     include: fixed,custom
-    # 环境 dev/test/prod
+    # 环境 dev/test/pre/prod
     active: dev
 
 # 指标监控
