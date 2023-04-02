@@ -34,7 +34,9 @@ spring:
     allow-bean-definition-overriding: false
   # 排除自动装配
   autoconfigure:
-    exclude: org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
+    exclude:
+      - org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
+      - org.springframework.boot.autoconfigure.data.redis.RedisRepositoriesAutoConfiguration
 
 # MybatisPlus
 mybatis-plus:
