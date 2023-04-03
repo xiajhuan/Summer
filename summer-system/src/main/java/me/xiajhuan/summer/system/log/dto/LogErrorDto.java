@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import me.xiajhuan.summer.core.constant.DateFormatConst;
-import me.xiajhuan.summer.core.dto.PageSortDto;
+import me.xiajhuan.summer.core.dto.ExcelDto;
 
 import java.util.Date;
 
@@ -31,7 +31,7 @@ import java.util.Date;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class LogErrorDto extends PageSortDto {
+public class LogErrorDto extends ExcelDto {
 
     /**
      * 请求URI

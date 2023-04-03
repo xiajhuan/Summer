@@ -19,7 +19,7 @@ import com.baomidou.mybatisplus.core.metadata.TableInfo;
 import com.baomidou.mybatisplus.extension.injector.methods.AlwaysUpdateSomeColumnById;
 import com.baomidou.mybatisplus.extension.injector.methods.InsertBatchSomeColumn;
 import com.baomidou.mybatisplus.extension.injector.methods.LogicDeleteBatchByIds;
-import me.xiajhuan.summer.core.entity.LogicBaseEntity;
+import me.xiajhuan.summer.core.entity.LogicEntity;
 
 import java.util.List;
 
@@ -101,7 +101,7 @@ public class CustomSqlInjector extends DefaultSqlInjector {
     /**
      * 逻辑批量删除（更新时填充字段以第一条记录为准），note：
      * <pre>
-     *     1.只有Entity支持逻辑删除时才生效 {@link LogicBaseEntity}
+     *     1.只有Entity支持逻辑删除时才生效 {@link LogicEntity}
      *     2.若无法接受所有记录填充字段以第一条记录为准，如要求字段“update_time”的时间精确，请使用循环删除
      * </pre>
      *

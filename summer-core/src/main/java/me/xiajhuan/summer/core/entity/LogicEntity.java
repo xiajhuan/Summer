@@ -25,7 +25,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public abstract class LogicBaseEntity extends CommonBaseEntity {
+public abstract class LogicEntity extends CommonEntity {
 
     /**
      * 逻辑删除标识（0：未删除 1：已删除）<br>

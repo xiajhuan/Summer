@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import me.xiajhuan.summer.core.constant.DateFormatConst;
-import me.xiajhuan.summer.core.dto.PageSortDto;
+import me.xiajhuan.summer.core.dto.ExcelDto;
 import me.xiajhuan.summer.core.enums.OperationGroupEnum;
 import me.xiajhuan.summer.core.enums.OperationStatusEnum;
 import me.xiajhuan.summer.system.log.excel.converter.OperationGroupConverter;
@@ -35,7 +35,7 @@ import java.util.Date;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class LogOperationDto extends PageSortDto {
+public class LogOperationDto extends ExcelDto {
 
     /**
      * 用户操作

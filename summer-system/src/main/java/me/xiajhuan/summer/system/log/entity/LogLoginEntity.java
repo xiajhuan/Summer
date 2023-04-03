@@ -14,7 +14,7 @@ package me.xiajhuan.summer.system.log.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
-import me.xiajhuan.summer.core.entity.SimpleBaseEntity;
+import me.xiajhuan.summer.core.entity.SimpleEntity;
 import me.xiajhuan.summer.core.enums.LoginOperationEnum;
 import me.xiajhuan.summer.core.enums.LoginStatusEnum;
 
@@ -30,7 +30,7 @@ import me.xiajhuan.summer.core.enums.LoginStatusEnum;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @TableName("log_login")
-public class LogLoginEntity extends SimpleBaseEntity {
+public class LogLoginEntity extends SimpleEntity {
 
     /**
      * 登录用户名

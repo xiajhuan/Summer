@@ -14,7 +14,7 @@ package me.xiajhuan.summer.system.log.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
-import me.xiajhuan.summer.core.entity.SimpleBaseEntity;
+import me.xiajhuan.summer.core.entity.SimpleEntity;
 
 /**
  * 错误日志 Entity
@@ -28,7 +28,7 @@ import me.xiajhuan.summer.core.entity.SimpleBaseEntity;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @TableName("log_error")
-public class LogErrorEntity extends SimpleBaseEntity {
+public class LogErrorEntity extends SimpleEntity {
 
     /**
      * 请求URI

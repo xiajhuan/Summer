@@ -15,7 +15,7 @@ package me.xiajhuan.summer.system.security.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import me.xiajhuan.summer.core.entity.SimpleBaseEntity;
+import me.xiajhuan.summer.core.entity.SimpleEntity;
 
 /**
  * 角色用户关联 Entity
@@ -26,7 +26,7 @@ import me.xiajhuan.summer.core.entity.SimpleBaseEntity;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName("security_role_user")
-public class SecurityRoleUserEntity extends SimpleBaseEntity {
+public class SecurityRoleUserEntity extends SimpleEntity {
 
     /**
      * 角色ID

@@ -18,13 +18,14 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import me.xiajhuan.summer.core.dto.PageSortDto;
+import me.xiajhuan.summer.core.dto.ExcelDto;
 import me.xiajhuan.summer.core.utils.PageSortUtil;
 
 /**
  * MybatisPlus Helper，note：
  * <pre>
  *     1.非侵入式api，提供Mp的一些通用操作模板，可根据实际需求自行选择是否引入
- *     2.Dto必须继承 {@link PageSortDto}，ServiceImpl类写法示例：
+ *     2.Dto必须继承 {@link PageSortDto} 或 {@link ExcelDto}，ServiceImpl类写法示例：
  *      {@code public class LogErrorServiceImpl extends ... implements LogErrorService, MpHelper<LogErrorDto, LogErrorEntity>}
  * </pre>
  *

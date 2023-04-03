@@ -29,7 +29,7 @@ import java.util.Date;
  * @date 2022/11/19
  */
 @Data
-public abstract class SimpleBaseEntity implements Serializable {
+public abstract class SimpleEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

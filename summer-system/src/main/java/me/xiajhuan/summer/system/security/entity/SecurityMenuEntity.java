@@ -17,7 +17,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import me.xiajhuan.summer.core.entity.SimpleBaseEntity;
+import me.xiajhuan.summer.core.entity.SimpleEntity;
 import me.xiajhuan.summer.system.security.enums.ComponentTypeEnum;
 import me.xiajhuan.summer.system.security.enums.OpenModeEnum;
 
@@ -32,7 +32,7 @@ import java.util.Date;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName("security_menu")
-public class SecurityMenuEntity extends SimpleBaseEntity {
+public class SecurityMenuEntity extends SimpleEntity {
 
     /**
      * 更新者

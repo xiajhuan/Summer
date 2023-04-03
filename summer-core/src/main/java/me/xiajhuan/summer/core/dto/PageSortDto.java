@@ -24,7 +24,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public abstract class PageSortDto extends BaseDto {
+public abstract class PageSortDto extends SimpleDto {
 
     //*******************分页********************
 

@@ -18,7 +18,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import me.xiajhuan.summer.core.entity.SimpleBaseEntity;
+import me.xiajhuan.summer.core.entity.SimpleEntity;
 import me.xiajhuan.summer.core.enums.OperationGroupEnum;
 import me.xiajhuan.summer.core.enums.OperationStatusEnum;
 
@@ -33,7 +33,7 @@ import me.xiajhuan.summer.core.enums.OperationStatusEnum;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @TableName("log_operation")
-public class LogOperationEntity extends SimpleBaseEntity {
+public class LogOperationEntity extends SimpleEntity {
 
     /**
      * 用户操作

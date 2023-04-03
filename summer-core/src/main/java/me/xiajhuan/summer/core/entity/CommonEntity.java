@@ -14,27 +14,39 @@ package me.xiajhuan.summer.core.entity;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.Version;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.Date;
+
 /**
- * 乐观锁控制 Entity基类<br>
- * 包含【id,create_by,create_time,update_by,update_time,dept_id,version】字段
+ * 通用 Entity基类<br>
+ * 包含【id,create_by,create_time,update_by,update_time,dept_id】字段
  *
  * @author xiajhuan
- * @date 2022/11/19
+ * @date 2022/11/28
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public abstract class OptimisticLockBaseEntity extends CommonBaseEntity {
+public abstract class CommonEntity extends SimpleEntity {
 
     /**
-     * 乐观锁控制<br>
-     * note：表字段“version”默认值应为0
+     * 更新者
      */
-    @Version
-    @TableField(fill = FieldFill.INSERT, value = "version")
-    private Integer version;
+    @TableField(fill = FieldFill.INSERT_UPDATE, value = "update_by")
+    private String updateBy;
+
+    /**
+     * 更新时间
+     */
+    @TableField(fill = FieldFill.INSERT_UPDATE, value = "update_time")
+    private Date updateTime;
+
+    /**
+     * 部门ID<br>
+     * note：使用数据权限功能则必须包含此字段
+     */
+    @TableField(fill = FieldFill.INSERT)
+    private Long deptId;
 
 }

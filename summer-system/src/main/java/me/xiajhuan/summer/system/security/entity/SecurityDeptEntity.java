@@ -17,7 +17,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import me.xiajhuan.summer.core.entity.SimpleBaseEntity;
+import me.xiajhuan.summer.core.entity.SimpleEntity;
 
 import java.util.Date;
 
@@ -30,7 +30,7 @@ import java.util.Date;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName("security_dept")
-public class SecurityDeptEntity extends SimpleBaseEntity {
+public class SecurityDeptEntity extends SimpleEntity {
 
     /**
      * 更新者
