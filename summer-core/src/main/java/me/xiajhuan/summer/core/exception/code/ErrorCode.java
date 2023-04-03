@@ -13,7 +13,7 @@
 package me.xiajhuan.summer.core.exception.code;
 
 /**
- * common和business模块的错误编码，由5位数字组成，前2位为模块编码，后3位为业务编码<br>
+ * system和business模块的错误编码，由5位数字组成，前2位为模块编码，后3位为业务编码<br>
  * 如：10004（10代表权限相关模块，004代表具体业务）
  *
  * @author xiajhuan
@@ -21,7 +21,7 @@ package me.xiajhuan.summer.core.exception.code;
  */
 public interface ErrorCode {
 
-    //*******************system********************
+    //*******************fail********************
 
     /**
      * 未授权，请先登录
@@ -38,54 +38,64 @@ public interface ErrorCode {
      */
     int INTERNAL_SERVER_ERROR = 500;
 
-    //*******************custom********************
-
-    /**
-     * 不支持的参数类型
-     */
-    int UNSUPPORTED_CONTENT_TYPE = 1000;
+    //*******************common********************
 
     /**
      * 操作失败
      */
-    int OPERATION_FAILURE = 1001;
+    int OPERATION_FAILURE = 1000;
 
     /**
      * 服务器繁忙，请稍后再试~
      */
-    int SERVER_BUSY = 1002;
+    int SERVER_BUSY = 1001;
+
+    /**
+     * 不支持的参数类型
+     */
+    int UNSUPPORTED_CONTENT_TYPE = 1002;
+
+    /**
+     * 不支持的文件类型：{0}
+     */
+    int UNSUPPORTED_FILE_TYPE = 1003;
+
+    /**
+     * {0}文件不能超过{1}
+     */
+    int FILE_TYPE_EXCEED = 1004;
 
     /**
      * 文件上传失败
      */
-    int FILE_UPLOAD_FAILURE = 1003;
+    int FILE_UPLOAD_FAILURE = 1005;
 
     /**
      * 文件下载失败
      */
-    int FILE_DOWNLOAD_FAILURE = 1004;
-
-    /**
-     * Excel模板下载失败
-     */
-    int EXCEL_TEMPLATE_DOWNLOAD_FAILURE = 1005;
-
-    /**
-     * Excel导出失败
-     */
-    int EXCEL_EXPORT_FAILURE = 1006;
-
-    /**
-     * 最多导出{0}条记录
-     */
-    int EXCEL_EXPORT_MAXIMUM_LIMIT = 1007;
+    int FILE_DOWNLOAD_FAILURE = 1006;
 
     /**
      * Excel导入失败，第{0}行：
      */
-    int EXCEL_IMPORT_FAILURE_PREFIX = 1008;
+    int EXCEL_IMPORT_FAILURE_PREFIX = 1007;
 
-    //*******************common********************
+    /**
+     * Excel模板下载失败
+     */
+    int EXCEL_TEMPLATE_DOWNLOAD_FAILURE = 1008;
+
+    /**
+     * Excel导出失败
+     */
+    int EXCEL_EXPORT_FAILURE = 1009;
+
+    /**
+     * 最多导出{0}条记录
+     */
+    int EXCEL_EXPORT_MAXIMUM_LIMIT = 1010;
+
+    //*******************system********************
 
     /**
      * {0}不能为空

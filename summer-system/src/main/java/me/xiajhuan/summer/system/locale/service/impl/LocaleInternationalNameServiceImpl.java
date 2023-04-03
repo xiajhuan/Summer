@@ -122,7 +122,7 @@ public class LocaleInternationalNameServiceImpl extends ServiceImpl<LocaleIntern
     @Transactional(rollbackFor = Exception.class)
     public boolean saveBatch(Collection<LocaleInternationalNameEntity> entityList) {
         ListUtil.split(ListUtil.toList(entityList), limitBatchProperties.getRealSaveNumEveryTime())
-                .forEach(list -> baseMapper.realSaveBatch(list));
+                .forEach(baseMapper::realSaveBatch);
         return true;
     }
 
