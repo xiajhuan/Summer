@@ -43,7 +43,7 @@ public class EnvPostProcessor implements EnvironmentPostProcessor {
 
     /**
      * 加载环境配置yml文件<br>
-     * classpath*:env/summer-*.yml
+     * admin模块env下：summer-dev/pre/prod/test.yml
      *
      * @param propertySources {@link MutablePropertySources}
      */

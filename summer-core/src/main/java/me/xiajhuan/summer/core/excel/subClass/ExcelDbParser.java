@@ -10,11 +10,11 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.core.excel.parser.subClass;
+package me.xiajhuan.summer.core.excel.subClass;
 
 import com.alibaba.excel.context.AnalysisContext;
 import com.baomidou.mybatisplus.extension.service.IService;
-import me.xiajhuan.summer.core.excel.parser.AbstractExcelParser;
+import me.xiajhuan.summer.core.excel.AbstractExcelParser;
 
 /**
  * Excel数据解析（保存到Db），note：

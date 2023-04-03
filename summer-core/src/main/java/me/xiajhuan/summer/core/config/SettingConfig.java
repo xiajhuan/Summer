@@ -23,7 +23,7 @@ import org.springframework.context.annotation.Configuration;
  * @author xiajhuan
  * @date 2023/3/9
  */
-@Configuration("coreSettingConfig")
+@Configuration
 public class SettingConfig {
 
     /**
@@ -34,6 +34,16 @@ public class SettingConfig {
     @Bean(SettingConst.CORE)
     public Setting coreSetting() {
         return new Setting("setting/core.setting");
+    }
+
+    /**
+     * 注册 system.setting的配置文件Bean
+     *
+     * @return {@link Setting}
+     */
+    @Bean(SettingConst.SYSTEM)
+    public Setting systemSetting() {
+        return new Setting("setting/system.setting");
     }
 
 }

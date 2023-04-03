@@ -10,7 +10,7 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.core.excel.parser;
+package me.xiajhuan.summer.core.excel;
 
 import cn.hutool.core.lang.Dict;
 import cn.hutool.extra.spring.SpringUtil;

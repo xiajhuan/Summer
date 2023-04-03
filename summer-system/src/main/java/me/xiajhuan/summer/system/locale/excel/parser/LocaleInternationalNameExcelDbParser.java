@@ -14,7 +14,7 @@ package me.xiajhuan.summer.system.locale.excel.parser;
 
 import cn.hutool.extra.spring.SpringUtil;
 import com.baomidou.mybatisplus.extension.service.IService;
-import me.xiajhuan.summer.core.excel.parser.subClass.ExcelDbParser;
+import me.xiajhuan.summer.core.excel.subClass.ExcelDbParser;
 import me.xiajhuan.summer.system.locale.dto.LocaleInternationalNameDto;
 import me.xiajhuan.summer.system.locale.entity.LocaleInternationalNameEntity;
 import me.xiajhuan.summer.system.locale.service.LocaleInternationalNameService;

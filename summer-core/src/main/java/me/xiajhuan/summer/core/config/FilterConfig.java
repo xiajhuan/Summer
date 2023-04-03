@@ -10,7 +10,7 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.system.common.config;
+package me.xiajhuan.summer.core.config;
 
 import cn.hutool.setting.Setting;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;

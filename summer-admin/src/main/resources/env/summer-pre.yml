@@ -92,3 +92,8 @@ logging:
             business: info
             # task
             task: info
+    org:
+      springframework:
+        context:
+          # 去除“is not eligible”日志
+          support: warn

@@ -1,4 +1,4 @@
-# 主要放置相对固定的配置项
+# 相对固定的配置
 project:
   # 项目版本
   version: "@project.version@"
