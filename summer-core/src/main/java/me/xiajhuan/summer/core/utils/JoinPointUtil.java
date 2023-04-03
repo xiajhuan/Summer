@@ -32,6 +32,12 @@ import java.util.stream.Stream;
 public class JoinPointUtil {
 
     /**
+     * 构造JoinPointUtil
+     */
+    private JoinPointUtil() {
+    }
+
+    /**
      * 获取切入点方法
      *
      * @param point {@link JoinPoint}

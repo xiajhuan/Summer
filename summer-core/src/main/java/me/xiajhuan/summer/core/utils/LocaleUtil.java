@@ -51,6 +51,12 @@ public class LocaleUtil {
     private static final Log LOGGER = LogFactory.get();
 
     /**
+     * 构造LocaleUtil
+     */
+    private LocaleUtil() {
+    }
+
+    /**
      * {@link MessageSource}
      */
     private static MessageSource messageSource;

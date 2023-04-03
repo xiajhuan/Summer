@@ -40,6 +40,12 @@ import java.util.List;
 public class ExcelUtil extends EasyExcelFactory {
 
     /**
+     * 构造ExcelUtil
+     */
+    private ExcelUtil() {
+    }
+
+    /**
      * 导入（保存到Db）
      *
      * @param file        {@link MultipartFile}

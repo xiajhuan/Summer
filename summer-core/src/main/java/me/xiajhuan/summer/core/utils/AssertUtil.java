@@ -31,6 +31,12 @@ import java.util.Map;
 public class AssertUtil extends Assert {
 
     /**
+     * 构造AssertUtil
+     */
+    private AssertUtil() {
+    }
+
+    /**
      * <p>
      * 默认参数Key，用于填充断言失败时的业务异常消息，
      * 例如：”default不能为空“

@@ -35,6 +35,12 @@ import java.util.Arrays;
 public class PageSortUtil {
 
     /**
+     * 构造PageSortUtil
+     */
+    private PageSortUtil() {
+    }
+
+    /**
      * 空值和未定义
      */
     private static final String[] NULL_AND_UNDEFINED = {"null", "undefined"};

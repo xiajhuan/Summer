@@ -51,6 +51,12 @@ public class TreeUtil extends cn.hutool.core.lang.tree.TreeUtil {
     private static final Log LOGGER = LogFactory.get();
 
     /**
+     * 构造TreeUtil
+     */
+    private TreeUtil() {
+    }
+
+    /**
      * {@link TreeNodeConfig}
      */
     private static TreeNodeConfig treeNodeConfig;

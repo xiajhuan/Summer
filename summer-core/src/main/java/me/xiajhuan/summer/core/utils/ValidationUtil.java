@@ -36,6 +36,12 @@ import java.util.Set;
 public class ValidationUtil {
 
     /**
+     * 构造ValidationUtil
+     */
+    private ValidationUtil() {
+    }
+
+    /**
      * {@link Validator}
      */
     private static Validator validator;

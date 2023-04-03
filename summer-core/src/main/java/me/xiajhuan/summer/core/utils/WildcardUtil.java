@@ -25,6 +25,12 @@ import java.util.Arrays;
 public class WildcardUtil {
 
     /**
+     * 构造WildcardUtil
+     */
+    private WildcardUtil() {
+    }
+
+    /**
      * 检查源字符串是否匹配指定的通配符模板字符串数组中的任意一个，note：
      * <pre>
      *     1.仅支持“*”（任意匹配）和“?”（单值匹配）
@@ -50,7 +56,7 @@ public class WildcardUtil {
      *     1.仅支持“*”（任意匹配）和“?”（单值匹配）
      *     2.都为 {@code null} 则返回“true”，任一为 {@code null} 则返回“false”
      * </pre>
-     *
+     * <p>
      * 失效回溯法：
      * <pre>
      *     1.对于通配符匹配方案，我们主要的难点问题是在于通配符*的匹配，

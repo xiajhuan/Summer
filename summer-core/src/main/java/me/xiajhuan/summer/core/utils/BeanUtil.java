@@ -26,6 +26,12 @@ import java.util.List;
 public class BeanUtil extends cn.hutool.core.bean.BeanUtil {
 
     /**
+     * 构造BeanUtil
+     */
+    private BeanUtil() {
+    }
+
+    /**
      * 单一对象转换
      *
      * @param source 源
