@@ -60,11 +60,10 @@ public class SecurityMenuEntity extends SimpleEntity {
      * 授权
      * <p>
      * 多个授权以“,”分隔
-     * 格式：模块名:业务名:操作名
-     * 例如：
+     * 格式：模块名:业务名:操作名，例如：
      * <pre>
-     *     1.security:user:page,security:user:add
-     *     2.log:error:page,log:error:excelExport
+     *   security:user:page,security:user:add
+     *   log:error:page,log:error:excelExport
      * </pre>
      * </p>
      */

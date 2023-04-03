@@ -13,9 +13,7 @@
 package me.xiajhuan.summer.core.dto;
 
 import com.alibaba.excel.annotation.ExcelIgnoreUnannotated;
-import com.alibaba.excel.annotation.write.style.ColumnWidth;
-import com.alibaba.excel.annotation.write.style.ContentRowHeight;
-import com.alibaba.excel.annotation.write.style.HeadRowHeight;
+import com.alibaba.excel.annotation.write.style.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -30,6 +28,7 @@ import lombok.EqualsAndHashCode;
 @ExcelIgnoreUnannotated
 @ContentRowHeight(20)
 @HeadRowHeight(20)
+@HeadStyle(fillForegroundColor = 44)
 @ColumnWidth(25)
 public abstract class ExcelDto extends PageSortDto {
 }

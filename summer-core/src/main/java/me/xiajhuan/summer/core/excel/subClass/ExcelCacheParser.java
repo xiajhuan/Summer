@@ -28,11 +28,11 @@ import java.util.stream.Collectors;
 /**
  * Excel数据解析（缓存），note：
  * <pre>
- *     1.通常情况下不建议将Excel数据缓存，如确有需求，应注意防止OOM！
- *     2.想个性化前/后置处理，请自定义Parser继承当前类，可覆写：
- *       {@link AbstractExcelParser#handleDtoBefore(Object, AnalysisContext)}，
- *       {@link AbstractExcelParser#handleEntityListBefore()}，
- *       {@link AbstractExcelParser#handleEntityListAfter()}
+ *   1.通常情况下不建议将Excel数据缓存，如确有需求，应注意防止OOM！
+ *   2.想个性化前/后置处理，请自定义Parser继承当前类，可覆写：
+ *     {@link AbstractExcelParser#handleDtoBefore(Object, AnalysisContext)}，
+ *     {@link AbstractExcelParser#handleEntityListBefore()}，
+ *     {@link AbstractExcelParser#handleEntityListAfter()}
  * </pre>
  *
  * @author xiajhuan

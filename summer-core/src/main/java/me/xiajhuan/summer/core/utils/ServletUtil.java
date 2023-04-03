@@ -103,13 +103,13 @@ public class ServletUtil extends cn.hutool.extra.servlet.ServletUtil {
     /**
      * 获取请求参数（切入点方法），参数格式示例：
      * <pre>
-     *     1.Query -> Query【pageNum=1&pageSize=10】
-     *     2.Form-Data -> Form-Data【pageNum=1&pageSize=10】 或 Form-Data【status=1【文件上传】】
-     *     3.Json -> Json【{...}】 或 Json【[...]】
-     *     4.Xml -> Xml【...】
-     *     5.Javascript -> Javascript【...】
-     *     6.Text -> Text【...】
-     *     7.Html -> Html【...】
+     *   1.Query -> Query【pageNum=1&pageSize=10】
+     *   2.Form-Data -> Form-Data【pageNum=1&pageSize=10】 或 Form-Data【status=1【文件上传】】
+     *   3.Json -> Json【{...}】 或 Json【[...]】
+     *   4.Xml -> Xml【...】
+     *   5.Javascript -> Javascript【...】
+     *   6.Text -> Text【...】
+     *   7.Html -> Html【...】
      * </pre>
      *
      * @param point   {@link JoinPoint}

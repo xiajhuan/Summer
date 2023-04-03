@@ -143,9 +143,9 @@ public class GlobalExceptionHandler {
     /**
      * 校验异常处理，note：
      * <pre>
-     *     1.参数校验（Dto类型）（{@link ValidationUtil} api校验）
-     *     2.{@link AssertUtil} 断言失败
-     *     3.直接抛出 {@link ValidationException}
+     *   1.参数校验（Dto类型）（{@link ValidationUtil} api校验）
+     *   2.{@link AssertUtil} 断言失败
+     *   3.直接抛出 {@link ValidationException}
      * </pre>
      *
      * @param e 校验异常

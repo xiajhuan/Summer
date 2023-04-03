@@ -68,10 +68,10 @@ public class CustomSqlInjector extends DefaultSqlInjector {
     /**
      * 批量插入Sql（JDBC批量提交），note：
      * <pre>
-     *     1.MybatisPlus自带的saveBatch是循环插入，数据量大时可能效率低下，故提供“JDBC批量提交”模式的支持
-     *     2.如果个别字段在Entity里为 {@code null} 但表中有配置默认值，插入后该字段为“NULL”而不是默认值
-     *     3.逻辑删除和乐观锁控制字段不包含在内
-     *     4.不同的数据库支持度不一样，Mysql以外的数据库谨慎使用！
+     *   1.MybatisPlus自带的saveBatch是循环插入，数据量大时可能效率低下，故提供“JDBC批量提交”模式的支持
+     *   2.如果个别字段在Entity里为 {@code null} 但表中有配置默认值，插入后该字段为“NULL”而不是默认值
+     *   3.逻辑删除和乐观锁控制字段不包含在内
+     *   4.不同的数据库支持度不一样，Mysql以外的数据库谨慎使用！
      * </pre>
      *
      * @return {@link AbstractMethod}
@@ -85,9 +85,9 @@ public class CustomSqlInjector extends DefaultSqlInjector {
     /**
      * 根据ID更新固定的几个字段（不忽略值为 {@code null} 的字段），note：
      * <pre>
-     *     1.MybatisPlus自带的update/updateById会自动忽略 {@code null} 字段不更新，
-     *       而这个Sql会把entity存在的字段都更新，如果某个字段值为 {@code null} 就更新为“NULL”
-     *     2.插入时自动填充、乐观锁控制和逻辑删除字段不包含在内
+     *   1.MybatisPlus自带的update/updateById会自动忽略 {@code null} 字段不更新，
+     *     而这个Sql会把entity存在的字段都更新，如果某个字段值为 {@code null} 就更新为“NULL”
+     *   2.插入时自动填充、乐观锁控制和逻辑删除字段不包含在内
      * </pre>
      *
      * @return {@link AbstractMethod}
@@ -101,8 +101,8 @@ public class CustomSqlInjector extends DefaultSqlInjector {
     /**
      * 逻辑批量删除（更新时填充字段以第一条记录为准），note：
      * <pre>
-     *     1.只有Entity支持逻辑删除时才生效 {@link LogicEntity}
-     *     2.若无法接受所有记录填充字段以第一条记录为准，如要求字段“update_time”的时间精确，请使用循环删除
+     *   1.只有Entity支持逻辑删除时才生效 {@link LogicEntity}
+     *   2.若无法接受所有记录填充字段以第一条记录为准，如要求字段“update_time”的时间精确，请使用循环删除
      * </pre>
      *
      * @return {@link AbstractMethod}

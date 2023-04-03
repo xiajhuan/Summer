@@ -20,11 +20,10 @@ import org.aspectj.lang.JoinPoint;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * 用户名限流Key策略（Key为：接口签名#用户名（登录用户名或thirdPart））<br>
+ * 用户名限流Key策略（Key为：接口签名#用户名（登录用户名或thirdPart）），例如：<br>
  * <pre>
- * 例如：
- *     /summer/security/user/page[GET]#16042
- *     /summer/security/user/page[GET]#thirdPart
+ *   /summer/security/user/page[GET]#16042
+ *   /summer/security/user/page[GET]#thirdPart
  * </pre>
  *
  * @author xiajhuan

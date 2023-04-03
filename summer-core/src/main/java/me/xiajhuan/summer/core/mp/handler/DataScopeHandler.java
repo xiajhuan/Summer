@@ -48,10 +48,10 @@ import java.util.stream.Collectors;
 /**
  * 数据权限处理器，note：
  * <pre>
- *     1.表对应Entity必须包含create_by,dept_id字段，推荐继承 {@link CommonEntity}
- *     2.若想局部关闭数据权限过滤，可以采用以下两种方式：
- *       2.1 在Mapper和Mapper.Method上使用 {@link InterceptorIgnore}
- *       2.2 在common.setting中配置Mp组下的dataScope.ignore
+ *   1.表对应Entity必须包含create_by,dept_id字段，推荐继承 {@link CommonEntity}
+ *   2.若想局部关闭数据权限过滤，可以采用以下两种方式：
+ *     2.1 在Mapper和Mapper.Method上使用 {@link InterceptorIgnore}
+ *     2.2 在common.setting中配置Mp组下的dataScope.ignore
  * </pre>
  * 参考：https://gitee.com/baomidou/mybatis-plus/pulls/219
  *

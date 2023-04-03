@@ -24,9 +24,9 @@ import me.xiajhuan.summer.core.utils.PageSortUtil;
 /**
  * MybatisPlus Helper，note：
  * <pre>
- *     1.非侵入式api，提供Mp的一些通用操作模板，可根据实际需求自行选择是否引入
- *     2.Dto必须继承 {@link PageSortDto} 或 {@link ExcelDto}，ServiceImpl类写法示例：
- *      {@code public class LogErrorServiceImpl extends ... implements LogErrorService, MpHelper<LogErrorDto, LogErrorEntity>}
+ *   1.非侵入式api，提供Mp的一些通用操作模板，可根据实际需求自行选择是否引入
+ *   2.Dto必须继承 {@link PageSortDto} 或 {@link ExcelDto}，ServiceImpl类写法示例：
+ *     {@code public class LogErrorServiceImpl extends ... implements LogErrorService, MpHelper<LogErrorDto, LogErrorEntity>}
  * </pre>
  *
  * @author xiajhuan
@@ -87,10 +87,10 @@ public interface MpHelper<D extends PageSortDto, T> {
     /**
      * 获取 {@link LambdaQueryWrapper}（指定查询条件/查询字段/排序条件），note：
      * <pre>
-     *     1.调用后包含【查询条件,查询字段，排序条件】
-     *     2.默认无条件/所有Entity字段
-     *     3.默认排序条件依据 {@link PageSortDto#field} {@link PageSortDto#order} 的值指定
-     *     4.{@link PageSortUtil#handleSort(PageSortDto, LambdaQueryWrapper)} 有Sql注入风险！推荐根据实际需求覆写
+     *   1.调用后包含【查询条件,查询字段，排序条件】
+     *   2.默认无条件/所有Entity字段
+     *   3.默认排序条件依据 {@link PageSortDto#field} {@link PageSortDto#order} 的值指定
+     *   4.{@link PageSortUtil#handleSort(PageSortDto, LambdaQueryWrapper)} 有Sql注入风险！推荐根据实际需求覆写
      * </pre>
      *
      * @param dto Dto类型对象

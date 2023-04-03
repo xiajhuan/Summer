@@ -17,8 +17,8 @@ import me.xiajhuan.summer.core.ratelimiter.strategy.LoadBalanceStrategy;
 /**
  * 基本限流负载均衡策略（轮询），note：
  * <pre>
- *     1.realQps = setQps / nodeNum
- *     2.最好能够整除，否则会存在精度问题，默认四舍五入保留2位小数
+ *   1.realQps = setQps / nodeNum
+ *   2.最好能够整除，否则会存在精度问题，默认四舍五入保留2位小数
  * </pre>
  *
  * @author xiajhuan

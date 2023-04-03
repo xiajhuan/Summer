@@ -32,12 +32,12 @@ import java.util.Locale;
  * Locale：表示特定的地理，政治，或文化区域
  * 优先级从上到下依次：
  * <pre>
- *     1.请求头“Accept-Language”有值且以“zh”或“en”开头，
- *       以“Accept-Language”为准
- *     2.请求头“Accept-Language”没有值或有值但不以“zh”或“en”开头，
- *       以服务器JVM设置的值为准 {@link Locale#getDefault()}
- *     3.满足2但JVM设置的值语言不为“zh”或“en”，
- *       以core.setting中extra-default配置值为准
+ *   1.请求头“Accept-Language”有值且以“zh”或“en”开头，
+ *     以“Accept-Language”为准
+ *   2.请求头“Accept-Language”没有值或有值但不以“zh”或“en”开头，
+ *     以服务器JVM设置的值为准 {@link Locale#getDefault()}
+ *   3.满足2但JVM设置的值语言不为“zh”或“en”，
+ *     以core.setting中extra-default配置值为准
  * </pre>
  * </p>
  *

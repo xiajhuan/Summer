@@ -24,9 +24,9 @@ import java.lang.annotation.*;
 /**
  * 限流注解，note：
  * <pre>
- *     1.添加了 {@link AliasFor} 必须通过 {@link AnnotationUtils} 获取，才会生效
- *     2.keyStrategy/loadBalanceStrategy/nodeNum/timeout的生效优先级为：
- *       注解中设置的 > core.setting中配置的
+ *   1.添加了 {@link AliasFor} 必须通过 {@link AnnotationUtils} 获取，才会生效
+ *   2.keyStrategy/loadBalanceStrategy/nodeNum/timeout的生效优先级为：
+ *     注解中设置的 > core.setting中配置的
  * </pre>
  *
  * @author xiajhuan
