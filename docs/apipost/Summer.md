@@ -2,7 +2,7 @@
 #### 全局Header参数
 参数名 | 示例值 | 参数描述
 --- | --- | ---
-AccessToken | d327ed5d987b0caaeeb5674489d01c2f | accessToken
+AccessToken | 9adff6c756726b1a6a12c99a7b67424d | accessToken
 Accept-Language | zh_CN | 地区语言
 #### 全局Query参数
 参数名 | 示例值 | 参数描述
@@ -530,7 +530,7 @@ noauth
 > GET
 
 #### Content-Type
-> form-data
+> urlencoded
 
 #### 请求Query参数
 参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
@@ -729,7 +729,7 @@ noauth
 > GET
 
 #### Content-Type
-> form-data
+> urlencoded
 
 #### 请求Query参数
 参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
@@ -802,7 +802,7 @@ noauth
 > GET
 
 #### Content-Type
-> form-data
+> urlencoded
 
 #### 请求Query参数
 参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
@@ -959,7 +959,7 @@ noauth
 > GET
 
 #### Content-Type
-> form-data
+> urlencoded
 
 #### 请求Query参数
 参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
@@ -1016,7 +1016,7 @@ noauth
 > GET
 
 #### Content-Type
-> form-data
+> urlencoded
 
 #### 请求Query参数
 参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
@@ -1087,7 +1087,7 @@ noauth
 > GET
 
 #### Content-Type
-> form-data
+> urlencoded
 
 #### 请求Query参数
 参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
@@ -1236,7 +1236,7 @@ noauth
 > GET
 
 #### Content-Type
-> form-data
+> urlencoded
 
 #### 请求Query参数
 参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
@@ -1309,7 +1309,7 @@ noauth
 > GET
 
 #### Content-Type
-> form-data
+> urlencoded
 
 #### 请求Query参数
 参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
@@ -1530,7 +1530,7 @@ noauth
 > GET
 
 #### Content-Type
-> form-data
+> urlencoded
 
 #### 认证方式
 ```text
@@ -1669,7 +1669,7 @@ noauth
 > GET
 
 #### Content-Type
-> form-data
+> urlencoded
 
 #### 请求Query参数
 参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
@@ -1959,7 +1959,7 @@ noauth
 > GET
 
 #### Content-Type
-> form-data
+> urlencoded
 
 #### 请求Query参数
 参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
@@ -2095,7 +2095,7 @@ noauth
 > GET
 
 #### Content-Type
-> form-data
+> urlencoded
 
 #### 请求Query参数
 参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
@@ -2301,7 +2301,7 @@ noauth
 > GET
 
 #### Content-Type
-> form-data
+> urlencoded
 
 #### 认证方式
 ```text
@@ -2385,7 +2385,7 @@ noauth
 > GET
 
 #### Content-Type
-> form-data
+> urlencoded
 
 #### 请求Query参数
 参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
