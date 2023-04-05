@@ -48,7 +48,7 @@ public class CacheConst {
         public static final String STRING = "STRING";
 
         /**
-         * Auto
+         * Auto（自增/自减）
          */
         public static final String AUTO = "AUTO";
 

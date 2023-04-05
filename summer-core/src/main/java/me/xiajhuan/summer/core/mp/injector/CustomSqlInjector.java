@@ -66,7 +66,8 @@ public class CustomSqlInjector extends DefaultSqlInjector {
     }
 
     /**
-     * 批量插入Sql（JDBC批量提交），note：
+     * 批量插入（JDBC批量提交）<br>
+     * Sql示例：INSERT INTO table(...) VALUES (...),(...),(...); note：
      * <pre>
      *   1.MybatisPlus自带的saveBatch是循环插入，数据量大时可能效率低下，故提供“JDBC批量提交”模式的支持
      *   2.如果个别字段在Entity里为 {@code null} 但表中有配置默认值，插入后该字段为“NULL”而不是默认值
@@ -83,7 +84,8 @@ public class CustomSqlInjector extends DefaultSqlInjector {
     }
 
     /**
-     * 根据ID更新固定的几个字段（不忽略值为 {@code null} 的字段），note：
+     * 根据ID更新固定的几个字段（不忽略值为 {@code null} 的字段）<br>
+     * Sql示例：UPDATE table SET 非空字段 = xxx,空字段 = NULL WHERE id = 主键; note：
      * <pre>
      *   1.MybatisPlus自带的update/updateById会自动忽略 {@code null} 字段不更新，
      *     而这个Sql会把entity存在的字段都更新，如果某个字段值为 {@code null} 就更新为“NULL”
@@ -99,7 +101,8 @@ public class CustomSqlInjector extends DefaultSqlInjector {
     }
 
     /**
-     * 逻辑批量删除（更新时填充字段以第一条记录为准），note：
+     * 逻辑批量删除（更新时填充字段以第一条记录为准）<br>
+     * Sql示例：UPDATE table SET 填充字段 = xxx,逻辑删除字段 = 1 WHERE id IN (主键1,主键2,主键3); note：
      * <pre>
      *   1.只有Entity支持逻辑删除时才生效 {@link LogicEntity}
      *   2.若无法接受所有记录填充字段以第一条记录为准，如要求字段“update_time”的时间精确，请使用循环删除
