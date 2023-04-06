@@ -41,17 +41,24 @@ public class LocaleInternationalNameDto extends ExcelDto {
     private String tableName;
 
     /**
+     * 行ID
+     */
+    @NotBlank(message = "{locale.internationalName.lineId.require}", groups = {AddGroup.class, UpdateGroup.class})
+    @ExcelProperty(value = "行ID", index = 1)
+    private String lineId;
+
+    /**
      * 字段名
      */
     @NotBlank(message = "{locale.internationalName.fieldName.require}", groups = {AddGroup.class, UpdateGroup.class})
-    @ExcelProperty(value = "字段名", index = 1)
+    @ExcelProperty(value = "字段名", index = 2)
     private String fieldName;
 
     /**
      * 字段值
      */
     @NotBlank(message = "{locale.internationalName.fieldValue.require}", groups = {AddGroup.class, UpdateGroup.class})
-    @ExcelProperty(value = "字段值", index = 2)
+    @ExcelProperty(value = "字段值", index = 3)
     private String fieldValue;
 
     /**
@@ -60,7 +67,7 @@ public class LocaleInternationalNameDto extends ExcelDto {
      * @see LocaleSupportEnum
      */
     @NotBlank(message = "{locale.internationalName.locale.require}", groups = {AddGroup.class, UpdateGroup.class})
-    @ExcelProperty(value = "地区语言", index = 3)
+    @ExcelProperty(value = "地区语言", index = 4)
     private String locale;
 
     /**

@@ -2156,6 +2156,7 @@ noauth
 参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
 --- | --- | --- | --- | ---
 tableName | security_menu | String | 是 | 表名
+lineId | 1636549079382880258 | Integer | 是 | 行ID
 fieldName | name | String | 是 | 字段名
 fieldValue | 权限管理 | String | 是 | 字段值
 locale | zh_CN | String | 是 | 地区语言
@@ -2208,6 +2209,7 @@ noauth
 --- | --- | --- | --- | ---
 id | 1641040580263530498 | Integer | 是 | ID
 tableName | security_menu | String | 是 | 表名
+lineId | 1636549079382880258 | Integer | 是 | 行ID
 fieldName | name | String | 是 | 字段名
 fieldValue | Role Management | String | 是 | 字段值
 locale | en_US | String | 是 | 地区语言

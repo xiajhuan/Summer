@@ -14,11 +14,12 @@ CREATE TABLE `locale_international_name`
     `update_time` datetime(0)                                                   NULL DEFAULT NULL COMMENT '更新时间',
     `dept_id`     bigint(20)                                                    NULL DEFAULT NULL COMMENT '部门ID',
     `table_name`  varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL COMMENT '表名',
+    `line_id`     bigint(20)                                                    NULL DEFAULT NULL COMMENT '行ID',
     `field_name`  varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL COMMENT '字段名',
     `field_value` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '字段值',
     `locale`      varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL COMMENT '地区语言',
     PRIMARY KEY (`id`) USING BTREE,
-    INDEX `idx_table_name` (`table_name`) USING BTREE,
+    UNIQUE INDEX `idx_line_id` (`line_id`) USING BTREE,
     INDEX `idx_create_time` (`create_time`) USING BTREE
 ) ENGINE = InnoDB
   CHARACTER SET = utf8mb4

@@ -65,8 +65,9 @@ public class LocaleInternationalNameServiceImpl extends ServiceImpl<LocaleIntern
     public LambdaQueryWrapper<LocaleInternationalNameEntity> getSelectWrapper(LocaleInternationalNameDto dto) {
         LambdaQueryWrapper<LocaleInternationalNameEntity> queryWrapper = getQueryWrapper(dto);
         // 查询字段
-        queryWrapper.select(LocaleInternationalNameEntity::getId, LocaleInternationalNameEntity::getTableName, LocaleInternationalNameEntity::getFieldName,
-                LocaleInternationalNameEntity::getFieldValue, LocaleInternationalNameEntity::getLocale, LocaleInternationalNameEntity::getCreateTime);
+        queryWrapper.select(LocaleInternationalNameEntity::getId, LocaleInternationalNameEntity::getTableName, LocaleInternationalNameEntity::getLineId,
+                LocaleInternationalNameEntity::getFieldName, LocaleInternationalNameEntity::getFieldValue, LocaleInternationalNameEntity::getLocale,
+                LocaleInternationalNameEntity::getCreateTime);
 
         return queryWrapper;
     }
@@ -87,8 +88,9 @@ public class LocaleInternationalNameServiceImpl extends ServiceImpl<LocaleIntern
     public LocaleInternationalNameDto getById(Long id) {
         LambdaQueryWrapper<LocaleInternationalNameEntity> queryWrapper = getEmptyWrapper();
         queryWrapper.eq(LocaleInternationalNameEntity::getId, id);
-        queryWrapper.select(LocaleInternationalNameEntity::getId, LocaleInternationalNameEntity::getTableName, LocaleInternationalNameEntity::getFieldName,
-                LocaleInternationalNameEntity::getFieldValue, LocaleInternationalNameEntity::getLocale, LocaleInternationalNameEntity::getCreateTime);
+        queryWrapper.select(LocaleInternationalNameEntity::getId, LocaleInternationalNameEntity::getTableName, LocaleInternationalNameEntity::getLineId,
+                LocaleInternationalNameEntity::getFieldName, LocaleInternationalNameEntity::getFieldValue, LocaleInternationalNameEntity::getLocale,
+                LocaleInternationalNameEntity::getCreateTime);
 
         return BeanUtil.convert(getOne(queryWrapper), LocaleInternationalNameDto.class);
     }

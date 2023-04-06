@@ -42,7 +42,7 @@ public interface LocaleInternationalNameService extends IService<LocaleInternati
     /**
      * Excel模板数据
      *
-     * @return 国际化名称Dto列表 或 {@code null}
+     * @return 国际化名称列表 或 {@code null}
      */
     default List<LocaleInternationalNameDto> excelTemplate() {
         return null;

@@ -35,6 +35,11 @@ public class LocaleInternationalNameEntity extends CommonEntity {
     private String tableName;
 
     /**
+     * 行ID
+     */
+    private Long lineId;
+
+    /**
      * 字段名
      */
     private String fieldName;
