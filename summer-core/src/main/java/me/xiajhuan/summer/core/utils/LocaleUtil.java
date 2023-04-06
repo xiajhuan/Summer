@@ -62,20 +62,32 @@ public class LocaleUtil {
     private static MessageSource messageSource;
 
     /**
-     * 服务器JVM设置的语言是中英文以外时的默认语言
+     * 请求头“Accept-Language”的值是中英文以外时的默认语言<br>
+     * note：此默认值只适用于 {@link LocaleUtil#getAcceptLanguage(HttpServletRequest)}
      */
-    private static String extraDefault;
+    private static String defaultRequestHeader;
 
     /**
-     * 初始化 {@link messageSource} {@link extraDefault}
+     * 服务器JVM设置的语言是中英文以外时的默认语言
+     */
+    private static String defaultJvm;
+
+    /**
+     * 初始化 {@link messageSource} {@link defaultRequestHeader} {@link defaultJvm}
      */
     static {
         messageSource = SpringUtil.getBean("messageSource", MessageSource.class);
-        extraDefault = SpringUtil.getBean(SettingConst.CORE, Setting.class)
-                .getByGroupWithLog("extra-default", "Locale");
-        if (StrUtil.isBlank(extraDefault)) {
+
+        Setting setting = SpringUtil.getBean(SettingConst.CORE, Setting.class);
+        defaultRequestHeader = setting.getByGroupWithLog("default.request-header", "Locale");
+        if (StrUtil.isBlank(defaultRequestHeader)) {
+            // 没有配置则默认为：zh_CN
+            defaultRequestHeader = LocaleSupportEnum.ZH_CN.getName();
+        }
+        defaultJvm = setting.getByGroupWithLog("default.jvm", "Locale");
+        if (StrUtil.isBlank(defaultJvm)) {
             // 没有配置则默认为：en_US
-            extraDefault = LocaleSupportEnum.EN_US.getName();
+            defaultJvm = LocaleSupportEnum.EN_US.getName();
         }
     }
 
@@ -126,9 +138,9 @@ public class LocaleUtil {
                 // 所有英文地区，强制为：美国（英语）
                 locale = americaLocale;
             } else {
-                LOGGER.warn("中英文以外的地区【{}】，自动调整为默认地区【{}】", locale.toLanguageTag(), extraDefault);
+                LOGGER.warn("中英文以外的地区【{}】，自动调整为默认地区【{}】", locale.toLanguageTag(), defaultJvm);
 
-                locale = LocaleSupportEnum.ZH_CN.getName().equalsIgnoreCase(extraDefault)
+                locale = LocaleSupportEnum.ZH_CN.getName().equalsIgnoreCase(defaultJvm)
                         ? chineseLocale : americaLocale;
             }
         }
@@ -137,10 +149,22 @@ public class LocaleUtil {
     }
 
     /**
+     * 根据请求头“Accept-Language”获取地区语言
+     *
+     * @param request {@link HttpServletRequest}
+     * @return 地区语言
+     */
+    public static String getAcceptLanguage(HttpServletRequest request) {
+        Locale locale = getLocaleAcceptLanguage(request);
+
+        return locale == null ? defaultRequestHeader : locale.toLanguageTag();
+    }
+
+    /**
      * 根据请求头“Accept-Language”获取 {@link Locale}
      *
      * @param request {@link HttpServletRequest}
-     * @return {@link Locale}
+     * @return {@link Locale} 或 {@code null}
      */
     private static Locale getLocaleAcceptLanguage(HttpServletRequest request) {
         if (request == null) {

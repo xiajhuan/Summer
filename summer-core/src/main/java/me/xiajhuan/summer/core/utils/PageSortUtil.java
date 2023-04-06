@@ -217,7 +217,7 @@ public class PageSortUtil {
      *
      * @param field 字段
      * @param order 规则
-     * @return {@link Dict}
+     * @return {@link Dict} 或 {@code null}
      */
     private static Dict handleSortInternal(String field, String order) {
         // 默认字段和规则

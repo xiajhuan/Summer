@@ -165,7 +165,7 @@ public class SecurityUtil extends SecurityUtils {
      * 获取 {@link Subject}<br>
      * Subject：表示单个应用程序用户的状态和安全操作
      *
-     * @return {@link Subject}
+     * @return {@link Subject} 或 {@code null}
      */
     private static Subject acquireSubject() {
         try {

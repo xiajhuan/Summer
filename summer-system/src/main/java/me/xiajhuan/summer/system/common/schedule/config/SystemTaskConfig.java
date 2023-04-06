@@ -83,7 +83,7 @@ public class SystemTaskConfig implements SchedulingConfigurer {
     /**
      * 构建定时任务线程池
      *
-     * @return {@link ScheduledExecutorService}
+     * @return {@link ScheduledExecutorService} 或 {@code null}
      */
     private ScheduledExecutorService buildScheduledExecutorService() {
         if (enableSystemTask) {
@@ -107,7 +107,7 @@ public class SystemTaskConfig implements SchedulingConfigurer {
     /**
      * 注册日志定时任务
      *
-     * @return 日志定时任务
+     * @return 日志定时任务或 {@code null}
      */
     @Bean
     public LogTask logTask() {

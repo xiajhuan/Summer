@@ -107,7 +107,7 @@ public class DataScopeHandler implements MultiDataPermissionHandler {
      * 获取 {@link Parenthesis}
      *
      * @param prefix 前缀
-     * @return {@link Parenthesis}
+     * @return {@link Parenthesis} 或 {@code null}
      */
     private Parenthesis getParenthesis(String prefix) {
         // note：这里默认是内部接口，开放接口不适用数据权限功能，所以必然存在登录用户

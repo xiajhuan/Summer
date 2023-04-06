@@ -208,7 +208,7 @@ public class SecurityServiceImpl implements SecurityService {
      * 获取用户权限集合
      *
      * @param loginUser 登录用户信息
-     * @return 用户权限集合
+     * @return 用户权限集合 或 {@code null}
      */
     private Set<String> getPermissions(LoginUser loginUser) {
         // 用户权限集合
