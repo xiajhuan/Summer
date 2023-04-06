@@ -12,7 +12,6 @@
 
 package me.xiajhuan.summer.system.security.service;
 
-
 import me.xiajhuan.summer.system.security.dto.SecurityUserDto;
 import me.xiajhuan.summer.system.security.dto.TokenDto;
 

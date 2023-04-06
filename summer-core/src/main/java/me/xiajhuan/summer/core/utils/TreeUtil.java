@@ -97,6 +97,8 @@ public class TreeUtil extends cn.hutool.core.lang.tree.TreeUtil {
      * @return 树形结构列表（{@link Tree}）
      */
     public static <D extends TreeNode> List<Tree<Long>> build(Class<D> dtoClass, List<D> dtoList, Long rootId, String... extraField) {
+        AssertUtil.isNotNull("rootId", rootId);
+
         // 获取扩展属性的Getter
         final Map<String, Method> extraGetters = getExtraGetters(dtoClass, extraField);
 

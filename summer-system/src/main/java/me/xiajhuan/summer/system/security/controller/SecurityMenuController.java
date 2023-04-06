@@ -15,10 +15,12 @@ package me.xiajhuan.summer.system.security.controller;
 import me.xiajhuan.summer.core.constant.OperationConst;
 import me.xiajhuan.summer.core.data.Result;
 import me.xiajhuan.summer.core.utils.AssertUtil;
+import me.xiajhuan.summer.core.utils.SecurityUtil;
 import me.xiajhuan.summer.core.validation.group.AddGroup;
 import me.xiajhuan.summer.core.validation.group.UpdateGroup;
 import me.xiajhuan.summer.system.common.annotation.LogOperation;
 import me.xiajhuan.summer.system.security.dto.SecurityMenuDto;
+import me.xiajhuan.summer.system.security.enums.ComponentTypeEnum;
 import me.xiajhuan.summer.system.security.service.SecurityMenuService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.validation.annotation.Validated;
@@ -26,6 +28,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 菜单 Controller
@@ -109,6 +112,30 @@ public class SecurityMenuController {
         AssertUtil.isNotNull("id", id);
         mainService.delete(id);
         return Result.ofSuccess();
+    }
+
+    //*******************Other Operation********************
+
+    /**
+     * 导航列表
+     *
+     * @return 响应结果
+     */
+    @GetMapping("navList")
+    @LogOperation("导航列表")
+    public Result<List<SecurityMenuDto>> navList() {
+        return Result.ofSuccess(mainService.navList(ComponentTypeEnum.MENU.getValue()));
+    }
+
+    /**
+     * 用户权限集合
+     *
+     * @return 响应结果
+     */
+    @GetMapping("permissions")
+    @LogOperation("用户权限集合")
+    public Result<Set<String>> permissions() {
+        return Result.ofSuccess(mainService.getPermissions(SecurityUtil.getLoginUser()));
     }
 
 }

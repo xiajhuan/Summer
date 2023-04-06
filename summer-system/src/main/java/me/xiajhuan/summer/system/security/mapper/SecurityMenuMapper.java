@@ -16,7 +16,9 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import me.xiajhuan.summer.system.security.entity.SecurityMenuEntity;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import me.xiajhuan.summer.system.security.enums.ComponentTypeEnum;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -26,6 +28,25 @@ import java.util.Set;
  * @date 2023/2/28
  */
 public interface SecurityMenuMapper extends BaseMapper<SecurityMenuEntity> {
+
+    SecurityMenuEntity getById(@Param("id") Long id, @Param("locale") String locale);
+
+    /**
+     * 获取所有菜单
+     *
+     * @param locale 地区语言
+     * @param type   类型 {@link ComponentTypeEnum}
+     */
+    List<SecurityMenuEntity> getMenusAll(@Param("locale") String locale, @Param("type") Integer type);
+
+    /**
+     * 获取菜单
+     *
+     * @param locale 地区语言
+     * @param type   类型 {@link ComponentTypeEnum}
+     * @param userId 用户ID
+     */
+    List<SecurityMenuEntity> getMenus(@Param("locale") String locale, @Param("type") Integer type, @Param("userId") Long userId);
 
     /**
      * 获取所有权限

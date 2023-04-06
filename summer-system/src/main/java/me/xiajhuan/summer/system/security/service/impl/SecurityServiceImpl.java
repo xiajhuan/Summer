@@ -23,7 +23,6 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import me.xiajhuan.summer.core.cache.factory.CacheServerFactory;
 import me.xiajhuan.summer.core.cache.server.CacheServer;
 import me.xiajhuan.summer.core.constant.*;
-import me.xiajhuan.summer.core.enums.UserTypeEnum;
 import me.xiajhuan.summer.core.data.LoginUser;
 import me.xiajhuan.summer.core.utils.BeanUtil;
 import me.xiajhuan.summer.core.utils.SecurityUtil;
@@ -33,9 +32,9 @@ import static me.xiajhuan.summer.system.security.cache.SecurityCacheKey.*;
 import me.xiajhuan.summer.system.security.dto.SecurityUserDto;
 import me.xiajhuan.summer.system.security.dto.TokenDto;
 import me.xiajhuan.summer.system.security.enums.CaptchaTypeEnum;
-import me.xiajhuan.summer.system.security.mapper.SecurityMenuMapper;
 import me.xiajhuan.summer.system.security.mapper.SecurityRoleDeptMapper;
 import me.xiajhuan.summer.system.security.service.SecurityDeptService;
+import me.xiajhuan.summer.system.security.service.SecurityMenuService;
 import me.xiajhuan.summer.system.security.service.SecurityService;
 import org.springframework.stereotype.Service;
 
@@ -44,7 +43,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * 权限相关 ServiceImpl
@@ -60,13 +58,13 @@ public class SecurityServiceImpl implements SecurityService {
     private Setting setting;
 
     @Resource
-    private SecurityMenuMapper securityMenuMapper;
-
-    @Resource
-    private SecurityRoleDeptMapper securityRoleDeptMapper;
+    private SecurityMenuService securityMenuService;
 
     @Resource
     private SecurityDeptService securityDeptService;
+
+    @Resource
+    private SecurityRoleDeptMapper securityRoleDeptMapper;
 
     @Override
     public TokenDto generateTokenAndCache(SecurityUserDto dto) {
@@ -99,7 +97,7 @@ public class SecurityServiceImpl implements SecurityService {
         cacheServer.setHash(loginInfoKey, loginInfo, cacheTtl);
 
         // 缓存用户权限集合（覆盖刷新）
-        Set<String> permissions = getPermissions(loginUser);
+        Set<String> permissions = securityMenuService.getPermissions(loginUser);
         if (permissions == null) {
             permissions = CollUtil.newHashSet(StrUtil.EMPTY);
         }
@@ -202,31 +200,6 @@ public class SecurityServiceImpl implements SecurityService {
         deptIdSet.add(deptId);
 
         return deptIdSet;
-    }
-
-    /**
-     * 获取用户权限集合
-     *
-     * @param loginUser 登录用户信息
-     * @return 用户权限集合 或 {@code null}
-     */
-    private Set<String> getPermissions(LoginUser loginUser) {
-        // 用户权限集合
-        final Set<String> permissions;
-        if (loginUser.getUserType() == UserTypeEnum.SUPER_ADMIN.getValue()) {
-            // 超级管理员
-            permissions = securityMenuMapper.getPermissionsAll();
-        } else {
-            // 普通用户
-            permissions = securityMenuMapper.getPermissions(loginUser.getId());
-        }
-
-        if (CollUtil.isNotEmpty(permissions)) {
-            return permissions.stream().filter(p -> !StrUtil.isBlankOrUndefined(p))
-                    .collect(Collectors.toSet());
-        } else {
-            return null;
-        }
     }
 
     /**

@@ -138,7 +138,7 @@ public class LocaleUtil {
                 // 所有英文地区，强制为：美国（英语）
                 locale = americaLocale;
             } else {
-                LOGGER.warn("中英文以外的地区【{}】，自动调整为默认地区【{}】", locale.toLanguageTag(), defaultJvm);
+                LOGGER.warn("中英文以外的地区【{}】，自动调整为默认地区【{}】", locale.toString(), defaultJvm);
 
                 locale = LocaleSupportEnum.ZH_CN.getName().equalsIgnoreCase(defaultJvm)
                         ? chineseLocale : americaLocale;
@@ -157,7 +157,7 @@ public class LocaleUtil {
     public static String getAcceptLanguage(HttpServletRequest request) {
         Locale locale = getLocaleAcceptLanguage(request);
 
-        return locale == null ? defaultRequestHeader : locale.toLanguageTag();
+        return locale == null ? defaultRequestHeader : locale.toString();
     }
 
     /**

@@ -3,6 +3,77 @@
 
 <mapper namespace="me.xiajhuan.summer.system.security.mapper.SecurityMenuMapper">
 
+    <sql id="column">
+        t1.id,
+        t1.parent_id,
+        t1.url,
+        t1.permissions,
+        t1.type,
+        t1.open_mode,
+        t1.icon,
+        t1.weight,
+        t1.create_time,
+        ( SELECT
+	      t2.field_value
+          FROM
+          locale_international_name t2
+          WHERE
+	      t2.table_name = 'security_menu'
+	      AND t2.field_name = 'name'
+	      AND t2.line_id = t1.id
+	      AND t2.locale = #{locale} ) AS name
+    </sql>
+
+    <select id="getById" resultType="SecurityMenuEntity">
+        SELECT
+        <include refid="column"/>,
+        ( SELECT
+          t2.field_value
+          FROM
+          locale_international_name t2
+          WHERE
+          t2.table_name = 'security_menu'
+          AND t2.field_name = 'name'
+          AND t2.line_id = t1.parent_id
+          AND t2.locale = #{locale} ) AS parentName
+        FROM
+        security_menu t1
+        WHERE
+        t1.id = #{id}
+    </select>
+
+    <select id="getMenusAll" resultType="SecurityMenuEntity">
+        SELECT
+        <include refid="column"/>
+        FROM
+        security_menu t1
+        <where>
+            <if test="type != null">
+                t1.type = #{type}
+            </if>
+        </where>
+        ORDER BY
+        t1.weight
+    </select>
+
+    <select id="getMenus" resultType="SecurityMenuEntity">
+        SELECT
+        <include refid="column"/>
+        FROM
+        security_role_user t3
+        LEFT JOIN security_role_menu t4
+        ON t3.role_id = t4.role_id
+        LEFT JOIN security_menu t1
+        ON t4.menu_id = t1.id
+        WHERE
+        t3.user_id = #{userId}
+        <if test="type != null">
+            AND t1.type = #{type}
+        </if>
+        ORDER BY
+        t1.weight
+    </select>
+
     <select id="getPermissions" parameterType="Long" resultType="String">
         SELECT
         t3.permissions

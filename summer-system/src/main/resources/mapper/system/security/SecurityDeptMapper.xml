@@ -9,7 +9,12 @@
         t1.name,
         t1.weight,
         t1.create_time,
-        ( SELECT t2.name FROM security_dept t2 WHERE t2.id = t1.parent_id ) parentName
+        ( SELECT
+          t2.name
+          FROM
+          security_dept t2
+          WHERE
+          t2.id = t1.parent_id ) parentName
     </sql>
 
     <select id="getList" parameterType="Collection" resultType="SecurityDeptEntity">
@@ -17,12 +22,14 @@
         <include refid="column"/>
         FROM
         security_dept t1
-        <if test="idSet != null and idSet.size() > 0">
-            WHERE t1.id IN
-            <foreach item="id" collection="idSet" open="(" separator="," close=")">
-                #{id}
-            </foreach>
-        </if>
+        <where>
+            <if test="idSet != null and idSet.size() > 0">
+                t1.id IN
+                <foreach item="id" collection="idSet" open="(" separator="," close=")">
+                    #{id}
+                </foreach>
+            </if>
+        </where>
         ORDER BY
         t1.weight
     </select>
@@ -32,7 +39,8 @@
         <include refid="column"/>
         FROM
         security_dept t1
-        WHERE t1.id = #{id}
+        WHERE
+        t1.id = #{id}
     </select>
 
 </mapper>
