@@ -47,7 +47,7 @@ public class ServletUtil extends cn.hutool.extra.servlet.ServletUtil {
     /**
      * 获取HTTP请求
      *
-     * @return {@link HttpServletRequest}
+     * @return {@link HttpServletRequest} 或 {@code null}
      */
     public static HttpServletRequest getHttpServletRequest() {
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
@@ -65,8 +65,11 @@ public class ServletUtil extends cn.hutool.extra.servlet.ServletUtil {
      * @return 请求域名
      */
     public static String getDomain(HttpServletRequest request) {
-        StringBuffer url = request.getRequestURL();
-        return url.delete(url.length() - request.getRequestURI().length(), url.length()).toString();
+        if (request != null) {
+            StringBuffer url = request.getRequestURL();
+            return url.delete(url.length() - request.getRequestURI().length(), url.length()).toString();
+        }
+        return StrUtil.EMPTY;
     }
 
     /**
@@ -76,7 +79,7 @@ public class ServletUtil extends cn.hutool.extra.servlet.ServletUtil {
      * @return 请求来源
      */
     public static String getOrigin(HttpServletRequest request) {
-        return getHeaderIgnoreCase(request, HttpHeaders.ORIGIN);
+        return request == null ? StrUtil.EMPTY : getHeaderIgnoreCase(request, HttpHeaders.ORIGIN);
     }
 
     /**
@@ -86,7 +89,7 @@ public class ServletUtil extends cn.hutool.extra.servlet.ServletUtil {
      * @return 请求代理
      */
     public static String getUserAgent(HttpServletRequest request) {
-        return getHeaderIgnoreCase(request, HttpHeaders.USER_AGENT);
+        return request == null ? StrUtil.EMPTY : getHeaderIgnoreCase(request, HttpHeaders.USER_AGENT);
     }
 
     /**
@@ -97,7 +100,8 @@ public class ServletUtil extends cn.hutool.extra.servlet.ServletUtil {
      * @return 接口唯一标识
      */
     public static String getInterfaceSignature(HttpServletRequest request) {
-        return StrUtil.format("{}[{}]", request.getRequestURI(), request.getMethod());
+        return request == null ? StrUtil.EMPTY
+                : StrUtil.format("{}[{}]", request.getRequestURI(), request.getMethod());
     }
 
     /**
@@ -121,7 +125,7 @@ public class ServletUtil extends cn.hutool.extra.servlet.ServletUtil {
         // 请求参数，note：这里如果没有参数会返回空数组
         Object[] args = point.getArgs();
 
-        if (args.length > 0) {
+        if (request != null && args.length > 0) {
             // Path中的Query参数，note：非GET请求也可能携带Query参数
             String queryString = request.getQueryString();
             // Query参数格式示例：Query【pageNum=1&pageSize=10】
@@ -190,8 +194,10 @@ public class ServletUtil extends cn.hutool.extra.servlet.ServletUtil {
      */
     public static void response(HttpServletResponse response, String contentType,
                                 int status, Object data) {
-        response.setStatus(status);
-        write(response, JSONUtil.toJsonStr(data), contentType);
+        if (response != null) {
+            response.setStatus(status);
+            write(response, JSONUtil.toJsonStr(data), contentType);
+        }
     }
 
     /**
