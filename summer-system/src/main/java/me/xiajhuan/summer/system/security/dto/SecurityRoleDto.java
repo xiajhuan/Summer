@@ -12,6 +12,7 @@
 
 package me.xiajhuan.summer.system.security.dto;
 
+import cn.hutool.core.collection.CollUtil;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import me.xiajhuan.summer.core.dto.PageSortDto;
@@ -41,7 +42,7 @@ public class SecurityRoleDto extends PageSortDto {
     /**
      * 描述
      */
-    private String desc;
+    private String description;
 
     /**
      * 创建时间
@@ -51,11 +52,11 @@ public class SecurityRoleDto extends PageSortDto {
     /**
      * 菜单ID集合
      */
-    private Set<Long> menuIdSet;
+    private Set<Long> menuIdSet = CollUtil.newHashSet();
 
     /**
      * 部门ID集合
      */
-    private Set<Long> deptIdSet;
+    private Set<Long> deptIdSet = CollUtil.newHashSet();
 
 }

@@ -15,6 +15,7 @@ package me.xiajhuan.summer.system.security.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import me.xiajhuan.summer.system.security.entity.SecurityRoleDeptEntity;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.Set;
 
@@ -25,6 +26,15 @@ import java.util.Set;
  * @date 2023/2/28
  */
 public interface SecurityRoleDeptMapper extends BaseMapper<SecurityRoleDeptEntity> {
+
+    /**
+     * 获取部门ID集合
+     *
+     * @param roleId 角色ID
+     * @return 部门ID集合
+     */
+    @Select("SELECT dept_id from security_role_dept WHERE role_id = #{roleId}")
+    Set<Long> getDeptIdSet(@Param("roleId") Long roleId);
 
     Set<Long> getDeptIdRoleBasedSet(@Param("userId") Long userId);
 

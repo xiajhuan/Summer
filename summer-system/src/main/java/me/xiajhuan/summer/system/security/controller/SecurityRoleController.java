@@ -26,6 +26,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 角色 Controller
@@ -53,6 +54,33 @@ public class SecurityRoleController {
     @LogOperation(OperationConst.PAGE)
     public Result<PageData<SecurityRoleDto>> page(SecurityRoleDto dto) {
         return Result.ofSuccess(PageData.of(mainService.page(dto)));
+    }
+
+    /**
+     * 列表
+     *
+     * @param dto 角色Dto
+     * @return 响应结果
+     */
+    @GetMapping("list")
+    @RequiresPermissions("security:role:list")
+    @LogOperation(OperationConst.LIST)
+    public Result<List<SecurityRoleDto>> list(SecurityRoleDto dto) {
+        return Result.ofSuccess(mainService.list(dto));
+    }
+
+    /**
+     * 根据ID获取
+     *
+     * @param id ID
+     * @return 响应结果
+     */
+    @GetMapping("getById")
+    @RequiresPermissions("security:role:getById")
+    @LogOperation(OperationConst.GET_BY_ID)
+    public Result<SecurityRoleDto> getById(Long id) {
+        AssertUtil.isNotNull("id", id);
+        return Result.ofSuccess(mainService.getById(id));
     }
 
     /**

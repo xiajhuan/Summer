@@ -13,27 +13,13 @@
 package me.xiajhuan.summer.system.security.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import me.xiajhuan.summer.system.security.entity.SecurityRoleMenuEntity;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-
-import java.util.Set;
+import me.xiajhuan.summer.system.security.entity.SecurityRoleUserEntity;
 
 /**
- * 角色菜单关联 Mapper
+ * 角色用户关联 Mapper
  *
  * @author xiajhuan
  * @date 2023/4/7
  */
-public interface SecurityRoleMenuMapper extends BaseMapper<SecurityRoleMenuEntity> {
-
-    /**
-     * 获取菜单ID集合
-     *
-     * @param roleId 角色ID
-     * @return 菜单ID集合
-     */
-    @Select("SELECT menu_id from security_role_menu WHERE role_id = #{roleId}")
-    Set<Long> getMenuIdSet(@Param("roleId") Long roleId);
-
+public interface SecurityRoleUserMapper extends BaseMapper<SecurityRoleUserEntity> {
 }

@@ -17,6 +17,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import me.xiajhuan.summer.core.entity.SimpleEntity;
 
+import java.util.Date;
+
 /**
  * 角色部门关联 Entity
  *
@@ -27,6 +29,18 @@ import me.xiajhuan.summer.core.entity.SimpleEntity;
 @EqualsAndHashCode(callSuper = true)
 @TableName("security_role_dept")
 public class SecurityRoleDeptEntity extends SimpleEntity {
+
+    /**
+     * 创建者<br>
+     * note：不使用字段自动填充，否则“deptId”会被填充覆盖！
+     */
+    private String createBy;
+
+    /**
+     * 创建时间<br>
+     * note：不使用字段自动填充，否则“deptId”会被填充覆盖！
+     */
+    private Date createTime;
 
     /**
      * 角色ID

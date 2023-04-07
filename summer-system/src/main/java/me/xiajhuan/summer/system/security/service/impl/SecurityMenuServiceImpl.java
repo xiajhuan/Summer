@@ -123,7 +123,7 @@ public class SecurityMenuServiceImpl extends ServiceImpl<SecurityMenuMapper, Sec
         queryWrapper.eq(LocaleInternationalNameEntity::getLocale, LocaleUtil.getAcceptLanguage(ServletUtil.getHttpRequest()));
         localeInternationalNameService.remove(queryWrapper);
 
-        // 删除角色菜单关系
+        // 删除角色菜单关联
         LambdaQueryWrapper<SecurityRoleMenuEntity> roleMenuQueryWrapper = Wrappers.lambdaQuery();
         roleMenuQueryWrapper.eq(SecurityRoleMenuEntity::getMenuId, id);
         securityRoleMenuMapper.delete(roleMenuQueryWrapper);

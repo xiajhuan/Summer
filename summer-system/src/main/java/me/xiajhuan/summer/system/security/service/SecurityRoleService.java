@@ -17,6 +17,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import me.xiajhuan.summer.system.security.dto.SecurityRoleDto;
 import me.xiajhuan.summer.system.security.entity.SecurityRoleEntity;
 
+import java.util.List;
+
 /**
  * 角色 Service
  *
@@ -26,6 +28,10 @@ import me.xiajhuan.summer.system.security.entity.SecurityRoleEntity;
 public interface SecurityRoleService extends IService<SecurityRoleEntity> {
 
     Page<SecurityRoleDto> page(SecurityRoleDto dto);
+
+    List<SecurityRoleDto> list(SecurityRoleDto dto);
+
+    SecurityRoleDto getById(Long id);
 
     void add(SecurityRoleDto dto);
 

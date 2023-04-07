@@ -36,6 +36,6 @@ public class SecurityRoleEntity extends CommonEntity {
     /**
      * 描述
      */
-    private String desc;
+    private String description;
 
 }
