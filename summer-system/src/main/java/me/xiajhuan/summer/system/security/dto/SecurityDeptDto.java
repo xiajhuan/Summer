@@ -62,6 +62,7 @@ public class SecurityDeptDto extends TreeNode {
      * 顺序，越小优先级越高
      */
     @Min(value = 0, message = "{weight.number}", groups = {AddGroup.class, UpdateGroup.class})
+    @NotNull(message = "{weight.require}", groups = {AddGroup.class, UpdateGroup.class})
     private Integer weight;
 
     /**

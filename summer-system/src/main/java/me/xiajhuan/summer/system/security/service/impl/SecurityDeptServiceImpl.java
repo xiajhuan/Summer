@@ -88,15 +88,14 @@ public class SecurityDeptServiceImpl extends ServiceImpl<SecurityDeptMapper, Sec
 
     @Override
     public void update(SecurityDeptDto dto) {
-        SecurityDeptEntity entity = BeanUtil.convert(dto, SecurityDeptEntity.class);
-
-        long id = entity.getId().longValue();
-        long parentId = entity.getParentId().longValue();
+        long id = dto.getId().longValue();
+        long parentId = dto.getParentId().longValue();
         // 上级部门不能为自身或下级部门
         if (id == parentId || getChildIdSet(id).contains(parentId)) {
             throw BusinessException.of(ErrorCode.SUPERIOR_DEPT_ERROR);
         }
 
+        SecurityDeptEntity entity = BeanUtil.convert(dto, SecurityDeptEntity.class);
         // 所有上级部门ID
         entity.setParentIdAll(getParentIdAll(parentId));
 

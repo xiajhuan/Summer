@@ -19,7 +19,7 @@ CREATE TABLE `locale_international_name`
     `field_value` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '字段值',
     `locale`      varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL COMMENT '地区语言',
     PRIMARY KEY (`id`) USING BTREE,
-    UNIQUE INDEX `idx_line_id` (`line_id`) USING BTREE,
+    INDEX `idx_line_id` (`line_id`) USING BTREE,
     INDEX `idx_create_time` (`create_time`) USING BTREE
 ) ENGINE = InnoDB
   CHARACTER SET = utf8mb4

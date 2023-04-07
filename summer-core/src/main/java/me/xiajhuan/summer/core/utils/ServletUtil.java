@@ -49,7 +49,7 @@ public class ServletUtil extends cn.hutool.extra.servlet.ServletUtil {
      *
      * @return {@link HttpServletRequest} 或 {@code null}
      */
-    public static HttpServletRequest getHttpServletRequest() {
+    public static HttpServletRequest getHttpRequest() {
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
         if (requestAttributes == null) {
             return null;

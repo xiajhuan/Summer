@@ -204,7 +204,7 @@ public class GlobalExceptionHandler {
         boolean isIgnore = isIgnoreBusinessException(e);
         if (isSaveErrorLog && !isIgnore) {
             // 异步保存错误日志
-            logErrorService.saveAsync(e, ServletUtil.getHttpServletRequest());
+            logErrorService.saveAsync(e, ServletUtil.getHttpRequest());
         }
 
         String msg = e.getMessage();

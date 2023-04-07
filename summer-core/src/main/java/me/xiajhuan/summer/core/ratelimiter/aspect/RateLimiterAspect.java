@@ -138,7 +138,7 @@ public class RateLimiterAspect {
 
         if (rateLimiter != null && rateLimiter.qps() > RateLimiter.NOT_LIMITED) {
             // 请求
-            HttpServletRequest request = ServletUtil.getHttpServletRequest();
+            HttpServletRequest request = ServletUtil.getHttpRequest();
 
             //*******************限流Key获取********************
 

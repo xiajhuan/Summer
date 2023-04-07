@@ -101,7 +101,7 @@ public class LogOperationAspect {
         LogOperation logOperation = AnnotationUtils.findAnnotation(method, LogOperation.class);
 
         // 请求
-        HttpServletRequest request = ServletUtil.getHttpServletRequest();
+        HttpServletRequest request = ServletUtil.getHttpRequest();
 
         // 构建操作日志
         LogOperationEntity entity = LogOperationEntity.builder()

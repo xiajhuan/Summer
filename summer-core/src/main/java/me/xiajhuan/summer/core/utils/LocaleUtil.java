@@ -121,7 +121,7 @@ public class LocaleUtil {
      */
     public static Locale getLocalePriority() {
         // 优先取请求头“Accept-Language”的值
-        Locale locale = getLocaleAcceptLanguage(ServletUtil.getHttpServletRequest());
+        Locale locale = getLocaleAcceptLanguage(ServletUtil.getHttpRequest());
 
         if (locale == null) {
             // 取JVM设置的值

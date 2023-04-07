@@ -13,8 +13,7 @@
 package me.xiajhuan.summer.system.locale.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 import me.xiajhuan.summer.core.entity.CommonEntity;
 import me.xiajhuan.summer.core.enums.LocaleSupportEnum;
 
@@ -25,6 +24,9 @@ import me.xiajhuan.summer.core.enums.LocaleSupportEnum;
  * @date 2023/3/16
  */
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @TableName("locale_international_name")
 public class LocaleInternationalNameEntity extends CommonEntity {

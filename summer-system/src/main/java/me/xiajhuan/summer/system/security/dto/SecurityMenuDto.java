@@ -80,6 +80,7 @@ public class SecurityMenuDto extends TreeNode {
      * @see ComponentTypeEnum
      */
     @Range(min = 0, max = 1, message = "{security.menu.type.range}", groups = {AddGroup.class, UpdateGroup.class})
+    @NotNull(message = "{security.menu.type.require}", groups = {AddGroup.class, UpdateGroup.class})
     private Integer type;
 
     /**
@@ -99,6 +100,7 @@ public class SecurityMenuDto extends TreeNode {
      * 顺序，越小优先级越高
      */
     @Min(value = 0, message = "{weight.number}", groups = {AddGroup.class, UpdateGroup.class})
+    @NotNull(message = "{weight.require}", groups = {AddGroup.class, UpdateGroup.class})
     private Integer weight;
 
     /**
