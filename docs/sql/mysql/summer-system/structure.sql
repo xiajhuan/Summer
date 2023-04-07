@@ -157,7 +157,7 @@ CREATE TABLE `security_role`
     `update_time` datetime(0)                                                   NULL DEFAULT NULL COMMENT '更新时间',
     `dept_id`     bigint(20)                                                    NULL DEFAULT NULL COMMENT '部门ID',
     `name`        varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL COMMENT '角色名称',
-    `desc`        varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
+    `description`        varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
     PRIMARY KEY (`id`) USING BTREE,
     INDEX `idx_dept_id` (`dept_id`) USING BTREE,
     INDEX `idx_create_time` (`create_time`) USING BTREE
