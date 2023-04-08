@@ -82,6 +82,15 @@ public class SecurityPostServiceImpl extends ServiceImpl<SecurityPostMapper, Sec
                 SecurityPostEntity::getStatus, SecurityPostEntity::getCreateTime);
     }
 
+    @Override
+    public void handleDtoBefore(SecurityPostDto dto) {
+        // 岗位编码不能重复
+        String code = dto.getCode();
+        if (baseMapper.exist(code) != null) {
+            throw ValidationException.of(ErrorCode.POST_EXISTS, code);
+        }
+    }
+
     //*******************MpHelper覆写结束********************
 
     @Override
@@ -90,8 +99,11 @@ public class SecurityPostServiceImpl extends ServiceImpl<SecurityPostMapper, Sec
     }
 
     @Override
-    public List<SecurityPostDto> list(SecurityPostDto dto) {
-        return BeanUtil.convert(list(getSortWrapper(dto)), SecurityPostDto.class);
+    public List<SecurityPostDto> list(int status) {
+        LambdaQueryWrapper<SecurityPostEntity> queryWrapper = getEmptyWrapper();
+        queryWrapper.eq(SecurityPostEntity::getStatus, status);
+        queryWrapper.select(SecurityPostEntity::getId, SecurityPostEntity::getName);
+        return BeanUtil.convert(list(queryWrapper), SecurityPostDto.class);
     }
 
     @Override
@@ -104,11 +116,7 @@ public class SecurityPostServiceImpl extends ServiceImpl<SecurityPostMapper, Sec
 
     @Override
     public void add(SecurityPostDto dto) {
-        // 岗位编码不能重复
-        String code = dto.getCode();
-        if (baseMapper.exist(code) != null) {
-            throw ValidationException.of(ErrorCode.POST_EXISTS, code);
-        }
+        handleDtoBefore(dto);
 
         save(BeanUtil.convert(dto, SecurityPostEntity.class));
     }

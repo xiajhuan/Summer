@@ -55,13 +55,13 @@ import java.util.stream.Collectors;
 public class SecurityRoleServiceImpl extends ServiceImpl<SecurityRoleMapper, SecurityRoleEntity> implements SecurityRoleService, MpHelper<SecurityRoleDto, SecurityRoleEntity> {
 
     @Resource
+    private SecurityRoleUserMapper securityRoleUserMapper;
+
+    @Resource
     private SecurityRoleMenuMapper securityRoleMenuMapper;
 
     @Resource
     private SecurityRoleDeptMapper securityRoleDeptMapper;
-
-    @Resource
-    private SecurityRoleUserMapper securityRoleUserMapper;
 
     //*******************MpHelper覆写开始********************
 
@@ -88,6 +88,15 @@ public class SecurityRoleServiceImpl extends ServiceImpl<SecurityRoleMapper, Sec
                 SecurityRoleEntity::getCreateTime);
     }
 
+    @Override
+    public void handleDtoBefore(SecurityRoleDto dto) {
+        // 角色名称不能重复
+        String name = dto.getName();
+        if (baseMapper.exist(name) != null) {
+            throw ValidationException.of(ErrorCode.ROLE_EXISTS, name);
+        }
+    }
+
     //*******************MpHelper覆写结束********************
 
     @Override
@@ -97,7 +106,9 @@ public class SecurityRoleServiceImpl extends ServiceImpl<SecurityRoleMapper, Sec
 
     @Override
     public List<SecurityRoleDto> list(SecurityRoleDto dto) {
-        return BeanUtil.convert(list(getSortWrapper(dto)), SecurityRoleDto.class);
+        LambdaQueryWrapper<SecurityRoleEntity> queryWrapper = getQueryWrapper(dto);
+        queryWrapper.select(SecurityRoleEntity::getId, SecurityRoleEntity::getName);
+        return BeanUtil.convert(list(queryWrapper), SecurityRoleDto.class);
     }
 
     @Override
@@ -121,7 +132,7 @@ public class SecurityRoleServiceImpl extends ServiceImpl<SecurityRoleMapper, Sec
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void add(SecurityRoleDto dto) {
-        validateName(dto.getName());
+        handleDtoBefore(dto);
 
         SecurityRoleEntity entity = BeanUtil.convert(dto, SecurityRoleEntity.class);
         // 保存角色
@@ -138,7 +149,7 @@ public class SecurityRoleServiceImpl extends ServiceImpl<SecurityRoleMapper, Sec
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void update(SecurityRoleDto dto) {
-        validateName(dto.getName());
+        handleDtoBefore(dto);
 
         SecurityRoleEntity entity = BeanUtil.convert(dto, SecurityRoleEntity.class);
         // 修改角色
@@ -173,18 +184,6 @@ public class SecurityRoleServiceImpl extends ServiceImpl<SecurityRoleMapper, Sec
         LambdaQueryWrapper<SecurityRoleUserEntity> roleUserQueryWrapper = Wrappers.lambdaQuery();
         roleUserQueryWrapper.in(SecurityRoleUserEntity::getRoleId, idSet);
         securityRoleUserMapper.delete(roleUserQueryWrapper);
-    }
-
-    /**
-     * 校验角色名称
-     *
-     * @param name 角色名称
-     */
-    private void validateName(String name) {
-        // 角色名称不能重复
-        if (baseMapper.exist(name) != null) {
-            throw ValidationException.of(ErrorCode.ROLE_EXISTS, name);
-        }
     }
 
     /**

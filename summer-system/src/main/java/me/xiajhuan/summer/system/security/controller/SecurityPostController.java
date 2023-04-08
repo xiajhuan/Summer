@@ -59,14 +59,13 @@ public class SecurityPostController {
     /**
      * 列表
      *
-     * @param dto 岗位Dto
      * @return 响应结果
      */
     @GetMapping("list")
     @RequiresPermissions("security:post:list")
     @LogOperation(OperationConst.LIST)
-    public Result<List<SecurityPostDto>> list(SecurityPostDto dto) {
-        return Result.ofSuccess(mainService.list(dto));
+    public Result<List<SecurityPostDto>> list() {
+        return Result.ofSuccess(mainService.list(1));
     }
 
     /**

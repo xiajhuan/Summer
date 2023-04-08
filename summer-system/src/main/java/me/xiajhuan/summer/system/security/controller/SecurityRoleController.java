@@ -59,14 +59,13 @@ public class SecurityRoleController {
     /**
      * 列表
      *
-     * @param dto 角色Dto
      * @return 响应结果
      */
     @GetMapping("list")
     @RequiresPermissions("security:role:list")
     @LogOperation(OperationConst.LIST)
-    public Result<List<SecurityRoleDto>> list(SecurityRoleDto dto) {
-        return Result.ofSuccess(mainService.list(dto));
+    public Result<List<SecurityRoleDto>> list() {
+        return Result.ofSuccess(mainService.list(new SecurityRoleDto()));
     }
 
     /**

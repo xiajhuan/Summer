@@ -31,7 +31,6 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * 操作日志 ServiceImpl
@@ -60,13 +59,9 @@ public class LogOperationServiceImpl extends ServiceImpl<LogOperationMapper, Log
         queryWrapper.eq(status != null, LogOperationEntity::getStatus, status);
         // 创建时间（闭区间）
         Date createTimeStart = dto.getCreateTimeStart();
-        if (createTimeStart != null) {
-            queryWrapper.ge(LogOperationEntity::getCreateTime, createTimeStart);
-        }
+        queryWrapper.ge(createTimeStart != null, LogOperationEntity::getCreateTime, createTimeStart);
         Date createTimeEnd = dto.getCreateTimeEnd();
-        if (createTimeEnd != null) {
-            queryWrapper.le(LogOperationEntity::getCreateTime, createTimeEnd);
-        }
+        queryWrapper.le(createTimeEnd != null, LogOperationEntity::getCreateTime, createTimeEnd);
 
         return queryWrapper;
     }
@@ -111,14 +106,7 @@ public class LogOperationServiceImpl extends ServiceImpl<LogOperationMapper, Log
         LambdaQueryWrapper<LogOperationEntity> queryWrapper = getEmptyWrapper();
         queryWrapper.lt(LogOperationEntity::getCreateTime, DateUtil.offsetDay(DateUtil.date(),
                 setting.getInt("operation.clear-days-limit", "Log", -30)));
-        queryWrapper.select(LogOperationEntity::getId);
-
-        List<LogOperationEntity> entityList = list(queryWrapper);
-
-        if (entityList.size() > 0) {
-            removeByIds(entityList.stream().map(LogOperationEntity::getId)
-                    .collect(Collectors.toSet()));
-        }
+        remove(queryWrapper);
     }
 
 }

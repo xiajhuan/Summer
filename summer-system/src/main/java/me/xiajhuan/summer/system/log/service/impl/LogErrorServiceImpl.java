@@ -36,7 +36,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * 错误日志 ServiceImpl
@@ -59,13 +58,9 @@ public class LogErrorServiceImpl extends ServiceImpl<LogErrorMapper, LogErrorEnt
         // 查询条件
         // 创建时间（闭区间）
         Date createTimeStart = dto.getCreateTimeStart();
-        if (createTimeStart != null) {
-            queryWrapper.ge(LogErrorEntity::getCreateTime, createTimeStart);
-        }
+        queryWrapper.ge(createTimeStart != null, LogErrorEntity::getCreateTime, createTimeStart);
         Date createTimeEnd = dto.getCreateTimeEnd();
-        if (createTimeEnd != null) {
-            queryWrapper.le(LogErrorEntity::getCreateTime, createTimeEnd);
-        }
+        queryWrapper.le(createTimeEnd != null, LogErrorEntity::getCreateTime, createTimeEnd);
 
         return queryWrapper;
     }
@@ -135,14 +130,7 @@ public class LogErrorServiceImpl extends ServiceImpl<LogErrorMapper, LogErrorEnt
         LambdaQueryWrapper<LogErrorEntity> queryWrapper = getEmptyWrapper();
         queryWrapper.lt(LogErrorEntity::getCreateTime, DateUtil.offsetDay(DateUtil.date(),
                 setting.getInt("error.clear-days-limit", "Log", -90)));
-        queryWrapper.select(LogErrorEntity::getId);
-
-        List<LogErrorEntity> entityList = list(queryWrapper);
-
-        if (entityList.size() > 0) {
-            removeByIds(entityList.stream().map(LogErrorEntity::getId)
-                    .collect(Collectors.toSet()));
-        }
+        remove(queryWrapper);
     }
 
 }
