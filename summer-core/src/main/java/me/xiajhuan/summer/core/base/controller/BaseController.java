@@ -35,8 +35,9 @@ public abstract class BaseController {
      * @param count 导出数
      */
     protected void lessThanMaxExport(long count) {
-        if (count > limitBatchProperties.getExcelMaxExport()) {
-            throw ValidationException.of(ErrorCode.EXCEL_EXPORT_MAXIMUM_LIMIT);
+        long excelMaxExport = limitBatchProperties.getExcelMaxExport();
+        if (count > excelMaxExport) {
+            throw ValidationException.of(ErrorCode.EXCEL_EXPORT_MAXIMUM_LIMIT, String.valueOf(excelMaxExport));
         }
     }
 
