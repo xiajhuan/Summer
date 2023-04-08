@@ -12,7 +12,6 @@
 
 package me.xiajhuan.summer.core.interceptor;
 
-import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.text.StrPool;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.setting.Setting;
@@ -75,7 +74,7 @@ public class SqlInjectionInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         if (enable) {
             Map<String, String> paramMap = ServletUtil.getParamMap(request);
-            if (MapUtil.isNotEmpty(paramMap)) {
+            if (paramMap.size() > 0) {
                 filter(paramMap);
             }
         }

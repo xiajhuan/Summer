@@ -77,11 +77,11 @@ public class SecurityServiceImpl implements SecurityService {
         // 缓存过期时间（ms）
         long cacheTtl = tokenExpire * TimeUnitConst.HOUR;
         // 缓存用户ID
-        String userIdStr = String.valueOf(dto.getId());
-        cacheServer.setString(userId(accessToken), userIdStr, cacheTtl);
+        long userId = dto.getId();
+        cacheServer.setString(userId(accessToken), String.valueOf(userId), cacheTtl);
 
         // 获取登录信息
-        String loginInfoKey = loginInfo(userIdStr);
+        String loginInfoKey = loginInfo(userId);
         Map<String, Object> loginInfo = cacheServer.getHash(loginInfoKey);
         if (loginInfo == null) {
             // 未登录或登录失效
@@ -101,7 +101,7 @@ public class SecurityServiceImpl implements SecurityService {
         if (permissions == null) {
             permissions = CollUtil.newHashSet(StrUtil.EMPTY);
         }
-        cacheServer.setList(permissions(userIdStr),
+        cacheServer.setList(permissions(userId),
                 ListUtil.toList(permissions), cacheTtl);
 
         TokenDto tokenDto = new TokenDto();
@@ -115,8 +115,7 @@ public class SecurityServiceImpl implements SecurityService {
     public void logout(Long userId) {
         CacheServer cacheServer = CacheServerFactory.getCacheServer();
 
-        String userIdStr = String.valueOf(userId);
-        String loginInfoKey = loginInfo(userIdStr);
+        String loginInfoKey = loginInfo(userId);
         // 获取accessToken
         String accessToken = String.valueOf(cacheServer.getHash(loginInfoKey, SecurityConst.LoginInfo.ACCESS_TOKEN));
 
@@ -127,7 +126,7 @@ public class SecurityServiceImpl implements SecurityService {
         cacheServer.delete(loginInfoKey, CacheConst.Value.HASH);
 
         // 删除用户权限集合
-        cacheServer.delete(permissions(userIdStr), CacheConst.Value.LIST);
+        cacheServer.delete(permissions(userId), CacheConst.Value.LIST);
     }
 
     @Override

@@ -50,4 +50,9 @@ public interface SecurityDeptService extends IService<SecurityDeptEntity> {
      */
     Set<Long> getChildIdSet(Long deptId);
 
+    /**
+     * 缓存所有部门
+     */
+    void cacheAll();
+
 }

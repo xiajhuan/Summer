@@ -12,7 +12,6 @@
 
 package me.xiajhuan.summer.system.log.service.impl;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.setting.Setting;
 import com.baomidou.dynamic.datasource.annotation.DS;
@@ -115,7 +114,7 @@ public class LogLoginServiceImpl extends ServiceImpl<LogLoginMapper, LogLoginEnt
 
         List<LogLoginEntity> entityList = list(queryWrapper);
 
-        if (CollUtil.isNotEmpty(entityList)) {
+        if (entityList.size() > 0) {
             removeByIds(entityList.stream().map(LogLoginEntity::getId)
                     .collect(Collectors.toSet()));
         }

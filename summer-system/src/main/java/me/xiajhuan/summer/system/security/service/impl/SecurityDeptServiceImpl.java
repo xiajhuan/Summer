@@ -19,7 +19,11 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import me.xiajhuan.summer.core.cache.factory.CacheServerFactory;
+import me.xiajhuan.summer.core.cache.server.CacheServer;
+import me.xiajhuan.summer.core.constant.CacheConst;
 import me.xiajhuan.summer.core.constant.DataSourceConst;
+import me.xiajhuan.summer.core.constant.TimeUnitConst;
 import me.xiajhuan.summer.core.constant.TreeConst;
 import me.xiajhuan.summer.core.enums.UserTypeEnum;
 import me.xiajhuan.summer.core.exception.code.ErrorCode;
@@ -35,6 +39,8 @@ import me.xiajhuan.summer.system.security.mapper.SecurityDeptMapper;
 import me.xiajhuan.summer.system.security.service.SecurityDeptService;
 import me.xiajhuan.summer.system.security.service.SecurityUserService;
 import org.springframework.stereotype.Service;
+
+import static me.xiajhuan.summer.system.security.cache.SecurityCacheKey.dept;
 
 import javax.annotation.Resource;
 import java.util.*;
@@ -84,7 +90,10 @@ public class SecurityDeptServiceImpl extends ServiceImpl<SecurityDeptMapper, Sec
         // 所有上级部门ID
         entity.setParentIdAll(getParentIdAll(entity.getParentId()));
 
-        save(entity);
+        if (save(entity)) {
+            // 缓存
+            cache(entity, CacheServerFactory.getCacheServer());
+        }
     }
 
     @Override
@@ -100,7 +109,10 @@ public class SecurityDeptServiceImpl extends ServiceImpl<SecurityDeptMapper, Sec
         // 所有上级部门ID
         entity.setParentIdAll(getParentIdAll(parentId));
 
-        updateById(entity);
+        if (updateById(entity)) {
+            // 更新缓存
+            cache(entity, CacheServerFactory.getCacheServer());
+        }
     }
 
     @Override
@@ -111,7 +123,10 @@ public class SecurityDeptServiceImpl extends ServiceImpl<SecurityDeptMapper, Sec
             throw ValidationException.of(ErrorCode.DEPT_SUB_DELETE_ERROR);
         }
 
-        removeById(id);
+        if (removeById(id)) {
+            // 删除缓存
+            CacheServerFactory.getCacheServer().delete(dept(id), CacheConst.Value.HASH);
+        }
     }
 
     @Override
@@ -123,10 +138,39 @@ public class SecurityDeptServiceImpl extends ServiceImpl<SecurityDeptMapper, Sec
         queryWrapper.select(SecurityDeptEntity::getId);
         List<SecurityDeptEntity> entityList = list(queryWrapper);
 
-        if (CollUtil.isNotEmpty(entityList)) {
+        if (entityList.size() > 0) {
             entityList.forEach(entity -> childIdSet.add(entity.getId()));
         }
         return childIdSet;
+    }
+
+    @Override
+    public void cacheAll() {
+        // 所有部门
+        LambdaQueryWrapper<SecurityDeptEntity> queryWrapper = Wrappers.lambdaQuery();
+        queryWrapper.select(SecurityDeptEntity::getId, SecurityDeptEntity::getName, SecurityDeptEntity::getWeight,
+                SecurityDeptEntity::getParentId, SecurityDeptEntity::getParentIdAll);
+        List<SecurityDeptEntity> entityList = list(queryWrapper);
+        if (entityList.size() > 0) {
+            CacheServer cacheServer = CacheServerFactory.getCacheServer();
+            entityList.forEach(entity -> cache(entity, cacheServer));
+        }
+    }
+
+    /**
+     * 缓存部门
+     *
+     * @param entity      部门Entity
+     * @param cacheServer 缓存服务
+     */
+    private void cache(SecurityDeptEntity entity, CacheServer cacheServer) {
+        Map<String, Object> hash = MapUtil.newHashMap(4, true);
+        hash.put("name", entity.getName());
+        hash.put("weight", entity.getWeight());
+        hash.put("parentId", entity.getParentId());
+        hash.put("parentIdAll", entity.getParentIdAll());
+
+        cacheServer.setHash(dept(entity.getId()), hash, TimeUnitConst.WEEK);
     }
 
     /**

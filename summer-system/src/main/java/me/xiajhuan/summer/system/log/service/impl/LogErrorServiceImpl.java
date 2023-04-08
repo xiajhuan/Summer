@@ -12,10 +12,8 @@
 
 package me.xiajhuan.summer.system.log.service.impl;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.exceptions.ExceptionUtil;
-import cn.hutool.core.map.MapUtil;
 import cn.hutool.json.JSONUtil;
 import cn.hutool.setting.Setting;
 import com.baomidou.dynamic.datasource.annotation.DS;
@@ -120,7 +118,7 @@ public class LogErrorServiceImpl extends ServiceImpl<LogErrorMapper, LogErrorEnt
 
         // 请求参数，note：这里只能获取Query/FORM-DATA参数
         Map<String, String> params = ServletUtil.getParamMap(request);
-        if (MapUtil.isNotEmpty(params)) {
+        if (params.size() > 0) {
             entity.setRequestParams(JSONUtil.toJsonStr(params));
         }
 
@@ -141,7 +139,7 @@ public class LogErrorServiceImpl extends ServiceImpl<LogErrorMapper, LogErrorEnt
 
         List<LogErrorEntity> entityList = list(queryWrapper);
 
-        if (CollUtil.isNotEmpty(entityList)) {
+        if (entityList.size() > 0) {
             removeByIds(entityList.stream().map(LogErrorEntity::getId)
                     .collect(Collectors.toSet()));
         }

@@ -19,9 +19,11 @@ import cn.hutool.setting.Setting;
 import me.xiajhuan.summer.core.constant.SettingConst;
 import me.xiajhuan.summer.core.constant.ThreadPoolConst;
 import me.xiajhuan.summer.system.common.schedule.task.LogTask;
+import me.xiajhuan.summer.system.common.schedule.task.SecurityTask;
 import me.xiajhuan.summer.system.log.service.LogErrorService;
 import me.xiajhuan.summer.system.log.service.LogLoginService;
 import me.xiajhuan.summer.system.log.service.LogOperationService;
+import me.xiajhuan.summer.system.security.service.SecurityDeptService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -116,6 +118,23 @@ public class SystemTaskConfig implements SchedulingConfigurer {
             return new LogTask().setLogOperationService(logOperationService)
                     .setLogErrorService(logErrorService)
                     .setLogLoginService(logLoginService);
+        }
+        return null;
+    }
+
+    @Resource
+    private SecurityDeptService securityDeptService;
+
+    /**
+     * 注册权限相关定时任务
+     *
+     * @return 权限相关定时任务或 {@code null}
+     */
+    @Bean
+    public SecurityTask securityTask() {
+        if (enableSystemTask && setting.getBool("system.security-task", "Schedule", true)) {
+            LOGGER.info("【{}】系统定时任务【SecurityTask】加载完毕", applicationName);
+            return new SecurityTask().setSecurityDeptService(securityDeptService);
         }
         return null;
     }

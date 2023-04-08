@@ -52,13 +52,13 @@ public class Oauth2Realm extends AuthorizingRealm {
 
         CacheServer cacheServer = CacheServerFactory.getCacheServer();
         // 获取用户ID
-        String userIdStr = cacheServer.getString(userId(accessToken));
-        if (userIdStr == null) {
+        String userId = cacheServer.getString(userId(accessToken));
+        if (userId == null) {
             throw new IncorrectCredentialsException(LocaleUtil.getI18nMessage(ErrorCode.TOKEN_INVALID));
         }
 
         // 获取登录用户信息
-        final LoginUser loginUser = (LoginUser) cacheServer.getHash(loginInfo(userIdStr), SecurityConst.LoginInfo.LOGIN_USER);
+        final LoginUser loginUser = (LoginUser) cacheServer.getHash(loginInfo(Long.parseLong(userId)), SecurityConst.LoginInfo.LOGIN_USER);
 
         SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(loginUser, accessToken, getName());
         return info;
@@ -71,7 +71,7 @@ public class Oauth2Realm extends AuthorizingRealm {
 
         // 用户权限集合
         List<String> permissions = CacheServerFactory.getCacheServer()
-                .getList(permissions(String.valueOf(loginUser.getId())));
+                .getList(permissions(loginUser.getId()));
 
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         info.setStringPermissions(CollUtil.newHashSet(permissions));

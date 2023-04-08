@@ -160,7 +160,7 @@ public class SecurityMenuServiceImpl extends ServiceImpl<SecurityMenuMapper, Sec
             menuPermissions = baseMapper.getMenuPermissions(loginUser.getId());
         }
 
-        if (CollUtil.isNotEmpty(menuPermissions)) {
+        if (menuPermissions.size() > 0) {
             Set<String> permissions = CollUtil.newHashSet();
             menuPermissions.forEach(p -> {
                 if (!StrUtil.isBlankOrUndefined(p)) {

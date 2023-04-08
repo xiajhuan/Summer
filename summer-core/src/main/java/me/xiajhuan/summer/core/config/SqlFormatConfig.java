@@ -35,7 +35,7 @@ public class SqlFormatConfig implements MessageFormattingStrategy {
     /**
      * 不详细打印的Sql语句替换数组，例如：["INSERT:log_operation","INSERT:log_error"]
      */
-    private static String[] excludeAndReplaceSqlArray = null;
+    private static String[] excludeAndReplaceSqlArray;
 
     /**
      * 初始化 {@link excludeAndReplaceSqlArray}

@@ -37,12 +37,14 @@ captcha.cache-ttl = 5
 # note：定时任务在服务多节点部署时会重复执行，请注意避免多节点同时开启相同的任务
 # 是否开启系统定时任务（总开关），值：true/false
 enable-system-task = true
-# 系统定时任务线程池核心线程数，note：建议和任务数一致
+# 系统定时任务线程池核心线程数
 system.core-pool-size = 1
 
 # 系统定时任务独立开关，只有总开关为true时才能生效，值：true/false
 # 日志定时任务
 system.log-task = true
+# 权限相关定时任务
+system.security-task = true
 
 
 # *******************日志配置********************

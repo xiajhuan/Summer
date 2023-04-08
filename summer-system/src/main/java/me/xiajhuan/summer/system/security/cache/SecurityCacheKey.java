@@ -48,7 +48,7 @@ public class SecurityCacheKey {
      * @param keyParam 填充参数
      * @return 登录信息 Key
      */
-    public static String loginInfo(String keyParam) {
+    public static String loginInfo(long keyParam) {
         return StrUtil.format("LOGIN_INFO_{}", keyParam);
     }
 
@@ -58,8 +58,18 @@ public class SecurityCacheKey {
      * @param keyParam 填充参数
      * @return 用户权限集合 Key
      */
-    public static String permissions(String keyParam) {
+    public static String permissions(long keyParam) {
         return StrUtil.format("PERMISSIONS_{}", keyParam);
+    }
+
+    /**
+     * 部门 Key
+     *
+     * @param keyParam 填充参数
+     * @return 部门 Key
+     */
+    public static String dept(long keyParam) {
+        return StrUtil.format("DEPT_{}", keyParam);
     }
 
 }
