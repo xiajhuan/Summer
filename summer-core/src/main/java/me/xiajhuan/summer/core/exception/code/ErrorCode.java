@@ -103,9 +103,9 @@ public interface ErrorCode {
     int NOT_NULL = 10001;
 
     /**
-     * 数据库中已存在该记录
+     * 角色【{0}】已存在
      */
-    int DB_RECORD_EXISTS = 10002;
+    int ROLE_EXISTS = 10002;
 
     /**
      * 获取参数失败

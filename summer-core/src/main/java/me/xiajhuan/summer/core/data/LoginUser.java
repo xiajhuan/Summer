@@ -47,7 +47,7 @@ public class LoginUser implements Serializable {
     private String realName;
 
     /**
-     * 所属部门ID
+     * 本部门ID
      */
     private Long deptId;
 

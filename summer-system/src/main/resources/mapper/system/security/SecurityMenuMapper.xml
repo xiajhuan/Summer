@@ -74,7 +74,7 @@
         t1.weight
     </select>
 
-    <select id="getPermissions" parameterType="Long" resultType="String">
+    <select id="getMenuPermissions" parameterType="Long" resultType="String">
         SELECT
         t3.permissions
         FROM

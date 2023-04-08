@@ -22,6 +22,8 @@ import me.xiajhuan.summer.system.security.enums.GenderEnum;
 import me.xiajhuan.summer.core.enums.StatusEnum;
 import me.xiajhuan.summer.core.enums.UserTypeEnum;
 
+import java.util.Date;
+
 /**
  * 用户 Entity
  *
@@ -32,6 +34,36 @@ import me.xiajhuan.summer.core.enums.UserTypeEnum;
 @EqualsAndHashCode(callSuper = true)
 @TableName("security_user")
 public class SecurityUserEntity extends CommonEntity {
+
+    /**
+     * 创建者<br>
+     * note：不使用字段自动填充，否则“deptId”会被填充覆盖！
+     */
+    private String createBy;
+
+    /**
+     * 创建时间<br>
+     * note：不使用字段自动填充，否则“deptId”会被填充覆盖！
+     */
+    private Date createTime;
+
+    /**
+     * 更新者<br>
+     * note：不使用字段自动填充，否则“deptId”会被填充覆盖！
+     */
+    private String updateBy;
+
+    /**
+     * 更新时间<br>
+     * note：不使用字段自动填充，否则“deptId”会被填充覆盖！
+     */
+    private Date updateTime;
+
+    /**
+     * 本部门ID<br>
+     * note：不使用字段自动填充，否则“deptId”会被填充覆盖！
+     */
+    private Long deptId;
 
     /**
      * 用户名
@@ -92,7 +124,7 @@ public class SecurityUserEntity extends CommonEntity {
     private Integer dataScope;
 
     /**
-     * 所属部门名称
+     * 本部门名称
      */
     @TableField(exist = false)
     private String deptName;

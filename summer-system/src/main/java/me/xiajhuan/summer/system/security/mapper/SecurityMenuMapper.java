@@ -49,19 +49,19 @@ public interface SecurityMenuMapper extends BaseMapper<SecurityMenuEntity> {
     List<SecurityMenuEntity> getMenus(@Param("locale") String locale, @Param("type") Integer type, @Param("userId") Long userId);
 
     /**
-     * 获取所有权限
+     * 获取所有菜单权限
      *
-     * @return 权限集合
+     * @return 菜单权限集合
      */
     @Select("SELECT permissions FROM security_menu")
-    Set<String> getPermissionsAll();
+    Set<String> getMenuPermissionsAll();
 
     /**
-     * 获取权限
+     * 获取菜单权限
      *
      * @param userId 用户ID
-     * @return 权限集合
+     * @return 菜单权限集合
      */
-    Set<String> getPermissions(@Param("userId") Long userId);
+    Set<String> getMenuPermissions(@Param("userId") Long userId);
 
 }

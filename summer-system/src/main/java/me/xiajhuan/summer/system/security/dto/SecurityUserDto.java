@@ -86,7 +86,7 @@ public class SecurityUserDto extends ExcelDto {
     private String mobile;
 
     /**
-     * 部门ID
+     * 本部门ID
      */
     @NotNull(message = "{security.user.deptId.require}", groups = {AddGroup.class, UpdateGroup.class})
     private Long deptId;
@@ -125,7 +125,7 @@ public class SecurityUserDto extends ExcelDto {
     private Set<Long> roleIdSet;
 
     /**
-     * 所属部门名称
+     * 本部门名称
      */
     private String deptName;
 

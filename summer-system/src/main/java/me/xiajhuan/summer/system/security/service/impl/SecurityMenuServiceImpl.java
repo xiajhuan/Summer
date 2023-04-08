@@ -13,7 +13,9 @@
 package me.xiajhuan.summer.system.security.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.text.StrPool;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -41,7 +43,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * 菜单 ServiceImpl
@@ -149,19 +150,25 @@ public class SecurityMenuServiceImpl extends ServiceImpl<SecurityMenuMapper, Sec
 
     @Override
     public Set<String> getPermissions(LoginUser loginUser) {
-        // 用户权限集合
-        final Set<String> permissions;
+        // 用户菜单权限集合，note：1个菜单/按钮可能包含多个权限，以“,”分隔
+        final Set<String> menuPermissions;
         if (loginUser.getUserType() == UserTypeEnum.SUPER_ADMIN.getValue()) {
             // 超级管理员
-            permissions = baseMapper.getPermissionsAll();
+            menuPermissions = baseMapper.getMenuPermissionsAll();
         } else {
             // 普通用户
-            permissions = baseMapper.getPermissions(loginUser.getId());
+            menuPermissions = baseMapper.getMenuPermissions(loginUser.getId());
         }
 
-        if (CollUtil.isNotEmpty(permissions)) {
-            return permissions.stream().filter(p -> !StrUtil.isBlankOrUndefined(p))
-                    .collect(Collectors.toSet());
+        if (CollUtil.isNotEmpty(menuPermissions)) {
+            Set<String> permissions = CollUtil.newHashSet();
+            menuPermissions.forEach(p -> {
+                if (!StrUtil.isBlankOrUndefined(p)) {
+                    // 如果包含多个权限，以“,”拆分出来
+                    permissions.addAll(ListUtil.of(p.split(StrPool.COMMA)));
+                }
+            });
+            return permissions;
         } else {
             return null;
         }

@@ -20,6 +20,8 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import me.xiajhuan.summer.core.constant.DataSourceConst;
+import me.xiajhuan.summer.core.exception.code.ErrorCode;
+import me.xiajhuan.summer.core.exception.custom.BusinessException;
 import me.xiajhuan.summer.core.mp.helper.MpHelper;
 import me.xiajhuan.summer.core.utils.BeanUtil;
 import me.xiajhuan.summer.core.utils.SecurityUtil;
@@ -119,8 +121,13 @@ public class SecurityRoleServiceImpl extends ServiceImpl<SecurityRoleMapper, Sec
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void add(SecurityRoleDto dto) {
-        SecurityRoleEntity entity = BeanUtil.convert(dto, SecurityRoleEntity.class);
+        // 角色名称不能重复
+        String name = dto.getName();
+        if (baseMapper.exist(name) != null) {
+            throw BusinessException.of(ErrorCode.ROLE_EXISTS, name);
+        }
 
+        SecurityRoleEntity entity = BeanUtil.convert(dto, SecurityRoleEntity.class);
         // 保存角色
         save(entity);
         Long id = entity.getId();
@@ -135,8 +142,13 @@ public class SecurityRoleServiceImpl extends ServiceImpl<SecurityRoleMapper, Sec
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void update(SecurityRoleDto dto) {
-        SecurityRoleEntity entity = BeanUtil.convert(dto, SecurityRoleEntity.class);
+        // 角色名称不能重复
+        String name = dto.getName();
+        if (baseMapper.exist(name) != null) {
+            throw BusinessException.of(ErrorCode.ROLE_EXISTS, name);
+        }
 
+        SecurityRoleEntity entity = BeanUtil.convert(dto, SecurityRoleEntity.class);
         // 修改角色
         updateById(entity);
         Long id = entity.getId();

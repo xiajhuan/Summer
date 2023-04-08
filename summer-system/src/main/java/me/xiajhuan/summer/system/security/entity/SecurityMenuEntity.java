@@ -12,16 +12,13 @@
 
 package me.xiajhuan.summer.system.security.entity;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import me.xiajhuan.summer.core.entity.SimpleEntity;
+import me.xiajhuan.summer.core.entity.CommonEntity;
 import me.xiajhuan.summer.system.security.enums.ComponentTypeEnum;
 import me.xiajhuan.summer.system.security.enums.OpenModeEnum;
-
-import java.util.Date;
 
 /**
  * 菜单 Entity
@@ -32,19 +29,13 @@ import java.util.Date;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName("security_menu")
-public class SecurityMenuEntity extends SimpleEntity {
+public class SecurityMenuEntity extends CommonEntity {
 
     /**
-     * 更新者
+     * 部门ID
      */
-    @TableField(fill = FieldFill.INSERT_UPDATE, value = "update_by")
-    private String updateBy;
-
-    /**
-     * 更新时间
-     */
-    @TableField(fill = FieldFill.INSERT_UPDATE, value = "update_time")
-    private Date updateTime;
+    @TableField(exist = false)
+    private Long deptId;
 
     /**
      * 上级菜单ID

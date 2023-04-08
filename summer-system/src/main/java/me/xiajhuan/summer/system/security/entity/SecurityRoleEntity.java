@@ -12,6 +12,7 @@
 
 package me.xiajhuan.summer.system.security.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -27,6 +28,12 @@ import me.xiajhuan.summer.core.entity.CommonEntity;
 @EqualsAndHashCode(callSuper = true)
 @TableName("security_role")
 public class SecurityRoleEntity extends CommonEntity {
+
+    /**
+     * 部门ID
+     */
+    @TableField(exist = false)
+    private Long deptId;
 
     /**
      * 角色名称

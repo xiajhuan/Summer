@@ -12,6 +12,7 @@
 
 package me.xiajhuan.summer.system.locale.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
 import me.xiajhuan.summer.core.entity.CommonEntity;
@@ -30,6 +31,12 @@ import me.xiajhuan.summer.core.enums.LocaleSupportEnum;
 @EqualsAndHashCode(callSuper = true)
 @TableName("locale_international_name")
 public class LocaleInternationalNameEntity extends CommonEntity {
+
+    /**
+     * 部门ID
+     */
+    @TableField(exist = false)
+    private Long deptId;
 
     /**
      * 表名

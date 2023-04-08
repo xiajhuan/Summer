@@ -12,7 +12,6 @@ CREATE TABLE `locale_international_name`
     `create_time` datetime(0)                                                   NULL DEFAULT NULL COMMENT '创建时间',
     `update_by`   varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL COMMENT '更新者',
     `update_time` datetime(0)                                                   NULL DEFAULT NULL COMMENT '更新时间',
-    `dept_id`     bigint(20)                                                    NULL DEFAULT NULL COMMENT '部门ID',
     `table_name`  varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL COMMENT '表名',
     `line_id`     bigint(20)                                                    NULL DEFAULT NULL COMMENT '行ID',
     `field_name`  varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL COMMENT '字段名',
@@ -155,11 +154,9 @@ CREATE TABLE `security_role`
     `create_time` datetime(0)                                                   NULL DEFAULT NULL COMMENT '创建时间',
     `update_by`   varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL COMMENT '更新者',
     `update_time` datetime(0)                                                   NULL DEFAULT NULL COMMENT '更新时间',
-    `dept_id`     bigint(20)                                                    NULL DEFAULT NULL COMMENT '部门ID',
     `name`        varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL COMMENT '角色名称',
     `description`        varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
     PRIMARY KEY (`id`) USING BTREE,
-    INDEX `idx_dept_id` (`dept_id`) USING BTREE,
     INDEX `idx_create_time` (`create_time`) USING BTREE
 ) ENGINE = InnoDB
   CHARACTER SET = utf8mb4
@@ -234,7 +231,7 @@ CREATE TABLE `security_user`
     `create_time` datetime(0)                                                   NULL DEFAULT NULL COMMENT '创建时间',
     `update_by`   varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL COMMENT '更新者',
     `update_time` datetime(0)                                                   NULL DEFAULT NULL COMMENT '更新时间',
-    `dept_id`     bigint(20)                                                    NULL DEFAULT NULL COMMENT '部门ID',
+    `dept_id`     bigint(20)                                                    NULL DEFAULT NULL COMMENT '本部门ID',
     `username`    varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL COMMENT '用户名',
     `password`    varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '密码',
     `real_name`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL COMMENT '真实姓名',

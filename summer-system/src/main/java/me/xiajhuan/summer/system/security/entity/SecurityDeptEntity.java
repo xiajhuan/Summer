@@ -12,14 +12,11 @@
 
 package me.xiajhuan.summer.system.security.entity;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import me.xiajhuan.summer.core.entity.SimpleEntity;
-
-import java.util.Date;
+import me.xiajhuan.summer.core.entity.CommonEntity;
 
 /**
  * 部门 Entity
@@ -30,19 +27,13 @@ import java.util.Date;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName("security_dept")
-public class SecurityDeptEntity extends SimpleEntity {
+public class SecurityDeptEntity extends CommonEntity {
 
     /**
-     * 更新者
+     * 部门ID
      */
-    @TableField(fill = FieldFill.INSERT_UPDATE, value = "update_by")
-    private String updateBy;
-
-    /**
-     * 更新时间
-     */
-    @TableField(fill = FieldFill.INSERT_UPDATE, value = "update_time")
-    private Date updateTime;
+    @TableField(exist = false)
+    private Long deptId;
 
     /**
      * 上级部门ID
