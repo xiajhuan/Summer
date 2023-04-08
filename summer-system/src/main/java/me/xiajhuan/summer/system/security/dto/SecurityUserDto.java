@@ -96,7 +96,8 @@ public class SecurityUserDto extends ExcelDto {
      *
      * @see StatusEnum
      */
-    @Range(min = 0, max = 1, message = "{security.user.status.range}", groups = {AddGroup.class, UpdateGroup.class})
+    @Range(min = 0, max = 1, message = "{status.range}", groups = {AddGroup.class, UpdateGroup.class})
+    @NotNull(message = "{status.require}", groups = {AddGroup.class, UpdateGroup.class})
     private Integer status;
 
     /**

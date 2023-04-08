@@ -22,9 +22,9 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import me.xiajhuan.summer.core.constant.DataSourceConst;
 import me.xiajhuan.summer.core.constant.TreeConst;
 import me.xiajhuan.summer.core.enums.UserTypeEnum;
-import me.xiajhuan.summer.core.exception.custom.BusinessException;
 import me.xiajhuan.summer.core.exception.code.ErrorCode;
 import me.xiajhuan.summer.core.data.LoginUser;
+import me.xiajhuan.summer.core.exception.custom.ValidationException;
 import me.xiajhuan.summer.core.utils.BeanUtil;
 import me.xiajhuan.summer.core.utils.SecurityUtil;
 import me.xiajhuan.summer.core.utils.TreeUtil;
@@ -92,7 +92,7 @@ public class SecurityDeptServiceImpl extends ServiceImpl<SecurityDeptMapper, Sec
         long parentId = dto.getParentId().longValue();
         // 上级部门不能为自身或下级部门
         if (id == parentId || getChildIdSet(id).contains(parentId)) {
-            throw BusinessException.of(ErrorCode.SUPERIOR_DEPT_ERROR);
+            throw ValidationException.of(ErrorCode.SUPERIOR_DEPT_ERROR);
         }
 
         SecurityDeptEntity entity = BeanUtil.convert(dto, SecurityDeptEntity.class);
@@ -106,7 +106,7 @@ public class SecurityDeptServiceImpl extends ServiceImpl<SecurityDeptMapper, Sec
     public void delete(Long id) {
         // 判断是否存在子部门或用户
         if (getChildIdSet(id).size() > 0 || securityUserService.countByDeptId(id) > 0) {
-            throw BusinessException.of(ErrorCode.DEPT_SUB_DELETE_ERROR);
+            throw ValidationException.of(ErrorCode.DEPT_SUB_DELETE_ERROR);
         }
 
         removeById(id);

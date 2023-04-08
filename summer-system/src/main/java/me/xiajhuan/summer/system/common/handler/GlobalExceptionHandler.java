@@ -100,7 +100,7 @@ public class GlobalExceptionHandler {
     public Result handleException(Exception e) {
         // 处理限流切面的异常
         Exception cause = (Exception) e.getCause();
-        if (cause != null) {
+        if (cause != null && cause instanceof BusinessException) {
             e = cause;
         }
 

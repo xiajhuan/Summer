@@ -21,7 +21,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import me.xiajhuan.summer.core.constant.DataSourceConst;
 import me.xiajhuan.summer.core.exception.code.ErrorCode;
-import me.xiajhuan.summer.core.exception.custom.BusinessException;
+import me.xiajhuan.summer.core.exception.custom.ValidationException;
 import me.xiajhuan.summer.core.mp.helper.MpHelper;
 import me.xiajhuan.summer.core.utils.BeanUtil;
 import me.xiajhuan.summer.core.utils.SecurityUtil;
@@ -121,11 +121,7 @@ public class SecurityRoleServiceImpl extends ServiceImpl<SecurityRoleMapper, Sec
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void add(SecurityRoleDto dto) {
-        // 角色名称不能重复
-        String name = dto.getName();
-        if (baseMapper.exist(name) != null) {
-            throw BusinessException.of(ErrorCode.ROLE_EXISTS, name);
-        }
+        validateName(dto.getName());
 
         SecurityRoleEntity entity = BeanUtil.convert(dto, SecurityRoleEntity.class);
         // 保存角色
@@ -142,11 +138,7 @@ public class SecurityRoleServiceImpl extends ServiceImpl<SecurityRoleMapper, Sec
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void update(SecurityRoleDto dto) {
-        // 角色名称不能重复
-        String name = dto.getName();
-        if (baseMapper.exist(name) != null) {
-            throw BusinessException.of(ErrorCode.ROLE_EXISTS, name);
-        }
+        validateName(dto.getName());
 
         SecurityRoleEntity entity = BeanUtil.convert(dto, SecurityRoleEntity.class);
         // 修改角色
@@ -181,6 +173,18 @@ public class SecurityRoleServiceImpl extends ServiceImpl<SecurityRoleMapper, Sec
         LambdaQueryWrapper<SecurityRoleUserEntity> roleUserQueryWrapper = Wrappers.lambdaQuery();
         roleUserQueryWrapper.in(SecurityRoleUserEntity::getRoleId, idSet);
         securityRoleUserMapper.delete(roleUserQueryWrapper);
+    }
+
+    /**
+     * 校验角色名称
+     *
+     * @param name 角色名称
+     */
+    private void validateName(String name) {
+        // 角色名称不能重复
+        if (baseMapper.exist(name) != null) {
+            throw ValidationException.of(ErrorCode.ROLE_EXISTS, name);
+        }
     }
 
     /**

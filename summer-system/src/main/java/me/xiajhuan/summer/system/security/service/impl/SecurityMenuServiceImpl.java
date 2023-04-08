@@ -27,7 +27,7 @@ import me.xiajhuan.summer.core.constant.TreeConst;
 import me.xiajhuan.summer.core.data.LoginUser;
 import me.xiajhuan.summer.core.enums.UserTypeEnum;
 import me.xiajhuan.summer.core.exception.code.ErrorCode;
-import me.xiajhuan.summer.core.exception.custom.BusinessException;
+import me.xiajhuan.summer.core.exception.custom.ValidationException;
 import me.xiajhuan.summer.core.utils.*;
 import me.xiajhuan.summer.system.locale.entity.LocaleInternationalNameEntity;
 import me.xiajhuan.summer.system.locale.service.LocaleInternationalNameService;
@@ -94,7 +94,7 @@ public class SecurityMenuServiceImpl extends ServiceImpl<SecurityMenuMapper, Sec
     public void update(SecurityMenuDto dto) {
         // 上级菜单不能为自身
         if (dto.getId().longValue() == dto.getParentId().longValue()) {
-            throw BusinessException.of(ErrorCode.SUPERIOR_MENU_ERROR);
+            throw ValidationException.of(ErrorCode.SUPERIOR_MENU_ERROR);
         }
 
         SecurityMenuEntity entity = BeanUtil.convert(dto, SecurityMenuEntity.class);

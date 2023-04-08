@@ -108,6 +108,11 @@ public interface ErrorCode {
     int ROLE_EXISTS = 10002;
 
     /**
+     * 岗位【{0}】已存在
+     */
+    int POST_EXISTS = 10088;
+
+    /**
      * 获取参数失败
      */
     int PARAMS_GET_ERROR = 10003;
