@@ -1,6 +1,9 @@
 me.xiajhuan.summer
 me.xiajhuan.summer.admin.api.open
 me.xiajhuan.summer.admin.api.test
+me.xiajhuan.summer.core.base.controller
+me.xiajhuan.summer.core.base.dto
+me.xiajhuan.summer.core.base.entity
 me.xiajhuan.summer.core.boot.processor
 me.xiajhuan.summer.core.boot.runner
 me.xiajhuan.summer.core.cache.config
@@ -12,8 +15,6 @@ me.xiajhuan.summer.core.config
 me.xiajhuan.summer.core.constant
 me.xiajhuan.summer.core.converter
 me.xiajhuan.summer.core.data
-me.xiajhuan.summer.core.dto
-me.xiajhuan.summer.core.entity
 me.xiajhuan.summer.core.enums
 me.xiajhuan.summer.core.excel
 me.xiajhuan.summer.core.excel.subClass
