@@ -18,7 +18,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import me.xiajhuan.summer.core.entity.SimpleEntity;
+import me.xiajhuan.summer.core.base.entity.SimpleEntity;
 import me.xiajhuan.summer.core.enums.OperationGroupEnum;
 import me.xiajhuan.summer.core.enums.OperationStatusEnum;
 

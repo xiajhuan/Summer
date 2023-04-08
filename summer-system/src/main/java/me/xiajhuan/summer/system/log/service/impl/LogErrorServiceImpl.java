@@ -105,6 +105,11 @@ public class LogErrorServiceImpl extends ServiceImpl<LogErrorMapper, LogErrorEnt
     }
 
     @Override
+    public long count(LogErrorDto dto) {
+        return count(getQueryWrapper(dto));
+    }
+
+    @Override
     public void saveAsync(Exception e, HttpServletRequest request) {
         // 构建错误日志
         LogErrorEntity entity = LogErrorEntity.builder()

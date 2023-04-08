@@ -22,7 +22,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import me.xiajhuan.summer.core.constant.SettingConst;
-import me.xiajhuan.summer.core.dto.PageSortDto;
+import me.xiajhuan.summer.core.base.dto.PageSortDto;
 
 import java.util.Arrays;
 

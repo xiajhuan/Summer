@@ -15,7 +15,7 @@ package me.xiajhuan.summer.system.locale.dto;
 import com.alibaba.excel.annotation.ExcelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import me.xiajhuan.summer.core.dto.ExcelDto;
+import me.xiajhuan.summer.core.base.dto.ExcelDto;
 import me.xiajhuan.summer.core.enums.LocaleSupportEnum;
 import me.xiajhuan.summer.core.validation.group.AddGroup;
 import me.xiajhuan.summer.core.validation.group.UpdateGroup;

@@ -12,6 +12,7 @@
 
 package me.xiajhuan.summer.system.log.controller;
 
+import me.xiajhuan.summer.core.base.controller.BaseController;
 import me.xiajhuan.summer.core.constant.OperationConst;
 import me.xiajhuan.summer.core.data.PageData;
 import me.xiajhuan.summer.core.data.Result;
@@ -37,7 +38,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @RestController
 @RequestMapping("log/operation")
-public class LogOperationController {
+public class LogOperationController extends BaseController {
 
     @Resource
     private LogOperationService mainService;
@@ -70,6 +71,7 @@ public class LogOperationController {
     @RateLimiter(0.2)
     @LogOperation(OperationConst.EXCEL_EXPORT)
     public void excelExport(LogOperationDto dto, HttpServletResponse response) {
+        lessThanMaxExport(mainService.count(dto));
         ExcelUtil.export(response, "操作日志", "操作日志", mainService.list(dto),
                 LogOperationDto.class, ErrorCode.EXCEL_EXPORT_FAILURE);
     }

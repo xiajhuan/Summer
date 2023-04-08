@@ -34,6 +34,14 @@ public interface LogLoginService extends IService<LogLoginEntity> {
     List<LogLoginDto> list(LogLoginDto dto);
 
     /**
+     * 统计记录数
+     *
+     * @param dto 登录日志Dto
+     * @return 记录数
+     */
+    long count(LogLoginDto dto);
+
+    /**
      * 异步保存日志
      *
      * @param entity 登录日志Entity

@@ -15,7 +15,7 @@ package me.xiajhuan.summer.system.security.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import me.xiajhuan.summer.core.entity.SimpleEntity;
+import me.xiajhuan.summer.core.base.entity.SimpleEntity;
 
 /**
  * 用户岗位关联 Entity

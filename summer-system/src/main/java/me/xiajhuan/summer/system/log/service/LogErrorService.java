@@ -37,6 +37,14 @@ public interface LogErrorService extends IService<LogErrorEntity> {
     LogErrorDto getById(Long id);
 
     /**
+     * 统计记录数
+     *
+     * @param dto 错误日志Dto
+     * @return 记录数
+     */
+    long count(LogErrorDto dto);
+
+    /**
      * 异步保存日志
      *
      * @param e       {@link Exception}

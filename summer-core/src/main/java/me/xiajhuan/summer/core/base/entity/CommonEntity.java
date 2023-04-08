@@ -10,7 +10,7 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.core.entity;
+package me.xiajhuan.summer.core.base.entity;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;

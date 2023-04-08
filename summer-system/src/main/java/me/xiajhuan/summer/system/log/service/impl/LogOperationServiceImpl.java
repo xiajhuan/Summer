@@ -97,6 +97,11 @@ public class LogOperationServiceImpl extends ServiceImpl<LogOperationMapper, Log
     }
 
     @Override
+    public long count(LogOperationDto dto) {
+        return count(getQueryWrapper(dto));
+    }
+
+    @Override
     public void saveAsync(LogOperationEntity entity) {
         save(entity);
     }

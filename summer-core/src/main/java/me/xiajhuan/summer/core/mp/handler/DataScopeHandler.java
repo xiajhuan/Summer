@@ -19,7 +19,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.setting.Setting;
 import com.baomidou.mybatisplus.extension.plugins.handler.MultiDataPermissionHandler;
 import me.xiajhuan.summer.core.data.LoginUser;
-import me.xiajhuan.summer.core.entity.CommonEntity;
+import me.xiajhuan.summer.core.base.entity.CommonEntity;
 import me.xiajhuan.summer.core.constant.DataScopeConst;
 import me.xiajhuan.summer.core.constant.SettingConst;
 import me.xiajhuan.summer.core.enums.UserTypeEnum;

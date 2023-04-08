@@ -15,6 +15,7 @@ package me.xiajhuan.summer.system.security.service.impl;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import me.xiajhuan.summer.core.constant.DataSourceConst;
 import me.xiajhuan.summer.core.mp.helper.MpHelper;
@@ -24,6 +25,8 @@ import me.xiajhuan.summer.system.security.entity.SecurityUserEntity;
 import me.xiajhuan.summer.system.security.mapper.SecurityUserMapper;
 import me.xiajhuan.summer.system.security.service.SecurityUserService;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * 用户 ServiceImpl
@@ -64,6 +67,36 @@ public class SecurityUserServiceImpl extends ServiceImpl<SecurityUserMapper, Sec
     }
 
     //*******************MpHelper覆写结束********************
+
+    @Override
+    public Page<SecurityUserDto> page(SecurityUserDto dto) {
+        return null;
+    }
+
+    @Override
+    public List<SecurityUserDto> list(SecurityUserDto dto) {
+        return null;
+    }
+
+    @Override
+    public SecurityUserDto getById(Long id) {
+        return null;
+    }
+
+    @Override
+    public void add(SecurityUserDto dto) {
+
+    }
+
+    @Override
+    public void update(SecurityUserDto dto) {
+
+    }
+
+    @Override
+    public void delete(Long[] ids) {
+
+    }
 
     @Override
     public SecurityUserDto getByUsername(String username) {

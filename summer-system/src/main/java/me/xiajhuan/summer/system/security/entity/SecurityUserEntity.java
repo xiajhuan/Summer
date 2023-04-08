@@ -16,7 +16,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import me.xiajhuan.summer.core.entity.CommonEntity;
+import me.xiajhuan.summer.core.base.entity.CommonEntity;
 import me.xiajhuan.summer.core.constant.DataScopeConst;
 import me.xiajhuan.summer.system.security.enums.GenderEnum;
 import me.xiajhuan.summer.core.enums.StatusEnum;

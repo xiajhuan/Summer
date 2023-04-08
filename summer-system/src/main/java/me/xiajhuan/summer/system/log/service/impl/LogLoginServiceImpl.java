@@ -96,6 +96,11 @@ public class LogLoginServiceImpl extends ServiceImpl<LogLoginMapper, LogLoginEnt
     }
 
     @Override
+    public long count(LogLoginDto dto) {
+        return count(getQueryWrapper(dto));
+    }
+
+    @Override
     public void saveAsync(LogLoginEntity entity) {
         save(entity);
     }

@@ -19,7 +19,7 @@ import com.baomidou.mybatisplus.core.metadata.TableInfo;
 import com.baomidou.mybatisplus.extension.injector.methods.AlwaysUpdateSomeColumnById;
 import com.baomidou.mybatisplus.extension.injector.methods.InsertBatchSomeColumn;
 import com.baomidou.mybatisplus.extension.injector.methods.LogicDeleteBatchByIds;
-import me.xiajhuan.summer.core.entity.LogicEntity;
+import me.xiajhuan.summer.core.base.entity.LogicEntity;
 
 import java.util.List;
 

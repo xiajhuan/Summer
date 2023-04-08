@@ -15,7 +15,7 @@ package me.xiajhuan.summer.system.security.dto;
 import cn.hutool.core.collection.CollUtil;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import me.xiajhuan.summer.core.dto.PageSortDto;
+import me.xiajhuan.summer.core.base.dto.PageSortDto;
 import me.xiajhuan.summer.core.validation.group.AddGroup;
 import me.xiajhuan.summer.core.validation.group.UpdateGroup;
 

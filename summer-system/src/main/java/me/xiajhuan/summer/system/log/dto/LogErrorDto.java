@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import me.xiajhuan.summer.core.constant.DateFormatConst;
-import me.xiajhuan.summer.core.dto.ExcelDto;
+import me.xiajhuan.summer.core.base.dto.ExcelDto;
 
 import java.util.Date;
 

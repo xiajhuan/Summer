@@ -16,7 +16,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import me.xiajhuan.summer.core.entity.CommonEntity;
+import me.xiajhuan.summer.core.base.entity.CommonEntity;
 
 /**
  * 角色 Entity

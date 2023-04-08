@@ -10,28 +10,31 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.core.entity;
+package me.xiajhuan.summer.core.base.entity;
 
-import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.Version;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * 逻辑删除 Entity基类<br>
- * 包含【id,create_by,create_time,update_by,update_time,dept_id,is_del】字段
+ * 乐观锁控制 Entity基类<br>
+ * 包含【id,create_by,create_time,update_by,update_time,dept_id,version】字段
  *
  * @author xiajhuan
  * @date 2022/11/19
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public abstract class LogicEntity extends CommonEntity {
+public abstract class OptimisticLockEntity extends CommonEntity {
 
     /**
-     * 逻辑删除标识（0：未删除 1：已删除）<br>
-     * note：表字段“is_del”默认值应为0
+     * 乐观锁控制<br>
+     * note：表字段“version”默认值应为0
      */
-    @TableLogic
-    private Integer isDel;
+    @Version
+    @TableField(fill = FieldFill.INSERT, value = "version")
+    private Integer version;
 
 }

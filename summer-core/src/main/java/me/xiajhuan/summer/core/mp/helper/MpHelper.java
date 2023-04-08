@@ -17,8 +17,8 @@ import com.baomidou.mybatisplus.core.toolkit.ReflectionKit;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import me.xiajhuan.summer.core.dto.PageSortDto;
-import me.xiajhuan.summer.core.dto.ExcelDto;
+import me.xiajhuan.summer.core.base.dto.PageSortDto;
+import me.xiajhuan.summer.core.base.dto.ExcelDto;
 import me.xiajhuan.summer.core.utils.PageSortUtil;
 
 /**

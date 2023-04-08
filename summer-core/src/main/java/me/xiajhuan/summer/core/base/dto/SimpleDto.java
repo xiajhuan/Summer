@@ -10,7 +10,7 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.core.dto;
+package me.xiajhuan.summer.core.base.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

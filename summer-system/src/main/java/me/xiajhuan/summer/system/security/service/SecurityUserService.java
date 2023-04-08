@@ -12,9 +12,12 @@
 
 package me.xiajhuan.summer.system.security.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import me.xiajhuan.summer.system.security.dto.SecurityUserDto;
 import me.xiajhuan.summer.system.security.entity.SecurityUserEntity;
+
+import java.util.List;
 
 /**
  * 用户 Service
@@ -23,6 +26,18 @@ import me.xiajhuan.summer.system.security.entity.SecurityUserEntity;
  * @date 2023/3/3
  */
 public interface SecurityUserService extends IService<SecurityUserEntity> {
+
+    Page<SecurityUserDto> page(SecurityUserDto dto);
+
+    List<SecurityUserDto> list(SecurityUserDto dto);
+
+    SecurityUserDto getById(Long id);
+
+    void add(SecurityUserDto dto);
+
+    void update(SecurityUserDto dto);
+
+    void delete(Long[] ids);
 
     /**
      * 根据用户名获取

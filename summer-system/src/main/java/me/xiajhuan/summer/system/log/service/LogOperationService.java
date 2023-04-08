@@ -34,6 +34,14 @@ public interface LogOperationService extends IService<LogOperationEntity> {
     List<LogOperationDto> list(LogOperationDto dto);
 
     /**
+     * 统计记录数
+     *
+     * @param dto 操作日志Dto
+     * @return 记录数
+     */
+    long count(LogOperationDto dto);
+
+    /**
      * 异步保存日志
      *
      * @param entity 操作日志Entity
