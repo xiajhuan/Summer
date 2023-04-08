@@ -2,7 +2,7 @@
 #### 全局Header参数
 参数名 | 示例值 | 参数描述
 --- | --- | ---
-AccessToken | 891c19ae529c46811397e56873171df0 | accessToken
+AccessToken | 0558c0db01692e8f29a9db6c2d45ed88 | accessToken
 Accept-Language | zh_CN | 地区语言
 #### 全局Query参数
 参数名 | 示例值 | 参数描述
@@ -459,6 +459,3068 @@ noauth
 #### 后执行脚本
 ```javascript
 暂无后执行脚本
+```
+## /system/security
+```text
+权限相关模块
+```
+#### Header参数
+参数名 | 示例值 | 参数描述
+--- | --- | ---
+暂无参数
+#### Query参数
+参数名 | 示例值 | 参数描述
+--- | --- | ---
+暂无参数
+#### Body参数
+参数名 | 示例值 | 参数描述
+--- | --- | ---
+暂无参数
+#### 认证方式
+```text
+noauth
+```
+#### 预执行脚本
+```javascript
+暂无预执行脚本
+```
+#### 后执行脚本
+```javascript
+暂无后执行脚本
+```
+## /system/security/获取验证码
+```text
+暂无描述
+```
+#### 接口状态
+> 已完成
+
+#### 接口URL
+> http://localhost:6666/summer/security/captcha?uuid=00376e8000bffa7a538274d69fff20f2
+
+#### 请求方式
+> GET
+
+#### Content-Type
+> none
+
+#### 请求Query参数
+参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
+--- | --- | --- | --- | ---
+uuid | 00376e8000bffa7a538274d69fff20f2 | String | 是 | uuid
+#### 认证方式
+```text
+noauth
+```
+#### 预执行脚本
+```javascript
+暂无预执行脚本
+```
+#### 后执行脚本
+```javascript
+暂无后执行脚本
+```
+#### 错误响应示例
+```javascript
+{
+	"code": "0",
+	"msg": "服务器繁忙，请稍后再试~",
+	"data": null
+}
+```
+## /system/security/用户登录
+```text
+暂无描述
+```
+#### 接口状态
+> 已完成
+
+#### 接口URL
+> http://localhost:6666/summer/security/login
+
+#### 请求方式
+> POST
+
+#### Content-Type
+> urlencoded
+
+#### 请求Body参数
+参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
+--- | --- | --- | --- | ---
+username | admin | String | 是 | 用户名
+password | admin | String | 是 | 密码
+captcha | 7g8g7 | String | 是 | 验证码
+uuid | 00376e8000bffa7a538274d69fff20f2 | String | 是 | uuid
+#### 认证方式
+```text
+noauth
+```
+#### 预执行脚本
+```javascript
+暂无预执行脚本
+```
+#### 后执行脚本
+```javascript
+暂无后执行脚本
+```
+#### 成功响应示例
+```javascript
+{
+	"code": "1",
+	"msg": null,
+	"data": {
+		"accessToken": "eee4eb696457036abaadb38f6fd4c1df",
+		"expireTime": 12
+	}
+}
+```
+#### 错误响应示例
+```javascript
+{
+	"code": "0",
+	"msg": "验证码不正确",
+	"data": null
+}
+```
+## /system/security/用户退出
+```text
+暂无描述
+```
+#### 接口状态
+> 已完成
+
+#### 接口URL
+> http://localhost:6666/summer/security/logout
+
+#### 请求方式
+> POST
+
+#### Content-Type
+> urlencoded
+
+#### 认证方式
+```text
+noauth
+```
+#### 预执行脚本
+```javascript
+暂无预执行脚本
+```
+#### 后执行脚本
+```javascript
+暂无后执行脚本
+```
+#### 成功响应示例
+```javascript
+{
+	"code": "1",
+	"msg": "操作成功",
+	"data": null
+}
+```
+#### 错误响应示例
+```javascript
+{
+	"code": "0",
+	"msg": "Token失效，请重新登录"
+}
+```
+## /system/security/role
+```text
+角色
+```
+#### Header参数
+参数名 | 示例值 | 参数描述
+--- | --- | ---
+暂无参数
+#### Query参数
+参数名 | 示例值 | 参数描述
+--- | --- | ---
+暂无参数
+#### Body参数
+参数名 | 示例值 | 参数描述
+--- | --- | ---
+暂无参数
+#### 认证方式
+```text
+noauth
+```
+#### 预执行脚本
+```javascript
+暂无预执行脚本
+```
+#### 后执行脚本
+```javascript
+暂无后执行脚本
+```
+## /system/security/role/分页
+```text
+暂无描述
+```
+#### 接口状态
+> 已完成
+
+#### 接口URL
+> http://localhost:6666/summer/security/role/page?pageNum=1&pageSize=10&field=createTime&order=desc&name=
+
+#### 请求方式
+> GET
+
+#### Content-Type
+> none
+
+#### 请求Query参数
+参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
+--- | --- | --- | --- | ---
+pageNum | 1 | Integer | 否 | 当前页码
+pageSize | 10 | Integer | 否 | 每页记录数
+field | createTime | String | 否 | 排序字段，以“,”分隔
+order | desc | String | 否 | 排序规则，以“,”分隔
+name | - | String | 否 | 角色名称
+#### 认证方式
+```text
+noauth
+```
+#### 预执行脚本
+```javascript
+暂无预执行脚本
+```
+#### 后执行脚本
+```javascript
+暂无后执行脚本
+```
+#### 成功响应示例
+```javascript
+{
+	"code": "1",
+	"msg": null,
+	"data": {
+		"total": 2,
+		"rows": [
+			{
+				"id": 1644591359763062786,
+				"name": "运维人员",
+				"description": "拥有查看日志的权限",
+				"createTime": "2023-04-08 14:41:50",
+				"menuIdSet": [],
+				"deptIdSet": []
+			},
+			{
+				"id": 1644589480094113793,
+				"name": "超级管理员",
+				"description": "拥有所有权限",
+				"createTime": "2023-04-08 14:34:22",
+				"menuIdSet": [],
+				"deptIdSet": []
+			}
+		]
+	}
+}
+```
+#### 错误响应示例
+```javascript
+{
+	"code": "0",
+	"msg": "拒绝访问，没有权限",
+	"data": null
+}
+```
+## /system/security/role/列表
+```text
+暂无描述
+```
+#### 接口状态
+> 已完成
+
+#### 接口URL
+> http://localhost:6666/summer/security/role/list?field=createTime&order=desc&name=
+
+#### 请求方式
+> GET
+
+#### Content-Type
+> none
+
+#### 请求Query参数
+参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
+--- | --- | --- | --- | ---
+field | createTime | String | 否 | 排序字段，以“,”分隔
+order | desc | String | 否 | 排序规则，以“,”分隔
+name | - | String | 否 | 角色名称
+#### 认证方式
+```text
+noauth
+```
+#### 预执行脚本
+```javascript
+暂无预执行脚本
+```
+#### 后执行脚本
+```javascript
+暂无后执行脚本
+```
+#### 成功响应示例
+```javascript
+{
+	"code": "1",
+	"msg": null,
+	"data": [
+		{
+			"id": 1644591359763062786,
+			"name": "运维人员",
+			"description": "拥有查看日志的权限",
+			"createTime": "2023-04-08 14:41:50",
+			"menuIdSet": [],
+			"deptIdSet": []
+		},
+		{
+			"id": 1644589480094113793,
+			"name": "超级管理员",
+			"description": "拥有所有权限",
+			"createTime": "2023-04-08 14:34:22",
+			"menuIdSet": [],
+			"deptIdSet": []
+		}
+	]
+}
+```
+#### 错误响应示例
+```javascript
+{
+	"code": "0",
+	"msg": "拒绝访问，没有权限",
+	"data": null
+}
+```
+## /system/security/role/根据ID获取
+```text
+暂无描述
+```
+#### 接口状态
+> 已完成
+
+#### 接口URL
+> http://localhost:6666/summer/security/role/getById?id=1644591359763062786
+
+#### 请求方式
+> GET
+
+#### Content-Type
+> none
+
+#### 请求Query参数
+参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
+--- | --- | --- | --- | ---
+id | 1644591359763062786 | Integer | 是 | ID
+#### 认证方式
+```text
+noauth
+```
+#### 预执行脚本
+```javascript
+暂无预执行脚本
+```
+#### 后执行脚本
+```javascript
+暂无后执行脚本
+```
+#### 成功响应示例
+```javascript
+{
+	"code": "1",
+	"msg": null,
+	"data": {
+		"id": 1644591359763062786,
+		"name": "运维人员",
+		"description": "拥有查看日志的权限",
+		"createTime": "2023-04-08 14:41:50",
+		"menuIdSet": [
+			1644250886280286210,
+			1644251921644228609,
+			1644254129991421954,
+			1644254438981603329,
+			1644249552424505346,
+			1644254772470714369,
+			1644253821047377922,
+			1644251503899938817,
+			1644253286663688193,
+			1644252869271719938
+		],
+		"deptIdSet": [
+			1636548627622785026,
+			1636548954166128641,
+			1636549079382880258
+		]
+	}
+}
+```
+#### 错误响应示例
+```javascript
+{
+	"code": "0",
+	"msg": "id不能为空",
+	"data": null
+}
+```
+## /system/security/role/新增
+```text
+暂无描述
+```
+#### 接口状态
+> 已完成
+
+#### 接口URL
+> http://localhost:6666/summer/security/role/add
+
+#### 请求方式
+> POST
+
+#### Content-Type
+> urlencoded
+
+#### 请求Body参数
+参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
+--- | --- | --- | --- | ---
+name | 超级管理员 | String | 是 | 角色名称
+description | 拥有所有权限233 | String | 否 | 描述
+menuIdSet | 1644147910819700738,1644152845405667330,1644153599092736001,1644154672847142914,1644155270992642049,1644157656800935937,1644158403013754882,1644158848205570050,1644159233980874754,1644159962489536514,1644160692621393922,1644161676202459138,1644162022752632834,1644162242701934594,1644162484654555138,1644247399261769730,1644247996216086530,1644248300751917057,1644248585805205505,1644249552424505346,1644250886280286210,1644251503899938817,1644251921644228609,1644252869271719938,1644253286663688193,1644253821047377922,1644254129991421954,1644254438981603329,1644254772470714369,1644256030950658049,1644256659760713730,1644256943945781250,1644257173638451202,1644257432523476994,1644257749889683457,1644258035748278274,1644258340347023362,1644587091928719361,1644587720784912385,1644587976218025985,1644588210742534145 | String | 否 | 菜单ID集合，以“,”分隔
+deptIdSet | 1636548298722242561,1636548627622785026,1636548808003022850,1636548954166128641,1636549079382880258,1636549217312567298,1636549260430012417,1636549294890414082,1636549534884294658 | String | 否 | 部门ID集合，以“,”分隔
+#### 认证方式
+```text
+noauth
+```
+#### 预执行脚本
+```javascript
+暂无预执行脚本
+```
+#### 后执行脚本
+```javascript
+暂无后执行脚本
+```
+#### 成功响应示例
+```javascript
+{
+	"code": "1",
+	"msg": "操作成功",
+	"data": null
+}
+```
+#### 错误响应示例
+```javascript
+{
+	"code": "0",
+	"msg": "角色【超级管理员】已存在",
+	"data": null
+}
+```
+## /system/security/role/修改
+```text
+暂无描述
+```
+#### 接口状态
+> 已完成
+
+#### 接口URL
+> http://localhost:6666/summer/security/role/update
+
+#### 请求方式
+> PUT
+
+#### Content-Type
+> urlencoded
+
+#### 请求Body参数
+参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
+--- | --- | --- | --- | ---
+id | 1644589480094113793 | Integer | 是 | ID
+name | 超级管理员 | String | 是 | 角色名称
+description | 拥有所有权限233 | String | 否 | 描述
+menuIdSet | 1644147910819700738,1644152845405667330,1644153599092736001,1644154672847142914,1644155270992642049,1644157656800935937,1644158403013754882,1644158848205570050,1644159233980874754,1644159962489536514,1644160692621393922,1644161676202459138,1644162022752632834,1644162242701934594,1644162484654555138,1644247399261769730,1644247996216086530,1644248300751917057,1644248585805205505,1644249552424505346,1644250886280286210,1644251503899938817,1644251921644228609,1644252869271719938,1644253286663688193,1644253821047377922,1644254129991421954,1644254438981603329,1644254772470714369,1644256030950658049,1644256659760713730,1644256943945781250,1644257173638451202,1644257432523476994,1644257749889683457,1644258035748278274,1644258340347023362,1644587091928719361,1644587720784912385,1644587976218025985,1644588210742534145 | String | 否 | 菜单ID集合，以“,”分隔
+deptIdSet | 1636548298722242561,1636548627622785026,1636548808003022850,1636548954166128641,1636549079382880258,1636549217312567298,1636549260430012417,1636549294890414082,1636549534884294658 | String | 否 | 部门ID集合，以“,”分隔
+#### 认证方式
+```text
+noauth
+```
+#### 预执行脚本
+```javascript
+暂无预执行脚本
+```
+#### 后执行脚本
+```javascript
+暂无后执行脚本
+```
+#### 成功响应示例
+```javascript
+{
+	"code": "1",
+	"msg": "操作成功",
+	"data": null
+}
+```
+#### 错误响应示例
+```javascript
+{
+	"code": "0",
+	"msg": "id【ID不能为空】",
+	"data": null
+}
+```
+## /system/security/role/删除
+```text
+暂无描述
+```
+#### 接口状态
+> 已完成
+
+#### 接口URL
+> http://localhost:6666/summer/security/role/delete
+
+#### 请求方式
+> DELETE
+
+#### Content-Type
+> urlencoded
+
+#### 请求Body参数
+参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
+--- | --- | --- | --- | ---
+ids | 1644281738557005825 | Integer | 是 | ID数组，以“,”分隔
+#### 认证方式
+```text
+noauth
+```
+#### 预执行脚本
+```javascript
+暂无预执行脚本
+```
+#### 后执行脚本
+```javascript
+暂无后执行脚本
+```
+#### 成功响应示例
+```javascript
+{
+	"code": "1",
+	"msg": "操作成功",
+	"data": null
+}
+```
+#### 错误响应示例
+```javascript
+{
+	"code": "0",
+	"msg": "ids不能为空",
+	"data": null
+}
+```
+## /system/security/user
+```text
+用户
+```
+#### 公共Header参数
+参数名 | 示例值 | 参数描述
+--- | --- | ---
+暂无参数
+#### 公共Query参数
+参数名 | 示例值 | 参数描述
+--- | --- | ---
+暂无参数
+#### 公共Body参数
+参数名 | 示例值 | 参数描述
+--- | --- | ---
+暂无参数
+#### 公共认证信息
+```text
+noauth
+```
+#### 预执行脚本
+```javascript
+暂无预执行脚本
+```
+#### 后执行脚本
+```javascript
+暂无后执行脚本
+```
+## /system/security/post
+```text
+岗位
+```
+#### Header参数
+参数名 | 示例值 | 参数描述
+--- | --- | ---
+暂无参数
+#### Query参数
+参数名 | 示例值 | 参数描述
+--- | --- | ---
+暂无参数
+#### Body参数
+参数名 | 示例值 | 参数描述
+--- | --- | ---
+暂无参数
+#### 认证方式
+```text
+noauth
+```
+#### 预执行脚本
+```javascript
+暂无预执行脚本
+```
+#### 后执行脚本
+```javascript
+暂无后执行脚本
+```
+## /system/security/post/分页
+```text
+暂无描述
+```
+#### 接口状态
+> 已完成
+
+#### 接口URL
+> http://localhost:6666/summer/security/post/page?pageNum=1&pageSize=10&field=createTime&order=desc&codeOrName=&status=1
+
+#### 请求方式
+> GET
+
+#### Content-Type
+> none
+
+#### 请求Query参数
+参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
+--- | --- | --- | --- | ---
+pageNum | 1 | Integer | 否 | 当前页码
+pageSize | 10 | Integer | 否 | 每页记录数
+field | createTime | String | 否 | 排序字段，以“,”分隔
+order | desc | String | 否 | 排序规则，以“,”分隔
+codeOrName | - | String | 否 | 岗位编码或名称
+status | 1 | Integer | 否 | 状态  0：停用 1：正常
+#### 认证方式
+```text
+noauth
+```
+#### 预执行脚本
+```javascript
+暂无预执行脚本
+```
+#### 后执行脚本
+```javascript
+暂无后执行脚本
+```
+#### 成功响应示例
+```javascript
+{
+	"code": "1",
+	"msg": null,
+	"data": {
+		"total": 2,
+		"rows": [
+			{
+				"id": 1644573719426424833,
+				"code": "1002",
+				"name": "管理岗",
+				"status": 1,
+				"createTime": "2023-04-08 13:31:44"
+			},
+			{
+				"id": 1644572881052164098,
+				"code": "1001",
+				"name": "技术岗",
+				"status": 1,
+				"createTime": "2023-04-08 13:28:24"
+			}
+		]
+	}
+}
+```
+#### 错误响应示例
+```javascript
+{
+	"code": "0",
+	"msg": "拒绝访问，没有权限",
+	"data": null
+}
+```
+## /system/security/post/列表
+```text
+暂无描述
+```
+#### 接口状态
+> 已完成
+
+#### 接口URL
+> http://localhost:6666/summer/security/post/list?field=createTime&order=desc&codeOrName=技术岗&status=1
+
+#### 请求方式
+> GET
+
+#### Content-Type
+> none
+
+#### 请求Query参数
+参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
+--- | --- | --- | --- | ---
+field | createTime | String | 否 | 排序字段，以“,”分隔
+order | desc | String | 否 | 排序规则，以“,”分隔
+codeOrName | 技术岗 | String | 否 | 岗位编码或名称
+status | 1 | Integer | 否 | 状态  0：停用 1：正常
+#### 认证方式
+```text
+noauth
+```
+#### 预执行脚本
+```javascript
+暂无预执行脚本
+```
+#### 后执行脚本
+```javascript
+暂无后执行脚本
+```
+#### 成功响应示例
+```javascript
+{
+	"code": "1",
+	"msg": null,
+	"data": [
+		{
+			"id": 1644572881052164098,
+			"code": "1001",
+			"name": "技术岗",
+			"status": 1,
+			"createTime": "2023-04-08 13:28:24"
+		}
+	]
+}
+```
+#### 错误响应示例
+```javascript
+{
+	"code": "0",
+	"msg": "拒绝访问，没有权限",
+	"data": null
+}
+```
+## /system/security/post/根据ID获取
+```text
+暂无描述
+```
+#### 接口状态
+> 已完成
+
+#### 接口URL
+> http://localhost:6666/summer/security/post/getById?id=1644573768797577217
+
+#### 请求方式
+> GET
+
+#### Content-Type
+> none
+
+#### 请求Query参数
+参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
+--- | --- | --- | --- | ---
+id | 1644573768797577217 | Integer | 是 | ID
+#### 认证方式
+```text
+noauth
+```
+#### 预执行脚本
+```javascript
+暂无预执行脚本
+```
+#### 后执行脚本
+```javascript
+暂无后执行脚本
+```
+#### 成功响应示例
+```javascript
+{
+	"code": "1",
+	"msg": null,
+	"data": {
+		"id": 1644573768797577217,
+		"code": "1003",
+		"name": "测试岗233",
+		"status": 0,
+		"createTime": "2023-04-08 13:31:56"
+	}
+}
+```
+#### 错误响应示例
+```javascript
+{
+	"code": "0",
+	"msg": "id不能为空",
+	"data": null
+}
+```
+## /system/security/post/新增
+```text
+暂无描述
+```
+#### 接口状态
+> 已完成
+
+#### 接口URL
+> http://localhost:6666/summer/security/post/add
+
+#### 请求方式
+> POST
+
+#### Content-Type
+> urlencoded
+
+#### 请求Body参数
+参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
+--- | --- | --- | --- | ---
+code | 1004 | String | 是 | 岗位编码
+name | 运维岗 | String | 是 | 岗位名称
+status | 1 | Integer | 是 | 状态  0：停用 1：正常
+#### 认证方式
+```text
+noauth
+```
+#### 预执行脚本
+```javascript
+暂无预执行脚本
+```
+#### 后执行脚本
+```javascript
+暂无后执行脚本
+```
+#### 成功响应示例
+```javascript
+{
+	"code": "1",
+	"msg": "操作成功",
+	"data": null
+}
+```
+#### 错误响应示例
+```javascript
+{
+	"code": "0",
+	"msg": "岗位【1001】已存在",
+	"data": null
+}
+```
+## /system/security/post/修改
+```text
+暂无描述
+```
+#### 接口状态
+> 已完成
+
+#### 接口URL
+> http://localhost:6666/summer/security/post/update
+
+#### 请求方式
+> PUT
+
+#### Content-Type
+> urlencoded
+
+#### 请求Body参数
+参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
+--- | --- | --- | --- | ---
+id | 1644573768797577217 | Integer | 是 | ID
+name | 测试岗233 | String | 是 | 岗位名称
+status | 0 | String | 是 | 状态  0：停用 1：正常
+#### 认证方式
+```text
+noauth
+```
+#### 预执行脚本
+```javascript
+暂无预执行脚本
+```
+#### 后执行脚本
+```javascript
+暂无后执行脚本
+```
+#### 成功响应示例
+```javascript
+{
+	"code": "1",
+	"msg": "操作成功",
+	"data": null
+}
+```
+#### 错误响应示例
+```javascript
+{
+	"code": "0",
+	"msg": "code【岗位编码必须为空】",
+	"data": null
+}
+```
+## /system/security/post/删除
+```text
+暂无描述
+```
+#### 接口状态
+> 已完成
+
+#### 接口URL
+> http://localhost:6666/summer/security/post/delete
+
+#### 请求方式
+> DELETE
+
+#### Content-Type
+> urlencoded
+
+#### 请求Body参数
+参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
+--- | --- | --- | --- | ---
+ids | 1644578050695405570 | Integer | 是 | ID数组，以“,”分隔
+#### 认证方式
+```text
+noauth
+```
+#### 预执行脚本
+```javascript
+暂无预执行脚本
+```
+#### 后执行脚本
+```javascript
+暂无后执行脚本
+```
+#### 成功响应示例
+```javascript
+{
+	"code": "1",
+	"msg": "操作成功",
+	"data": null
+}
+```
+#### 错误响应示例
+```javascript
+{
+	"code": "0",
+	"msg": "ids不能为空",
+	"data": null
+}
+```
+## /system/security/menu
+```text
+菜单
+```
+#### Header参数
+参数名 | 示例值 | 参数描述
+--- | --- | ---
+暂无参数
+#### Query参数
+参数名 | 示例值 | 参数描述
+--- | --- | ---
+暂无参数
+#### Body参数
+参数名 | 示例值 | 参数描述
+--- | --- | ---
+暂无参数
+#### 认证方式
+```text
+noauth
+```
+#### 预执行脚本
+```javascript
+暂无预执行脚本
+```
+#### 后执行脚本
+```javascript
+暂无后执行脚本
+```
+## /system/security/menu/列表
+```text
+暂无描述
+```
+#### 接口状态
+> 已完成
+
+#### 接口URL
+> http://localhost:6666/summer/security/menu/list
+
+#### 请求方式
+> GET
+
+#### Content-Type
+> none
+
+#### 认证方式
+```text
+noauth
+```
+#### 预执行脚本
+```javascript
+暂无预执行脚本
+```
+#### 后执行脚本
+```javascript
+暂无后执行脚本
+```
+#### 成功响应示例
+```javascript
+{
+	"code": "1",
+	"msg": null,
+	"data": [
+		{
+			"id": 1644147910819700738,
+			"parentId": 0,
+			"name": "权限管理",
+			"weight": 0,
+			"extra": null,
+			"url": "",
+			"permissions": "",
+			"type": 0,
+			"openMode": 0,
+			"icon": "icon-safetycertificate",
+			"createTime": "2023-04-07 09:19:43",
+			"children": [
+				{
+					"id": 1644155270992642049,
+					"parentId": 1644147910819700738,
+					"name": "角色管理",
+					"weight": 0,
+					"extra": null,
+					"url": "security/role",
+					"permissions": "",
+					"type": 0,
+					"openMode": 0,
+					"icon": "icon-team",
+					"createTime": "2023-04-07 09:48:58",
+					"children": [
+						{
+							"id": 1644247399261769730,
+							"parentId": 1644155270992642049,
+							"name": "查看",
+							"weight": 0,
+							"extra": null,
+							"url": "",
+							"permissions": "security:role:page,security:role:list,security:role:getById",
+							"type": 1,
+							"openMode": null,
+							"icon": "",
+							"createTime": "2023-04-07 15:55:03",
+							"children": [],
+							"parentName": null
+						},
+						{
+							"id": 1644247996216086530,
+							"parentId": 1644155270992642049,
+							"name": "新增",
+							"weight": 1,
+							"extra": null,
+							"url": "",
+							"permissions": "security:role:add",
+							"type": 1,
+							"openMode": null,
+							"icon": "",
+							"createTime": "2023-04-07 15:57:26",
+							"children": [],
+							"parentName": null
+						},
+						{
+							"id": 1644248300751917057,
+							"parentId": 1644155270992642049,
+							"name": "修改",
+							"weight": 2,
+							"extra": null,
+							"url": "",
+							"permissions": "security:role:update",
+							"type": 1,
+							"openMode": null,
+							"icon": "",
+							"createTime": "2023-04-07 15:58:38",
+							"children": [],
+							"parentName": null
+						},
+						{
+							"id": 1644248585805205505,
+							"parentId": 1644155270992642049,
+							"name": "删除",
+							"weight": 3,
+							"extra": null,
+							"url": "",
+							"permissions": "security:role:delete",
+							"type": 1,
+							"openMode": null,
+							"icon": "",
+							"createTime": "2023-04-07 15:59:46",
+							"children": [],
+							"parentName": null
+						}
+					],
+					"parentName": null
+				},
+				{
+					"id": 1644152845405667330,
+					"parentId": 1644147910819700738,
+					"name": "用户管理",
+					"weight": 1,
+					"extra": null,
+					"url": "security/user",
+					"permissions": "",
+					"type": 0,
+					"openMode": 0,
+					"icon": "icon-user",
+					"createTime": "2023-04-07 09:39:20",
+					"children": [],
+					"parentName": null
+				},
+				{
+					"id": 1644153599092736001,
+					"parentId": 1644147910819700738,
+					"name": "岗位管理",
+					"weight": 2,
+					"extra": null,
+					"url": "security/post",
+					"permissions": "",
+					"type": 0,
+					"openMode": 0,
+					"icon": "icon-pic-left",
+					"createTime": "2023-04-07 09:42:20",
+					"children": [
+						{
+							"id": 1644587091928719361,
+							"parentId": 1644153599092736001,
+							"name": "查看",
+							"weight": 0,
+							"extra": null,
+							"url": "",
+							"permissions": "security:post:page,security:post:list,security:post:getById",
+							"type": 1,
+							"openMode": null,
+							"icon": "",
+							"createTime": "2023-04-08 14:24:52",
+							"children": [],
+							"parentName": null
+						},
+						{
+							"id": 1644587720784912385,
+							"parentId": 1644153599092736001,
+							"name": "新增",
+							"weight": 1,
+							"extra": null,
+							"url": "",
+							"permissions": "security:post:add",
+							"type": 1,
+							"openMode": null,
+							"icon": "",
+							"createTime": "2023-04-08 14:27:22",
+							"children": [],
+							"parentName": null
+						},
+						{
+							"id": 1644587976218025985,
+							"parentId": 1644153599092736001,
+							"name": "修改",
+							"weight": 2,
+							"extra": null,
+							"url": "",
+							"permissions": "security:post:update",
+							"type": 1,
+							"openMode": null,
+							"icon": "",
+							"createTime": "2023-04-08 14:28:23",
+							"children": [],
+							"parentName": null
+						},
+						{
+							"id": 1644588210742534145,
+							"parentId": 1644153599092736001,
+							"name": "删除",
+							"weight": 3,
+							"extra": null,
+							"url": "",
+							"permissions": "security:post:delete",
+							"type": 1,
+							"openMode": null,
+							"icon": "",
+							"createTime": "2023-04-08 14:29:19",
+							"children": [],
+							"parentName": null
+						}
+					],
+					"parentName": null
+				},
+				{
+					"id": 1644160692621393922,
+					"parentId": 1644147910819700738,
+					"name": "菜单管理",
+					"weight": 3,
+					"extra": null,
+					"url": "security/menu",
+					"permissions": "",
+					"type": 0,
+					"openMode": 0,
+					"icon": "icon-unorderedlist",
+					"createTime": "2023-04-07 10:10:31",
+					"children": [
+						{
+							"id": 1644161676202459138,
+							"parentId": 1644160692621393922,
+							"name": "查看",
+							"weight": 0,
+							"extra": null,
+							"url": "",
+							"permissions": "security:menu:list,security:menu:getById",
+							"type": 1,
+							"openMode": null,
+							"icon": "",
+							"createTime": "2023-04-07 10:14:25",
+							"children": [],
+							"parentName": null
+						},
+						{
+							"id": 1644162022752632834,
+							"parentId": 1644160692621393922,
+							"name": "新增",
+							"weight": 1,
+							"extra": null,
+							"url": "",
+							"permissions": "security:menu:add",
+							"type": 1,
+							"openMode": null,
+							"icon": "",
+							"createTime": "2023-04-07 10:15:48",
+							"children": [],
+							"parentName": null
+						},
+						{
+							"id": 1644162242701934594,
+							"parentId": 1644160692621393922,
+							"name": "修改",
+							"weight": 2,
+							"extra": null,
+							"url": "",
+							"permissions": "security:menu:update",
+							"type": 1,
+							"openMode": null,
+							"icon": "",
+							"createTime": "2023-04-07 10:16:40",
+							"children": [],
+							"parentName": null
+						},
+						{
+							"id": 1644162484654555138,
+							"parentId": 1644160692621393922,
+							"name": "删除",
+							"weight": 3,
+							"extra": null,
+							"url": "",
+							"permissions": "security:menu:delete",
+							"type": 1,
+							"openMode": null,
+							"icon": "",
+							"createTime": "2023-04-07 10:17:38",
+							"children": [],
+							"parentName": null
+						}
+					],
+					"parentName": null
+				},
+				{
+					"id": 1644154672847142914,
+					"parentId": 1644147910819700738,
+					"name": "部门管理",
+					"weight": 4,
+					"extra": null,
+					"url": "security/dept",
+					"permissions": "",
+					"type": 0,
+					"openMode": 0,
+					"icon": "icon-apartment",
+					"createTime": "2023-04-07 09:46:36",
+					"children": [
+						{
+							"id": 1644157656800935937,
+							"parentId": 1644154672847142914,
+							"name": "查看",
+							"weight": 0,
+							"extra": null,
+							"url": "",
+							"permissions": "security:dept:list,security:dept:getById",
+							"type": 1,
+							"openMode": null,
+							"icon": "",
+							"createTime": "2023-04-07 09:58:27",
+							"children": [],
+							"parentName": null
+						},
+						{
+							"id": 1644158403013754882,
+							"parentId": 1644154672847142914,
+							"name": "新增",
+							"weight": 1,
+							"extra": null,
+							"url": "",
+							"permissions": "security:dept:add",
+							"type": 1,
+							"openMode": null,
+							"icon": "",
+							"createTime": "2023-04-07 10:01:25",
+							"children": [],
+							"parentName": null
+						},
+						{
+							"id": 1644158848205570050,
+							"parentId": 1644154672847142914,
+							"name": "修改",
+							"weight": 2,
+							"extra": null,
+							"url": "",
+							"permissions": "security:dept:update",
+							"type": 1,
+							"openMode": null,
+							"icon": "",
+							"createTime": "2023-04-07 10:03:11",
+							"children": [],
+							"parentName": null
+						},
+						{
+							"id": 1644159233980874754,
+							"parentId": 1644154672847142914,
+							"name": "删除",
+							"weight": 3,
+							"extra": null,
+							"url": "",
+							"permissions": "security:dept:delete",
+							"type": 1,
+							"openMode": null,
+							"icon": "",
+							"createTime": "2023-04-07 10:04:43",
+							"children": [],
+							"parentName": null
+						}
+					],
+					"parentName": null
+				}
+			],
+			"parentName": null
+		},
+		{
+			"id": 1644159962489536514,
+			"parentId": 0,
+			"name": "系统设置",
+			"weight": 1,
+			"extra": null,
+			"url": "",
+			"permissions": "",
+			"type": 0,
+			"openMode": 0,
+			"icon": "icon-setting",
+			"createTime": "2023-04-07 10:07:37",
+			"children": [
+				{
+					"id": 1644256030950658049,
+					"parentId": 1644159962489536514,
+					"name": "国际化名称",
+					"weight": 1,
+					"extra": null,
+					"url": "locale/internationalName",
+					"permissions": "",
+					"type": 0,
+					"openMode": 0,
+					"icon": "icon-file-word",
+					"createTime": "2023-04-07 16:29:21",
+					"children": [
+						{
+							"id": 1644256659760713730,
+							"parentId": 1644256030950658049,
+							"name": "查看",
+							"weight": 0,
+							"extra": null,
+							"url": "",
+							"permissions": "locale:internationalName:page,locale:internationalName:getById",
+							"type": 1,
+							"openMode": null,
+							"icon": "",
+							"createTime": "2023-04-07 16:31:51",
+							"children": [],
+							"parentName": null
+						},
+						{
+							"id": 1644256943945781250,
+							"parentId": 1644256030950658049,
+							"name": "新增",
+							"weight": 1,
+							"extra": null,
+							"url": "",
+							"permissions": "locale:internationalName:add",
+							"type": 1,
+							"openMode": null,
+							"icon": "",
+							"createTime": "2023-04-07 16:32:59",
+							"children": [],
+							"parentName": null
+						},
+						{
+							"id": 1644257173638451202,
+							"parentId": 1644256030950658049,
+							"name": "修改",
+							"weight": 2,
+							"extra": null,
+							"url": "",
+							"permissions": "locale:internationalName:update",
+							"type": 1,
+							"openMode": null,
+							"icon": "",
+							"createTime": "2023-04-07 16:33:54",
+							"children": [],
+							"parentName": null
+						},
+						{
+							"id": 1644257432523476994,
+							"parentId": 1644256030950658049,
+							"name": "删除",
+							"weight": 3,
+							"extra": null,
+							"url": "",
+							"permissions": "locale:internationalName:delete",
+							"type": 1,
+							"openMode": null,
+							"icon": "",
+							"createTime": "2023-04-07 16:34:55",
+							"children": [],
+							"parentName": null
+						},
+						{
+							"id": 1644257749889683457,
+							"parentId": 1644256030950658049,
+							"name": "模板下载",
+							"weight": 4,
+							"extra": null,
+							"url": "",
+							"permissions": "locale:internationalName:excelTemplate",
+							"type": 1,
+							"openMode": null,
+							"icon": "",
+							"createTime": "2023-04-07 16:36:11",
+							"children": [],
+							"parentName": null
+						},
+						{
+							"id": 1644258035748278274,
+							"parentId": 1644256030950658049,
+							"name": "导入",
+							"weight": 5,
+							"extra": null,
+							"url": "",
+							"permissions": "locale:internationalName:excelImport",
+							"type": 1,
+							"openMode": null,
+							"icon": "",
+							"createTime": "2023-04-07 16:37:19",
+							"children": [],
+							"parentName": null
+						},
+						{
+							"id": 1644258340347023362,
+							"parentId": 1644256030950658049,
+							"name": "导出",
+							"weight": 6,
+							"extra": null,
+							"url": "",
+							"permissions": "locale:internationalName:excelExport",
+							"type": 1,
+							"openMode": null,
+							"icon": "",
+							"createTime": "2023-04-07 16:38:32",
+							"children": [],
+							"parentName": null
+						}
+					],
+					"parentName": null
+				}
+			],
+			"parentName": null
+		},
+		{
+			"id": 1644249552424505346,
+			"parentId": 0,
+			"name": "日志管理",
+			"weight": 2,
+			"extra": null,
+			"url": "",
+			"permissions": "",
+			"type": 0,
+			"openMode": 0,
+			"icon": "icon-container",
+			"createTime": "2023-04-07 16:03:37",
+			"children": [
+				{
+					"id": 1644250886280286210,
+					"parentId": 1644249552424505346,
+					"name": "操作日志",
+					"weight": 0,
+					"extra": null,
+					"url": "log/operation",
+					"permissions": "",
+					"type": 0,
+					"openMode": 0,
+					"icon": "icon-solution",
+					"createTime": "2023-04-07 16:08:55",
+					"children": [
+						{
+							"id": 1644252869271719938,
+							"parentId": 1644250886280286210,
+							"name": "查看",
+							"weight": 0,
+							"extra": null,
+							"url": "",
+							"permissions": "log:operation:page",
+							"type": 1,
+							"openMode": null,
+							"icon": "",
+							"createTime": "2023-04-07 16:16:47",
+							"children": [],
+							"parentName": null
+						},
+						{
+							"id": 1644253286663688193,
+							"parentId": 1644250886280286210,
+							"name": "导出",
+							"weight": 1,
+							"extra": null,
+							"url": "",
+							"permissions": "log:operation:excelExport",
+							"type": 1,
+							"openMode": null,
+							"icon": "",
+							"createTime": "2023-04-07 16:18:27",
+							"children": [],
+							"parentName": null
+						}
+					],
+					"parentName": null
+				},
+				{
+					"id": 1644251503899938817,
+					"parentId": 1644249552424505346,
+					"name": "错误日志",
+					"weight": 1,
+					"extra": null,
+					"url": "log/error",
+					"permissions": "",
+					"type": 0,
+					"openMode": 0,
+					"icon": "icon-file-exception",
+					"createTime": "2023-04-07 16:11:22",
+					"children": [
+						{
+							"id": 1644253821047377922,
+							"parentId": 1644251503899938817,
+							"name": "查看",
+							"weight": 0,
+							"extra": null,
+							"url": "",
+							"permissions": "log:error:page,log:error:getById",
+							"type": 1,
+							"openMode": null,
+							"icon": "",
+							"createTime": "2023-04-07 16:20:34",
+							"children": [],
+							"parentName": null
+						},
+						{
+							"id": 1644254129991421954,
+							"parentId": 1644251503899938817,
+							"name": "导出",
+							"weight": 1,
+							"extra": null,
+							"url": "",
+							"permissions": "log:error:excelExport",
+							"type": 1,
+							"openMode": null,
+							"icon": "",
+							"createTime": "2023-04-07 16:21:48",
+							"children": [],
+							"parentName": null
+						}
+					],
+					"parentName": null
+				},
+				{
+					"id": 1644251921644228609,
+					"parentId": 1644249552424505346,
+					"name": "登录日志",
+					"weight": 2,
+					"extra": null,
+					"url": "log/login",
+					"permissions": "",
+					"type": 0,
+					"openMode": 0,
+					"icon": "icon-filedone",
+					"createTime": "2023-04-07 16:13:02",
+					"children": [
+						{
+							"id": 1644254438981603329,
+							"parentId": 1644251921644228609,
+							"name": "查看",
+							"weight": 0,
+							"extra": null,
+							"url": "",
+							"permissions": "log:login:page",
+							"type": 1,
+							"openMode": null,
+							"icon": "",
+							"createTime": "2023-04-07 16:23:02",
+							"children": [],
+							"parentName": null
+						},
+						{
+							"id": 1644254772470714369,
+							"parentId": 1644251921644228609,
+							"name": "导出",
+							"weight": 1,
+							"extra": null,
+							"url": "",
+							"permissions": "log:login:excelExport",
+							"type": 1,
+							"openMode": null,
+							"icon": "",
+							"createTime": "2023-04-07 16:24:21",
+							"children": [],
+							"parentName": null
+						}
+					],
+					"parentName": null
+				}
+			],
+			"parentName": null
+		}
+	]
+}
+```
+#### 错误响应示例
+```javascript
+{
+	"code": "0",
+	"msg": "拒绝访问，没有权限",
+	"data": null
+}
+```
+## /system/security/menu/根据ID获取
+```text
+暂无描述
+```
+#### 接口状态
+> 已完成
+
+#### 接口URL
+> http://localhost:6666/summer/security/menu/getById?id=1644147910819700738
+
+#### 请求方式
+> GET
+
+#### Content-Type
+> none
+
+#### 请求Query参数
+参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
+--- | --- | --- | --- | ---
+id | 1644147910819700738 | Integer | 是 | ID
+#### 认证方式
+```text
+noauth
+```
+#### 预执行脚本
+```javascript
+暂无预执行脚本
+```
+#### 后执行脚本
+```javascript
+暂无后执行脚本
+```
+#### 成功响应示例
+```javascript
+{
+	"code": "1",
+	"msg": null,
+	"data": {
+		"id": 1644147910819700738,
+		"parentId": 0,
+		"name": "权限管理",
+		"weight": 0,
+		"extra": null,
+		"url": "",
+		"permissions": "",
+		"type": 0,
+		"openMode": 0,
+		"icon": "icon-safetycertificate",
+		"createTime": "2023-04-07 09:19:43",
+		"children": [],
+		"parentName": null
+	}
+}
+```
+#### 错误响应示例
+```javascript
+{
+	"code": "0",
+	"msg": "拒绝访问，没有权限",
+	"data": null
+}
+```
+## /system/security/menu/新增
+```text
+暂无描述
+```
+#### 接口状态
+> 已完成
+
+#### 接口URL
+> http://localhost:6666/summer/security/menu/add
+
+#### 请求方式
+> POST
+
+#### Content-Type
+> urlencoded
+
+#### 请求Body参数
+参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
+--- | --- | --- | --- | ---
+parentId | 1644153599092736001 | Integer | 是 | 上级菜单ID
+name | Delete | String | 是 | 菜单名称
+url | - | String | 否 | 菜单URL
+permissions | security:post:delete | String | 否 | 授权
+type | 1 | Integer | 是 | 类型 0：菜单 1：按钮
+openMode | - | Integer | 否 | 打开方式 0：内部 1：外部
+icon | - | String | 否 | 图标
+weight | 3 | Integer | 是 | 顺序，越小优先级越高
+#### 认证方式
+```text
+noauth
+```
+#### 预执行脚本
+```javascript
+暂无预执行脚本
+```
+#### 后执行脚本
+```javascript
+暂无后执行脚本
+```
+#### 成功响应示例
+```javascript
+{
+	"code": "1",
+	"msg": "操作成功",
+	"data": null
+}
+```
+#### 错误响应示例
+```javascript
+{
+	"code": "0",
+	"msg": "name【菜单名称不能为空】",
+	"data": null
+}
+```
+## /system/security/menu/修改
+```text
+暂无描述
+```
+#### 接口状态
+> 已完成
+
+#### 接口URL
+> http://localhost:6666/summer/security/menu/update
+
+#### 请求方式
+> PUT
+
+#### Content-Type
+> urlencoded
+
+#### 请求Body参数
+参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
+--- | --- | --- | --- | ---
+id | 1644162484654555138 | Integer | 是 | ID
+parentId | 1644160692621393922 | Integer | 是 | 上级菜单ID
+name | 删除233 | String | 是 | 菜单名称
+url | - | String | 否 | 菜单URL
+permissions | security:menu:remove | String | 否 | 授权
+type | 1 | Integer | 是 | 类型 0：菜单 1：按钮
+openMode | - | Integer | 否 | 打开方式 0：内部 1：外部
+icon | - | String | 否 | 图标
+weight | 3 | Integer | 是 | 顺序，越小优先级越高
+#### 认证方式
+```text
+noauth
+```
+#### 预执行脚本
+```javascript
+暂无预执行脚本
+```
+#### 后执行脚本
+```javascript
+暂无后执行脚本
+```
+#### 成功响应示例
+```javascript
+{
+	"code": "1",
+	"msg": "操作成功",
+	"data": null
+}
+```
+#### 错误响应示例
+```javascript
+{
+	"code": "0",
+	"msg": "上级菜单不能为自身",
+	"data": null
+}
+```
+## /system/security/menu/删除
+```text
+暂无描述
+```
+#### 接口状态
+> 已完成
+
+#### 接口URL
+> http://localhost:6666/summer/security/menu/delete
+
+#### 请求方式
+> DELETE
+
+#### Content-Type
+> urlencoded
+
+#### 请求Body参数
+参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
+--- | --- | --- | --- | ---
+id | 1644177630772723713 | Integer | 是 | ID
+#### 认证方式
+```text
+noauth
+```
+#### 预执行脚本
+```javascript
+暂无预执行脚本
+```
+#### 后执行脚本
+```javascript
+暂无后执行脚本
+```
+#### 成功响应示例
+```javascript
+{
+	"code": "1",
+	"msg": "操作成功",
+	"data": null
+}
+```
+#### 错误响应示例
+```javascript
+{
+	"code": "0",
+	"msg": "拒绝访问，没有权限",
+	"data": null
+}
+```
+## /system/security/menu/导航列表
+```text
+暂无描述
+```
+#### 接口状态
+> 已完成
+
+#### 接口URL
+> http://localhost:6666/summer/security/menu/navList
+
+#### 请求方式
+> GET
+
+#### Content-Type
+> none
+
+#### 认证方式
+```text
+noauth
+```
+#### 预执行脚本
+```javascript
+暂无预执行脚本
+```
+#### 后执行脚本
+```javascript
+暂无后执行脚本
+```
+#### 成功响应示例
+```javascript
+{
+	"code": "1",
+	"msg": null,
+	"data": [
+		{
+			"id": 1644147910819700738,
+			"parentId": 0,
+			"name": "权限管理",
+			"weight": 0,
+			"extra": null,
+			"url": "",
+			"permissions": "",
+			"type": 0,
+			"openMode": 0,
+			"icon": "icon-safetycertificate",
+			"createTime": "2023-04-07 09:19:43",
+			"children": [
+				{
+					"id": 1644152845405667330,
+					"parentId": 1644147910819700738,
+					"name": "用户管理",
+					"weight": 0,
+					"extra": null,
+					"url": "security/user",
+					"permissions": "",
+					"type": 0,
+					"openMode": 0,
+					"icon": "icon-user",
+					"createTime": "2023-04-07 09:39:20",
+					"children": [],
+					"parentName": null
+				},
+				{
+					"id": 1644153599092736001,
+					"parentId": 1644147910819700738,
+					"name": "岗位管理",
+					"weight": 1,
+					"extra": null,
+					"url": "security/post",
+					"permissions": "",
+					"type": 0,
+					"openMode": 0,
+					"icon": "icon-pic-left",
+					"createTime": "2023-04-07 09:42:20",
+					"children": [],
+					"parentName": null
+				},
+				{
+					"id": 1644154672847142914,
+					"parentId": 1644147910819700738,
+					"name": "部门管理",
+					"weight": 2,
+					"extra": null,
+					"url": "security/dept",
+					"permissions": "",
+					"type": 0,
+					"openMode": 0,
+					"icon": "icon-apartment",
+					"createTime": "2023-04-07 09:46:36",
+					"children": [],
+					"parentName": null
+				},
+				{
+					"id": 1644155270992642049,
+					"parentId": 1644147910819700738,
+					"name": "角色管理",
+					"weight": 3,
+					"extra": null,
+					"url": "security/role",
+					"permissions": "",
+					"type": 0,
+					"openMode": 0,
+					"icon": "icon-team",
+					"createTime": "2023-04-07 09:48:58",
+					"children": [],
+					"parentName": null
+				}
+			],
+			"parentName": null
+		},
+		{
+			"id": 1644159962489536514,
+			"parentId": 0,
+			"name": "系统设置",
+			"weight": 1,
+			"extra": null,
+			"url": "",
+			"permissions": "",
+			"type": 0,
+			"openMode": 0,
+			"icon": "icon-setting",
+			"createTime": "2023-04-07 10:07:37",
+			"children": [
+				{
+					"id": 1644160692621393922,
+					"parentId": 1644159962489536514,
+					"name": "菜单管理",
+					"weight": 0,
+					"extra": null,
+					"url": "security/menu",
+					"permissions": "",
+					"type": 0,
+					"openMode": 0,
+					"icon": "icon-unorderedlist",
+					"createTime": "2023-04-07 10:10:31",
+					"children": [],
+					"parentName": null
+				},
+				{
+					"id": 1644256030950658049,
+					"parentId": 1644159962489536514,
+					"name": "国际化名称",
+					"weight": 1,
+					"extra": null,
+					"url": "locale/internationalName",
+					"permissions": "",
+					"type": 0,
+					"openMode": 0,
+					"icon": "icon-file-word",
+					"createTime": "2023-04-07 16:29:21",
+					"children": [],
+					"parentName": null
+				}
+			],
+			"parentName": null
+		},
+		{
+			"id": 1644249552424505346,
+			"parentId": 0,
+			"name": "日志管理",
+			"weight": 2,
+			"extra": null,
+			"url": "",
+			"permissions": "",
+			"type": 0,
+			"openMode": 0,
+			"icon": "icon-container",
+			"createTime": "2023-04-07 16:03:37",
+			"children": [
+				{
+					"id": 1644250886280286210,
+					"parentId": 1644249552424505346,
+					"name": "操作日志",
+					"weight": 0,
+					"extra": null,
+					"url": "log/operation",
+					"permissions": "",
+					"type": 0,
+					"openMode": 0,
+					"icon": "icon-solution",
+					"createTime": "2023-04-07 16:08:55",
+					"children": [],
+					"parentName": null
+				},
+				{
+					"id": 1644251503899938817,
+					"parentId": 1644249552424505346,
+					"name": "错误日志",
+					"weight": 1,
+					"extra": null,
+					"url": "log/error",
+					"permissions": "",
+					"type": 0,
+					"openMode": 0,
+					"icon": "icon-file-exception",
+					"createTime": "2023-04-07 16:11:22",
+					"children": [],
+					"parentName": null
+				},
+				{
+					"id": 1644251921644228609,
+					"parentId": 1644249552424505346,
+					"name": "登录日志",
+					"weight": 2,
+					"extra": null,
+					"url": "log/login",
+					"permissions": "",
+					"type": 0,
+					"openMode": 0,
+					"icon": "icon-filedone",
+					"createTime": "2023-04-07 16:13:02",
+					"children": [],
+					"parentName": null
+				}
+			],
+			"parentName": null
+		}
+	]
+}
+```
+#### 错误响应示例
+```javascript
+{
+	"code": "0",
+	"msg": "Token失效，请重新登录"
+}
+```
+## /system/security/menu/用户权限集合
+```text
+暂无描述
+```
+#### 接口状态
+> 已完成
+
+#### 接口URL
+> http://localhost:6666/summer/security/menu/permissions
+
+#### 请求方式
+> GET
+
+#### Content-Type
+> none
+
+#### 认证方式
+```text
+noauth
+```
+#### 预执行脚本
+```javascript
+暂无预执行脚本
+```
+#### 后执行脚本
+```javascript
+暂无后执行脚本
+```
+#### 成功响应示例
+```javascript
+{
+	"code": "1",
+	"msg": null,
+	"data": [
+		"log:error:excelExport",
+		"security:dept:getById",
+		"log:login:page",
+		"log:error:getById",
+		"locale:internationalName:delete",
+		"log:error:page",
+		"security:menu:add",
+		"security:menu:getById",
+		"log:operation:page",
+		"log:login:excelExport",
+		"locale:internationalName:excelImport",
+		"security:dept:list",
+		"security:role:add",
+		"security:menu:update",
+		"locale:internationalName:page",
+		"locale:internationalName:excelExport",
+		"log:operation:excelExport",
+		"security:role:page",
+		"security:dept:add",
+		"security:dept:update",
+		"locale:internationalName:getById",
+		"locale:internationalName:update",
+		"locale:internationalName:add",
+		"security:menu:list",
+		"security:role:update",
+		"security:role:getById",
+		"security:dept:delete",
+		"security:role:delete",
+		"locale:internationalName:excelTemplate",
+		"security:menu:delete"
+	]
+}
+```
+#### 错误响应示例
+```javascript
+{
+	"code": "0",
+	"msg": "Token失效，请重新登录"
+}
+```
+## /system/security/dept
+```text
+部门
+```
+#### Header参数
+参数名 | 示例值 | 参数描述
+--- | --- | ---
+暂无参数
+#### Query参数
+参数名 | 示例值 | 参数描述
+--- | --- | ---
+暂无参数
+#### Body参数
+参数名 | 示例值 | 参数描述
+--- | --- | ---
+暂无参数
+#### 认证方式
+```text
+noauth
+```
+#### 预执行脚本
+```javascript
+暂无预执行脚本
+```
+#### 后执行脚本
+```javascript
+暂无后执行脚本
+```
+## /system/security/dept/列表
+```text
+暂无描述
+```
+#### 接口状态
+> 已完成
+
+#### 接口URL
+> http://localhost:6666/summer/security/dept/list
+
+#### 请求方式
+> GET
+
+#### Content-Type
+> none
+
+#### 认证方式
+```text
+noauth
+```
+#### 预执行脚本
+```javascript
+暂无预执行脚本
+```
+#### 后执行脚本
+```javascript
+暂无后执行脚本
+```
+#### 成功响应示例
+```javascript
+{
+	"code": "1",
+	"msg": null,
+	"data": [
+		{
+			"id": 1636548298722242561,
+			"parentId": 0,
+			"name": "罗邦洁具股份有限公司",
+			"weight": 0,
+			"extra": null,
+			"createTime": "2023-03-17 10:01:35",
+			"children": [
+				{
+					"id": 1636548627622785026,
+					"parentId": 1636548298722242561,
+					"name": "泰国工厂",
+					"weight": 0,
+					"extra": null,
+					"createTime": "2023-03-17 10:02:53",
+					"children": [
+						{
+							"id": 1636548954166128641,
+							"parentId": 1636548627622785026,
+							"name": "市场部",
+							"weight": 0,
+							"extra": null,
+							"createTime": "2023-03-17 10:04:11",
+							"children": [],
+							"parentName": "泰国工厂"
+						},
+						{
+							"id": 1636549079382880258,
+							"parentId": 1636548627622785026,
+							"name": "销售部",
+							"weight": 1,
+							"extra": null,
+							"createTime": "2023-03-17 10:04:41",
+							"children": [],
+							"parentName": "泰国工厂"
+						}
+					],
+					"parentName": "罗邦洁具股份有限公司"
+				},
+				{
+					"id": 1636548808003022850,
+					"parentId": 1636548298722242561,
+					"name": "椒江工厂",
+					"weight": 1,
+					"extra": null,
+					"createTime": "2023-03-17 10:03:36",
+					"children": [
+						{
+							"id": 1636549217312567298,
+							"parentId": 1636548808003022850,
+							"name": "产品部",
+							"weight": 0,
+							"extra": null,
+							"createTime": "2023-03-17 10:05:14",
+							"children": [],
+							"parentName": "椒江工厂"
+						},
+						{
+							"id": 1636549260430012417,
+							"parentId": 1636548808003022850,
+							"name": "技术部",
+							"weight": 1,
+							"extra": null,
+							"createTime": "2023-03-17 10:05:24",
+							"children": [
+								{
+									"id": 1636549534884294658,
+									"parentId": 1636549260430012417,
+									"name": "模具研发部",
+									"weight": 0,
+									"extra": null,
+									"createTime": "2023-03-17 10:06:29",
+									"children": [],
+									"parentName": "技术部"
+								}
+							],
+							"parentName": "椒江工厂"
+						},
+						{
+							"id": 1636549294890414082,
+							"parentId": 1636548808003022850,
+							"name": "销售部",
+							"weight": 2,
+							"extra": null,
+							"createTime": "2023-03-17 10:05:32",
+							"children": [],
+							"parentName": "椒江工厂"
+						}
+					],
+					"parentName": "罗邦洁具股份有限公司"
+				}
+			],
+			"parentName": null
+		}
+	]
+}
+```
+#### 错误响应示例
+```javascript
+{
+	"code": "0",
+	"msg": "拒绝访问，没有权限",
+	"data": null
+}
+```
+## /system/security/dept/根据ID获取
+```text
+暂无描述
+```
+#### 接口状态
+> 已完成
+
+#### 接口URL
+> http://localhost:6666/summer/security/dept/getById?id=1636549534884294658
+
+#### 请求方式
+> GET
+
+#### Content-Type
+> none
+
+#### 请求Query参数
+参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
+--- | --- | --- | --- | ---
+id | 1636549534884294658 | Integer | 是 | ID
+#### 认证方式
+```text
+noauth
+```
+#### 预执行脚本
+```javascript
+暂无预执行脚本
+```
+#### 后执行脚本
+```javascript
+暂无后执行脚本
+```
+#### 成功响应示例
+```javascript
+{
+	"code": "1",
+	"msg": null,
+	"data": {
+		"id": 1636549534884294658,
+		"parentId": 1636549260430012417,
+		"name": "模具研发部",
+		"weight": 0,
+		"extra": null,
+		"createTime": "2023-03-17 10:06:29",
+		"children": [],
+		"parentName": "技术部"
+	}
+}
+```
+#### 错误响应示例
+```javascript
+{
+	"code": "0",
+	"msg": "拒绝访问，没有权限",
+	"data": null
+}
+```
+## /system/security/dept/新增
+```text
+暂无描述
+```
+#### 接口状态
+> 已完成
+
+#### 接口URL
+> http://localhost:6666/summer/security/dept/add
+
+#### 请求方式
+> POST
+
+#### Content-Type
+> urlencoded
+
+#### 请求Body参数
+参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
+--- | --- | --- | --- | ---
+parentId | 1636549260430012417 | Integer | 是 | 上级部门ID
+name | 模具造型部 | String | 是 | 部门名称
+weight | 0 | Integer | 是 | 顺序，越小优先级越高
+#### 认证方式
+```text
+noauth
+```
+#### 预执行脚本
+```javascript
+暂无预执行脚本
+```
+#### 后执行脚本
+```javascript
+暂无后执行脚本
+```
+#### 成功响应示例
+```javascript
+{
+	"code": "1",
+	"msg": "操作成功",
+	"data": null
+}
+```
+#### 错误响应示例
+```javascript
+{
+	"code": "0",
+	"msg": "拒绝访问，没有权限",
+	"data": null
+}
+```
+## /system/security/dept/修改
+```text
+暂无描述
+```
+#### 接口状态
+> 已完成
+
+#### 接口URL
+> http://localhost:6666/summer/security/dept/update
+
+#### 请求方式
+> PUT
+
+#### Content-Type
+> urlencoded
+
+#### 请求Body参数
+参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
+--- | --- | --- | --- | ---
+id | 1639546265158758402 | Integer | 是 | ID
+parentId | 1636549260430012417 | Integer | 是 | 上级部门ID
+name | 模具研发部 | String | 是 | 部门名称
+weight | 0 | Integer | 是 | 顺序，越小优先级越高
+#### 认证方式
+```text
+noauth
+```
+#### 预执行脚本
+```javascript
+暂无预执行脚本
+```
+#### 后执行脚本
+```javascript
+暂无后执行脚本
+```
+#### 成功响应示例
+```javascript
+{
+	"code": "1",
+	"msg": "操作成功",
+	"data": null
+}
+```
+#### 错误响应示例
+```javascript
+{
+	"code": "0",
+	"msg": "拒绝访问，没有权限",
+	"data": null
+}
+```
+## /system/security/dept/删除
+```text
+暂无描述
+```
+#### 接口状态
+> 已完成
+
+#### 接口URL
+> http://localhost:6666/summer/security/dept/delete
+
+#### 请求方式
+> DELETE
+
+#### Content-Type
+> urlencoded
+
+#### 请求Body参数
+参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
+--- | --- | --- | --- | ---
+id | 1639546265158758402 | Integer | 是 | ID
+#### 认证方式
+```text
+noauth
+```
+#### 预执行脚本
+```javascript
+暂无预执行脚本
+```
+#### 后执行脚本
+```javascript
+暂无后执行脚本
+```
+#### 成功响应示例
+```javascript
+{
+	"code": "1",
+	"msg": "操作成功",
+	"data": null
+}
+```
+#### 错误响应示例
+```javascript
+{
+	"code": "0",
+	"msg": "拒绝访问，没有权限",
+	"data": null
+}
+```
+## /system/locale
+```text
+国际化模块
+```
+#### Header参数
+参数名 | 示例值 | 参数描述
+--- | --- | ---
+暂无参数
+#### Query参数
+参数名 | 示例值 | 参数描述
+--- | --- | ---
+暂无参数
+#### Body参数
+参数名 | 示例值 | 参数描述
+--- | --- | ---
+暂无参数
+#### 认证方式
+```text
+noauth
+```
+#### 预执行脚本
+```javascript
+暂无预执行脚本
+```
+#### 后执行脚本
+```javascript
+暂无后执行脚本
+```
+## /system/locale/internationalName
+```text
+国际化名称
+```
+#### Header参数
+参数名 | 示例值 | 参数描述
+--- | --- | ---
+暂无参数
+#### Query参数
+参数名 | 示例值 | 参数描述
+--- | --- | ---
+暂无参数
+#### Body参数
+参数名 | 示例值 | 参数描述
+--- | --- | ---
+暂无参数
+#### 认证方式
+```text
+noauth
+```
+#### 预执行脚本
+```javascript
+暂无预执行脚本
+```
+#### 后执行脚本
+```javascript
+暂无后执行脚本
+```
+## /system/locale/internationalName/分页
+```text
+暂无描述
+```
+#### 接口状态
+> 已完成
+
+#### 接口URL
+> http://localhost:6666/summer/locale/internationalName/page?pageNum=1&pageSize=10&field=createTime,fieldValue&order=desc,asc&tableName=security_menu
+
+#### 请求方式
+> GET
+
+#### Content-Type
+> none
+
+#### 请求Query参数
+参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
+--- | --- | --- | --- | ---
+pageNum | 1 | Integer | 否 | 当前页码
+pageSize | 10 | Integer | 否 | 每页记录数
+field | createTime,fieldValue | String | 否 | 排序字段，以“,”分隔
+order | desc,asc | String | 否 | 排序规则，以“,”分隔
+tableName | security_menu | String | 否 | 表名
+#### 认证方式
+```text
+noauth
+```
+#### 预执行脚本
+```javascript
+暂无预执行脚本
+```
+#### 后执行脚本
+```javascript
+暂无后执行脚本
+```
+#### 成功响应示例
+```javascript
+{
+	"code": "1",
+	"msg": null,
+	"data": {
+		"total": 10,
+		"rows": [
+			{
+				"id": 1637654766259195906,
+				"tableName": "security_menu",
+				"fieldName": "name",
+				"fieldValue": "Delete",
+				"locale": "en_US",
+				"createTime": "2023-03-20 11:18:17"
+			},
+			{
+				"id": 1637654712052011010,
+				"tableName": "security_menu",
+				"fieldName": "name",
+				"fieldValue": "删除",
+				"locale": "zh_CN",
+				"createTime": "2023-03-20 11:18:04"
+			},
+			{
+				"id": 1637654647296151554,
+				"tableName": "security_menu",
+				"fieldName": "name",
+				"fieldValue": "Edit",
+				"locale": "en_US",
+				"createTime": "2023-03-20 11:17:49"
+			},
+			{
+				"id": 1637654587099500545,
+				"tableName": "security_menu",
+				"fieldName": "name",
+				"fieldValue": "修改",
+				"locale": "zh_CN",
+				"createTime": "2023-03-20 11:17:34"
+			},
+			{
+				"id": 1637654533332717570,
+				"tableName": "security_menu",
+				"fieldName": "name",
+				"fieldValue": "Add",
+				"locale": "en_US",
+				"createTime": "2023-03-20 11:17:22"
+			},
+			{
+				"id": 1637654466978828290,
+				"tableName": "security_menu",
+				"fieldName": "name",
+				"fieldValue": "新增",
+				"locale": "zh_CN",
+				"createTime": "2023-03-20 11:17:06"
+			},
+			{
+				"id": 1637654312922042370,
+				"tableName": "security_menu",
+				"fieldName": "name",
+				"fieldValue": "View",
+				"locale": "en_US",
+				"createTime": "2023-03-20 11:16:29"
+			},
+			{
+				"id": 1637654261814448130,
+				"tableName": "security_menu",
+				"fieldName": "name",
+				"fieldValue": "查看",
+				"locale": "zh_CN",
+				"createTime": "2023-03-20 11:16:17"
+			},
+			{
+				"id": 1637653834494562306,
+				"tableName": "security_menu",
+				"fieldName": "name",
+				"fieldValue": "Department Management",
+				"locale": "en_US",
+				"createTime": "2023-03-20 11:14:35"
+			},
+			{
+				"id": 1637653692089552898,
+				"tableName": "security_menu",
+				"fieldName": "name",
+				"fieldValue": "部门管理",
+				"locale": "zh_CN",
+				"createTime": "2023-03-20 11:14:01"
+			}
+		]
+	}
+}
+```
+#### 错误响应示例
+```javascript
+{
+	"code": "0",
+	"msg": "拒绝访问，没有权限",
+	"data": null
+}
+```
+## /system/locale/internationalName/根据ID获取
+```text
+暂无描述
+```
+#### 接口状态
+> 已完成
+
+#### 接口URL
+> http://localhost:6666/summer/locale/internationalName/getById?id=1644257749889683458
+
+#### 请求方式
+> GET
+
+#### Content-Type
+> none
+
+#### 请求Query参数
+参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
+--- | --- | --- | --- | ---
+id | 1644257749889683458 | Integer | 是 | ID
+#### 认证方式
+```text
+noauth
+```
+#### 预执行脚本
+```javascript
+暂无预执行脚本
+```
+#### 后执行脚本
+```javascript
+暂无后执行脚本
+```
+#### 成功响应示例
+```javascript
+{
+	"code": "1",
+	"msg": null,
+	"data": {
+		"id": 1644257749889683458,
+		"tableName": "security_menu",
+		"lineId": "1644257749889683457",
+		"fieldName": "name",
+		"fieldValue": "模板下载",
+		"locale": "zh_CN",
+		"createTime": "2023-04-07 16:36:11"
+	}
+}
+```
+#### 错误响应示例
+```javascript
+{
+	"code": "0",
+	"msg": "拒绝访问，没有权限",
+	"data": null
+}
+```
+## /system/locale/internationalName/新增
+```text
+暂无描述
+```
+#### 接口状态
+> 已完成
+
+#### 接口URL
+> http://localhost:6666/summer/locale/internationalName/add
+
+#### 请求方式
+> POST
+
+#### Content-Type
+> urlencoded
+
+#### 请求Body参数
+参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
+--- | --- | --- | --- | ---
+tableName | security_menu | String | 是 | 表名
+lineId | 1636549079382880258 | Integer | 是 | 行ID
+fieldName | name | String | 是 | 字段名
+fieldValue | 权限管理 | String | 是 | 字段值
+locale | zh_CN | String | 是 | 地区语言
+#### 认证方式
+```text
+noauth
+```
+#### 预执行脚本
+```javascript
+暂无预执行脚本
+```
+#### 后执行脚本
+```javascript
+暂无后执行脚本
+```
+#### 成功响应示例
+```javascript
+{
+	"code": "1",
+	"msg": "操作成功",
+	"data": null
+}
+```
+#### 错误响应示例
+```javascript
+{
+	"code": "0",
+	"msg": "拒绝访问，没有权限",
+	"data": null
+}
+```
+## /system/locale/internationalName/修改
+```text
+暂无描述
+```
+#### 接口状态
+> 已完成
+
+#### 接口URL
+> http://localhost:6666/summer/locale/internationalName/update
+
+#### 请求方式
+> PUT
+
+#### Content-Type
+> urlencoded
+
+#### 请求Body参数
+参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
+--- | --- | --- | --- | ---
+id | 1641040580263530498 | Integer | 是 | ID
+tableName | security_menu | String | 是 | 表名
+lineId | 1636549079382880258 | Integer | 是 | 行ID
+fieldName | name | String | 是 | 字段名
+fieldValue | Role Management | String | 是 | 字段值
+locale | en_US | String | 是 | 地区语言
+#### 认证方式
+```text
+noauth
+```
+#### 预执行脚本
+```javascript
+暂无预执行脚本
+```
+#### 后执行脚本
+```javascript
+暂无后执行脚本
+```
+#### 成功响应示例
+```javascript
+{
+	"code": "1",
+	"msg": "操作成功",
+	"data": null
+}
+```
+#### 错误响应示例
+```javascript
+{
+	"code": "0",
+	"msg": "拒绝访问，没有权限",
+	"data": null
+}
+```
+## /system/locale/internationalName/删除
+```text
+暂无描述
+```
+#### 接口状态
+> 已完成
+
+#### 接口URL
+> http://localhost:6666/summer/locale/internationalName/delete
+
+#### 请求方式
+> DELETE
+
+#### Content-Type
+> urlencoded
+
+#### 请求Body参数
+参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
+--- | --- | --- | --- | ---
+ids | 1639541999484481537,1639542125145829378 | Integer | 是 | ID数组，以“,”分隔
+#### 认证方式
+```text
+noauth
+```
+#### 预执行脚本
+```javascript
+暂无预执行脚本
+```
+#### 后执行脚本
+```javascript
+暂无后执行脚本
+```
+#### 成功响应示例
+```javascript
+{
+	"code": "1",
+	"msg": "操作成功",
+	"data": null
+}
+```
+#### 错误响应示例
+```javascript
+{
+	"code": "0",
+	"msg": "拒绝访问，没有权限",
+	"data": null
+}
+```
+## /system/locale/internationalName/Excel模板下载
+```text
+暂无描述
+```
+#### 接口状态
+> 已完成
+
+#### 接口URL
+> http://localhost:6666/summer/locale/internationalName/excelTemplate
+
+#### 请求方式
+> GET
+
+#### Content-Type
+> none
+
+#### 认证方式
+```text
+noauth
+```
+#### 预执行脚本
+```javascript
+暂无预执行脚本
+```
+#### 后执行脚本
+```javascript
+暂无后执行脚本
+```
+#### 错误响应示例
+```javascript
+{
+	"code": "0",
+	"msg": "拒绝访问，没有权限",
+	"data": null
+}
+```
+## /system/locale/internationalName/Excel导入
+```text
+暂无描述
+```
+#### 接口状态
+> 已完成
+
+#### 接口URL
+> http://localhost:6666/summer/locale/internationalName/excelImport
+
+#### 请求方式
+> POST
+
+#### Content-Type
+> form-data
+
+#### 请求Body参数
+参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
+--- | --- | --- | --- | ---
+file | d:\Users\jk\Downloads\国际化名称模板.xls | File | 是 | Excel文件
+#### 认证方式
+```text
+noauth
+```
+#### 预执行脚本
+```javascript
+暂无预执行脚本
+```
+#### 后执行脚本
+```javascript
+暂无后执行脚本
+```
+#### 成功响应示例
+```javascript
+{
+	"code": "1",
+	"msg": "操作成功",
+	"data": null
+}
+```
+#### 错误响应示例
+```javascript
+{
+	"code": "0",
+	"msg": "拒绝访问，没有权限",
+	"data": null
+}
+```
+## /system/locale/internationalName/Excel导出
+```text
+暂无描述
+```
+#### 接口状态
+> 已完成
+
+#### 接口URL
+> http://localhost:6666/summer/locale/internationalName/excelExport?field=create_time&order=desc&tableName=security_menu
+
+#### 请求方式
+> GET
+
+#### Content-Type
+> none
+
+#### 请求Query参数
+参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
+--- | --- | --- | --- | ---
+field | create_time | String | 否 | 排序字段，以“,”分隔
+order | desc | String | 否 | 排序规则，以“,”分隔
+tableName | security_menu | String | 否 | 表名
+#### 认证方式
+```text
+noauth
+```
+#### 预执行脚本
+```javascript
+暂无预执行脚本
+```
+#### 后执行脚本
+```javascript
+暂无后执行脚本
+```
+#### 错误响应示例
+```javascript
+{
+	"code": "0",
+	"msg": "拒绝访问，没有权限",
+	"data": null
+}
 ```
 ## /system/log
 ```text
@@ -1247,2229 +4309,6 @@ operation | 0 | Integer | 否 | 用户操作 0：用户登录 1：用户退出
 status | 1 | Integer | 否 | 登录状态 0：失败1：成功 2：账号已锁定
 createTimeStart | 2023-03-21 12:00:00 | Date | 否 | 创建时间区间（开始）
 createTimeEnd | 2023-04-21 12:00:00 | Date | 否 | 创建时间区间（结束）
-#### 认证方式
-```text
-noauth
-```
-#### 预执行脚本
-```javascript
-暂无预执行脚本
-```
-#### 后执行脚本
-```javascript
-暂无后执行脚本
-```
-#### 错误响应示例
-```javascript
-{
-	"code": "0",
-	"msg": "拒绝访问，没有权限",
-	"data": null
-}
-```
-## /system/security
-```text
-权限相关模块
-```
-#### Header参数
-参数名 | 示例值 | 参数描述
---- | --- | ---
-暂无参数
-#### Query参数
-参数名 | 示例值 | 参数描述
---- | --- | ---
-暂无参数
-#### Body参数
-参数名 | 示例值 | 参数描述
---- | --- | ---
-暂无参数
-#### 认证方式
-```text
-noauth
-```
-#### 预执行脚本
-```javascript
-暂无预执行脚本
-```
-#### 后执行脚本
-```javascript
-暂无后执行脚本
-```
-## /system/security/获取验证码
-```text
-暂无描述
-```
-#### 接口状态
-> 已完成
-
-#### 接口URL
-> http://localhost:6666/summer/security/captcha?uuid=00376e8000bffa7a538274d69fff20f2
-
-#### 请求方式
-> GET
-
-#### Content-Type
-> none
-
-#### 请求Query参数
-参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
---- | --- | --- | --- | ---
-uuid | 00376e8000bffa7a538274d69fff20f2 | String | 是 | uuid
-#### 认证方式
-```text
-noauth
-```
-#### 预执行脚本
-```javascript
-暂无预执行脚本
-```
-#### 后执行脚本
-```javascript
-暂无后执行脚本
-```
-#### 错误响应示例
-```javascript
-{
-	"code": "0",
-	"msg": "服务器繁忙，请稍后再试~",
-	"data": null
-}
-```
-## /system/security/用户登录
-```text
-暂无描述
-```
-#### 接口状态
-> 已完成
-
-#### 接口URL
-> http://localhost:6666/summer/security/login
-
-#### 请求方式
-> POST
-
-#### Content-Type
-> urlencoded
-
-#### 请求Body参数
-参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
---- | --- | --- | --- | ---
-username | admin | String | 是 | 用户名
-password | admin | String | 是 | 密码
-captcha | 7g8g7 | String | 是 | 验证码
-uuid | 00376e8000bffa7a538274d69fff20f2 | String | 是 | uuid
-#### 认证方式
-```text
-noauth
-```
-#### 预执行脚本
-```javascript
-暂无预执行脚本
-```
-#### 后执行脚本
-```javascript
-暂无后执行脚本
-```
-#### 成功响应示例
-```javascript
-{
-	"code": "1",
-	"msg": null,
-	"data": {
-		"accessToken": "eee4eb696457036abaadb38f6fd4c1df",
-		"expireTime": 12
-	}
-}
-```
-#### 错误响应示例
-```javascript
-{
-	"code": "0",
-	"msg": "验证码不正确",
-	"data": null
-}
-```
-## /system/security/用户退出
-```text
-暂无描述
-```
-#### 接口状态
-> 已完成
-
-#### 接口URL
-> http://localhost:6666/summer/security/logout
-
-#### 请求方式
-> POST
-
-#### Content-Type
-> urlencoded
-
-#### 认证方式
-```text
-noauth
-```
-#### 预执行脚本
-```javascript
-暂无预执行脚本
-```
-#### 后执行脚本
-```javascript
-暂无后执行脚本
-```
-#### 成功响应示例
-```javascript
-{
-	"code": "1",
-	"msg": "操作成功",
-	"data": null
-}
-```
-#### 错误响应示例
-```javascript
-{
-	"code": "0",
-	"msg": "Token失效，请重新登录"
-}
-```
-## /system/security/user
-```text
-用户
-```
-#### 公共Header参数
-参数名 | 示例值 | 参数描述
---- | --- | ---
-暂无参数
-#### 公共Query参数
-参数名 | 示例值 | 参数描述
---- | --- | ---
-暂无参数
-#### 公共Body参数
-参数名 | 示例值 | 参数描述
---- | --- | ---
-暂无参数
-#### 公共认证信息
-```text
-noauth
-```
-#### 预执行脚本
-```javascript
-暂无预执行脚本
-```
-#### 后执行脚本
-```javascript
-暂无后执行脚本
-```
-## /system/security/role
-```text
-角色
-```
-#### Header参数
-参数名 | 示例值 | 参数描述
---- | --- | ---
-暂无参数
-#### Query参数
-参数名 | 示例值 | 参数描述
---- | --- | ---
-暂无参数
-#### Body参数
-参数名 | 示例值 | 参数描述
---- | --- | ---
-暂无参数
-#### 认证方式
-```text
-noauth
-```
-#### 预执行脚本
-```javascript
-暂无预执行脚本
-```
-#### 后执行脚本
-```javascript
-暂无后执行脚本
-```
-## /system/security/role/分页
-```text
-暂无描述
-```
-#### 接口状态
-> 已完成
-
-#### 接口URL
-> http://localhost:6666/summer/security/role/page?pageNum=1&pageSize=10&field=createTime&order=desc&name=
-
-#### 请求方式
-> GET
-
-#### Content-Type
-> none
-
-#### 请求Query参数
-参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
---- | --- | --- | --- | ---
-pageNum | 1 | Integer | 否 | 当前页码
-pageSize | 10 | Integer | 否 | 每页记录数
-field | createTime | String | 否 | 排序字段，以“,”分隔
-order | desc | String | 否 | 排序规则，以“,”分隔
-name | - | String | 否 | 角色名称
-#### 认证方式
-```text
-noauth
-```
-#### 预执行脚本
-```javascript
-暂无预执行脚本
-```
-#### 后执行脚本
-```javascript
-暂无后执行脚本
-```
-#### 成功响应示例
-```javascript
-{
-	"code": "1",
-	"msg": null,
-	"data": {
-		"total": 1,
-		"rows": [
-			{
-				"id": 1644266123314225153,
-				"name": "超级管理员",
-				"description": "拥有所有权限",
-				"createTime": "2023-04-07 17:09:27",
-				"menuIdSet": [],
-				"deptIdSet": []
-			}
-		]
-	}
-}
-```
-#### 错误响应示例
-```javascript
-{
-	"code": "0",
-	"msg": "拒绝访问，没有权限",
-	"data": null
-}
-```
-## /system/security/role/列表
-```text
-暂无描述
-```
-#### 接口状态
-> 已完成
-
-#### 接口URL
-> http://localhost:6666/summer/security/role/list?field=createTime&order=desc&name=
-
-#### 请求方式
-> GET
-
-#### Content-Type
-> none
-
-#### 请求Query参数
-参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
---- | --- | --- | --- | ---
-field | createTime | String | 否 | 排序字段，以“,”分隔
-order | desc | String | 否 | 排序规则，以“,”分隔
-name | - | String | 否 | 角色名称
-#### 认证方式
-```text
-noauth
-```
-#### 预执行脚本
-```javascript
-暂无预执行脚本
-```
-#### 后执行脚本
-```javascript
-暂无后执行脚本
-```
-#### 成功响应示例
-```javascript
-{
-	"code": "1",
-	"msg": null,
-	"data": [
-		{
-			"id": 1644266123314225153,
-			"name": "超级管理员",
-			"description": "拥有所有权限",
-			"createTime": "2023-04-07 17:09:27",
-			"menuIdSet": [],
-			"deptIdSet": []
-		}
-	]
-}
-```
-#### 错误响应示例
-```javascript
-{
-	"code": "0",
-	"msg": "拒绝访问，没有权限",
-	"data": null
-}
-```
-## /system/security/role/根据ID获取
-```text
-暂无描述
-```
-#### 接口状态
-> 已完成
-
-#### 接口URL
-> http://localhost:6666/summer/security/role/getById?id=1644288389922058242
-
-#### 请求方式
-> GET
-
-#### Content-Type
-> none
-
-#### 请求Query参数
-参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
---- | --- | --- | --- | ---
-id | 1644288389922058242 | Integer | 是 | ID
-#### 认证方式
-```text
-noauth
-```
-#### 预执行脚本
-```javascript
-暂无预执行脚本
-```
-#### 后执行脚本
-```javascript
-暂无后执行脚本
-```
-#### 成功响应示例
-```javascript
-{
-	"code": "1",
-	"msg": null,
-	"data": {
-		"id": 1644288389922058242,
-		"name": "超级管理员",
-		"description": "拥有所有权限",
-		"createTime": "2023-04-07 18:37:56",
-		"menuIdSet": [
-			1644152845405667330,
-			1644247399261769730,
-			1644155270992642049,
-			1644249552424505346,
-			1644158848205570050,
-			1644254772470714369,
-			1644251503899938817,
-			1644252869271719938,
-			1644159962489536514,
-			1644162242701934594,
-			1644158403013754882,
-			1644159233980874754,
-			1644248300751917057,
-			1644147910819700738,
-			1644162484654555138,
-			1644161676202459138,
-			1644247996216086530,
-			1644251921644228609,
-			1644254129991421954,
-			1644257432523476994,
-			1644157656800935937,
-			1644248585805205505,
-			1644253821047377922,
-			1644253286663688193,
-			1644256030950658049,
-			1644162022752632834,
-			1644250886280286210,
-			1644256659760713730,
-			1644258035748278274,
-			1644256943945781250,
-			1644153599092736001,
-			1644258340347023362,
-			1644160692621393922,
-			1644254438981603329,
-			1644257173638451202,
-			1644257749889683457,
-			1644154672847142914
-		],
-		"deptIdSet": [
-			1636548627622785026,
-			1636548954166128641,
-			1636549294890414082,
-			1636548808003022850,
-			1636549079382880258,
-			1636549217312567298,
-			1636548298722242561,
-			1636549260430012417,
-			1636549534884294658
-		]
-	}
-}
-```
-#### 错误响应示例
-```javascript
-{
-	"code": "0",
-	"msg": "id不能为空",
-	"data": null
-}
-```
-## /system/security/role/新增
-```text
-暂无描述
-```
-#### 接口状态
-> 已完成
-
-#### 接口URL
-> http://localhost:6666/summer/security/role/add
-
-#### 请求方式
-> POST
-
-#### Content-Type
-> urlencoded
-
-#### 请求Body参数
-参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
---- | --- | --- | --- | ---
-name | 超级管理员 | String | 是 | 角色名称
-description | 拥有所有权限 | String | 否 | 描述
-menuIdSet | 1644147910819700738,1644152845405667330,1644153599092736001,1644154672847142914,1644155270992642049,1644157656800935937,1644158403013754882,1644158848205570050,1644159233980874754,1644159962489536514,1644160692621393922,1644161676202459138,1644162022752632834,1644162242701934594,1644162484654555138,1644247399261769730,1644247996216086530,1644248300751917057,1644248585805205505,1644249552424505346,1644250886280286210,1644251503899938817,1644251921644228609,1644252869271719938,1644253286663688193,1644253821047377922,1644254129991421954,1644254438981603329,1644254772470714369,1644256030950658049,1644256659760713730,1644256943945781250,1644257173638451202,1644257432523476994,1644257749889683457,1644258035748278274,1644258340347023362 | String | 否 | 菜单ID集合，以“,”分隔
-deptIdSet | 1636548298722242561,1636548627622785026,1636548808003022850,1636548954166128641,1636549079382880258,1636549217312567298,1636549260430012417,1636549294890414082,1636549534884294658 | String | 否 | 部门ID集合，以“,”分隔
-#### 认证方式
-```text
-noauth
-```
-#### 预执行脚本
-```javascript
-暂无预执行脚本
-```
-#### 后执行脚本
-```javascript
-暂无后执行脚本
-```
-#### 成功响应示例
-```javascript
-{
-	"code": "1",
-	"msg": "操作成功",
-	"data": null
-}
-```
-#### 错误响应示例
-```javascript
-{
-	"code": "0",
-	"msg": "拒绝访问，没有权限",
-	"data": null
-}
-```
-## /system/security/role/修改
-```text
-暂无描述
-```
-#### 接口状态
-> 已完成
-
-#### 接口URL
-> http://localhost:6666/summer/security/role/update
-
-#### 请求方式
-> PUT
-
-#### Content-Type
-> urlencoded
-
-#### 请求Body参数
-参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
---- | --- | --- | --- | ---
-id | 1644288389922058242 | Integer | 是 | ID
-name | 超级管理员 | String | 是 | 角色名称
-description | 拥有所有权限233 | String | 否 | 描述
-menuIdSet | 1644147910819700738,1644152845405667330,1644153599092736001,1644154672847142914,1644155270992642049,1644157656800935937,1644158403013754882,1644158848205570050,1644159233980874754,1644159962489536514,1644160692621393922,1644161676202459138,1644162022752632834,1644162242701934594,1644162484654555138,1644247399261769730,1644247996216086530,1644248300751917057,1644248585805205505,1644249552424505346,1644250886280286210,1644251503899938817,1644251921644228609,1644252869271719938,1644253286663688193,1644253821047377922,1644254129991421954,1644254438981603329,1644254772470714369,1644256030950658049,1644256659760713730,1644256943945781250,1644257173638451202,1644257432523476994,1644257749889683457,1644258035748278274,1644258340347023362 | String | 否 | 菜单ID集合，以“,”分隔
-deptIdSet | 1636548298722242561,1636548627622785026,1636548808003022850,1636548954166128641,1636549079382880258,1636549217312567298,1636549260430012417,1636549294890414082,1636549534884294658 | String | 否 | 部门ID集合，以“,”分隔
-#### 认证方式
-```text
-noauth
-```
-#### 预执行脚本
-```javascript
-暂无预执行脚本
-```
-#### 后执行脚本
-```javascript
-暂无后执行脚本
-```
-#### 成功响应示例
-```javascript
-{
-	"code": "1",
-	"msg": "操作成功",
-	"data": null
-}
-```
-#### 错误响应示例
-```javascript
-{
-	"code": "0",
-	"msg": "id【ID不能为空】",
-	"data": null
-}
-```
-## /system/security/role/删除
-```text
-暂无描述
-```
-#### 接口状态
-> 已完成
-
-#### 接口URL
-> http://localhost:6666/summer/security/role/delete
-
-#### 请求方式
-> DELETE
-
-#### Content-Type
-> urlencoded
-
-#### 请求Body参数
-参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
---- | --- | --- | --- | ---
-ids | 1644281738557005825 | Integer | 是 | ID数组，以“,”分隔
-#### 认证方式
-```text
-noauth
-```
-#### 预执行脚本
-```javascript
-暂无预执行脚本
-```
-#### 后执行脚本
-```javascript
-暂无后执行脚本
-```
-#### 成功响应示例
-```javascript
-{
-	"code": "1",
-	"msg": "操作成功",
-	"data": null
-}
-```
-#### 错误响应示例
-```javascript
-{
-	"code": "0",
-	"msg": "ids不能为空",
-	"data": null
-}
-```
-## /system/security/dept
-```text
-部门
-```
-#### Header参数
-参数名 | 示例值 | 参数描述
---- | --- | ---
-暂无参数
-#### Query参数
-参数名 | 示例值 | 参数描述
---- | --- | ---
-暂无参数
-#### Body参数
-参数名 | 示例值 | 参数描述
---- | --- | ---
-暂无参数
-#### 认证方式
-```text
-noauth
-```
-#### 预执行脚本
-```javascript
-暂无预执行脚本
-```
-#### 后执行脚本
-```javascript
-暂无后执行脚本
-```
-## /system/security/dept/列表
-```text
-暂无描述
-```
-#### 接口状态
-> 已完成
-
-#### 接口URL
-> http://localhost:6666/summer/security/dept/list
-
-#### 请求方式
-> GET
-
-#### Content-Type
-> none
-
-#### 认证方式
-```text
-noauth
-```
-#### 预执行脚本
-```javascript
-暂无预执行脚本
-```
-#### 后执行脚本
-```javascript
-暂无后执行脚本
-```
-#### 成功响应示例
-```javascript
-{
-	"code": "1",
-	"msg": null,
-	"data": [
-		{
-			"id": 1636548298722242561,
-			"parentId": 0,
-			"name": "罗邦洁具股份有限公司",
-			"weight": 0,
-			"extra": null,
-			"createTime": "2023-03-17 10:01:35",
-			"children": [
-				{
-					"id": 1636548627622785026,
-					"parentId": 1636548298722242561,
-					"name": "泰国工厂",
-					"weight": 0,
-					"extra": null,
-					"createTime": "2023-03-17 10:02:53",
-					"children": [
-						{
-							"id": 1636548954166128641,
-							"parentId": 1636548627622785026,
-							"name": "市场部",
-							"weight": 0,
-							"extra": null,
-							"createTime": "2023-03-17 10:04:11",
-							"children": [],
-							"parentName": "泰国工厂"
-						},
-						{
-							"id": 1636549079382880258,
-							"parentId": 1636548627622785026,
-							"name": "销售部",
-							"weight": 1,
-							"extra": null,
-							"createTime": "2023-03-17 10:04:41",
-							"children": [],
-							"parentName": "泰国工厂"
-						}
-					],
-					"parentName": "罗邦洁具股份有限公司"
-				},
-				{
-					"id": 1636548808003022850,
-					"parentId": 1636548298722242561,
-					"name": "椒江工厂",
-					"weight": 1,
-					"extra": null,
-					"createTime": "2023-03-17 10:03:36",
-					"children": [
-						{
-							"id": 1636549217312567298,
-							"parentId": 1636548808003022850,
-							"name": "产品部",
-							"weight": 0,
-							"extra": null,
-							"createTime": "2023-03-17 10:05:14",
-							"children": [],
-							"parentName": "椒江工厂"
-						},
-						{
-							"id": 1636549260430012417,
-							"parentId": 1636548808003022850,
-							"name": "技术部",
-							"weight": 1,
-							"extra": null,
-							"createTime": "2023-03-17 10:05:24",
-							"children": [
-								{
-									"id": 1636549534884294658,
-									"parentId": 1636549260430012417,
-									"name": "模具研发部",
-									"weight": 0,
-									"extra": null,
-									"createTime": "2023-03-17 10:06:29",
-									"children": [],
-									"parentName": "技术部"
-								}
-							],
-							"parentName": "椒江工厂"
-						},
-						{
-							"id": 1636549294890414082,
-							"parentId": 1636548808003022850,
-							"name": "销售部",
-							"weight": 2,
-							"extra": null,
-							"createTime": "2023-03-17 10:05:32",
-							"children": [],
-							"parentName": "椒江工厂"
-						}
-					],
-					"parentName": "罗邦洁具股份有限公司"
-				}
-			],
-			"parentName": null
-		}
-	]
-}
-```
-#### 错误响应示例
-```javascript
-{
-	"code": "0",
-	"msg": "拒绝访问，没有权限",
-	"data": null
-}
-```
-## /system/security/dept/根据ID获取
-```text
-暂无描述
-```
-#### 接口状态
-> 已完成
-
-#### 接口URL
-> http://localhost:6666/summer/security/dept/getById?id=1636549534884294658
-
-#### 请求方式
-> GET
-
-#### Content-Type
-> none
-
-#### 请求Query参数
-参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
---- | --- | --- | --- | ---
-id | 1636549534884294658 | Integer | 是 | ID
-#### 认证方式
-```text
-noauth
-```
-#### 预执行脚本
-```javascript
-暂无预执行脚本
-```
-#### 后执行脚本
-```javascript
-暂无后执行脚本
-```
-#### 成功响应示例
-```javascript
-{
-	"code": "1",
-	"msg": null,
-	"data": {
-		"id": 1636549534884294658,
-		"parentId": 1636549260430012417,
-		"name": "模具研发部",
-		"weight": 0,
-		"extra": null,
-		"createTime": "2023-03-17 10:06:29",
-		"children": [],
-		"parentName": "技术部"
-	}
-}
-```
-#### 错误响应示例
-```javascript
-{
-	"code": "0",
-	"msg": "拒绝访问，没有权限",
-	"data": null
-}
-```
-## /system/security/dept/新增
-```text
-暂无描述
-```
-#### 接口状态
-> 已完成
-
-#### 接口URL
-> http://localhost:6666/summer/security/dept/add
-
-#### 请求方式
-> POST
-
-#### Content-Type
-> urlencoded
-
-#### 请求Body参数
-参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
---- | --- | --- | --- | ---
-parentId | 1636549260430012417 | Integer | 是 | 上级部门ID
-name | 模具造型部 | String | 是 | 部门名称
-weight | 0 | Integer | 是 | 顺序，越小优先级越高
-#### 认证方式
-```text
-noauth
-```
-#### 预执行脚本
-```javascript
-暂无预执行脚本
-```
-#### 后执行脚本
-```javascript
-暂无后执行脚本
-```
-#### 成功响应示例
-```javascript
-{
-	"code": "1",
-	"msg": "操作成功",
-	"data": null
-}
-```
-#### 错误响应示例
-```javascript
-{
-	"code": "0",
-	"msg": "拒绝访问，没有权限",
-	"data": null
-}
-```
-## /system/security/dept/修改
-```text
-暂无描述
-```
-#### 接口状态
-> 已完成
-
-#### 接口URL
-> http://localhost:6666/summer/security/dept/update
-
-#### 请求方式
-> PUT
-
-#### Content-Type
-> urlencoded
-
-#### 请求Body参数
-参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
---- | --- | --- | --- | ---
-id | 1639546265158758402 | Integer | 是 | ID
-parentId | 1636549260430012417 | Integer | 是 | 上级部门ID
-name | 模具研发部 | String | 是 | 部门名称
-weight | 0 | Integer | 是 | 顺序，越小优先级越高
-#### 认证方式
-```text
-noauth
-```
-#### 预执行脚本
-```javascript
-暂无预执行脚本
-```
-#### 后执行脚本
-```javascript
-暂无后执行脚本
-```
-#### 成功响应示例
-```javascript
-{
-	"code": "1",
-	"msg": "操作成功",
-	"data": null
-}
-```
-#### 错误响应示例
-```javascript
-{
-	"code": "0",
-	"msg": "拒绝访问，没有权限",
-	"data": null
-}
-```
-## /system/security/dept/删除
-```text
-暂无描述
-```
-#### 接口状态
-> 已完成
-
-#### 接口URL
-> http://localhost:6666/summer/security/dept/delete
-
-#### 请求方式
-> DELETE
-
-#### Content-Type
-> urlencoded
-
-#### 请求Body参数
-参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
---- | --- | --- | --- | ---
-id | 1639546265158758402 | Integer | 是 | ID
-#### 认证方式
-```text
-noauth
-```
-#### 预执行脚本
-```javascript
-暂无预执行脚本
-```
-#### 后执行脚本
-```javascript
-暂无后执行脚本
-```
-#### 成功响应示例
-```javascript
-{
-	"code": "1",
-	"msg": "操作成功",
-	"data": null
-}
-```
-#### 错误响应示例
-```javascript
-{
-	"code": "0",
-	"msg": "拒绝访问，没有权限",
-	"data": null
-}
-```
-## /system/security/menu
-```text
-菜单
-```
-#### Header参数
-参数名 | 示例值 | 参数描述
---- | --- | ---
-暂无参数
-#### Query参数
-参数名 | 示例值 | 参数描述
---- | --- | ---
-暂无参数
-#### Body参数
-参数名 | 示例值 | 参数描述
---- | --- | ---
-暂无参数
-#### 认证方式
-```text
-noauth
-```
-#### 预执行脚本
-```javascript
-暂无预执行脚本
-```
-#### 后执行脚本
-```javascript
-暂无后执行脚本
-```
-## /system/security/menu/列表
-```text
-暂无描述
-```
-#### 接口状态
-> 已完成
-
-#### 接口URL
-> http://localhost:6666/summer/security/menu/list
-
-#### 请求方式
-> GET
-
-#### Content-Type
-> none
-
-#### 认证方式
-```text
-noauth
-```
-#### 预执行脚本
-```javascript
-暂无预执行脚本
-```
-#### 后执行脚本
-```javascript
-暂无后执行脚本
-```
-#### 成功响应示例
-```javascript
-{
-	"code": "1",
-	"msg": null,
-	"data": [
-		{
-			"id": 1644159962489536514,
-			"parentId": 0,
-			"name": "系统设置",
-			"weight": 0,
-			"extra": null,
-			"url": "",
-			"permissions": "",
-			"type": 0,
-			"openMode": 0,
-			"icon": "icon-setting",
-			"createTime": "2023-04-07 10:07:37",
-			"children": [
-				{
-					"id": 1644160692621393922,
-					"parentId": 1644159962489536514,
-					"name": "菜单管理",
-					"weight": 0,
-					"extra": null,
-					"url": "security/menu",
-					"permissions": "",
-					"type": 0,
-					"openMode": 0,
-					"icon": "icon-unorderedlist",
-					"createTime": "2023-04-07 10:10:31",
-					"children": [
-						{
-							"id": 1644161676202459138,
-							"parentId": 1644160692621393922,
-							"name": "查看",
-							"weight": 0,
-							"extra": null,
-							"url": "",
-							"permissions": "security:menu:list,security:menu:getById",
-							"type": 1,
-							"openMode": null,
-							"icon": "",
-							"createTime": "2023-04-07 10:14:25",
-							"children": [],
-							"parentName": null
-						},
-						{
-							"id": 1644162022752632834,
-							"parentId": 1644160692621393922,
-							"name": "新增",
-							"weight": 1,
-							"extra": null,
-							"url": "",
-							"permissions": "security:menu:add",
-							"type": 1,
-							"openMode": null,
-							"icon": "",
-							"createTime": "2023-04-07 10:15:48",
-							"children": [],
-							"parentName": null
-						},
-						{
-							"id": 1644162242701934594,
-							"parentId": 1644160692621393922,
-							"name": "修改",
-							"weight": 2,
-							"extra": null,
-							"url": "",
-							"permissions": "security:menu:update",
-							"type": 1,
-							"openMode": null,
-							"icon": "",
-							"createTime": "2023-04-07 10:16:40",
-							"children": [],
-							"parentName": null
-						},
-						{
-							"id": 1644162484654555138,
-							"parentId": 1644160692621393922,
-							"name": "删除",
-							"weight": 3,
-							"extra": null,
-							"url": "",
-							"permissions": "security:menu:delete",
-							"type": 1,
-							"openMode": null,
-							"icon": "",
-							"createTime": "2023-04-07 10:17:38",
-							"children": [],
-							"parentName": null
-						}
-					],
-					"parentName": null
-				}
-			],
-			"parentName": null
-		},
-		{
-			"id": 1644147910819700738,
-			"parentId": 0,
-			"name": "权限管理",
-			"weight": 0,
-			"extra": null,
-			"url": "",
-			"permissions": "",
-			"type": 0,
-			"openMode": 0,
-			"icon": "icon-safetycertificate",
-			"createTime": "2023-04-07 09:19:43",
-			"children": [
-				{
-					"id": 1644152845405667330,
-					"parentId": 1644147910819700738,
-					"name": "用户管理",
-					"weight": 0,
-					"extra": null,
-					"url": "security/user",
-					"permissions": "",
-					"type": 0,
-					"openMode": 0,
-					"icon": "icon-user",
-					"createTime": "2023-04-07 09:39:20",
-					"children": [],
-					"parentName": null
-				},
-				{
-					"id": 1644153599092736001,
-					"parentId": 1644147910819700738,
-					"name": "岗位管理",
-					"weight": 1,
-					"extra": null,
-					"url": "security/post",
-					"permissions": "",
-					"type": 0,
-					"openMode": 0,
-					"icon": "icon-pic-left",
-					"createTime": "2023-04-07 09:42:20",
-					"children": [],
-					"parentName": null
-				},
-				{
-					"id": 1644154672847142914,
-					"parentId": 1644147910819700738,
-					"name": "部门管理",
-					"weight": 2,
-					"extra": null,
-					"url": "security/dept",
-					"permissions": "",
-					"type": 0,
-					"openMode": 0,
-					"icon": "icon-apartment",
-					"createTime": "2023-04-07 09:46:36",
-					"children": [
-						{
-							"id": 1644157656800935937,
-							"parentId": 1644154672847142914,
-							"name": "查看",
-							"weight": 0,
-							"extra": null,
-							"url": "",
-							"permissions": "security:dept:list,security:dept:getById",
-							"type": 1,
-							"openMode": null,
-							"icon": "",
-							"createTime": "2023-04-07 09:58:27",
-							"children": [],
-							"parentName": null
-						},
-						{
-							"id": 1644158403013754882,
-							"parentId": 1644154672847142914,
-							"name": "新增",
-							"weight": 1,
-							"extra": null,
-							"url": "",
-							"permissions": "security:dept:add",
-							"type": 1,
-							"openMode": null,
-							"icon": "",
-							"createTime": "2023-04-07 10:01:25",
-							"children": [],
-							"parentName": null
-						},
-						{
-							"id": 1644158848205570050,
-							"parentId": 1644154672847142914,
-							"name": "修改",
-							"weight": 2,
-							"extra": null,
-							"url": "",
-							"permissions": "security:dept:update",
-							"type": 1,
-							"openMode": null,
-							"icon": "",
-							"createTime": "2023-04-07 10:03:11",
-							"children": [],
-							"parentName": null
-						},
-						{
-							"id": 1644159233980874754,
-							"parentId": 1644154672847142914,
-							"name": "删除",
-							"weight": 3,
-							"extra": null,
-							"url": "",
-							"permissions": "security:dept:delete",
-							"type": 1,
-							"openMode": null,
-							"icon": "",
-							"createTime": "2023-04-07 10:04:43",
-							"children": [],
-							"parentName": null
-						}
-					],
-					"parentName": null
-				},
-				{
-					"id": 1644155270992642049,
-					"parentId": 1644147910819700738,
-					"name": "角色管理",
-					"weight": 3,
-					"extra": null,
-					"url": "security/role",
-					"permissions": "",
-					"type": 0,
-					"openMode": 0,
-					"icon": "icon-team",
-					"createTime": "2023-04-07 09:48:58",
-					"children": [],
-					"parentName": null
-				}
-			],
-			"parentName": null
-		}
-	]
-}
-```
-#### 错误响应示例
-```javascript
-{
-	"code": "0",
-	"msg": "拒绝访问，没有权限",
-	"data": null
-}
-```
-## /system/security/menu/根据ID获取
-```text
-暂无描述
-```
-#### 接口状态
-> 已完成
-
-#### 接口URL
-> http://localhost:6666/summer/security/menu/getById?id=1644147910819700738
-
-#### 请求方式
-> GET
-
-#### Content-Type
-> none
-
-#### 请求Query参数
-参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
---- | --- | --- | --- | ---
-id | 1644147910819700738 | Integer | 是 | ID
-#### 认证方式
-```text
-noauth
-```
-#### 预执行脚本
-```javascript
-暂无预执行脚本
-```
-#### 后执行脚本
-```javascript
-暂无后执行脚本
-```
-#### 成功响应示例
-```javascript
-{
-	"code": "1",
-	"msg": null,
-	"data": {
-		"id": 1644147910819700738,
-		"parentId": 0,
-		"name": "权限管理",
-		"weight": 0,
-		"extra": null,
-		"url": "",
-		"permissions": "",
-		"type": 0,
-		"openMode": 0,
-		"icon": "icon-safetycertificate",
-		"createTime": "2023-04-07 09:19:43",
-		"children": [],
-		"parentName": null
-	}
-}
-```
-#### 错误响应示例
-```javascript
-{
-	"code": "0",
-	"msg": "拒绝访问，没有权限",
-	"data": null
-}
-```
-## /system/security/menu/新增
-```text
-暂无描述
-```
-#### 接口状态
-> 已完成
-
-#### 接口URL
-> http://localhost:6666/summer/security/menu/add
-
-#### 请求方式
-> POST
-
-#### Content-Type
-> urlencoded
-
-#### 请求Body参数
-参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
---- | --- | --- | --- | ---
-parentId | 1644256030950658049 | Integer | 是 | 上级菜单ID
-name | 测试233 | String | 是 | 菜单名称
-url | - | String | 否 | 菜单URL
-permissions | locale:internationalName:test | String | 否 | 授权
-type | 1 | Integer | 是 | 类型 0：菜单 1：按钮
-openMode | - | Integer | 否 | 打开方式 0：内部 1：外部
-icon | - | String | 否 | 图标
-weight | 7 | Integer | 是 | 顺序，越小优先级越高
-#### 认证方式
-```text
-noauth
-```
-#### 预执行脚本
-```javascript
-暂无预执行脚本
-```
-#### 后执行脚本
-```javascript
-暂无后执行脚本
-```
-#### 成功响应示例
-```javascript
-{
-	"code": "1",
-	"msg": "操作成功",
-	"data": null
-}
-```
-#### 错误响应示例
-```javascript
-{
-	"code": "0",
-	"msg": "name【菜单名称不能为空】",
-	"data": null
-}
-```
-## /system/security/menu/修改
-```text
-暂无描述
-```
-#### 接口状态
-> 已完成
-
-#### 接口URL
-> http://localhost:6666/summer/security/menu/update
-
-#### 请求方式
-> PUT
-
-#### Content-Type
-> urlencoded
-
-#### 请求Body参数
-参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
---- | --- | --- | --- | ---
-id | 1644162484654555138 | Integer | 是 | ID
-parentId | 1644160692621393922 | Integer | 是 | 上级菜单ID
-name | 删除233 | String | 是 | 菜单名称
-url | - | String | 否 | 菜单URL
-permissions | security:menu:remove | String | 否 | 授权
-type | 1 | Integer | 是 | 类型 0：菜单 1：按钮
-openMode | - | Integer | 否 | 打开方式 0：内部 1：外部
-icon | - | String | 否 | 图标
-weight | 3 | Integer | 是 | 顺序，越小优先级越高
-#### 认证方式
-```text
-noauth
-```
-#### 预执行脚本
-```javascript
-暂无预执行脚本
-```
-#### 后执行脚本
-```javascript
-暂无后执行脚本
-```
-#### 成功响应示例
-```javascript
-{
-	"code": "1",
-	"msg": "操作成功",
-	"data": null
-}
-```
-#### 错误响应示例
-```javascript
-{
-	"code": "0",
-	"msg": "上级菜单不能为自身",
-	"data": null
-}
-```
-## /system/security/menu/删除
-```text
-暂无描述
-```
-#### 接口状态
-> 已完成
-
-#### 接口URL
-> http://localhost:6666/summer/security/menu/delete
-
-#### 请求方式
-> DELETE
-
-#### Content-Type
-> urlencoded
-
-#### 请求Body参数
-参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
---- | --- | --- | --- | ---
-id | 1644177630772723713 | Integer | 是 | ID
-#### 认证方式
-```text
-noauth
-```
-#### 预执行脚本
-```javascript
-暂无预执行脚本
-```
-#### 后执行脚本
-```javascript
-暂无后执行脚本
-```
-#### 成功响应示例
-```javascript
-{
-	"code": "1",
-	"msg": "操作成功",
-	"data": null
-}
-```
-#### 错误响应示例
-```javascript
-{
-	"code": "0",
-	"msg": "拒绝访问，没有权限",
-	"data": null
-}
-```
-## /system/security/menu/导航列表
-```text
-暂无描述
-```
-#### 接口状态
-> 已完成
-
-#### 接口URL
-> http://localhost:6666/summer/security/menu/navList
-
-#### 请求方式
-> GET
-
-#### Content-Type
-> none
-
-#### 认证方式
-```text
-noauth
-```
-#### 预执行脚本
-```javascript
-暂无预执行脚本
-```
-#### 后执行脚本
-```javascript
-暂无后执行脚本
-```
-#### 成功响应示例
-```javascript
-{
-	"code": "1",
-	"msg": null,
-	"data": [
-		{
-			"id": 1644159962489536514,
-			"parentId": 0,
-			"name": "系统设置",
-			"weight": 0,
-			"extra": null,
-			"url": "",
-			"permissions": "",
-			"type": 0,
-			"openMode": 0,
-			"icon": "icon-setting",
-			"createTime": "2023-04-07 10:07:37",
-			"children": [
-				{
-					"id": 1644160692621393922,
-					"parentId": 1644159962489536514,
-					"name": "菜单管理",
-					"weight": 0,
-					"extra": null,
-					"url": "security/menu",
-					"permissions": "",
-					"type": 0,
-					"openMode": 0,
-					"icon": "icon-unorderedlist",
-					"createTime": "2023-04-07 10:10:31",
-					"children": [],
-					"parentName": null
-				}
-			],
-			"parentName": null
-		},
-		{
-			"id": 1644147910819700738,
-			"parentId": 0,
-			"name": "权限管理",
-			"weight": 0,
-			"extra": null,
-			"url": "",
-			"permissions": "",
-			"type": 0,
-			"openMode": 0,
-			"icon": "icon-safetycertificate",
-			"createTime": "2023-04-07 09:19:43",
-			"children": [
-				{
-					"id": 1644152845405667330,
-					"parentId": 1644147910819700738,
-					"name": "用户管理",
-					"weight": 0,
-					"extra": null,
-					"url": "security/user",
-					"permissions": "",
-					"type": 0,
-					"openMode": 0,
-					"icon": "icon-user",
-					"createTime": "2023-04-07 09:39:20",
-					"children": [],
-					"parentName": null
-				},
-				{
-					"id": 1644153599092736001,
-					"parentId": 1644147910819700738,
-					"name": "岗位管理",
-					"weight": 1,
-					"extra": null,
-					"url": "security/post",
-					"permissions": "",
-					"type": 0,
-					"openMode": 0,
-					"icon": "icon-pic-left",
-					"createTime": "2023-04-07 09:42:20",
-					"children": [],
-					"parentName": null
-				},
-				{
-					"id": 1644154672847142914,
-					"parentId": 1644147910819700738,
-					"name": "部门管理",
-					"weight": 2,
-					"extra": null,
-					"url": "security/dept",
-					"permissions": "",
-					"type": 0,
-					"openMode": 0,
-					"icon": "icon-apartment",
-					"createTime": "2023-04-07 09:46:36",
-					"children": [],
-					"parentName": null
-				},
-				{
-					"id": 1644155270992642049,
-					"parentId": 1644147910819700738,
-					"name": "角色管理",
-					"weight": 3,
-					"extra": null,
-					"url": "security/role",
-					"permissions": "",
-					"type": 0,
-					"openMode": 0,
-					"icon": "icon-team",
-					"createTime": "2023-04-07 09:48:58",
-					"children": [],
-					"parentName": null
-				}
-			],
-			"parentName": null
-		}
-	]
-}
-```
-#### 错误响应示例
-```javascript
-{
-	"code": "0",
-	"msg": "Token失效，请重新登录"
-}
-```
-## /system/security/menu/用户权限集合
-```text
-暂无描述
-```
-#### 接口状态
-> 已完成
-
-#### 接口URL
-> http://localhost:6666/summer/security/menu/permissions
-
-#### 请求方式
-> GET
-
-#### Content-Type
-> none
-
-#### 认证方式
-```text
-noauth
-```
-#### 预执行脚本
-```javascript
-暂无预执行脚本
-```
-#### 后执行脚本
-```javascript
-暂无后执行脚本
-```
-#### 成功响应示例
-```javascript
-{
-	"code": "1",
-	"msg": null,
-	"data": [
-		"security:dept:list,security:dept:getById",
-		"security:dept:delete",
-		"security:menu:add",
-		"security:menu:update",
-		"security:menu:list,security:menu:getById",
-		"security:dept:add",
-		"security:dept:update",
-		"security:menu:delete"
-	]
-}
-```
-#### 错误响应示例
-```javascript
-{
-	"code": "0",
-	"msg": "Token失效，请重新登录"
-}
-```
-## /system/locale
-```text
-国际化模块
-```
-#### Header参数
-参数名 | 示例值 | 参数描述
---- | --- | ---
-暂无参数
-#### Query参数
-参数名 | 示例值 | 参数描述
---- | --- | ---
-暂无参数
-#### Body参数
-参数名 | 示例值 | 参数描述
---- | --- | ---
-暂无参数
-#### 认证方式
-```text
-noauth
-```
-#### 预执行脚本
-```javascript
-暂无预执行脚本
-```
-#### 后执行脚本
-```javascript
-暂无后执行脚本
-```
-## /system/locale/internationalName
-```text
-国际化名称
-```
-#### Header参数
-参数名 | 示例值 | 参数描述
---- | --- | ---
-暂无参数
-#### Query参数
-参数名 | 示例值 | 参数描述
---- | --- | ---
-暂无参数
-#### Body参数
-参数名 | 示例值 | 参数描述
---- | --- | ---
-暂无参数
-#### 认证方式
-```text
-noauth
-```
-#### 预执行脚本
-```javascript
-暂无预执行脚本
-```
-#### 后执行脚本
-```javascript
-暂无后执行脚本
-```
-## /system/locale/internationalName/分页
-```text
-暂无描述
-```
-#### 接口状态
-> 已完成
-
-#### 接口URL
-> http://localhost:6666/summer/locale/internationalName/page?pageNum=1&pageSize=10&field=createTime,fieldValue&order=desc,asc&tableName=security_menu
-
-#### 请求方式
-> GET
-
-#### Content-Type
-> none
-
-#### 请求Query参数
-参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
---- | --- | --- | --- | ---
-pageNum | 1 | Integer | 否 | 当前页码
-pageSize | 10 | Integer | 否 | 每页记录数
-field | createTime,fieldValue | String | 否 | 排序字段，以“,”分隔
-order | desc,asc | String | 否 | 排序规则，以“,”分隔
-tableName | security_menu | String | 否 | 表名
-#### 认证方式
-```text
-noauth
-```
-#### 预执行脚本
-```javascript
-暂无预执行脚本
-```
-#### 后执行脚本
-```javascript
-暂无后执行脚本
-```
-#### 成功响应示例
-```javascript
-{
-	"code": "1",
-	"msg": null,
-	"data": {
-		"total": 10,
-		"rows": [
-			{
-				"id": 1637654766259195906,
-				"tableName": "security_menu",
-				"fieldName": "name",
-				"fieldValue": "Delete",
-				"locale": "en_US",
-				"createTime": "2023-03-20 11:18:17"
-			},
-			{
-				"id": 1637654712052011010,
-				"tableName": "security_menu",
-				"fieldName": "name",
-				"fieldValue": "删除",
-				"locale": "zh_CN",
-				"createTime": "2023-03-20 11:18:04"
-			},
-			{
-				"id": 1637654647296151554,
-				"tableName": "security_menu",
-				"fieldName": "name",
-				"fieldValue": "Edit",
-				"locale": "en_US",
-				"createTime": "2023-03-20 11:17:49"
-			},
-			{
-				"id": 1637654587099500545,
-				"tableName": "security_menu",
-				"fieldName": "name",
-				"fieldValue": "修改",
-				"locale": "zh_CN",
-				"createTime": "2023-03-20 11:17:34"
-			},
-			{
-				"id": 1637654533332717570,
-				"tableName": "security_menu",
-				"fieldName": "name",
-				"fieldValue": "Add",
-				"locale": "en_US",
-				"createTime": "2023-03-20 11:17:22"
-			},
-			{
-				"id": 1637654466978828290,
-				"tableName": "security_menu",
-				"fieldName": "name",
-				"fieldValue": "新增",
-				"locale": "zh_CN",
-				"createTime": "2023-03-20 11:17:06"
-			},
-			{
-				"id": 1637654312922042370,
-				"tableName": "security_menu",
-				"fieldName": "name",
-				"fieldValue": "View",
-				"locale": "en_US",
-				"createTime": "2023-03-20 11:16:29"
-			},
-			{
-				"id": 1637654261814448130,
-				"tableName": "security_menu",
-				"fieldName": "name",
-				"fieldValue": "查看",
-				"locale": "zh_CN",
-				"createTime": "2023-03-20 11:16:17"
-			},
-			{
-				"id": 1637653834494562306,
-				"tableName": "security_menu",
-				"fieldName": "name",
-				"fieldValue": "Department Management",
-				"locale": "en_US",
-				"createTime": "2023-03-20 11:14:35"
-			},
-			{
-				"id": 1637653692089552898,
-				"tableName": "security_menu",
-				"fieldName": "name",
-				"fieldValue": "部门管理",
-				"locale": "zh_CN",
-				"createTime": "2023-03-20 11:14:01"
-			}
-		]
-	}
-}
-```
-#### 错误响应示例
-```javascript
-{
-	"code": "0",
-	"msg": "拒绝访问，没有权限",
-	"data": null
-}
-```
-## /system/locale/internationalName/根据ID获取
-```text
-暂无描述
-```
-#### 接口状态
-> 已完成
-
-#### 接口URL
-> http://localhost:6666/summer/locale/internationalName/getById?id=1637653692089552898
-
-#### 请求方式
-> GET
-
-#### Content-Type
-> none
-
-#### 请求Query参数
-参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
---- | --- | --- | --- | ---
-id | 1637653692089552898 | Integer | 是 | ID
-#### 认证方式
-```text
-noauth
-```
-#### 预执行脚本
-```javascript
-暂无预执行脚本
-```
-#### 后执行脚本
-```javascript
-暂无后执行脚本
-```
-#### 成功响应示例
-```javascript
-{
-	"code": "1",
-	"msg": null,
-	"data": {
-		"id": 1637653692089552898,
-		"tableName": "security_menu",
-		"fieldName": "name",
-		"fieldValue": "部门管理",
-		"locale": "zh_CN",
-		"createTime": "2023-03-20 11:14:01"
-	}
-}
-```
-#### 错误响应示例
-```javascript
-{
-	"code": "0",
-	"msg": "拒绝访问，没有权限",
-	"data": null
-}
-```
-## /system/locale/internationalName/新增
-```text
-暂无描述
-```
-#### 接口状态
-> 已完成
-
-#### 接口URL
-> http://localhost:6666/summer/locale/internationalName/add
-
-#### 请求方式
-> POST
-
-#### Content-Type
-> urlencoded
-
-#### 请求Body参数
-参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
---- | --- | --- | --- | ---
-tableName | security_menu | String | 是 | 表名
-lineId | 1636549079382880258 | Integer | 是 | 行ID
-fieldName | name | String | 是 | 字段名
-fieldValue | 权限管理 | String | 是 | 字段值
-locale | zh_CN | String | 是 | 地区语言
-#### 认证方式
-```text
-noauth
-```
-#### 预执行脚本
-```javascript
-暂无预执行脚本
-```
-#### 后执行脚本
-```javascript
-暂无后执行脚本
-```
-#### 成功响应示例
-```javascript
-{
-	"code": "1",
-	"msg": "操作成功",
-	"data": null
-}
-```
-#### 错误响应示例
-```javascript
-{
-	"code": "0",
-	"msg": "拒绝访问，没有权限",
-	"data": null
-}
-```
-## /system/locale/internationalName/修改
-```text
-暂无描述
-```
-#### 接口状态
-> 已完成
-
-#### 接口URL
-> http://localhost:6666/summer/locale/internationalName/update
-
-#### 请求方式
-> PUT
-
-#### Content-Type
-> urlencoded
-
-#### 请求Body参数
-参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
---- | --- | --- | --- | ---
-id | 1641040580263530498 | Integer | 是 | ID
-tableName | security_menu | String | 是 | 表名
-lineId | 1636549079382880258 | Integer | 是 | 行ID
-fieldName | name | String | 是 | 字段名
-fieldValue | Role Management | String | 是 | 字段值
-locale | en_US | String | 是 | 地区语言
-#### 认证方式
-```text
-noauth
-```
-#### 预执行脚本
-```javascript
-暂无预执行脚本
-```
-#### 后执行脚本
-```javascript
-暂无后执行脚本
-```
-#### 成功响应示例
-```javascript
-{
-	"code": "1",
-	"msg": "操作成功",
-	"data": null
-}
-```
-#### 错误响应示例
-```javascript
-{
-	"code": "0",
-	"msg": "拒绝访问，没有权限",
-	"data": null
-}
-```
-## /system/locale/internationalName/删除
-```text
-暂无描述
-```
-#### 接口状态
-> 已完成
-
-#### 接口URL
-> http://localhost:6666/summer/locale/internationalName/delete
-
-#### 请求方式
-> DELETE
-
-#### Content-Type
-> urlencoded
-
-#### 请求Body参数
-参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
---- | --- | --- | --- | ---
-ids | 1639541999484481537,1639542125145829378 | Integer | 是 | ID数组，以“,”分隔
-#### 认证方式
-```text
-noauth
-```
-#### 预执行脚本
-```javascript
-暂无预执行脚本
-```
-#### 后执行脚本
-```javascript
-暂无后执行脚本
-```
-#### 成功响应示例
-```javascript
-{
-	"code": "1",
-	"msg": "操作成功",
-	"data": null
-}
-```
-#### 错误响应示例
-```javascript
-{
-	"code": "0",
-	"msg": "拒绝访问，没有权限",
-	"data": null
-}
-```
-## /system/locale/internationalName/Excel模板下载
-```text
-暂无描述
-```
-#### 接口状态
-> 已完成
-
-#### 接口URL
-> http://localhost:6666/summer/locale/internationalName/excelTemplate
-
-#### 请求方式
-> GET
-
-#### Content-Type
-> none
-
-#### 认证方式
-```text
-noauth
-```
-#### 预执行脚本
-```javascript
-暂无预执行脚本
-```
-#### 后执行脚本
-```javascript
-暂无后执行脚本
-```
-#### 错误响应示例
-```javascript
-{
-	"code": "0",
-	"msg": "拒绝访问，没有权限",
-	"data": null
-}
-```
-## /system/locale/internationalName/Excel导入
-```text
-暂无描述
-```
-#### 接口状态
-> 已完成
-
-#### 接口URL
-> http://localhost:6666/summer/locale/internationalName/excelImport
-
-#### 请求方式
-> POST
-
-#### Content-Type
-> form-data
-
-#### 请求Body参数
-参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
---- | --- | --- | --- | ---
-file | d:\Users\jk\Downloads\国际化名称模板.xls | File | 是 | Excel文件
-#### 认证方式
-```text
-noauth
-```
-#### 预执行脚本
-```javascript
-暂无预执行脚本
-```
-#### 后执行脚本
-```javascript
-暂无后执行脚本
-```
-#### 成功响应示例
-```javascript
-{
-	"code": "1",
-	"msg": "操作成功",
-	"data": null
-}
-```
-#### 错误响应示例
-```javascript
-{
-	"code": "0",
-	"msg": "拒绝访问，没有权限",
-	"data": null
-}
-```
-## /system/locale/internationalName/Excel导出
-```text
-暂无描述
-```
-#### 接口状态
-> 已完成
-
-#### 接口URL
-> http://localhost:6666/summer/locale/internationalName/excelExport?field=create_time&order=desc&tableName=security_menu
-
-#### 请求方式
-> GET
-
-#### Content-Type
-> none
-
-#### 请求Query参数
-参数名 | 示例值 | 参数类型 | 是否必填 | 参数描述
---- | --- | --- | --- | ---
-field | create_time | String | 否 | 排序字段，以“,”分隔
-order | desc | String | 否 | 排序规则，以“,”分隔
-tableName | security_menu | String | 否 | 表名
 #### 认证方式
 ```text
 noauth
