@@ -115,6 +115,18 @@ public interface MpHelper<D extends PageSortDto, T> {
     //*******************自选扩展钩子********************
 
     /**
+     * 添加查询字段（默认所有Entity字段）<br>
+     * note：这个钩子只是为了防止相同的查询字段重复写，如“page”和“getById”，不会参与上面的模板流程！
+     *
+     * @param queryWrapper {@link LambdaQueryWrapper}
+     * @return {@link LambdaQueryWrapper}
+     */
+    default LambdaQueryWrapper<T> addSelectField(LambdaQueryWrapper<T> queryWrapper) {
+        // 查询字段（所有Entity字段）
+        return queryWrapper.select(currentEntityClass(), i -> true);
+    }
+
+    /**
      * 自定义分页钩子<br>
      * note：必须覆写该方法才能调用！否则将抛出 {@link UnsupportedOperationException}，
      *

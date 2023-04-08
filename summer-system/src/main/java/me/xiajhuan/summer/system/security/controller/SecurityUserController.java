@@ -12,10 +12,14 @@
 
 package me.xiajhuan.summer.system.security.controller;
 
+import me.xiajhuan.summer.core.base.controller.BaseController;
 import me.xiajhuan.summer.core.constant.OperationConst;
 import me.xiajhuan.summer.core.data.PageData;
 import me.xiajhuan.summer.core.data.Result;
+import me.xiajhuan.summer.core.exception.code.ErrorCode;
+import me.xiajhuan.summer.core.ratelimiter.annotation.RateLimiter;
 import me.xiajhuan.summer.core.utils.AssertUtil;
+import me.xiajhuan.summer.core.utils.ExcelUtil;
 import me.xiajhuan.summer.core.validation.group.AddGroup;
 import me.xiajhuan.summer.core.validation.group.UpdateGroup;
 import me.xiajhuan.summer.system.common.annotation.LogOperation;
@@ -26,6 +30,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * 用户 Controller
@@ -35,7 +40,7 @@ import javax.annotation.Resource;
  */
 @RestController
 @RequestMapping("security/user")
-public class SecurityUserController {
+public class SecurityUserController extends BaseController {
 
     @Resource
     private SecurityUserService mainService;
@@ -110,6 +115,24 @@ public class SecurityUserController {
         AssertUtil.isNotEmpty("ids", ids);
         mainService.delete(ids);
         return Result.ofSuccess();
+    }
+
+    //*******************Excel Operation********************
+
+    /**
+     * Excel导出
+     *
+     * @param dto      用户Dto
+     * @param response {@link HttpServletResponse}
+     */
+    @GetMapping("excelExport")
+    @RequiresPermissions("security:user:excelExport")
+    @RateLimiter(0.2)
+    @LogOperation(OperationConst.EXCEL_EXPORT)
+    public void excelExport(SecurityUserDto dto, HttpServletResponse response) {
+        validateMaxExport(mainService.count(dto));
+        ExcelUtil.export(response, "用户", "用户", mainService.list(dto),
+                SecurityUserDto.class, ErrorCode.EXCEL_EXPORT_FAILURE);
     }
 
 }

@@ -86,7 +86,7 @@ public class LogErrorController extends BaseController {
     @RateLimiter(0.2)
     @LogOperation(OperationConst.EXCEL_EXPORT)
     public void excelExport(LogErrorDto dto, HttpServletResponse response) {
-        lessThanMaxExport(mainService.count(dto));
+        validateMaxExport(mainService.count(dto));
         ExcelUtil.export(response, "错误日志", "错误日志", mainService.list(dto),
                 LogErrorDto.class, ErrorCode.EXCEL_EXPORT_FAILURE);
     }

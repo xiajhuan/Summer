@@ -40,19 +40,19 @@ public interface SecurityUserService extends IService<SecurityUserEntity> {
     void delete(Long[] ids);
 
     /**
+     * 统计记录数
+     *
+     * @param dto 用户Dto
+     * @return 记录数
+     */
+    long count(SecurityUserDto dto);
+
+    /**
      * 根据用户名获取
      *
      * @param username 用户名
      * @return 用户
      */
     SecurityUserDto getByUsername(String username);
-
-    /**
-     * 统计用户数
-     *
-     * @param deptId 部门ID
-     * @return 用户数
-     */
-    long countByDeptId(Long deptId);
 
 }

@@ -29,6 +29,7 @@ import me.xiajhuan.summer.core.utils.BeanUtil;
 import me.xiajhuan.summer.core.utils.SecurityUtil;
 import me.xiajhuan.summer.core.utils.TreeUtil;
 import me.xiajhuan.summer.system.security.dto.SecurityDeptDto;
+import me.xiajhuan.summer.system.security.dto.SecurityUserDto;
 import me.xiajhuan.summer.system.security.entity.SecurityDeptEntity;
 import me.xiajhuan.summer.system.security.mapper.SecurityDeptMapper;
 import me.xiajhuan.summer.system.security.service.SecurityDeptService;
@@ -105,7 +106,8 @@ public class SecurityDeptServiceImpl extends ServiceImpl<SecurityDeptMapper, Sec
     @Override
     public void delete(Long id) {
         // 判断是否存在子部门或用户
-        if (getChildIdSet(id).size() > 0 || securityUserService.countByDeptId(id) > 0) {
+        if (getChildIdSet(id).size() > 0
+                || securityUserService.count(SecurityUserDto.builder().deptId(id).build()) > 0) {
             throw ValidationException.of(ErrorCode.DEPT_SUB_DELETE_ERROR);
         }
 

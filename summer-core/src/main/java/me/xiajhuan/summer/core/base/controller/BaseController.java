@@ -15,6 +15,7 @@ package me.xiajhuan.summer.core.base.controller;
 import me.xiajhuan.summer.core.exception.code.ErrorCode;
 import me.xiajhuan.summer.core.exception.custom.ValidationException;
 import me.xiajhuan.summer.core.properties.LimitBatchProperties;
+import me.xiajhuan.summer.core.utils.AssertUtil;
 
 import javax.annotation.Resource;
 
@@ -30,15 +31,14 @@ public abstract class BaseController {
     private LimitBatchProperties limitBatchProperties;
 
     /**
-     * 断言小于等于最大导出数
+     * 校验最大导出数
      *
      * @param count 导出数
      */
-    protected void lessThanMaxExport(long count) {
+    protected void validateMaxExport(long count) {
         long excelMaxExport = limitBatchProperties.getExcelMaxExport();
-        if (count > excelMaxExport) {
-            throw ValidationException.of(ErrorCode.EXCEL_EXPORT_MAXIMUM_LIMIT, String.valueOf(excelMaxExport));
-        }
+        AssertUtil.checkBetween(count, 0L, excelMaxExport,
+                () -> ValidationException.of(ErrorCode.EXCEL_EXPORT_MAXIMUM_LIMIT, String.valueOf(excelMaxExport)));
     }
 
 }

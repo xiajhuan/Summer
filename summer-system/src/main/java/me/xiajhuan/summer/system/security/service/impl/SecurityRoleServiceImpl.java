@@ -78,12 +78,14 @@ public class SecurityRoleServiceImpl extends ServiceImpl<SecurityRoleMapper, Sec
 
     @Override
     public LambdaQueryWrapper<SecurityRoleEntity> getSelectWrapper(SecurityRoleDto dto) {
-        LambdaQueryWrapper<SecurityRoleEntity> queryWrapper = getQueryWrapper(dto);
         // 查询字段
-        queryWrapper.select(SecurityRoleEntity::getId, SecurityRoleEntity::getName, SecurityRoleEntity::getDescription,
-                SecurityRoleEntity::getCreateTime);
+        return addSelectField(getQueryWrapper(dto));
+    }
 
-        return queryWrapper;
+    @Override
+    public LambdaQueryWrapper<SecurityRoleEntity> addSelectField(LambdaQueryWrapper<SecurityRoleEntity> queryWrapper) {
+        return queryWrapper.select(SecurityRoleEntity::getId, SecurityRoleEntity::getName, SecurityRoleEntity::getDescription,
+                SecurityRoleEntity::getCreateTime);
     }
 
     //*******************MpHelper覆写结束********************
@@ -102,9 +104,7 @@ public class SecurityRoleServiceImpl extends ServiceImpl<SecurityRoleMapper, Sec
     public SecurityRoleDto getById(Long id) {
         LambdaQueryWrapper<SecurityRoleEntity> queryWrapper = getEmptyWrapper();
         queryWrapper.eq(SecurityRoleEntity::getId, id);
-        queryWrapper.select(SecurityRoleEntity::getId, SecurityRoleEntity::getName, SecurityRoleEntity::getDescription,
-                SecurityRoleEntity::getCreateTime);
-        SecurityRoleEntity entity = getOne(queryWrapper);
+        SecurityRoleEntity entity = getOne(addSelectField(queryWrapper));
 
         if (entity != null) {
             SecurityRoleDto dto = BeanUtil.convert(entity, SecurityRoleDto.class);

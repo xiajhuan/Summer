@@ -63,13 +63,15 @@ public class LocaleInternationalNameServiceImpl extends ServiceImpl<LocaleIntern
 
     @Override
     public LambdaQueryWrapper<LocaleInternationalNameEntity> getSelectWrapper(LocaleInternationalNameDto dto) {
-        LambdaQueryWrapper<LocaleInternationalNameEntity> queryWrapper = getQueryWrapper(dto);
         // 查询字段
-        queryWrapper.select(LocaleInternationalNameEntity::getId, LocaleInternationalNameEntity::getTableName, LocaleInternationalNameEntity::getLineId,
+        return addSelectField(getQueryWrapper(dto));
+    }
+
+    @Override
+    public LambdaQueryWrapper<LocaleInternationalNameEntity> addSelectField(LambdaQueryWrapper<LocaleInternationalNameEntity> queryWrapper) {
+        return queryWrapper.select(LocaleInternationalNameEntity::getId, LocaleInternationalNameEntity::getTableName, LocaleInternationalNameEntity::getLineId,
                 LocaleInternationalNameEntity::getFieldName, LocaleInternationalNameEntity::getFieldValue, LocaleInternationalNameEntity::getLocale,
                 LocaleInternationalNameEntity::getCreateTime);
-
-        return queryWrapper;
     }
 
     //*******************MpHelper覆写结束********************
@@ -88,11 +90,8 @@ public class LocaleInternationalNameServiceImpl extends ServiceImpl<LocaleIntern
     public LocaleInternationalNameDto getById(Long id) {
         LambdaQueryWrapper<LocaleInternationalNameEntity> queryWrapper = getEmptyWrapper();
         queryWrapper.eq(LocaleInternationalNameEntity::getId, id);
-        queryWrapper.select(LocaleInternationalNameEntity::getId, LocaleInternationalNameEntity::getTableName, LocaleInternationalNameEntity::getLineId,
-                LocaleInternationalNameEntity::getFieldName, LocaleInternationalNameEntity::getFieldValue, LocaleInternationalNameEntity::getLocale,
-                LocaleInternationalNameEntity::getCreateTime);
 
-        return BeanUtil.convert(getOne(queryWrapper), LocaleInternationalNameDto.class);
+        return BeanUtil.convert(getOne(addSelectField(queryWrapper)), LocaleInternationalNameDto.class);
     }
 
     @Override

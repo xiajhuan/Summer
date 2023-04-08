@@ -71,7 +71,7 @@ public class LogLoginController extends BaseController {
     @RateLimiter(0.2)
     @LogOperation(OperationConst.EXCEL_EXPORT)
     public void excelExport(LogLoginDto dto, HttpServletResponse response) {
-        lessThanMaxExport(mainService.count(dto));
+        validateMaxExport(mainService.count(dto));
         ExcelUtil.export(response, "登录日志", "登录日志", mainService.list(dto),
                 LogLoginDto.class, ErrorCode.EXCEL_EXPORT_FAILURE);
     }

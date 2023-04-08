@@ -13,8 +13,7 @@
 package me.xiajhuan.summer.system.security.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 import me.xiajhuan.summer.core.base.dto.ExcelDto;
 import me.xiajhuan.summer.core.enums.StatusEnum;
 import me.xiajhuan.summer.system.security.enums.GenderEnum;
@@ -36,6 +35,9 @@ import java.util.Set;
  * @date 2023/3/4
  */
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class SecurityUserDto extends ExcelDto {
 

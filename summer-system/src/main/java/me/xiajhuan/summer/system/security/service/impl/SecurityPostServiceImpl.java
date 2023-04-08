@@ -72,12 +72,14 @@ public class SecurityPostServiceImpl extends ServiceImpl<SecurityPostMapper, Sec
 
     @Override
     public LambdaQueryWrapper<SecurityPostEntity> getSelectWrapper(SecurityPostDto dto) {
-        LambdaQueryWrapper<SecurityPostEntity> queryWrapper = getQueryWrapper(dto);
         // 查询字段
-        queryWrapper.select(SecurityPostEntity::getId, SecurityPostEntity::getCode, SecurityPostEntity::getName,
-                SecurityPostEntity::getStatus, SecurityPostEntity::getCreateTime);
+        return addSelectField(getQueryWrapper(dto));
+    }
 
-        return queryWrapper;
+    @Override
+    public LambdaQueryWrapper<SecurityPostEntity> addSelectField(LambdaQueryWrapper<SecurityPostEntity> queryWrapper) {
+        return queryWrapper.select(SecurityPostEntity::getId, SecurityPostEntity::getCode, SecurityPostEntity::getName,
+                SecurityPostEntity::getStatus, SecurityPostEntity::getCreateTime);
     }
 
     //*******************MpHelper覆写结束********************
@@ -96,10 +98,8 @@ public class SecurityPostServiceImpl extends ServiceImpl<SecurityPostMapper, Sec
     public SecurityPostDto getById(Long id) {
         LambdaQueryWrapper<SecurityPostEntity> queryWrapper = getEmptyWrapper();
         queryWrapper.eq(SecurityPostEntity::getId, id);
-        queryWrapper.select(SecurityPostEntity::getId, SecurityPostEntity::getCode, SecurityPostEntity::getName,
-                SecurityPostEntity::getStatus, SecurityPostEntity::getCreateTime);
 
-        return BeanUtil.convert(getOne(queryWrapper), SecurityPostDto.class);
+        return BeanUtil.convert(getOne(addSelectField(queryWrapper)), SecurityPostDto.class);
     }
 
     @Override

@@ -163,7 +163,7 @@ public class LocaleInternationalNameController extends BaseController {
     @RateLimiter(0.2)
     @LogOperation(OperationConst.EXCEL_EXPORT)
     public void excelExport(LocaleInternationalNameDto dto, HttpServletResponse response) {
-        lessThanMaxExport(mainService.count(dto));
+        validateMaxExport(mainService.count(dto));
         ExcelUtil.export(response, "国际化名称", "国际化名称", mainService.list(dto),
                 LocaleInternationalNameDto.class, ErrorCode.EXCEL_EXPORT_FAILURE);
     }

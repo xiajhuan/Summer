@@ -50,36 +50,45 @@ public class SecurityUserServiceImpl extends ServiceImpl<SecurityUserMapper, Sec
         // 性别
         Integer gender = dto.getGender();
         queryWrapper.eq(gender != null, SecurityUserEntity::getGender, gender);
+        // 本部门ID
+        Long deptId = dto.getDeptId();
+        queryWrapper.eq(deptId != null, SecurityUserEntity::getDeptId, deptId);
 
         return queryWrapper;
     }
 
     @Override
     public LambdaQueryWrapper<SecurityUserEntity> getSelectWrapper(SecurityUserDto dto) {
-        LambdaQueryWrapper<SecurityUserEntity> queryWrapper = getQueryWrapper(dto);
         // 查询字段
-        queryWrapper.select(SecurityUserEntity::getId, SecurityUserEntity::getUsername, SecurityUserEntity::getRealName,
+        return addSelectField(getQueryWrapper(dto));
+    }
+
+    @Override
+    public LambdaQueryWrapper<SecurityUserEntity> addSelectField(LambdaQueryWrapper<SecurityUserEntity> queryWrapper) {
+        return queryWrapper.select(SecurityUserEntity::getId, SecurityUserEntity::getUsername, SecurityUserEntity::getRealName,
                 SecurityUserEntity::getHeadUrl, SecurityUserEntity::getGender, SecurityUserEntity::getEmail,
                 SecurityUserEntity::getMobile, SecurityUserEntity::getDeptId, SecurityUserEntity::getStatus,
-                SecurityUserEntity::getUserType, SecurityUserEntity::getCreateTime);
-
-        return queryWrapper;
+                SecurityUserEntity::getUserType, SecurityUserEntity::getDataScope, SecurityUserEntity::getCreateTime);
     }
 
     //*******************MpHelper覆写结束********************
 
     @Override
     public Page<SecurityUserDto> page(SecurityUserDto dto) {
-        return null;
+        return BeanUtil.convert(page(handlePageSort(dto), getSelectWrapper(dto)), SecurityUserDto.class);
     }
 
     @Override
     public List<SecurityUserDto> list(SecurityUserDto dto) {
-        return null;
+        return BeanUtil.convert(list(getSortWrapper(dto)), SecurityUserDto.class);
     }
 
     @Override
     public SecurityUserDto getById(Long id) {
+        LambdaQueryWrapper<SecurityUserEntity> queryWrapper = getEmptyWrapper();
+        queryWrapper.eq(SecurityUserEntity::getId, id);
+        queryWrapper = addSelectField(queryWrapper);
+
         return null;
     }
 
@@ -99,21 +108,19 @@ public class SecurityUserServiceImpl extends ServiceImpl<SecurityUserMapper, Sec
     }
 
     @Override
-    public SecurityUserDto getByUsername(String username) {
-        LambdaQueryWrapper<SecurityUserEntity> queryWrapper = getEmptyWrapper();
-        queryWrapper.eq(SecurityUserEntity::getUsername, username);
-        queryWrapper.select(SecurityUserEntity::getId, SecurityUserEntity::getDeptId, SecurityUserEntity::getUsername,
-                SecurityUserEntity::getPassword, SecurityUserEntity::getRealName, SecurityUserEntity::getStatus,
-                SecurityUserEntity::getUserType, SecurityUserEntity::getDataScope);
-
-        return BeanUtil.convert(getOne(queryWrapper), SecurityUserDto.class);
+    public long count(SecurityUserDto dto) {
+        return count(getQueryWrapper(dto));
     }
 
     @Override
-    public long countByDeptId(Long deptId) {
+    public SecurityUserDto getByUsername(String username) {
         LambdaQueryWrapper<SecurityUserEntity> queryWrapper = getEmptyWrapper();
-        queryWrapper.eq(SecurityUserEntity::getDeptId, deptId);
-        return count(queryWrapper);
+        queryWrapper.eq(SecurityUserEntity::getUsername, username);
+        queryWrapper.select(SecurityUserEntity::getId, SecurityUserEntity::getUsername, SecurityUserEntity::getPassword,
+                SecurityUserEntity::getRealName, SecurityUserEntity::getDeptId, SecurityUserEntity::getStatus,
+                SecurityUserEntity::getUserType, SecurityUserEntity::getDataScope);
+
+        return BeanUtil.convert(getOne(queryWrapper), SecurityUserDto.class);
     }
 
 }
