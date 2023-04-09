@@ -28,7 +28,7 @@ import org.apache.ibatis.annotations.Select;
 public interface LocaleInternationalNameMapper extends CustomBaseMapper<LocaleInternationalNameEntity> {
 
     @Select("SELECT 1 FROM locale_international_name WHERE" +
-            " line_id = #{param.lineId} AND locale = #{param.locale} LIMIT 1")
-    Integer exist(@Param("param") LocaleInternationalNameEntity entity);
+            " line_id = #{lineId} AND locale = #{locale} LIMIT 1")
+    Integer exist(@Param("lineId") long lineId, @Param("locale") String locale);
 
 }

@@ -51,49 +51,54 @@ public interface ErrorCode {
     int SERVER_BUSY = 1001;
 
     /**
+     * 您的操作太频繁了，请稍后再试~
+     */
+    int FREQUENT_OPERATION = 1002;
+
+    /**
      * 不支持的参数类型
      */
-    int UNSUPPORTED_CONTENT_TYPE = 1002;
+    int UNSUPPORTED_CONTENT_TYPE = 1003;
 
     /**
      * 不支持的文件类型：{0}
      */
-    int UNSUPPORTED_FILE_TYPE = 1003;
+    int UNSUPPORTED_FILE_TYPE = 1004;
 
     /**
      * {0}文件不能超过{1}
      */
-    int FILE_TYPE_EXCEED = 1004;
+    int FILE_TYPE_EXCEED = 1005;
 
     /**
      * 文件上传失败
      */
-    int FILE_UPLOAD_FAILURE = 1005;
+    int FILE_UPLOAD_FAILURE = 1006;
 
     /**
      * 文件下载失败
      */
-    int FILE_DOWNLOAD_FAILURE = 1006;
+    int FILE_DOWNLOAD_FAILURE = 1007;
 
     /**
      * Excel导入失败，第{0}行：
      */
-    int EXCEL_IMPORT_FAILURE_PREFIX = 1007;
+    int EXCEL_IMPORT_FAILURE_PREFIX = 1008;
 
     /**
      * Excel模板下载失败
      */
-    int EXCEL_TEMPLATE_DOWNLOAD_FAILURE = 1008;
+    int EXCEL_TEMPLATE_DOWNLOAD_FAILURE = 1009;
 
     /**
      * Excel导出失败
      */
-    int EXCEL_EXPORT_FAILURE = 1009;
+    int EXCEL_EXPORT_FAILURE = 1010;
 
     /**
      * 最多导出{0}条记录
      */
-    int EXCEL_EXPORT_MAXIMUM_LIMIT = 1010;
+    int EXCEL_EXPORT_MAXIMUM_LIMIT = 1011;
 
     //*******************system********************
 
@@ -111,6 +116,11 @@ public interface ErrorCode {
      * 岗位【{0}】已存在
      */
     int POST_EXISTS = 10088;
+
+    /**
+     * 国际化名称行ID【{0}】+地区语言【{1}】已存在
+     */
+    int INTERNATIONAL_NAME_EXISTS = 10077;
 
     /**
      * 获取参数失败

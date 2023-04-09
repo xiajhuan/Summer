@@ -12,7 +12,8 @@
 
 package me.xiajhuan.summer.core.ratelimiter.aspect;
 
-import cn.hutool.core.map.MapUtil;
+import cn.hutool.cache.CacheUtil;
+import cn.hutool.cache.impl.LFUCache;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
@@ -41,7 +42,6 @@ import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
-import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -51,6 +51,7 @@ import java.util.concurrent.TimeUnit;
  * @date 2022/12/1
  * @see com.google.common.util.concurrent.RateLimiter#create(double)
  * @see com.google.common.util.concurrent.RateLimiter#tryAcquire(long, TimeUnit)
+ * @see LFUCache
  */
 @Aspect
 @Component
@@ -62,15 +63,20 @@ public class RateLimiterAspect {
     private Setting setting;
 
     /**
-     * 限流规则缓存<br>
-     * Key：限流策略Key Value：{@link com.google.common.util.concurrent.RateLimiter}
-     */
-    private final ConcurrentMap<String, com.google.common.util.concurrent.RateLimiter> RATE_LIMITER_CACHE = MapUtil.newConcurrentHashMap();
-
-    /**
      * 策略类全限定性类名格式
      */
     private final String STRATEGY_CLASS_FORMAT = "me.xiajhuan.summer.core.ratelimiter.strategy.impl.{}";
+
+    /**
+     * 限流规则缓存，Key：限流策略Key Value：{@link com.google.common.util.concurrent.RateLimiter}<br>
+     * note：超过缓存容量后会清除访问计数最小的规则
+     */
+    private LFUCache<String, com.google.common.util.concurrent.RateLimiter> RATE_LIMITER_CACHE;
+
+    /**
+     * 提示消息
+     */
+    private int msg;
 
     /**
      * 默认限流key策略Class
@@ -93,13 +99,17 @@ public class RateLimiterAspect {
     private long defaultTimeout;
 
     /**
-     * 初始化 {@link defaultKeyStrategy} {@link defaultLoadBalanceStrategy}<br>
-     * {@link defaultNodeNum} {@link defaultTimeout}
+     * 初始化 {@link RATE_LIMITER_CACHE} {@link msg} {@link defaultKeyStrategy}<br>
+     * {@link defaultLoadBalanceStrategy} {@link defaultNodeNum} {@link defaultTimeout}
      *
      * @throws ClassNotFoundException 类找不到异常
      */
     @PostConstruct
     private void init() throws ClassNotFoundException {
+        RATE_LIMITER_CACHE = CacheUtil.newLFUCache(setting.getInt("key-num", "RateLimiter", 10000));
+
+        msg = setting.getInt("msg", "RateLimiter", ErrorCode.FREQUENT_OPERATION);
+
         String keySetting = setting.getByGroupWithLog("strategy.key", "RateLimiter");
         if (StrUtil.isBlank(keySetting)) {
             // 没有配置则默认为：BaseKeyStrategy
@@ -209,9 +219,11 @@ public class RateLimiterAspect {
 
             //*******************限流处理********************
 
-            if (RATE_LIMITER_CACHE.get(rateLimiterKey) == null) {
+            com.google.common.util.concurrent.RateLimiter limiter = RATE_LIMITER_CACHE.get(rateLimiterKey);
+            if (limiter == null) {
                 // 初始化Qps
-                RATE_LIMITER_CACHE.put(rateLimiterKey, com.google.common.util.concurrent.RateLimiter.create(realQps));
+                limiter = com.google.common.util.concurrent.RateLimiter.create(realQps);
+                RATE_LIMITER_CACHE.put(rateLimiterKey, limiter);
             }
 
             if (LOGGER.isDebugEnabled()) {
@@ -228,14 +240,20 @@ public class RateLimiterAspect {
                 // 没有设置或设置的值小于0则使用配置中的超时时长
                 timeout = defaultTimeout;
             }
-            if (RATE_LIMITER_CACHE.get(rateLimiterKey) != null && !RATE_LIMITER_CACHE.get(rateLimiterKey).tryAcquire(timeout, TimeUnit.MILLISECONDS)) {
+            if (limiter != null && !limiter.tryAcquire(timeout, TimeUnit.MILLISECONDS)) {
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("接口【{}[{}]】限流成功，key-Class【{}】，LoadBalance-Class【{}】{}",
                             request.getRequestURI(), request.getMethod(), keyStrategyClass.getSimpleName(), loadBalanceStrategyClass.getSimpleName(),
                             StrUtil.isNotBlank(msgTemplate) ? StrUtil.format(msgTemplate, StrUtil.subAfter(rateLimiterKey, "#", true)) : StrUtil.EMPTY);
                 }
 
-                throw BusinessException.of(ErrorCode.SERVER_BUSY);
+                // 注解中设置的提示消息
+                int message = rateLimiter.msg();
+                if (message < 0) {
+                    // 没有设置或设置的值小于0则使用配置中的提示消息
+                    message = msg;
+                }
+                throw BusinessException.of(message);
             }
         }
     }

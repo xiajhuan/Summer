@@ -58,6 +58,10 @@ optimistic-lock.retry-times = 20
 
 # *******************接口限流配置********************
 [RateLimiter]
+# 策略Key估算数量（RATE_LIMITER_CACHE的大小）
+key-num = 10000
+# 提示消息，值参考 ErrorCode
+msg = 1002
 # 默认策略Class（简单类名）
 strategy.key = IpKeyStrategy
 strategy.load-balance = BaseLoadBalanceStrategy

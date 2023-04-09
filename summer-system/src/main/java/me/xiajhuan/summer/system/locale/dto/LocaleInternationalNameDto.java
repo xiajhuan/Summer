@@ -45,7 +45,7 @@ public class LocaleInternationalNameDto extends ExcelDto {
      */
     @NotBlank(message = "{locale.internationalName.lineId.require}", groups = {AddGroup.class, UpdateGroup.class})
     @ExcelProperty(value = "行ID", index = 1)
-    private String lineId;
+    private Long lineId;
 
     /**
      * 字段名

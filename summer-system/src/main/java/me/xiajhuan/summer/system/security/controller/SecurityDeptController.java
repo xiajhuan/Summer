@@ -14,6 +14,7 @@ package me.xiajhuan.summer.system.security.controller;
 
 import me.xiajhuan.summer.core.constant.OperationConst;
 import me.xiajhuan.summer.core.data.Result;
+import me.xiajhuan.summer.core.ratelimiter.annotation.RateLimiter;
 import me.xiajhuan.summer.core.utils.AssertUtil;
 import me.xiajhuan.summer.core.validation.group.AddGroup;
 import me.xiajhuan.summer.core.validation.group.UpdateGroup;
@@ -76,6 +77,7 @@ public class SecurityDeptController {
      */
     @PostMapping("add")
     @RequiresPermissions("security:dept:add")
+    @RateLimiter(0.5)
     @LogOperation(OperationConst.ADD)
     public Result add(@Validated(AddGroup.class) SecurityDeptDto dto) {
         mainService.add(dto);
@@ -90,6 +92,7 @@ public class SecurityDeptController {
      */
     @PutMapping("update")
     @RequiresPermissions("security:dept:update")
+    @RateLimiter(0.5)
     @LogOperation(OperationConst.UPDATE)
     public Result update(@Validated(UpdateGroup.class) SecurityDeptDto dto) {
         mainService.update(dto);
@@ -104,6 +107,7 @@ public class SecurityDeptController {
      */
     @DeleteMapping("delete")
     @RequiresPermissions("security:dept:delete")
+    @RateLimiter(0.5)
     @LogOperation(OperationConst.DELETE)
     public Result delete(Long id) {
         AssertUtil.isNotNull("id", id);

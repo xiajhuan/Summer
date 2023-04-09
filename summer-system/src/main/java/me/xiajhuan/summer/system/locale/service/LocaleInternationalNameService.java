@@ -59,9 +59,10 @@ public interface LocaleInternationalNameService extends IService<LocaleInternati
     /**
      * 判断是否存在
      *
-     * @param entity 国际化名称Entity
+     * @param lineId 行ID
+     * @param locale 地区语言
      * @return 返回 {@code null} 则不存在
      */
-    Integer exist(LocaleInternationalNameEntity entity);
+    Integer exist(long lineId, String locale);
 
 }

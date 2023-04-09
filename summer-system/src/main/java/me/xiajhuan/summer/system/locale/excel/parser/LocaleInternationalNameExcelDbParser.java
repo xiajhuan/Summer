@@ -58,7 +58,7 @@ public class LocaleInternationalNameExcelDbParser extends ExcelDbParser<LocaleIn
     protected void handleEntityListBefore() {
         // 去重/过滤
         entityList = entityList.stream().distinct()
-                .filter(entity -> localeInternationalNameService.exist(entity) == null)
+                .filter(entity -> localeInternationalNameService.exist(entity.getLineId(), entity.getLocale()) == null)
                 .collect(Collectors.toList());
     }
 

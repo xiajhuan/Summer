@@ -85,6 +85,7 @@ public class LocaleInternationalNameController extends BaseController {
      */
     @PostMapping("add")
     @RequiresPermissions("locale:internationalName:add")
+    @RateLimiter(0.5)
     @LogOperation(OperationConst.ADD)
     public Result add(@Validated(AddGroup.class) LocaleInternationalNameDto dto) {
         mainService.add(dto);
@@ -99,6 +100,7 @@ public class LocaleInternationalNameController extends BaseController {
      */
     @PutMapping("update")
     @RequiresPermissions("locale:internationalName:update")
+    @RateLimiter(0.5)
     @LogOperation(OperationConst.UPDATE)
     public Result update(@Validated(UpdateGroup.class) LocaleInternationalNameDto dto) {
         mainService.update(dto);
@@ -113,6 +115,7 @@ public class LocaleInternationalNameController extends BaseController {
      */
     @DeleteMapping("delete")
     @RequiresPermissions("locale:internationalName:delete")
+    @RateLimiter(0.5)
     @LogOperation(OperationConst.DELETE)
     public Result delete(Long[] ids) {
         AssertUtil.isNotEmpty("ids", ids);

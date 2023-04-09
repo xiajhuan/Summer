@@ -12,6 +12,7 @@
 
 package me.xiajhuan.summer.core.ratelimiter.annotation;
 
+import me.xiajhuan.summer.core.exception.code.ErrorCode;
 import me.xiajhuan.summer.core.ratelimiter.strategy.KeyStrategy;
 import me.xiajhuan.summer.core.ratelimiter.strategy.LoadBalanceStrategy;
 import me.xiajhuan.summer.core.ratelimiter.strategy.impl.SettingKeyStrategy;
@@ -25,7 +26,7 @@ import java.lang.annotation.*;
  * 限流注解，note：
  * <pre>
  *   1.添加了 {@link AliasFor} 必须通过 {@link AnnotationUtils} 获取，才会生效
- *   2.keyStrategy/loadBalanceStrategy/nodeNum/timeout的生效优先级为：
+ *   2.msg/keyStrategy/loadBalanceStrategy/nodeNum/timeout的生效优先级为：
  *     注解中设置的 > core.setting中配置的
  * </pre>
  *
@@ -48,6 +49,13 @@ public @interface RateLimiter {
      */
     @AliasFor("value")
     double qps() default NOT_LIMITED;
+
+    /**
+     * 提示消息
+     *
+     * @see ErrorCode
+     */
+    int msg() default -1;
 
     /**
      * 限流key策略Class

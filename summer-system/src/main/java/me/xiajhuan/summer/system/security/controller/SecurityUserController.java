@@ -82,6 +82,7 @@ public class SecurityUserController extends BaseController {
      */
     @PostMapping("add")
     @RequiresPermissions("security:user:add")
+    @RateLimiter(0.5)
     @LogOperation(OperationConst.ADD)
     public Result add(@Validated(AddGroup.class) SecurityUserDto dto) {
         mainService.add(dto);
@@ -96,6 +97,7 @@ public class SecurityUserController extends BaseController {
      */
     @PutMapping("update")
     @RequiresPermissions("security:user:update")
+    @RateLimiter(0.5)
     @LogOperation(OperationConst.UPDATE)
     public Result update(@Validated(UpdateGroup.class) SecurityUserDto dto) {
         mainService.update(dto);
@@ -110,6 +112,7 @@ public class SecurityUserController extends BaseController {
      */
     @DeleteMapping("delete")
     @RequiresPermissions("security:user:delete")
+    @RateLimiter(0.5)
     @LogOperation(OperationConst.DELETE)
     public Result delete(Long[] ids) {
         AssertUtil.isNotEmpty("ids", ids);

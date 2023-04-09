@@ -15,6 +15,7 @@ package me.xiajhuan.summer.admin.api.test;
 import cn.hutool.core.lang.Console;
 import cn.hutool.json.JSONUtil;
 import me.xiajhuan.summer.core.data.Result;
+import me.xiajhuan.summer.core.exception.code.ErrorCode;
 import me.xiajhuan.summer.core.ratelimiter.annotation.RateLimiter;
 import me.xiajhuan.summer.core.ratelimiter.strategy.impl.BaseKeyStrategy;
 import me.xiajhuan.summer.core.ratelimiter.strategy.impl.ParamKeyStrategy;
@@ -41,7 +42,7 @@ public class RateLimiterController {
      * @return 响应结果
      */
     @PostMapping("base")
-    @RateLimiter(value = 0.2, keyStrategy = BaseKeyStrategy.class)
+    @RateLimiter(value = 0.2, msg = ErrorCode.SERVER_BUSY, keyStrategy = BaseKeyStrategy.class)
     public Result<String> base(@RequestBody String json) {
         return printAndResponse(json);
     }
@@ -53,7 +54,7 @@ public class RateLimiterController {
      * @return 响应结果
      */
     @PostMapping("ip")
-    @RateLimiter(0.2)
+    @RateLimiter(value = 0.2, msg = ErrorCode.SERVER_BUSY)
     public Result<String> ip(@RequestBody String json) {
         return printAndResponse(json);
     }
@@ -65,7 +66,7 @@ public class RateLimiterController {
      * @return 响应结果
      */
     @PostMapping("param")
-    @RateLimiter(value = 0.2, keyStrategy = ParamKeyStrategy.class)
+    @RateLimiter(value = 0.2, msg = ErrorCode.SERVER_BUSY, keyStrategy = ParamKeyStrategy.class)
     public Result<String> param(@RequestBody String json) {
         return printAndResponse(json);
     }
@@ -77,7 +78,7 @@ public class RateLimiterController {
      * @return 响应结果
      */
     @PostMapping("username")
-    @RateLimiter(value = 0.2, keyStrategy = UsernameKeyStrategy.class)
+    @RateLimiter(value = 0.2, msg = ErrorCode.SERVER_BUSY, keyStrategy = UsernameKeyStrategy.class)
     public Result<String> username(@RequestBody String json) {
         return printAndResponse(json);
     }

@@ -19,6 +19,8 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import me.xiajhuan.summer.core.constant.DataSourceConst;
+import me.xiajhuan.summer.core.exception.code.ErrorCode;
+import me.xiajhuan.summer.core.exception.custom.ValidationException;
 import me.xiajhuan.summer.core.mp.helper.MpHelper;
 import me.xiajhuan.summer.core.properties.LimitBatchProperties;
 import me.xiajhuan.summer.core.utils.BeanUtil;
@@ -74,6 +76,16 @@ public class LocaleInternationalNameServiceImpl extends ServiceImpl<LocaleIntern
                 LocaleInternationalNameEntity::getCreateTime);
     }
 
+    @Override
+    public void handleDtoBefore(LocaleInternationalNameDto dto) {
+        // 行ID+地区语言不能重复
+        long lineId = dto.getLineId();
+        String locale = dto.getLocale();
+        if (exist(lineId, locale) != null) {
+            throw ValidationException.of(ErrorCode.INTERNATIONAL_NAME_EXISTS, String.valueOf(lineId), locale);
+        }
+    }
+
     //*******************MpHelper覆写结束********************
 
     @Override
@@ -96,11 +108,15 @@ public class LocaleInternationalNameServiceImpl extends ServiceImpl<LocaleIntern
 
     @Override
     public void add(LocaleInternationalNameDto dto) {
+        handleDtoBefore(dto);
+
         save(BeanUtil.convert(dto, LocaleInternationalNameEntity.class));
     }
 
     @Override
     public void update(LocaleInternationalNameDto dto) {
+        handleDtoBefore(dto);
+
         baseMapper.alwaysUpdateById(BeanUtil.convert(dto, LocaleInternationalNameEntity.class));
     }
 
@@ -115,8 +131,8 @@ public class LocaleInternationalNameServiceImpl extends ServiceImpl<LocaleIntern
     }
 
     @Override
-    public Integer exist(LocaleInternationalNameEntity entity) {
-        return baseMapper.exist(entity);
+    public Integer exist(long lineId, String locale) {
+        return baseMapper.exist(lineId, locale);
     }
 
     @Override
