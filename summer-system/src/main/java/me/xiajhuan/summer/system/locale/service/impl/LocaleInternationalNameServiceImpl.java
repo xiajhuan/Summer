@@ -81,7 +81,7 @@ public class LocaleInternationalNameServiceImpl extends ServiceImpl<LocaleIntern
         // 行ID+地区语言不能重复
         long lineId = dto.getLineId();
         String locale = dto.getLocale();
-        if (exist(lineId, locale) != null) {
+        if (exist(lineId, locale)) {
             throw ValidationException.of(ErrorCode.INTERNATIONAL_NAME_EXISTS, String.valueOf(lineId), locale);
         }
     }
@@ -115,8 +115,6 @@ public class LocaleInternationalNameServiceImpl extends ServiceImpl<LocaleIntern
 
     @Override
     public void update(LocaleInternationalNameDto dto) {
-        handleDtoBefore(dto);
-
         baseMapper.alwaysUpdateById(BeanUtil.convert(dto, LocaleInternationalNameEntity.class));
     }
 
@@ -131,8 +129,8 @@ public class LocaleInternationalNameServiceImpl extends ServiceImpl<LocaleIntern
     }
 
     @Override
-    public Integer exist(long lineId, String locale) {
-        return baseMapper.exist(lineId, locale);
+    public boolean exist(long lineId, String locale) {
+        return baseMapper.exist(lineId, locale) != null ? true : false;
     }
 
     @Override

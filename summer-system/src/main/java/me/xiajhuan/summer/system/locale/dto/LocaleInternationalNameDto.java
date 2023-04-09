@@ -21,6 +21,8 @@ import me.xiajhuan.summer.core.validation.group.AddGroup;
 import me.xiajhuan.summer.core.validation.group.UpdateGroup;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import java.util.Date;
 
 /**
@@ -36,21 +38,24 @@ public class LocaleInternationalNameDto extends ExcelDto {
     /**
      * 表名
      */
-    @NotBlank(message = "{locale.internationalName.tableName.require}", groups = {AddGroup.class, UpdateGroup.class})
+    @Null(message = "{locale.internationalName.tableName.null}", groups = UpdateGroup.class)
+    @NotBlank(message = "{locale.internationalName.tableName.require}", groups = AddGroup.class)
     @ExcelProperty(value = "表名", index = 0)
     private String tableName;
 
     /**
      * 行ID
      */
-    @NotBlank(message = "{locale.internationalName.lineId.require}", groups = {AddGroup.class, UpdateGroup.class})
+    @Null(message = "{locale.internationalName.lineId.null}", groups = UpdateGroup.class)
+    @NotNull(message = "{locale.internationalName.lineId.require}", groups = AddGroup.class)
     @ExcelProperty(value = "行ID", index = 1)
     private Long lineId;
 
     /**
      * 字段名
      */
-    @NotBlank(message = "{locale.internationalName.fieldName.require}", groups = {AddGroup.class, UpdateGroup.class})
+    @Null(message = "{locale.internationalName.fieldName.null}", groups = UpdateGroup.class)
+    @NotBlank(message = "{locale.internationalName.fieldName.require}", groups = AddGroup.class)
     @ExcelProperty(value = "字段名", index = 2)
     private String fieldName;
 
@@ -66,7 +71,8 @@ public class LocaleInternationalNameDto extends ExcelDto {
      *
      * @see LocaleSupportEnum
      */
-    @NotBlank(message = "{locale.internationalName.locale.require}", groups = {AddGroup.class, UpdateGroup.class})
+    @Null(message = "{locale.internationalName.locale.null}", groups = UpdateGroup.class)
+    @NotBlank(message = "{locale.internationalName.locale.require}", groups = AddGroup.class)
     @ExcelProperty(value = "地区语言", index = 4)
     private String locale;
 
