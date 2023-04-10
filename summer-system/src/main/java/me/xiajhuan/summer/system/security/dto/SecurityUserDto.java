@@ -12,6 +12,7 @@
 
 package me.xiajhuan.summer.system.security.dto;
 
+import cn.hutool.core.collection.CollUtil;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import me.xiajhuan.summer.core.base.dto.ExcelDto;
@@ -54,6 +55,13 @@ public class SecurityUserDto extends ExcelDto {
     private String password;
 
     /**
+     * 确认密码
+     */
+    @NotBlank(message = "{security.user.confirmPassword.require}", groups = AddGroup.class)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String confirmPassword;
+
+    /**
      * 真实姓名
      */
     @NotBlank(message = "{security.user.realName.require}", groups = {AddGroup.class, UpdateGroup.class})
@@ -70,6 +78,7 @@ public class SecurityUserDto extends ExcelDto {
      * @see GenderEnum
      */
     @Range(min = 0, max = 2, message = "{security.user.gender.range}", groups = {AddGroup.class, UpdateGroup.class})
+    @NotNull(message = "{security.user.gender.require}", groups = {AddGroup.class, UpdateGroup.class})
     private Integer gender;
 
     /**
@@ -107,6 +116,7 @@ public class SecurityUserDto extends ExcelDto {
      * @see DataScopeConst.Type
      */
     @Range(min = 0, max = 4, message = "{security.user.dataScope.range}", groups = {AddGroup.class, UpdateGroup.class})
+    @NotNull(message = "{security.user.dataScope.require}", groups = {AddGroup.class, UpdateGroup.class})
     private Integer dataScope;
 
     /**
@@ -122,11 +132,11 @@ public class SecurityUserDto extends ExcelDto {
     /**
      * 角色ID集合
      */
-    private Set<Long> roleIdSet;
+    private Set<Long> roleIdSet = CollUtil.newHashSet();
 
     /**
      * 岗位ID集合
      */
-    private Set<Long> postIdSet;
+    private Set<Long> postIdSet = CollUtil.newHashSet();
 
 }

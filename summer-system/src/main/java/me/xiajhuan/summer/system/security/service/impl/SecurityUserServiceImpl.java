@@ -12,28 +12,42 @@
 
 package me.xiajhuan.summer.system.security.service.impl;
 
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import me.xiajhuan.summer.core.cache.factory.CacheServerFactory;
 import me.xiajhuan.summer.core.constant.DataSourceConst;
+import me.xiajhuan.summer.core.exception.code.ErrorCode;
+import me.xiajhuan.summer.core.exception.custom.ValidationException;
 import me.xiajhuan.summer.core.mp.helper.MpHelper;
 import me.xiajhuan.summer.core.utils.BeanUtil;
+import me.xiajhuan.summer.core.utils.SecurityUtil;
 import me.xiajhuan.summer.system.security.dto.SecurityUserDto;
+import me.xiajhuan.summer.system.security.entity.SecurityRoleUserEntity;
 import me.xiajhuan.summer.system.security.entity.SecurityUserEntity;
+import me.xiajhuan.summer.system.security.entity.SecurityUserPostEntity;
 import me.xiajhuan.summer.system.security.mapper.SecurityRoleUserMapper;
 import me.xiajhuan.summer.system.security.mapper.SecurityUserMapper;
 import me.xiajhuan.summer.system.security.mapper.SecurityUserPostMapper;
+import me.xiajhuan.summer.system.security.service.SecurityService;
 import me.xiajhuan.summer.system.security.service.SecurityUserService;
 
 import static me.xiajhuan.summer.system.security.cache.SecurityCacheKey.dept;
 
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * 用户 ServiceImpl
@@ -44,6 +58,10 @@ import java.util.List;
 @Service
 @DS(DataSourceConst.SYSTEM)
 public class SecurityUserServiceImpl extends ServiceImpl<SecurityUserMapper, SecurityUserEntity> implements SecurityUserService, MpHelper<SecurityUserDto, SecurityUserEntity> {
+
+    @Lazy
+    @Resource
+    private SecurityService securityService;
 
     @Resource
     private SecurityRoleUserMapper securityRoleUserMapper;
@@ -84,6 +102,29 @@ public class SecurityUserServiceImpl extends ServiceImpl<SecurityUserMapper, Sec
                 SecurityUserEntity::getHeadUrl, SecurityUserEntity::getGender, SecurityUserEntity::getEmail,
                 SecurityUserEntity::getMobile, SecurityUserEntity::getDeptId, SecurityUserEntity::getStatus,
                 SecurityUserEntity::getDataScope, SecurityUserEntity::getCreateTime);
+    }
+
+    @Override
+    public void handleDtoBefore(SecurityUserDto dto) {
+        String password = dto.getPassword();
+        if (StrUtil.isNotBlank(password)) {
+            if (!password.equals(dto.getConfirmPassword())) {
+                // 密码和确认密码不一致
+                throw ValidationException.of(ErrorCode.PASSWORD_CONFIRM_ERROR);
+            }
+
+            // 加密密码
+            dto.setPassword(SecurityUtil.encode(password));
+        } else {
+            // 修改时密码可能为空，设为“null”让MybatisPlus更新时忽略密码字段
+            dto.setPassword(null);
+        }
+
+        // 用户名不能重复
+        String username = dto.getUsername();
+        if (baseMapper.exist(username) != null) {
+            throw ValidationException.of(ErrorCode.USER_EXISTS, username);
+        }
     }
 
     @Override
@@ -137,18 +178,75 @@ public class SecurityUserServiceImpl extends ServiceImpl<SecurityUserMapper, Sec
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void add(SecurityUserDto dto) {
+        handleDtoBefore(dto);
 
+        SecurityUserEntity entity = BeanUtil.convert(dto, SecurityUserEntity.class);
+        // 保存用户
+        String currentUsername = SecurityUtil.getCurrentUsername();
+        Date now = DateUtil.date();
+        // note：这里不能使用字段自动填充，否则“deptId”会被覆盖！
+        entity.setCreateBy(currentUsername);
+        entity.setCreateTime(now);
+        entity.setUpdateBy(currentUsername);
+        entity.setUpdateTime(now);
+        save(entity);
+        Long id = entity.getId();
+
+        // 保存角色用户关联
+        saveOrUpdateRoleUser(id, dto.getRoleIdSet());
+
+        // 保存用户岗位关联
+        saveOrUpdateUserPost(id, dto.getPostIdSet());
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void update(SecurityUserDto dto) {
+        handleDtoBefore(dto);
 
+        Long id = dto.getId();
+        // 更新前的用户名
+        LambdaQueryWrapper<SecurityUserEntity> queryWrapper = getEmptyWrapper();
+        queryWrapper.eq(SecurityUserEntity::getId, id);
+        queryWrapper.select(SecurityUserEntity::getUsername);
+        String oldUsername = getOne(queryWrapper).getUsername();
+
+        SecurityUserEntity entity = BeanUtil.convert(dto, SecurityUserEntity.class);
+        // 更新用户，note：这里不能使用字段自动填充，否则“deptId”会被覆盖！
+        entity.setUpdateBy(SecurityUtil.getCurrentUsername());
+        entity.setUpdateTime(DateUtil.date());
+        updateById(entity);
+
+        // 更新角色用户关联
+        saveOrUpdateRoleUser(id, dto.getRoleIdSet());
+
+        // 更新用户岗位关联
+        saveOrUpdateUserPost(id, dto.getPostIdSet());
+
+        if (!oldUsername.equals(entity.getUsername())) {
+            // 如果修改了用户名，则让还在线的该用户自动退出
+            securityService.logout(id);
+        }
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void delete(Long[] ids) {
+        // 删除用户
+        Set<Long> idSet = Arrays.stream(ids).collect(Collectors.toSet());
+        removeByIds(idSet);
 
+        // 删除角色用户关联
+        LambdaQueryWrapper<SecurityRoleUserEntity> roleUserQueryWrapper = Wrappers.lambdaQuery();
+        roleUserQueryWrapper.in(SecurityRoleUserEntity::getUserId, idSet);
+        securityRoleUserMapper.delete(roleUserQueryWrapper);
+
+        // 删除用户岗位关联
+        LambdaQueryWrapper<SecurityUserPostEntity> userPostQueryWrapper = Wrappers.lambdaQuery();
+        userPostQueryWrapper.in(SecurityUserPostEntity::getUserId, idSet);
+        securityUserPostMapper.delete(userPostQueryWrapper);
     }
 
     @Override
@@ -165,6 +263,52 @@ public class SecurityUserServiceImpl extends ServiceImpl<SecurityUserMapper, Sec
                 SecurityUserEntity::getUserType, SecurityUserEntity::getDataScope);
 
         return getOne(queryWrapper);
+    }
+
+    /**
+     * 保存或修改角色用户关联
+     *
+     * @param id        ID
+     * @param roleIdSet 角色ID集合
+     */
+    private void saveOrUpdateRoleUser(Long id, Set<Long> roleIdSet) {
+        // 删除原来的角色用户关联
+        LambdaQueryWrapper<SecurityRoleUserEntity> queryWrapper = Wrappers.lambdaQuery();
+        queryWrapper.eq(SecurityRoleUserEntity::getUserId, id);
+        securityRoleUserMapper.delete(queryWrapper);
+
+        if (roleIdSet.size() > 0) {
+            // 保存新的角色用户关联，note：这里数据量不会很大，直接循环插入就好
+            roleIdSet.forEach(roleId -> {
+                SecurityRoleUserEntity entity = new SecurityRoleUserEntity();
+                entity.setRoleId(roleId);
+                entity.setUserId(id);
+                securityRoleUserMapper.insert(entity);
+            });
+        }
+    }
+
+    /**
+     * 保存或修改用户岗位关联
+     *
+     * @param id        ID
+     * @param postIdSet 岗位ID集合
+     */
+    private void saveOrUpdateUserPost(Long id, Set<Long> postIdSet) {
+        // 删除原来的用户岗位关联
+        LambdaQueryWrapper<SecurityUserPostEntity> queryWrapper = Wrappers.lambdaQuery();
+        queryWrapper.eq(SecurityUserPostEntity::getUserId, id);
+        securityUserPostMapper.delete(queryWrapper);
+
+        if (postIdSet.size() > 0) {
+            // 保存新的用户岗位关联，note：这里数据量不会很大，直接循环插入就好
+            postIdSet.forEach(postId -> {
+                SecurityUserPostEntity entity = new SecurityUserPostEntity();
+                entity.setPostId(postId);
+                entity.setUserId(id);
+                securityUserPostMapper.insert(entity);
+            });
+        }
     }
 
 }

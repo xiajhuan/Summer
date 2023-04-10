@@ -118,6 +118,11 @@ public interface ErrorCode {
     int ROLE_EXISTS = 10002;
 
     /**
+     * 用户【{0}】已存在
+     */
+    int USER_EXISTS = 10073;
+
+    /**
      * 岗位【{0}】已存在
      */
     int POST_EXISTS = 10088;
@@ -158,7 +163,7 @@ public interface ErrorCode {
     int PASSWORD_ERROR = 10009;
 
     /**
-     * 新密码和确认密码不一致
+     * 密码和确认密码不一致
      */
     int PASSWORD_CONFIRM_ERROR = 10099;
 

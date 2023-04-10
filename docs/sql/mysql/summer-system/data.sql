@@ -8,6 +8,26 @@ INSERT INTO `security_role` VALUES (1644589480094113793, 'admin', '2023-04-08 14
 INSERT INTO `security_role` VALUES (1644591359763062786, 'admin', '2023-04-08 14:41:50', 'admin', '2023-04-08 14:41:50', '运维人员', '拥有查看日志的权限');
 
 -- ----------------------------
+-- Records of security_role_user
+-- ----------------------------
+INSERT INTO `security_role_user` VALUES (1645392640714924033, 'superAdmin', '2023-04-10 19:45:50', 1644589480094113793, 1645392640257744897);
+INSERT INTO `security_role_user` VALUES (1645392640844947458, 'superAdmin', '2023-04-10 19:45:50', 1644591359763062786, 1645392640257744897);
+INSERT INTO `security_role_user` VALUES (1645393565953220610, 'superAdmin', '2023-04-10 19:49:31', 1644591359763062786, 1645393565563150337);
+
+-- ----------------------------
+-- Records of security_user
+-- ----------------------------
+INSERT INTO `security_user` VALUES (1498688513380720706, 'systemUser', '2023-03-17 08:46:41', 'superAdmin', '2023-04-10 15:26:49', NULL, 'superAdmin', '$2a$10$WqQqJ7EU.AN.CeG.DJ3Bdel3ZMkPSpIINo.ym1G9DF772iRJDwlnm', '超级管理员', 0, '', 'xiajhuan@163.com', '', 1, 0, 0);
+INSERT INTO `security_user` VALUES (1645392640257744897, 'superAdmin', '2023-04-10 19:45:50', 'superAdmin', '2023-04-10 19:45:50', 1636548298722242561, 'systemAdmin', '$2a$10$/9P6GsRq0um4DAzN.vRLIexEhiWYMDt2heIQTwgi.mGLCRTN5.lHO', '系统管理员', 2, '', 'xiajhuan@163.com', '', 1, 1, 1);
+INSERT INTO `security_user` VALUES (1645393565563150337, 'superAdmin', '2023-04-10 19:49:31', 'superAdmin', '2023-04-10 19:49:31', 1636548627622785026, 'test233', '$2a$10$afiXsN.BcQ4J2sBwQdH3q.LrP5fj97K3qsHKvsReDUH2AVYiG0a3e', '测试账号', 0, 'xxx', '', '', 1, 1, 3);
+
+-- ----------------------------
+-- Records of security_user_post
+-- ----------------------------
+INSERT INTO `security_user_post` VALUES (1645392641306320898, 'superAdmin', '2023-04-10 19:45:50', 1645392640257744897, 1644573719426424833);
+INSERT INTO `security_user_post` VALUES (1645393566473314306, 'superAdmin', '2023-04-10 19:49:31', 1645393565563150337, 1644573768797577217);
+
+-- ----------------------------
 -- Records of security_post
 -- ----------------------------
 INSERT INTO `security_post` VALUES (1644572881052164098, 'admin', '2023-04-08 13:28:24', 'admin', '2023-04-08 13:28:24', '1001', '技术岗', 1);

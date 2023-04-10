@@ -168,7 +168,7 @@ public class SecurityServiceImpl implements SecurityService {
 
         String newPassword = dto.getNewPassword();
         if (!newPassword.equals(dto.getConfirmPassword())) {
-            // 新密码和确认密码不一致
+            // 密码和确认密码不一致
             throw ValidationException.of(ErrorCode.PASSWORD_CONFIRM_ERROR);
         }
 

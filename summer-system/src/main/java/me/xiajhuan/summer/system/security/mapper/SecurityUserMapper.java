@@ -14,6 +14,8 @@ package me.xiajhuan.summer.system.security.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import me.xiajhuan.summer.system.security.entity.SecurityUserEntity;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 /**
  * 用户 Mapper
@@ -22,4 +24,14 @@ import me.xiajhuan.summer.system.security.entity.SecurityUserEntity;
  * @date 2023/2/28
  */
 public interface SecurityUserMapper extends BaseMapper<SecurityUserEntity> {
+
+    /**
+     * 判断是否存在
+     *
+     * @param username 用户名
+     * @return 返回 {@code null} 则不存在
+     */
+    @Select("SELECT 1 FROM security_user WHERE username = #{username} LIMIT 1")
+    Integer exist(@Param("username") String username);
+
 }
