@@ -128,9 +128,9 @@ public interface ErrorCode {
     int INTERNATIONAL_NAME_EXISTS = 10077;
 
     /**
-     * 获取参数失败
+     * 只有超级管理员可以重置密码
      */
-    int PARAMS_GET_ERROR = 10003;
+    int PASSWORD_RESET_ERROR = 10003;
 
     /**
      * 账号或密码错误

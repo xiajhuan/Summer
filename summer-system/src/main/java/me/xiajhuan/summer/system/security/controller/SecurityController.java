@@ -19,6 +19,7 @@ import me.xiajhuan.summer.core.data.Result;
 import me.xiajhuan.summer.core.enums.StatusEnum;
 import me.xiajhuan.summer.core.enums.LoginOperationEnum;
 import me.xiajhuan.summer.core.enums.LoginStatusEnum;
+import me.xiajhuan.summer.core.enums.UserTypeEnum;
 import me.xiajhuan.summer.core.exception.code.ErrorCode;
 import me.xiajhuan.summer.core.data.LoginUser;
 import me.xiajhuan.summer.core.ratelimiter.annotation.RateLimiter;
@@ -39,6 +40,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Arrays;
 
 /**
  * 权限相关 Controller
@@ -138,22 +140,45 @@ public class SecurityController {
     /**
      * 修改密码
      *
-     * @param dto     密码Dto
-     * @param request {@link HttpServletRequest}
+     * @param dto 密码Dto
      * @return 响应结果
      */
     @PutMapping("password")
-    @RateLimiter(0.5)
-    public Result password(@Validated(DefaultGroup.class) PasswordDto dto, HttpServletRequest request) {
+    public Result password(@Validated(DefaultGroup.class) PasswordDto dto) {
         LoginUser loginUser = SecurityUtil.getLoginUser();
 
         // 修改密码
         mainService.updatePassword(dto, loginUser);
 
         // 修改成功后自动退出
-        logoutAndSaveLog(SecurityUtil.getLoginUser(), request);
+        mainService.logout(loginUser.getId());
 
         return Result.ofSuccess();
+    }
+
+    /**
+     * 重置密码
+     *
+     * @param ids ID数组
+     * @return 响应结果
+     */
+    @PutMapping("reset")
+    public Result reset(Long[] ids) {
+        AssertUtil.isNotEmpty("ids", ids);
+
+        LoginUser loginUser = SecurityUtil.getLoginUser();
+        if (UserTypeEnum.SUPER_ADMIN.getValue() != loginUser.getUserType()) {
+            // 只有超级管理员可以重置密码
+            return Result.ofFail(ErrorCode.PASSWORD_RESET_ERROR);
+        }
+
+        // 重置密码
+        String passwordReset = mainService.resetPassword(ids);
+
+        // 重置成功后还在线的用户自动退出
+        Arrays.stream(ids).forEach(mainService::logout);
+
+        return Result.ofSuccess(null, Result.SuccessCode.PASSWORD_RESET, passwordReset);
     }
 
     /**
@@ -164,20 +189,13 @@ public class SecurityController {
      */
     @PostMapping("logout")
     public Result logout(HttpServletRequest request) {
-        logoutAndSaveLog(SecurityUtil.getLoginUser(), request);
-        return Result.ofSuccess();
-    }
+        LoginUser loginUser = SecurityUtil.getLoginUser();
 
-    /**
-     * 用户退出并保存日志
-     *
-     * @param loginUser 登录用户信息
-     * @param request   {@link HttpServletRequest}
-     */
-    private void logoutAndSaveLog(LoginUser loginUser, HttpServletRequest request) {
         mainService.logout(loginUser.getId());
 
         saveLog(loginUser.getUsername(), LoginOperationEnum.LOGOUT, LoginStatusEnum.SUCCESS, request);
+
+        return Result.ofSuccess();
     }
 
     /**

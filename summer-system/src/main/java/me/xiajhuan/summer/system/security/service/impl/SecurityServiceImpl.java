@@ -27,6 +27,7 @@ import me.xiajhuan.summer.core.cache.factory.CacheServerFactory;
 import me.xiajhuan.summer.core.cache.server.CacheServer;
 import me.xiajhuan.summer.core.constant.*;
 import me.xiajhuan.summer.core.data.LoginUser;
+import me.xiajhuan.summer.core.enums.UserTypeEnum;
 import me.xiajhuan.summer.core.exception.code.ErrorCode;
 import me.xiajhuan.summer.core.exception.custom.FileDownloadException;
 import me.xiajhuan.summer.core.exception.custom.ValidationException;
@@ -171,13 +172,25 @@ public class SecurityServiceImpl implements SecurityService {
             throw ValidationException.of(ErrorCode.PASSWORD_CONFIRM_ERROR);
         }
 
-        // note：通过 update(LambdaUpdateWrapper) 更新时基础字段自动填充不会生效
-        LambdaUpdateWrapper<SecurityUserEntity> updateWrapper = Wrappers.lambdaUpdate();
+        LambdaUpdateWrapper<SecurityUserEntity> updateWrapper = addUserSetField(
+                SecurityUtil.encode(newPassword), loginUser.getUsername());
         updateWrapper.eq(SecurityUserEntity::getId, loginUser.getId());
-        updateWrapper.set(SecurityUserEntity::getPassword, SecurityUtil.encode(newPassword));
-        updateWrapper.set(SecurityUserEntity::getUpdateBy, loginUser.getUsername());
-        updateWrapper.set(SecurityUserEntity::getUpdateTime, DateUtil.date());
         securityUserService.update(updateWrapper);
+    }
+
+    @Override
+    public String resetPassword(Long[] ids) {
+        String passwordReset = setting.getByGroupWithLog("password-reset", "Security");
+        if (StrUtil.isBlank(passwordReset)) {
+            // 没有配置则默认为：123456
+            passwordReset = "123456";
+        }
+
+        LambdaUpdateWrapper<SecurityUserEntity> updateWrapper = addUserSetField(SecurityUtil.encode(passwordReset), "superAdmin");
+        updateWrapper.in(SecurityUserEntity::getId, ids);
+        securityUserService.update(updateWrapper);
+
+        return passwordReset;
     }
 
     @Override
@@ -185,17 +198,19 @@ public class SecurityServiceImpl implements SecurityService {
         CacheServer cacheServer = CacheServerFactory.getCacheServer();
 
         String loginInfoKey = loginInfo(userId);
-        // 获取accessToken
-        String accessToken = String.valueOf(cacheServer.getHash(loginInfoKey, SecurityConst.LoginInfo.ACCESS_TOKEN));
+        if (cacheServer.hasHash(loginInfoKey)) {
+            // 获取accessToken
+            String accessToken = String.valueOf(cacheServer.getHash(loginInfoKey, SecurityConst.LoginInfo.ACCESS_TOKEN));
 
-        // 删除用户ID
-        cacheServer.delete(userId(accessToken));
+            // 删除用户ID
+            cacheServer.delete(userId(accessToken));
 
-        // 删除登录信息
-        cacheServer.delete(loginInfoKey, CacheConst.Value.HASH);
+            // 删除登录信息
+            cacheServer.delete(loginInfoKey, CacheConst.Value.HASH);
 
-        // 删除用户权限集合
-        cacheServer.delete(permissions(userId), CacheConst.Value.LIST);
+            // 删除用户权限集合
+            cacheServer.delete(permissions(userId), CacheConst.Value.LIST);
+        }
     }
 
     /**
@@ -240,9 +255,11 @@ public class SecurityServiceImpl implements SecurityService {
     private LoginUser getLoginUser(SecurityUserEntity entity) {
         LoginUser loginUser = BeanUtil.convert(entity, LoginUser.class);
 
-        loginUser.setDeptIdRoleBasedSet(getDeptIdRoleBasedSet(loginUser.getId()));
+        if (UserTypeEnum.GENERAL.getValue() == entity.getUserType()) {
+            loginUser.setDeptIdRoleBasedSet(getDeptIdRoleBasedSet(loginUser.getId()));
 
-        loginUser.setDeptAndChildIdSet(getDeptAndChildIdSet(loginUser.getDeptId()));
+            loginUser.setDeptAndChildIdSet(getDeptAndChildIdSet(loginUser.getDeptId()));
+        }
 
         return loginUser;
     }
@@ -269,6 +286,23 @@ public class SecurityServiceImpl implements SecurityService {
         deptIdSet.add(deptId);
 
         return deptIdSet;
+    }
+
+    /**
+     * 获取 {@link LambdaUpdateWrapper}（修改密码时用户的set字段）
+     *
+     * @param newPassword 新密码（密文）
+     * @param username    用户名
+     * @return {@link LambdaUpdateWrapper}
+     */
+    private LambdaUpdateWrapper<SecurityUserEntity> addUserSetField(String newPassword, String username) {
+        // note：通过 update(LambdaUpdateWrapper) 更新时基础字段自动填充不会生效
+        LambdaUpdateWrapper<SecurityUserEntity> updateWrapper = Wrappers.lambdaUpdate();
+        updateWrapper.set(SecurityUserEntity::getPassword, newPassword);
+        updateWrapper.set(SecurityUserEntity::getUpdateBy, username);
+        updateWrapper.set(SecurityUserEntity::getUpdateTime, DateUtil.date());
+
+        return updateWrapper;
     }
 
 }

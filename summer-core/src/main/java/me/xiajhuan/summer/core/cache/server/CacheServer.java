@@ -122,7 +122,7 @@ public interface CacheServer {
      * 获取值（String）
      *
      * @param key Key
-     * @return Value（String）
+     * @return Value（String）或 {@code null}
      */
     String getString(String key);
 
@@ -274,7 +274,7 @@ public interface CacheServer {
      * 获取值（Hash）
      *
      * @param key Key
-     * @return Value（Hash）
+     * @return Value（Hash）或 {@code null}
      */
     Map<String, Object> getHash(String key);
 
@@ -283,7 +283,7 @@ public interface CacheServer {
      *
      * @param key   Key
      * @param field Field（String）
-     * @return Value（String）
+     * @return Value（String）或 {@code null}
      */
     Object getHash(String key, String field);
 
@@ -363,7 +363,7 @@ public interface CacheServer {
      * 获取值（List）
      *
      * @param key Key
-     * @return Value（List）
+     * @return Value（List）或 {@code null}
      */
     List<String> getList(String key);
 
@@ -372,7 +372,7 @@ public interface CacheServer {
      *
      * @param key   Key
      * @param index 索引下标
-     * @return Value（List-Element）
+     * @return Value（List-Element）或 {@code null}
      */
     String getListElement(String key, int index);
 

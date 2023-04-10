@@ -14,6 +14,9 @@ token-expire = 12
 # 是否开启登录验证码校验，值：true/false
 enable-captcha = true
 
+# 重置后的密码
+password-reset = 123456
+
 # 图形验证码背景干扰类型，值：Line（线段干扰）/Circle（圆圈干扰）/Shear（扭曲干扰）
 captcha.type = Line
 # 干扰线个数，note：只有captcha.type = Line 时会生效

@@ -192,6 +192,11 @@ public class Result<T> implements Serializable {
          */
         public static final int OPERATION = 200;
 
+        /**
+         * 密码成功重置为：{0}
+         */
+        public static final int PASSWORD_RESET = 2000;
+
     }
 
 }

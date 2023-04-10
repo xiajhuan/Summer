@@ -65,6 +65,14 @@ public interface SecurityService {
     void updatePassword(PasswordDto dto, LoginUser loginUser);
 
     /**
+     * 重置密码
+     *
+     * @param ids ID数组
+     * @return 重置的密码
+     */
+    String resetPassword(Long[] ids);
+
+    /**
      * 用户退出
      *
      * @param userId 用户ID
