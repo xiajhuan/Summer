@@ -18,7 +18,6 @@ import me.xiajhuan.summer.core.base.dto.ExcelDto;
 import me.xiajhuan.summer.core.enums.StatusEnum;
 import me.xiajhuan.summer.system.security.enums.GenderEnum;
 import me.xiajhuan.summer.core.constant.DataScopeConst;
-import me.xiajhuan.summer.core.enums.UserTypeEnum;
 import me.xiajhuan.summer.core.validation.annotation.Mobile;
 import me.xiajhuan.summer.core.validation.group.AddGroup;
 import me.xiajhuan.summer.core.validation.group.UpdateGroup;
@@ -103,13 +102,6 @@ public class SecurityUserDto extends ExcelDto {
     private Integer status;
 
     /**
-     * 用户类型
-     *
-     * @see UserTypeEnum
-     */
-    private Integer userType;
-
-    /**
      * 数据权限
      *
      * @see DataScopeConst.Type
@@ -123,13 +115,18 @@ public class SecurityUserDto extends ExcelDto {
     private Date createTime;
 
     /**
+     * 本部门名称
+     */
+    private String deptName;
+
+    /**
      * 角色ID集合
      */
     private Set<Long> roleIdSet;
 
     /**
-     * 本部门名称
+     * 岗位ID集合
      */
-    private String deptName;
+    private Set<Long> postIdSet;
 
 }

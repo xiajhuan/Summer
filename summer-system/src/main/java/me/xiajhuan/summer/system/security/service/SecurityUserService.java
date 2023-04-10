@@ -51,8 +51,8 @@ public interface SecurityUserService extends IService<SecurityUserEntity> {
      * 根据用户名获取
      *
      * @param username 用户名
-     * @return 用户
+     * @return 用户Entity
      */
-    SecurityUserDto getByUsername(String username);
+    SecurityUserEntity getByUsername(String username);
 
 }

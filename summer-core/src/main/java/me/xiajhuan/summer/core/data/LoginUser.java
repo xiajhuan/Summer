@@ -42,6 +42,11 @@ public class LoginUser implements Serializable {
     private String username;
 
     /**
+     * 密码（密文）
+     */
+    private String password;
+
+    /**
      * 真实姓名
      */
     private String realName;

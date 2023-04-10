@@ -81,24 +81,29 @@ public interface ErrorCode {
     int FILE_DOWNLOAD_FAILURE = 1007;
 
     /**
+     * 验证码获取失败
+     */
+    int CAPTCHA_GET_FAILURE = 1008;
+
+    /**
      * Excel导入失败，第{0}行：
      */
-    int EXCEL_IMPORT_FAILURE_PREFIX = 1008;
+    int EXCEL_IMPORT_FAILURE_PREFIX = 1009;
 
     /**
      * Excel模板下载失败
      */
-    int EXCEL_TEMPLATE_DOWNLOAD_FAILURE = 1009;
+    int EXCEL_TEMPLATE_DOWNLOAD_FAILURE = 1010;
 
     /**
      * Excel导出失败
      */
-    int EXCEL_EXPORT_FAILURE = 1010;
+    int EXCEL_EXPORT_FAILURE = 1011;
 
     /**
      * 最多导出{0}条记录
      */
-    int EXCEL_EXPORT_MAXIMUM_LIMIT = 1011;
+    int EXCEL_EXPORT_MAXIMUM_LIMIT = 1012;
 
     //*******************system********************
 
@@ -151,6 +156,11 @@ public interface ErrorCode {
      * 原密码不正确
      */
     int PASSWORD_ERROR = 10009;
+
+    /**
+     * 新密码和确认密码不一致
+     */
+    int PASSWORD_CONFIRM_ERROR = 10099;
 
     /**
      * 账号不存在

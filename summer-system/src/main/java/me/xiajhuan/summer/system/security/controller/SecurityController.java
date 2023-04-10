@@ -27,8 +27,10 @@ import me.xiajhuan.summer.core.validation.group.DefaultGroup;
 import me.xiajhuan.summer.system.log.entity.LogLoginEntity;
 import me.xiajhuan.summer.system.log.service.LogLoginService;
 import me.xiajhuan.summer.system.security.dto.LoginDto;
+import me.xiajhuan.summer.system.security.dto.PasswordDto;
 import me.xiajhuan.summer.system.security.dto.SecurityUserDto;
 import me.xiajhuan.summer.system.security.dto.TokenDto;
+import me.xiajhuan.summer.system.security.entity.SecurityUserEntity;
 import me.xiajhuan.summer.system.security.service.SecurityService;
 import me.xiajhuan.summer.system.security.service.SecurityUserService;
 import org.springframework.validation.annotation.Validated;
@@ -37,7 +39,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 /**
  * 权限相关 Controller
@@ -66,11 +67,10 @@ public class SecurityController {
      *
      * @param uuid     唯一标识，作为验证码 Key的一部分
      * @param response {@link HttpServletResponse}
-     * @throws IOException I/O异常
      */
     @GetMapping("captcha")
     @RateLimiter(1)
-    public void captcha(String uuid, HttpServletResponse response) throws IOException {
+    public void captcha(String uuid, HttpServletResponse response) {
         AssertUtil.isNotBlank("uuid", uuid);
         mainService.buildCaptchaAndCache(response, uuid);
     }
@@ -97,32 +97,63 @@ public class SecurityController {
         }
 
         // 查询用户
-        SecurityUserDto securityUserDto = securityUserService.getByUsername(loginDto.getUsername());
+        SecurityUserEntity entity = securityUserService.getByUsername(loginDto.getUsername());
 
         // 登录处理
         // 用户不存在
-        if (securityUserDto == null) {
+        if (entity == null) {
             saveLog(loginDto.getUsername(), LoginOperationEnum.LOGIN, LoginStatusEnum.FAIL, request);
             return Result.ofFail(ErrorCode.ACCOUNT_PASSWORD_ERROR);
         }
 
         // 密码错误
-        if (!SecurityUtil.matches(loginDto.getPassword(), securityUserDto.getPassword())) {
-            saveLog(securityUserDto.getUsername(), LoginOperationEnum.LOGIN, LoginStatusEnum.FAIL, request);
+        if (!SecurityUtil.matches(loginDto.getPassword(), entity.getPassword())) {
+            saveLog(entity.getUsername(), LoginOperationEnum.LOGIN, LoginStatusEnum.FAIL, request);
             return Result.ofFail(ErrorCode.ACCOUNT_PASSWORD_ERROR);
         }
 
         // 用户账号已停用
-        if (securityUserDto.getStatus() == StatusEnum.DISABLE.getValue()) {
-            saveLog(securityUserDto.getUsername(), LoginOperationEnum.LOGIN, LoginStatusEnum.DISABLE, request);
+        if (entity.getStatus() == StatusEnum.DISABLE.getValue()) {
+            saveLog(entity.getUsername(), LoginOperationEnum.LOGIN, LoginStatusEnum.DISABLE, request);
             return Result.ofFail(ErrorCode.ACCOUNT_DISABLE);
         }
 
         // 登录成功
-        saveLog(securityUserDto.getUsername(), LoginOperationEnum.LOGIN, LoginStatusEnum.SUCCESS, request);
+        saveLog(entity.getUsername(), LoginOperationEnum.LOGIN, LoginStatusEnum.SUCCESS, request);
 
         // 生成Token并缓存
-        return Result.ofSuccess(mainService.generateTokenAndCache(securityUserDto));
+        return Result.ofSuccess(mainService.generateTokenAndCache(entity));
+    }
+
+    /**
+     * 登录信息
+     *
+     * @return 响应结果
+     */
+    @GetMapping("login/info")
+    public Result<SecurityUserDto> loginInfo() {
+        return Result.ofSuccess(BeanUtil.convert(SecurityUtil.getLoginUser(), SecurityUserDto.class));
+    }
+
+    /**
+     * 修改密码
+     *
+     * @param dto     密码Dto
+     * @param request {@link HttpServletRequest}
+     * @return 响应结果
+     */
+    @PutMapping("password")
+    @RateLimiter(0.5)
+    public Result password(@Validated(DefaultGroup.class) PasswordDto dto, HttpServletRequest request) {
+        LoginUser loginUser = SecurityUtil.getLoginUser();
+
+        // 修改密码
+        mainService.updatePassword(dto, loginUser);
+
+        // 修改成功后自动退出
+        logoutAndSaveLog(SecurityUtil.getLoginUser(), request);
+
+        return Result.ofSuccess();
     }
 
     /**
@@ -133,13 +164,20 @@ public class SecurityController {
      */
     @PostMapping("logout")
     public Result logout(HttpServletRequest request) {
-        LoginUser loginUser = SecurityUtil.getLoginUser();
+        logoutAndSaveLog(SecurityUtil.getLoginUser(), request);
+        return Result.ofSuccess();
+    }
 
+    /**
+     * 用户退出并保存日志
+     *
+     * @param loginUser 登录用户信息
+     * @param request   {@link HttpServletRequest}
+     */
+    private void logoutAndSaveLog(LoginUser loginUser, HttpServletRequest request) {
         mainService.logout(loginUser.getId());
 
         saveLog(loginUser.getUsername(), LoginOperationEnum.LOGOUT, LoginStatusEnum.SUCCESS, request);
-
-        return Result.ofSuccess();
     }
 
     /**

@@ -12,11 +12,12 @@
 
 package me.xiajhuan.summer.system.security.service;
 
-import me.xiajhuan.summer.system.security.dto.SecurityUserDto;
+import me.xiajhuan.summer.core.data.LoginUser;
+import me.xiajhuan.summer.system.security.dto.PasswordDto;
 import me.xiajhuan.summer.system.security.dto.TokenDto;
+import me.xiajhuan.summer.system.security.entity.SecurityUserEntity;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 /**
  * 权限相关 Service
@@ -26,23 +27,6 @@ import java.io.IOException;
  */
 public interface SecurityService {
 
-    //*******************认证授权********************
-
-    /**
-     * 生成Token并缓存
-     *
-     * @param dto 用户Dto
-     * @return Token
-     */
-    TokenDto generateTokenAndCache(SecurityUserDto dto);
-
-    /**
-     * 用户退出
-     *
-     * @param userId 用户ID
-     */
-    void logout(Long userId);
-
     //*******************验证码********************
 
     /**
@@ -50,9 +34,8 @@ public interface SecurityService {
      *
      * @param response {@link HttpServletResponse}
      * @param uuid     唯一标识，作为验证码 Key的一部分
-     * @throws IOException I/O异常
      */
-    void buildCaptchaAndCache(HttpServletResponse response, String uuid) throws IOException;
+    void buildCaptchaAndCache(HttpServletResponse response, String uuid);
 
     /**
      * 校验验证码
@@ -62,5 +45,30 @@ public interface SecurityService {
      * @return 校验结果，true：成功 false：失败
      */
     boolean validateCaptcha(String uuid, String captcha);
+
+    //*******************权限相关********************
+
+    /**
+     * 生成Token并缓存
+     *
+     * @param dto 用户Entity
+     * @return Token
+     */
+    TokenDto generateTokenAndCache(SecurityUserEntity dto);
+
+    /**
+     * 修改密码
+     *
+     * @param dto       密码Dto
+     * @param loginUser 登录用户信息
+     */
+    void updatePassword(PasswordDto dto, LoginUser loginUser);
+
+    /**
+     * 用户退出
+     *
+     * @param userId 用户ID
+     */
+    void logout(Long userId);
 
 }

@@ -127,6 +127,14 @@ public interface MpHelper<D extends PageSortDto, T> {
     }
 
     /**
+     * Dto类型对象前置处理钩子，可重写该钩子个性化前置处理，如校验/属性运算/属性填充等
+     *
+     * @param dto Dto类型对象
+     */
+    default void handleDtoBefore(D dto) {
+    }
+
+    /**
      * 自定义分页钩子<br>
      * note：必须覆写该方法才能调用！否则将抛出 {@link UnsupportedOperationException}，
      *
@@ -138,15 +146,7 @@ public interface MpHelper<D extends PageSortDto, T> {
     }
 
     /**
-     * Dto类型对象前置处理钩子，可重写该钩子个性化前置处理，如属性运算/填充等
-     *
-     * @param dto Dto类型对象
-     */
-    default void handleDtoBefore(D dto) {
-    }
-
-    /**
-     * Entity类型对象后置处理钩子，可重写该钩子个性化后置处理，如属性运算/填充等
+     * Entity类型对象后置处理钩子，可重写该钩子个性化后置处理，如属性运算/属性填充等
      *
      * @param entity Entity类型对象
      */

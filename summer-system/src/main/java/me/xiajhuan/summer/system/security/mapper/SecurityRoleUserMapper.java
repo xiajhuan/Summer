@@ -14,6 +14,10 @@ package me.xiajhuan.summer.system.security.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import me.xiajhuan.summer.system.security.entity.SecurityRoleUserEntity;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
+
+import java.util.Set;
 
 /**
  * 角色用户关联 Mapper
@@ -22,4 +26,14 @@ import me.xiajhuan.summer.system.security.entity.SecurityRoleUserEntity;
  * @date 2023/4/7
  */
 public interface SecurityRoleUserMapper extends BaseMapper<SecurityRoleUserEntity> {
+
+    /**
+     * 获取角色ID集合
+     *
+     * @param userId 用户ID
+     * @return 角色ID集合
+     */
+    @Select("SELECT role_id from security_role_user WHERE user_id = #{userId}")
+    Set<Long> getRoleIdSet(@Param("userId") Long userId);
+
 }
