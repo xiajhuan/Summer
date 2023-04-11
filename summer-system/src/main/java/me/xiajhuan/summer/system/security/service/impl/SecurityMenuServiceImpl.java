@@ -61,10 +61,20 @@ public class SecurityMenuServiceImpl extends ServiceImpl<SecurityMenuMapper, Sec
     private SecurityRoleMenuMapper securityRoleMenuMapper;
 
     @Override
-    public List<SecurityMenuDto> treeList() {
+    public List<SecurityMenuDto> treeList(Integer type, boolean needAll) {
+        final List<SecurityMenuEntity> entityList;
+        LoginUser loginUser = SecurityUtil.getLoginUser();
+        String locale = LocaleUtil.getAcceptLanguage(ServletUtil.getHttpRequest());
+
+        // 非超级管理员，一律只能查询自己的菜单列表
+        if (!needAll && UserTypeEnum.GENERAL.getValue() == loginUser.getUserType()) {
+            entityList = baseMapper.getMenus(locale, type, loginUser.getId());
+        } else {
+            entityList = baseMapper.getMenusAll(locale, type);
+        }
+
         // 构建菜单树形结构列表
-        return TreeUtil.buildDto(SecurityMenuDto.class,
-                BeanUtil.convert(baseMapper.getMenusAll(LocaleUtil.getAcceptLanguage(ServletUtil.getHttpRequest()), null), SecurityMenuDto.class),
+        return TreeUtil.buildDto(SecurityMenuDto.class, BeanUtil.convert(entityList, SecurityMenuDto.class),
                 TreeConst.ROOT, TreeConst.Extra.MENU);
     }
 
@@ -78,15 +88,15 @@ public class SecurityMenuServiceImpl extends ServiceImpl<SecurityMenuMapper, Sec
     @Transactional(rollbackFor = Exception.class)
     public void add(SecurityMenuDto dto) {
         SecurityMenuEntity entity = BeanUtil.convert(dto, SecurityMenuEntity.class);
-        // 保存菜单
-        save(entity);
 
-        // 保存国际化名称
-        LocaleInternationalNameEntity internationalNameEntity = LocaleInternationalNameEntity.builder()
-                .tableName("security_menu").lineId(entity.getId())
-                .fieldName("name").fieldValue(entity.getName())
-                .locale(LocaleUtil.getAcceptLanguage(ServletUtil.getHttpRequest())).build();
-        localeInternationalNameService.save(internationalNameEntity);
+        if (save(entity)) {
+            // 保存国际化名称
+            LocaleInternationalNameEntity internationalNameEntity = LocaleInternationalNameEntity.builder()
+                    .tableName("security_menu").lineId(entity.getId())
+                    .fieldName("name").fieldValue(entity.getName())
+                    .locale(LocaleUtil.getAcceptLanguage(ServletUtil.getHttpRequest())).build();
+            localeInternationalNameService.save(internationalNameEntity);
+        }
     }
 
     @Override
@@ -98,54 +108,35 @@ public class SecurityMenuServiceImpl extends ServiceImpl<SecurityMenuMapper, Sec
         }
 
         SecurityMenuEntity entity = BeanUtil.convert(dto, SecurityMenuEntity.class);
-        // 更新菜单
-        updateById(entity);
 
-        // 更新国际化名称
-        // note：通过 update(LambdaUpdateWrapper) 更新时基础字段自动填充不会生效
-        LambdaUpdateWrapper<LocaleInternationalNameEntity> updateWrapper = Wrappers.lambdaUpdate();
-        updateWrapper.eq(LocaleInternationalNameEntity::getLineId, entity.getId());
-        updateWrapper.eq(LocaleInternationalNameEntity::getLocale, LocaleUtil.getAcceptLanguage(ServletUtil.getHttpRequest()));
-        updateWrapper.set(LocaleInternationalNameEntity::getFieldValue, entity.getName());
-        updateWrapper.set(LocaleInternationalNameEntity::getUpdateBy, SecurityUtil.getCurrentUsername());
-        updateWrapper.set(LocaleInternationalNameEntity::getUpdateTime, DateUtil.date());
-        localeInternationalNameService.update(updateWrapper);
+        if (updateById(entity)) {
+            // 更新国际化名称
+            // note：通过 update(LambdaUpdateWrapper) 更新时基础字段自动填充不会生效
+            LambdaUpdateWrapper<LocaleInternationalNameEntity> updateWrapper = Wrappers.lambdaUpdate();
+            updateWrapper.eq(LocaleInternationalNameEntity::getLineId, entity.getId());
+            updateWrapper.eq(LocaleInternationalNameEntity::getLocale, LocaleUtil.getAcceptLanguage(ServletUtil.getHttpRequest()));
+            updateWrapper.set(LocaleInternationalNameEntity::getFieldValue, entity.getName());
+            updateWrapper.set(LocaleInternationalNameEntity::getUpdateBy, SecurityUtil.getCurrentUsername());
+            updateWrapper.set(LocaleInternationalNameEntity::getUpdateTime, DateUtil.date());
+            localeInternationalNameService.update(updateWrapper);
+        }
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void delete(Long id) {
-        // 删除菜单
-        removeById(id);
+        if (removeById(id)) {
+            // 删除国际化名称
+            LambdaQueryWrapper<LocaleInternationalNameEntity> queryWrapper = Wrappers.lambdaQuery();
+            queryWrapper.eq(LocaleInternationalNameEntity::getLineId, id);
+            queryWrapper.eq(LocaleInternationalNameEntity::getLocale, LocaleUtil.getAcceptLanguage(ServletUtil.getHttpRequest()));
+            localeInternationalNameService.remove(queryWrapper);
 
-        // 删除国际化名称
-        LambdaQueryWrapper<LocaleInternationalNameEntity> queryWrapper = Wrappers.lambdaQuery();
-        queryWrapper.eq(LocaleInternationalNameEntity::getLineId, id);
-        queryWrapper.eq(LocaleInternationalNameEntity::getLocale, LocaleUtil.getAcceptLanguage(ServletUtil.getHttpRequest()));
-        localeInternationalNameService.remove(queryWrapper);
-
-        // 删除角色菜单关联
-        LambdaQueryWrapper<SecurityRoleMenuEntity> roleMenuQueryWrapper = Wrappers.lambdaQuery();
-        roleMenuQueryWrapper.eq(SecurityRoleMenuEntity::getMenuId, id);
-        securityRoleMenuMapper.delete(roleMenuQueryWrapper);
-    }
-
-    @Override
-    public List<SecurityMenuDto> navList(Integer type) {
-        final List<SecurityMenuEntity> entityList;
-        LoginUser loginUser = SecurityUtil.getLoginUser();
-        String locale = LocaleUtil.getAcceptLanguage(ServletUtil.getHttpRequest());
-
-        // 非超级管理员，一律只能查询自己的菜单列表
-        if (UserTypeEnum.GENERAL.getValue() == loginUser.getUserType()) {
-            entityList = baseMapper.getMenus(locale, type, loginUser.getId());
-        } else {
-            entityList = baseMapper.getMenusAll(locale, type);
+            // 删除角色菜单关联
+            LambdaQueryWrapper<SecurityRoleMenuEntity> roleMenuQueryWrapper = Wrappers.lambdaQuery();
+            roleMenuQueryWrapper.eq(SecurityRoleMenuEntity::getMenuId, id);
+            securityRoleMenuMapper.delete(roleMenuQueryWrapper);
         }
-
-        // 构建菜单树形结构列表
-        return TreeUtil.buildDto(SecurityMenuDto.class, BeanUtil.convert(entityList, SecurityMenuDto.class),
-                TreeConst.ROOT, TreeConst.Extra.MENU);
     }
 
     @Override
@@ -164,7 +155,7 @@ public class SecurityMenuServiceImpl extends ServiceImpl<SecurityMenuMapper, Sec
             Set<String> permissions = CollUtil.newHashSet();
             menuPermissions.forEach(p -> {
                 if (!StrUtil.isBlankOrUndefined(p)) {
-                    // 如果包含多个权限，以“,”拆分出来
+                    // 如果包含多个权限，根据“,”拆分出来
                     permissions.addAll(ListUtil.of(p.split(StrPool.COMMA)));
                 }
             });

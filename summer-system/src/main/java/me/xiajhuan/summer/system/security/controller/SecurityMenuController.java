@@ -23,6 +23,7 @@ import me.xiajhuan.summer.system.common.annotation.LogOperation;
 import me.xiajhuan.summer.system.security.dto.SecurityMenuDto;
 import me.xiajhuan.summer.system.security.enums.ComponentTypeEnum;
 import me.xiajhuan.summer.system.security.service.SecurityMenuService;
+import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -55,7 +56,7 @@ public class SecurityMenuController {
     @RequiresPermissions("security:menu:list")
     @LogOperation(OperationConst.LIST)
     public Result<List<SecurityMenuDto>> list() {
-        return Result.ofSuccess(mainService.treeList());
+        return Result.ofSuccess(mainService.treeList(null, false));
     }
 
     /**
@@ -121,14 +122,28 @@ public class SecurityMenuController {
     //*******************Other Operation********************
 
     /**
-     * 导航列表
+     * 导航<br>
+     * note：列表，不包含按钮
      *
      * @return 响应结果
      */
-    @GetMapping("navList")
-    @LogOperation("导航列表")
-    public Result<List<SecurityMenuDto>> navList() {
-        return Result.ofSuccess(mainService.navList(ComponentTypeEnum.MENU.getValue()));
+    @GetMapping("nav")
+    @LogOperation("导航")
+    public Result<List<SecurityMenuDto>> nav() {
+        return Result.ofSuccess(mainService.treeList(ComponentTypeEnum.MENU.getValue(), false));
+    }
+
+    /**
+     * 全部<br>
+     * note：该接口用于新增/修改角色时带出菜单树
+     *
+     * @return 响应结果
+     */
+    @GetMapping("all")
+    @RequiresPermissions(value = {"security:role:add", "security:role:update"}, logical = Logical.OR)
+    @LogOperation("全部")
+    public Result<List<SecurityMenuDto>> all() {
+        return Result.ofSuccess(mainService.treeList(null, true));
     }
 
     /**

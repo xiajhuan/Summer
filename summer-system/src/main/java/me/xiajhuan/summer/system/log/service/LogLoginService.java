@@ -15,10 +15,13 @@ package me.xiajhuan.summer.system.log.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import me.xiajhuan.summer.core.constant.ThreadPoolConst;
+import me.xiajhuan.summer.core.enums.LoginOperationEnum;
+import me.xiajhuan.summer.core.enums.LoginStatusEnum;
 import me.xiajhuan.summer.system.log.dto.LogLoginDto;
 import me.xiajhuan.summer.system.log.entity.LogLoginEntity;
 import org.springframework.scheduling.annotation.Async;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -44,10 +47,13 @@ public interface LogLoginService extends IService<LogLoginEntity> {
     /**
      * 异步保存日志
      *
-     * @param entity 登录日志Entity
+     * @param loginUser      登录用户名
+     * @param loginOperation 登录操作 {@link LoginOperationEnum}
+     * @param loginStatus    登录状态 {@link LoginStatusEnum}
+     * @param request        {@link HttpServletRequest}
      */
     @Async(ThreadPoolConst.Async.COMMON)
-    void saveAsync(LogLoginEntity entity);
+    void saveAsync(String loginUser, int loginOperation, int loginStatus, HttpServletRequest request);
 
     /**
      * 清理日志

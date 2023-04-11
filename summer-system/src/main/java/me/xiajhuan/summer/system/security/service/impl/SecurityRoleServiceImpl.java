@@ -135,15 +135,16 @@ public class SecurityRoleServiceImpl extends ServiceImpl<SecurityRoleMapper, Sec
         handleDtoBefore(dto);
 
         SecurityRoleEntity entity = BeanUtil.convert(dto, SecurityRoleEntity.class);
-        // 保存角色
-        save(entity);
-        Long id = entity.getId();
 
-        // 保存角色菜单关联
-        saveOrUpdateRoleMenu(id, dto.getMenuIdSet());
+        if (save(entity)) {
+            Long id = entity.getId();
 
-        // 保存角色部门关联
-        saveOrUpdateRoleDept(id, dto.getDeptIdSet());
+            // 保存角色菜单关联
+            saveOrUpdateRoleMenu(id, dto.getMenuIdSet(), false);
+
+            // 保存角色部门关联
+            saveOrUpdateRoleDept(id, dto.getDeptIdSet(), false);
+        }
     }
 
     @Override
@@ -152,38 +153,39 @@ public class SecurityRoleServiceImpl extends ServiceImpl<SecurityRoleMapper, Sec
         handleDtoBefore(dto);
 
         SecurityRoleEntity entity = BeanUtil.convert(dto, SecurityRoleEntity.class);
-        // 修改角色
-        updateById(entity);
-        Long id = entity.getId();
 
-        // 修改角色菜单关联
-        saveOrUpdateRoleMenu(id, dto.getMenuIdSet());
+        if (updateById(entity)) {
+            Long id = entity.getId();
 
-        // 修改角色部门关联
-        saveOrUpdateRoleDept(id, dto.getDeptIdSet());
+            // 修改角色菜单关联
+            saveOrUpdateRoleMenu(id, dto.getMenuIdSet(), true);
+
+            // 修改角色部门关联
+            saveOrUpdateRoleDept(id, dto.getDeptIdSet(), true);
+        }
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void delete(Long[] ids) {
-        // 删除角色
         Set<Long> idSet = Arrays.stream(ids).collect(Collectors.toSet());
-        removeByIds(idSet);
 
-        // 删除角色菜单关联
-        LambdaQueryWrapper<SecurityRoleMenuEntity> roleMenuQueryWrapper = Wrappers.lambdaQuery();
-        roleMenuQueryWrapper.in(SecurityRoleMenuEntity::getRoleId, idSet);
-        securityRoleMenuMapper.delete(roleMenuQueryWrapper);
+        if (removeByIds(idSet)) {
+            // 删除角色菜单关联
+            LambdaQueryWrapper<SecurityRoleMenuEntity> roleMenuQueryWrapper = Wrappers.lambdaQuery();
+            roleMenuQueryWrapper.in(SecurityRoleMenuEntity::getRoleId, idSet);
+            securityRoleMenuMapper.delete(roleMenuQueryWrapper);
 
-        // 删除角色部门关联
-        LambdaQueryWrapper<SecurityRoleDeptEntity> roleDeptQueryWrapper = Wrappers.lambdaQuery();
-        roleDeptQueryWrapper.in(SecurityRoleDeptEntity::getRoleId, idSet);
-        securityRoleDeptMapper.delete(roleDeptQueryWrapper);
+            // 删除角色部门关联
+            LambdaQueryWrapper<SecurityRoleDeptEntity> roleDeptQueryWrapper = Wrappers.lambdaQuery();
+            roleDeptQueryWrapper.in(SecurityRoleDeptEntity::getRoleId, idSet);
+            securityRoleDeptMapper.delete(roleDeptQueryWrapper);
 
-        // 删除角色用户关联
-        LambdaQueryWrapper<SecurityRoleUserEntity> roleUserQueryWrapper = Wrappers.lambdaQuery();
-        roleUserQueryWrapper.in(SecurityRoleUserEntity::getRoleId, idSet);
-        securityRoleUserMapper.delete(roleUserQueryWrapper);
+            // 删除角色用户关联
+            LambdaQueryWrapper<SecurityRoleUserEntity> roleUserQueryWrapper = Wrappers.lambdaQuery();
+            roleUserQueryWrapper.in(SecurityRoleUserEntity::getRoleId, idSet);
+            securityRoleUserMapper.delete(roleUserQueryWrapper);
+        }
     }
 
     /**
@@ -191,12 +193,15 @@ public class SecurityRoleServiceImpl extends ServiceImpl<SecurityRoleMapper, Sec
      *
      * @param id        ID
      * @param menuIdSet 菜单ID集合
+     * @param isUpdate  是否为更新，true：是 false：不是
      */
-    private void saveOrUpdateRoleMenu(Long id, Set<Long> menuIdSet) {
-        // 删除原来的角色菜单关联
-        LambdaQueryWrapper<SecurityRoleMenuEntity> queryWrapper = Wrappers.lambdaQuery();
-        queryWrapper.eq(SecurityRoleMenuEntity::getRoleId, id);
-        securityRoleMenuMapper.delete(queryWrapper);
+    private void saveOrUpdateRoleMenu(Long id, Set<Long> menuIdSet, boolean isUpdate) {
+        if (isUpdate) {
+            // 是更新则删除原来的角色菜单关联
+            LambdaQueryWrapper<SecurityRoleMenuEntity> queryWrapper = Wrappers.lambdaQuery();
+            queryWrapper.eq(SecurityRoleMenuEntity::getRoleId, id);
+            securityRoleMenuMapper.delete(queryWrapper);
+        }
 
         if (menuIdSet.size() > 0) {
             // 保存新的角色菜单关联，note：这里数据量不会很大，直接循环插入就好
@@ -214,12 +219,15 @@ public class SecurityRoleServiceImpl extends ServiceImpl<SecurityRoleMapper, Sec
      *
      * @param id        ID
      * @param deptIdSet 部门ID集合
+     * @param isUpdate  是否为更新，true：是 false：不是
      */
-    private void saveOrUpdateRoleDept(Long id, Set<Long> deptIdSet) {
-        // 删除原来的角色部门关联
-        LambdaQueryWrapper<SecurityRoleDeptEntity> queryWrapper = Wrappers.lambdaQuery();
-        queryWrapper.eq(SecurityRoleDeptEntity::getRoleId, id);
-        securityRoleDeptMapper.delete(queryWrapper);
+    private void saveOrUpdateRoleDept(Long id, Set<Long> deptIdSet, boolean isUpdate) {
+        if (isUpdate) {
+            // 是更新则删除原来的角色部门关联
+            LambdaQueryWrapper<SecurityRoleDeptEntity> queryWrapper = Wrappers.lambdaQuery();
+            queryWrapper.eq(SecurityRoleDeptEntity::getRoleId, id);
+            securityRoleDeptMapper.delete(queryWrapper);
+        }
 
         if (deptIdSet.size() > 0) {
             // 保存新的角色部门关联，note：这里数据量不会很大，直接循环插入就好

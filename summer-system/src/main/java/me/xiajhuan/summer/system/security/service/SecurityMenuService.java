@@ -30,11 +30,13 @@ import java.util.Set;
 public interface SecurityMenuService extends IService<SecurityMenuEntity> {
 
     /**
-     * 树形结构列表
+     * 国际化树形结构列表
      *
-     * @return 菜单列表（树形结构）
+     * @param type    类型 {@link ComponentTypeEnum}
+     * @param needAll 是否需要全部，true：是 false：不是
+     * @return 国际化菜单列表（树形结构）
      */
-    List<SecurityMenuDto> treeList();
+    List<SecurityMenuDto> treeList(Integer type, boolean needAll);
 
     SecurityMenuDto getById(Long id);
 
@@ -43,14 +45,6 @@ public interface SecurityMenuService extends IService<SecurityMenuEntity> {
     void update(SecurityMenuDto dto);
 
     void delete(Long id);
-
-    /**
-     * 导航菜单列表
-     *
-     * @param type 类型 {@link ComponentTypeEnum}
-     * @return 菜单列表（树形结构）
-     */
-    List<SecurityMenuDto> navList(Integer type);
 
     /**
      * 获取用户权限集合

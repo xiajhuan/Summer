@@ -21,8 +21,10 @@ import me.xiajhuan.summer.core.ratelimiter.annotation.RateLimiter;
 import me.xiajhuan.summer.core.utils.AssertUtil;
 import me.xiajhuan.summer.core.utils.ExcelUtil;
 import me.xiajhuan.summer.core.validation.group.AddGroup;
+import me.xiajhuan.summer.core.validation.group.DefaultGroup;
 import me.xiajhuan.summer.core.validation.group.UpdateGroup;
 import me.xiajhuan.summer.system.common.annotation.LogOperation;
+import me.xiajhuan.summer.system.security.dto.PasswordDto;
 import me.xiajhuan.summer.system.security.dto.SecurityUserDto;
 import me.xiajhuan.summer.system.security.service.SecurityUserService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -136,6 +138,36 @@ public class SecurityUserController extends BaseController {
         validateMaxExport(mainService.count(dto));
         ExcelUtil.export(response, "用户", "用户", mainService.list(dto),
                 SecurityUserDto.class, ErrorCode.EXCEL_EXPORT_FAILURE);
+    }
+
+    //*******************Other Operation********************
+
+    /**
+     * 修改密码
+     *
+     * @param dto 密码Dto
+     * @return 响应结果
+     */
+    @PutMapping("password")
+    @LogOperation("修改密码")
+    public Result password(@Validated(DefaultGroup.class) PasswordDto dto) {
+        mainService.updatePasswordAndLogout(dto);
+        return Result.ofSuccess();
+    }
+
+    /**
+     * 重置密码
+     *
+     * @param ids ID数组
+     * @return 响应结果
+     */
+    @PutMapping("reset")
+    @LogOperation("重置密码")
+    public Result reset(Long[] ids) {
+        AssertUtil.isNotEmpty("ids", ids);
+        String passwordReset = mainService.reset(ids);
+        return passwordReset == null ? Result.ofFail() :
+                Result.ofSuccess(null, Result.SuccessCode.PASSWORD_RESET, passwordReset);
     }
 
 }

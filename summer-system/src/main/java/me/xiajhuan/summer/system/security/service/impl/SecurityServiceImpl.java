@@ -16,27 +16,29 @@ import cn.hutool.captcha.AbstractCaptcha;
 import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.ListUtil;
-import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.setting.Setting;
 import com.baomidou.dynamic.datasource.annotation.DS;
-import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import me.xiajhuan.summer.core.cache.factory.CacheServerFactory;
 import me.xiajhuan.summer.core.cache.server.CacheServer;
 import me.xiajhuan.summer.core.constant.*;
 import me.xiajhuan.summer.core.data.LoginUser;
+import me.xiajhuan.summer.core.enums.LoginOperationEnum;
+import me.xiajhuan.summer.core.enums.LoginStatusEnum;
+import me.xiajhuan.summer.core.enums.StatusEnum;
 import me.xiajhuan.summer.core.enums.UserTypeEnum;
 import me.xiajhuan.summer.core.exception.code.ErrorCode;
 import me.xiajhuan.summer.core.exception.custom.FileDownloadException;
 import me.xiajhuan.summer.core.exception.custom.ValidationException;
+import me.xiajhuan.summer.core.utils.AssertUtil;
 import me.xiajhuan.summer.core.utils.BeanUtil;
 import me.xiajhuan.summer.core.utils.SecurityUtil;
 
 import static me.xiajhuan.summer.system.security.cache.SecurityCacheKey.*;
 
-import me.xiajhuan.summer.system.security.dto.PasswordDto;
+import me.xiajhuan.summer.system.log.service.LogLoginService;
+import me.xiajhuan.summer.system.security.dto.LoginDto;
 import me.xiajhuan.summer.system.security.dto.TokenDto;
 import me.xiajhuan.summer.system.security.entity.SecurityUserEntity;
 import me.xiajhuan.summer.system.security.enums.CaptchaTypeEnum;
@@ -48,6 +50,7 @@ import me.xiajhuan.summer.system.security.service.SecurityUserService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Map;
@@ -74,6 +77,9 @@ public class SecurityServiceImpl implements SecurityService {
 
     @Resource
     private SecurityDeptService securityDeptService;
+
+    @Resource
+    private LogLoginService logLoginService;
 
     @Resource
     private SecurityRoleDeptMapper securityRoleDeptMapper;
@@ -115,7 +121,128 @@ public class SecurityServiceImpl implements SecurityService {
     }
 
     @Override
-    public TokenDto generateTokenAndCache(SecurityUserEntity entity) {
+    public TokenDto login(LoginDto loginDto, HttpServletRequest request) {
+        if (setting.getBool("enable-captcha", "Security", true)) {
+            // 校验验证码
+            AssertUtil.isNotBlank("uuid", loginDto.getUuid());
+            if (StrUtil.isBlank(loginDto.getCaptcha())) {
+                throw ValidationException.of(ErrorCode.CAPTCHA_NOT_NULL);
+            }
+            if (!validateCaptcha(loginDto.getUuid(), loginDto.getCaptcha())) {
+                throw ValidationException.of(ErrorCode.CAPTCHA_ERROR);
+            }
+        }
+
+        // 查询用户
+        SecurityUserEntity entity = securityUserService.getByUsername(loginDto.getUsername());
+
+        // 登录处理
+        // 用户不存在
+        if (entity == null) {
+            logLoginService.saveAsync(loginDto.getUsername(), LoginOperationEnum.LOGIN.getValue(),
+                    LoginStatusEnum.FAIL.getValue(), request);
+            throw ValidationException.of(ErrorCode.ACCOUNT_PASSWORD_ERROR);
+        }
+
+        // 密码错误
+        if (!SecurityUtil.matches(loginDto.getPassword(), entity.getPassword())) {
+            logLoginService.saveAsync(entity.getUsername(), LoginOperationEnum.LOGIN.getValue(),
+                    LoginStatusEnum.FAIL.getValue(), request);
+            throw ValidationException.of(ErrorCode.ACCOUNT_PASSWORD_ERROR);
+        }
+
+        // 用户账号已停用
+        if (entity.getStatus() == StatusEnum.DISABLE.getValue()) {
+            logLoginService.saveAsync(entity.getUsername(), LoginOperationEnum.LOGIN.getValue(),
+                    LoginStatusEnum.DISABLE.getValue(), request);
+            throw ValidationException.of(ErrorCode.ACCOUNT_DISABLE);
+        }
+
+        // 登录成功
+        logLoginService.saveAsync(entity.getUsername(), LoginOperationEnum.LOGIN.getValue(),
+                LoginStatusEnum.SUCCESS.getValue(), request);
+
+        // 生成Token并缓存
+        return generateTokenAndCache(entity);
+    }
+
+    @Override
+    public void logoutAndLog(LoginUser loginUser, HttpServletRequest request) {
+        String loginUsername = loginUser.getUsername();
+        if (logout(loginUser.getId())) {
+            // 用户退出成功
+            logLoginService.saveAsync(loginUsername, LoginOperationEnum.LOGOUT.getValue(),
+                    LoginStatusEnum.SUCCESS.getValue(), request);
+        } else {
+            // 用户退出失败
+            logLoginService.saveAsync(loginUsername, LoginOperationEnum.LOGOUT.getValue(),
+                    LoginStatusEnum.FAIL.getValue(), request);
+        }
+    }
+
+    @Override
+    public boolean logout(Long userId) {
+        CacheServer cacheServer = CacheServerFactory.getCacheServer();
+
+        String loginInfoKey = loginInfo(userId);
+        if (cacheServer.hasHash(loginInfoKey)) {
+            // 获取accessToken
+            String accessToken = String.valueOf(cacheServer.getHash(loginInfoKey, SecurityConst.LoginInfo.ACCESS_TOKEN));
+
+            // 删除用户ID
+            cacheServer.delete(userId(accessToken));
+
+            // 删除登录信息
+            cacheServer.delete(loginInfoKey, CacheConst.Value.HASH);
+
+            // 删除用户权限集合
+            cacheServer.delete(permissions(userId), CacheConst.Value.LIST);
+
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 构建图形验证码
+     *
+     * @return {@link AbstractCaptcha}
+     * @see CaptchaTypeEnum
+     */
+    private AbstractCaptcha buildGraphicCaptcha() {
+        // 验证码类型
+        String type = setting.getByGroupWithLog("captcha.type", "Security");
+        if (StrUtil.isBlank(type)) {
+            // 没有配置则默认为：Line
+            type = CaptchaTypeEnum.Line.getValue();
+        }
+        // 验证码宽/高
+        int width = setting.getInt("captcha.width", "Security", 150);
+        int height = setting.getInt("captcha.height", "Security", 40);
+        // 验证码字符个数
+        int charNum = setting.getInt("captcha.char-num", "Security", 5);
+        switch (type) {
+            case "Line":
+                return CaptchaUtil.createLineCaptcha(width, height, charNum,
+                        setting.getInt("captcha.line-num", "Security", 10));
+            case "Circle":
+                return CaptchaUtil.createCircleCaptcha(width, height, charNum,
+                        setting.getInt("captcha.circle-num", "Security", 10));
+            case "Shear":
+                return CaptchaUtil.createShearCaptcha(width, height, charNum,
+                        setting.getInt("captcha.shear-width", "Security", 4));
+            default:
+                throw new IllegalArgumentException(StrUtil.format("不支持的验证码类型【{}】", type));
+        }
+    }
+
+    /**
+     * 生成Token并缓存
+     *
+     * @param entity 用户Entity
+     * @return TokenDto
+     */
+    private TokenDto generateTokenAndCache(SecurityUserEntity entity) {
         CacheServer cacheServer = CacheServerFactory.getCacheServer();
 
         // 生成accessToken
@@ -159,93 +286,6 @@ public class SecurityServiceImpl implements SecurityService {
         return tokenDto;
     }
 
-    @Override
-    public void updatePassword(PasswordDto dto, LoginUser loginUser) {
-        if (!SecurityUtil.matches(dto.getOldPassword(), loginUser.getPassword())) {
-            // 原密码不正确
-            throw ValidationException.of(ErrorCode.PASSWORD_ERROR);
-        }
-
-        String newPassword = dto.getNewPassword();
-        if (!newPassword.equals(dto.getConfirmPassword())) {
-            // 密码和确认密码不一致
-            throw ValidationException.of(ErrorCode.PASSWORD_CONFIRM_ERROR);
-        }
-
-        LambdaUpdateWrapper<SecurityUserEntity> updateWrapper = addUserSetField(
-                SecurityUtil.encode(newPassword), loginUser.getUsername());
-        updateWrapper.eq(SecurityUserEntity::getId, loginUser.getId());
-        securityUserService.update(updateWrapper);
-    }
-
-    @Override
-    public String resetPassword(Long[] ids) {
-        String passwordReset = setting.getByGroupWithLog("password-reset", "Security");
-        if (StrUtil.isBlank(passwordReset)) {
-            // 没有配置则默认为：123456
-            passwordReset = "123456";
-        }
-
-        LambdaUpdateWrapper<SecurityUserEntity> updateWrapper = addUserSetField(SecurityUtil.encode(passwordReset), "superAdmin");
-        updateWrapper.in(SecurityUserEntity::getId, ids);
-        securityUserService.update(updateWrapper);
-
-        return passwordReset;
-    }
-
-    @Override
-    public void logout(Long userId) {
-        CacheServer cacheServer = CacheServerFactory.getCacheServer();
-
-        String loginInfoKey = loginInfo(userId);
-        if (cacheServer.hasHash(loginInfoKey)) {
-            // 获取accessToken
-            String accessToken = String.valueOf(cacheServer.getHash(loginInfoKey, SecurityConst.LoginInfo.ACCESS_TOKEN));
-
-            // 删除用户ID
-            cacheServer.delete(userId(accessToken));
-
-            // 删除登录信息
-            cacheServer.delete(loginInfoKey, CacheConst.Value.HASH);
-
-            // 删除用户权限集合
-            cacheServer.delete(permissions(userId), CacheConst.Value.LIST);
-        }
-    }
-
-    /**
-     * 构建图形验证码
-     *
-     * @return {@link AbstractCaptcha}
-     * @see CaptchaTypeEnum
-     */
-    private AbstractCaptcha buildGraphicCaptcha() {
-        // 验证码类型
-        String type = setting.getByGroupWithLog("captcha.type", "Security");
-        if (StrUtil.isBlank(type)) {
-            // 没有配置则默认为：Line
-            type = CaptchaTypeEnum.Line.getValue();
-        }
-        // 验证码宽高
-        int width = setting.getInt("captcha.width", "Security", 150);
-        int height = setting.getInt("captcha.height", "Security", 40);
-        // 验证码字符个数
-        int charNum = setting.getInt("captcha.char-num", "Security", 5);
-        switch (type) {
-            case "Line":
-                return CaptchaUtil.createLineCaptcha(width, height, charNum,
-                        setting.getInt("captcha.line-num", "Security", 10));
-            case "Circle":
-                return CaptchaUtil.createCircleCaptcha(width, height, charNum,
-                        setting.getInt("captcha.circle-num", "Security", 10));
-            case "Shear":
-                return CaptchaUtil.createShearCaptcha(width, height, charNum,
-                        setting.getInt("captcha.shear-width", "Security", 4));
-            default:
-                throw new IllegalArgumentException(StrUtil.format("不支持的验证码类型【{}】", type));
-        }
-    }
-
     /**
      * 获取登录用户信息
      *
@@ -256,53 +296,17 @@ public class SecurityServiceImpl implements SecurityService {
         LoginUser loginUser = BeanUtil.convert(entity, LoginUser.class);
 
         if (UserTypeEnum.GENERAL.getValue() == entity.getUserType()) {
-            loginUser.setDeptIdRoleBasedSet(getDeptIdRoleBasedSet(loginUser.getId()));
+            // 部门ID集合（这里指用户所有角色关联的所有部门ID）
+            loginUser.setDeptIdRoleBasedSet(securityRoleDeptMapper.getDeptIdRoleBasedSet(loginUser.getId()));
 
-            loginUser.setDeptAndChildIdSet(getDeptAndChildIdSet(loginUser.getDeptId()));
+            // 本部门及本部门下子部门ID
+            Long deptId = loginUser.getDeptId();
+            Set<Long> deptIdSet = securityDeptService.getChildIdSet(deptId);
+            deptIdSet.add(deptId);
+            loginUser.setDeptAndChildIdSet(deptIdSet);
         }
 
         return loginUser;
-    }
-
-    /**
-     * 获取部门ID集合（这里指用户所有角色关联的所有部门ID）
-     *
-     * @param userId 用户ID
-     * @return 部门ID集合
-     */
-    private Set<Long> getDeptIdRoleBasedSet(Long userId) {
-        return securityRoleDeptMapper.getDeptIdRoleBasedSet(userId);
-    }
-
-    /**
-     * 获取本部门及本部门下子部门ID集合
-     *
-     * @param deptId 所属部门ID
-     * @return 本部门及本部门下子部门ID集合
-     */
-    private Set<Long> getDeptAndChildIdSet(Long deptId) {
-        // 获取子部门ID集合
-        Set<Long> deptIdSet = securityDeptService.getChildIdSet(deptId);
-        deptIdSet.add(deptId);
-
-        return deptIdSet;
-    }
-
-    /**
-     * 获取 {@link LambdaUpdateWrapper}（修改密码时用户的set字段）
-     *
-     * @param newPassword 新密码（密文）
-     * @param username    用户名
-     * @return {@link LambdaUpdateWrapper}
-     */
-    private LambdaUpdateWrapper<SecurityUserEntity> addUserSetField(String newPassword, String username) {
-        // note：通过 update(LambdaUpdateWrapper) 更新时基础字段自动填充不会生效
-        LambdaUpdateWrapper<SecurityUserEntity> updateWrapper = Wrappers.lambdaUpdate();
-        updateWrapper.set(SecurityUserEntity::getPassword, newPassword);
-        updateWrapper.set(SecurityUserEntity::getUpdateBy, username);
-        updateWrapper.set(SecurityUserEntity::getUpdateTime, DateUtil.date());
-
-        return updateWrapper;
     }
 
 }

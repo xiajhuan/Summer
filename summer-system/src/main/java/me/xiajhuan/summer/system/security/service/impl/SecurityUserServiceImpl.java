@@ -14,18 +14,24 @@ package me.xiajhuan.summer.system.security.service.impl;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.setting.Setting;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import me.xiajhuan.summer.core.cache.factory.CacheServerFactory;
 import me.xiajhuan.summer.core.constant.DataSourceConst;
+import me.xiajhuan.summer.core.constant.SettingConst;
+import me.xiajhuan.summer.core.data.LoginUser;
+import me.xiajhuan.summer.core.enums.UserTypeEnum;
 import me.xiajhuan.summer.core.exception.code.ErrorCode;
 import me.xiajhuan.summer.core.exception.custom.ValidationException;
 import me.xiajhuan.summer.core.mp.helper.MpHelper;
 import me.xiajhuan.summer.core.utils.BeanUtil;
 import me.xiajhuan.summer.core.utils.SecurityUtil;
+import me.xiajhuan.summer.system.security.dto.PasswordDto;
 import me.xiajhuan.summer.system.security.dto.SecurityUserDto;
 import me.xiajhuan.summer.system.security.entity.SecurityRoleUserEntity;
 import me.xiajhuan.summer.system.security.entity.SecurityUserEntity;
@@ -58,6 +64,9 @@ import java.util.stream.Collectors;
 @Service
 @DS(DataSourceConst.SYSTEM)
 public class SecurityUserServiceImpl extends ServiceImpl<SecurityUserMapper, SecurityUserEntity> implements SecurityUserService, MpHelper<SecurityUserDto, SecurityUserEntity> {
+
+    @Resource(name = SettingConst.SYSTEM)
+    private Setting setting;
 
     @Lazy
     @Resource
@@ -185,6 +194,7 @@ public class SecurityUserServiceImpl extends ServiceImpl<SecurityUserMapper, Sec
         handleDtoBefore(dto);
 
         SecurityUserEntity entity = BeanUtil.convert(dto, SecurityUserEntity.class);
+
         // 保存用户
         String currentUsername = SecurityUtil.getCurrentUsername();
         Date now = DateUtil.date();
@@ -193,14 +203,15 @@ public class SecurityUserServiceImpl extends ServiceImpl<SecurityUserMapper, Sec
         entity.setCreateTime(now);
         entity.setUpdateBy(currentUsername);
         entity.setUpdateTime(now);
-        save(entity);
-        Long id = entity.getId();
+        if (save(entity)) {
+            Long id = entity.getId();
 
-        // 保存角色用户关联
-        saveOrUpdateRoleUser(id, dto.getRoleIdSet());
+            // 保存角色用户关联
+            saveOrUpdateRoleUser(id, dto.getRoleIdSet(), false);
 
-        // 保存用户岗位关联
-        saveOrUpdateUserPost(id, dto.getPostIdSet());
+            // 保存用户岗位关联
+            saveOrUpdateUserPost(id, dto.getPostIdSet(), false);
+        }
     }
 
     @Override
@@ -216,39 +227,40 @@ public class SecurityUserServiceImpl extends ServiceImpl<SecurityUserMapper, Sec
         String oldUsername = getOne(queryWrapper).getUsername();
 
         SecurityUserEntity entity = BeanUtil.convert(dto, SecurityUserEntity.class);
+
         // 更新用户，note：这里不能使用字段自动填充，否则“deptId”会被覆盖！
         entity.setUpdateBy(SecurityUtil.getCurrentUsername());
         entity.setUpdateTime(DateUtil.date());
-        updateById(entity);
+        if (updateById(entity)) {
+            // 更新角色用户关联
+            saveOrUpdateRoleUser(id, dto.getRoleIdSet(), true);
 
-        // 更新角色用户关联
-        saveOrUpdateRoleUser(id, dto.getRoleIdSet());
+            // 更新用户岗位关联
+            saveOrUpdateUserPost(id, dto.getPostIdSet(), true);
 
-        // 更新用户岗位关联
-        saveOrUpdateUserPost(id, dto.getPostIdSet());
-
-        if (!oldUsername.equals(entity.getUsername())) {
-            // 如果修改了用户名，则让还在线的该用户自动退出
-            securityService.logout(id);
+            if (!oldUsername.equals(entity.getUsername())) {
+                // 如果修改了用户名，则让还在线的该用户自动退出
+                securityService.logout(id);
+            }
         }
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void delete(Long[] ids) {
-        // 删除用户
         Set<Long> idSet = Arrays.stream(ids).collect(Collectors.toSet());
-        removeByIds(idSet);
 
-        // 删除角色用户关联
-        LambdaQueryWrapper<SecurityRoleUserEntity> roleUserQueryWrapper = Wrappers.lambdaQuery();
-        roleUserQueryWrapper.in(SecurityRoleUserEntity::getUserId, idSet);
-        securityRoleUserMapper.delete(roleUserQueryWrapper);
+        if (removeByIds(idSet)) {
+            // 删除角色用户关联
+            LambdaQueryWrapper<SecurityRoleUserEntity> roleUserQueryWrapper = Wrappers.lambdaQuery();
+            roleUserQueryWrapper.in(SecurityRoleUserEntity::getUserId, idSet);
+            securityRoleUserMapper.delete(roleUserQueryWrapper);
 
-        // 删除用户岗位关联
-        LambdaQueryWrapper<SecurityUserPostEntity> userPostQueryWrapper = Wrappers.lambdaQuery();
-        userPostQueryWrapper.in(SecurityUserPostEntity::getUserId, idSet);
-        securityUserPostMapper.delete(userPostQueryWrapper);
+            // 删除用户岗位关联
+            LambdaQueryWrapper<SecurityUserPostEntity> userPostQueryWrapper = Wrappers.lambdaQuery();
+            userPostQueryWrapper.in(SecurityUserPostEntity::getUserId, idSet);
+            securityUserPostMapper.delete(userPostQueryWrapper);
+        }
     }
 
     @Override
@@ -267,17 +279,56 @@ public class SecurityUserServiceImpl extends ServiceImpl<SecurityUserMapper, Sec
         return getOne(queryWrapper);
     }
 
+    @Override
+    public void updatePasswordAndLogout(PasswordDto dto) {
+        LoginUser loginUser = SecurityUtil.getLoginUser();
+
+        if (updatePassword(dto, loginUser)) {
+            // 用户退出
+            securityService.logout(loginUser.getId());
+        }
+    }
+
+    @Override
+    public String reset(Long[] ids) {
+        LoginUser loginUser = SecurityUtil.getLoginUser();
+        if (UserTypeEnum.SUPER_ADMIN.getValue() != loginUser.getUserType()) {
+            // 只有超级管理员可以重置密码
+            throw ValidationException.of(ErrorCode.PASSWORD_RESET_ERROR);
+        }
+
+        // 重置密码
+        String passwordReset = setting.getByGroupWithLog("password-reset", "Security");
+        if (StrUtil.isBlank(passwordReset)) {
+            // 没有配置则默认为：123456
+            passwordReset = "123456";
+        }
+
+        LambdaUpdateWrapper<SecurityUserEntity> updateWrapper = addUserSetField(SecurityUtil.encode(passwordReset), "superAdmin");
+        updateWrapper.in(SecurityUserEntity::getId, ids);
+        if (update(updateWrapper)) {
+            // 被重置密码且还在线的用户自动退出
+            Arrays.stream(ids).forEach(securityService::logout);
+
+            return passwordReset;
+        }
+        return null;
+    }
+
     /**
      * 保存或修改角色用户关联
      *
      * @param id        ID
      * @param roleIdSet 角色ID集合
+     * @param isUpdate  是否为更新，true：是 false：不是
      */
-    private void saveOrUpdateRoleUser(Long id, Set<Long> roleIdSet) {
-        // 删除原来的角色用户关联
-        LambdaQueryWrapper<SecurityRoleUserEntity> queryWrapper = Wrappers.lambdaQuery();
-        queryWrapper.eq(SecurityRoleUserEntity::getUserId, id);
-        securityRoleUserMapper.delete(queryWrapper);
+    private void saveOrUpdateRoleUser(Long id, Set<Long> roleIdSet, boolean isUpdate) {
+        if (isUpdate) {
+            // 是更新则删除原来的角色用户关联
+            LambdaQueryWrapper<SecurityRoleUserEntity> queryWrapper = Wrappers.lambdaQuery();
+            queryWrapper.eq(SecurityRoleUserEntity::getUserId, id);
+            securityRoleUserMapper.delete(queryWrapper);
+        }
 
         if (roleIdSet.size() > 0) {
             // 保存新的角色用户关联，note：这里数据量不会很大，直接循环插入就好
@@ -295,12 +346,15 @@ public class SecurityUserServiceImpl extends ServiceImpl<SecurityUserMapper, Sec
      *
      * @param id        ID
      * @param postIdSet 岗位ID集合
+     * @param isUpdate  是否为更新，true：是 false：不是
      */
-    private void saveOrUpdateUserPost(Long id, Set<Long> postIdSet) {
-        // 删除原来的用户岗位关联
-        LambdaQueryWrapper<SecurityUserPostEntity> queryWrapper = Wrappers.lambdaQuery();
-        queryWrapper.eq(SecurityUserPostEntity::getUserId, id);
-        securityUserPostMapper.delete(queryWrapper);
+    private void saveOrUpdateUserPost(Long id, Set<Long> postIdSet, boolean isUpdate) {
+        if (isUpdate) {
+            // 是更新则删除原来的用户岗位关联
+            LambdaQueryWrapper<SecurityUserPostEntity> queryWrapper = Wrappers.lambdaQuery();
+            queryWrapper.eq(SecurityUserPostEntity::getUserId, id);
+            securityUserPostMapper.delete(queryWrapper);
+        }
 
         if (postIdSet.size() > 0) {
             // 保存新的用户岗位关联，note：这里数据量不会很大，直接循环插入就好
@@ -311,6 +365,48 @@ public class SecurityUserServiceImpl extends ServiceImpl<SecurityUserMapper, Sec
                 securityUserPostMapper.insert(entity);
             });
         }
+    }
+
+    /**
+     * 修改密码
+     *
+     * @param dto       密码Dto
+     * @param loginUser 登录用户信息
+     * @return 是否修改成功，true：成功 false：失败
+     */
+    private boolean updatePassword(PasswordDto dto, LoginUser loginUser) {
+        if (!SecurityUtil.matches(dto.getOldPassword(), loginUser.getPassword())) {
+            // 原密码不正确
+            throw ValidationException.of(ErrorCode.PASSWORD_ERROR);
+        }
+
+        String newPassword = dto.getNewPassword();
+        if (!newPassword.equals(dto.getConfirmPassword())) {
+            // 密码和确认密码不一致
+            throw ValidationException.of(ErrorCode.PASSWORD_CONFIRM_ERROR);
+        }
+
+        LambdaUpdateWrapper<SecurityUserEntity> updateWrapper = addUserSetField(
+                SecurityUtil.encode(newPassword), loginUser.getUsername());
+        updateWrapper.eq(SecurityUserEntity::getId, loginUser.getId());
+        return update(updateWrapper);
+    }
+
+    /**
+     * 获取 {@link LambdaUpdateWrapper}（修改密码时用户的set字段）
+     *
+     * @param newPassword 新密码（密文）
+     * @param username    用户名
+     * @return {@link LambdaUpdateWrapper}
+     */
+    private LambdaUpdateWrapper<SecurityUserEntity> addUserSetField(String newPassword, String username) {
+        // note：通过 update(LambdaUpdateWrapper) 更新时基础字段自动填充不会生效
+        LambdaUpdateWrapper<SecurityUserEntity> updateWrapper = Wrappers.lambdaUpdate();
+        updateWrapper.set(SecurityUserEntity::getPassword, newPassword);
+        updateWrapper.set(SecurityUserEntity::getUpdateBy, username);
+        updateWrapper.set(SecurityUserEntity::getUpdateTime, DateUtil.date());
+
+        return updateWrapper;
     }
 
 }

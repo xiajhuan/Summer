@@ -35,10 +35,13 @@ import me.xiajhuan.summer.core.utils.TreeUtil;
 import me.xiajhuan.summer.system.security.dto.SecurityDeptDto;
 import me.xiajhuan.summer.system.security.dto.SecurityUserDto;
 import me.xiajhuan.summer.system.security.entity.SecurityDeptEntity;
+import me.xiajhuan.summer.system.security.entity.SecurityRoleDeptEntity;
 import me.xiajhuan.summer.system.security.mapper.SecurityDeptMapper;
+import me.xiajhuan.summer.system.security.mapper.SecurityRoleDeptMapper;
 import me.xiajhuan.summer.system.security.service.SecurityDeptService;
 import me.xiajhuan.summer.system.security.service.SecurityUserService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import static me.xiajhuan.summer.system.security.cache.SecurityCacheKey.dept;
 
@@ -59,13 +62,16 @@ public class SecurityDeptServiceImpl extends ServiceImpl<SecurityDeptMapper, Sec
     @Resource
     private SecurityUserService securityUserService;
 
+    @Resource
+    private SecurityRoleDeptMapper securityRoleDeptMapper;
+
     @Override
-    public List<SecurityDeptDto> treeList() {
+    public List<SecurityDeptDto> treeList(boolean needAll) {
         Set<Long> idSet = null;
         LoginUser loginUser = SecurityUtil.getLoginUser();
-        // 这里不细分数据权限，非超级管理员，一律只能查询本部门及本部门下子部门的数据
+        // 非超级管理员，一律只能查询本部门及本部门下子部门
         boolean isGeneral = false;
-        if (UserTypeEnum.GENERAL.getValue() == loginUser.getUserType()) {
+        if (!needAll && UserTypeEnum.GENERAL.getValue() == loginUser.getUserType()) {
             isGeneral = true;
             idSet = loginUser.getDeptAndChildIdSet();
         }
@@ -116,6 +122,7 @@ public class SecurityDeptServiceImpl extends ServiceImpl<SecurityDeptMapper, Sec
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void delete(Long id) {
         // 判断是否存在子部门或用户
         if (getChildIdSet(id).size() > 0
@@ -126,6 +133,11 @@ public class SecurityDeptServiceImpl extends ServiceImpl<SecurityDeptMapper, Sec
         if (removeById(id)) {
             // 删除缓存
             CacheServerFactory.getCacheServer().delete(dept(id), CacheConst.Value.HASH);
+
+            // 删除角色部门关联
+            LambdaQueryWrapper<SecurityRoleDeptEntity> queryWrapper = Wrappers.lambdaQuery();
+            queryWrapper.eq(SecurityRoleDeptEntity::getDeptId, id);
+            securityRoleDeptMapper.delete(queryWrapper);
         }
     }
 

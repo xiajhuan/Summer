@@ -21,6 +21,7 @@ import me.xiajhuan.summer.core.validation.group.UpdateGroup;
 import me.xiajhuan.summer.system.common.annotation.LogOperation;
 import me.xiajhuan.summer.system.security.dto.SecurityDeptDto;
 import me.xiajhuan.summer.system.security.service.SecurityDeptService;
+import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -52,7 +53,7 @@ public class SecurityDeptController {
     @RequiresPermissions("security:dept:list")
     @LogOperation(OperationConst.LIST)
     public Result<List<SecurityDeptDto>> list() {
-        return Result.ofSuccess(mainService.treeList());
+        return Result.ofSuccess(mainService.treeList(false));
     }
 
     /**
@@ -113,6 +114,21 @@ public class SecurityDeptController {
         AssertUtil.isNotNull("id", id);
         mainService.delete(id);
         return Result.ofSuccess();
+    }
+
+    //*******************Other Operation********************
+
+    /**
+     * 全部<br>
+     * note：该接口用于新增/修改角色时带出部门树
+     *
+     * @return 响应结果
+     */
+    @GetMapping("all")
+    @RequiresPermissions(value = {"security:role:add", "security:role:update"}, logical = Logical.OR)
+    @LogOperation("全部")
+    public Result<List<SecurityDeptDto>> all() {
+        return Result.ofSuccess(mainService.treeList(true));
     }
 
 }

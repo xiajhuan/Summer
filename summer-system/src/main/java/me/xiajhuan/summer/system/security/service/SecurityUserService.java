@@ -14,6 +14,7 @@ package me.xiajhuan.summer.system.security.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import me.xiajhuan.summer.system.security.dto.PasswordDto;
 import me.xiajhuan.summer.system.security.dto.SecurityUserDto;
 import me.xiajhuan.summer.system.security.entity.SecurityUserEntity;
 
@@ -54,5 +55,20 @@ public interface SecurityUserService extends IService<SecurityUserEntity> {
      * @return 用户Entity
      */
     SecurityUserEntity getByUsername(String username);
+
+    /**
+     * 修改密码并退出
+     *
+     * @param dto 密码Dto
+     */
+    void updatePasswordAndLogout(PasswordDto dto);
+
+    /**
+     * 重置密码
+     *
+     * @param ids ID数组
+     * @return 重置的密码或 {@code null}
+     */
+    String reset(Long[] ids);
 
 }

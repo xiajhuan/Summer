@@ -129,14 +129,14 @@ public class SecurityPostServiceImpl extends ServiceImpl<SecurityPostMapper, Sec
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void delete(Long[] ids) {
-        // 删除岗位
         Set<Long> idSet = Arrays.stream(ids).collect(Collectors.toSet());
-        removeByIds(idSet);
 
-        // 删除用户岗位关联
-        LambdaQueryWrapper<SecurityUserPostEntity> queryWrapper = Wrappers.lambdaQuery();
-        queryWrapper.in(SecurityUserPostEntity::getPostId, idSet);
-        securityUserPostMapper.delete(queryWrapper);
+        if (removeByIds(idSet)) {
+            // 删除用户岗位关联
+            LambdaQueryWrapper<SecurityUserPostEntity> queryWrapper = Wrappers.lambdaQuery();
+            queryWrapper.in(SecurityUserPostEntity::getPostId, idSet);
+            securityUserPostMapper.delete(queryWrapper);
+        }
     }
 
 }

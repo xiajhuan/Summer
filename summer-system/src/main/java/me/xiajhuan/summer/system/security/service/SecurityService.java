@@ -13,10 +13,10 @@
 package me.xiajhuan.summer.system.security.service;
 
 import me.xiajhuan.summer.core.data.LoginUser;
-import me.xiajhuan.summer.system.security.dto.PasswordDto;
+import me.xiajhuan.summer.system.security.dto.LoginDto;
 import me.xiajhuan.summer.system.security.dto.TokenDto;
-import me.xiajhuan.summer.system.security.entity.SecurityUserEntity;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -46,37 +46,31 @@ public interface SecurityService {
      */
     boolean validateCaptcha(String uuid, String captcha);
 
-    //*******************权限相关********************
+    //*******************登录/退出********************
 
     /**
-     * 生成Token并缓存
+     * 用户登录
      *
-     * @param dto 用户Entity
-     * @return Token
+     * @param loginDto 登录Dto
+     * @param request  {@link HttpServletRequest}
+     * @return TokenDto
      */
-    TokenDto generateTokenAndCache(SecurityUserEntity dto);
+    TokenDto login(LoginDto loginDto, HttpServletRequest request);
 
     /**
-     * 修改密码
+     * 用户退出并记录日志
      *
-     * @param dto       密码Dto
      * @param loginUser 登录用户信息
+     * @param request   {@link HttpServletRequest}
      */
-    void updatePassword(PasswordDto dto, LoginUser loginUser);
-
-    /**
-     * 重置密码
-     *
-     * @param ids ID数组
-     * @return 重置的密码
-     */
-    String resetPassword(Long[] ids);
+    void logoutAndLog(LoginUser loginUser, HttpServletRequest request);
 
     /**
      * 用户退出
      *
      * @param userId 用户ID
+     * @return 是否退出成功，true：成功 false：失败
      */
-    void logout(Long userId);
+    boolean logout(Long userId);
 
 }

@@ -22,6 +22,7 @@ import me.xiajhuan.summer.core.constant.DataSourceConst;
 import me.xiajhuan.summer.core.constant.SettingConst;
 import me.xiajhuan.summer.core.mp.helper.MpHelper;
 import me.xiajhuan.summer.core.utils.BeanUtil;
+import me.xiajhuan.summer.core.utils.ServletUtil;
 import me.xiajhuan.summer.system.log.dto.LogLoginDto;
 import me.xiajhuan.summer.system.log.entity.LogLoginEntity;
 import me.xiajhuan.summer.system.log.mapper.LogLoginMapper;
@@ -29,6 +30,7 @@ import me.xiajhuan.summer.system.log.service.LogLoginService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 
@@ -95,7 +97,15 @@ public class LogLoginServiceImpl extends ServiceImpl<LogLoginMapper, LogLoginEnt
     }
 
     @Override
-    public void saveAsync(LogLoginEntity entity) {
+    public void saveAsync(String loginUser, int loginOperation, int loginStatus, HttpServletRequest request) {
+        // 构建登录日志
+        LogLoginEntity entity = LogLoginEntity.builder()
+                .loginUser(loginUser)
+                .operation(loginOperation)
+                .status(loginStatus)
+                .userAgent(ServletUtil.getUserAgent(request))
+                .ip(ServletUtil.getClientIP(request)).build();
+
         save(entity);
     }
 
