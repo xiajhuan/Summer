@@ -17,7 +17,7 @@ me.xiajhuan.summer.core.converter
 me.xiajhuan.summer.core.data
 me.xiajhuan.summer.core.enums
 me.xiajhuan.summer.core.excel
-me.xiajhuan.summer.core.excel.subClass
+me.xiajhuan.summer.core.excel.parser.subClass
 me.xiajhuan.summer.core.exception.code
 me.xiajhuan.summer.core.exception.custom
 me.xiajhuan.summer.core.interceptor

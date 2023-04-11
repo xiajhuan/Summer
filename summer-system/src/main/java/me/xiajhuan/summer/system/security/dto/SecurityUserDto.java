@@ -13,15 +13,22 @@
 package me.xiajhuan.summer.system.security.dto;
 
 import cn.hutool.core.collection.CollUtil;
+import com.alibaba.excel.annotation.ExcelProperty;
+import com.alibaba.excel.annotation.format.DateTimeFormat;
+import com.alibaba.excel.annotation.write.style.ColumnWidth;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import me.xiajhuan.summer.core.base.dto.ExcelDto;
+import me.xiajhuan.summer.core.constant.DateFormatConst;
 import me.xiajhuan.summer.core.enums.StatusEnum;
+import me.xiajhuan.summer.core.excel.converter.StatusConverter;
 import me.xiajhuan.summer.system.security.enums.GenderEnum;
 import me.xiajhuan.summer.core.constant.DataScopeConst;
 import me.xiajhuan.summer.core.validation.annotation.Mobile;
 import me.xiajhuan.summer.core.validation.group.AddGroup;
 import me.xiajhuan.summer.core.validation.group.UpdateGroup;
+import me.xiajhuan.summer.system.security.excel.converter.DataScopeConverter;
+import me.xiajhuan.summer.system.security.excel.converter.GenderConverter;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.*;
@@ -45,6 +52,7 @@ public class SecurityUserDto extends ExcelDto {
      * 用户名
      */
     @NotBlank(message = "{security.user.username.require}", groups = {AddGroup.class, UpdateGroup.class})
+    @ExcelProperty(value = "用户名", index = 0)
     private String username;
 
     /**
@@ -65,11 +73,14 @@ public class SecurityUserDto extends ExcelDto {
      * 真实姓名
      */
     @NotBlank(message = "{security.user.realName.require}", groups = {AddGroup.class, UpdateGroup.class})
+    @ExcelProperty(value = "真实姓名", index = 1)
     private String realName;
 
     /**
      * 头像URL
      */
+    @ColumnWidth(40)
+    @ExcelProperty(value = "头像URL", index = 2)
     private String headUrl;
 
     /**
@@ -79,6 +90,7 @@ public class SecurityUserDto extends ExcelDto {
      */
     @Range(min = 0, max = 2, message = "{security.user.gender.range}", groups = {AddGroup.class, UpdateGroup.class})
     @NotNull(message = "{security.user.gender.require}", groups = {AddGroup.class, UpdateGroup.class})
+    @ExcelProperty(value = "性别", index = 3, converter = GenderConverter.class)
     private Integer gender;
 
     /**
@@ -86,6 +98,7 @@ public class SecurityUserDto extends ExcelDto {
      */
 //    @NotBlank(message = "{security.user.email.require}", groups = {AddGroup.class, UpdateGroup.class})
     @Email(message = "{security.user.email.error}", groups = {AddGroup.class, UpdateGroup.class})
+    @ExcelProperty(value = "邮箱", index = 4)
     private String email;
 
     /**
@@ -93,6 +106,7 @@ public class SecurityUserDto extends ExcelDto {
      */
 //    @NotBlank(message = "{security.user.mobile.require}", groups = {AddGroup.class, UpdateGroup.class})
     @Mobile(groups = {AddGroup.class, UpdateGroup.class})
+    @ExcelProperty(value = "手机号", index = 5)
     private String mobile;
 
     /**
@@ -108,6 +122,7 @@ public class SecurityUserDto extends ExcelDto {
      */
     @Range(min = 0, max = 1, message = "{status.range}", groups = {AddGroup.class, UpdateGroup.class})
     @NotNull(message = "{status.require}", groups = {AddGroup.class, UpdateGroup.class})
+    @ExcelProperty(value = "状态", index = 6, converter = StatusConverter.class)
     private Integer status;
 
     /**
@@ -117,16 +132,20 @@ public class SecurityUserDto extends ExcelDto {
      */
     @Range(min = 0, max = 4, message = "{security.user.dataScope.range}", groups = {AddGroup.class, UpdateGroup.class})
     @NotNull(message = "{security.user.dataScope.require}", groups = {AddGroup.class, UpdateGroup.class})
+    @ExcelProperty(value = "数据权限", index = 7, converter = DataScopeConverter.class)
     private Integer dataScope;
 
     /**
      * 创建时间
      */
+    @DateTimeFormat(DateFormatConst.DATE_TIME)
+    @ExcelProperty(value = "创建时间", index = 8)
     private Date createTime;
 
     /**
      * 本部门名称
      */
+    @ExcelProperty(value = "本部门名称", index = 9)
     private String deptName;
 
     /**

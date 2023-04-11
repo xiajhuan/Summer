@@ -108,8 +108,8 @@ public class LogOperationDto extends ExcelDto {
     /**
      * 创建时间
      */
-    @ExcelProperty(value = "创建时间", index = 10)
     @DateTimeFormat(DateFormatConst.DATE_TIME)
+    @ExcelProperty(value = "创建时间", index = 10)
     private Date createTime;
 
     //*******************查询参数********************

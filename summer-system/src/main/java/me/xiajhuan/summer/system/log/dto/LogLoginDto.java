@@ -75,8 +75,8 @@ public class LogLoginDto extends ExcelDto {
     /**
      * 创建时间
      */
-    @ExcelProperty(value = "创建时间", index = 5)
     @DateTimeFormat(DateFormatConst.DATE_TIME)
+    @ExcelProperty(value = "创建时间", index = 5)
     private Date createTime;
 
     //*******************查询参数********************

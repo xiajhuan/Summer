@@ -29,6 +29,6 @@ import lombok.EqualsAndHashCode;
 @ContentRowHeight(20)
 @HeadRowHeight(20)
 @HeadStyle(fillForegroundColor = 44)
-@ColumnWidth(25)
+@ColumnWidth(20)
 public abstract class ExcelDto extends PageSortDto {
 }
