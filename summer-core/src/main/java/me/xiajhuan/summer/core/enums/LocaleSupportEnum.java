@@ -30,12 +30,12 @@ public enum LocaleSupportEnum {
     /**
      * zh_CN
      */
-    ZH_CN(Locale.CHINA, "zh_CN", "/^(\\+?0?86\\-?)?1[345789]\\d{9}$/"),
+    ZH_CN(Locale.CHINA, "zh_CN", "^1[345789]\\d{9}$"),
 
     /**
      * en_US
      */
-    EN_US(Locale.US, "en_US", "/^(\\+?1)?[2-9]\\d{2}[2-9](?!11)\\d{6}$/");
+    EN_US(Locale.US, "en_US", "^[2-9]\\d{2}[2-9](?!11)\\d{6}$");
 
     private Locale value;
 

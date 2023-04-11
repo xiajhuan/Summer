@@ -120,10 +120,12 @@ public class SecurityUserServiceImpl extends ServiceImpl<SecurityUserMapper, Sec
             dto.setPassword(null);
         }
 
-        // 用户名不能重复
-        String username = dto.getUsername();
-        if (baseMapper.exist(username) != null) {
-            throw ValidationException.of(ErrorCode.USER_EXISTS, username);
+        // 新增时用户名不能重复
+        if (dto.getId() == null) {
+            String username = dto.getUsername();
+            if (baseMapper.exist(username) != null) {
+                throw ValidationException.of(ErrorCode.USER_EXISTS, username);
+            }
         }
     }
 
