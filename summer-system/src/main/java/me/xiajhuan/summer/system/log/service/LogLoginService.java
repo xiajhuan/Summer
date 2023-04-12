@@ -45,7 +45,7 @@ public interface LogLoginService extends IService<LogLoginEntity> {
     long count(LogLoginDto dto);
 
     /**
-     * 异步保存日志
+     * 异步保存
      *
      * @param loginUser      登录用户名
      * @param loginOperation 登录操作 {@link LoginOperationEnum}
@@ -56,7 +56,7 @@ public interface LogLoginService extends IService<LogLoginEntity> {
     void saveAsync(String loginUser, int loginOperation, int loginStatus, HttpServletRequest request);
 
     /**
-     * 清理日志
+     * 清理
      */
     void clear();
 

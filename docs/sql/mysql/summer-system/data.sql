@@ -149,7 +149,7 @@ INSERT INTO `security_menu` VALUES (1645734043018043393, 'superAdmin', '2023-04-
 INSERT INTO `security_menu` VALUES (1645734305539530753, 'superAdmin', '2023-04-11 18:23:29', 'superAdmin', '2023-04-11 18:23:29', 1644152845405667330, '', 'security:user:excelExport', 1, NULL, '', 4);
 INSERT INTO `security_menu` VALUES (1645738549151768577, 'superAdmin', '2023-04-11 18:40:21', 'superAdmin', '2023-04-11 18:40:21', 0, '', '', 0, 0, 'icon-desktop', 3);
 INSERT INTO `security_menu` VALUES (1645740146187542529, 'superAdmin', '2023-04-11 18:46:42', 'superAdmin', '2023-04-11 18:46:42', 1645738549151768577, 'monitor/online', '', 0, 0, 'icon-team', 1);
-INSERT INTO `security_menu` VALUES (1645740925552140289, 'superAdmin', '2023-04-11 18:49:48', 'superAdmin', '2023-04-11 18:49:48', 1645740146187542529, '', 'monitor:online:list', 1, NULL, '', 0);
+INSERT INTO `security_menu` VALUES (1645740925552140289, 'superAdmin', '2023-04-11 18:49:48', 'superAdmin', '2023-04-11 18:49:48', 1645740146187542529, '', 'monitor:online:page', 1, NULL, '', 0);
 INSERT INTO `security_menu` VALUES (1645742458788356097, 'superAdmin', '2023-04-11 18:55:53', 'superAdmin', '2023-04-11 18:55:53', 1645738549151768577, 'monitor/system', 'monitor:system:info', 0, 0, 'icon-database', 0);
 
 -- ----------------------------

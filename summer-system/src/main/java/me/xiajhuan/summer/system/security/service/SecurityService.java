@@ -68,9 +68,10 @@ public interface SecurityService {
     /**
      * 用户退出
      *
-     * @param userId 用户ID
+     * @param userId    用户ID
+     * @param delOnline 是否删除在线用户，true：是 false：否
      * @return 是否退出成功，true：成功 false：失败
      */
-    boolean logout(Long userId);
+    boolean logout(Long userId, boolean delOnline);
 
 }

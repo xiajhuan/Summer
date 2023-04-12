@@ -10,31 +10,37 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.system.monitor.dto;
+package me.xiajhuan.summer.system.monitor.entity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import me.xiajhuan.summer.core.base.dto.PageSortDto;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.*;
+import me.xiajhuan.summer.core.base.entity.SimpleEntity;
 
 import java.util.Date;
 
 /**
- * 在线用户 Dto
+ * 在线用户 Entity
  *
  * @author xiajhuan
- * @date 2023/4/11
+ * @date 2023/4/12
  */
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class MonitorOnlineDto extends PageSortDto {
+@TableName("monitor_online")
+public class MonitorOnlineEntity extends SimpleEntity {
 
     /**
-     * 创建者（用户名）
+     * 创建者（用户名）<br>
+     * note：不使用字段自动填充
      */
     private String createBy;
 
     /**
-     * 创建时间
+     * 创建时间<br>
+     * note：不使用字段自动填充
      */
     private Date createTime;
 

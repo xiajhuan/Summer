@@ -290,4 +290,26 @@ CREATE TABLE `log_login`
   COLLATE = utf8mb4_general_ci COMMENT = '登录日志'
   ROW_FORMAT = Dynamic;
 
+-- ----------------------------
+-- Table structure for monitor_online
+-- ----------------------------
+DROP TABLE IF EXISTS `monitor_online`;
+CREATE TABLE `monitor_online`
+(
+    `id`          bigint(20)                                                   NOT NULL COMMENT '主键ID',
+    `create_by`   varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '创建者（用户名）',
+    `create_time` datetime(0)                                                  NULL DEFAULT NULL COMMENT '创建时间',
+    `user_id`     bigint(20)                                                   NULL DEFAULT NULL COMMENT '用户ID',
+    `real_name`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '真实姓名',
+    `dept_name`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '本部门名称',
+    `login_time`  datetime(0)                                                  NULL DEFAULT NULL COMMENT '登录时间',
+    `expire_time` datetime(0)                                                  NULL DEFAULT NULL COMMENT 'Token过期时间',
+    PRIMARY KEY (`id`) USING BTREE,
+    INDEX `idx_create_time` (`create_time`) USING BTREE,
+    INDEX `uk_user_id` (`user_id`) USING BTREE
+) ENGINE = InnoDB
+  CHARACTER SET = utf8mb4
+  COLLATE = utf8mb4_general_ci COMMENT = '在线用户'
+  ROW_FORMAT = Dynamic;
+
 SET FOREIGN_KEY_CHECKS = 1;

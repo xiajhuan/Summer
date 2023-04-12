@@ -13,8 +13,11 @@
 package me.xiajhuan.summer.core.exception.code;
 
 /**
- * system和business模块的错误编码，由5位数字组成，前2位为模块编码，后3位为业务编码<br>
- * 如：10004（10代表权限相关模块，004代表具体业务）
+ * 错误编码
+ * <p>
+ * 编码定义规则：由5位数字组成，前2位为模块编码，后3位为业务编码，
+ * 例如：10004（10代表权限相关模块，004代表具体业务）
+ * </p>
  *
  * @author xiajhuan
  * @date 2022/11/19
@@ -136,6 +139,11 @@ public interface ErrorCode {
      * 只有超级管理员可以重置密码
      */
     int PASSWORD_RESET_ERROR = 10003;
+
+    /**
+     * 只有超级管理员可以踢出用户
+     */
+    int KICK_OUT_ERROR = 10069;
 
     /**
      * 账号或密码错误

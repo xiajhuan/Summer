@@ -38,6 +38,7 @@ import me.xiajhuan.summer.core.utils.SecurityUtil;
 import static me.xiajhuan.summer.system.security.cache.SecurityCacheKey.*;
 
 import me.xiajhuan.summer.system.log.service.LogLoginService;
+import me.xiajhuan.summer.system.monitor.service.MonitorOnlineService;
 import me.xiajhuan.summer.system.security.dto.LoginDto;
 import me.xiajhuan.summer.system.security.dto.TokenDto;
 import me.xiajhuan.summer.system.security.entity.SecurityUserEntity;
@@ -80,6 +81,9 @@ public class SecurityServiceImpl implements SecurityService {
 
     @Resource
     private LogLoginService logLoginService;
+
+    @Resource
+    private MonitorOnlineService monitorOnlineService;
 
     @Resource
     private SecurityRoleDeptMapper securityRoleDeptMapper;
@@ -159,17 +163,25 @@ public class SecurityServiceImpl implements SecurityService {
         }
 
         // 登录成功
+        // 记录日志
         logLoginService.saveAsync(entity.getUsername(), LoginOperationEnum.LOGIN.getValue(),
                 LoginStatusEnum.SUCCESS.getValue(), request);
 
         // 生成Token并缓存
-        return generateTokenAndCache(entity);
+        TokenDto dto = generateTokenAndCache(entity);
+
+        if (isGeneralUser(entity.getUserType())) {
+            // 记录在线用户
+            monitorOnlineService.saveOrUpdateAsync(entity, dto.getExpireTime());
+        }
+
+        return dto;
     }
 
     @Override
     public void logoutAndLog(LoginUser loginUser, HttpServletRequest request) {
         String loginUsername = loginUser.getUsername();
-        if (logout(loginUser.getId())) {
+        if (logout(loginUser.getId(), true)) {
             // 用户退出成功
             logLoginService.saveAsync(loginUsername, LoginOperationEnum.LOGOUT.getValue(),
                     LoginStatusEnum.SUCCESS.getValue(), request);
@@ -181,9 +193,13 @@ public class SecurityServiceImpl implements SecurityService {
     }
 
     @Override
-    public boolean logout(Long userId) {
-        CacheServer cacheServer = CacheServerFactory.getCacheServer();
+    public boolean logout(Long userId, boolean delOnline) {
+        if (delOnline) {
+            // 删除在线用户
+            monitorOnlineService.delete(userId);
+        }
 
+        CacheServer cacheServer = CacheServerFactory.getCacheServer();
         String loginInfoKey = loginInfo(userId);
         if (cacheServer.hasHash(loginInfoKey)) {
             // 获取accessToken
@@ -281,7 +297,7 @@ public class SecurityServiceImpl implements SecurityService {
 
         TokenDto tokenDto = new TokenDto();
         tokenDto.setAccessToken(accessToken);
-        tokenDto.setExpireTime(tokenExpire);
+        tokenDto.setExpireTime(tokenExpire * 3600);
 
         return tokenDto;
     }
@@ -295,7 +311,7 @@ public class SecurityServiceImpl implements SecurityService {
     private LoginUser getLoginUser(SecurityUserEntity entity) {
         LoginUser loginUser = BeanUtil.convert(entity, LoginUser.class);
 
-        if (UserTypeEnum.GENERAL.getValue() == entity.getUserType()) {
+        if (isGeneralUser(entity.getUserType())) {
             // 部门ID集合（这里指用户所有角色关联的所有部门ID）
             loginUser.setDeptIdRoleBasedSet(securityRoleDeptMapper.getDeptIdRoleBasedSet(loginUser.getId()));
 
@@ -307,6 +323,16 @@ public class SecurityServiceImpl implements SecurityService {
         }
 
         return loginUser;
+    }
+
+    /**
+     * 是否是普通用户
+     *
+     * @param userType 用户类型 {@link UserTypeEnum}
+     * @return 是否是普通用户，true：是 false：不是
+     */
+    private boolean isGeneralUser(int userType) {
+        return UserTypeEnum.GENERAL.getValue() == userType ? true : false;
     }
 
 }

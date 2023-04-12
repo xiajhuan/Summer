@@ -4,8 +4,8 @@ me.xiajhuan.summer.admin.api.test
 me.xiajhuan.summer.core.base.controller
 me.xiajhuan.summer.core.base.dto
 me.xiajhuan.summer.core.base.entity
-me.xiajhuan.summer.core.boot.processor
-me.xiajhuan.summer.core.boot.runner
+me.xiajhuan.summer.admin.task.boot.processor
+me.xiajhuan.summer.admin.task.boot.runner
 me.xiajhuan.summer.core.cache.config
 me.xiajhuan.summer.core.cache.factory
 me.xiajhuan.summer.core.cache.key

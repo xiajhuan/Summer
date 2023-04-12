@@ -42,7 +42,7 @@ public interface LogOperationService extends IService<LogOperationEntity> {
     long count(LogOperationDto dto);
 
     /**
-     * 异步保存日志
+     * 异步保存
      *
      * @param entity 操作日志Entity
      */
@@ -50,7 +50,7 @@ public interface LogOperationService extends IService<LogOperationEntity> {
     void saveAsync(LogOperationEntity entity);
 
     /**
-     * 清理日志
+     * 清理
      */
     void clear();
 

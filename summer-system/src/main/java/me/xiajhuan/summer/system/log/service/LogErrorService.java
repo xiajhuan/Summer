@@ -45,7 +45,7 @@ public interface LogErrorService extends IService<LogErrorEntity> {
     long count(LogErrorDto dto);
 
     /**
-     * 异步保存日志
+     * 异步保存
      *
      * @param e       {@link Exception}
      * @param request {@link HttpServletRequest}
@@ -54,7 +54,7 @@ public interface LogErrorService extends IService<LogErrorEntity> {
     void saveAsync(Exception e, HttpServletRequest request);
 
     /**
-     * 清理日志
+     * 清理
      */
     void clear();
 

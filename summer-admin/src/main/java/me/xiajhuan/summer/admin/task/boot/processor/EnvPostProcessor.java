@@ -10,7 +10,7 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.core.boot.processor;
+package me.xiajhuan.summer.admin.task.boot.processor;
 
 import cn.hutool.core.util.ArrayUtil;
 import org.springframework.boot.SpringApplication;
@@ -43,7 +43,7 @@ public class EnvPostProcessor implements EnvironmentPostProcessor {
 
     /**
      * 加载环境配置yml文件<br>
-     * admin模块env下：summer-dev/pre/prod/test.yml
+     * env下：summer-dev/pre/prod/test.yml
      *
      * @param propertySources {@link MutablePropertySources}
      */

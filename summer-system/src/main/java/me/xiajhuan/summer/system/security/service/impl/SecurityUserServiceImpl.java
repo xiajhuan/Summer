@@ -31,6 +31,7 @@ import me.xiajhuan.summer.core.exception.custom.ValidationException;
 import me.xiajhuan.summer.core.mp.helper.MpHelper;
 import me.xiajhuan.summer.core.utils.BeanUtil;
 import me.xiajhuan.summer.core.utils.SecurityUtil;
+import me.xiajhuan.summer.system.monitor.service.MonitorOnlineService;
 import me.xiajhuan.summer.system.security.dto.PasswordDto;
 import me.xiajhuan.summer.system.security.dto.SecurityUserDto;
 import me.xiajhuan.summer.system.security.entity.SecurityRoleUserEntity;
@@ -71,6 +72,9 @@ public class SecurityUserServiceImpl extends ServiceImpl<SecurityUserMapper, Sec
     @Lazy
     @Resource
     private SecurityService securityService;
+
+    @Resource
+    private MonitorOnlineService monitorOnlineService;
 
     @Resource
     private SecurityRoleUserMapper securityRoleUserMapper;
@@ -240,7 +244,7 @@ public class SecurityUserServiceImpl extends ServiceImpl<SecurityUserMapper, Sec
 
             if (!oldUsername.equals(entity.getUsername())) {
                 // 如果修改了用户名，则让还在线的该用户自动退出
-                securityService.logout(id);
+                securityService.logout(id, true);
             }
         }
     }
@@ -260,6 +264,11 @@ public class SecurityUserServiceImpl extends ServiceImpl<SecurityUserMapper, Sec
             LambdaQueryWrapper<SecurityUserPostEntity> userPostQueryWrapper = Wrappers.lambdaQuery();
             userPostQueryWrapper.in(SecurityUserPostEntity::getUserId, idSet);
             securityUserPostMapper.delete(userPostQueryWrapper);
+
+            // 删除的用户如果还在线则自动退出
+            monitorOnlineService.deleteBatch(idSet);
+
+            idSet.forEach(id -> securityService.logout(id, false));
         }
     }
 
@@ -285,7 +294,7 @@ public class SecurityUserServiceImpl extends ServiceImpl<SecurityUserMapper, Sec
 
         if (updatePassword(dto, loginUser)) {
             // 用户退出
-            securityService.logout(loginUser.getId());
+            securityService.logout(loginUser.getId(), true);
         }
     }
 
@@ -308,7 +317,11 @@ public class SecurityUserServiceImpl extends ServiceImpl<SecurityUserMapper, Sec
         updateWrapper.in(SecurityUserEntity::getId, ids);
         if (update(updateWrapper)) {
             // 被重置密码且还在线的用户自动退出
-            Arrays.stream(ids).forEach(securityService::logout);
+            Set<Long> idSet = Arrays.stream(ids).collect(Collectors.toSet());
+
+            monitorOnlineService.deleteBatch(idSet);
+
+            idSet.forEach(id -> securityService.logout(id, false));
 
             return passwordReset;
         }
