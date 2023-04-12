@@ -1,11 +1,11 @@
 me.xiajhuan.summer
 me.xiajhuan.summer.admin.api.open
 me.xiajhuan.summer.admin.api.test
+me.xiajhuan.summer.admin.task.boot.processor
+me.xiajhuan.summer.admin.task.boot.runner
 me.xiajhuan.summer.core.base.controller
 me.xiajhuan.summer.core.base.dto
 me.xiajhuan.summer.core.base.entity
-me.xiajhuan.summer.admin.task.boot.processor
-me.xiajhuan.summer.admin.task.boot.runner
 me.xiajhuan.summer.core.cache.config
 me.xiajhuan.summer.core.cache.factory
 me.xiajhuan.summer.core.cache.key
@@ -60,7 +60,12 @@ me.xiajhuan.summer.system.log.excel.converter
 me.xiajhuan.summer.system.log.mapper
 me.xiajhuan.summer.system.log.service
 me.xiajhuan.summer.system.log.service.impl
+me.xiajhuan.summer.system.monitor.controller
 me.xiajhuan.summer.system.monitor.dto
+me.xiajhuan.summer.system.monitor.entity
+me.xiajhuan.summer.system.monitor.mapper
+me.xiajhuan.summer.system.monitor.service
+me.xiajhuan.summer.system.monitor.service.impl
 me.xiajhuan.summer.system.security.cache
 me.xiajhuan.summer.system.security.controller
 me.xiajhuan.summer.system.security.dto
