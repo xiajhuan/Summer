@@ -24,6 +24,12 @@ import java.lang.reflect.Method;
 public class StrategyFactory {
 
     /**
+     * 构造StrategyFactory（不允许实例化）
+     */
+    private StrategyFactory() {
+    }
+
+    /**
      * 获取限流Key策略实例
      *
      * @param keyStrategyClass 限流key策略Class

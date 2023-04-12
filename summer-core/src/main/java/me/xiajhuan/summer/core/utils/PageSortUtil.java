@@ -35,7 +35,7 @@ import java.util.Arrays;
 public class PageSortUtil {
 
     /**
-     * 构造PageSortUtil
+     * 构造PageSortUtil（不允许实例化）
      */
     private PageSortUtil() {
     }

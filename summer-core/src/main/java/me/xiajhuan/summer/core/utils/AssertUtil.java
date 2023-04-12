@@ -31,7 +31,7 @@ import java.util.Map;
 public class AssertUtil extends Assert {
 
     /**
-     * 构造AssertUtil
+     * 构造AssertUtil（不允许实例化）
      */
     private AssertUtil() {
     }

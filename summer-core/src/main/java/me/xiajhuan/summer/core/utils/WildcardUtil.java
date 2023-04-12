@@ -25,7 +25,7 @@ import java.util.Arrays;
 public class WildcardUtil {
 
     /**
-     * 构造WildcardUtil
+     * 构造WildcardUtil（不允许实例化）
      */
     private WildcardUtil() {
     }

@@ -26,7 +26,7 @@ import java.util.List;
 public class BeanUtil extends cn.hutool.core.bean.BeanUtil {
 
     /**
-     * 构造BeanUtil
+     * 构造BeanUtil（不允许实例化）
      */
     private BeanUtil() {
     }

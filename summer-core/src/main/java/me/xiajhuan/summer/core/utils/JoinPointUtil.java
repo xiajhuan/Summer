@@ -32,7 +32,7 @@ import java.util.stream.Stream;
 public class JoinPointUtil {
 
     /**
-     * 构造JoinPointUtil
+     * 构造JoinPointUtil（不允许实例化）
      */
     private JoinPointUtil() {
     }

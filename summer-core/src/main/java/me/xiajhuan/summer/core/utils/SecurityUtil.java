@@ -37,7 +37,7 @@ public class SecurityUtil extends SecurityUtils {
     private static final Log LOGGER = LogFactory.get();
 
     /**
-     * 构造SecurityUtil
+     * 构造SecurityUtil（不允许实例化）
      */
     private SecurityUtil() {
     }

@@ -29,24 +29,58 @@ import me.xiajhuan.summer.core.properties.ServerCacheProperties;
 public class CacheServerFactory {
 
     /**
+     * 缓存类型
+     */
+    private static String CACHE_TYPE;
+
+    /**
+     * 初始化 {@link CACHE_TYPE}
+     */
+    static {
+        CACHE_TYPE = SpringUtil.getBean("serverCacheProperties", ServerCacheProperties.class).getType();
+        if (StrUtil.isBlank(CACHE_TYPE)) {
+            // 没有配置则默认为：REDIS
+            CACHE_TYPE = CacheConst.Type.REDIS;
+        }
+    }
+
+    /**
+     * 构造CacheServerFactory（不允许实例化）
+     */
+    private CacheServerFactory() {
+    }
+
+    /**
      * 获取缓存服务
      *
      * @return 缓存服务
      */
     public static CacheServer getCacheServer() {
-        String cacheType = SpringUtil.getBean("serverCacheProperties", ServerCacheProperties.class).getType();
-        if (StrUtil.isBlank(cacheType)) {
-            // 没有配置则默认为：REDIS
-            cacheType = "REDIS";
-        }
-
-        if (cacheType.equalsIgnoreCase(CacheConst.Type.REDIS)) {
+        if (CACHE_TYPE.equalsIgnoreCase(CacheConst.Type.REDIS)) {
             return RedisCacheServer.getInstance();
-        } else if (cacheType.equalsIgnoreCase(CacheConst.Type.HEAP)) {
+        } else if (CACHE_TYPE.equalsIgnoreCase(CacheConst.Type.HEAP)) {
             return HeapCacheServer.getInstance();
         } else {
-            throw new IllegalArgumentException(StrUtil.format("不支持的缓存类型【{}】", cacheType));
+            throw new IllegalArgumentException(StrUtil.format("不支持的缓存类型【{}】", CACHE_TYPE));
         }
+    }
+
+    /**
+     * 获取Redis缓存服务，note：
+     * <pre>
+     *   1.当缓存类型为“REDIS”时，若有分级缓存需求，可以通过该方法获取Redis缓存服务
+     *   2.当没有分级缓存需求时，推荐使用 {@link CacheServerFactory#getCacheServer()}，
+     *     这将便于在缓存类型切换时保证代码通用
+     *   3.当缓存类型不为“REDIS”时将抛出 {@link UnsupportedOperationException}
+     * </pre>
+     *
+     * @return 缓存服务
+     */
+    public static CacheServer getRedisCacheServer() {
+        if (CACHE_TYPE.equalsIgnoreCase(CacheConst.Type.REDIS)) {
+            return RedisCacheServer.getInstance();
+        }
+        throw new UnsupportedOperationException("缓存类型必须为REDIS才能调用!");
     }
 
     /**

@@ -40,7 +40,7 @@ import java.util.List;
 public class ExcelUtil extends EasyExcelFactory {
 
     /**
-     * 构造ExcelUtil
+     * 构造ExcelUtil（不允许实例化）
      */
     private ExcelUtil() {
     }

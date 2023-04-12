@@ -39,7 +39,7 @@ import java.util.Arrays;
 public class ServletUtil extends cn.hutool.extra.servlet.ServletUtil {
 
     /**
-     * 构造ServletUtil
+     * 构造ServletUtil（不允许实例化）
      */
     private ServletUtil() {
     }

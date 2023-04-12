@@ -51,7 +51,7 @@ public class LocaleUtil {
     private static final Log LOGGER = LogFactory.get();
 
     /**
-     * 构造LocaleUtil
+     * 构造LocaleUtil（不允许实例化）
      */
     private LocaleUtil() {
     }

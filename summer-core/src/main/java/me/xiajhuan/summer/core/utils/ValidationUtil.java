@@ -36,7 +36,7 @@ import java.util.Set;
 public class ValidationUtil {
 
     /**
-     * 构造ValidationUtil
+     * 构造ValidationUtil（不允许实例化）
      */
     private ValidationUtil() {
     }
