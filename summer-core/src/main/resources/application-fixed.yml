@@ -73,3 +73,52 @@ mica:
     path-patterns: /**
     # 放行的路由
     path-exclude-patterns: /api/test/**
+
+# 应用监控
+management:
+  endpoints:
+    # 以web（Http接口）方式暴露所有端点
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    # CacheManagers
+    caches:
+      enabled: false
+    # Beans
+    beans:
+      enabled: true
+    # 健康
+    health:
+      enabled: true
+      show-details: ALWAYS
+    # 信息
+    info:
+      enabled: true
+    # Conditions
+    conditions:
+      enabled: true
+    # 配置
+    configprops:
+      enabled: true
+    # 环境
+    env:
+      enabled: true
+    # 日志
+    loggers:
+      enabled: true
+    # 堆转储
+    heapdump:
+      enabled: false
+    # 线程转储
+    threaddump:
+      enabled: false
+    # 指标
+    metrics:
+      enabled: true
+    # 定时任务
+    scheduledtasks:
+      enabled: true
+    # 请求映射
+    mappings:
+      enabled: true

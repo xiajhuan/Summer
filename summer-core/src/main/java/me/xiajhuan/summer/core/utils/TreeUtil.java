@@ -19,11 +19,8 @@ import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.extra.spring.SpringUtil;
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
-import cn.hutool.setting.Setting;
-import me.xiajhuan.summer.core.constant.SettingConst;
 import me.xiajhuan.summer.core.constant.TreeConst;
 
 import java.lang.reflect.InvocationTargetException;
@@ -65,11 +62,8 @@ public class TreeUtil extends cn.hutool.core.lang.tree.TreeUtil {
      * 初始化 {@link treeNodeConfig}
      */
     static {
-        int deep = SpringUtil.getBean(SettingConst.CORE, Setting.class)
-                .getInt("deep", "Tree", 5);
-        deep = Math.max(deep, 0);
-
-        treeNodeConfig = TreeNodeConfig.DEFAULT_CONFIG.setDeep(deep);
+        // 最大递归深度（从0开始计算）
+        treeNodeConfig = TreeNodeConfig.DEFAULT_CONFIG.setDeep(5);
     }
 
     /**

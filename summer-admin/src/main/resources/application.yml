@@ -12,13 +12,3 @@ spring:
       - custom
     # 环境 dev/test/pre/prod
     active: dev
-
-# 指标监控
-management:
-  endpoints:
-    web:
-      exposure:
-        include: '*'
-  endpoint:
-    health:
-      show-details: ALWAYS

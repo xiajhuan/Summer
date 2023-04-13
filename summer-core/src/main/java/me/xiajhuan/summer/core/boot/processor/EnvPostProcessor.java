@@ -10,7 +10,7 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.admin.task.boot.processor;
+package me.xiajhuan.summer.core.boot.processor;
 
 import cn.hutool.core.util.ArrayUtil;
 import org.springframework.boot.SpringApplication;

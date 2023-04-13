@@ -1,2 +1,0 @@
-org.springframework.boot.env.EnvironmentPostProcessor=\
-me.xiajhuan.summer.admin.task.boot.processor.EnvPostProcessor

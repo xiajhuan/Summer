@@ -10,44 +10,47 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.admin.task.boot.runner;
+package me.xiajhuan.summer.core.boot.runner;
 
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
-import me.xiajhuan.summer.core.constant.CacheConst;
-import me.xiajhuan.summer.core.properties.ServerCacheProperties;
-import me.xiajhuan.summer.system.monitor.service.MonitorOnlineService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 
 /**
- * ApplicationRunner（在线用户清理）
+ * ApplicationRunner（服务启动完毕）
  *
  * @author xiajhuan
- * @date 2023/4/12
+ * @date 2022/11/28
  * @see ApplicationRunner
  */
 @Component
-public class OnlineCleanRunner implements ApplicationRunner {
+@Order
+public class StartedUpRunner implements ApplicationRunner {
 
     private static final Log LOGGER = LogFactory.get();
 
-    @Resource
-    private ServerCacheProperties serverCacheProperties;
+    @Value("${spring.application.name}")
+    private String applicationName;
 
     @Resource
-    private MonitorOnlineService monitorOnlineService;
+    private ConfigurableApplicationContext context;
 
     @Override
     public void run(ApplicationArguments args) {
-        if (CacheConst.Type.HEAP.equalsIgnoreCase(serverCacheProperties.getType())) {
-            // 如果缓存类型为“HEAP”，则清理应用启动前遗留的在线用户
-            if (monitorOnlineService.remove(null)) {
-                LOGGER.info("清理遗留在线用户成功");
-            }
+        if (context.isActive()) {
+            LOGGER.info("  _   _   _   _   _   _   _   _");
+            LOGGER.info(" / \\ / \\ / \\ / \\ / \\ / \\ / \\ / \\");
+            LOGGER.info("( c | o | m | p | l | e | t | e )");
+            LOGGER.info(" \\_/ \\_/ \\_/ \\_/ \\_/ \\_/ \\_/ \\_/");
+            LOGGER.info("【{}】启动完毕，时间【{}】", applicationName, DateUtil.date());
         }
     }
 
