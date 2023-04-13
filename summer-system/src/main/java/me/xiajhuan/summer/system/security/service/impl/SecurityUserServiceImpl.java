@@ -390,7 +390,7 @@ public class SecurityUserServiceImpl extends ServiceImpl<SecurityUserMapper, Sec
     private boolean updatePassword(PasswordDto dto, LoginUser loginUser) {
         if (!SecurityUtil.matches(dto.getOldPassword(), loginUser.getPassword())) {
             // 原密码不正确
-            throw ValidationException.of(ErrorCode.PASSWORD_ERROR);
+            throw ValidationException.of(ErrorCode.OLD_PASSWORD_ERROR);
         }
 
         String newPassword = dto.getNewPassword();

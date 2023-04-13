@@ -124,10 +124,14 @@ public class SecurityDeptServiceImpl extends ServiceImpl<SecurityDeptMapper, Sec
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void delete(Long id) {
-        // 判断是否存在子部门或用户
-        if (getChildIdSet(id).size() > 0
-                || securityUserService.count(SecurityUserDto.builder().deptId(id).build()) > 0) {
+        // 判断是否存在子部门
+        if (getChildIdSet(id).size() > 0) {
             throw ValidationException.of(ErrorCode.DEPT_SUB_DELETE_ERROR);
+        }
+
+        // 判断部门下是否存在用户
+        if (securityUserService.count(SecurityUserDto.builder().deptId(id).build()) > 0) {
+            throw ValidationException.of(ErrorCode.DEPT_USER_DELETE_ERROR);
         }
 
         if (removeById(id)) {

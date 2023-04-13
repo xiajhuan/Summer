@@ -125,12 +125,19 @@ public class SecurityMenuServiceImpl extends ServiceImpl<SecurityMenuMapper, Sec
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void delete(Long id) {
+        // 判断是否存在子菜单或按钮
+        LambdaQueryWrapper<SecurityMenuEntity> queryWrapper = Wrappers.lambdaQuery();
+        queryWrapper.eq(SecurityMenuEntity::getParentId, id);
+        if (count(queryWrapper) > 0) {
+            throw ValidationException.of(ErrorCode.MENU_SUB_DELETE_ERROR);
+        }
+
         if (removeById(id)) {
             // 删除国际化名称
-            LambdaQueryWrapper<LocaleInternationalNameEntity> queryWrapper = Wrappers.lambdaQuery();
-            queryWrapper.eq(LocaleInternationalNameEntity::getLineId, id);
-            queryWrapper.eq(LocaleInternationalNameEntity::getLocale, LocaleUtil.getAcceptLanguage(ServletUtil.getHttpRequest()));
-            localeInternationalNameService.remove(queryWrapper);
+            LambdaQueryWrapper<LocaleInternationalNameEntity> internationalNameQueryWrapper = Wrappers.lambdaQuery();
+            internationalNameQueryWrapper.eq(LocaleInternationalNameEntity::getLineId, id);
+            internationalNameQueryWrapper.eq(LocaleInternationalNameEntity::getLocale, LocaleUtil.getAcceptLanguage(ServletUtil.getHttpRequest()));
+            localeInternationalNameService.remove(internationalNameQueryWrapper);
 
             // 删除角色菜单关联
             LambdaQueryWrapper<SecurityRoleMenuEntity> roleMenuQueryWrapper = Wrappers.lambdaQuery();

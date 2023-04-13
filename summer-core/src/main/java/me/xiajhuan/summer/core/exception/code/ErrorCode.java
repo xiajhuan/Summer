@@ -108,92 +108,87 @@ public interface ErrorCode {
      */
     int EXCEL_EXPORT_MAXIMUM_LIMIT = 1012;
 
-    //*******************system********************
+    /**
+     * 不能包含非法字符
+     */
+    int INVALID_SYMBOL = 1013;
 
     /**
      * {0}不能为空
      */
-    int NOT_NULL = 10001;
+    int NOT_NULL = 1014;
+
+    //*******************system********************
 
     /**
-     * 角色【{0}】已存在
+     * Token失效，请重新登录
      */
-    int ROLE_EXISTS = 10002;
-
-    /**
-     * 用户【{0}】已存在
-     */
-    int USER_EXISTS = 10073;
-
-    /**
-     * 岗位【{0}】已存在
-     */
-    int POST_EXISTS = 10088;
-
-    /**
-     * 国际化名称行ID【{0}】+地区语言【{1}】已存在
-     */
-    int INTERNATIONAL_NAME_EXISTS = 10077;
-
-    /**
-     * 只有超级管理员可以重置密码
-     */
-    int PASSWORD_RESET_ERROR = 10003;
-
-    /**
-     * 只有超级管理员可以踢出用户
-     */
-    int KICK_OUT_ERROR = 10069;
-
-    /**
-     * 账号或密码错误
-     */
-    int ACCOUNT_PASSWORD_ERROR = 10004;
+    int TOKEN_INVALID = 10000;
 
     /**
      * 验证码不能为空
      */
-    int CAPTCHA_NOT_NULL = 10006;
+    int CAPTCHA_NOT_NULL = 10001;
 
     /**
      * 验证码不正确
      */
-    int CAPTCHA_ERROR = 10007;
+    int CAPTCHA_ERROR = 10002;
 
     /**
-     * 先删除子菜单或按钮
+     * 账号或密码错误
      */
-    int SUB_MENU_EXIST = 10008;
+    int ACCOUNT_PASSWORD_ERROR = 10003;
+
+    /**
+     * 账号已停用
+     */
+    int ACCOUNT_DISABLE = 10004;
+
+    /**
+     * 角色【{0}】已存在
+     */
+    int ROLE_EXISTS = 10005;
+
+    /**
+     * 用户【{0}】已存在
+     */
+    int USER_EXISTS = 10006;
 
     /**
      * 原密码不正确
      */
-    int PASSWORD_ERROR = 10009;
+    int OLD_PASSWORD_ERROR = 10007;
 
     /**
      * 密码和确认密码不一致
      */
-    int PASSWORD_CONFIRM_ERROR = 10099;
+    int PASSWORD_CONFIRM_ERROR = 10008;
 
     /**
-     * 账号不存在
+     * 只有超级管理员可以重置密码
      */
-    int ACCOUNT_NOT_EXIST = 10010;
+    int PASSWORD_RESET_ERROR = 10009;
 
     /**
-     * 上级部门选择错误
+     * 岗位【{0}】已存在
      */
-    int SUPERIOR_DEPT_ERROR = 10011;
+    int POST_EXISTS = 10010;
 
     /**
      * 上级菜单不能为自身
      */
-    int SUPERIOR_MENU_ERROR = 10012;
+    int SUPERIOR_MENU_ERROR = 10011;
 
     /**
-     * 数据权限接口，只能是BaseDto类型参数
+     * 请先删除下级菜单或按钮
      */
-    int DATA_SCOPE_PARAMS_ERROR = 10013;
+    int MENU_SUB_DELETE_ERROR = 10012;
+
+    /**
+     * 上级部门选择错误
+     */
+    int SUPERIOR_DEPT_ERROR = 10013;
 
     /**
      * 请先删除下级部门
@@ -206,164 +201,14 @@ public interface ErrorCode {
     int DEPT_USER_DELETE_ERROR = 10015;
 
     /**
-     * 部署失败，没有流程
+     * 国际化名称行ID【{0}】+地区语言【{1}】已存在
      */
-    int ACT_DEPLOY_ERROR = 10016;
+    int INTERNATIONAL_NAME_EXISTS = 11000;
 
     /**
-     * 模型图不正确，请检查
+     * 只有超级管理员可以踢出用户
      */
-    int ACT_MODEL_IMG_ERROR = 10017;
-
-    /**
-     * 导出失败，模型ID为{0}
-     */
-    int ACT_MODEL_EXPORT_ERROR = 10018;
-
-    /**
-     * 请上传文件
-     */
-    int UPLOAD_FILE_EMPTY = 10019;
-
-    /**
-     * Token不能为空
-     */
-    int TOKEN_NOT_EMPTY = 10020;
-
-    /**
-     * Token失效，请重新登录
-     */
-    int TOKEN_INVALID = 10021;
-
-    /**
-     * 账号已停用
-     */
-    int ACCOUNT_DISABLE = 10022;
-
-    /**
-     * 请上传zip、bar、bpmn、bpmn20.xml格式文件
-     */
-    int ACT_DEPLOY_FORMAT_ERROR = 10023;
-
-    /**
-     * 上传文件失败{0}
-     */
-    int OSS_UPLOAD_FILE_ERROR = 10024;
-
-    /**
-     * 发送短信失败{0}
-     */
-    int SEND_SMS_ERROR = 10025;
-
-    /**
-     * 邮件模板不存在
-     */
-    int MAIL_TEMPLATE_NOT_EXISTS = 10026;
-
-    /**
-     * 定时任务失败
-     */
-    int JOB_ERROR = 10028;
-
-    /**
-     * 不能包含非法字符
-     */
-    int INVALID_SYMBOL = 10029;
-
-    /**
-     * 参数格式不正确，请使用JSON格式
-     */
-    int JSON_FORMAT_ERROR = 10030;
-
-    /**
-     * 请先完成短信配置
-     */
-    int SMS_CONFIG = 10031;
-
-    /**
-     * 账号已存在
-     */
-    int ACCOUNT_EXIST = 10200;
-
-    /**
-     * 任务已被签收，操作失败
-     */
-    int TASK_CLIME_FAIL = 10032;
-
-    /**
-     * 不存在的流程定义
-     */
-    int NONE_EXIST_PROCESS = 10033;
-
-    /**
-     * 上级节点不存在
-     */
-    int SUPERIOR_NOT_EXIST = 10034;
-
-    /**
-     * 驳回
-     */
-    int REJECT_MESSAGE = 10035;
-
-    /**
-     * 回退
-     */
-    int ROLLBACK_MESSAGE = 10036;
-
-    /**
-     * 任务没有分组，无法取消认领
-     */
-    int UNCLAIM_ERROR_MESSAGE = 10037;
-
-    /**
-     * 上级区域选择错误
-     */
-    int SUPERIOR_REGION_ERROR = 10038;
-
-    /**
-     * 请先删除下级区域
-     */
-    int REGION_SUB_DELETE_ERROR = 10039;
-
-    /**
-     * 流程已挂起，不能启动实例
-     */
-    int PROCESS_START_ERROR = 10040;
-
-    /**
-     * 多实例任务不能驳回
-     */
-    int REJECT_PROCESS_PARALLEL_ERROR = 10041;
-
-    /**
-     * 存在多个处理中的任务，不能驳回
-     */
-    int REJECT_PROCESS_HANDLEING_ERROR = 10042;
-
-    /**
-     * 多实例任务不能终止
-     */
-    int END_PROCESS_PARALLEL_ERROR = 10043;
-
-    /**
-     * 终止
-     */
-    int END_PROCESS_HANDLEING_ERROR = 10044;
-
-    /**
-     * 多实例任务不能回退
-     */
-    int END_PROCESS_MESSAGE = 10045;
-
-    /**
-     * 存在多个并行执行的任务，不能回退
-     */
-    int BACK_PROCESS_PARALLEL_ERROR = 10046;
-
-    /**
-     * 存在多个处理中的任务，不能终止流程
-     */
-    int BACK_PROCESS_HANDLEING_ERROR = 10047;
+    int KICK_OUT_ERROR = 12000;
 
     //*******************business********************
 
