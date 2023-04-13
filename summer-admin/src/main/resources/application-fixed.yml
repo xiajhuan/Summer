@@ -1,5 +1,9 @@
 # 相对固定的配置
 project:
+  # 项目描述
+  description: Summer权限管理系统
+  # 项目LICENSE
+  license: MulanPSL2
   # 项目版本
   version: "@project.version@"
 

@@ -14,13 +14,13 @@ package me.xiajhuan.summer.core.interceptor;
 
 import cn.hutool.core.io.file.FileNameUtil;
 import cn.hutool.core.io.file.FileReader;
+import cn.hutool.core.io.unit.DataSizeUtil;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.json.JSONUtil;
 import me.xiajhuan.summer.core.exception.code.ErrorCode;
 import me.xiajhuan.summer.core.exception.custom.ValidationException;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ResourceUtils;
-import org.springframework.util.unit.DataSize;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -45,11 +45,11 @@ public class FileUploadInterceptor implements HandlerInterceptor {
      * 文件上传限制，note：
      * <pre>
      *   1.配置位置：/custom/upload-limit.json
-     *   2.Key：支持的文件类型后缀名 Value：大小限制（MB）
+     *   2.Key：支持的文件类型后缀名 Value：大小限制
      *   3.Value不能超过 spring.servlet.multipart.max-file-size 中的配置
      * </pre>
      */
-    private Map<String, Integer> uploadLimit = MapUtil.newHashMap(true);
+    private Map<String, String> uploadLimit = MapUtil.newHashMap(true);
 
     /**
      * 初始化 {@link uploadLimit}
@@ -87,12 +87,12 @@ public class FileUploadInterceptor implements HandlerInterceptor {
         String fileSuffix = FileNameUtil.getSuffix(file.getOriginalFilename());
         // 文件大小（B）
         long fileSize = file.getSize();
-        for (Map.Entry<String, Integer> entry : uploadLimit.entrySet()) {
+        for (Map.Entry<String, String> entry : uploadLimit.entrySet()) {
             if (fileSuffix.equals(entry.getKey())) {
-                int sizeLimit = entry.getValue();
-                if (fileSize > DataSize.ofMegabytes(sizeLimit).toBytes()) {
+                String sizeLimit = entry.getValue();
+                if (fileSize > DataSizeUtil.parse(sizeLimit)) {
                     // 超过大小限制
-                    throw ValidationException.of(ErrorCode.FILE_TYPE_EXCEED, fileSuffix, sizeLimit + "MB");
+                    throw ValidationException.of(ErrorCode.FILE_TYPE_EXCEED, fileSuffix, sizeLimit);
                 } else {
                     supported = true;
                     break;
