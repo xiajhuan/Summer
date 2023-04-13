@@ -8,6 +8,17 @@ project:
   version: "@project.version@"
 
 server:
+  # 缓存类型，值：REDIS/HEAP
+  # note：HEAP（堆内缓存）在服务多节点部署时数据无法共享！
+  cache:
+    type: REDIS
+  # Tomcat
+  tomcat:
+    threads:
+      # 最大工作线程（并发）
+      max: 1000
+      # 最小工作线程
+      min-spare: 30
   # 最大请求头大小
   max-http-header-size: 10KB
   # Servlet
@@ -41,6 +52,30 @@ spring:
     exclude:
       - org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
       - org.springframework.boot.autoconfigure.data.redis.RedisRepositoriesAutoConfiguration
+  datasource:
+    # 多数据源
+    dynamic:
+      # Sql打印
+      p6spy: true
+      # 连接池配置
+      hikari:
+        # 配置项说明参考 com.zaxxer.hikari.HikariConfigMXBean
+        connection-timeout: 10000
+        validation-timeout: 3000
+        idle-timeout: 60000
+        max-lifetime: 180000
+        max-pool-size: 10
+        min-idle: 5
+  # Redis，只有server.cache.type: REDIS 时会生效
+  redis:
+    timeout: 6000
+    lettuce:
+      # 连接池配置
+      pool:
+        min-idle: 5
+        max-idle: 10
+        max-active: 1000
+        max-wait: -1
 
 # MybatisPlus
 mybatis-plus:
@@ -66,6 +101,14 @@ mybatis-plus:
     # 当没有为参数指定特定的 JDBC 类型时，空值的默认 JDBC 类型
     jdbc-type-for-null: NULL
 
+limit:
+  # 批量操作限制
+  batch:
+    # 每次批量插入数（JDBC批量提交）
+    real-save-num-every-time: 100
+    # Excel最大导出数
+    excel-max-export: 40000
+
 # XSS过滤
 mica:
   xss:
@@ -73,6 +116,15 @@ mica:
     path-patterns: /**
     # 放行的路由
     path-exclude-patterns: /api/test/**
+
+# 日志级别
+logging:
+  level:
+    org:
+      springframework:
+        context:
+          # 屏蔽“is not eligible”日志
+          support: warn
 
 # 应用监控
 management:

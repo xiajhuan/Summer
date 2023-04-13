@@ -33,7 +33,7 @@ public class SettingConfig {
      */
     @Bean(SettingConst.CORE)
     public Setting coreSetting() {
-        return new Setting("setting/core.setting");
+        return new Setting("core.setting");
     }
 
     /**
@@ -43,7 +43,7 @@ public class SettingConfig {
      */
     @Bean(SettingConst.SYSTEM)
     public Setting systemSetting() {
-        return new Setting("setting/system.setting");
+        return new Setting("system.setting");
     }
 
 }
