@@ -59,14 +59,14 @@ Summer
 │    └─resources 
 │         ├─mapper      系统模块Mapper.xml
 │ 
-├─summer-core      核心模块（专注于核心功能/工具的封装支持）
+├─summer-core      核心模块（专注于核心功能、工具集以及配置项的封装支持）
 │    └─core 
 │    │    ├─base        基类定义
 │    │    ├─boot        SpringBoot启动钩子
 │    │    ├─cache       缓存支持
 │    │    ├─config      基本配置
 │    │    ├─constant    常量定义
-│    │    ├─converter   转换器支持
+│    │    ├─converter   转换器定义
 │    │    ├─data        数据类定义
 │    │    ├─enums       枚举定义
 │    │    ├─excel       Excel支持
@@ -94,7 +94,7 @@ Summer
 - Shiro：1.11.0
 - CommonsPool2：2.11.1
 - Guava：31.1-jre
-- Hutool：5.8.16
+- Hutool：5.8.17
 - EasyExcel：3.2.1
 - MicaXss：2.7.10
 
@@ -104,8 +104,8 @@ Summer
 |  角色管理 | 自开发       |   ✅          |  角色相关接口，RBAC架构的核心   |
 |  用户管理 | 自开发       |   ✅          |  用户相关接口          |
 |  岗位管理 | 自开发       |   ✅         |  岗位相关接口        |
-|  菜单管理 | 自开发       |   ✅          |  菜单相关接口，树形结构展现，可随意调整上下级。               |
-|  部门管理 | 自开发    |   ✅          |  部门相关接口，树形结构展现，可随意调整上下级                                     |
+|  菜单管理 | 自开发       |   ✅          |  菜单相关接口，树形结构展现               |
+|  部门管理 | 自开发    |   ✅          |  部门相关接口，树形结构展现                                    |
 |  国际化名称管理 | 自开发    |   ✅          |  国际化名称相关接口                                     |
 |  操作日志管理 | 自开发    |   ✅          |  操作日志相关接口                                     |
 |  错误日志管理 | 自开发    |   ✅          |  错误日志相关接口                                     |
@@ -129,12 +129,12 @@ Summer
 - Maven3.0+
 - Mysql5.7+
 
-核心技术：Springboot、Hutool、MybatisPlus
+核心技术：Springboot2.x、Hutool5.x、MybatisPlus3.x
 - [SpringBoot文档](https://spring.io/projects/spring-boot#learn)
 - [Hutool文档](https://hutool.cn/docs/#/)
 - [MybatisPlus文档](https://baomidou.com/pages/24112f/) 
 
-推荐工具：ApiPost、PDManer
+推荐工具：ApiPost7.x、PDManer4.x
 - [ApiPost文档](https://v7-wiki.apipost.cn/)
 - [PDManer文档](https://www.yuque.com/pdmaner/docs/pdmaner-manual)
 
@@ -146,3 +146,16 @@ Summer
 
 ## 参与贡献
 本项目还处于孵化阶段，暂不接受PR,欢迎各类Feature Issue/Bug Issue
+
+### Commit规范
+- feat: 新功能
+- fix: 修复 Bug
+- docs: 文档修改
+- perf: 性能优化
+- revert: 版本回退
+- ci: CICD 集成相关
+- test: 添加测试代码
+- refactor: 代码重构
+- build: 影响项目构建或依赖修改
+- style: 不影响程序逻辑的代码修改
+- chore: 不属于以上类型的其他类型(日常事务)
