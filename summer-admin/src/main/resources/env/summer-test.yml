@@ -25,8 +25,8 @@ spring:
     password: jack_2021
     database: 2
 
-# 日志级别
 logging:
+  # 日志级别
   level:
     me:
       xiajhuan:

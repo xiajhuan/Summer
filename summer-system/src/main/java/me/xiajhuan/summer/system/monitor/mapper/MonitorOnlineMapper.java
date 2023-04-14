@@ -22,6 +22,6 @@ import me.xiajhuan.summer.system.monitor.entity.MonitorOnlineEntity;
  * @author xiajhuan
  * @date 2023/4/12
  */
-@InterceptorIgnore(blockAttack = "true")
+@InterceptorIgnore
 public interface MonitorOnlineMapper extends BaseMapper<MonitorOnlineEntity> {
 }

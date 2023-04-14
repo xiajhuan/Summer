@@ -8,9 +8,9 @@ project:
   version: "@project.version@"
 
 server:
-  # 缓存类型，值：REDIS/HEAP
-  # note：HEAP（堆内缓存）在服务多节点部署时数据无法共享！
   cache:
+    # 缓存类型，值：REDIS/HEAP
+    # note：HEAP（堆内缓存）在服务多节点部署时数据无法共享！
     type: REDIS
   # Tomcat
   tomcat:
@@ -33,8 +33,8 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: Asia/Shanghai
-  # 文件上传
   servlet:
+    # 文件上传
     multipart:
       # 单个文件最大限制
       max-file-size: 30MB
@@ -44,11 +44,11 @@ spring:
   messages:
     encoding: UTF-8
     basename: i18n/messages,i18n/validation
-  # 不允许同名Bean覆盖
   main:
+    # 不允许同名Bean覆盖
     allow-bean-definition-overriding: false
-  # 排除自动装配
   autoconfigure:
+    # 排除自动装配
     exclude:
       - org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
       - org.springframework.boot.autoconfigure.data.redis.RedisRepositoriesAutoConfiguration
@@ -109,16 +109,16 @@ limit:
     # Excel最大导出数
     excel-max-export: 40000
 
-# XSS过滤
 mica:
+  # XSS过滤
   xss:
     # 拦截的路由
     path-patterns: /**
     # 放行的路由
     path-exclude-patterns: /api/test/**
 
-# 日志级别
 logging:
+  # 日志级别
   level:
     org:
       springframework:
