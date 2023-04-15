@@ -312,4 +312,27 @@ CREATE TABLE `monitor_online`
   COLLATE = utf8mb4_general_ci COMMENT = '在线用户'
   ROW_FORMAT = Dynamic;
 
+-- ----------------------------
+-- Table structure for schedule_task
+-- ----------------------------
+DROP TABLE IF EXISTS `schedule_task`;
+CREATE TABLE `schedule_task`
+(
+    `id`              bigint(20)                                                     NOT NULL COMMENT '主键ID',
+    `create_by`       varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci   NULL DEFAULT NULL COMMENT '创建者',
+    `create_time`     datetime(0)                                                    NULL DEFAULT NULL COMMENT '创建时间',
+    `update_by`       varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci   NULL DEFAULT NULL COMMENT '更新者',
+    `update_time`     datetime(0)                                                    NULL DEFAULT NULL COMMENT '更新时间',
+    `bean_name`       varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL COMMENT 'Bean名称',
+    `json`            varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '参数（Json格式）',
+    `cron_expression` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci   NULL DEFAULT NULL COMMENT 'Cron表达式',
+    `status`          tinyint(1)                                                     NULL DEFAULT NULL COMMENT '状态 0：停用 1：正常',
+    `description`     varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL COMMENT '描述',
+    PRIMARY KEY (`id`) USING BTREE,
+    INDEX `idx_create_time` (`create_time`) USING BTREE
+) ENGINE = InnoDB
+  CHARACTER SET = utf8mb4
+  COLLATE = utf8mb4_general_ci COMMENT = '任务'
+  ROW_FORMAT = Dynamic;
+
 SET FOREIGN_KEY_CHECKS = 1;

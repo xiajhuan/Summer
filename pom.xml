@@ -40,6 +40,7 @@
         <p6spy.version>3.9.1</p6spy.version>
         <lombok.version>1.18.26</lombok.version>
         <shiro.version>1.11.0</shiro.version>
+        <quartz.version>2.3.2</quartz.version>
         <commons-pool2.version>2.11.1</commons-pool2.version>
         <guava.version>31.1-jre</guava.version>
         <hutool.version>5.8.17</hutool.version>
@@ -117,6 +118,12 @@
                 <groupId>org.apache.shiro</groupId>
                 <artifactId>shiro-spring</artifactId>
                 <version>${shiro.version}</version>
+            </dependency>
+            <!--quartz-->
+            <dependency>
+                <groupId>org.quartz-scheduler</groupId>
+                <artifactId>quartz</artifactId>
+                <version>${quartz.version}</version>
             </dependency>
             <!--commons-pool2-->
             <dependency>

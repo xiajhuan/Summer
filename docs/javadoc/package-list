@@ -44,6 +44,7 @@ me.xiajhuan.summer.system.common.aspect
 me.xiajhuan.summer.system.common.handler
 me.xiajhuan.summer.system.common.schedule.config
 me.xiajhuan.summer.system.common.schedule.task
+me.xiajhuan.summer.system.common.schedule.task.subClass
 me.xiajhuan.summer.system.common.shiro.config
 me.xiajhuan.summer.system.common.shiro.oauth2
 me.xiajhuan.summer.system.locale.controller
@@ -66,6 +67,8 @@ me.xiajhuan.summer.system.monitor.entity
 me.xiajhuan.summer.system.monitor.mapper
 me.xiajhuan.summer.system.monitor.service
 me.xiajhuan.summer.system.monitor.service.impl
+me.xiajhuan.summer.system.schedule.dto
+me.xiajhuan.summer.system.schedule.entity
 me.xiajhuan.summer.system.security.cache
 me.xiajhuan.summer.system.security.controller
 me.xiajhuan.summer.system.security.dto
