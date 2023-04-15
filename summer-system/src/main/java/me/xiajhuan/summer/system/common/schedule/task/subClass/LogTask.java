@@ -10,7 +10,7 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.system.common.schedule.task;
+package me.xiajhuan.summer.system.common.schedule.task.subClass;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.date.TimeInterval;
@@ -18,6 +18,7 @@ import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import me.xiajhuan.summer.system.common.schedule.task.AbstractTask;
 import me.xiajhuan.summer.system.log.service.LogErrorService;
 import me.xiajhuan.summer.system.log.service.LogLoginService;
 import me.xiajhuan.summer.system.log.service.LogOperationService;
@@ -31,7 +32,7 @@ import org.springframework.scheduling.annotation.Scheduled;
  */
 @Setter
 @Accessors(chain = true)
-public class LogTask {
+public class LogTask extends AbstractTask {
 
     private static final Log LOGGER = LogFactory.get();
 
@@ -47,12 +48,16 @@ public class LogTask {
      */
     @Scheduled(cron = "0 30 0 * * ?")
     public void clearOperationLog() {
-        TimeInterval timer = DateUtil.timer();
-        LOGGER.info("【LogTask】【clearOperationLog】开始执行：{}", DateUtil.date());
+        String methodSignature = "LogTask#clearOperationLog";
 
-        logOperationService.clear();
+        if (acquireLock(methodSignature)) {
+            TimeInterval timer = DateUtil.timer();
+            LOGGER.info("【{}】开始执行：{}", methodSignature, DateUtil.date());
 
-        LOGGER.info("【LogTask】【clearOperationLog】执行结束：{}，耗时【{}】ms", DateUtil.date(), timer.interval());
+            logOperationService.clear();
+
+            LOGGER.info("【{}】执行结束：{}，耗时【{}】ms", methodSignature, DateUtil.date(), timer.interval());
+        }
     }
 
     /**
@@ -61,12 +66,16 @@ public class LogTask {
      */
     @Scheduled(cron = "0 0 1 * * ?")
     public void clearErrorLog() {
-        TimeInterval timer = DateUtil.timer();
-        LOGGER.info("【LogTask】【clearErrorLog】开始执行：{}", DateUtil.date());
+        String methodSignature = "LogTask#clearErrorLog";
 
-        logErrorService.clear();
+        if (acquireLock(methodSignature)) {
+            TimeInterval timer = DateUtil.timer();
+            LOGGER.info("【{}】开始执行：{}", methodSignature, DateUtil.date());
 
-        LOGGER.info("【LogTask】【clearErrorLog】执行结束：{}，耗时【{}】ms", DateUtil.date(), timer.interval());
+            logErrorService.clear();
+
+            LOGGER.info("【{}】执行结束：{}，耗时【{}】ms", methodSignature, DateUtil.date(), timer.interval());
+        }
     }
 
     /**
@@ -75,12 +84,16 @@ public class LogTask {
      */
     @Scheduled(cron = "0 30 1 * * ?")
     public void clearLoginLog() {
-        TimeInterval timer = DateUtil.timer();
-        LOGGER.info("【LogTask】【clearLoginLog】开始执行：{}", DateUtil.date());
+        String methodSignature = "LogTask#clearLoginLog";
 
-        logLoginService.clear();
+        if (acquireLock(methodSignature)) {
+            TimeInterval timer = DateUtil.timer();
+            LOGGER.info("【{}】开始执行：{}", methodSignature, DateUtil.date());
 
-        LOGGER.info("【LogTask】【clearLoginLog】执行结束：{}，耗时【{}】ms", DateUtil.date(), timer.interval());
+            logLoginService.clear();
+
+            LOGGER.info("【{}】执行结束：{}，耗时【{}】ms", methodSignature, DateUtil.date(), timer.interval());
+        }
     }
 
 }

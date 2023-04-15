@@ -312,15 +312,15 @@ public class HeapCacheServer implements CacheServer {
 
         if (hasAuto(key)) {
             if (ttl == -1L) {
-                cacheAuto.put(key, cacheAuto.get(key).longValue() + step);
+                cacheAuto.put(key, cacheAuto.get(key) + step);
             } else {
-                cacheAuto.put(key, cacheAuto.get(key).longValue() + step, ttl);
+                cacheAuto.put(key, cacheAuto.get(key) + step, ttl);
             }
         } else {
             if (ttl == -1L) {
-                cacheAuto.put(key, Long.valueOf(step));
+                cacheAuto.put(key, (long) step);
             } else {
-                cacheAuto.put(key, Long.valueOf(step), ttl);
+                cacheAuto.put(key, (long) step, ttl);
             }
         }
     }
@@ -332,7 +332,7 @@ public class HeapCacheServer implements CacheServer {
 
     @Override
     public void decrement(String key, int step) {
-        increment(key, 0 - step);
+        increment(key, -step);
     }
 
     @Override
@@ -342,7 +342,7 @@ public class HeapCacheServer implements CacheServer {
 
     @Override
     public void decrement(String key, int step, long ttl) {
-        increment(key, 0 - step, ttl);
+        increment(key, -step, ttl);
     }
 
     //*******************Value-Hash********************

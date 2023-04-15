@@ -54,7 +54,6 @@ public class ServletUtil extends cn.hutool.extra.servlet.ServletUtil {
         if (requestAttributes == null) {
             return null;
         }
-
         return ((ServletRequestAttributes) requestAttributes).getRequest();
     }
 

@@ -16,10 +16,12 @@ import cn.hutool.core.thread.ThreadUtil;
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
 import cn.hutool.setting.Setting;
+import me.xiajhuan.summer.core.constant.CacheConst;
 import me.xiajhuan.summer.core.constant.SettingConst;
 import me.xiajhuan.summer.core.constant.ThreadPoolConst;
-import me.xiajhuan.summer.system.common.schedule.task.LogTask;
-import me.xiajhuan.summer.system.common.schedule.task.SecurityTask;
+import me.xiajhuan.summer.core.properties.ServerCacheProperties;
+import me.xiajhuan.summer.system.common.schedule.task.subClass.LogTask;
+import me.xiajhuan.summer.system.common.schedule.task.subClass.SecurityTask;
 import me.xiajhuan.summer.system.log.service.LogErrorService;
 import me.xiajhuan.summer.system.log.service.LogLoginService;
 import me.xiajhuan.summer.system.log.service.LogOperationService;
@@ -44,7 +46,7 @@ import java.util.concurrent.ScheduledExecutorService;
  *     2.2 定期清理日志
  *     2.3 固定的系统批处理操作
  *   3.可通过system.setting下的Schedule组进行配置
- *   4.如需线上动态调整或业务层面的定时调度需求，请使用quartz模块下基于quartz的实现
+ *   4.如需线上动态调整或是业务层面的定时调度需求，请在admin模块task包下编写任务逻辑实现
  * </pre>
  *
  * @author xiajhuan
@@ -63,17 +65,26 @@ public class SystemTaskConfig implements SchedulingConfigurer {
     @Resource(name = SettingConst.SYSTEM)
     private Setting setting;
 
+    @Resource
+    private ServerCacheProperties serverCacheProperties;
+
     /**
      * 是否开启系统定时任务
      */
     private boolean enableSystemTask;
 
     /**
-     * 初始化 {@link enableSystemTask}
+     * 是否是Redis缓存
+     */
+    private boolean isRedisCache;
+
+    /**
+     * 初始化 {@link enableSystemTask} {@link isRedisCache}
      */
     @PostConstruct
     private void init() {
         enableSystemTask = setting.getBool("enable-system-task", "Schedule", true);
+        isRedisCache = CacheConst.Type.REDIS.equalsIgnoreCase(serverCacheProperties.getType());
     }
 
     @Override
@@ -114,10 +125,13 @@ public class SystemTaskConfig implements SchedulingConfigurer {
     @Bean
     public LogTask logTask() {
         if (enableSystemTask && setting.getBool("system.log-task", "Schedule", true)) {
-            LOGGER.info("【{}】系统定时任务【LogTask】加载完毕", applicationName);
-            return new LogTask().setLogOperationService(logOperationService)
+            LogTask logTask = new LogTask()
+                    .setLogOperationService(logOperationService)
                     .setLogErrorService(logErrorService)
                     .setLogLoginService(logLoginService);
+            logTask.setRedisCache(isRedisCache);
+            LOGGER.info("【{}】系统定时任务【LogTask】加载完毕", applicationName);
+            return logTask;
         }
         return null;
     }
@@ -133,8 +147,11 @@ public class SystemTaskConfig implements SchedulingConfigurer {
     @Bean
     public SecurityTask securityTask() {
         if (enableSystemTask && setting.getBool("system.security-task", "Schedule", true)) {
+            SecurityTask securityTask = new SecurityTask()
+                    .setSecurityDeptService(securityDeptService);
+            securityTask.setRedisCache(isRedisCache);
             LOGGER.info("【{}】系统定时任务【SecurityTask】加载完毕", applicationName);
-            return new SecurityTask().setSecurityDeptService(securityDeptService);
+            return securityTask;
         }
         return null;
     }

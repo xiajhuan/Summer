@@ -240,7 +240,7 @@ public class RateLimiterAspect {
                 // 没有设置或设置的值小于0则使用配置中的超时时长
                 timeout = defaultTimeout;
             }
-            if (limiter != null && !limiter.tryAcquire(timeout, TimeUnit.MILLISECONDS)) {
+            if (!limiter.tryAcquire(timeout, TimeUnit.MILLISECONDS)) {
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("接口【{}[{}]】限流成功，key-Class【{}】，LoadBalance-Class【{}】{}",
                             request.getRequestURI(), request.getMethod(), keyStrategyClass.getSimpleName(), loadBalanceStrategyClass.getSimpleName(),

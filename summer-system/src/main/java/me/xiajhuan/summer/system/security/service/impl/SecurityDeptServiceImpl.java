@@ -104,8 +104,8 @@ public class SecurityDeptServiceImpl extends ServiceImpl<SecurityDeptMapper, Sec
 
     @Override
     public void update(SecurityDeptDto dto) {
-        long id = dto.getId().longValue();
-        long parentId = dto.getParentId().longValue();
+        long id = dto.getId();
+        long parentId = dto.getParentId();
         // 上级部门不能为自身或下级部门
         if (id == parentId || getChildIdSet(id).contains(parentId)) {
             throw ValidationException.of(ErrorCode.SUPERIOR_DEPT_ERROR);

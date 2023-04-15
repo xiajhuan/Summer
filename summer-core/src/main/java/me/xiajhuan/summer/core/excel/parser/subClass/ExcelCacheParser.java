@@ -17,10 +17,11 @@ import cn.hutool.json.JSONUtil;
 import cn.hutool.setting.Setting;
 import com.alibaba.excel.context.AnalysisContext;
 import me.xiajhuan.summer.core.cache.factory.CacheServerFactory;
-import me.xiajhuan.summer.core.cache.key.CoreCacheKey;
 import me.xiajhuan.summer.core.constant.SettingConst;
 import me.xiajhuan.summer.core.constant.TimeUnitConst;
 import me.xiajhuan.summer.core.excel.parser.AbstractExcelParser;
+
+import static me.xiajhuan.summer.core.cache.key.CoreCacheKey.excelData;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -82,7 +83,7 @@ public class ExcelCacheParser<D, T> extends AbstractExcelParser<D, T> {
 
         List<String> excelList = entityList.stream().map(JSONUtil::toJsonStr).collect(Collectors.toList());
         CacheServerFactory.getCacheServer()
-                .setList(CoreCacheKey.excelData(currentEntityClass.getSimpleName()), excelList, CACHE_TTL);
+                .setList(excelData(currentEntityClass.getSimpleName()), excelList, CACHE_TTL);
 
         LOGGER.info("缓存成功！");
     }

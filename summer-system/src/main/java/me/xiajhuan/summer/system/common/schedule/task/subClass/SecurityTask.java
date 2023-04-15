@@ -10,7 +10,7 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.system.common.schedule.task;
+package me.xiajhuan.summer.system.common.schedule.task.subClass;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.date.TimeInterval;
@@ -19,6 +19,7 @@ import cn.hutool.log.LogFactory;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import me.xiajhuan.summer.core.constant.TimeUnitConst;
+import me.xiajhuan.summer.system.common.schedule.task.AbstractTask;
 import me.xiajhuan.summer.system.security.service.SecurityDeptService;
 import org.springframework.scheduling.annotation.Scheduled;
 
@@ -30,7 +31,7 @@ import org.springframework.scheduling.annotation.Scheduled;
  */
 @Setter
 @Accessors(chain = true)
-public class SecurityTask {
+public class SecurityTask extends AbstractTask {
 
     private static final Log LOGGER = LogFactory.get();
 
@@ -42,12 +43,16 @@ public class SecurityTask {
      */
     @Scheduled(fixedRate = TimeUnitConst.WEEK, initialDelay = 5 * TimeUnitConst.SECOND)
     public void cacheAllDept() {
-        TimeInterval timer = DateUtil.timer();
-        LOGGER.info("【SecurityTask】【cacheAllDept】开始执行：{}", DateUtil.date());
+        String methodSignature = "SecurityTask#cacheAllDept";
 
-        securityDeptService.cacheAll();
+        if (acquireLock(methodSignature)) {
+            TimeInterval timer = DateUtil.timer();
+            LOGGER.info("【{}】开始执行：{}", methodSignature, DateUtil.date());
 
-        LOGGER.info("【SecurityTask】【cacheAllDept】执行结束：{}，耗时【{}】ms", DateUtil.date(), timer.interval());
+            securityDeptService.cacheAll();
+
+            LOGGER.info("【{}】执行结束：{}，耗时【{}】ms", methodSignature, DateUtil.date(), timer.interval());
+        }
     }
 
 }
