@@ -29,8 +29,8 @@ import me.xiajhuan.summer.core.enums.UserTypeEnum;
 import me.xiajhuan.summer.core.exception.code.ErrorCode;
 import me.xiajhuan.summer.core.exception.custom.ValidationException;
 import me.xiajhuan.summer.core.utils.*;
-import me.xiajhuan.summer.system.locale.entity.LocaleInternationalNameEntity;
-import me.xiajhuan.summer.system.locale.service.LocaleInternationalNameService;
+import me.xiajhuan.summer.system.locale.entity.LocaleNameEntity;
+import me.xiajhuan.summer.system.locale.service.LocaleNameService;
 import me.xiajhuan.summer.system.security.dto.SecurityMenuDto;
 import me.xiajhuan.summer.system.security.entity.SecurityMenuEntity;
 import me.xiajhuan.summer.system.security.entity.SecurityRoleMenuEntity;
@@ -55,7 +55,7 @@ import java.util.Set;
 public class SecurityMenuServiceImpl extends ServiceImpl<SecurityMenuMapper, SecurityMenuEntity> implements SecurityMenuService {
 
     @Resource
-    private LocaleInternationalNameService localeInternationalNameService;
+    private LocaleNameService localeNameService;
 
     @Resource
     private SecurityRoleMenuMapper securityRoleMenuMapper;
@@ -91,11 +91,11 @@ public class SecurityMenuServiceImpl extends ServiceImpl<SecurityMenuMapper, Sec
 
         if (save(entity)) {
             // 保存国际化名称
-            LocaleInternationalNameEntity internationalNameEntity = LocaleInternationalNameEntity.builder()
+            LocaleNameEntity nameEntity = LocaleNameEntity.builder()
                     .tableName("security_menu").lineId(entity.getId())
                     .fieldName("name").fieldValue(entity.getName())
                     .locale(LocaleUtil.getAcceptLanguage(ServletUtil.getHttpRequest())).build();
-            localeInternationalNameService.save(internationalNameEntity);
+            localeNameService.save(nameEntity);
         }
     }
 
@@ -112,13 +112,13 @@ public class SecurityMenuServiceImpl extends ServiceImpl<SecurityMenuMapper, Sec
         if (updateById(entity)) {
             // 更新国际化名称
             // note：通过 update(LambdaUpdateWrapper) 更新时基础字段自动填充不会生效
-            LambdaUpdateWrapper<LocaleInternationalNameEntity> updateWrapper = Wrappers.lambdaUpdate();
-            updateWrapper.eq(LocaleInternationalNameEntity::getLineId, entity.getId());
-            updateWrapper.eq(LocaleInternationalNameEntity::getLocale, LocaleUtil.getAcceptLanguage(ServletUtil.getHttpRequest()));
-            updateWrapper.set(LocaleInternationalNameEntity::getFieldValue, entity.getName());
-            updateWrapper.set(LocaleInternationalNameEntity::getUpdateBy, SecurityUtil.getCurrentUsername());
-            updateWrapper.set(LocaleInternationalNameEntity::getUpdateTime, DateUtil.date());
-            localeInternationalNameService.update(updateWrapper);
+            LambdaUpdateWrapper<LocaleNameEntity> updateWrapper = Wrappers.lambdaUpdate();
+            updateWrapper.eq(LocaleNameEntity::getLineId, entity.getId());
+            updateWrapper.eq(LocaleNameEntity::getLocale, LocaleUtil.getAcceptLanguage(ServletUtil.getHttpRequest()));
+            updateWrapper.set(LocaleNameEntity::getFieldValue, entity.getName());
+            updateWrapper.set(LocaleNameEntity::getUpdateBy, SecurityUtil.getCurrentUsername());
+            updateWrapper.set(LocaleNameEntity::getUpdateTime, DateUtil.date());
+            localeNameService.update(updateWrapper);
         }
     }
 
@@ -134,10 +134,10 @@ public class SecurityMenuServiceImpl extends ServiceImpl<SecurityMenuMapper, Sec
 
         if (removeById(id)) {
             // 删除国际化名称
-            LambdaQueryWrapper<LocaleInternationalNameEntity> internationalNameQueryWrapper = Wrappers.lambdaQuery();
-            internationalNameQueryWrapper.eq(LocaleInternationalNameEntity::getLineId, id);
-            internationalNameQueryWrapper.eq(LocaleInternationalNameEntity::getLocale, LocaleUtil.getAcceptLanguage(ServletUtil.getHttpRequest()));
-            localeInternationalNameService.remove(internationalNameQueryWrapper);
+            LambdaQueryWrapper<LocaleNameEntity> nameQueryWrapper = Wrappers.lambdaQuery();
+            nameQueryWrapper.eq(LocaleNameEntity::getLineId, id);
+            nameQueryWrapper.eq(LocaleNameEntity::getLocale, LocaleUtil.getAcceptLanguage(ServletUtil.getHttpRequest()));
+            localeNameService.remove(nameQueryWrapper);
 
             // 删除角色菜单关联
             LambdaQueryWrapper<SecurityRoleMenuEntity> roleMenuQueryWrapper = Wrappers.lambdaQuery();

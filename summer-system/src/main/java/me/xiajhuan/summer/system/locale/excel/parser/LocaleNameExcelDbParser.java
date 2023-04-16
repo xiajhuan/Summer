@@ -15,50 +15,50 @@ package me.xiajhuan.summer.system.locale.excel.parser;
 import cn.hutool.extra.spring.SpringUtil;
 import com.baomidou.mybatisplus.extension.service.IService;
 import me.xiajhuan.summer.core.excel.parser.subClass.ExcelDbParser;
-import me.xiajhuan.summer.system.locale.dto.LocaleInternationalNameDto;
-import me.xiajhuan.summer.system.locale.entity.LocaleInternationalNameEntity;
-import me.xiajhuan.summer.system.locale.service.LocaleInternationalNameService;
+import me.xiajhuan.summer.system.locale.dto.LocaleNameDto;
+import me.xiajhuan.summer.system.locale.entity.LocaleNameEntity;
+import me.xiajhuan.summer.system.locale.service.LocaleNameService;
 
 import java.util.stream.Collectors;
 
 /**
- * 国际化名称Excel数据解析（保存到Db）
+ * 名称 Excel数据解析（保存到Db）
  *
  * @author xiajhuan
  * @date 2023/3/16
  */
-public class LocaleInternationalNameExcelDbParser extends ExcelDbParser<LocaleInternationalNameDto, LocaleInternationalNameEntity> {
+public class LocaleNameExcelDbParser extends ExcelDbParser<LocaleNameDto, LocaleNameEntity> {
 
-    private LocaleInternationalNameService localeInternationalNameService;
+    private LocaleNameService localeNameService;
 
     /**
-     * 构造LocaleInternationalNameExcelDbParser
+     * 构造LocaleNameExcelDbParser
      *
      * @param service            {@link IService}
      * @param currentEntityClass 当前EntityClass
      */
-    private LocaleInternationalNameExcelDbParser(IService<LocaleInternationalNameEntity> service, Class<LocaleInternationalNameEntity> currentEntityClass) {
+    private LocaleNameExcelDbParser(IService<LocaleNameEntity> service, Class<LocaleNameEntity> currentEntityClass) {
         super(service, currentEntityClass);
 
-        localeInternationalNameService = SpringUtil.getBean("localeInternationalNameServiceImpl", LocaleInternationalNameService.class);
+        localeNameService = SpringUtil.getBean("localeNameServiceImpl", LocaleNameService.class);
     }
 
     /**
-     * 构建LocaleInternationalNameExcelDbParser
+     * 构建LocaleNameExcelDbParser
      *
      * @param service            {@link IService}
      * @param currentEntityClass 当前EntityClass
-     * @return LocaleInternationalNameExcelDbParser
+     * @return LocaleNameExcelDbParser
      */
-    public static LocaleInternationalNameExcelDbParser of(IService<LocaleInternationalNameEntity> service, Class<LocaleInternationalNameEntity> currentEntityClass) {
-        return new LocaleInternationalNameExcelDbParser(service, currentEntityClass);
+    public static LocaleNameExcelDbParser of(IService<LocaleNameEntity> service, Class<LocaleNameEntity> currentEntityClass) {
+        return new LocaleNameExcelDbParser(service, currentEntityClass);
     }
 
     @Override
     protected void handleEntityListBefore() {
         // 去重/过滤
         entityList = entityList.stream().distinct()
-                .filter(entity -> !localeInternationalNameService.exist(entity.getLineId(), entity.getLocale()))
+                .filter(entity -> !localeNameService.exist(entity.getLineId(), entity.getLocale()))
                 .collect(Collectors.toList());
     }
 

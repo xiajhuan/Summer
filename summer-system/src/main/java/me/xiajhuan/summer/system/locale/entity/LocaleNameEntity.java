@@ -19,7 +19,7 @@ import me.xiajhuan.summer.core.base.entity.CommonEntity;
 import me.xiajhuan.summer.core.enums.LocaleSupportEnum;
 
 /**
- * 国际化名称 Entity
+ * 名称 Entity
  *
  * @author xiajhuan
  * @date 2023/3/16
@@ -29,8 +29,8 @@ import me.xiajhuan.summer.core.enums.LocaleSupportEnum;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@TableName("locale_international_name")
-public class LocaleInternationalNameEntity extends CommonEntity {
+@TableName("locale_name")
+public class LocaleNameEntity extends CommonEntity {
 
     /**
      * 部门ID

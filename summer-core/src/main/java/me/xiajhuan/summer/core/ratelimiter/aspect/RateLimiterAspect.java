@@ -41,6 +41,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.util.concurrent.TimeUnit;
 
@@ -144,11 +145,18 @@ public class RateLimiterAspect {
     @Before("pointcut()")
     public void before(JoinPoint point) {
         // 获取切入点方法上的RateLimiter注解
-        RateLimiter rateLimiter = AnnotationUtils.findAnnotation(JoinPointUtil.getMethod(point), RateLimiter.class);
+        Method method = JoinPointUtil.getMethod(point);
+        if (method == null) {
+            return;
+        }
+        RateLimiter rateLimiter = AnnotationUtils.findAnnotation(method, RateLimiter.class);
 
         if (rateLimiter != null && rateLimiter.qps() > RateLimiter.NOT_LIMITED) {
             // 请求
             HttpServletRequest request = ServletUtil.getHttpRequest();
+            if (request == null) {
+                return;
+            }
 
             //*******************限流Key获取********************
 

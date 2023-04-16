@@ -24,10 +24,10 @@ import me.xiajhuan.summer.core.exception.custom.ValidationException;
 import me.xiajhuan.summer.core.mp.helper.MpHelper;
 import me.xiajhuan.summer.core.properties.LimitBatchProperties;
 import me.xiajhuan.summer.core.utils.BeanUtil;
-import me.xiajhuan.summer.system.locale.dto.LocaleInternationalNameDto;
-import me.xiajhuan.summer.system.locale.entity.LocaleInternationalNameEntity;
-import me.xiajhuan.summer.system.locale.mapper.LocaleInternationalNameMapper;
-import me.xiajhuan.summer.system.locale.service.LocaleInternationalNameService;
+import me.xiajhuan.summer.system.locale.dto.LocaleNameDto;
+import me.xiajhuan.summer.system.locale.entity.LocaleNameEntity;
+import me.xiajhuan.summer.system.locale.mapper.LocaleNameMapper;
+import me.xiajhuan.summer.system.locale.service.LocaleNameService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,14 +38,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * 国际化名称 ServiceImpl
+ * 名称 ServiceImpl
  *
  * @author xiajhuan
  * @date 2023/3/16
  */
 @Service
 @DS(DataSourceConst.SYSTEM)
-public class LocaleInternationalNameServiceImpl extends ServiceImpl<LocaleInternationalNameMapper, LocaleInternationalNameEntity> implements LocaleInternationalNameService, MpHelper<LocaleInternationalNameDto, LocaleInternationalNameEntity> {
+public class LocaleNameServiceImpl extends ServiceImpl<LocaleNameMapper, LocaleNameEntity> implements LocaleNameService, MpHelper<LocaleNameDto, LocaleNameEntity> {
 
     @Resource
     private LimitBatchProperties limitBatchProperties;
@@ -53,69 +53,69 @@ public class LocaleInternationalNameServiceImpl extends ServiceImpl<LocaleIntern
     //*******************MpHelper覆写开始********************
 
     @Override
-    public LambdaQueryWrapper<LocaleInternationalNameEntity> getQueryWrapper(LocaleInternationalNameDto dto) {
-        LambdaQueryWrapper<LocaleInternationalNameEntity> queryWrapper = getEmptyWrapper();
+    public LambdaQueryWrapper<LocaleNameEntity> getQueryWrapper(LocaleNameDto dto) {
+        LambdaQueryWrapper<LocaleNameEntity> queryWrapper = getEmptyWrapper();
         // 查询条件
         // 表名
         String tableName = dto.getTableName();
-        queryWrapper.eq(StrUtil.isNotBlank(tableName), LocaleInternationalNameEntity::getTableName, tableName);
+        queryWrapper.eq(StrUtil.isNotBlank(tableName), LocaleNameEntity::getTableName, tableName);
 
         return queryWrapper;
     }
 
     @Override
-    public LambdaQueryWrapper<LocaleInternationalNameEntity> getSelectWrapper(LocaleInternationalNameDto dto) {
+    public LambdaQueryWrapper<LocaleNameEntity> getSelectWrapper(LocaleNameDto dto) {
         // 查询字段
         return addSelectField(getQueryWrapper(dto));
     }
 
     @Override
-    public LambdaQueryWrapper<LocaleInternationalNameEntity> addSelectField(LambdaQueryWrapper<LocaleInternationalNameEntity> queryWrapper) {
-        return queryWrapper.select(LocaleInternationalNameEntity::getId, LocaleInternationalNameEntity::getTableName, LocaleInternationalNameEntity::getLineId,
-                LocaleInternationalNameEntity::getFieldName, LocaleInternationalNameEntity::getFieldValue, LocaleInternationalNameEntity::getLocale,
-                LocaleInternationalNameEntity::getCreateTime);
+    public LambdaQueryWrapper<LocaleNameEntity> addSelectField(LambdaQueryWrapper<LocaleNameEntity> queryWrapper) {
+        return queryWrapper.select(LocaleNameEntity::getId, LocaleNameEntity::getTableName, LocaleNameEntity::getLineId,
+                LocaleNameEntity::getFieldName, LocaleNameEntity::getFieldValue, LocaleNameEntity::getLocale,
+                LocaleNameEntity::getCreateTime);
     }
 
     @Override
-    public void handleDtoBefore(LocaleInternationalNameDto dto) {
+    public void handleDtoBefore(LocaleNameDto dto) {
         // 行ID+地区语言不能重复
         long lineId = dto.getLineId();
         String locale = dto.getLocale();
         if (exist(lineId, locale)) {
-            throw ValidationException.of(ErrorCode.INTERNATIONAL_NAME_EXISTS, String.valueOf(lineId), locale);
+            throw ValidationException.of(ErrorCode.NAME_LINE_ID_AND_LOCALE_EXISTS, String.valueOf(lineId), locale);
         }
     }
 
     //*******************MpHelper覆写结束********************
 
     @Override
-    public Page<LocaleInternationalNameDto> page(LocaleInternationalNameDto dto) {
-        return BeanUtil.convert(page(handlePageSort(dto), getSelectWrapper(dto)), LocaleInternationalNameDto.class);
+    public Page<LocaleNameDto> page(LocaleNameDto dto) {
+        return BeanUtil.convert(page(handlePageSort(dto), getSelectWrapper(dto)), LocaleNameDto.class);
     }
 
     @Override
-    public List<LocaleInternationalNameDto> list(LocaleInternationalNameDto dto) {
-        return BeanUtil.convert(list(getSortWrapper(dto)), LocaleInternationalNameDto.class);
+    public List<LocaleNameDto> list(LocaleNameDto dto) {
+        return BeanUtil.convert(list(getSortWrapper(dto)), LocaleNameDto.class);
     }
 
     @Override
-    public LocaleInternationalNameDto getById(Long id) {
-        LambdaQueryWrapper<LocaleInternationalNameEntity> queryWrapper = getEmptyWrapper();
-        queryWrapper.eq(LocaleInternationalNameEntity::getId, id);
+    public LocaleNameDto getById(Long id) {
+        LambdaQueryWrapper<LocaleNameEntity> queryWrapper = getEmptyWrapper();
+        queryWrapper.eq(LocaleNameEntity::getId, id);
 
-        return BeanUtil.convert(getOne(addSelectField(queryWrapper)), LocaleInternationalNameDto.class);
+        return BeanUtil.convert(getOne(addSelectField(queryWrapper)), LocaleNameDto.class);
     }
 
     @Override
-    public void add(LocaleInternationalNameDto dto) {
+    public void add(LocaleNameDto dto) {
         handleDtoBefore(dto);
 
-        save(BeanUtil.convert(dto, LocaleInternationalNameEntity.class));
+        save(BeanUtil.convert(dto, LocaleNameEntity.class));
     }
 
     @Override
-    public void update(LocaleInternationalNameDto dto) {
-        baseMapper.alwaysUpdateById(BeanUtil.convert(dto, LocaleInternationalNameEntity.class));
+    public void update(LocaleNameDto dto) {
+        baseMapper.alwaysUpdateById(BeanUtil.convert(dto, LocaleNameEntity.class));
     }
 
     @Override
@@ -124,18 +124,18 @@ public class LocaleInternationalNameServiceImpl extends ServiceImpl<LocaleIntern
     }
 
     @Override
-    public long count(LocaleInternationalNameDto dto) {
+    public long count(LocaleNameDto dto) {
         return count(getQueryWrapper(dto));
     }
 
     @Override
     public boolean exist(long lineId, String locale) {
-        return baseMapper.exist(lineId, locale) != null ? true : false;
+        return baseMapper.exist(lineId, locale) != null;
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean saveBatch(Collection<LocaleInternationalNameEntity> entityList) {
+    public boolean saveBatch(Collection<LocaleNameEntity> entityList) {
         ListUtil.split(ListUtil.toList(entityList), limitBatchProperties.getRealSaveNumEveryTime())
                 .forEach(baseMapper::realSaveBatch);
         return true;

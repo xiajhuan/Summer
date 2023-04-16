@@ -23,10 +23,10 @@ import me.xiajhuan.summer.core.utils.ExcelUtil;
 import me.xiajhuan.summer.core.validation.group.AddGroup;
 import me.xiajhuan.summer.core.validation.group.UpdateGroup;
 import me.xiajhuan.summer.system.common.annotation.LogOperation;
-import me.xiajhuan.summer.system.locale.dto.LocaleInternationalNameDto;
-import me.xiajhuan.summer.system.locale.entity.LocaleInternationalNameEntity;
-import me.xiajhuan.summer.system.locale.excel.parser.LocaleInternationalNameExcelDbParser;
-import me.xiajhuan.summer.system.locale.service.LocaleInternationalNameService;
+import me.xiajhuan.summer.system.locale.dto.LocaleNameDto;
+import me.xiajhuan.summer.system.locale.entity.LocaleNameEntity;
+import me.xiajhuan.summer.system.locale.excel.parser.LocaleNameExcelDbParser;
+import me.xiajhuan.summer.system.locale.service.LocaleNameService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -36,30 +36,30 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * 国际化名称 Controller
+ * 名称 Controller
  *
  * @author xiajhuan
  * @date 2023/3/16
  */
 @RestController
-@RequestMapping("locale/internationalName")
-public class LocaleInternationalNameController extends BaseController {
+@RequestMapping("locale/name")
+public class LocaleNameController extends BaseController {
 
     @Resource
-    private LocaleInternationalNameService mainService;
+    private LocaleNameService mainService;
 
     //*******************Common Crud********************
 
     /**
      * 分页
      *
-     * @param dto 国际化名称Dto
+     * @param dto 名称Dto
      * @return 响应结果
      */
     @GetMapping("page")
-    @RequiresPermissions("locale:internationalName:page")
+    @RequiresPermissions("locale:name:page")
     @LogOperation(OperationConst.PAGE)
-    public Result<PageData<LocaleInternationalNameDto>> page(LocaleInternationalNameDto dto) {
+    public Result<PageData<LocaleNameDto>> page(LocaleNameDto dto) {
         return Result.ofSuccess(PageData.of(mainService.page(dto)));
     }
 
@@ -70,9 +70,9 @@ public class LocaleInternationalNameController extends BaseController {
      * @return 响应结果
      */
     @GetMapping("getById")
-    @RequiresPermissions("locale:internationalName:getById")
+    @RequiresPermissions("locale:name:getById")
     @LogOperation(OperationConst.GET_BY_ID)
-    public Result<LocaleInternationalNameDto> getById(Long id) {
+    public Result<LocaleNameDto> getById(Long id) {
         AssertUtil.isNotNull("id", id);
         return Result.ofSuccess(mainService.getById(id));
     }
@@ -80,14 +80,14 @@ public class LocaleInternationalNameController extends BaseController {
     /**
      * 新增
      *
-     * @param dto 国际化名称Dto
+     * @param dto 名称Dto
      * @return 响应结果
      */
     @PostMapping("add")
-    @RequiresPermissions("locale:internationalName:add")
+    @RequiresPermissions("locale:name:add")
     @RateLimiter(0.5)
     @LogOperation(OperationConst.ADD)
-    public Result add(@Validated(AddGroup.class) LocaleInternationalNameDto dto) {
+    public Result add(@Validated(AddGroup.class) LocaleNameDto dto) {
         mainService.add(dto);
         return Result.ofSuccess();
     }
@@ -95,14 +95,14 @@ public class LocaleInternationalNameController extends BaseController {
     /**
      * 修改
      *
-     * @param dto 国际化名称Dto
+     * @param dto 名称Dto
      * @return 响应结果
      */
     @PutMapping("update")
-    @RequiresPermissions("locale:internationalName:update")
+    @RequiresPermissions("locale:name:update")
     @RateLimiter(0.5)
     @LogOperation(OperationConst.UPDATE)
-    public Result update(@Validated(UpdateGroup.class) LocaleInternationalNameDto dto) {
+    public Result update(@Validated(UpdateGroup.class) LocaleNameDto dto) {
         mainService.update(dto);
         return Result.ofSuccess();
     }
@@ -114,7 +114,7 @@ public class LocaleInternationalNameController extends BaseController {
      * @return 响应结果
      */
     @DeleteMapping("delete")
-    @RequiresPermissions("locale:internationalName:delete")
+    @RequiresPermissions("locale:name:delete")
     @RateLimiter(0.5)
     @LogOperation(OperationConst.DELETE)
     public Result delete(Long[] ids) {
@@ -131,12 +131,12 @@ public class LocaleInternationalNameController extends BaseController {
      * @param response {@link HttpServletResponse}
      */
     @GetMapping("excelTemplate")
-    @RequiresPermissions("locale:internationalName:excelTemplate")
+    @RequiresPermissions("locale:name:excelTemplate")
     @RateLimiter(0.2)
     @LogOperation(OperationConst.EXCEL_TEMPLATE)
     public void excelTemplate(HttpServletResponse response) {
-        ExcelUtil.export(response, "国际化名称模板", "国际化名称", mainService.excelTemplate(),
-                LocaleInternationalNameDto.class, ErrorCode.EXCEL_TEMPLATE_DOWNLOAD_FAILURE);
+        ExcelUtil.export(response, "名称模板", "名称", mainService.template(),
+                LocaleNameDto.class, ErrorCode.EXCEL_TEMPLATE_DOWNLOAD_FAILURE);
     }
 
     /**
@@ -146,29 +146,29 @@ public class LocaleInternationalNameController extends BaseController {
      * @return 响应结果
      */
     @PostMapping("excelImport")
-    @RequiresPermissions("locale:internationalName:excelImport")
+    @RequiresPermissions("locale:name:excelImport")
     @RateLimiter(0.2)
     @LogOperation(OperationConst.EXCEL_IMPORT)
     public Result excelImport(MultipartFile file) {
-        ExcelUtil.importDb(file, LocaleInternationalNameDto.class,
-                LocaleInternationalNameExcelDbParser.of(mainService, LocaleInternationalNameEntity.class));
+        ExcelUtil.importDb(file, LocaleNameDto.class,
+                LocaleNameExcelDbParser.of(mainService, LocaleNameEntity.class));
         return Result.ofSuccess();
     }
 
     /**
      * Excel导出
      *
-     * @param dto      国际化名称Dto
+     * @param dto      名称Dto
      * @param response {@link HttpServletResponse}
      */
     @GetMapping("excelExport")
-    @RequiresPermissions("locale:internationalName:excelExport")
+    @RequiresPermissions("locale:name:excelExport")
     @RateLimiter(0.2)
     @LogOperation(OperationConst.EXCEL_EXPORT)
-    public void excelExport(LocaleInternationalNameDto dto, HttpServletResponse response) {
+    public void excelExport(LocaleNameDto dto, HttpServletResponse response) {
         validateMaxExport(mainService.count(dto));
-        ExcelUtil.export(response, "国际化名称", "国际化名称", mainService.list(dto),
-                LocaleInternationalNameDto.class, ErrorCode.EXCEL_EXPORT_FAILURE);
+        ExcelUtil.export(response, "名称", "名称", mainService.list(dto),
+                LocaleNameDto.class, ErrorCode.EXCEL_EXPORT_FAILURE);
     }
 
 }

@@ -198,10 +198,10 @@ CREATE TABLE `security_dept`
   ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Table structure for locale_international_name
+-- Table structure for locale_name
 -- ----------------------------
-DROP TABLE IF EXISTS `locale_international_name`;
-CREATE TABLE `locale_international_name`
+DROP TABLE IF EXISTS `locale_name`;
+CREATE TABLE `locale_name`
 (
     `id`          bigint(20)                                                    NOT NULL COMMENT '主键ID',
     `create_by`   varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL COMMENT '创建者',
@@ -218,7 +218,7 @@ CREATE TABLE `locale_international_name`
     INDEX `idx_create_time` (`create_time`) USING BTREE
 ) ENGINE = InnoDB
   CHARACTER SET = utf8mb4
-  COLLATE = utf8mb4_general_ci COMMENT = '国际化名称'
+  COLLATE = utf8mb4_general_ci COMMENT = '名称'
   ROW_FORMAT = Dynamic;
 
 -- ----------------------------

@@ -14,47 +14,47 @@ package me.xiajhuan.summer.system.locale.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import me.xiajhuan.summer.system.locale.dto.LocaleInternationalNameDto;
-import me.xiajhuan.summer.system.locale.entity.LocaleInternationalNameEntity;
+import me.xiajhuan.summer.system.locale.dto.LocaleNameDto;
+import me.xiajhuan.summer.system.locale.entity.LocaleNameEntity;
 
 import java.util.List;
 
 /**
- * 国际化名称 Service
+ * 名称 Service
  *
  * @author xiajhuan
  * @date 2023/3/16
  */
-public interface LocaleInternationalNameService extends IService<LocaleInternationalNameEntity> {
+public interface LocaleNameService extends IService<LocaleNameEntity> {
 
-    Page<LocaleInternationalNameDto> page(LocaleInternationalNameDto dto);
+    Page<LocaleNameDto> page(LocaleNameDto dto);
 
-    List<LocaleInternationalNameDto> list(LocaleInternationalNameDto dto);
+    List<LocaleNameDto> list(LocaleNameDto dto);
 
-    LocaleInternationalNameDto getById(Long id);
+    LocaleNameDto getById(Long id);
 
-    void add(LocaleInternationalNameDto dto);
+    void add(LocaleNameDto dto);
 
-    void update(LocaleInternationalNameDto dto);
+    void update(LocaleNameDto dto);
 
     void delete(Long[] ids);
 
     /**
-     * Excel模板数据
+     * 模板数据
      *
-     * @return 国际化名称列表 或 {@code null}
+     * @return 名称Dto列表 或 {@code null}
      */
-    default List<LocaleInternationalNameDto> excelTemplate() {
+    default List<LocaleNameDto> template() {
         return null;
     }
 
     /**
      * 统计记录数
      *
-     * @param dto 国际化名称Dto
+     * @param dto 名称Dto
      * @return 记录数
      */
-    long count(LocaleInternationalNameDto dto);
+    long count(LocaleNameDto dto);
 
     /**
      * 判断是否存在

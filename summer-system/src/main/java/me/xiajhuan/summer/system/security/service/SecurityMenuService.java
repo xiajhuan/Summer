@@ -30,11 +30,11 @@ import java.util.Set;
 public interface SecurityMenuService extends IService<SecurityMenuEntity> {
 
     /**
-     * 国际化树形结构列表
+     * 树形结构列表（菜单名称国际化）
      *
      * @param type    类型 {@link ComponentTypeEnum}
      * @param needAll 是否需要全部，true：是 false：不是
-     * @return 国际化菜单列表（树形结构）
+     * @return 菜单列表（树形结构，菜单名称国际化）
      */
     List<SecurityMenuDto> treeList(Integer type, boolean needAll);
 

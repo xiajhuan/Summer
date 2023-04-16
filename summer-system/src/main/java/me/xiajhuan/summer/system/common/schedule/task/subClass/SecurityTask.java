@@ -14,8 +14,6 @@ package me.xiajhuan.summer.system.common.schedule.task.subClass;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.date.TimeInterval;
-import cn.hutool.log.Log;
-import cn.hutool.log.LogFactory;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import me.xiajhuan.summer.core.constant.TimeUnitConst;
@@ -32,8 +30,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 @Setter
 @Accessors(chain = true)
 public class SecurityTask extends AbstractTask {
-
-    private static final Log LOGGER = LogFactory.get();
 
     private SecurityDeptService securityDeptService;
 

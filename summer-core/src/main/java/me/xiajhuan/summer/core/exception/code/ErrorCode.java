@@ -201,9 +201,9 @@ public interface ErrorCode {
     int DEPT_USER_DELETE_ERROR = 10015;
 
     /**
-     * 国际化名称行ID【{0}】+地区语言【{1}】已存在
+     * 名称行ID【{0}】+地区语言【{1}】已存在
      */
-    int INTERNATIONAL_NAME_EXISTS = 11000;
+    int NAME_LINE_ID_AND_LOCALE_EXISTS = 11000;
 
     /**
      * 只有超级管理员可以踢出用户

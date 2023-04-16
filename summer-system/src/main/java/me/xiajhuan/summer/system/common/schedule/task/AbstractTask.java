@@ -13,6 +13,8 @@
 package me.xiajhuan.summer.system.common.schedule.task;
 
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.log.Log;
+import cn.hutool.log.LogFactory;
 import lombok.Setter;
 import me.xiajhuan.summer.core.cache.factory.CacheServerFactory;
 import me.xiajhuan.summer.core.constant.TimeUnitConst;
@@ -25,6 +27,8 @@ import me.xiajhuan.summer.core.constant.TimeUnitConst;
  */
 @Setter
 public class AbstractTask {
+
+    protected static final Log LOGGER = LogFactory.get();
 
     /**
      * 系统定时任务锁，防止多节点部署时同一任务重复执行

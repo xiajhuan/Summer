@@ -332,7 +332,7 @@ public class SecurityServiceImpl implements SecurityService {
      * @return 是否是普通用户，true：是 false：不是
      */
     private boolean isGeneralUser(int userType) {
-        return UserTypeEnum.GENERAL.getValue() == userType ? true : false;
+        return UserTypeEnum.GENERAL.getValue() == userType;
     }
 
 }

@@ -98,30 +98,35 @@ public class LogOperationAspect {
 
         // 获取切入点方法上的LogOperation注解
         Method method = JoinPointUtil.getMethod(point);
+        if (method == null) {
+            return;
+        }
         LogOperation logOperation = AnnotationUtils.findAnnotation(method, LogOperation.class);
 
         // 请求
         HttpServletRequest request = ServletUtil.getHttpRequest();
 
-        // 构建操作日志
-        LogOperationEntity entity = LogOperationEntity.builder()
-                .operation(StrUtil.format("【{}】{}", logOperation.name(), requestMapping.path()))
-                .operationGroup(getOperationGroup(logOperation.name()))
-                .operateBy(SecurityUtil.getCurrentUsername(NonLoggedUserEnum.THIRD_PART.getValue()))
-                .status(status.getValue())
-                .requestTime((int) cost)
-                .ip(ServletUtil.getClientIP(request))
-                .userAgent(ServletUtil.getUserAgent(request))
-                .requestUri(request.getRequestURI())
-                .requestMethod(request.getMethod()).build();
+        if (logOperation != null && request != null) {
+            // 构建操作日志
+            LogOperationEntity entity = LogOperationEntity.builder()
+                    .operation(StrUtil.format("【{}】{}", logOperation.name(), requestMapping.path()))
+                    .operationGroup(getOperationGroup(logOperation.name()))
+                    .operateBy(SecurityUtil.getCurrentUsername(NonLoggedUserEnum.THIRD_PART.getValue()))
+                    .status(status.getValue())
+                    .requestTime((int) cost)
+                    .ip(ServletUtil.getClientIP(request))
+                    .userAgent(ServletUtil.getUserAgent(request))
+                    .requestUri(request.getRequestURI())
+                    .requestMethod(request.getMethod()).build();
 
-        if (logOperation.saveRequestParam()) {
-            // 请求参数
-            entity.setRequestParams(ServletUtil.getParamPoint(point, request));
+            if (logOperation.saveRequestParam()) {
+                // 请求参数
+                entity.setRequestParams(ServletUtil.getParamPoint(point, request));
+            }
+
+            // 异步保存日志
+            logOperationService.saveAsync(entity);
         }
-
-        // 异步保存日志
-        logOperationService.saveAsync(entity);
     }
 
     /**

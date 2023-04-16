@@ -16,7 +16,7 @@
         ( SELECT
 	      t2.field_value
           FROM
-          locale_international_name t2
+          locale_name t2
           WHERE
 	      t2.table_name = 'security_menu'
 	      AND t2.field_name = 'name'
@@ -30,7 +30,7 @@
         ( SELECT
           t2.field_value
           FROM
-          locale_international_name t2
+          locale_name t2
           WHERE
           t2.table_name = 'security_menu'
           AND t2.field_name = 'name'

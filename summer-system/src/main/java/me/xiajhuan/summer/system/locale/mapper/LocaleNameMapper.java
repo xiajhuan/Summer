@@ -14,20 +14,20 @@ package me.xiajhuan.summer.system.locale.mapper;
 
 import com.baomidou.mybatisplus.annotation.InterceptorIgnore;
 import me.xiajhuan.summer.core.mp.mapper.CustomBaseMapper;
-import me.xiajhuan.summer.system.locale.entity.LocaleInternationalNameEntity;
+import me.xiajhuan.summer.system.locale.entity.LocaleNameEntity;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 /**
- * 国际化名称 Mapper
+ * 名称 Mapper
  *
  * @author xiajhuan
  * @date 2023/3/16
  */
 @InterceptorIgnore
-public interface LocaleInternationalNameMapper extends CustomBaseMapper<LocaleInternationalNameEntity> {
+public interface LocaleNameMapper extends CustomBaseMapper<LocaleNameEntity> {
 
-    @Select("SELECT 1 FROM locale_international_name WHERE" +
+    @Select("SELECT 1 FROM locale_name WHERE" +
             " line_id = #{lineId} AND locale = #{locale} LIMIT 1")
     Integer exist(@Param("lineId") long lineId, @Param("locale") String locale);
 
