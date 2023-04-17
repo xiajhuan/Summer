@@ -56,15 +56,15 @@ quartz.schedule-thread-count = 16
 quartz.schedule-thread-priority = 5
 
 # 最大触发超时时间（ms），超时则认为“错过触发”
-quartz.misfire-threshold = 12000
+quartz.misfire-threshold = 15000
 # 能处理“错过触发”的Trigger最大数量，note：数量大时将导致表被锁过长时间，会影响别的Trigger的执行性能
-quartz.max-misfires-to-handle-at-time = 1
+quartz.max-misfires-to-handle-at-time = 3
 
 # 是否是集群模式，值：true/false
 quartz.is-cluster = true
 # 当前实例报告给集群中其他实例的时间间隔（ms），只有quartz.is-cluster = true 时会生效
-quartz.cluster-checkin-interval = 15000
-# 一个实例节点允许接受的Trigger的最大数，只有quartz.is-cluster = true 时会生效，note：值越大，当前节点任务执行的越多，但集群间会不均衡
+quartz.cluster-checkin-interval = 20000
+# 一个实例节点允许接受的Trigger最大数，只有quartz.is-cluster = true 时会生效，note：值越大，当前节点任务执行的越多，但集群间会不均衡
 quartz.batch-trigger-acquisition-max-count = 1
 
 

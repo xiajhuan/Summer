@@ -171,7 +171,10 @@ management:
     # 指标
     metrics:
       enabled: true
-    # 定时任务
+    # 定时任务（Quartz）
+    quartz:
+      enabled: true
+    # 定时任务（Spring）
     scheduledtasks:
       enabled: true
     # 请求映射

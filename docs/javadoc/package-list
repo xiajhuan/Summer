@@ -42,11 +42,12 @@ me.xiajhuan.summer.core.validation.validator.subClass
 me.xiajhuan.summer.system.common.annotation
 me.xiajhuan.summer.system.common.aspect
 me.xiajhuan.summer.system.common.handler
+me.xiajhuan.summer.system.common.quartz.config
+me.xiajhuan.summer.system.common.schedule.config
+me.xiajhuan.summer.system.common.schedule.task
+me.xiajhuan.summer.system.common.schedule.task.subClass
 me.xiajhuan.summer.system.common.shiro.config
 me.xiajhuan.summer.system.common.shiro.oauth2
-me.xiajhuan.summer.system.common.task
-me.xiajhuan.summer.system.common.task.config
-me.xiajhuan.summer.system.common.task.subClass
 me.xiajhuan.summer.system.locale.controller
 me.xiajhuan.summer.system.locale.dto
 me.xiajhuan.summer.system.locale.entity
