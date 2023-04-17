@@ -40,17 +40,32 @@ captcha.cache-ttl = 5
 # 系统定时任务（Spring）
 # 是否开启系统定时任务（总开关），值：true/false
 enable-system-task = true
-# 系统定时任务线程池线程数
-system.pool-thread-count = 1
+# 线程池线程数
+system.schedule-thread-count = 1
 
-# 系统定时任务独立开关，只有总开关为true时才能生效，值：true/false
+# 独立开关，只有总开关为true时才能生效，值：true/false
 # 日志定时任务
 system.log-task = true
 # 权限相关定时任务
 system.security-task = true
 
 # 业务定时任务（Quartz）
+# 线程池线程数
+quartz.schedule-thread-count = 16
+# 线程优先级，值：1-10，5为公平竞争
+quartz.schedule-thread-priority = 5
 
+# 最大触发超时时间（ms），超时则认为“错过触发”
+quartz.misfire-threshold = 12000
+# 能处理“错过触发”的Trigger最大数量，note：数量大时将导致表被锁过长时间，会影响别的Trigger的执行性能
+quartz.max-misfires-to-handle-at-time = 1
+
+# 是否是集群模式，值：true/false
+quartz.is-cluster = true
+# 当前实例报告给集群中其他实例的时间间隔（ms），只有quartz.is-cluster = true 时会生效
+quartz.cluster-checkin-interval = 15000
+# 一个实例节点允许接受的Trigger的最大数，只有quartz.is-cluster = true 时会生效，note：值越大，当前节点任务执行的越多，但集群间会不均衡
+quartz.batch-trigger-acquisition-max-count = 1
 
 
 # *******************日志配置********************

@@ -52,7 +52,7 @@ public interface LogLoginService extends IService<LogLoginEntity> {
      * @param loginStatus    登录状态 {@link LoginStatusEnum}
      * @param request        {@link HttpServletRequest}
      */
-    @Async(ThreadPoolConst.ASYNC)
+    @Async(ThreadPoolConst.ASYNC_SPRING)
     void saveAsync(String loginUser, int loginOperation, int loginStatus, HttpServletRequest request);
 
     /**

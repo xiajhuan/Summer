@@ -10,7 +10,7 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.system.common.task;
+package me.xiajhuan.summer.system.common.schedule.task;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.log.Log;
@@ -33,7 +33,7 @@ public class SystemTask {
     protected static final Log LOGGER = LogFactory.get();
 
     /**
-     * 系统定时任务锁，防止多节点部署时同一任务重复执行
+     * 系统定时任务锁，防止集群部署时同一任务重复执行
      */
     private static final String LOCK_KEY = "TASK_LOCK_{}";
 

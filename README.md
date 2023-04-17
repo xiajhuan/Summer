@@ -54,6 +54,7 @@ Summer
 │    │    ├─locale      国际化模块
 │    │    ├─log         日志模块
 │    │    ├─monitor     监控模块
+│    │    ├─schedule    定时任务模块
 │    │    ├─security    权限相关模块
 │    │    ├─TODO        开发中...
 │    │

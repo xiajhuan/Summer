@@ -23,21 +23,21 @@ public class ThreadPoolConst {
     /**
      * Spring异步任务线程池Bean名称
      */
-    public static final String ASYNC = "springAsyncThreadPool";
+    public static final String ASYNC_SPRING = "springAsyncThreadPool";
 
     /**
      * Spring异步任务线程池线程名前缀
      */
-    public static final String ASYNC_PREFIX = "Async-Spring-";
+    public static final String ASYNC_SPRING_PREFIX = "Async-Spring-";
 
     /**
-     * Quartz定时任务线程池Bean名称
+     * Spring定时任务线程池线程名前缀
      */
-    public static final String SCHEDULE = "quartzScheduleThreadPool";
+    public static final String SCHEDULE_SPRING_PREFIX = "Schedule-Spring-";
 
     /**
      * Quartz定时任务线程池线程名前缀
      */
-    public static final String SCHEDULE_PREFIX = "Schedule-Quartz-";
+    public static final String SCHEDULE_QUARTZ_PREFIX = "Schedule-Quartz-";
 
 }

@@ -24,7 +24,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.AsyncConfigurer;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
-import org.springframework.scheduling.quartz.SimpleThreadPoolTaskExecutor;
 
 import javax.annotation.Resource;
 import java.lang.reflect.Method;
@@ -50,36 +49,19 @@ public class ThreadPoolConfig {
      *
      * @return {@link ThreadPoolTaskExecutor}
      */
-    @Bean(ThreadPoolConst.ASYNC)
+    @Bean(ThreadPoolConst.ASYNC_SPRING)
     public ThreadPoolTaskExecutor threadPoolTaskExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        executor.setCorePoolSize(setting.getInt("async.core-pool-size", "Thread", 8));
-        executor.setAllowCoreThreadTimeOut(setting.getBool("async.allow-core-thread-timeout", "Thread", false));
-        executor.setMaxPoolSize(setting.getInt("async.max-pool-size", "Thread", 32));
-        executor.setQueueCapacity(setting.getInt("async.queue-capacity", "Thread", 512));
-        executor.setKeepAliveSeconds(setting.getInt("async.keep-alive-seconds", "Thread", 30));
-        executor.setThreadNamePrefix(ThreadPoolConst.ASYNC_PREFIX);
-        executor.setWaitForTasksToCompleteOnShutdown(setting.getBool("async.wait-for-tasks-to-complete-on-shutdown", "Thread", true));
-        executor.setAwaitTerminationSeconds(setting.getInt("async.await-termination-Seconds", "Thread", 30));
+        executor.setCorePoolSize(setting.getInt("core-pool-size", "Async", 8));
+        executor.setAllowCoreThreadTimeOut(setting.getBool("allow-core-thread-timeout", "Async", false));
+        executor.setMaxPoolSize(setting.getInt("max-pool-size", "Async", 32));
+        executor.setQueueCapacity(setting.getInt("queue-capacity", "Async", 512));
+        executor.setKeepAliveSeconds(setting.getInt("keep-alive-seconds", "Async", 30));
+        executor.setThreadNamePrefix(ThreadPoolConst.ASYNC_SPRING_PREFIX);
+        executor.setWaitForTasksToCompleteOnShutdown(setting.getBool("wait-for-tasks-to-complete-on-shutdown", "Async", true));
+        executor.setAwaitTerminationSeconds(setting.getInt("await-termination-Seconds", "Async", 30));
         // 拒绝策略：由调用的线程处理任务
         executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
-        return executor;
-    }
-
-    /**
-     * 注册Quartz定时任务线程池
-     *
-     * @return {@link SimpleThreadPoolTaskExecutor}
-     */
-    @Bean(ThreadPoolConst.SCHEDULE)
-    public SimpleThreadPoolTaskExecutor simpleThreadPoolTaskExecutor() {
-        SimpleThreadPoolTaskExecutor executor = new SimpleThreadPoolTaskExecutor();
-        executor.setInstanceId("AUTO");
-        executor.setInstanceName("SummerScheduler");
-        executor.setThreadCount(setting.getInt("schedule.thread-count", "Thread", 16));
-        executor.setThreadPriority(setting.getInt("schedule.thread-priority", "Thread", 5));
-        executor.setThreadNamePrefix(ThreadPoolConst.SCHEDULE_PREFIX);
-        executor.setWaitForJobsToCompleteOnShutdown(setting.getBool("schedule.wait-for-jobs-to-complete-on-shutdown", "Thread", true));
         return executor;
     }
 

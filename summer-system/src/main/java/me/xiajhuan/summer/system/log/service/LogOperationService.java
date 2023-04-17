@@ -46,7 +46,7 @@ public interface LogOperationService extends IService<LogOperationEntity> {
      *
      * @param entity 操作日志Entity
      */
-    @Async(ThreadPoolConst.ASYNC)
+    @Async(ThreadPoolConst.ASYNC_SPRING)
     void saveAsync(LogOperationEntity entity);
 
     /**

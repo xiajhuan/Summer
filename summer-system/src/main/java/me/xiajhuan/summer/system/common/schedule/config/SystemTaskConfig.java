@@ -10,7 +10,7 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.system.common.task.config;
+package me.xiajhuan.summer.system.common.schedule.config;
 
 import cn.hutool.core.thread.ThreadUtil;
 import cn.hutool.log.Log;
@@ -18,9 +18,10 @@ import cn.hutool.log.LogFactory;
 import cn.hutool.setting.Setting;
 import me.xiajhuan.summer.core.constant.CacheConst;
 import me.xiajhuan.summer.core.constant.SettingConst;
+import me.xiajhuan.summer.core.constant.ThreadPoolConst;
 import me.xiajhuan.summer.core.properties.ServerCacheProperties;
-import me.xiajhuan.summer.system.common.task.subClass.LogTask;
-import me.xiajhuan.summer.system.common.task.subClass.SecurityTask;
+import me.xiajhuan.summer.system.common.schedule.task.subClass.LogTask;
+import me.xiajhuan.summer.system.common.schedule.task.subClass.SecurityTask;
 import me.xiajhuan.summer.system.log.service.LogErrorService;
 import me.xiajhuan.summer.system.log.service.LogLoginService;
 import me.xiajhuan.summer.system.log.service.LogOperationService;
@@ -100,8 +101,8 @@ public class SystemTaskConfig implements SchedulingConfigurer {
      */
     private ScheduledExecutorService buildSystemExecutorService() {
         if (enableSystemTask) {
-            return Executors.newScheduledThreadPool(setting.getInt("system.pool-thread-count", "Schedule", 1),
-                    ThreadUtil.newNamedThreadFactory("Schedule-Jdk-", false));
+            return Executors.newScheduledThreadPool(setting.getInt("system.schedule-thread-count", "Schedule", 1),
+                    ThreadUtil.newNamedThreadFactory(ThreadPoolConst.SCHEDULE_SPRING_PREFIX, false));
         }
         return null;
     }

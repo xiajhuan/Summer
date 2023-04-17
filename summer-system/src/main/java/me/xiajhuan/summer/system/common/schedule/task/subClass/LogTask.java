@@ -10,13 +10,13 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.system.common.task.subClass;
+package me.xiajhuan.summer.system.common.schedule.task.subClass;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.date.TimeInterval;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import me.xiajhuan.summer.system.common.task.SystemTask;
+import me.xiajhuan.summer.system.common.schedule.task.SystemTask;
 import me.xiajhuan.summer.system.log.service.LogErrorService;
 import me.xiajhuan.summer.system.log.service.LogLoginService;
 import me.xiajhuan.summer.system.log.service.LogOperationService;
