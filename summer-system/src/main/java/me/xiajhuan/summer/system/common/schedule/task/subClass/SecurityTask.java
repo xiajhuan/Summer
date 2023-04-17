@@ -43,11 +43,11 @@ public class SecurityTask extends AbstractTask {
 
         if (acquireLock(methodSignature)) {
             TimeInterval timer = DateUtil.timer();
-            LOGGER.info("【{}】开始执行：{}", methodSignature, DateUtil.date());
+            LOGGER.info(startMsg(methodSignature, DateUtil.date()));
 
             securityDeptService.cacheAll();
 
-            LOGGER.info("【{}】执行结束：{}，耗时【{}】ms", methodSignature, DateUtil.date(), timer.interval());
+            LOGGER.info(endMsg(methodSignature, DateUtil.date(), timer.interval()));
         }
     }
 

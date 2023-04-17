@@ -19,6 +19,8 @@ import lombok.Setter;
 import me.xiajhuan.summer.core.cache.factory.CacheServerFactory;
 import me.xiajhuan.summer.core.constant.TimeUnitConst;
 
+import java.util.Date;
+
 /**
  * 定时任务基类
  *
@@ -39,7 +41,7 @@ public class AbstractTask {
      * 是否是Redis缓存，note：<br>
      * 只有缓存类型为REDIS时才会在任务执行前获取锁
      */
-    protected boolean isRedisCache;
+    private boolean isRedisCache;
 
     /**
      * 获取锁，默认10min后过期
@@ -68,6 +70,29 @@ public class AbstractTask {
                     .setStringAbsent(StrUtil.format(LOCK_KEY, methodSignature), StrUtil.EMPTY, ttl);
         }
         return true;
+    }
+
+    /**
+     * 开始消息
+     *
+     * @param methodSignature 方法签名
+     * @param now             当前时间
+     * @return 开始消息
+     */
+    protected String startMsg(String methodSignature, Date now) {
+        return StrUtil.format("【system】【{}】开始执行：{}", methodSignature, now);
+    }
+
+    /**
+     * 结束消息
+     *
+     * @param methodSignature 方法签名
+     * @param now             当前时间
+     * @param cost            耗时（ms）
+     * @return 结束消息
+     */
+    protected String endMsg(String methodSignature, Date now, long cost) {
+        return StrUtil.format("【system】【{}】执行结束：{}，耗时【{}】ms", methodSignature, now, cost);
     }
 
 }

@@ -50,7 +50,7 @@ public interface LogErrorService extends IService<LogErrorEntity> {
      * @param e       {@link Exception}
      * @param request {@link HttpServletRequest}
      */
-    @Async(ThreadPoolConst.Async.COMMON)
+    @Async(ThreadPoolConst.ASYNC)
     void saveAsync(Exception e, HttpServletRequest request);
 
     /**

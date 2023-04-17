@@ -90,19 +90,28 @@ default.request-header = zh_CN
 default.jvm = en_US
 
 
-# *******************异步任务线程池配置********************
-[Async]
+# *******************线程池配置********************
+[Thread]
+# Spring异步任务线程池
 # 核心线程数，建议：I/O密集型任务：CPU核心数*2，CPU密集型任务：CPU核心数+1
-core-pool-size = 8
+async.core-pool-size = 8
 # 是否允许核心线程空闲时退出，值：true/false
-allow-core-thread-timeout = false
+async.allow-core-thread-timeout = false
 # 最大线程数
-max-pool-size = 32
+async.max-pool-size = 32
 # 阻塞队列大小
-queue-capacity = 512
+async.queue-capacity = 512
 # 空闲线程存活时间（s），note：如果是核心线程，则必须 allow-core-thread-timeout = true 时才生效
-keep-alive-seconds = 30
+async.keep-alive-seconds = 30
 # 服务停止时是否等待所有线程执行完，值：true/false
-wait-for-tasks-to-complete-on-shutdown = true
+async.wait-for-tasks-to-complete-on-shutdown = true
 # 服务停止时等待线程执行的时间（s），超时则强制销毁
-await-termination-Seconds = 30
+async.await-termination-Seconds = 30
+
+# Quartz定时任务线程池
+# 线程数
+schedule.thread-count = 16
+# 线程优先级，值：1-10，默认5为公平竞争
+schedule.thread-priority = 5
+# 服务停止时是否等待所有任务执行完，值：true/false
+schedule.wait-for-jobs-to-complete-on-shutdown = true

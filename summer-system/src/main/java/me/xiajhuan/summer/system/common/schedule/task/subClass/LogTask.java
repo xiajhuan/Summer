@@ -48,11 +48,11 @@ public class LogTask extends AbstractTask {
 
         if (acquireLock(methodSignature)) {
             TimeInterval timer = DateUtil.timer();
-            LOGGER.info("【{}】开始执行：{}", methodSignature, DateUtil.date());
+            LOGGER.info(startMsg(methodSignature, DateUtil.date()));
 
             logOperationService.clear();
 
-            LOGGER.info("【{}】执行结束：{}，耗时【{}】ms", methodSignature, DateUtil.date(), timer.interval());
+            LOGGER.info(endMsg(methodSignature, DateUtil.date(), timer.interval()));
         }
     }
 
@@ -66,11 +66,11 @@ public class LogTask extends AbstractTask {
 
         if (acquireLock(methodSignature)) {
             TimeInterval timer = DateUtil.timer();
-            LOGGER.info("【{}】开始执行：{}", methodSignature, DateUtil.date());
+            LOGGER.info(startMsg(methodSignature, DateUtil.date()));
 
             logErrorService.clear();
 
-            LOGGER.info("【{}】执行结束：{}，耗时【{}】ms", methodSignature, DateUtil.date(), timer.interval());
+            LOGGER.info(endMsg(methodSignature, DateUtil.date(), timer.interval()));
         }
     }
 
@@ -84,11 +84,11 @@ public class LogTask extends AbstractTask {
 
         if (acquireLock(methodSignature)) {
             TimeInterval timer = DateUtil.timer();
-            LOGGER.info("【{}】开始执行：{}", methodSignature, DateUtil.date());
+            LOGGER.info(startMsg(methodSignature, DateUtil.date()));
 
             logLoginService.clear();
 
-            LOGGER.info("【{}】执行结束：{}，耗时【{}】ms", methodSignature, DateUtil.date(), timer.interval());
+            LOGGER.info(endMsg(methodSignature, DateUtil.date(), timer.interval()));
         }
     }
 

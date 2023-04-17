@@ -18,7 +18,6 @@ import cn.hutool.log.LogFactory;
 import cn.hutool.setting.Setting;
 import me.xiajhuan.summer.core.constant.CacheConst;
 import me.xiajhuan.summer.core.constant.SettingConst;
-import me.xiajhuan.summer.core.constant.ThreadPoolConst;
 import me.xiajhuan.summer.core.properties.ServerCacheProperties;
 import me.xiajhuan.summer.system.common.schedule.task.subClass.LogTask;
 import me.xiajhuan.summer.system.common.schedule.task.subClass.SecurityTask;
@@ -41,12 +40,13 @@ import java.util.concurrent.ScheduledExecutorService;
  * 系统定时任务配置，note：
  * <pre>
  *   1.该定时任务无法提供对外暴露的接口，故不支持线上动态调整
- *   2.主要初衷是为一些系统层面的定时调度需求提供轻量级支持，例如：
- *     2.1 随机启动时缓存数据
- *     2.2 定期清理日志
- *     2.3 固定的系统批处理操作
- *   3.可通过system.setting下的Schedule组进行配置
- *   4.如需线上动态调整或是业务层面的定时调度需求，请在admin模块task包下编写任务逻辑实现
+ *   2.主要初衷是和业务层面的定时调度需求相分离
+ *   3.系统层面的定时调度需求极少调整，一般不需要业务开发人员关注，例如：
+ *     3.1 随服务启动时缓存数据
+ *     3.2 定期清理日志
+ *     3.3 固定的系统批处理操作
+ *   4.可通过system.setting下的Schedule组进行配置
+ *   5.如需线上动态调整或是业务层面的定时调度需求，请在admin模块task包下编写任务逻辑实现
  * </pre>
  *
  * @author xiajhuan
@@ -100,8 +100,8 @@ public class SystemTaskConfig implements SchedulingConfigurer {
      */
     private ScheduledExecutorService buildScheduledExecutorService() {
         if (enableSystemTask) {
-            return Executors.newScheduledThreadPool(setting.getInt("system.core-pool-size", "Schedule", 3),
-                    ThreadUtil.newNamedThreadFactory(ThreadPoolConst.Schedule.SYSTEM_PREFIX, false));
+            return Executors.newScheduledThreadPool(setting.getInt("system.pool-thread-count", "Schedule", 1),
+                    ThreadUtil.newNamedThreadFactory("Schedule-Jdk-", false));
         }
         return null;
     }
