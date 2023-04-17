@@ -10,7 +10,7 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.system.common.schedule.task;
+package me.xiajhuan.summer.system.common.task;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.log.Log;
@@ -22,13 +22,13 @@ import me.xiajhuan.summer.core.constant.TimeUnitConst;
 import java.util.Date;
 
 /**
- * 定时任务基类
+ * 系统定时任务 基类
  *
  * @author xiajhuan
  * @date 2023/4/15
  */
 @Setter
-public class AbstractTask {
+public class SystemTask {
 
     protected static final Log LOGGER = LogFactory.get();
 

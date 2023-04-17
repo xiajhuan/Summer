@@ -10,7 +10,7 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.system.common.schedule.config;
+package me.xiajhuan.summer.system.common.task.config;
 
 import cn.hutool.core.thread.ThreadUtil;
 import cn.hutool.log.Log;
@@ -19,8 +19,8 @@ import cn.hutool.setting.Setting;
 import me.xiajhuan.summer.core.constant.CacheConst;
 import me.xiajhuan.summer.core.constant.SettingConst;
 import me.xiajhuan.summer.core.properties.ServerCacheProperties;
-import me.xiajhuan.summer.system.common.schedule.task.subClass.LogTask;
-import me.xiajhuan.summer.system.common.schedule.task.subClass.SecurityTask;
+import me.xiajhuan.summer.system.common.task.subClass.LogTask;
+import me.xiajhuan.summer.system.common.task.subClass.SecurityTask;
 import me.xiajhuan.summer.system.log.service.LogErrorService;
 import me.xiajhuan.summer.system.log.service.LogLoginService;
 import me.xiajhuan.summer.system.log.service.LogOperationService;
@@ -40,7 +40,7 @@ import java.util.concurrent.ScheduledExecutorService;
  * 系统定时任务配置，note：
  * <pre>
  *   1.该定时任务无法提供对外暴露的接口，故不支持线上动态调整
- *   2.主要初衷是和业务层面的定时调度需求相分离
+ *   2.主要初衷是和业务层面的定时调度需求互相分离
  *   3.系统层面的定时调度需求极少调整，一般不需要业务开发人员关注，例如：
  *     3.1 随服务启动时缓存数据
  *     3.2 定期清理日志
@@ -90,15 +90,15 @@ public class SystemTaskConfig implements SchedulingConfigurer {
     @Override
     public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
         // note：这里只是设置自己的定时任务线程池，为null时如果有定时任务会使用Spring默认的线程池执行
-        taskRegistrar.setScheduler(buildScheduledExecutorService());
+        taskRegistrar.setScheduler(buildSystemExecutorService());
     }
 
     /**
-     * 构建定时任务线程池
+     * 构建系统定时任务线程池
      *
      * @return {@link ScheduledExecutorService} 或 {@code null}
      */
-    private ScheduledExecutorService buildScheduledExecutorService() {
+    private ScheduledExecutorService buildSystemExecutorService() {
         if (enableSystemTask) {
             return Executors.newScheduledThreadPool(setting.getInt("system.pool-thread-count", "Schedule", 1),
                     ThreadUtil.newNamedThreadFactory("Schedule-Jdk-", false));

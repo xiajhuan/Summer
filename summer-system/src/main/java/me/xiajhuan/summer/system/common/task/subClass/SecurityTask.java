@@ -10,14 +10,14 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.system.common.schedule.task.subClass;
+package me.xiajhuan.summer.system.common.task.subClass;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.date.TimeInterval;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import me.xiajhuan.summer.core.constant.TimeUnitConst;
-import me.xiajhuan.summer.system.common.schedule.task.AbstractTask;
+import me.xiajhuan.summer.system.common.task.SystemTask;
 import me.xiajhuan.summer.system.security.service.SecurityDeptService;
 import org.springframework.scheduling.annotation.Scheduled;
 
@@ -29,7 +29,7 @@ import org.springframework.scheduling.annotation.Scheduled;
  */
 @Setter
 @Accessors(chain = true)
-public class SecurityTask extends AbstractTask {
+public class SecurityTask extends SystemTask {
 
     private SecurityDeptService securityDeptService;
 
