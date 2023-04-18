@@ -12,6 +12,9 @@
 
 package me.xiajhuan.summer.system.common.quartz.config;
 
+import cn.hutool.core.lang.UUID;
+import cn.hutool.log.Log;
+import cn.hutool.log.LogFactory;
 import cn.hutool.setting.Setting;
 import cn.hutool.setting.dialect.Props;
 import com.baomidou.dynamic.datasource.DynamicRoutingDataSource;
@@ -25,6 +28,8 @@ import org.quartz.simpl.SimpleThreadPool;
 import org.springframework.scheduling.quartz.LocalDataSourceJobStore;
 
 import javax.annotation.Resource;
+import java.net.Inet4Address;
+import java.net.UnknownHostException;
 
 /**
  * Quartz配置
@@ -36,6 +41,8 @@ import javax.annotation.Resource;
  */
 @Configuration
 public class QuartzConfig {
+
+    private static final Log LOGGER = LogFactory.get();
 
     @Resource(name = SettingConst.SYSTEM)
     private Setting setting;
@@ -51,9 +58,9 @@ public class QuartzConfig {
 
     /**
      * 实例ID<br>
-     * note：集群模式下每个实例ID必须唯一，“AUTO”表示自动生成
+     * note：集群模式下每个实例ID必须唯一
      */
-    private static final String INSTANCE_ID = "AUTO";
+    private static String INSTANCE_ID;
 
     /**
      * 线程池Class
@@ -79,6 +86,18 @@ public class QuartzConfig {
      * note：{0}会被 {@link TABLE_PREFIX} 替换
      */
     private static final String LOCK_SQL = "SELECT * FROM {0}LOCKS WHERE LOCK_NAME = ? FOR UPDATE";
+
+    /**
+     * 初始化 {@link INSTANCE_ID}
+     */
+    static {
+        try {
+            INSTANCE_ID = Inet4Address.getLocalHost().getHostAddress();
+        } catch (UnknownHostException e) {
+            INSTANCE_ID = UUID.fastUUID().toString();
+            LOGGER.error(e, "获取本机IP失败【{}】", e.getMessage());
+        }
+    }
 
     /**
      * 注册 {@link SchedulerFactoryBean}

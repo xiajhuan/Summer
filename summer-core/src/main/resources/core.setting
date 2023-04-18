@@ -73,8 +73,10 @@ timeout = 0
 
 # *******************Sql相关配置********************
 [Sql]
-# p6spy不详细打印的Sql语句配置，替换格式：操作关键字:表名,操作关键字:表名，例如：INSERT:log_operation,INSERT:log_error
-exclude-and-replace = INSERT:log_operation,INSERT:log_error,INSERT:log_login
+# p6spy不详细打印的Sql配置，替换格式：操作关键字->表名,操作关键字->表名，例如：INSERT->log_operation,INSERT->log_error
+p6spy.sql-replace = INSERT->log_operation,INSERT->log_error,INSERT->log_login
+# 是否替换Quartz相关Sql，值：true/false
+p6spy.quartz-sql-replace = true
 
 # 是否开启Sql注入过滤，值：true/false
 enable-injection-filter = false

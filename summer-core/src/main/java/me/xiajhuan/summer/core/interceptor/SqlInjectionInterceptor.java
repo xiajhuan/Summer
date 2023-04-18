@@ -59,7 +59,7 @@ public class SqlInjectionInterceptor implements HandlerInterceptor {
      */
     @PostConstruct
     private void init() {
-        enable = setting.getBool("enable-injection-filter", "Sql", true);
+        enable = setting.getBool("enable-injection-filter", "Sql", false);
         if (enable) {
             String illegalKeyWord = setting.getByGroupWithLog("injection.illegal-key-word", "Sql");
             if (StrUtil.isBlank(illegalKeyWord)) {
