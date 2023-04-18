@@ -3,6 +3,8 @@ spring:
   datasource:
     # 多数据源
     dynamic:
+      # Sql打印
+      p6spy: true
       # 默认数据源
       primary: business
       datasource:

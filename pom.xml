@@ -43,7 +43,7 @@
         <quartz.version>2.3.2</quartz.version>
         <commons-pool2.version>2.11.1</commons-pool2.version>
         <guava.version>31.1-jre</guava.version>
-        <hutool.version>5.8.17</hutool.version>
+        <hutool.version>5.8.18</hutool.version>
         <easyexcel.version>3.2.1</easyexcel.version>
         <mica-xss.version>2.7.10</mica-xss.version>
         <compiler-plugin.version>3.11.0</compiler-plugin.version>

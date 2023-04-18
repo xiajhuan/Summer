@@ -26,7 +26,25 @@
             <pattern>${log.pattern}</pattern>
         </encoder>
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <!--只记录INFO日志-->
             <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!--warn文件-->
+    <appender name="file_warn" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log.path}/warn/warn.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <MaxHistory>${log.maxHistory}</MaxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${log.pattern}</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <!--只记录WARN日志-->
+            <level>WARN</level>
             <onMatch>ACCEPT</onMatch>
             <onMismatch>DENY</onMismatch>
         </filter>
@@ -41,20 +59,69 @@
             <pattern>${log.pattern}</pattern>
         </encoder>
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <!--只记录ERROR日志-->
             <level>ERROR</level>
             <onMatch>ACCEPT</onMatch>
             <onMismatch>DENY</onMismatch>
         </filter>
     </appender>
 
+    <!--
+    异步日志注意事项：
+        1.参数：
+            queueSize：阻塞队列大小（默认256，即内存中最多保存256条日志）
+            discardingThreshold：丢弃日志的阈值，防止队列满后发生阻塞（默认队列剩余容量 < 队列长度的20% 会丢弃TRACE/DEBUG/INFO日志）
+            neverBlock：控制队列满时，加入的日志是否直接丢弃，不会阻塞等待（默认false）
+        2.坑点：
+            queueSize过大可能导致OOM
+            queueSize过小且discardingThreshold设置大于0（或默认值），队列剩余容量小于阈值就会丢弃<=INFO的日志
+            discardingThreshold为“日志条数”，不是“百分比”
+            neverBlock默认false意味着可能会出现阻塞
+        3.建议：
+            若优先绝对性能，设置 neverBlock = true，永不阻塞
+            若优先绝不丢失日志，设置 discardingThreshold = 0 且最好把queueSize设置大点
+            若两者兼顾，可丢弃不重要日志，把queueSize设置大点，再设置合理的discardingThreshold
+    -->
+
+    <!--控制台异步-->
+    <appender name="console_async" class="ch.qos.logback.classic.AsyncAppender">
+        <neverBlock>true</neverBlock>
+        <discardingThreshold>128</discardingThreshold>
+        <queueSize>2048</queueSize>
+        <appender-ref ref="console"/>
+    </appender>
+
+    <!--info文件异步-->
+    <appender name="file_info_async" class="ch.qos.logback.classic.AsyncAppender">
+        <neverBlock>true</neverBlock>
+        <discardingThreshold>128</discardingThreshold>
+        <queueSize>2048</queueSize>
+        <appender-ref ref="file_info"/>
+    </appender>
+
+    <!--warn文件异步-->
+    <appender name="file_warn_async" class="ch.qos.logback.classic.AsyncAppender">
+        <discardingThreshold>0</discardingThreshold>
+        <queueSize>512</queueSize>
+        <appender-ref ref="file_warn"/>
+    </appender>
+
+    <!--error文件异步-->
+    <appender name="file_error_async" class="ch.qos.logback.classic.AsyncAppender">
+        <discardingThreshold>0</discardingThreshold>
+        <queueSize>512</queueSize>
+        <appender-ref ref="file_error"/>
+    </appender>
+
     <!--控制台-->
     <root level="debug">
-        <appender-ref ref="console"/>
+        <appender-ref ref="console_async"/>
     </root>
 
     <!--文件-->
     <root level="info">
-        <appender-ref ref="file_info"/>
-        <appender-ref ref="file_error"/>
+        <appender-ref ref="file_info_async"/>
+        <appender-ref ref="file_warn_async"/>
+        <appender-ref ref="file_error_async"/>
     </root>
 </configuration>

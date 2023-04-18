@@ -102,7 +102,7 @@ public class SystemTaskConfig implements SchedulingConfigurer {
     private ScheduledExecutorService buildSystemExecutorService() {
         if (enableSystemTask) {
             return Executors.newScheduledThreadPool(setting.getInt("system.schedule-thread-count", "Schedule", 1),
-                    ThreadUtil.newNamedThreadFactory(ThreadPoolConst.SCHEDULE_SPRING_PREFIX, false));
+                    ThreadUtil.newNamedThreadFactory(ThreadPoolConst.SCHEDULE_SYSTEM_PREFIX, false));
         }
         return null;
     }

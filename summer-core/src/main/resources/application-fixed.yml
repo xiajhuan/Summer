@@ -58,8 +58,6 @@ spring:
   datasource:
     # 多数据源
     dynamic:
-      # Sql打印
-      p6spy: true
       # 连接池配置
       hikari:
         # 配置项说明参考 com.zaxxer.hikari.HikariConfigMXBean

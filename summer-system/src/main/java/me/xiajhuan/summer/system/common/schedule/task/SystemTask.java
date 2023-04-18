@@ -44,13 +44,13 @@ public class SystemTask {
     private boolean isRedisCache;
 
     /**
-     * 获取锁，默认10min后过期
+     * 获取锁，默认20min过期
      *
      * @param methodSignature 方法签名，格式：简单类名#方法名
      * @return 是否获取到锁，true：是 false：否
      */
     protected boolean acquireLock(String methodSignature) {
-        return acquireLock(methodSignature, 10 * TimeUnitConst.MINUTE);
+        return acquireLock(methodSignature, 20 * TimeUnitConst.MINUTE);
     }
 
     /**

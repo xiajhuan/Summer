@@ -21,23 +21,23 @@ package me.xiajhuan.summer.core.constant;
 public class ThreadPoolConst {
 
     /**
-     * Spring异步任务线程池Bean名称
+     * 通用异步任务线程池Bean名称
      */
-    public static final String ASYNC_SPRING = "springAsyncThreadPool";
+    public static final String ASYNC_COMMON = "asyncCommonThreadPool";
 
     /**
-     * Spring异步任务线程池线程名前缀
+     * 通用异步任务线程池线程名前缀
      */
-    public static final String ASYNC_SPRING_PREFIX = "Async-Spring-";
+    public static final String ASYNC_COMMON_PREFIX = "Async-Common-";
 
     /**
-     * Spring定时任务线程池线程名前缀
+     * 系统定时任务线程池线程名前缀
      */
-    public static final String SCHEDULE_SPRING_PREFIX = "Schedule-Spring-";
+    public static final String SCHEDULE_SYSTEM_PREFIX = "Schedule-System-";
 
     /**
-     * Quartz定时任务线程池线程名前缀
+     * 业务定时任务线程池线程名前缀
      */
-    public static final String SCHEDULE_QUARTZ_PREFIX = "Schedule-Quartz-";
+    public static final String SCHEDULE_BUSINESS_PREFIX = "Schedule-Business-";
 
 }

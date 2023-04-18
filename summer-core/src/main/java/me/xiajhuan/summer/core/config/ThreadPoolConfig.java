@@ -45,11 +45,11 @@ public class ThreadPoolConfig {
     private Setting setting;
 
     /**
-     * 注册Spring异步任务线程池
+     * 注册通用异步任务线程池
      *
      * @return {@link ThreadPoolTaskExecutor}
      */
-    @Bean(ThreadPoolConst.ASYNC_SPRING)
+    @Bean(ThreadPoolConst.ASYNC_COMMON)
     public ThreadPoolTaskExecutor threadPoolTaskExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         executor.setCorePoolSize(setting.getInt("core-pool-size", "Async", 8));
@@ -57,7 +57,7 @@ public class ThreadPoolConfig {
         executor.setMaxPoolSize(setting.getInt("max-pool-size", "Async", 32));
         executor.setQueueCapacity(setting.getInt("queue-capacity", "Async", 512));
         executor.setKeepAliveSeconds(setting.getInt("keep-alive-seconds", "Async", 30));
-        executor.setThreadNamePrefix(ThreadPoolConst.ASYNC_SPRING_PREFIX);
+        executor.setThreadNamePrefix(ThreadPoolConst.ASYNC_COMMON_PREFIX);
         executor.setWaitForTasksToCompleteOnShutdown(setting.getBool("wait-for-tasks-to-complete-on-shutdown", "Async", true));
         executor.setAwaitTerminationSeconds(setting.getInt("await-termination-Seconds", "Async", 30));
         // 拒绝策略：由调用的线程处理任务
@@ -66,7 +66,7 @@ public class ThreadPoolConfig {
     }
 
     /**
-     * Spring异步任务异常配置
+     * 异步任务异常配置
      *
      * @see AsyncConfigurer
      */
