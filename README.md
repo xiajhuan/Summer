@@ -64,7 +64,6 @@ Summer
 ├─summer-core      核心模块（专注于核心功能、工具集和配置项的封装支持）
 │    └─core 
 │    │    ├─base        基类定义
-│    │    ├─boot        SpringBoot启动钩子
 │    │    ├─cache       缓存封装支持
 │    │    ├─config      系统基本配置
 │    │    ├─constant    常量定义
@@ -77,6 +76,7 @@ Summer
 │    │    ├─mp          MybatisPlus封装支持
 │    │    ├─properties  自定义SpringBoot配置
 │    │    ├─ratelimiter 接口限流功能支持
+│    │    ├─runner      SpringBoot-Runner
 │    │    ├─utils       工具封装支持
 │    │    ├─validation  对象校验支持
 │    │
@@ -97,7 +97,7 @@ Summer
 - Quartz：2.3.2
 - CommonsPool2：2.11.1
 - Guava：31.1-jre
-- Hutool：5.8.17
+- Hutool：5.8.18
 - EasyExcel：3.2.1
 - MicaXss：2.7.10
 
