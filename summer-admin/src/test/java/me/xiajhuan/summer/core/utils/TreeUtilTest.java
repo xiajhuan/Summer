@@ -73,7 +73,7 @@ public class TreeUtilTest implements CommonMsg {
 
         List<SecurityMenuDto> treeNodes = TreeUtil.buildDto(SecurityMenuDto.class, menuDtoList, TreeConst.ROOT,
                 "url", "permissions");
-        Assertions.assertTrue(treeNodes.size() == 2, "菜单树构建失败！");
+        Assertions.assertEquals(2, treeNodes.size(), "菜单树构建失败！");
         Console.log(JSONUtil.toJsonPrettyStr(treeNodes));
 
         Console.log(successMsg(methodSignature));

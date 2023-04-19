@@ -18,8 +18,7 @@ import me.xiajhuan.summer.CommonMsg;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * 权限相关工具 Test
@@ -33,7 +32,7 @@ public class SecurityUtilTest implements CommonMsg {
     /**
      * 明文
      */
-    private static String PLAIN_TEXT = "16042XJH";
+    private static final String PLAIN_TEXT = "16042XJH";
 
     /**
      * 密文
@@ -50,7 +49,7 @@ public class SecurityUtilTest implements CommonMsg {
 
         String token = SecurityUtil.generateToken();
         assertNotNull(token, "生成Token失败！");
-        assertTrue(token.length() == 32, "生成的Token长度不为32！");
+        assertEquals(32, token.length(), "生成的Token长度不为32！");
         Console.log("生成的Token：{}", token);
 
         Console.log(successMsg(methodSignature));
@@ -66,7 +65,7 @@ public class SecurityUtilTest implements CommonMsg {
 
         HASHED = SecurityUtil.encode(PLAIN_TEXT);
         assertNotNull(HASHED, "加密失败！");
-        assertTrue(HASHED.length() == 60, "密文长度不为60！");
+        assertEquals(60, HASHED.length(), "密文长度不为60！");
         Console.log("加密后的密文：{}", HASHED);
 
         Console.log(successMsg(methodSignature));
