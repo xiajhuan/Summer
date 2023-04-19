@@ -40,8 +40,8 @@ public enum CaptchaTypeEnum {
      */
     Shear("Shear", "扭曲干扰");
 
-    private String value;
+    private final String value;
 
-    private String name;
+    private final String name;
 
 }

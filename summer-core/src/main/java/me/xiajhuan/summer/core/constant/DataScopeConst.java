@@ -72,11 +72,11 @@ public class DataScopeConst {
          */
         SELF(4, "仅本人", "用户自己的数据");
 
-        private Integer value;
+        private final int value;
 
-        private String name;
+        private final String name;
 
-        private String desc;
+        private final String desc;
 
     }
 

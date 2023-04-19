@@ -41,7 +41,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class SecurityMenuDto extends TreeNode {
+public class SecurityMenuDto extends TreeNode<Long> {
 
     /**
      * 主键ID

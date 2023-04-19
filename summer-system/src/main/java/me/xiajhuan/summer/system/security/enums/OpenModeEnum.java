@@ -35,8 +35,8 @@ public enum OpenModeEnum {
      */
     OUTER(1, "外部");
 
-    private Integer value;
+    private final int value;
 
-    private String name;
+    private final String name;
 
 }

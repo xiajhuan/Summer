@@ -242,7 +242,6 @@ public class GlobalExceptionHandler {
         if (msg == null) {
             msg = e.getMessage();
         }
-
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug(e, msg);
         } else {

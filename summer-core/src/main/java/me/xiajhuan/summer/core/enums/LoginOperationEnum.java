@@ -35,8 +35,8 @@ public enum LoginOperationEnum {
      */
     LOGOUT(1, "用户退出");
 
-    private int value;
+    private final int value;
 
-    private String name;
+    private final String name;
 
 }

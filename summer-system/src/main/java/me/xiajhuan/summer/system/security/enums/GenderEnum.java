@@ -40,8 +40,8 @@ public enum GenderEnum {
      */
     SECRET(2, "保密");
 
-    private Integer value;
+    private final int value;
 
-    private String name;
+    private final String name;
 
 }

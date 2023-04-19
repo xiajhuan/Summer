@@ -40,8 +40,8 @@ public enum NonLoggedUserEnum {
      */
     THIRD_PART("thirdPart", "第三方用户");
 
-    private String value;
+    private final String value;
 
-    private String name;
+    private final String name;
 
 }

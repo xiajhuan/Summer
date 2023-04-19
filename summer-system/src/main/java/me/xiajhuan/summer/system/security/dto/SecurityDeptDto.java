@@ -37,7 +37,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class SecurityDeptDto extends TreeNode {
+public class SecurityDeptDto extends TreeNode<Long> {
 
     /**
      * 主键ID

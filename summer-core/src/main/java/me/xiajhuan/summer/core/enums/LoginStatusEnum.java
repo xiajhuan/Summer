@@ -40,8 +40,8 @@ public enum LoginStatusEnum {
      */
     DISABLE(2, "账号已停用");
 
-    private Integer value;
+    private final int value;
 
-    private String name;
+    private final String name;
 
 }

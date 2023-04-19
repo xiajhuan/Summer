@@ -35,8 +35,8 @@ public enum OperationStatusEnum {
      */
     SUCCESS(1, "成功");
 
-    private Integer value;
+    private final int value;
 
-    private String name;
+    private final String name;
 
 }

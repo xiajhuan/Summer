@@ -37,10 +37,10 @@ public enum LocaleSupportEnum {
      */
     EN_US(Locale.US, "en_US", "^[2-9]\\d{2}[2-9](?!11)\\d{6}$");
 
-    private Locale value;
+    private final Locale value;
 
-    private String name;
+    private final String name;
 
-    private String mobileRegex;
+    private final String mobileRegex;
 
 }

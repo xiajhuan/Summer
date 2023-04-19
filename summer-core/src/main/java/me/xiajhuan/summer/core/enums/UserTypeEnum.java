@@ -35,8 +35,8 @@ public enum UserTypeEnum {
      */
     GENERAL(1, "普通用户");
 
-    private int value;
+    private final int value;
 
-    private String name;
+    private final String name;
 
 }

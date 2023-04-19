@@ -35,8 +35,8 @@ public enum ComponentTypeEnum {
      */
     BUTTON(1, "按钮");
 
-    private Integer value;
+    private final int value;
 
-    private String name;
+    private final String name;
 
 }

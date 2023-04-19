@@ -26,7 +26,7 @@ public class Oauth2Token implements AuthenticationToken {
     /**
      * accessToken
      */
-    private String accessToken;
+    private final String accessToken;
 
     /**
      * 构造Oauth2Token

@@ -40,8 +40,8 @@ public enum OperationGroupEnum {
      */
     OTHER_OPERATION(2, "Other Operation");
 
-    private Integer value;
+    private final int value;
 
-    private String name;
+    private final String name;
 
 }

@@ -35,8 +35,8 @@ public enum StatusEnum {
      */
     ENABLE(1, "正常");
 
-    private Integer value;
+    private final int value;
 
-    private String name;
+    private final String name;
 
 }
