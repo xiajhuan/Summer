@@ -14,6 +14,7 @@ package me.xiajhuan.summer.system.common.quartz.config;
 
 import cn.hutool.core.lang.UUID;
 import cn.hutool.core.text.StrPool;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.setting.Setting;
 import cn.hutool.setting.dialect.Props;
 import com.baomidou.dynamic.datasource.DynamicRoutingDataSource;
@@ -92,7 +93,7 @@ public class QuartzConfig {
         String ip = SystemUtil.getIp();
         String port = SystemUtil.getPort();
         if (ip != null && port != null) {
-            instanceId = ip + StrPool.COLON + port;
+            instanceId = StrUtil.subAfter(ip, StrPool.DOT, true) + StrPool.COLON + port;
         } else {
             instanceId = UUID.fastUUID().toString();
         }

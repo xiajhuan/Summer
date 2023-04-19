@@ -5,9 +5,9 @@
     <property name="log.path" value="log"/>
     <property name="log.maxHistory" value="15"/>
     <property name="log.colorPattern"
-              value="%magenta(%d{yyyy-MM-dd HH:mm:ss}) %highlight(%-5level) %boldCyan([${springAppName:-},%X{X-B3-TraceId:-},%X{X-B3-SpanId:-},%X{X-Span-Export:-}]) %yellow(%thread) %green(%logger) %msg%n"/>
+              value="%blue(%d{yyyy-MM-dd HH:mm:ss}) %highlight(%-5level) %yellow(%thread) %magenta(%logger) %cyan(%msg%n)"/>
     <property name="log.pattern"
-              value="%d{yyyy-MM-dd HH:mm:ss} %-5level [${springAppName:-},%X{X-B3-TraceId:-},%X{X-B3-SpanId:-},%X{X-Span-Export:-}] %thread %logger %msg%n"/>
+              value="%d{yyyy-MM-dd HH:mm:ss} %-5level %thread %logger %msg%n"/>
 
     <!--控制台-->
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
