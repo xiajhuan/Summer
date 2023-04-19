@@ -25,6 +25,7 @@ import me.xiajhuan.summer.system.common.schedule.task.subClass.SecurityTask;
 import me.xiajhuan.summer.system.log.service.LogErrorService;
 import me.xiajhuan.summer.system.log.service.LogLoginService;
 import me.xiajhuan.summer.system.log.service.LogOperationService;
+import me.xiajhuan.summer.system.log.service.LogTaskService;
 import me.xiajhuan.summer.system.security.service.SecurityDeptService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -118,6 +119,9 @@ public class SystemTaskConfig implements SchedulingConfigurer {
     @Resource
     private LogLoginService logLoginService;
 
+    @Resource
+    private LogTaskService logTaskService;
+
     /**
      * 注册日志定时任务
      *
@@ -129,7 +133,8 @@ public class SystemTaskConfig implements SchedulingConfigurer {
             LogTask logTask = new LogTask()
                     .setLogOperationService(logOperationService)
                     .setLogErrorService(logErrorService)
-                    .setLogLoginService(logLoginService);
+                    .setLogLoginService(logLoginService)
+                    .setLogTaskService(logTaskService);
             logTask.setRedisCache(isRedisCache);
             LOGGER.info("【{}】系统定时任务【LogTask】加载完毕", applicationName);
             return logTask;

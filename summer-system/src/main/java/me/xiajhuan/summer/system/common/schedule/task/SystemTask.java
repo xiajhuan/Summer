@@ -28,7 +28,7 @@ import java.util.Date;
  * @date 2023/4/15
  */
 @Setter
-public class SystemTask {
+public abstract class SystemTask {
 
     protected static final Log LOGGER = LogFactory.get();
 
@@ -80,7 +80,7 @@ public class SystemTask {
      * @return 开始消息
      */
     protected String startMsg(String methodSignature, Date now) {
-        return StrUtil.format("【system】【{}】开始执行：{}", methodSignature, now);
+        return StrUtil.format("【System】【{}】开始执行：{}", methodSignature, now);
     }
 
     /**
@@ -92,7 +92,7 @@ public class SystemTask {
      * @return 结束消息
      */
     protected String endMsg(String methodSignature, Date now, long cost) {
-        return StrUtil.format("【system】【{}】执行结束：{}，耗时【{}】ms", methodSignature, now, cost);
+        return StrUtil.format("【System】【{}】执行结束：{}，耗时【{}】ms", methodSignature, now, cost);
     }
 
 }

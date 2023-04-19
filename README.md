@@ -45,7 +45,6 @@ Summer
 │    │    ├─task        定时任务模块
 │    │
 │    └─resources
-│         ├─env         环境配置
 │         ├─mapper      业务模块Mapper.xml
 │
 ├─summer-system    系统模块（专注于系统基本功能支持）
@@ -83,7 +82,6 @@ Summer
 │    └─resources 
 │         ├─custom      自定义配置
 │         ├─i18n        国际化配置
-│         ├─META-INF    SpringBoot SPI
 ```
 
 ### 依赖清单

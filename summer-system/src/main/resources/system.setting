@@ -58,7 +58,7 @@ business.schedule-thread-priority = 5
 # 最大触发超时时间（ms），超时则认为“错过触发”
 business.misfire-threshold = 15000
 # 能处理“错过触发”的Trigger最大数量，note：数量大时将导致表被锁过长时间，会影响别的Trigger的执行性能
-business.max-misfires-to-handle-at-time = 3
+business.max-misfires-to-handle-at-time = 2
 
 # 是否是集群模式，值：true/false
 business.is-cluster = true
@@ -86,3 +86,8 @@ error.clear-days-limit = -90
 
 # 登录日志清理天数限制，-n则清理n天以前的日志
 login.clear-days-limit = -30
+
+# 保存任务日志时，异常堆栈的最大长度，note：不能超过表字段限制的长度
+task.stacktrace-length = 65535
+# 任务日志清理天数限制，-n则清理n天以前的日志
+task.clear-days-limit = -90

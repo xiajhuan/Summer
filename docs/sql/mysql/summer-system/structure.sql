@@ -291,6 +291,29 @@ CREATE TABLE `log_login`
   ROW_FORMAT = Dynamic;
 
 -- ----------------------------
+-- Table structure for log_task
+-- ----------------------------
+DROP TABLE IF EXISTS `log_task`;
+CREATE TABLE `log_task`
+(
+    `id`          bigint(20)                                                     NOT NULL COMMENT '主键ID',
+    `create_by`   varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci   NULL DEFAULT NULL COMMENT '创建者',
+    `create_time` datetime(0)                                                    NULL DEFAULT NULL COMMENT '创建时间',
+    `task_id`     bigint(20)                                                     NULL DEFAULT NULL COMMENT '任务ID',
+    `bean_name`   varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT '0' COMMENT 'Bean名称',
+    `json`        varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '0' COMMENT '参数（Json格式）',
+    `task_time`   int(11)                                                        NULL DEFAULT NULL COMMENT '任务时长（ms）',
+    `status`      tinyint(1)                                                     NULL DEFAULT NULL COMMENT '状态  0：失败 1：成功',
+    `error_info`  text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci          NULL COMMENT '异常堆栈信息',
+    PRIMARY KEY (`id`) USING BTREE,
+    INDEX `idx_task_id` (`task_id`) USING BTREE,
+    INDEX `idx_create_time` (`create_time`) USING BTREE
+) ENGINE = InnoDB
+  CHARACTER SET = utf8mb4
+  COLLATE = utf8mb4_general_ci COMMENT = '任务日志'
+  ROW_FORMAT = Dynamic;
+
+-- ----------------------------
 -- Table structure for monitor_online
 -- ----------------------------
 DROP TABLE IF EXISTS `monitor_online`;

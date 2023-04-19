@@ -58,6 +58,8 @@ spring:
   datasource:
     # 多数据源
     dynamic:
+      # 必须严格匹配所有数据源
+      strict: true
       # 连接池配置
       hikari:
         # 配置项说明参考 com.zaxxer.hikari.HikariConfigMXBean

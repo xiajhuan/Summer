@@ -20,6 +20,7 @@ import me.xiajhuan.summer.system.common.schedule.task.SystemTask;
 import me.xiajhuan.summer.system.log.service.LogErrorService;
 import me.xiajhuan.summer.system.log.service.LogLoginService;
 import me.xiajhuan.summer.system.log.service.LogOperationService;
+import me.xiajhuan.summer.system.log.service.LogTaskService;
 import org.springframework.scheduling.annotation.Scheduled;
 
 /**
@@ -37,6 +38,8 @@ public class LogTask extends SystemTask {
     private LogErrorService logErrorService;
 
     private LogLoginService logLoginService;
+
+    private LogTaskService logTaskService;
 
     /**
      * 清理操作日志<br>
@@ -87,6 +90,24 @@ public class LogTask extends SystemTask {
             LOGGER.info(startMsg(methodSignature, DateUtil.date()));
 
             logLoginService.clear();
+
+            LOGGER.info(endMsg(methodSignature, DateUtil.date(), timer.interval()));
+        }
+    }
+
+    /**
+     * 清理任务日志<br>
+     * note：按标准时间计，每天 02:00 执行
+     */
+    @Scheduled(cron = "0 0 2 * * ?")
+    public void clearTaskLog() {
+        String methodSignature = "LogTask#clearTaskLog";
+
+        if (acquireLock(methodSignature)) {
+            TimeInterval timer = DateUtil.timer();
+            LOGGER.info(startMsg(methodSignature, DateUtil.date()));
+
+            logTaskService.clear();
 
             LOGGER.info(endMsg(methodSignature, DateUtil.date(), timer.interval()));
         }
