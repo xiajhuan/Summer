@@ -19,8 +19,6 @@ import lombok.Setter;
 import me.xiajhuan.summer.core.cache.factory.CacheServerFactory;
 import me.xiajhuan.summer.core.constant.TimeUnitConst;
 
-import java.util.Date;
-
 /**
  * 系统定时任务 基类
  *
@@ -76,23 +74,21 @@ public abstract class SystemTask {
      * 开始消息
      *
      * @param methodSignature 方法签名
-     * @param now             当前时间
      * @return 开始消息
      */
-    protected String startMsg(String methodSignature, Date now) {
-        return StrUtil.format("【System】【{}】开始执行：{}", methodSignature, now);
+    protected String startMsg(String methodSignature) {
+        return StrUtil.format("【System】【{}】开始执行...", methodSignature);
     }
 
     /**
      * 结束消息
      *
      * @param methodSignature 方法签名
-     * @param now             当前时间
      * @param cost            耗时（ms）
      * @return 结束消息
      */
-    protected String endMsg(String methodSignature, Date now, long cost) {
-        return StrUtil.format("【System】【{}】执行结束：{}，耗时【{}】ms", methodSignature, now, cost);
+    protected String endMsg(String methodSignature, long cost) {
+        return StrUtil.format("【System】【{}】执行结束，耗时【{}】ms", methodSignature, cost);
     }
 
 }

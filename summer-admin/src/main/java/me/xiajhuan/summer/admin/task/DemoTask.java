@@ -31,11 +31,11 @@ public class DemoTask extends BusinessTask {
         String taskName = "demo";
 
         TimeInterval timer = DateUtil.timer();
-        LOGGER.info(startMsg(taskName, DateUtil.date()));
+        LOGGER.info(startMsg(taskName));
 
         LOGGER.info("xxx业务处理中...");
 
-        LOGGER.info(endMsg(taskName, DateUtil.date(), timer.interval()));
+        LOGGER.info(endMsg(taskName, timer.interval()));
     }
 
 }

@@ -51,11 +51,11 @@ public class LogTask extends SystemTask {
 
         if (acquireLock(methodSignature)) {
             TimeInterval timer = DateUtil.timer();
-            LOGGER.info(startMsg(methodSignature, DateUtil.date()));
+            LOGGER.info(startMsg(methodSignature));
 
             logOperationService.clear();
 
-            LOGGER.info(endMsg(methodSignature, DateUtil.date(), timer.interval()));
+            LOGGER.info(endMsg(methodSignature, timer.interval()));
         }
     }
 
@@ -69,11 +69,11 @@ public class LogTask extends SystemTask {
 
         if (acquireLock(methodSignature)) {
             TimeInterval timer = DateUtil.timer();
-            LOGGER.info(startMsg(methodSignature, DateUtil.date()));
+            LOGGER.info(startMsg(methodSignature));
 
             logErrorService.clear();
 
-            LOGGER.info(endMsg(methodSignature, DateUtil.date(), timer.interval()));
+            LOGGER.info(endMsg(methodSignature, timer.interval()));
         }
     }
 
@@ -87,11 +87,11 @@ public class LogTask extends SystemTask {
 
         if (acquireLock(methodSignature)) {
             TimeInterval timer = DateUtil.timer();
-            LOGGER.info(startMsg(methodSignature, DateUtil.date()));
+            LOGGER.info(startMsg(methodSignature));
 
             logLoginService.clear();
 
-            LOGGER.info(endMsg(methodSignature, DateUtil.date(), timer.interval()));
+            LOGGER.info(endMsg(methodSignature, timer.interval()));
         }
     }
 
@@ -105,11 +105,11 @@ public class LogTask extends SystemTask {
 
         if (acquireLock(methodSignature)) {
             TimeInterval timer = DateUtil.timer();
-            LOGGER.info(startMsg(methodSignature, DateUtil.date()));
+            LOGGER.info(startMsg(methodSignature));
 
             logTaskService.clear();
 
-            LOGGER.info(endMsg(methodSignature, DateUtil.date(), timer.interval()));
+            LOGGER.info(endMsg(methodSignature, timer.interval()));
         }
     }
 

@@ -16,8 +16,6 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
 
-import java.util.Date;
-
 /**
  * 业务定时任务 基类
  *
@@ -39,23 +37,21 @@ public abstract class BusinessTask {
      * 开始消息
      *
      * @param taskName 定时任务名称
-     * @param now      当前时间
      * @return 开始消息
      */
-    protected String startMsg(String taskName, Date now) {
-        return StrUtil.format("【Business】【{}】开始执行：{}", taskName, now);
+    protected String startMsg(String taskName) {
+        return StrUtil.format("【Business】【{}】开始执行...", taskName);
     }
 
     /**
      * 结束消息
      *
      * @param taskName 定时任务名称
-     * @param now      当前时间
      * @param cost     耗时（ms）
      * @return 结束消息
      */
-    protected String endMsg(String taskName, Date now, long cost) {
-        return StrUtil.format("【Business】【{}】执行结束：{}，耗时【{}】ms", taskName, now, cost);
+    protected String endMsg(String taskName, long cost) {
+        return StrUtil.format("【Business】【{}】执行结束，耗时【{}】ms", taskName, cost);
     }
 
 }

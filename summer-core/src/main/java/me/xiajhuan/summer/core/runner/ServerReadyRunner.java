@@ -12,7 +12,6 @@
 
 package me.xiajhuan.summer.core.runner;
 
-import cn.hutool.core.date.DateUtil;
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
 import me.xiajhuan.summer.core.utils.SystemUtil;
@@ -33,7 +32,7 @@ import javax.annotation.Resource;
  */
 @Component
 @Order
-public class StartedUpRunner implements ApplicationRunner {
+public class ServerReadyRunner implements ApplicationRunner {
 
     private static final Log LOGGER = LogFactory.get();
 
@@ -43,11 +42,11 @@ public class StartedUpRunner implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) {
         if (context.isActive()) {
-            LOGGER.info("  _   _   _   _   _   _   _   _");
-            LOGGER.info(" / \\ / \\ / \\ / \\ / \\ / \\ / \\ / \\");
-            LOGGER.info("( c | o | m | p | l | e | t | e )");
-            LOGGER.info(" \\_/ \\_/ \\_/ \\_/ \\_/ \\_/ \\_/ \\_/");
-            LOGGER.info("【{}】启动完毕，时间【{}】", SystemUtil.getApplicationName(), DateUtil.date());
+            LOGGER.info("  _   _   _   _   _  ");
+            LOGGER.info(" / \\ / \\ / \\ / \\ / \\");
+            LOGGER.info("( R | E | A | D | Y )");
+            LOGGER.info(" \\_/ \\_/ \\_/ \\_/ \\_/");
+            LOGGER.info("【{}】服务启动完毕", SystemUtil.getApplicationName());
         }
     }
 

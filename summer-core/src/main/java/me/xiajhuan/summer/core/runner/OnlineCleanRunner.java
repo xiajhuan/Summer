@@ -19,6 +19,7 @@ import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
 import me.xiajhuan.summer.core.constant.CacheConst;
 import me.xiajhuan.summer.core.constant.DataSourceConst;
 import me.xiajhuan.summer.core.properties.ServerCacheProperties;
+import me.xiajhuan.summer.core.utils.SystemUtil;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.core.Ordered;
@@ -55,7 +56,7 @@ public class OnlineCleanRunner implements ApplicationRunner {
             // 设置当前线程的数据源为“system”
             DynamicDataSourceContextHolder.push(DataSourceConst.SYSTEM);
             if (SqlHelper.retBool(jdbcTemplate.update("DELETE FROM monitor_online"))) {
-                LOGGER.info("清理遗留在线用户成功");
+                LOGGER.info("【{}】清理遗留在线用户成功", SystemUtil.getApplicationName());
             }
             // 强制清空本地线程，防止内存泄漏
             DynamicDataSourceContextHolder.clear();

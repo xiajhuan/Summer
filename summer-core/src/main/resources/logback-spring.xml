@@ -5,7 +5,7 @@
     <property name="log.path" value="log"/>
     <property name="log.maxHistory" value="15"/>
     <property name="log.colorPattern"
-              value="%blue(%d{yyyy-MM-dd HH:mm:ss}) %highlight(%-5level) %yellow(%thread) %magenta(%logger) %cyan(%msg%n)"/>
+              value="%magenta(%d{yyyy-MM-dd HH:mm:ss}) %highlight(%-5level) %cyan(%thread) %green(%logger) %msg%n"/>
     <property name="log.pattern"
               value="%d{yyyy-MM-dd HH:mm:ss} %-5level %thread %logger %msg%n"/>
 

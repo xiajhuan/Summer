@@ -13,7 +13,6 @@
 package me.xiajhuan.summer.core.config;
 
 import cn.hutool.core.collection.ListUtil;
-import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.text.StrPool;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
@@ -90,8 +89,8 @@ public class SqlFormatConfig implements MessageFormattingStrategy {
             if (StrUtil.isNotBlank(replace)) {
                 return replace;
             }
-            return StrUtil.format("{} | 耗时 {} ms | SQL 语句：\n{};",
-                    DateUtil.formatDateTime(DateUtil.date()), elapsed, sql.replaceAll("[\\s]+", StrUtil.SPACE));
+            return StrUtil.format("耗时 {} ms | Sql 语句：\n{};",
+                    elapsed, sql.replaceAll("[\\s]+", StrUtil.SPACE));
         }
         return StrUtil.EMPTY;
     }

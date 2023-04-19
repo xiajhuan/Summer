@@ -43,11 +43,11 @@ public class SecurityTask extends SystemTask {
 
         if (acquireLock(methodSignature)) {
             TimeInterval timer = DateUtil.timer();
-            LOGGER.info(startMsg(methodSignature, DateUtil.date()));
+            LOGGER.info(startMsg(methodSignature));
 
             securityDeptService.cacheAll();
 
-            LOGGER.info(endMsg(methodSignature, DateUtil.date(), timer.interval()));
+            LOGGER.info(endMsg(methodSignature, timer.interval()));
         }
     }
 
