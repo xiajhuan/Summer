@@ -20,6 +20,7 @@ import me.xiajhuan.summer.core.constant.CacheConst;
 import me.xiajhuan.summer.core.constant.SettingConst;
 import me.xiajhuan.summer.core.constant.ThreadPoolConst;
 import me.xiajhuan.summer.core.properties.ServerCacheProperties;
+import me.xiajhuan.summer.core.utils.SystemUtil;
 import me.xiajhuan.summer.system.common.schedule.task.subClass.LogTask;
 import me.xiajhuan.summer.system.common.schedule.task.subClass.SecurityTask;
 import me.xiajhuan.summer.system.log.service.LogErrorService;
@@ -27,7 +28,6 @@ import me.xiajhuan.summer.system.log.service.LogLoginService;
 import me.xiajhuan.summer.system.log.service.LogOperationService;
 import me.xiajhuan.summer.system.log.service.LogTaskService;
 import me.xiajhuan.summer.system.security.service.SecurityDeptService;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.SchedulingConfigurer;
@@ -61,14 +61,16 @@ public class SystemTaskConfig implements SchedulingConfigurer {
 
     private static final Log LOGGER = LogFactory.get();
 
-    @Value("${spring.application.name}")
-    private String applicationName;
-
     @Resource(name = SettingConst.SYSTEM)
     private Setting setting;
 
     @Resource
     private ServerCacheProperties serverCacheProperties;
+
+    /**
+     * 服务名称
+     */
+    private final String applicationName = SystemUtil.getApplicationName();
 
     /**
      * 是否开启系统定时任务

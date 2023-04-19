@@ -41,6 +41,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.util.concurrent.TimeUnit;
@@ -182,7 +183,7 @@ public class RateLimiterAspect {
                 rateLimiterKey = keyStrategy.getKey(point, request, SecurityUtil.getCurrentUsername(NonLoggedUserEnum.THIRD_PART.getValue()));
 
                 msgTemplate = keyStrategy.extraMsgTemplate();
-            } catch (Exception e) {
+            } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
                 LOGGER.error(e, "key-Class【{}】获取Key失败，自动切换为基本Key策略，请参考【KeyStrategy】编写", keyStrategyClass.getSimpleName());
 
                 rateLimiterKey = StrUtil.format(KeyStrategy.FORMAT, ServletUtil.getInterfaceSignature(request), StrUtil.EMPTY);
@@ -219,7 +220,7 @@ public class RateLimiterAspect {
                 loadBalanceStrategy = StrategyFactory.getLoadBalanceStrategy(loadBalanceStrategyClass);
 
                 realQps = loadBalanceStrategy.calRealQps(setQps, nodeNum);
-            } catch (Exception e) {
+            } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
                 LOGGER.error(e, "LoadBalance-Class【{}】获取realQps失败，自动切换为基本负载均衡策略，请参考【LoadBalanceStrategy】编写", loadBalanceStrategyClass.getSimpleName());
 
                 realQps = BigDecimal.valueOf(setQps / nodeNum).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();

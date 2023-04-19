@@ -118,6 +118,11 @@ public interface ErrorCode {
      */
     int NOT_NULL = 1014;
 
+    /**
+     * 业务定时任务异常【{0}】
+     */
+    int BUSINESS_TASK_ERROR = 1015;
+
     //*******************system********************
 
     /**

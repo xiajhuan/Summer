@@ -15,7 +15,7 @@ package me.xiajhuan.summer.core.runner;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
-import org.springframework.beans.factory.annotation.Value;
+import me.xiajhuan.summer.core.utils.SystemUtil;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -37,9 +37,6 @@ public class StartedUpRunner implements ApplicationRunner {
 
     private static final Log LOGGER = LogFactory.get();
 
-    @Value("${spring.application.name}")
-    private String applicationName;
-
     @Resource
     private ConfigurableApplicationContext context;
 
@@ -50,7 +47,7 @@ public class StartedUpRunner implements ApplicationRunner {
             LOGGER.info(" / \\ / \\ / \\ / \\ / \\ / \\ / \\ / \\");
             LOGGER.info("( c | o | m | p | l | e | t | e )");
             LOGGER.info(" \\_/ \\_/ \\_/ \\_/ \\_/ \\_/ \\_/ \\_/");
-            LOGGER.info("【{}】启动完毕，时间【{}】", applicationName, DateUtil.date());
+            LOGGER.info("【{}】启动完毕，时间【{}】", SystemUtil.getApplicationName(), DateUtil.date());
         }
     }
 

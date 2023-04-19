@@ -54,17 +54,11 @@ public class TreeUtil extends cn.hutool.core.lang.tree.TreeUtil {
     }
 
     /**
-     * {@link TreeNodeConfig}
+     * 树形结构配置
+     *
+     * @see TreeNodeConfig
      */
-    private static TreeNodeConfig treeNodeConfig;
-
-    /**
-     * 初始化 {@link treeNodeConfig}
-     */
-    static {
-        // 最大递归深度（从0开始计算）
-        treeNodeConfig = TreeNodeConfig.DEFAULT_CONFIG.setDeep(5);
-    }
+    private static final TreeNodeConfig config = TreeNodeConfig.DEFAULT_CONFIG.setDeep(5);
 
     /**
      * 构建树（List<DtoClass>）
@@ -96,7 +90,7 @@ public class TreeUtil extends cn.hutool.core.lang.tree.TreeUtil {
         // 获取扩展属性的Getter
         final Map<String, Method> extraGetters = getExtraGetters(dtoClass, extraField);
 
-        return build(dtoList, rootId, treeNodeConfig,
+        return build(dtoList, rootId, config,
                 (treeNode, tree) -> {
                     tree.setId((Long) treeNode.getId());
                     tree.setParentId((Long) treeNode.getParentId());
@@ -107,9 +101,7 @@ public class TreeUtil extends cn.hutool.core.lang.tree.TreeUtil {
                         extraGetters.forEach((extra, getter) -> {
                             try {
                                 tree.putExtra(extra, getter.invoke(treeNode));
-                            } catch (IllegalAccessException e) {
-                                LOGGER.error(e, e.getMessage());
-                            } catch (InvocationTargetException e) {
+                            } catch (IllegalAccessException | InvocationTargetException e) {
                                 LOGGER.error(e, e.getMessage());
                             }
                         });

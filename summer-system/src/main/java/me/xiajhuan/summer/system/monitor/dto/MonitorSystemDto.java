@@ -59,12 +59,12 @@ public class MonitorSystemDto implements Serializable {
     private String osArchitecture;
 
     /**
-     * CPU核数
+     * CPU核心数
      */
     private Integer cpuCoreNum;
 
     /**
-     * 系统内存（MB）
+     * 系统总内存（MB）
      */
     private String sysTotalMemory;
 
@@ -74,7 +74,7 @@ public class MonitorSystemDto implements Serializable {
     private String sysFreeMemory;
 
     /**
-     * 内存使用率（%），保留2位小数
+     * 系统内存使用率（%），保留2位小数
      */
     private String sysMemoryRate;
 
@@ -119,7 +119,7 @@ public class MonitorSystemDto implements Serializable {
     private String jvmMaxMemory;
 
     /**
-     * 当前系统用户
+     * 系统当前用户
      */
     private String sysCurrentUser;
 

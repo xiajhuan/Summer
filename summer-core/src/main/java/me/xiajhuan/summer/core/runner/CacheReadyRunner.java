@@ -15,7 +15,7 @@ package me.xiajhuan.summer.core.runner;
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
 import me.xiajhuan.summer.core.properties.ServerCacheProperties;
-import org.springframework.beans.factory.annotation.Value;
+import me.xiajhuan.summer.core.utils.SystemUtil;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.core.Ordered;
@@ -37,15 +37,13 @@ public class CacheReadyRunner implements ApplicationRunner {
 
     private static final Log LOGGER = LogFactory.get();
 
-    @Value("${spring.application.name}")
-    private String applicationName;
-
     @Resource
     private ServerCacheProperties serverCacheProperties;
 
     @Override
     public void run(ApplicationArguments args) {
-        LOGGER.info("【{}】缓存设施加载完毕，缓存类型【{}】", applicationName, serverCacheProperties.getType());
+        LOGGER.info("【{}】缓存设施加载完毕，缓存类型【{}】", SystemUtil.getApplicationName(),
+                serverCacheProperties.getType());
     }
 
 }

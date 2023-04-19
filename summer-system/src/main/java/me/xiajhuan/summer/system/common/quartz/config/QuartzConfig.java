@@ -13,54 +13,39 @@
 package me.xiajhuan.summer.system.common.quartz.config;
 
 import cn.hutool.core.lang.UUID;
-import cn.hutool.log.Log;
-import cn.hutool.log.LogFactory;
+import cn.hutool.core.text.StrPool;
 import cn.hutool.setting.Setting;
 import cn.hutool.setting.dialect.Props;
 import com.baomidou.dynamic.datasource.DynamicRoutingDataSource;
 import me.xiajhuan.summer.core.constant.DataSourceConst;
 import me.xiajhuan.summer.core.constant.SettingConst;
 import me.xiajhuan.summer.core.constant.ThreadPoolConst;
+import me.xiajhuan.summer.core.utils.SystemUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.quartz.simpl.SimpleThreadPool;
 import org.springframework.scheduling.quartz.LocalDataSourceJobStore;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-import java.net.Inet4Address;
-import java.net.UnknownHostException;
 
 /**
  * Quartz配置
  *
  * @author xiajhuan
  * @date 2023/4/17
- * @see SchedulerFactoryBean
  * @see DynamicRoutingDataSource
+ * @see SchedulerFactoryBean
  */
 @Configuration
 public class QuartzConfig {
-
-    private static final Log LOGGER = LogFactory.get();
 
     @Resource(name = SettingConst.SYSTEM)
     private Setting setting;
 
     @Resource
     private DynamicRoutingDataSource dynamicRoutingDataSource;
-
-    /**
-     * 实例名称<br>
-     * note：集群模式下每个实例必须使用相同的名称
-     */
-    private static final String INSTANCE_NAME = "Business";
-
-    /**
-     * 实例ID<br>
-     * note：集群模式下每个实例ID必须唯一
-     */
-    private static String INSTANCE_ID;
 
     /**
      * 线程池Class
@@ -88,14 +73,28 @@ public class QuartzConfig {
     private static final String LOCK_SQL = "SELECT * FROM {0}LOCKS WHERE LOCK_NAME = ? FOR UPDATE";
 
     /**
-     * 初始化 {@link INSTANCE_ID}
+     * 实例名称<br>
+     * note：集群模式下每个实例必须使用相同的名称
      */
-    static {
-        try {
-            INSTANCE_ID = Inet4Address.getLocalHost().getHostAddress();
-        } catch (UnknownHostException e) {
-            INSTANCE_ID = UUID.fastUUID().toString();
-            LOGGER.error(e, "获取本机IP失败【{}】", e.getMessage());
+    private static final String INSTANCE_NAME = "Business";
+
+    /**
+     * 实例ID<br>
+     * note：集群模式下每个实例ID必须唯一
+     */
+    private String instanceId;
+
+    /**
+     * 初始化 {@link instanceId}
+     */
+    @PostConstruct
+    private void init() {
+        String ip = SystemUtil.getIp();
+        String port = SystemUtil.getPort();
+        if (ip != null && port != null) {
+            instanceId = ip + StrPool.COLON + port;
+        } else {
+            instanceId = UUID.fastUUID().toString();
         }
     }
 
@@ -135,7 +134,7 @@ public class QuartzConfig {
         Props props = Props.create();
 
         props.setProperty("org.quartz.scheduler.instanceName", INSTANCE_NAME);
-        props.setProperty("org.quartz.scheduler.instanceId", INSTANCE_ID);
+        props.setProperty("org.quartz.scheduler.instanceId", instanceId);
 
         // 线程池
         props.setProperty("org.quartz.threadPool.class", THREAD_POOL_CLASS);
