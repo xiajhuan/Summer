@@ -67,7 +67,7 @@ public class RateLimiterAspect {
     /**
      * 策略类全限定性类名格式
      */
-    private final String STRATEGY_CLASS_FORMAT = "me.xiajhuan.summer.core.ratelimiter.strategy.impl.{}";
+    private static final String STRATEGY_CLASS_FORMAT = "me.xiajhuan.summer.core.ratelimiter.strategy.impl.{}";
 
     /**
      * 限流规则缓存，Key：限流策略Key Value：{@link com.google.common.util.concurrent.RateLimiter}<br>
@@ -91,7 +91,7 @@ public class RateLimiterAspect {
     private Class<? extends LoadBalanceStrategy> defaultLoadBalanceStrategy;
 
     /**
-     * 默认服务节点数
+     * 默认节点数
      */
     private int defaultNodeNum;
 
@@ -194,7 +194,7 @@ public class RateLimiterAspect {
             // 设置的Qps
             double setQps = rateLimiter.qps();
 
-            // 服务节点数
+            // 节点数
             // 注解中设置的节点数
             int nodeNum = rateLimiter.nodeNum();
             if (nodeNum <= 0) {

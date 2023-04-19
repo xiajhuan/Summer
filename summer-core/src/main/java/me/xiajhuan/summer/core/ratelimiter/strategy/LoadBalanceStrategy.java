@@ -27,7 +27,7 @@ public interface LoadBalanceStrategy {
      * 计算当前服务节点实际的Qps
      *
      * @param setQps  设置的Qps
-     * @param nodeNum 服务节点数
+     * @param nodeNum 节点数
      * @return 实际的Qps
      */
     default double calRealQps(double setQps, int nodeNum) {

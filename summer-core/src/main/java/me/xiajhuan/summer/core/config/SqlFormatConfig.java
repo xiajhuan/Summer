@@ -37,7 +37,7 @@ public class SqlFormatConfig implements MessageFormattingStrategy {
     /**
      * Quartz相关Sql替换列表
      */
-    private final static List<String> QUARTZ_SQL_REPLACE_LIST = ListUtil.of(
+    private static final List<String> QUARTZ_SQL_REPLACE_LIST = ListUtil.of(
             "SELECT->QUARTZ_TRIGGERS", "INSERT->QUARTZ_TRIGGERS",
             "UPDATE->QUARTZ_TRIGGERS", "DELETE->QUARTZ_TRIGGERS",
             "SELECT->QUARTZ_SIMPROP_TRIGGERS", "INSERT->QUARTZ_SIMPROP_TRIGGERS",
@@ -65,21 +65,21 @@ public class SqlFormatConfig implements MessageFormattingStrategy {
     /**
      * Sql替换集合
      */
-    private static Set<String> sqlReplaceSet = new HashSet<>(64);
+    private static final Set<String> SQL_REPLACE_SET = new HashSet<>(64);
 
     /**
-     * 初始化 {@link sqlReplaceSet}
+     * 初始化 {@link SQL_REPLACE_SET}
      */
     static {
         Setting setting = SpringUtil.getBean(SettingConst.CORE, Setting.class);
 
         if (setting.getBool("p6spy.quartz-sql-replace", "Sql", true)) {
-            sqlReplaceSet.addAll(QUARTZ_SQL_REPLACE_LIST);
+            SQL_REPLACE_SET.addAll(QUARTZ_SQL_REPLACE_LIST);
         }
 
         String sqlReplace = setting.getByGroup("p6spy.sql-replace", "Sql");
         if (StrUtil.isNotBlank(sqlReplace)) {
-            sqlReplaceSet.addAll(ListUtil.of(sqlReplace.split(StrPool.COMMA)));
+            SQL_REPLACE_SET.addAll(ListUtil.of(sqlReplace.split(StrPool.COMMA)));
         }
     }
 
@@ -106,7 +106,7 @@ public class SqlFormatConfig implements MessageFormattingStrategy {
      * @return 替换的字符串或空串
      */
     private String getReplacedSql(String sql) {
-        return sqlReplaceSet.stream().filter(replace -> {
+        return SQL_REPLACE_SET.stream().filter(replace -> {
             if (replace.indexOf("->") > 0) {
                 String[] operationAndTable = replace.split("->");
                 if (sql.contains(operationAndTable[0]) && sql.contains(operationAndTable[1])) {

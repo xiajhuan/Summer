@@ -58,7 +58,7 @@ public class PageSortUtil {
     /**
      * 单页分页条数限制
      */
-    private static long maxLimit;
+    private static final long MAX_LIMIT;
 
     /**
      * 默认排序字段数组
@@ -73,16 +73,16 @@ public class PageSortUtil {
     /**
      * 排序字段是否驼峰转下划线
      */
-    private static boolean camelToUnderscore;
+    private static final boolean CAMEL_TO_UNDERSCORE;
 
     /**
-     * 初始化 {@link maxLimit} {@link defaultFieldArray}<br>
-     * {@link defaultOrderArray} {@link camelToUnderscore}
+     * 初始化 {@link MAX_LIMIT} {@link defaultFieldArray}<br>
+     * {@link defaultOrderArray} {@link CAMEL_TO_UNDERSCORE}
      */
     static {
         Setting setting = SpringUtil.getBean(SettingConst.CORE, Setting.class);
 
-        maxLimit = setting.getLong("page.max-limit", "Mp", 2000L);
+        MAX_LIMIT = setting.getLong("page.max-limit", "Mp", 2000L);
 
         String defaultField = setting.getByGroup("sort.default-field", "Mp");
         if (StrUtil.isNotBlank(defaultField)) {
@@ -93,7 +93,7 @@ public class PageSortUtil {
             defaultOrderArray = defaultOrder.split(StrPool.COMMA);
         }
 
-        camelToUnderscore = setting.getBool("sort.field-camel-to-underscore", "Mp", true);
+        CAMEL_TO_UNDERSCORE = setting.getBool("sort.field-camel-to-underscore", "Mp", true);
     }
 
     /**
@@ -173,7 +173,7 @@ public class PageSortUtil {
             // 自定义分页总记录数
             page = Page.of(pageNum, pageSize, customTotal, false);
         }
-        page.setMaxLimit(maxLimit);
+        page.setMaxLimit(MAX_LIMIT);
 
         //*******************排序处理********************
 
@@ -234,7 +234,7 @@ public class PageSortUtil {
 
         if (ArrayUtil.isNotEmpty(fieldArray) && ArrayUtil.isNotEmpty(orderArray)) {
             int num = checkFieldAndOrder(fieldArray, orderArray);
-            if (camelToUnderscore) {
+            if (CAMEL_TO_UNDERSCORE) {
                 // 驼峰转下划线
                 fieldArray = Arrays.stream(fieldArray)
                         .map(StrUtil::toUnderlineCase).toArray(String[]::new);

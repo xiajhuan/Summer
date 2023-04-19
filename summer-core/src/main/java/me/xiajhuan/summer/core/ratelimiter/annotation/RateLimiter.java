@@ -72,7 +72,7 @@ public @interface RateLimiter {
     Class<? extends LoadBalanceStrategy> loadBalanceStrategy() default SettingLoadBalanceStrategy.class;
 
     /**
-     * 服务节点数
+     * 节点数
      */
     int nodeNum() default 0;
 

@@ -59,7 +59,7 @@ public class LocaleUtil {
     /**
      * {@link MessageSource}
      */
-    private static MessageSource messageSource;
+    private static final MessageSource MESSAGE_SOURCE;
 
     /**
      * 请求头“Accept-Language”的值是中英文以外时的默认语言<br>
@@ -73,10 +73,10 @@ public class LocaleUtil {
     private static String defaultJvm;
 
     /**
-     * 初始化 {@link messageSource} {@link defaultRequestHeader} {@link defaultJvm}
+     * 初始化 {@link MESSAGE_SOURCE} {@link defaultRequestHeader} {@link defaultJvm}
      */
     static {
-        messageSource = SpringUtil.getBean("messageSource", MessageSource.class);
+        MESSAGE_SOURCE = SpringUtil.getBean("messageSource", MessageSource.class);
 
         Setting setting = SpringUtil.getBean(SettingConst.CORE, Setting.class);
         defaultRequestHeader = setting.getByGroupWithLog("default.request-header", "Locale");
@@ -111,7 +111,7 @@ public class LocaleUtil {
      * @return 国际化消息
      */
     public static String getI18nMessage(Locale locale, int code, String... params) {
-        return messageSource.getMessage(String.valueOf(code), params, locale);
+        return MESSAGE_SOURCE.getMessage(String.valueOf(code), params, locale);
     }
 
     /**

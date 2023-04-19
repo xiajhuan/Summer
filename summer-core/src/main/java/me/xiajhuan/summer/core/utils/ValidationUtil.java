@@ -44,14 +44,7 @@ public class ValidationUtil {
     /**
      * {@link Validator}
      */
-    private static Validator validator;
-
-    /**
-     * 初始化 {@link validator}
-     */
-    static {
-        validator = SpringUtil.getBean("getValidator", Validator.class);
-    }
+    private static final Validator VALIDATOR = SpringUtil.getBean("getValidator", Validator.class);
 
     /**
      * 校验List<Dto>
@@ -141,9 +134,9 @@ public class ValidationUtil {
         // 校验
         final Set<ConstraintViolation<D>> constraintViolations;
         if (fieldName != null) {
-            constraintViolations = validator.validateProperty(dto, fieldName, group);
+            constraintViolations = VALIDATOR.validateProperty(dto, fieldName, group);
         } else {
-            constraintViolations = validator.validate(dto, group);
+            constraintViolations = VALIDATOR.validate(dto, group);
         }
 
         // 校验消息

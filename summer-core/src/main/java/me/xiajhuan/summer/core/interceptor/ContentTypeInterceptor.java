@@ -47,7 +47,7 @@ public class ContentTypeInterceptor implements HandlerInterceptor {
     /**
      * 请求体类型集合
      */
-    private Set<String> contentTypeSet = CollUtil.newHashSet();
+    private final Set<String> contentTypeSet = CollUtil.newHashSet();
 
     /**
      * 初始化 {@link contentTypeSet}

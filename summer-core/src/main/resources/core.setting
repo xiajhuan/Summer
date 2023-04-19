@@ -65,7 +65,7 @@ msg = 1002
 # 默认策略Class（简单类名）
 strategy.key = IpKeyStrategy
 strategy.load-balance = BaseLoadBalanceStrategy
-# 默认服务节点数
+# 默认节点数
 node-num = 1
 # 默认超时时长（ms）
 timeout = 0

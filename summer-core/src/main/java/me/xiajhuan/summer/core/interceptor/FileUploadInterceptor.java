@@ -49,7 +49,7 @@ public class FileUploadInterceptor implements HandlerInterceptor {
      *   3.Value不能超过 spring.servlet.multipart.max-file-size 中的配置
      * </pre>
      */
-    private Map<String, String> uploadLimit = MapUtil.newHashMap(true);
+    private Map<String, String> uploadLimit;
 
     /**
      * 初始化 {@link uploadLimit}
@@ -65,7 +65,7 @@ public class FileUploadInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        if (request instanceof MultipartHttpServletRequest && uploadLimit.size() > 0) {
+        if (request instanceof MultipartHttpServletRequest && MapUtil.isNotEmpty(uploadLimit)) {
             Map<String, MultipartFile> fileMap = ((MultipartHttpServletRequest) request).getFileMap();
             if (MapUtil.isNotEmpty(fileMap)) {
                 fileMap.values().forEach(this::validateFile);
@@ -88,7 +88,7 @@ public class FileUploadInterceptor implements HandlerInterceptor {
         // 文件大小（B）
         long fileSize = file.getSize();
         for (Map.Entry<String, String> entry : uploadLimit.entrySet()) {
-            if (fileSuffix.equals(entry.getKey())) {
+            if (entry.getKey().equals(fileSuffix)) {
                 String sizeLimit = entry.getValue();
                 if (fileSize > DataSizeUtil.parse(sizeLimit)) {
                     // 超过大小限制
