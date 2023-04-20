@@ -31,13 +31,8 @@ public class ThreadPoolConst {
     public static final String ASYNC_COMMON_PREFIX = "Async-Common-";
 
     /**
-     * 系统定时任务线程池线程名前缀
+     * Quartz定时任务线程池线程名前缀
      */
-    public static final String SCHEDULE_SYSTEM_PREFIX = "Schedule-System-";
-
-    /**
-     * 业务定时任务线程池线程名前缀
-     */
-    public static final String SCHEDULE_BUSINESS_PREFIX = "Schedule-Business-";
+    public static final String SCHEDULE_QUARTZ_PREFIX = "Schedule-Quartz-";
 
 }

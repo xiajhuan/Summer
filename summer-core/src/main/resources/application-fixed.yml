@@ -13,7 +13,7 @@ server:
     # 使用HEAP（堆内缓存）的注意事项：
     #    1.在服务集群部署时数据无法共享！
     #    2.在服务关闭或重启时数据会丢失！
-    #    3.当且仅当“服务单节点部署且不想依赖Redis”或“集群部署作为Redis的次级缓存”时推荐使用！
+    #    3.当且仅当“服务单机部署且不想依赖Redis”或“集群部署作为Redis的次级缓存”时推荐使用！
     type: REDIS
   # Tomcat
   tomcat:
@@ -85,7 +85,7 @@ mybatis-plus:
   # Entity扫描，多个package用“,”或者“;”分隔
   typeAliasesPackage: me.xiajhuan.summer.**.entity
   # Mapper.xml文件位置，多个location用“,”分隔
-  mapperlocations: classpath*:/mapper/**/*.xml
+  mapperlocations: classpath*:/mapper/*/*.xml
   global-config:
     # 数据库相关配置
     db-config:
@@ -176,7 +176,7 @@ management:
       enabled: true
     # 定时任务（Spring）
     scheduledtasks:
-      enabled: true
+      enabled: false
     # 请求映射
     mappings:
       enabled: true

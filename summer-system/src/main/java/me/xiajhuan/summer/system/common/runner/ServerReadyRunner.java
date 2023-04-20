@@ -10,7 +10,7 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.core.runner;
+package me.xiajhuan.summer.system.common.runner;
 
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;

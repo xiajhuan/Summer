@@ -16,7 +16,6 @@ import cn.hutool.extra.spring.EnableSpringUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableAsync;
-import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * 启用配置
@@ -27,7 +26,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  */
 @Configuration
 @EnableAsync
-@EnableScheduling
 @EnableSpringUtil
 public class EnableConfig {
 }

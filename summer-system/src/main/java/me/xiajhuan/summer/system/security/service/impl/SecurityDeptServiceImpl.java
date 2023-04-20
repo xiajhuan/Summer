@@ -23,7 +23,6 @@ import me.xiajhuan.summer.core.cache.factory.CacheServerFactory;
 import me.xiajhuan.summer.core.cache.server.CacheServer;
 import me.xiajhuan.summer.core.constant.CacheConst;
 import me.xiajhuan.summer.core.constant.DataSourceConst;
-import me.xiajhuan.summer.core.constant.TimeUnitConst;
 import me.xiajhuan.summer.core.constant.TreeConst;
 import me.xiajhuan.summer.core.enums.UserTypeEnum;
 import me.xiajhuan.summer.core.exception.code.ErrorCode;
@@ -135,13 +134,13 @@ public class SecurityDeptServiceImpl extends ServiceImpl<SecurityDeptMapper, Sec
         }
 
         if (removeById(id)) {
-            // 删除缓存
-            CacheServerFactory.getCacheServer().delete(dept(id), CacheConst.Value.HASH);
-
             // 删除角色部门关联
             LambdaQueryWrapper<SecurityRoleDeptEntity> queryWrapper = Wrappers.lambdaQuery();
             queryWrapper.eq(SecurityRoleDeptEntity::getDeptId, id);
             securityRoleDeptMapper.delete(queryWrapper);
+
+            // 删除缓存
+            CacheServerFactory.getCacheServer().delete(dept(id), CacheConst.Value.HASH);
         }
     }
 
@@ -161,16 +160,19 @@ public class SecurityDeptServiceImpl extends ServiceImpl<SecurityDeptMapper, Sec
     }
 
     @Override
-    public void cacheAll() {
-        // 所有部门
+    public boolean cacheAll() {
+        // 全部部门
         LambdaQueryWrapper<SecurityDeptEntity> queryWrapper = Wrappers.lambdaQuery();
         queryWrapper.select(SecurityDeptEntity::getId, SecurityDeptEntity::getName, SecurityDeptEntity::getWeight,
                 SecurityDeptEntity::getParentId, SecurityDeptEntity::getParentIdAll);
         List<SecurityDeptEntity> entityList = list(queryWrapper);
+
         if (entityList.size() > 0) {
             CacheServer cacheServer = CacheServerFactory.getCacheServer();
             entityList.forEach(entity -> cache(entity, cacheServer));
+            return true;
         }
+        return false;
     }
 
     /**
@@ -186,7 +188,7 @@ public class SecurityDeptServiceImpl extends ServiceImpl<SecurityDeptMapper, Sec
         hash.put("parentId", entity.getParentId());
         hash.put("parentIdAll", entity.getParentIdAll());
 
-        cacheServer.setHash(dept(entity.getId()), hash, TimeUnitConst.WEEK);
+        cacheServer.setHash(dept(entity.getId()), hash);
     }
 
     /**

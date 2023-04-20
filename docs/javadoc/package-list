@@ -1,6 +1,8 @@
 me.xiajhuan.summer
 me.xiajhuan.summer.admin.api.open
 me.xiajhuan.summer.admin.api.test
+me.xiajhuan.summer.admin.task.api
+me.xiajhuan.summer.admin.task.business
 me.xiajhuan.summer.core.base.controller
 me.xiajhuan.summer.core.base.dto
 me.xiajhuan.summer.core.base.entity
@@ -30,7 +32,6 @@ me.xiajhuan.summer.core.ratelimiter.annotation
 me.xiajhuan.summer.core.ratelimiter.aspect
 me.xiajhuan.summer.core.ratelimiter.strategy
 me.xiajhuan.summer.core.ratelimiter.strategy.impl
-me.xiajhuan.summer.core.runner
 me.xiajhuan.summer.core.utils
 me.xiajhuan.summer.core.validation.annotation
 me.xiajhuan.summer.core.validation.config
@@ -42,9 +43,10 @@ me.xiajhuan.summer.system.common.annotation
 me.xiajhuan.summer.system.common.aspect
 me.xiajhuan.summer.system.common.handler
 me.xiajhuan.summer.system.common.quartz.config
-me.xiajhuan.summer.system.common.schedule.config
-me.xiajhuan.summer.system.common.schedule.task
-me.xiajhuan.summer.system.common.schedule.task.subClass
+me.xiajhuan.summer.system.common.quartz.executor
+me.xiajhuan.summer.system.common.quartz.helper
+me.xiajhuan.summer.system.common.quartz.task
+me.xiajhuan.summer.system.common.runner
 me.xiajhuan.summer.system.common.shiro.config
 me.xiajhuan.summer.system.common.shiro.oauth2
 me.xiajhuan.summer.system.locale.controller

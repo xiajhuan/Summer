@@ -52,8 +52,10 @@ public interface SecurityDeptService extends IService<SecurityDeptEntity> {
     Set<Long> getChildIdSet(Long deptId);
 
     /**
-     * 缓存所有部门
+     * 缓存全部
+     *
+     * @return 是否缓存成功，true：是 false：否
      */
-    void cacheAll();
+    boolean cacheAll();
 
 }

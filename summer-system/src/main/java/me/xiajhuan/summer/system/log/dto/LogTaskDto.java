@@ -21,6 +21,7 @@ import lombok.EqualsAndHashCode;
 import me.xiajhuan.summer.core.base.dto.ExcelDto;
 import me.xiajhuan.summer.core.constant.DateFormatConst;
 import me.xiajhuan.summer.core.enums.OperationStatusEnum;
+import me.xiajhuan.summer.core.enums.TaskTypeEnum;
 import me.xiajhuan.summer.system.log.excel.converter.OperationStatusConverter;
 
 import java.util.Date;
@@ -59,6 +60,13 @@ public class LogTaskDto extends ExcelDto {
      */
     @ExcelProperty(value = "任务时长（ms）", index = 3)
     private Integer taskTime;
+
+    /**
+     * 类型
+     *
+     * @see TaskTypeEnum
+     */
+    private Integer type;
 
     /**
      * 状态

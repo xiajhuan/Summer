@@ -54,6 +54,9 @@ public class LogTaskServiceImpl extends ServiceImpl<LogTaskMapper, LogTaskEntity
         // 任务ID
         Long taskId = dto.getTaskId();
         queryWrapper.eq(taskId != null, LogTaskEntity::getTaskId, taskId);
+        // 类型
+        Integer type = dto.getType();
+        queryWrapper.eq(type != null, LogTaskEntity::getType, type);
         // 状态
         Integer status = dto.getStatus();
         queryWrapper.eq(status != null, LogTaskEntity::getStatus, status);

@@ -38,61 +38,61 @@ public class RateLimiterController {
     /**
      * 基本限流策略
      *
-     * @param json Json参数
+     * @param json Json格式参数
      * @return 响应结果
      */
     @PostMapping("base")
     @RateLimiter(value = 0.2, msg = ErrorCode.SERVER_BUSY, keyStrategy = BaseKeyStrategy.class)
-    public Result<String> base(@RequestBody String json) {
+    public Result base(@RequestBody String json) {
         return printAndResponse(json);
     }
 
     /**
      * IP限流策略
      *
-     * @param json Json参数
+     * @param json Json格式参数
      * @return 响应结果
      */
     @PostMapping("ip")
     @RateLimiter(value = 0.2, msg = ErrorCode.SERVER_BUSY)
-    public Result<String> ip(@RequestBody String json) {
+    public Result ip(@RequestBody String json) {
         return printAndResponse(json);
     }
 
     /**
      * 参数限流策略
      *
-     * @param json Json参数
+     * @param json Json格式参数
      * @return 响应结果
      */
     @PostMapping("param")
     @RateLimiter(value = 0.2, msg = ErrorCode.SERVER_BUSY, keyStrategy = ParamKeyStrategy.class)
-    public Result<String> param(@RequestBody String json) {
+    public Result param(@RequestBody String json) {
         return printAndResponse(json);
     }
 
     /**
      * 用户名限流策略
      *
-     * @param json Json参数
+     * @param json Json格式参数
      * @return 响应结果
      */
     @PostMapping("username")
     @RateLimiter(value = 0.2, msg = ErrorCode.SERVER_BUSY, keyStrategy = UsernameKeyStrategy.class)
-    public Result<String> username(@RequestBody String json) {
+    public Result username(@RequestBody String json) {
         return printAndResponse(json);
     }
 
     /**
      * 打印到控制台并响应
      *
-     * @param json Json参数
+     * @param json Json格式参数
      * @return 响应结果
      */
-    private Result<String> printAndResponse(String json) {
+    private Result printAndResponse(String json) {
         if (JSONUtil.isTypeJSON(json)) {
-            Console.log("接收到的数据为：{}", json);
-            return Result.ofSuccess(json, "成功接收到数据");
+            Console.log("接收到Json数据：{}", json);
+            return Result.ofSuccess();
         }
         return Result.ofFail("参数必须是Json格式");
     }

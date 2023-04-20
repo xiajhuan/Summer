@@ -140,10 +140,10 @@ public class QuartzConfig {
         // 线程池
         props.setProperty("org.quartz.threadPool.class", THREAD_POOL_CLASS);
         props.setProperty("org.quartz.threadPool.threadCount",
-                setting.getInt("business.schedule-thread-count", "Schedule", 16));
+                setting.getInt("thread-count", "Schedule", 16));
         props.setProperty("org.quartz.threadPool.threadPriority",
-                setting.getInt("business.schedule-thread-priority", "Schedule", 5));
-        props.setProperty("org.quartz.threadPool.threadNamePrefix", ThreadPoolConst.SCHEDULE_BUSINESS_PREFIX);
+                setting.getInt("thread-priority", "Schedule", 5));
+        props.setProperty("org.quartz.threadPool.threadNamePrefix", ThreadPoolConst.SCHEDULE_QUARTZ_PREFIX);
 
         // 持久化
         props.setProperty("org.quartz.jobStore.class", PERSISTENCE_CLASS);
@@ -152,17 +152,17 @@ public class QuartzConfig {
 
         // “错过触发”处理
         props.setProperty("org.quartz.jobStore.misfireThreshold",
-                setting.getLong("business.misfire-threshold", "Schedule", 15000L));
+                setting.getLong("misfire-threshold", "Schedule", 15000L));
         props.setProperty("org.quartz.jobStore.maxMisfiresToHandleAtATime",
-                setting.getInt("business.max-misfires-to-handle-at-time", "Schedule", 3));
+                setting.getInt("max-misfires-to-handle-at-time", "Schedule", 3));
 
-        boolean isCluster = setting.getBool("business.is-cluster", "Schedule", true);
+        boolean isCluster = setting.getBool("is-cluster", "Schedule", true);
         if (isCluster) {
             // 集群
             props.setProperty("org.quartz.jobStore.isClustered", true);
             props.setProperty("org.quartz.jobStore.clusterCheckinInterval",
-                    setting.getLong("business.cluster-checkin-interval", "Schedule", 20000L));
-            int acquisitionMaxCount = setting.getInt("business.batch-trigger-acquisition-max-count", "Schedule", 1);
+                    setting.getLong("cluster-checkin-interval", "Schedule", 20000L));
+            int acquisitionMaxCount = setting.getInt("batch-trigger-acquisition-max-count", "Schedule", 1);
             if (acquisitionMaxCount > 1) {
                 props.setProperty("org.quartz.scheduler.batchTriggerAcquisitionMaxCount", acquisitionMaxCount);
                 // 避免多个Trigger产生混乱

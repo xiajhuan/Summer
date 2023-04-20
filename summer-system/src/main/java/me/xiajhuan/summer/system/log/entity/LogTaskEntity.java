@@ -16,6 +16,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
 import me.xiajhuan.summer.core.base.entity.SimpleEntity;
 import me.xiajhuan.summer.core.enums.OperationStatusEnum;
+import me.xiajhuan.summer.core.enums.TaskTypeEnum;
 
 /**
  * 任务日志 Entity
@@ -50,6 +51,13 @@ public class LogTaskEntity extends SimpleEntity {
      * 任务时长（ms）
      */
     private Integer taskTime;
+
+    /**
+     * 类型
+     *
+     * @see TaskTypeEnum
+     */
+    private Integer type;
 
     /**
      * 状态

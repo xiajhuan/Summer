@@ -15,6 +15,7 @@ package me.xiajhuan.summer.system.common.quartz.task;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
+import me.xiajhuan.summer.core.enums.TaskTypeEnum;
 
 /**
  * 业务定时任务 基类
@@ -27,7 +28,7 @@ public abstract class BusinessTask {
     protected static final Log LOGGER = LogFactory.get();
 
     /**
-     * 执行定时任务
+     * 执行
      *
      * @param json Json格式参数
      */
@@ -36,22 +37,24 @@ public abstract class BusinessTask {
     /**
      * 开始消息
      *
-     * @param taskName 定时任务名称
+     * @param name 名称
      * @return 开始消息
      */
-    protected String startMsg(String taskName) {
-        return StrUtil.format("【Business】【{}】开始执行...", taskName);
+    protected String startMsg(String name) {
+        return StrUtil.format("【{}】【{}】开始执行...",
+                TaskTypeEnum.BUSINESS.getName(), name);
     }
 
     /**
      * 结束消息
      *
-     * @param taskName 定时任务名称
-     * @param cost     耗时（ms）
+     * @param name 名称
+     * @param cost 耗时（ms）
      * @return 结束消息
      */
-    protected String endMsg(String taskName, long cost) {
-        return StrUtil.format("【Business】【{}】执行结束，耗时【{}】ms", taskName, cost);
+    protected String endMsg(String name, long cost) {
+        return StrUtil.format("【{}】【{}】执行结束，耗时【{}】ms",
+                TaskTypeEnum.BUSINESS.getName(), name, cost);
     }
 
 }

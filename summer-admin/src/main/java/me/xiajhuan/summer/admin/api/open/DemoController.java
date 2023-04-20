@@ -33,24 +33,24 @@ public class DemoController {
     /**
      * hello
      *
-     * @param json Json参数
+     * @param json Json格式参数
      * @return 响应结果
      */
     @PostMapping("hello")
-    public Result<String> hello(@RequestBody String json) {
+    public Result hello(@RequestBody String json) {
         return printAndResponse(json);
     }
 
     /**
      * 打印到控制台并响应
      *
-     * @param json Json参数
+     * @param json Json格式参数
      * @return 响应结果
      */
-    private Result<String> printAndResponse(String json) {
+    private Result printAndResponse(String json) {
         if (JSONUtil.isTypeJSON(json)) {
-            Console.log("接收到的数据为：{}", json);
-            return Result.ofSuccess(json, "成功接收到数据");
+            Console.log("接收到Json数据：{}", json);
+            return Result.ofSuccess();
         }
         return Result.ofFail("参数必须是Json格式");
     }

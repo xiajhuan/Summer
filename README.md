@@ -11,7 +11,7 @@
 - 异常/日志统一规范并做精细化处理
 - 提供基于Shiro+Oauth2的轻量级RBAC架构实现
 - Hutool工具类库深度实践，全项目统一规范工具使用
-- 自定义缓存服务api，支持多级缓存，单节点部署时可脱离Redis使用
+- 自定义缓存服务api，支持多级缓存，单机部署时可脱离Redis使用
 - 可扩展接口限流功能支持，自带多种基本限流策略
 - 标准国际化支持，包含异常消息/校验消息的国际化实现
 - EasyExcel可扩展工具封装，一行代码即可实现导入导出功能
@@ -32,56 +32,67 @@ Summer
 ### 目录说明
 ```
 Summer
-├─docs             文档
-│    ├─apipost     接口文档（使用浏览器打开）
-│    ├─javadoc     API文档（使用浏览器打开index.html）
-│    ├─pdmaner     数据建模文档（使用PDManer4.x打开）
-│    ├─sql         Sql脚本
+├─docs               文档
+│    ├─apipost       接口文档（使用浏览器打开）
+│    ├─javadoc       API文档（使用浏览器打开index.html）
+│    ├─pdmaner       数据建模文档（使用PDManer4.x打开）
+│    └─sql           Sql脚本
 │    
-├─summer-admin     管理模块（专注于实际业务开发）
+├─summer-admin       管理模块（专注于实际业务开发）
 │    └─admin 
-│    │    ├─api         开放接口模块
-│    │    ├─business    业务模块
-│    │    ├─task        定时任务模块
+│    │    ├─api           api模块
+│    │    │    ├─open            开放接口
+│    │    │    └─test            测试接口
+│    │    ├─business      业务模块
+│    │    │    └─TODO            个性化业务
+│    │    └─task          定时任务模块
+│    │         ├─api             api定时任务
+│    │         └─business        业务定时任务
 │    │
 │    └─resources
-│         ├─mapper      业务模块Mapper.xml
+│         └─mapper        Mapper.xml
 │
-├─summer-system    系统模块（专注于系统基本功能支持）
+├─summer-system      系统模块（专注于系统基本功能支持）
 │    └─system 
-│    │    ├─common      通用模块
-│    │    ├─locale      国际化模块
-│    │    ├─log         日志模块
-│    │    ├─monitor     监控模块
-│    │    ├─schedule    定时任务模块
-│    │    ├─security    权限相关模块
-│    │    ├─TODO        开发中...
+│    │    ├─common        通用模块
+│    │    │    ├─annotation      注解定义
+│    │    │    ├─aspect          切面类定义
+│    │    │    ├─handler         处理器定义
+│    │    │    ├─quartz          Quartz支持
+│    │    │    ├─runner          SpringBoot-Runner
+│    │    │    └─shiro           Shiro支持
+│    │    │    
+│    │    ├─locale        国际化模块
+│    │    ├─log           日志模块
+│    │    ├─monitor       监控模块
+│    │    ├─schedule      定时任务模块
+│    │    ├─security      权限相关模块
+│    │    └─TODO          开发中...
 │    │
 │    └─resources 
-│         ├─mapper      系统模块Mapper.xml
+│         └─mapper        Mapper.xml
 │ 
-├─summer-core      核心模块（专注于核心功能、工具集和配置项的封装支持）
+├─summer-core        核心模块（专注于核心功能、工具集和配置项的封装支持）
 │    └─core 
-│    │    ├─base        基类定义
-│    │    ├─cache       缓存封装支持
-│    │    ├─config      系统基本配置
-│    │    ├─constant    常量定义
-│    │    ├─converter   转换器定义
-│    │    ├─data        数据类定义
-│    │    ├─enums       枚举定义
-│    │    ├─excel       Excel功能支持
-│    │    ├─exception   异常定义
-│    │    ├─interceptor 拦截器定义
-│    │    ├─mp          MybatisPlus封装支持
-│    │    ├─properties  自定义SpringBoot配置
-│    │    ├─ratelimiter 接口限流功能支持
-│    │    ├─runner      SpringBoot-Runner
-│    │    ├─utils       工具封装支持
-│    │    ├─validation  对象校验支持
+│    │    ├─base          基类定义
+│    │    ├─cache         缓存支持
+│    │    ├─config        系统基本配置
+│    │    ├─constant      常量定义
+│    │    ├─converter     转换器定义
+│    │    ├─data          数据类定义
+│    │    ├─enums         枚举定义
+│    │    ├─excel         Excel支持
+│    │    ├─exception     异常定义
+│    │    ├─interceptor   拦截器定义
+│    │    ├─mp            MybatisPlus支持
+│    │    ├─properties    自定义属性配置
+│    │    ├─ratelimiter   接口限流支持
+│    │    ├─utils         工具封装支持
+│    │    └─validation    对象校验支持
 │    │
 │    └─resources 
-│         ├─custom      自定义配置
-│         ├─i18n        国际化配置
+│         ├─custom        自定义配置
+│         └─i18n          国际化配置
 ```
 
 ### 依赖清单

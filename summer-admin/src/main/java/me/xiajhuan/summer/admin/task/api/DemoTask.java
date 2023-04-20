@@ -10,32 +10,32 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.admin.task;
+package me.xiajhuan.summer.admin.task.api;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.date.TimeInterval;
-import me.xiajhuan.summer.system.common.quartz.task.BusinessTask;
+import me.xiajhuan.summer.system.common.quartz.task.ApiTask;
 import org.springframework.stereotype.Component;
 
 /**
- * Demo 定时任务
+ * Demo api定时任务
  *
  * @author xiajhuan
- * @date 2023/4/19
+ * @date 2023/4/20
  */
-@Component
-public class DemoTask extends BusinessTask {
+@Component("apiDemo")
+public class DemoTask extends ApiTask {
 
     @Override
     protected void run(String json) {
-        String taskName = "demo";
+        String name = "Demo";
 
         TimeInterval timer = DateUtil.timer();
-        LOGGER.info(startMsg(taskName));
+        LOGGER.info(startMsg(name));
 
-        LOGGER.info("xxx业务处理中...");
+        LOGGER.info("xxx接口调用中...");
 
-        LOGGER.info(endMsg(taskName, timer.interval()));
+        LOGGER.info(endMsg(name, timer.interval()));
     }
 
 }
