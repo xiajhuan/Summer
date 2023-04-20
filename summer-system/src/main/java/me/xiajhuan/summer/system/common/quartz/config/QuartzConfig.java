@@ -117,7 +117,7 @@ public class QuartzConfig {
         // 自动启动
         factory.setAutoStartup(true);
         // 延时启动（s）
-        factory.setStartupDelay(20);
+        factory.setStartupDelay(30);
         // 将Spring的applicationContext加入到Quartz的schedulerContext中
         factory.setApplicationContextSchedulerContextKey("springContext");
         // 启动时更新己存在的Task，这样就不用每次修改targetObject后删除QUARTZ_JOB_DETAILS表对应的记录了

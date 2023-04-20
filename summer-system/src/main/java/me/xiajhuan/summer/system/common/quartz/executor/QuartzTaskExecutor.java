@@ -24,7 +24,6 @@ import cn.hutool.setting.Setting;
 import me.xiajhuan.summer.core.constant.SettingConst;
 import me.xiajhuan.summer.core.enums.TaskTypeEnum;
 import me.xiajhuan.summer.core.enums.OperationStatusEnum;
-import me.xiajhuan.summer.core.exception.custom.BusinessException;
 import me.xiajhuan.summer.system.common.quartz.task.QuartzTask;
 import me.xiajhuan.summer.system.log.entity.LogTaskEntity;
 import me.xiajhuan.summer.system.log.service.LogTaskService;
