@@ -49,9 +49,9 @@ max-misfires-to-handle-at-time = 2
 
 # 是否是集群模式，值：true/false
 is-cluster = true
-# 当前实例报告给集群中其他实例的时间间隔（ms），只有quartz.is-cluster = true 时会生效
+# 当前实例报告给集群中其他实例的时间间隔（ms），只有is-cluster = true 时会生效
 cluster-checkin-interval = 20000
-# 一个实例节点允许接受的Trigger最大数，只有quartz.is-cluster = true 时会生效，note：值越大，当前节点任务执行的越多，但集群间会不均衡
+# 一个实例节点允许接受的Trigger最大数，只有is-cluster = true 时会生效，note：值越大，当前节点任务执行的越多，但集群间会不均衡
 batch-trigger-acquisition-max-count = 1
 
 

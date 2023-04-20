@@ -16,7 +16,7 @@ import cn.hutool.core.util.StrUtil;
 import me.xiajhuan.summer.core.enums.StatusEnum;
 import me.xiajhuan.summer.core.exception.code.ErrorCode;
 import me.xiajhuan.summer.core.exception.custom.BusinessException;
-import me.xiajhuan.summer.system.common.quartz.executor.TaskExecutor;
+import me.xiajhuan.summer.system.common.quartz.executor.QuartzTaskExecutor;
 import me.xiajhuan.summer.system.schedule.entity.ScheduleTaskEntity;
 import org.quartz.*;
 
@@ -36,19 +36,24 @@ public class QuartzHelper {
     }
 
     /**
-     * 任务ID Key
+     * 任务ID
      */
     public static final String TASK_ID = "taskId";
 
     /**
-     * Bean名称 Key
+     * Bean名称
      */
     public static final String BEAN_NAME = "beanName";
 
     /**
-     * 参数（Json格式） Key
+     * 参数（Json格式）
      */
     public static final String JSON = "json";
+
+    /**
+     * 类型
+     */
+    public static final String TYPE = "type";
 
     /**
      * 获取 {@link CronTrigger}
@@ -61,7 +66,7 @@ public class QuartzHelper {
         try {
             return (CronTrigger) scheduler.getTrigger(getTriggerKey(taskId));
         } catch (SchedulerException e) {
-            throw BusinessException.of(e, ErrorCode.BUSINESS_TASK_ERROR, "getCronTrigger");
+            throw BusinessException.of(e, ErrorCode.SCHEDULE_ERROR, "getCronTrigger");
         }
     }
 
@@ -75,35 +80,28 @@ public class QuartzHelper {
         Long taskId = entity.getId();
 
         // 构建任务详情
-        JobDetail jobDetail = JobBuilder.newJob(TaskExecutor.class)
+        JobDetail jobDetail = JobBuilder.newJob(QuartzTaskExecutor.class)
                 .withIdentity(getJobKey(taskId)).build();
-
-        // Cron表达式调度构建器
-        CronScheduleBuilder scheduleBuilder = CronScheduleBuilder
-                .cronSchedule(entity.getCronExpression())
-                .withMisfireHandlingInstructionFireAndProceed();
 
         // 根据Cron表达式构建一个新的Trigger
         CronTrigger trigger = TriggerBuilder.newTrigger()
                 .withIdentity(getTriggerKey(taskId))
-                .withSchedule(scheduleBuilder).build();
+                .withSchedule(getScheduleBuilder(entity.getCronExpression()))
+                .build();
 
         // 任务信息放入JobDataMap，用于运行时获取
-        JobDataMap jobDataMap = jobDetail.getJobDataMap();
-        jobDataMap.putAsString(TASK_ID, taskId);
-        jobDataMap.put(BEAN_NAME, entity.getBeanName());
-        jobDataMap.put(JSON, entity.getJson());
+        fillDataMap(jobDetail.getJobDataMap(), taskId, entity.getBeanName(), entity.getJson(), entity.getType());
 
         try {
             // 新增任务
             scheduler.scheduleJob(jobDetail, trigger);
         } catch (SchedulerException e) {
-            throw BusinessException.of(e, ErrorCode.BUSINESS_TASK_ERROR, "createTask");
+            throw BusinessException.of(e, ErrorCode.SCHEDULE_ERROR, "addTask");
         }
 
         // 暂停任务
         if (StatusEnum.DISABLE.getValue() == entity.getStatus()) {
-            pauseTask(scheduler, entity.getId());
+            pauseTask(scheduler, taskId);
         }
     }
 
@@ -118,87 +116,26 @@ public class QuartzHelper {
 
         TriggerKey triggerKey = getTriggerKey(taskId);
 
-        // 表达式调度构建器
-        CronScheduleBuilder scheduleBuilder = CronScheduleBuilder
-                .cronSchedule(entity.getCronExpression())
-                .withMisfireHandlingInstructionFireAndProceed();
-
-        CronTrigger trigger = getCronTrigger(scheduler, taskId);
-
         // 根据Cron表达式重新构建一个Trigger
-        trigger = trigger.getTriggerBuilder()
+        CronTrigger trigger = getCronTrigger(scheduler, taskId)
+                .getTriggerBuilder()
                 .withIdentity(triggerKey)
-                .withSchedule(scheduleBuilder).build();
+                .withSchedule(getScheduleBuilder(entity.getCronExpression()))
+                .build();
 
         // 任务信息放入JobDataMap，用于运行时获取
-        JobDataMap jobDataMap = trigger.getJobDataMap();
-        jobDataMap.putAsString(TASK_ID, taskId);
-        jobDataMap.put(BEAN_NAME, entity.getBeanName());
-        jobDataMap.put(JSON, entity.getJson());
+        fillDataMap(trigger.getJobDataMap(), taskId, entity.getBeanName(), entity.getJson(), entity.getType());
 
         try {
             // 修改任务
             scheduler.rescheduleJob(triggerKey, trigger);
         } catch (SchedulerException e) {
-            throw BusinessException.of(e, ErrorCode.BUSINESS_TASK_ERROR, "updateTask");
+            throw BusinessException.of(e, ErrorCode.SCHEDULE_ERROR, "updateTask");
         }
 
         // 暂停任务
         if (StatusEnum.DISABLE.getValue() == entity.getStatus()) {
-            pauseTask(scheduler, entity.getId());
-        }
-    }
-
-    /**
-     * 执行任务
-     *
-     * @param scheduler {@link Scheduler}
-     * @param entity    任务Entity
-     */
-    public static void runTask(Scheduler scheduler, ScheduleTaskEntity entity) {
-        Long taskId = entity.getId();
-
-        // 任务信息放入JobDataMap，用于运行时获取
-        JobDataMap jobDataMap = new JobDataMap();
-        jobDataMap.putAsString(TASK_ID, taskId);
-        jobDataMap.put(BEAN_NAME, entity.getBeanName());
-        jobDataMap.put(JSON, entity.getJson());
-
-        try {
-            // 执行任务
-            scheduler.triggerJob(getJobKey(taskId), jobDataMap);
-        } catch (SchedulerException e) {
-            throw BusinessException.of(e, ErrorCode.BUSINESS_TASK_ERROR, "runTask");
-        }
-    }
-
-    /**
-     * 暂停任务
-     *
-     * @param scheduler {@link Scheduler}
-     * @param taskId    任务ID
-     */
-    public static void pauseTask(Scheduler scheduler, Long taskId) {
-        try {
-            // 暂停任务
-            scheduler.pauseJob(getJobKey(taskId));
-        } catch (SchedulerException e) {
-            throw BusinessException.of(e, ErrorCode.BUSINESS_TASK_ERROR, "pauseTask");
-        }
-    }
-
-    /**
-     * 恢复任务
-     *
-     * @param scheduler {@link Scheduler}
-     * @param taskId    任务ID
-     */
-    public static void resumeJob(Scheduler scheduler, Long taskId) {
-        try {
-            // 恢复任务
-            scheduler.resumeJob(getJobKey(taskId));
-        } catch (SchedulerException e) {
-            throw BusinessException.of(e, ErrorCode.BUSINESS_TASK_ERROR, "resumeJob");
+            pauseTask(scheduler, taskId);
         }
     }
 
@@ -213,18 +150,87 @@ public class QuartzHelper {
             // 删除任务
             scheduler.deleteJob(getJobKey(taskId));
         } catch (SchedulerException e) {
-            throw BusinessException.of(e, ErrorCode.BUSINESS_TASK_ERROR, "deleteJob");
+            throw BusinessException.of(e, ErrorCode.SCHEDULE_ERROR, "deleteJob");
         }
     }
 
     /**
-     * 获取 {@link TriggerKey}
+     * 执行任务
      *
-     * @param taskId 任务ID
-     * @return {@link TriggerKey}
+     * @param scheduler {@link Scheduler}
+     * @param entity    任务Entity
      */
-    private static TriggerKey getTriggerKey(Long taskId) {
-        return TriggerKey.triggerKey(getTaskKey(taskId));
+    public static void runTask(Scheduler scheduler, ScheduleTaskEntity entity) {
+        Long taskId = entity.getId();
+
+        // 任务信息放入JobDataMap，用于运行时获取
+        JobDataMap jobDataMap = new JobDataMap();
+        fillDataMap(jobDataMap, taskId, entity.getBeanName(), entity.getJson(), entity.getType());
+
+        try {
+            // 执行任务
+            scheduler.triggerJob(getJobKey(taskId), jobDataMap);
+        } catch (SchedulerException e) {
+            throw BusinessException.of(e, ErrorCode.SCHEDULE_ERROR, "runTask");
+        }
+    }
+
+    /**
+     * 暂停任务
+     *
+     * @param scheduler {@link Scheduler}
+     * @param taskId    任务ID
+     */
+    public static void pauseTask(Scheduler scheduler, Long taskId) {
+        try {
+            // 暂停任务
+            scheduler.pauseJob(getJobKey(taskId));
+        } catch (SchedulerException e) {
+            throw BusinessException.of(e, ErrorCode.SCHEDULE_ERROR, "pauseTask");
+        }
+    }
+
+    /**
+     * 恢复任务
+     *
+     * @param scheduler {@link Scheduler}
+     * @param taskId    任务ID
+     */
+    public static void resumeJob(Scheduler scheduler, Long taskId) {
+        try {
+            // 恢复任务
+            scheduler.resumeJob(getJobKey(taskId));
+        } catch (SchedulerException e) {
+            throw BusinessException.of(e, ErrorCode.SCHEDULE_ERROR, "resumeJob");
+        }
+    }
+
+    /**
+     * 获取表达式调度构建器
+     *
+     * @param cronExpression Cron表达式
+     * @return {@link CronScheduleBuilder}
+     * @see CronTrigger#MISFIRE_INSTRUCTION_FIRE_ONCE_NOW
+     */
+    private static CronScheduleBuilder getScheduleBuilder(String cronExpression) {
+        return CronScheduleBuilder.cronSchedule(cronExpression)
+                .withMisfireHandlingInstructionFireAndProceed();
+    }
+
+    /**
+     * 填充 {@link JobDataMap}
+     *
+     * @param jobDataMap {@link JobDataMap}
+     * @param taskId     任务ID
+     * @param beanName   Bean名称
+     * @param json       参数（Json格式）
+     * @param type       类型
+     */
+    private static void fillDataMap(JobDataMap jobDataMap, Long taskId, String beanName, String json, Integer type) {
+        jobDataMap.put(TASK_ID, taskId);
+        jobDataMap.put(BEAN_NAME, beanName);
+        jobDataMap.put(JSON, json);
+        jobDataMap.put(TYPE, type);
     }
 
     /**
@@ -235,6 +241,16 @@ public class QuartzHelper {
      */
     private static JobKey getJobKey(Long taskId) {
         return JobKey.jobKey(getTaskKey(taskId));
+    }
+
+    /**
+     * 获取 {@link TriggerKey}
+     *
+     * @param taskId 任务ID
+     * @return {@link TriggerKey}
+     */
+    private static TriggerKey getTriggerKey(Long taskId) {
+        return TriggerKey.triggerKey(getTaskKey(taskId));
     }
 
     /**

@@ -29,6 +29,9 @@ import java.util.stream.Collectors;
  */
 public class LocaleNameExcelDbParser extends ExcelDbParser<LocaleNameDto, LocaleNameEntity> {
 
+    /**
+     * 名称 Service
+     */
     private final LocaleNameService localeNameService;
 
     /**

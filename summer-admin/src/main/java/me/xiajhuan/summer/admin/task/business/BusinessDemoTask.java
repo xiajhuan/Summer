@@ -10,24 +10,28 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.system.common.quartz.executor;
+package me.xiajhuan.summer.admin.task.business;
 
-import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
-import org.springframework.scheduling.quartz.QuartzJobBean;
+import cn.hutool.log.Log;
+import cn.hutool.log.LogFactory;
+import me.xiajhuan.summer.system.common.quartz.task.QuartzTask;
+import org.springframework.stereotype.Component;
 
 /**
- * 任务执行器
+ * BusinessDemo
  *
  * @author xiajhuan
  * @date 2023/4/19
- * @see QuartzJobBean
  */
-public class TaskExecutor extends QuartzJobBean {
+@Component
+public class BusinessDemoTask implements QuartzTask {
+
+    private static final Log LOGGER = LogFactory.get();
 
     @Override
-    protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
-
+    public void execute(String json) {
+        LOGGER.info("任务参数：{}", json);
+        LOGGER.info("xxx业务处理中...");
     }
 
 }

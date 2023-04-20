@@ -10,32 +10,29 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.admin.task.business;
+package me.xiajhuan.summer.system.log.task;
 
-import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.date.TimeInterval;
-import me.xiajhuan.summer.system.common.quartz.task.BusinessTask;
+import me.xiajhuan.summer.system.common.quartz.task.QuartzTask;
+import me.xiajhuan.summer.system.log.service.LogTaskService;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
+
 /**
- * Demo 业务定时任务
+ * 任务日志清理
  *
  * @author xiajhuan
- * @date 2023/4/19
+ * @date 2023/4/20
  */
-@Component("businessDemo")
-public class DemoTask extends BusinessTask {
+@Component
+public class LogTaskClearTask implements QuartzTask {
+
+    @Resource
+    private LogTaskService logTaskService;
 
     @Override
-    protected void run(String json) {
-        String name = "Demo";
-
-        TimeInterval timer = DateUtil.timer();
-        LOGGER.info(startMsg(name));
-
-        LOGGER.info("xxx业务处理中...");
-
-        LOGGER.info(endMsg(name, timer.interval()));
+    public void execute(String json) {
+        logTaskService.clear();
     }
 
 }

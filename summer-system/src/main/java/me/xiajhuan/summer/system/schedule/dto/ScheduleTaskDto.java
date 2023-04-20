@@ -16,6 +16,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import me.xiajhuan.summer.core.base.dto.PageSortDto;
 import me.xiajhuan.summer.core.enums.StatusEnum;
+import me.xiajhuan.summer.core.enums.TaskTypeEnum;
 import me.xiajhuan.summer.core.validation.group.AddGroup;
 import me.xiajhuan.summer.core.validation.group.UpdateGroup;
 import org.hibernate.validator.constraints.Range;
@@ -45,6 +46,15 @@ public class ScheduleTaskDto extends PageSortDto {
      */
     @NotBlank(message = "{schedule.task.cronExpression.require}", groups = {AddGroup.class, UpdateGroup.class})
     private String cronExpression;
+
+    /**
+     * 类型
+     *
+     * @see TaskTypeEnum
+     */
+    @Range(min = 0, max = 2, message = "{schedule.task.type.range}", groups = {AddGroup.class, UpdateGroup.class})
+    @NotNull(message = "{schedule.task.type.require}", groups = {AddGroup.class, UpdateGroup.class})
+    private Integer type;
 
     /**
      * 状态

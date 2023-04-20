@@ -23,6 +23,7 @@ import me.xiajhuan.summer.core.constant.DateFormatConst;
 import me.xiajhuan.summer.core.enums.OperationStatusEnum;
 import me.xiajhuan.summer.core.enums.TaskTypeEnum;
 import me.xiajhuan.summer.system.log.excel.converter.OperationStatusConverter;
+import me.xiajhuan.summer.system.log.excel.converter.TaskTypeConverter;
 
 import java.util.Date;
 
@@ -66,6 +67,7 @@ public class LogTaskDto extends ExcelDto {
      *
      * @see TaskTypeEnum
      */
+    @ExcelProperty(value = "类型", index = 4, converter = TaskTypeConverter.class)
     private Integer type;
 
     /**
@@ -73,14 +75,14 @@ public class LogTaskDto extends ExcelDto {
      *
      * @see OperationStatusEnum
      */
-    @ExcelProperty(value = "状态", index = 4, converter = OperationStatusConverter.class)
+    @ExcelProperty(value = "状态", index = 5, converter = OperationStatusConverter.class)
     private Integer status;
 
     /**
      * 创建时间
      */
     @DateTimeFormat(DateFormatConst.DATE_TIME)
-    @ExcelProperty(value = "创建时间", index = 5)
+    @ExcelProperty(value = "创建时间", index = 6)
     private Date createTime;
 
     /**

@@ -18,6 +18,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import me.xiajhuan.summer.core.base.entity.CommonEntity;
 import me.xiajhuan.summer.core.enums.StatusEnum;
+import me.xiajhuan.summer.core.enums.TaskTypeEnum;
 
 /**
  * 任务 Entity
@@ -50,6 +51,13 @@ public class ScheduleTaskEntity extends CommonEntity {
      * Cron表达式
      */
     private String cronExpression;
+
+    /**
+     * 类型
+     *
+     * @see TaskTypeEnum
+     */
+    private Integer type;
 
     /**
      * 状态
