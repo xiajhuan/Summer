@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * 限流 OpenTest
+ * 限流 TestApi
  *
  * @author xiajhuan
  * @date 2022/3/8

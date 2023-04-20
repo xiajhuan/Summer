@@ -19,7 +19,7 @@ import me.xiajhuan.summer.core.ratelimiter.annotation.RateLimiter;
 import me.xiajhuan.summer.core.utils.AssertUtil;
 import me.xiajhuan.summer.core.validation.group.AddGroup;
 import me.xiajhuan.summer.core.validation.group.UpdateGroup;
-import me.xiajhuan.summer.system.common.annotation.LogOperation;
+import me.xiajhuan.summer.system.log.annotation.LogOperation;
 import me.xiajhuan.summer.system.schedule.dto.ScheduleTaskDto;
 import me.xiajhuan.summer.system.schedule.service.ScheduleTaskService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;

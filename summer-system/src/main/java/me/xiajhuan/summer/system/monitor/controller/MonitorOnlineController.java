@@ -16,7 +16,7 @@ import me.xiajhuan.summer.core.constant.OperationConst;
 import me.xiajhuan.summer.core.data.PageData;
 import me.xiajhuan.summer.core.data.Result;
 import me.xiajhuan.summer.core.utils.AssertUtil;
-import me.xiajhuan.summer.system.common.annotation.LogOperation;
+import me.xiajhuan.summer.system.log.annotation.LogOperation;
 import me.xiajhuan.summer.system.monitor.dto.MonitorOnlineDto;
 import me.xiajhuan.summer.system.monitor.service.MonitorOnlineService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;

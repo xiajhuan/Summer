@@ -19,7 +19,7 @@ import me.xiajhuan.summer.core.data.Result;
 import me.xiajhuan.summer.core.exception.code.ErrorCode;
 import me.xiajhuan.summer.core.ratelimiter.annotation.RateLimiter;
 import me.xiajhuan.summer.core.utils.ExcelUtil;
-import me.xiajhuan.summer.system.common.annotation.LogOperation;
+import me.xiajhuan.summer.system.log.annotation.LogOperation;
 import me.xiajhuan.summer.system.log.dto.LogLoginDto;
 import me.xiajhuan.summer.system.log.service.LogLoginService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;

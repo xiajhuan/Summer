@@ -22,7 +22,7 @@ import me.xiajhuan.summer.core.utils.AssertUtil;
 import me.xiajhuan.summer.core.utils.ExcelUtil;
 import me.xiajhuan.summer.core.validation.group.AddGroup;
 import me.xiajhuan.summer.core.validation.group.UpdateGroup;
-import me.xiajhuan.summer.system.common.annotation.LogOperation;
+import me.xiajhuan.summer.system.log.annotation.LogOperation;
 import me.xiajhuan.summer.system.locale.dto.LocaleNameDto;
 import me.xiajhuan.summer.system.locale.entity.LocaleNameEntity;
 import me.xiajhuan.summer.system.locale.excel.parser.LocaleNameExcelDbParser;

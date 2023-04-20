@@ -23,7 +23,7 @@ import me.xiajhuan.summer.core.utils.ExcelUtil;
 import me.xiajhuan.summer.core.validation.group.AddGroup;
 import me.xiajhuan.summer.core.validation.group.DefaultGroup;
 import me.xiajhuan.summer.core.validation.group.UpdateGroup;
-import me.xiajhuan.summer.system.common.annotation.LogOperation;
+import me.xiajhuan.summer.system.log.annotation.LogOperation;
 import me.xiajhuan.summer.system.security.dto.PasswordDto;
 import me.xiajhuan.summer.system.security.dto.SecurityUserDto;
 import me.xiajhuan.summer.system.security.service.SecurityUserService;

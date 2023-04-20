@@ -13,7 +13,7 @@
 package me.xiajhuan.summer.system.monitor.controller;
 
 import me.xiajhuan.summer.core.data.Result;
-import me.xiajhuan.summer.system.common.annotation.LogOperation;
+import me.xiajhuan.summer.system.log.annotation.LogOperation;
 import me.xiajhuan.summer.system.monitor.service.MonitorSystemService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.GetMapping;

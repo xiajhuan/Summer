@@ -22,7 +22,7 @@ import me.xiajhuan.summer.core.exception.code.ErrorCode;
 import me.xiajhuan.summer.core.exception.custom.ValidationException;
 import me.xiajhuan.summer.core.mp.helper.MpHelper;
 import me.xiajhuan.summer.core.utils.BeanUtil;
-import me.xiajhuan.summer.system.common.quartz.helper.QuartzHelper;
+import me.xiajhuan.summer.system.schedule.quartz.helper.QuartzHelper;
 import me.xiajhuan.summer.system.schedule.dto.ScheduleTaskDto;
 import me.xiajhuan.summer.system.schedule.entity.ScheduleTaskEntity;
 import me.xiajhuan.summer.system.schedule.mapper.ScheduleTaskMapper;

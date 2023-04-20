@@ -44,7 +44,6 @@ Summer
 │    │    │    ├─open            开放接口
 │    │    │    └─test            测试接口
 │    │    ├─business      业务模块
-│    │    │    └─TODO            个性化业务
 │    │    └─task          定时任务模块
 │    │         ├─api             api定时任务
 │    │         └─business        业务定时任务
@@ -54,20 +53,13 @@ Summer
 │
 ├─summer-system      系统模块（专注于系统基本功能支持）
 │    └─system 
-│    │    ├─common        通用模块
-│    │    │    ├─annotation      注解定义
-│    │    │    ├─aspect          切面类定义
-│    │    │    ├─handler         处理器定义
-│    │    │    ├─quartz          Quartz支持
-│    │    │    ├─runner          SpringBoot-Runner
-│    │    │    └─shiro           Shiro支持
-│    │    │    
+│    │    ├─handler       处理器定义
 │    │    ├─locale        国际化模块
 │    │    ├─log           日志模块
 │    │    ├─monitor       监控模块
+│    │    ├─runner        SpringBoot-Runner
 │    │    ├─schedule      定时任务模块
-│    │    ├─security      权限相关模块
-│    │    └─TODO          开发中...
+│    │    └─security      权限相关模块
 │    │
 │    └─resources 
 │         └─mapper        Mapper.xml
@@ -96,7 +88,7 @@ Summer
 ```
 
 ### 依赖清单
-- SpringBoot：2.7.10
+- SpringBoot：2.7.11
 - MysqlConnector：8.0.32
 - DynamicDatasource：3.6.1
 - MybatisPlus：3.5.3.1
