@@ -14,6 +14,7 @@ package me.xiajhuan.summer.system.common.runner;
 
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import me.xiajhuan.summer.core.utils.SystemUtil;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -29,6 +30,7 @@ import javax.annotation.Resource;
  * @author xiajhuan
  * @date 2022/11/28
  * @see ApplicationRunner
+ * @see DynamicDataSourceContextHolder
  */
 @Component
 @Order
@@ -41,6 +43,9 @@ public class ServerReadyRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
+        // 强制清空本地线程，防止内存泄漏
+        DynamicDataSourceContextHolder.clear();
+
         if (context.isActive()) {
             LOGGER.info("  _   _   _   _   _  ");
             LOGGER.info(" / \\ / \\ / \\ / \\ / \\");

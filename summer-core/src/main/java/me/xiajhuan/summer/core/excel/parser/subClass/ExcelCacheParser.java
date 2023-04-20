@@ -21,7 +21,7 @@ import me.xiajhuan.summer.core.constant.SettingConst;
 import me.xiajhuan.summer.core.constant.TimeUnitConst;
 import me.xiajhuan.summer.core.excel.parser.AbstractExcelParser;
 
-import static me.xiajhuan.summer.core.cache.key.CoreCacheKey.excelData;
+import static me.xiajhuan.summer.core.cache.key.CommonCacheKey.excelData;
 
 import java.util.List;
 import java.util.stream.Collectors;

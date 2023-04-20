@@ -145,12 +145,12 @@ public class QuartzHelper {
      * @param scheduler {@link Scheduler}
      * @param taskId    任务ID
      */
-    public static void deleteJob(Scheduler scheduler, Long taskId) {
+    public static void deleteTask(Scheduler scheduler, Long taskId) {
         try {
             // 删除任务
             scheduler.deleteJob(getJobKey(taskId));
         } catch (SchedulerException e) {
-            throw BusinessException.of(e, ErrorCode.SCHEDULE_ERROR, "deleteJob");
+            throw BusinessException.of(e, ErrorCode.SCHEDULE_ERROR, "deleteTask");
         }
     }
 
@@ -196,12 +196,12 @@ public class QuartzHelper {
      * @param scheduler {@link Scheduler}
      * @param taskId    任务ID
      */
-    public static void resumeJob(Scheduler scheduler, Long taskId) {
+    public static void resumeTask(Scheduler scheduler, Long taskId) {
         try {
             // 恢复任务
             scheduler.resumeJob(getJobKey(taskId));
         } catch (SchedulerException e) {
-            throw BusinessException.of(e, ErrorCode.SCHEDULE_ERROR, "resumeJob");
+            throw BusinessException.of(e, ErrorCode.SCHEDULE_ERROR, "resumeTask");
         }
     }
 

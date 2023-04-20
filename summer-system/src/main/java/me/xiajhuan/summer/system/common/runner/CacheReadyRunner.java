@@ -64,16 +64,14 @@ public class CacheReadyRunner implements ApplicationRunner {
         // 设置当前线程的数据源为“system”
         DynamicDataSourceContextHolder.push(DataSourceConst.SYSTEM);
 
-        // 缓存数据
-        cacheData();
         // 缓存类型为“HEAP”时清理遗留在线用户
         if (CacheConst.Type.HEAP.equalsIgnoreCase(serverCacheProperties.getType())
                 && monitorOnlineService.remove(null)) {
             LOGGER.info("【{}】清理遗留在线用户成功", applicationName);
         }
 
-        // 强制清空本地线程，防止内存泄漏
-        DynamicDataSourceContextHolder.clear();
+        // 缓存数据
+        cacheData();
     }
 
     /**

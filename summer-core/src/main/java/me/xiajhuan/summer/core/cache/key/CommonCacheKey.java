@@ -15,12 +15,12 @@ package me.xiajhuan.summer.core.cache.key;
 import cn.hutool.core.util.StrUtil;
 
 /**
- * core模块缓存Key
+ * 通用缓存Key
  *
  * @author xiajhuan
  * @date 2023/3/17
  */
-public class CoreCacheKey {
+public class CommonCacheKey {
 
     /**
      * Excel数据 Key

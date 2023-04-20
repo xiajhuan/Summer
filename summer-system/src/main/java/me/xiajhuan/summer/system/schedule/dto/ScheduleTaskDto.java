@@ -17,6 +17,7 @@ import lombok.EqualsAndHashCode;
 import me.xiajhuan.summer.core.base.dto.PageSortDto;
 import me.xiajhuan.summer.core.enums.StatusEnum;
 import me.xiajhuan.summer.core.enums.TaskTypeEnum;
+import me.xiajhuan.summer.core.validation.annotation.Json;
 import me.xiajhuan.summer.core.validation.group.AddGroup;
 import me.xiajhuan.summer.core.validation.group.UpdateGroup;
 import org.hibernate.validator.constraints.Range;
@@ -40,6 +41,12 @@ public class ScheduleTaskDto extends PageSortDto {
      */
     @NotBlank(message = "{schedule.task.beanName.require}", groups = {AddGroup.class, UpdateGroup.class})
     private String beanName;
+
+    /**
+     * 参数（Json格式）
+     */
+    @Json(groups = {AddGroup.class, UpdateGroup.class})
+    private String json;
 
     /**
      * Cron表达式

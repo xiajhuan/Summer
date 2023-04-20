@@ -12,7 +12,9 @@
 
 package me.xiajhuan.summer.system.schedule.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import me.xiajhuan.summer.system.schedule.dto.ScheduleTaskDto;
 import me.xiajhuan.summer.system.schedule.entity.ScheduleTaskEntity;
 
 /**
@@ -22,4 +24,15 @@ import me.xiajhuan.summer.system.schedule.entity.ScheduleTaskEntity;
  * @date 2023/4/17
  */
 public interface ScheduleTaskService extends IService<ScheduleTaskEntity> {
+
+    Page<ScheduleTaskDto> page(ScheduleTaskDto dto);
+
+    ScheduleTaskDto getById(Long id);
+
+    void add(ScheduleTaskDto dto);
+
+    void update(ScheduleTaskDto dto);
+
+    void delete(Long[] ids);
+
 }

@@ -215,6 +215,11 @@ public interface ErrorCode {
      */
     int KICK_OUT_ERROR = 12000;
 
+    /**
+     * Bean名称【{0}】已存在
+     */
+    int BEAN_NAME_EXISTS = 13000;
+
     //*******************business********************
 
 }
