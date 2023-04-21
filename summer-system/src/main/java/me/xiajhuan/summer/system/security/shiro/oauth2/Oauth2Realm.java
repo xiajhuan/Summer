@@ -36,6 +36,8 @@ import static me.xiajhuan.summer.system.security.cache.SecurityCacheKey.*;
  * @author xiajhuan
  * @date 2023/02/27
  * @see AuthorizingRealm
+ * @see AuthenticationInfo
+ * @see AuthorizationInfo
  */
 @Component
 public class Oauth2Realm extends AuthorizingRealm {

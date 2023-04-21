@@ -50,6 +50,13 @@ import java.util.Locale;
  *
  * @author xiajhuan
  * @date 2022/11/26
+ * @see Exception
+ * @see BusinessException
+ * @see BindException
+ * @see ValidationException
+ * @see FileUploadException
+ * @see FileDownloadException
+ * @see AuthorizationException
  */
 @RestControllerAdvice
 public class GlobalExceptionHandler {

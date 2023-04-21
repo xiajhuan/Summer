@@ -12,7 +12,6 @@
 
 package me.xiajhuan.summer.core.config;
 
-import cn.hutool.setting.Setting;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -32,7 +31,6 @@ public class FilterConfig {
      * 将shiroFilter从Spring容器中注册到Servlet容器
      *
      * @return {@link FilterRegistrationBean}
-     * @see ShiroConfig#shiroFilter(SecurityManager, Setting)
      */
     @Bean
     @SuppressWarnings("all")

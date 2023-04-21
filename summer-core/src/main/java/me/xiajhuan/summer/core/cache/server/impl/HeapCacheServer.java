@@ -18,9 +18,6 @@ import cn.hutool.extra.spring.SpringUtil;
 import cn.hutool.setting.Setting;
 import cn.hutool.cache.CacheUtil;
 import cn.hutool.cache.impl.AbstractCache;
-import cn.hutool.cache.impl.FIFOCache;
-import cn.hutool.cache.impl.LFUCache;
-import cn.hutool.cache.impl.LRUCache;
 import me.xiajhuan.summer.core.cache.server.CacheServer;
 import me.xiajhuan.summer.core.constant.SettingConst;
 import me.xiajhuan.summer.core.constant.CacheConst;
@@ -34,11 +31,8 @@ import java.util.Map;
  *
  * @author xiajhuan
  * @date 2022/11/22
- * @see CacheUtil
  * @see AbstractCache
- * @see FIFOCache
- * @see LFUCache
- * @see LRUCache
+ * @see CacheUtil
  */
 public class HeapCacheServer implements CacheServer {
 

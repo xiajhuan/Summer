@@ -25,7 +25,13 @@ import org.quartz.*;
  *
  * @author xiajhuan
  * @date 2023/4/19
+ * @see CronTrigger
  * @see Scheduler
+ * @see JobDetail
+ * @see CronScheduleBuilder
+ * @see JobDataMap
+ * @see JobKey
+ * @see TriggerKey
  */
 public class QuartzHelper {
 

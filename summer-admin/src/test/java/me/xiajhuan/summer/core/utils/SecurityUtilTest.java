@@ -71,7 +71,6 @@ public class SecurityUtilTest implements CommonMsg {
         Console.log(successMsg(methodSignature));
     }
 
-
     /**
      * @see SecurityUtil#matches(String, String)
      */

@@ -51,9 +51,9 @@ import java.util.concurrent.TimeUnit;
  *
  * @author xiajhuan
  * @date 2022/12/1
+ * @see LFUCache
  * @see com.google.common.util.concurrent.RateLimiter#create(double)
  * @see com.google.common.util.concurrent.RateLimiter#tryAcquire(long, TimeUnit)
- * @see LFUCache
  */
 @Aspect
 @Component

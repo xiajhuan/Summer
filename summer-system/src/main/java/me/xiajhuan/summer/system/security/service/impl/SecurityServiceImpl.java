@@ -62,6 +62,7 @@ import java.util.Set;
  *
  * @author xiajhuan
  * @date 2023/2/28
+ * @see AbstractCaptcha
  */
 @Service
 @DS(DataSourceConst.SYSTEM)

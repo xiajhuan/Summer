@@ -53,7 +53,8 @@ public @interface RateLimiter {
     /**
      * 提示消息
      *
-     * @see ErrorCode
+     * @see ErrorCode#SERVER_BUSY
+     * @see ErrorCode#FREQUENT_OPERATION
      */
     int msg() default -1;
 

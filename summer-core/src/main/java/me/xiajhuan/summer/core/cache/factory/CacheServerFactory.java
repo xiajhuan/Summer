@@ -29,6 +29,12 @@ import me.xiajhuan.summer.core.properties.ServerCacheProperties;
 public class CacheServerFactory {
 
     /**
+     * 构造CacheServerFactory（不允许实例化）
+     */
+    private CacheServerFactory() {
+    }
+
+    /**
      * 缓存类型
      */
     private static String CACHE_TYPE;
@@ -42,12 +48,6 @@ public class CacheServerFactory {
             // 没有配置则默认为：REDIS
             CACHE_TYPE = CacheConst.Type.REDIS;
         }
-    }
-
-    /**
-     * 构造CacheServerFactory（不允许实例化）
-     */
-    private CacheServerFactory() {
     }
 
     /**

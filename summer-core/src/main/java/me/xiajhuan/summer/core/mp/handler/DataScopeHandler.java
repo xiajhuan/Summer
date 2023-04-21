@@ -57,8 +57,8 @@ import java.util.stream.Collectors;
  *
  * @author xiajhuan
  * @date 2023/3/7
- * @see DataPermissionInterceptor#setWhere(PlainSelect, String)
  * @see MultiDataPermissionHandler#getSqlSegment(Table, Expression, String)
+ * @see DataPermissionInterceptor#setWhere(PlainSelect, String)
  */
 @Component
 public class DataScopeHandler implements MultiDataPermissionHandler {
