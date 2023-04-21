@@ -13,6 +13,7 @@
 package me.xiajhuan.summer.system.log.service.impl;
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.setting.Setting;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -51,9 +52,9 @@ public class LogTaskServiceImpl extends ServiceImpl<LogTaskMapper, LogTaskEntity
     public LambdaQueryWrapper<LogTaskEntity> getQueryWrapper(LogTaskDto dto) {
         LambdaQueryWrapper<LogTaskEntity> queryWrapper = getEmptyWrapper();
         // 查询条件
-        // 任务ID
-        Long taskId = dto.getTaskId();
-        queryWrapper.eq(taskId != null, LogTaskEntity::getTaskId, taskId);
+        // Bean名称
+        String beanName = dto.getBeanName();
+        queryWrapper.eq(StrUtil.isNotBlank(beanName), LogTaskEntity::getBeanName, beanName);
         // 类型
         Integer type = dto.getType();
         queryWrapper.eq(type != null, LogTaskEntity::getType, type);
@@ -74,8 +75,8 @@ public class LogTaskServiceImpl extends ServiceImpl<LogTaskMapper, LogTaskEntity
         LambdaQueryWrapper<LogTaskEntity> queryWrapper = getQueryWrapper(dto);
         // 查询字段
         queryWrapper.select(LogTaskEntity::getId, LogTaskEntity::getTaskId, LogTaskEntity::getBeanName,
-                LogTaskEntity::getJson, LogTaskEntity::getTaskTime, LogTaskEntity::getStatus,
-                LogTaskEntity::getCreateTime);
+                LogTaskEntity::getJson, LogTaskEntity::getTaskTime, LogTaskEntity::getType,
+                LogTaskEntity::getStatus, LogTaskEntity::getCreateTime);
 
         return queryWrapper;
     }

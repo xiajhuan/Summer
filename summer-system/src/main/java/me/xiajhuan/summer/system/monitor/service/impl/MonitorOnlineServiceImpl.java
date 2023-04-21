@@ -37,6 +37,7 @@ import me.xiajhuan.summer.system.security.entity.SecurityUserEntity;
 import me.xiajhuan.summer.system.security.service.SecurityService;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Arrays;
@@ -128,6 +129,7 @@ public class MonitorOnlineServiceImpl extends ServiceImpl<MonitorOnlineMapper, M
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void kick(Long[] userIds) {
         if (UserTypeEnum.SUPER_ADMIN.getValue() != SecurityUtil.getLoginUser().getUserType()) {
             // 只有超级管理员可以踢出用户

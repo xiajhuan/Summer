@@ -19,8 +19,11 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import me.xiajhuan.summer.core.base.entity.SimpleEntity;
+import me.xiajhuan.summer.core.enums.NonLoggedUserEnum;
 import me.xiajhuan.summer.core.enums.OperationGroupEnum;
 import me.xiajhuan.summer.core.enums.OperationStatusEnum;
+
+import java.util.Date;
 
 /**
  * 操作日志 Entity
@@ -34,6 +37,19 @@ import me.xiajhuan.summer.core.enums.OperationStatusEnum;
 @EqualsAndHashCode(callSuper = true)
 @TableName("log_operation")
 public class LogOperationEntity extends SimpleEntity {
+
+    /**
+     * 创建者，固定为“systemUser”
+     *
+     * @see NonLoggedUserEnum#SYSTEM_USER
+     */
+    private String createBy;
+
+    /**
+     * 创建时间<br>
+     * note：不使用字段自动填充
+     */
+    private Date createTime;
 
     /**
      * 用户操作
@@ -97,6 +113,10 @@ public class LogOperationEntity extends SimpleEntity {
 
     public static class LogOperationEntityBuilder {
 
+        private String createBy;
+
+        private Date createTime;
+
         private String operation;
 
         private Integer operationGroup;
@@ -118,6 +138,16 @@ public class LogOperationEntity extends SimpleEntity {
         private String operateBy;
 
         LogOperationEntityBuilder() {
+        }
+
+        public LogOperationEntityBuilder createBy(final String createBy) {
+            this.createBy = createBy;
+            return this;
+        }
+
+        public LogOperationEntityBuilder createTime(final Date createTime) {
+            this.createTime = createTime;
+            return this;
         }
 
         public LogOperationEntityBuilder operation(final String operation) {
@@ -173,11 +203,11 @@ public class LogOperationEntity extends SimpleEntity {
         }
 
         public LogOperationEntity build() {
-            return new LogOperationEntity(this.operation, this.operationGroup, this.requestUri, this.requestMethod, this.requestParams, this.requestTime, this.userAgent, this.ip, this.status, this.operateBy);
+            return new LogOperationEntity(this.createBy, this.createTime, this.operation, this.operationGroup, this.requestUri, this.requestMethod, this.requestParams, this.requestTime, this.userAgent, this.ip, this.status, this.operateBy);
         }
 
         public String toString() {
-            return "LogOperationEntity.LogOperationEntityBuilder(operation=" + this.operation + ", operationGroup=" + operationGroup + ", requestUri=" + this.requestUri + ", requestMethod=" + this.requestMethod + ", requestParams=" + this.requestParams + ", requestTime=" + this.requestTime + ", userAgent=" + this.userAgent + ", ip=" + this.ip + ", status=" + this.status + ", operateBy=" + this.operateBy + ")";
+            return "LogOperationEntity.LogOperationEntityBuilder(createBy=" + this.createBy + ", createTime=" + createTime + ", operation=" + this.operation + ", operationGroup=" + operationGroup + ", requestUri=" + this.requestUri + ", requestMethod=" + this.requestMethod + ", requestParams=" + this.requestParams + ", requestTime=" + this.requestTime + ", userAgent=" + this.userAgent + ", ip=" + this.ip + ", status=" + this.status + ", operateBy=" + this.operateBy + ")";
         }
 
     }

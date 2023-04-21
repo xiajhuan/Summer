@@ -90,6 +90,7 @@ public class SecurityDeptServiceImpl extends ServiceImpl<SecurityDeptMapper, Sec
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void add(SecurityDeptDto dto) {
         SecurityDeptEntity entity = BeanUtil.convert(dto, SecurityDeptEntity.class);
         // 所有上级部门ID
@@ -102,6 +103,7 @@ public class SecurityDeptServiceImpl extends ServiceImpl<SecurityDeptMapper, Sec
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void update(SecurityDeptDto dto) {
         long id = dto.getId();
         long parentId = dto.getParentId();

@@ -166,7 +166,7 @@ public class QuartzHelper {
      * @param scheduler {@link Scheduler}
      * @param entity    任务Entity
      */
-    public static void runTask(Scheduler scheduler, ScheduleTaskEntity entity) {
+    public static void executeTask(Scheduler scheduler, ScheduleTaskEntity entity) {
         Long taskId = entity.getId();
 
         // 任务信息放入JobDataMap，用于运行时获取
@@ -177,7 +177,7 @@ public class QuartzHelper {
             // 执行任务
             scheduler.triggerJob(getJobKey(taskId), jobDataMap);
         } catch (SchedulerException e) {
-            throw BusinessException.of(e, ErrorCode.SCHEDULE_ERROR, "runTask");
+            throw BusinessException.of(e, ErrorCode.SCHEDULE_ERROR, "executeTask");
         }
     }
 

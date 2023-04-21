@@ -15,8 +15,11 @@ package me.xiajhuan.summer.system.log.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
 import me.xiajhuan.summer.core.base.entity.SimpleEntity;
+import me.xiajhuan.summer.core.enums.NonLoggedUserEnum;
 import me.xiajhuan.summer.core.enums.OperationStatusEnum;
 import me.xiajhuan.summer.core.enums.TaskTypeEnum;
+
+import java.util.Date;
 
 /**
  * 任务日志 Entity
@@ -31,6 +34,19 @@ import me.xiajhuan.summer.core.enums.TaskTypeEnum;
 @EqualsAndHashCode(callSuper = true)
 @TableName("log_task")
 public class LogTaskEntity extends SimpleEntity {
+
+    /**
+     * 创建者，固定为“quartzTask”
+     *
+     * @see NonLoggedUserEnum#QUARTZ_TASK
+     */
+    private String createBy;
+
+    /**
+     * 创建时间<br>
+     * note：不使用字段自动填充
+     */
+    private Date createTime;
 
     /**
      * 任务ID

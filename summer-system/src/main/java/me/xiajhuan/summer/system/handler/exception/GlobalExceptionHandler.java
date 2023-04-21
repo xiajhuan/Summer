@@ -10,7 +10,7 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.system.handler;
+package me.xiajhuan.summer.system.handler.exception;
 
 import cn.hutool.core.text.StrPool;
 import cn.hutool.core.util.ArrayUtil;

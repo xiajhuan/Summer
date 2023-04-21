@@ -52,6 +52,11 @@ public class LogOperationAspect {
     private LogOperationService logOperationService;
 
     /**
+     * 操作格式
+     */
+    private static final String OPERATION_FORMAT = "【{}】{}";
+
+    /**
      * 切入点
      */
     @Pointcut("@annotation(me.xiajhuan.summer.system.log.annotation.LogOperation)")
@@ -72,12 +77,12 @@ public class LogOperationAspect {
             // 执行切入点方法
             Object result = point.proceed();
 
-            // 保存成功日志
+            // 操作成功
             saveLog(point, timer.interval(), OperationStatusEnum.SUCCESS);
 
             return result;
         } catch (Throwable e) {
-            // 保存失败日志
+            // 操作失败
             saveLog(point, timer.interval(), OperationStatusEnum.FAIL);
 
             throw e;
@@ -95,21 +100,25 @@ public class LogOperationAspect {
         // 获取切入点方法所属Controller上的RequestMapping注解
         Class controllerClass = point.getTarget().getClass();
         RequestMapping requestMapping = AnnotationUtils.findAnnotation(controllerClass, RequestMapping.class);
-
+        if (requestMapping == null) {
+            return;
+        }
         // 获取切入点方法上的LogOperation注解
         Method method = JoinPointUtil.getMethod(point);
         if (method == null) {
             return;
         }
         LogOperation logOperation = AnnotationUtils.findAnnotation(method, LogOperation.class);
-
+        if (logOperation == null) {
+            return;
+        }
         // 请求
         HttpServletRequest request = ServletUtil.getHttpRequest();
 
-        if (logOperation != null && request != null) {
+        if (request != null) {
             // 构建操作日志
             LogOperationEntity entity = LogOperationEntity.builder()
-                    .operation(StrUtil.format("【{}】{}", logOperation.name(), requestMapping.path()))
+                    .operation(StrUtil.format(OPERATION_FORMAT, logOperation.name(), requestMapping.path()))
                     .operationGroup(getOperationGroup(logOperation.name()))
                     .operateBy(SecurityUtil.getCurrentUsername(NonLoggedUserEnum.THIRD_PART.getValue()))
                     .status(status.getValue())
@@ -117,7 +126,8 @@ public class LogOperationAspect {
                     .ip(ServletUtil.getClientIP(request))
                     .userAgent(ServletUtil.getUserAgent(request))
                     .requestUri(request.getRequestURI())
-                    .requestMethod(request.getMethod()).build();
+                    .requestMethod(request.getMethod())
+                    .createTime(DateUtil.date()).build();
 
             if (logOperation.saveRequestParam()) {
                 // 请求参数

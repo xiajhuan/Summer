@@ -40,26 +40,25 @@ public class LogTaskDto extends ExcelDto {
     /**
      * 任务ID
      */
-    @ExcelProperty(value = "任务ID", index = 0)
     private Long taskId;
 
     /**
      * Bean名称
      */
-    @ExcelProperty(value = "Bean名称", index = 1)
+    @ExcelProperty(value = "Bean名称", index = 0)
     private String beanName;
 
     /**
      * 参数（Json格式）
      */
     @ColumnWidth(100)
-    @ExcelProperty(value = "参数（Json格式）", index = 2)
+    @ExcelProperty(value = "参数（Json格式）", index = 1)
     private String json;
 
     /**
      * 任务时长（ms）
      */
-    @ExcelProperty(value = "任务时长（ms）", index = 3)
+    @ExcelProperty(value = "任务时长（ms）", index = 2)
     private Integer taskTime;
 
     /**
@@ -67,7 +66,7 @@ public class LogTaskDto extends ExcelDto {
      *
      * @see TaskTypeEnum
      */
-    @ExcelProperty(value = "类型", index = 4, converter = TaskTypeConverter.class)
+    @ExcelProperty(value = "类型", index = 3, converter = TaskTypeConverter.class)
     private Integer type;
 
     /**
@@ -75,14 +74,14 @@ public class LogTaskDto extends ExcelDto {
      *
      * @see OperationStatusEnum
      */
-    @ExcelProperty(value = "状态", index = 5, converter = OperationStatusConverter.class)
+    @ExcelProperty(value = "状态", index = 4, converter = OperationStatusConverter.class)
     private Integer status;
 
     /**
      * 创建时间
      */
     @DateTimeFormat(DateFormatConst.DATE_TIME)
-    @ExcelProperty(value = "创建时间", index = 6)
+    @ExcelProperty(value = "创建时间", index = 5)
     private Date createTime;
 
     /**

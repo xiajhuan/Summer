@@ -58,7 +58,7 @@ public class QuartzTaskExecutor extends QuartzJobBean {
     /**
      * 任务日志 Service
      */
-    private final LogTaskService logTaskService = SpringUtil.getBean("logTasKServiceImpl", LogTaskService.class);
+    private final LogTaskService logTaskService = SpringUtil.getBean("logTaskServiceImpl", LogTaskService.class);
 
     /**
      * 异常堆栈长度限制
@@ -102,6 +102,7 @@ public class QuartzTaskExecutor extends QuartzJobBean {
             entity.setStatus(OperationStatusEnum.FAIL.getValue());
             entity.setErrorInfo(ExceptionUtil.stacktraceToString(e, stacktraceLength));
         } finally {
+            entity.setCreateTime(DateUtil.date());
             // 异步保存日志
             logTaskService.saveAsync(entity);
         }

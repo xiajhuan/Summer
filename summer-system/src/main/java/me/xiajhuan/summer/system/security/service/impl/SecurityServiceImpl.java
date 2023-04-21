@@ -49,6 +49,7 @@ import me.xiajhuan.summer.system.security.service.SecurityMenuService;
 import me.xiajhuan.summer.system.security.service.SecurityService;
 import me.xiajhuan.summer.system.security.service.SecurityUserService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -194,6 +195,7 @@ public class SecurityServiceImpl implements SecurityService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public boolean logout(Long userId, boolean delOnline) {
         if (delOnline) {
             // 删除在线用户

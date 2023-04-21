@@ -216,9 +216,14 @@ public interface ErrorCode {
     int KICK_OUT_ERROR = 12000;
 
     /**
+     * Cron表达式格式错误
+     */
+    int CRON_EXPRESSION_ERROR = 13000;
+
+    /**
      * Bean名称【{0}】已存在
      */
-    int BEAN_NAME_EXISTS = 13000;
+    int BEAN_NAME_EXISTS = 13001;
 
     //*******************business********************
 

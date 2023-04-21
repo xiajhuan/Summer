@@ -10,7 +10,7 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.system.runner;
+package me.xiajhuan.summer.system.hook.runner;
 
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
@@ -25,7 +25,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 
 /**
- * ApplicationRunner（服务启动完毕）
+ * ApplicationRunner（应用启动完毕）
  *
  * @author xiajhuan
  * @date 2022/11/28
@@ -34,7 +34,7 @@ import javax.annotation.Resource;
  */
 @Component
 @Order
-public class ServerReadyRunner implements ApplicationRunner {
+public class AppStartupRunner implements ApplicationRunner {
 
     private static final Log LOGGER = LogFactory.get();
 
@@ -47,11 +47,11 @@ public class ServerReadyRunner implements ApplicationRunner {
         DynamicDataSourceContextHolder.clear();
 
         if (context.isActive()) {
-            LOGGER.info("  _   _   _   _   _  ");
+            LOGGER.info("  _   _   _   _   _");
             LOGGER.info(" / \\ / \\ / \\ / \\ / \\");
             LOGGER.info("( R | E | A | D | Y )");
             LOGGER.info(" \\_/ \\_/ \\_/ \\_/ \\_/");
-            LOGGER.info("【{}】服务启动完毕", SystemUtil.getApplicationName());
+            LOGGER.info("【{}】应用启动完毕", SystemUtil.getApplicationName());
         }
     }
 

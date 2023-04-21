@@ -118,4 +118,52 @@ public class ScheduleTaskController {
 
     //*******************Other Operation********************
 
+    /**
+     * 执行
+     *
+     * @param ids ID数组
+     * @return 响应结果
+     */
+    @PostMapping("execute")
+    @RequiresPermissions("schedule:task:execute")
+    @RateLimiter(0.5)
+    @LogOperation("执行")
+    public Result execute(Long[] ids) {
+        AssertUtil.isNotEmpty("ids", ids);
+        mainService.execute(ids);
+        return Result.ofSuccess();
+    }
+
+    /**
+     * 暂停
+     *
+     * @param ids ID数组
+     * @return 响应结果
+     */
+    @PutMapping("pause")
+    @RequiresPermissions("schedule:task:pause")
+    @RateLimiter(0.5)
+    @LogOperation("暂停")
+    public Result pause(Long[] ids) {
+        AssertUtil.isNotEmpty("ids", ids);
+        mainService.pause(ids);
+        return Result.ofSuccess();
+    }
+
+    /**
+     * 恢复
+     *
+     * @param ids ID数组
+     * @return 响应结果
+     */
+    @PutMapping("resume")
+    @RequiresPermissions("schedule:task:resume")
+    @RateLimiter(0.5)
+    @LogOperation("恢复")
+    public Result resume(Long[] ids) {
+        AssertUtil.isNotEmpty("ids", ids);
+        mainService.resume(ids);
+        return Result.ofSuccess();
+    }
+
 }

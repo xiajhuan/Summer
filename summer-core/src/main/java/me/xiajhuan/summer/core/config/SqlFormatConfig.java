@@ -34,6 +34,16 @@ import java.util.Set;
 public class SqlFormatConfig implements MessageFormattingStrategy {
 
     /**
+     * Sql打印格式
+     */
+    private static final String SQL_FORMAT = "耗时 {} ms | Sql 语句：\n{};";
+
+    /**
+     * Sql替换打印格式
+     */
+    private static final String SQL_REPLACE_FORMAT = "耗时 {} ms | {}";
+
+    /**
      * Quartz相关Sql替换列表
      */
     private static final List<String> QUARTZ_SQL_REPLACE_LIST = ListUtil.of(
@@ -84,13 +94,12 @@ public class SqlFormatConfig implements MessageFormattingStrategy {
 
     @Override
     public String formatMessage(int connectionId, String now, long elapsed, String category, String prepared, String sql, String url) {
-        String replace = getReplacedSql(sql);
         if (StrUtil.isNotBlank(sql)) {
-            if (StrUtil.isNotBlank(replace)) {
-                return replace;
+            String replace = getReplacedSql(sql);
+            if (replace != null) {
+                return StrUtil.format(SQL_REPLACE_FORMAT, elapsed, replace);
             }
-            return StrUtil.format("耗时 {} ms | Sql 语句：\n{};",
-                    elapsed, sql.replaceAll("[\\s]+", StrUtil.SPACE));
+            return StrUtil.format(SQL_FORMAT, elapsed, sql.replaceAll("[\\s]+", StrUtil.SPACE));
         }
         return StrUtil.EMPTY;
     }
@@ -98,11 +107,11 @@ public class SqlFormatConfig implements MessageFormattingStrategy {
     /**
      * <p>
      * 判断Sql是否是被替换的Sql，
-     * 若是则返回替换的字符串，若不是则返回空串
+     * 若是则返回替换的字符串，若不是则返回 {@code null}
      * </p>
      *
      * @param sql Sql
-     * @return 替换的字符串或空串
+     * @return 替换的字符串或 {@code null}
      */
     private String getReplacedSql(String sql) {
         return SQL_REPLACE_SET.stream().filter(replace -> {
@@ -113,7 +122,7 @@ public class SqlFormatConfig implements MessageFormattingStrategy {
                 }
             }
             return false;
-        }).findAny().orElse(StrUtil.EMPTY);
+        }).findAny().orElse(null);
     }
 
 }

@@ -21,6 +21,7 @@ import com.baomidou.dynamic.datasource.DynamicRoutingDataSource;
 import me.xiajhuan.summer.core.constant.DataSourceConst;
 import me.xiajhuan.summer.core.constant.SettingConst;
 import me.xiajhuan.summer.core.constant.ThreadPoolConst;
+import me.xiajhuan.summer.core.properties.QuartzStartupProperties;
 import me.xiajhuan.summer.core.utils.SystemUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,7 +29,6 @@ import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.quartz.simpl.SimpleThreadPool;
 import org.springframework.scheduling.quartz.LocalDataSourceJobStore;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
 /**
@@ -44,6 +44,9 @@ public class QuartzConfig {
 
     @Resource(name = SettingConst.SYSTEM)
     private Setting setting;
+
+    @Resource
+    private QuartzStartupProperties quartzStartupProperties;
 
     @Resource
     private DynamicRoutingDataSource dynamicRoutingDataSource;
@@ -80,26 +83,6 @@ public class QuartzConfig {
     private static final String INSTANCE_NAME = "Business";
 
     /**
-     * 实例ID<br>
-     * note：集群模式下每个实例ID必须唯一
-     */
-    private String instanceId;
-
-    /**
-     * 初始化 {@link instanceId}
-     */
-    @PostConstruct
-    private void init() {
-        String ip = SystemUtil.getIp();
-        String port = SystemUtil.getPort();
-        if (ip != null && port != null) {
-            instanceId = StrUtil.subAfter(ip, StrPool.DOT, true) + StrPool.COLON + port;
-        } else {
-            instanceId = UUID.fastUUID().toString();
-        }
-    }
-
-    /**
      * 注册 {@link SchedulerFactoryBean}
      *
      * @return {@link SchedulerFactoryBean}
@@ -114,14 +97,26 @@ public class QuartzConfig {
         // 自定义Quartz属性配置
         factory.setQuartzProperties(buildCustomProps());
 
-        // 自动启动
-        factory.setAutoStartup(true);
-        // 延时启动（s）
-        factory.setStartupDelay(30);
+        // 应用关闭时等待所有任务执行完
+        factory.setWaitForJobsToCompleteOnShutdown(setting
+                .getBool("wait-for-jobs-to-complete-on-shutdown", "Schedule", true));
+
         // 将Spring的applicationContext加入到Quartz的schedulerContext中
         factory.setApplicationContextSchedulerContextKey("springContext");
-        // 启动时更新己存在的Task，这样就不用每次修改targetObject后删除QUARTZ_JOB_DETAILS表对应的记录了
+
+        // 启动时更新己存在的Task，这样就不用每次修改ScheduleTaskEntity后删除QUARTZ_JOB_DETAILS表对应的记录了
         factory.setOverwriteExistingJobs(true);
+
+        if (quartzStartupProperties.isAuto()) {
+            // 自动启动
+            factory.setAutoStartup(true);
+
+            // 延迟启动（s）
+            factory.setStartupDelay(quartzStartupProperties.getDelay());
+        } else {
+            // 不自动启动
+            factory.setAutoStartup(false);
+        }
 
         return factory;
     }
@@ -135,7 +130,7 @@ public class QuartzConfig {
         Props props = Props.create();
 
         props.setProperty("org.quartz.scheduler.instanceName", INSTANCE_NAME);
-        props.setProperty("org.quartz.scheduler.instanceId", instanceId);
+        props.setProperty("org.quartz.scheduler.instanceId", getInstanceId());
 
         // 线程池
         props.setProperty("org.quartz.threadPool.class", THREAD_POOL_CLASS);
@@ -171,6 +166,22 @@ public class QuartzConfig {
         }
 
         return props;
+    }
+
+    /**
+     * 获取实例ID<br>
+     * note：集群模式下每个实例ID必须唯一
+     *
+     * @return 实例ID
+     */
+    private String getInstanceId() {
+        String ip = SystemUtil.getIp();
+        String port = SystemUtil.getPort();
+        if (ip != null && port != null) {
+            return StrUtil.subAfter(ip, StrPool.DOT, true) + StrPool.COLON + port;
+        } else {
+            return UUID.fastUUID().toString();
+        }
     }
 
 }

@@ -14,6 +14,7 @@ package me.xiajhuan.summer.system.schedule.dto;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.stereotype.Component;
 import me.xiajhuan.summer.core.base.dto.PageSortDto;
 import me.xiajhuan.summer.core.enums.StatusEnum;
 import me.xiajhuan.summer.core.enums.TaskTypeEnum;
@@ -24,6 +25,7 @@ import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import java.util.Date;
 
 /**
@@ -37,9 +39,11 @@ import java.util.Date;
 public class ScheduleTaskDto extends PageSortDto {
 
     /**
-     * Bean名称
+     * Bean名称<br>
+     * note：值为“简单类名（首字母小写）”或 {@link Component} 指定的名称
      */
-    @NotBlank(message = "{schedule.task.beanName.require}", groups = {AddGroup.class, UpdateGroup.class})
+    @Null(message = "{schedule.task.beanName.null}", groups = UpdateGroup.class)
+    @NotBlank(message = "{schedule.task.beanName.require}", groups = AddGroup.class)
     private String beanName;
 
     /**

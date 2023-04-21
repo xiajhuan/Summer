@@ -104,7 +104,8 @@ public class LogLoginServiceImpl extends ServiceImpl<LogLoginMapper, LogLoginEnt
                 .operation(loginOperation)
                 .status(loginStatus)
                 .userAgent(ServletUtil.getUserAgent(request))
-                .ip(ServletUtil.getClientIP(request)).build();
+                .ip(ServletUtil.getClientIP(request))
+                .createTime(DateUtil.date()).build();
 
         save(entity);
     }

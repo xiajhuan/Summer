@@ -12,13 +12,15 @@
 
 package me.xiajhuan.summer.system.schedule.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 import me.xiajhuan.summer.core.base.entity.CommonEntity;
 import me.xiajhuan.summer.core.enums.StatusEnum;
 import me.xiajhuan.summer.core.enums.TaskTypeEnum;
+import org.springframework.stereotype.Component;
 
 /**
  * 任务 Entity
@@ -27,9 +29,20 @@ import me.xiajhuan.summer.core.enums.TaskTypeEnum;
  * @date 2023/4/15
  */
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @TableName("schedule_task")
 public class ScheduleTaskEntity extends CommonEntity {
+
+    /**
+     * 主键ID，默认策略：分配ID（雪花算法）
+     *
+     * @see IdType
+     */
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
+    private Long id;
 
     /**
      * 部门ID
@@ -38,7 +51,8 @@ public class ScheduleTaskEntity extends CommonEntity {
     private Long deptId;
 
     /**
-     * Bean名称
+     * Bean名称<br>
+     * note：值为“简单类名（首字母小写）”或 {@link Component} 指定的名称
      */
     private String beanName;
 

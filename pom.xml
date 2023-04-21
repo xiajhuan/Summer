@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>me.xiajhuan</groupId>
     <artifactId>Summer</artifactId>
-    <version>1.0.0-Alpha</version>
+    <version>1.0.0-Beta</version>
     <packaging>pom</packaging>
 
     <name>Summer</name>
@@ -29,12 +29,12 @@
     </modules>
 
     <properties>
-        <Summer.version>1.0.0-Alpha</Summer.version>
+        <Summer.version>1.0.0-Beta</Summer.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <spring-boot.version>2.7.11</spring-boot.version>
-        <mysql.version>8.0.32</mysql.version>
+        <mysql.version>8.0.33</mysql.version>
         <dynamic-datasource.version>3.6.1</dynamic-datasource.version>
         <mybatisplus.version>3.5.3.1</mybatisplus.version>
         <p6spy.version>3.9.1</p6spy.version>

@@ -285,4 +285,14 @@ INSERT INTO `locale_name` VALUES (1645741285826076674, 'superAdmin', '2023-04-11
 INSERT INTO `locale_name` VALUES (1645742459056791553, 'superAdmin', '2023-04-11 18:55:53', 'superAdmin', '2023-04-11 18:55:53', 'security_menu', 1645742458788356097, 'name', '系统信息', 'zh_CN');
 INSERT INTO `locale_name` VALUES (1645742842944659458, 'superAdmin', '2023-04-11 18:57:25', 'superAdmin', '2023-04-11 18:57:25', 'security_menu', 1645742458788356097, 'name', 'System information', 'en_US');
 
+-- ----------------------------
+-- Records of schedule_task
+-- ----------------------------
+INSERT INTO `schedule_task` VALUES (1649246831678017538, 'superAdmin', '2023-04-21 11:01:01', 'superAdmin', '2023-04-21 11:01:01', 'logOperationClearTask', '', '0 0 1 * * ? *', 0, 1, '操作日志清理');
+INSERT INTO `schedule_task` VALUES (1649247935891460098, 'superAdmin', '2023-04-21 11:05:24', 'superAdmin', '2023-04-21 11:05:24', 'logErrorClearTask', '', '0 30 1 * * ? *', 0, 1, '错误日志清理');
+INSERT INTO `schedule_task` VALUES (1649248244256690177, 'superAdmin', '2023-04-21 11:06:38', 'superAdmin', '2023-04-21 11:06:38', 'logLoginClearTask', '', '0 0 2 * * ? *', 0, 1, '登录日志清理');
+INSERT INTO `schedule_task` VALUES (1649248434837475330, 'superAdmin', '2023-04-21 11:07:23', 'superAdmin', '2023-04-21 11:07:23', 'logTaskClearTask', '', '0 30 2 * * ? *', 0, 1, '任务日志清理');
+INSERT INTO `schedule_task` VALUES (1649250094074777602, 'superAdmin', '2023-04-21 11:13:59', 'superAdmin', '2023-04-21 11:13:59', 'apiDemoTask', '{\"url\": \"http://xxx\"}', '0/20 * * * * ? *', 1, 1, 'ApiDemo');
+INSERT INTO `schedule_task` VALUES (1649250416746778626, 'superAdmin', '2023-04-21 11:15:16', 'superAdmin', '2023-04-21 11:15:16', 'businessDemoTask', '{\"test\": \"xxx\"}', '5/20 * * * * ? *', 2, 1, 'BusinessDemo');
+
 SET FOREIGN_KEY_CHECKS = 1;

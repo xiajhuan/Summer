@@ -27,6 +27,12 @@ spring:
     password: jack_2021
     database: 2
 
+quartz:
+  # 定时任务启动
+  startup:
+    auto: false
+    delay: 20
+
 logging:
   # 日志级别
   level:

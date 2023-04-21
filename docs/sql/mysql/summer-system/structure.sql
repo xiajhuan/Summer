@@ -228,7 +228,7 @@ DROP TABLE IF EXISTS `log_operation`;
 CREATE TABLE `log_operation`
 (
     `id`              bigint(20)                                                    NOT NULL COMMENT '主键ID',
-    `create_by`       varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL COMMENT '创建者',
+    `create_by`       varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT 'systemUser' COMMENT '创建者',
     `create_time`     datetime(0)                                                   NULL DEFAULT NULL COMMENT '创建时间',
     `operation`       varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL COMMENT '用户操作',
     `request_uri`     varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '请求URI',
@@ -276,7 +276,7 @@ DROP TABLE IF EXISTS `log_login`;
 CREATE TABLE `log_login`
 (
     `id`          bigint(20)                                                    NOT NULL COMMENT '主键ID',
-    `create_by`   varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL COMMENT '创建者',
+    `create_by`   varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT 'systemUser' COMMENT '创建者',
     `create_time` datetime(0)                                                   NULL DEFAULT NULL COMMENT '创建时间',
     `login_user`  varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL COMMENT '登录用户名',
     `operation`   tinyint(1)                                                    NULL DEFAULT NULL COMMENT '用户操作 0：用户登录 1：用户退出',
@@ -297,7 +297,7 @@ DROP TABLE IF EXISTS `log_task`;
 CREATE TABLE `log_task`
 (
     `id`          bigint(20)                                                     NOT NULL COMMENT '主键ID',
-    `create_by`   varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci   NULL DEFAULT NULL COMMENT '创建者',
+    `create_by`   varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci   NULL DEFAULT 'quartzTask' COMMENT '创建者',
     `create_time` datetime(0)                                                    NULL DEFAULT NULL COMMENT '创建时间',
     `task_id`     bigint(20)                                                     NULL DEFAULT NULL COMMENT '任务ID',
     `bean_name`   varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT '0' COMMENT 'Bean名称',

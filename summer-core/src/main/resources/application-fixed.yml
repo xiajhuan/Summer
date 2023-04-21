@@ -136,6 +136,8 @@ management:
     web:
       exposure:
         include: '*'
+      # 自定义前缀（安全性考虑）
+      base-path: /appMonitor
   endpoint:
     # CacheManagers
     caches:
@@ -153,6 +155,10 @@ management:
     # Conditions
     conditions:
       enabled: true
+    # 远程关闭应用（慎用）
+    # curl -X POST http://localhost:6666/summer/appMonitor/shutdown
+    shutdown:
+      enabled: false
     # 配置
     configprops:
       enabled: true

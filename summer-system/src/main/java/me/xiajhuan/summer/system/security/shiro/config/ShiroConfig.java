@@ -106,7 +106,7 @@ public class ShiroConfig {
         // 默认过滤的URI
         filterUriMap.put("/webjars/**", ANON);
         filterUriMap.put("/favicon.ico", ANON);
-        filterUriMap.put("/actuator/**", ANON);
+        filterUriMap.put("/appMonitor/**", ANON);
         filterUriMap.put("/security/captcha", ANON);
         filterUriMap.put("/security/login", ANON);
 

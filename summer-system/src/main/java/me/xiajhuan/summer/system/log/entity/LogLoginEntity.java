@@ -17,6 +17,9 @@ import lombok.*;
 import me.xiajhuan.summer.core.base.entity.SimpleEntity;
 import me.xiajhuan.summer.core.enums.LoginOperationEnum;
 import me.xiajhuan.summer.core.enums.LoginStatusEnum;
+import me.xiajhuan.summer.core.enums.NonLoggedUserEnum;
+
+import java.util.Date;
 
 /**
  * 登录日志 Entity
@@ -31,6 +34,19 @@ import me.xiajhuan.summer.core.enums.LoginStatusEnum;
 @EqualsAndHashCode(callSuper = true)
 @TableName("log_login")
 public class LogLoginEntity extends SimpleEntity {
+
+    /**
+     * 创建者，固定为“systemUser”
+     *
+     * @see NonLoggedUserEnum#SYSTEM_USER
+     */
+    private String createBy;
+
+    /**
+     * 创建时间<br>
+     * note：不使用字段自动填充
+     */
+    private Date createTime;
 
     /**
      * 登录用户名

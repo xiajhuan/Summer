@@ -33,7 +33,7 @@ public enum NonLoggedUserEnum {
     /**
      * 定时任务
      */
-    TASK_JOB("taskJob", "定时任务"),
+    QUARTZ_TASK("quartzTask", "定时任务"),
 
     /**
      * 第三方用户

@@ -74,7 +74,7 @@ timeout = 0
 # *******************Sql相关配置********************
 [Sql]
 # p6spy不详细打印的Sql配置，替换格式：操作关键字->表名,操作关键字->表名，例如：INSERT->log_operation,INSERT->log_error
-p6spy.sql-replace = INSERT->log_operation,INSERT->log_error,INSERT->log_login
+p6spy.sql-replace = INSERT->log_operation,INSERT->log_error,INSERT->log_login,INSERT->log_task
 # 是否替换Quartz相关Sql，值：true/false
 p6spy.quartz-sql-replace = true
 
@@ -104,7 +104,7 @@ max-pool-size = 32
 queue-capacity = 512
 # 空闲线程存活时间（s），note：如果是核心线程，则必须 allow-core-thread-timeout = true 时才生效
 keep-alive-seconds = 30
-# 服务停止时是否等待所有线程执行完，值：true/false
+# 应用关闭时是否等待所有线程执行完，值：true/false
 wait-for-tasks-to-complete-on-shutdown = true
-# 服务停止时等待线程执行的时间（s），超时则强制销毁
+# 应用关闭时等待线程执行的时间（s），超时则强制销毁
 await-termination-Seconds = 30

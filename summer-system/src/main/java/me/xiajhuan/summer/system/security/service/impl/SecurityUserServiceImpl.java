@@ -289,6 +289,7 @@ public class SecurityUserServiceImpl extends ServiceImpl<SecurityUserMapper, Sec
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void updatePasswordAndLogout(PasswordDto dto) {
         LoginUser loginUser = SecurityUtil.getLoginUser();
 
@@ -299,6 +300,7 @@ public class SecurityUserServiceImpl extends ServiceImpl<SecurityUserMapper, Sec
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public String reset(Long[] ids) {
         LoginUser loginUser = SecurityUtil.getLoginUser();
         if (UserTypeEnum.SUPER_ADMIN.getValue() != loginUser.getUserType()) {

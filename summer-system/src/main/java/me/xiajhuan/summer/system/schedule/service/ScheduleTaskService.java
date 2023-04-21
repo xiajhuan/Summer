@@ -17,6 +17,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import me.xiajhuan.summer.system.schedule.dto.ScheduleTaskDto;
 import me.xiajhuan.summer.system.schedule.entity.ScheduleTaskEntity;
 
+import java.util.List;
+
 /**
  * 任务 Service
  *
@@ -34,5 +36,18 @@ public interface ScheduleTaskService extends IService<ScheduleTaskEntity> {
     void update(ScheduleTaskDto dto);
 
     void delete(Long[] ids);
+
+    void execute(Long[] ids);
+
+    void pause(Long[] ids);
+
+    void resume(Long[] ids);
+
+    /**
+     * 获取全部任务
+     *
+     * @return 任务Entity列表
+     */
+    List<ScheduleTaskEntity> getAll();
 
 }

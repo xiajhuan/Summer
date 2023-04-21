@@ -18,6 +18,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import me.xiajhuan.summer.core.constant.DataSourceConst;
+import me.xiajhuan.summer.core.enums.StatusEnum;
 import me.xiajhuan.summer.core.exception.code.ErrorCode;
 import me.xiajhuan.summer.core.exception.custom.ValidationException;
 import me.xiajhuan.summer.core.mp.helper.MpHelper;
@@ -27,11 +28,14 @@ import me.xiajhuan.summer.system.schedule.dto.ScheduleTaskDto;
 import me.xiajhuan.summer.system.schedule.entity.ScheduleTaskEntity;
 import me.xiajhuan.summer.system.schedule.mapper.ScheduleTaskMapper;
 import me.xiajhuan.summer.system.schedule.service.ScheduleTaskService;
+import org.quartz.CronExpression;
 import org.quartz.Scheduler;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -40,10 +44,12 @@ import java.util.stream.Collectors;
  *
  * @author xiajhuan
  * @date 2023/4/17
+ * @see Scheduler
+ * @see CronExpression
  */
 @Service
 @DS(DataSourceConst.SYSTEM)
-public class ScheduleServiceImpl extends ServiceImpl<ScheduleTaskMapper, ScheduleTaskEntity> implements ScheduleTaskService, MpHelper<ScheduleTaskDto, ScheduleTaskEntity> {
+public class ScheduleTaskServiceImpl extends ServiceImpl<ScheduleTaskMapper, ScheduleTaskEntity> implements ScheduleTaskService, MpHelper<ScheduleTaskDto, ScheduleTaskEntity> {
 
     @Resource
     private Scheduler scheduler;
@@ -57,6 +63,9 @@ public class ScheduleServiceImpl extends ServiceImpl<ScheduleTaskMapper, Schedul
         // Bean名称
         String beanName = dto.getBeanName();
         queryWrapper.eq(StrUtil.isNotBlank(beanName), ScheduleTaskEntity::getBeanName, beanName);
+        // 类型
+        Integer type = dto.getType();
+        queryWrapper.eq(type != null, ScheduleTaskEntity::getType, type);
         // 状态
         Integer status = dto.getStatus();
         queryWrapper.eq(status != null, ScheduleTaskEntity::getStatus, status);
@@ -79,10 +88,17 @@ public class ScheduleServiceImpl extends ServiceImpl<ScheduleTaskMapper, Schedul
 
     @Override
     public void handleDtoBefore(ScheduleTaskDto dto) {
-        // Bean名称不能重复
-        String beanName = dto.getBeanName();
-        if (baseMapper.exist(beanName) != null) {
-            throw ValidationException.of(ErrorCode.BEAN_NAME_EXISTS, beanName);
+        // Cron表达式校验
+        if (!CronExpression.isValidExpression(dto.getCronExpression())) {
+            throw ValidationException.of(ErrorCode.CRON_EXPRESSION_ERROR);
+        }
+
+        // 新增时Bean名称不能重复
+        if (dto.getId() == null) {
+            String beanName = dto.getBeanName();
+            if (baseMapper.exist(beanName) != null) {
+                throw ValidationException.of(ErrorCode.BEAN_NAME_EXISTS, beanName);
+            }
         }
     }
 
@@ -102,6 +118,7 @@ public class ScheduleServiceImpl extends ServiceImpl<ScheduleTaskMapper, Schedul
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void add(ScheduleTaskDto dto) {
         handleDtoBefore(dto);
 
@@ -114,6 +131,7 @@ public class ScheduleServiceImpl extends ServiceImpl<ScheduleTaskMapper, Schedul
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void update(ScheduleTaskDto dto) {
         handleDtoBefore(dto);
 
@@ -126,6 +144,7 @@ public class ScheduleServiceImpl extends ServiceImpl<ScheduleTaskMapper, Schedul
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void delete(Long[] ids) {
         Set<Long> idSet = Arrays.stream(ids).collect(Collectors.toSet());
 
@@ -133,6 +152,63 @@ public class ScheduleServiceImpl extends ServiceImpl<ScheduleTaskMapper, Schedul
             // 删除任务
             idSet.forEach(id -> QuartzHelper.deleteTask(scheduler, id));
         }
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void execute(Long[] ids) {
+        LambdaQueryWrapper<ScheduleTaskEntity> queryWrapper = addSelectFieldForQuartz();
+        queryWrapper.in(ScheduleTaskEntity::getId, ids);
+        List<ScheduleTaskEntity> entityList = list(queryWrapper);
+
+        if (entityList.size() > 0) {
+            // 执行任务
+            entityList.forEach(entity -> QuartzHelper.executeTask(scheduler, entity));
+        }
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void pause(Long[] ids) {
+        Arrays.stream(ids).forEach(id -> {
+            if (updateById(ScheduleTaskEntity.builder()
+                    .id(id).status(StatusEnum.DISABLE.getValue())
+                    .build())) {
+                // 暂停任务
+                QuartzHelper.pauseTask(scheduler, id);
+            }
+        });
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void resume(Long[] ids) {
+        Arrays.stream(ids).forEach(id -> {
+            if (updateById(ScheduleTaskEntity.builder()
+                    .id(id).status(StatusEnum.ENABLE.getValue())
+                    .build())) {
+                // 恢复任务
+                QuartzHelper.resumeTask(scheduler, id);
+            }
+        });
+    }
+
+    @Override
+    public List<ScheduleTaskEntity> getAll() {
+        return list(addSelectFieldForQuartz());
+    }
+
+    /**
+     * 添加查询字段（Quartz需要的字段）
+     *
+     * @return {@link LambdaQueryWrapper}
+     */
+    private LambdaQueryWrapper<ScheduleTaskEntity> addSelectFieldForQuartz() {
+        LambdaQueryWrapper<ScheduleTaskEntity> queryWrapper = getEmptyWrapper();
+        queryWrapper.select(ScheduleTaskEntity::getId, ScheduleTaskEntity::getBeanName, ScheduleTaskEntity::getJson,
+                ScheduleTaskEntity::getCronExpression, ScheduleTaskEntity::getType, ScheduleTaskEntity::getStatus);
+
+        return queryWrapper;
     }
 
 }

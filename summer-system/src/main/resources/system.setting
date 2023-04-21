@@ -41,6 +41,8 @@ captcha.cache-ttl = 5
 thread-count = 16
 # 线程优先级，值：1-10，5为公平竞争
 thread-priority = 5
+# 应用关闭时是否等待所有任务执行完，值：true/false
+wait-for-jobs-to-complete-on-shutdown = true
 
 # 最大触发超时时间（ms），超时则认为“错过触发”
 misfire-threshold = 15000
