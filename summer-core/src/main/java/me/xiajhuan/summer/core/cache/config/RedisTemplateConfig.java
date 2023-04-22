@@ -52,7 +52,7 @@ public class RedisTemplateConfig {
      * 端口
      */
     @Value("${spring.redis.port}")
-    private Integer port;
+    private int port;
 
     /**
      * 密码
@@ -64,37 +64,37 @@ public class RedisTemplateConfig {
      * 数据库
      */
     @Value("${spring.redis.database}")
-    private Integer database;
+    private int database;
 
     /**
      * 超时时间（ms）
      */
     @Value("${spring.redis.timeout}")
-    private Long timeout;
+    private long timeout;
 
     /**
      * 最小空闲连接数
      */
     @Value("${spring.redis.lettuce.pool.min-idle}")
-    private Integer minIdle;
+    private int minIdle;
 
     /**
      * 最大空闲连接数
      */
     @Value("${spring.redis.lettuce.pool.max-idle}")
-    private Integer maxIdle;
+    private int maxIdle;
 
     /**
      * 最大可分配连接数
      */
     @Value("${spring.redis.lettuce.pool.max-active}")
-    private Integer maxActive;
+    private int maxActive;
 
     /**
      * 抛出异常之前连接分配应阻塞的最大时间（ms）
      */
     @Value("${spring.redis.lettuce.pool.max-wait}")
-    private Long maxWait;
+    private long maxWait;
 
     /**
      * 注册 {@link RedisConnectionFactory}

@@ -201,7 +201,7 @@ public class SecurityDeptServiceImpl extends ServiceImpl<SecurityDeptMapper, Sec
      */
     private String getParentIdAll(Long parentId) {
         // 顶级部门，无上级部门
-        if (TreeConst.ROOT.equals(parentId)) {
+        if (TreeConst.ROOT == parentId) {
             return String.valueOf(parentId);
         }
 
@@ -230,7 +230,7 @@ public class SecurityDeptServiceImpl extends ServiceImpl<SecurityDeptMapper, Sec
      * @param parentIdSet 上级部门ID集合
      */
     private void getParentIdSetRecursion(Long parentId, Map<Long, SecurityDeptEntity> idToDeptMap, Set<Long> parentIdSet) {
-        if (!TreeConst.ROOT.equals(parentId)) {
+        if (TreeConst.ROOT != parentId) {
             // 非顶级部门，必然存在上级部门
             SecurityDeptEntity parent = idToDeptMap.get(parentId);
             if (parent != null) {

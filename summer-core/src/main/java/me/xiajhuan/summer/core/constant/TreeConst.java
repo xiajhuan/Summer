@@ -23,7 +23,7 @@ public class TreeConst {
     /**
      * Root节点ID
      */
-    public static final Long ROOT = 0L;
+    public static final long ROOT = 0L;
 
     /**
      * 扩展属性

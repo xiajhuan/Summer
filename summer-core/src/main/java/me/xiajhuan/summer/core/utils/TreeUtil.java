@@ -70,7 +70,7 @@ public class TreeUtil extends cn.hutool.core.lang.tree.TreeUtil {
      * @param <D>        Dto类型
      * @return 树形结构列表（DtoClass）
      */
-    public static <D extends TreeNode> List<D> buildDto(Class<D> dtoClass, List<D> dtoList, Long rootId, String... extraField) {
+    public static <D extends TreeNode> List<D> buildDto(Class<D> dtoClass, List<D> dtoList, long rootId, String... extraField) {
         return BeanUtil.convert(build(dtoClass, dtoList, rootId, extraField), dtoClass);
     }
 
@@ -84,7 +84,7 @@ public class TreeUtil extends cn.hutool.core.lang.tree.TreeUtil {
      * @param <D>        Dto类型
      * @return 树形结构列表（{@link Tree}）
      */
-    public static <D extends TreeNode> List<Tree<Long>> build(Class<D> dtoClass, List<D> dtoList, Long rootId, String... extraField) {
+    public static <D extends TreeNode> List<Tree<Long>> build(Class<D> dtoClass, List<D> dtoList, long rootId, String... extraField) {
         AssertUtil.isNotNull("rootId", rootId);
 
         // 获取扩展属性的Getter

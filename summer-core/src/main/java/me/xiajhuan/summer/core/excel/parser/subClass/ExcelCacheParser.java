@@ -44,7 +44,7 @@ public class ExcelCacheParser<D, T> extends AbstractExcelParser<D, T> {
     /**
      * 缓存过期时间（h）
      */
-    private static final Long CACHE_TTL = SpringUtil.getBean(SettingConst.CORE, Setting.class)
+    private static final long CACHE_TTL = SpringUtil.getBean(SettingConst.CORE, Setting.class)
             .getInt("parser.cache-ttl", "Excel", 24) * TimeUnitConst.HOUR;
 
     /**

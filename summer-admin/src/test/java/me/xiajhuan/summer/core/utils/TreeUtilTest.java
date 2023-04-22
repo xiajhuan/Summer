@@ -64,11 +64,11 @@ public class TreeUtilTest implements CommonMsg {
     }
 
     /**
-     * @see TreeUtil#buildDto(Class, List, Long, String...)
+     * @see TreeUtil#buildDto(Class, List, long, String...)
      */
     @Test
     void buildDto() {
-        String methodSignature = "TreeUtil#buildDto(Class, List, Long, String...)";
+        String methodSignature = "TreeUtil#buildDto(Class, List, long, String...)";
         Console.log(startMsg(methodSignature));
 
         List<SecurityMenuDto> treeNodes = TreeUtil.buildDto(SecurityMenuDto.class, menuDtoList, TreeConst.ROOT,
