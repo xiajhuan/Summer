@@ -33,6 +33,6 @@ public class ThreadPoolConst {
     /**
      * Quartz定时任务线程池线程名前缀
      */
-    public static final String SCHEDULE_QUARTZ_PREFIX = "Schedule-Quartz-";
+    public static final String SCHEDULE_QUARTZ_PREFIX = "Schedule-Quartz";
 
 }

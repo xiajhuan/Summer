@@ -104,7 +104,7 @@ public class QuartzConfig {
         // 将Spring的applicationContext加入到Quartz的schedulerContext中
         factory.setApplicationContextSchedulerContextKey("springContext");
 
-        // 启动时更新己存在的Task，这样就不用每次修改ScheduleTaskEntity后删除QUARTZ_JOB_DETAILS表对应的记录了
+        // 启动时更新己存在的Task，这样就不用每次修改schedule_task表记录后删除QUARTZ_JOB_DETAILS表对应的记录了
         factory.setOverwriteExistingJobs(true);
 
         if (quartzStartupProperties.isAuto()) {

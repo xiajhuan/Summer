@@ -39,7 +39,9 @@ me.xiajhuan.summer.core.validation.group
 me.xiajhuan.summer.core.validation.resolver
 me.xiajhuan.summer.core.validation.validator
 me.xiajhuan.summer.core.validation.validator.subClass
-me.xiajhuan.summer.system.handler
+me.xiajhuan.summer.system.handler.exception
+me.xiajhuan.summer.system.hook.listener
+me.xiajhuan.summer.system.hook.runner
 me.xiajhuan.summer.system.locale.controller
 me.xiajhuan.summer.system.locale.dto
 me.xiajhuan.summer.system.locale.entity
@@ -63,7 +65,6 @@ me.xiajhuan.summer.system.monitor.entity
 me.xiajhuan.summer.system.monitor.mapper
 me.xiajhuan.summer.system.monitor.service
 me.xiajhuan.summer.system.monitor.service.impl
-me.xiajhuan.summer.system.runner
 me.xiajhuan.summer.system.schedule.controller
 me.xiajhuan.summer.system.schedule.dto
 me.xiajhuan.summer.system.schedule.entity
