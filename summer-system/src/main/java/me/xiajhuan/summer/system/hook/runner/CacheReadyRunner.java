@@ -17,7 +17,7 @@ import cn.hutool.log.LogFactory;
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import me.xiajhuan.summer.core.constant.CacheConst;
 import me.xiajhuan.summer.core.constant.DataSourceConst;
-import me.xiajhuan.summer.core.properties.ServerCacheProperties;
+import me.xiajhuan.summer.core.properties.ApplicationCacheProperties;
 import me.xiajhuan.summer.core.utils.SystemUtil;
 import me.xiajhuan.summer.system.monitor.service.MonitorOnlineService;
 import me.xiajhuan.summer.system.security.service.SecurityDeptService;
@@ -30,7 +30,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 
 /**
- * ApplicationRunner（缓存设施加载完毕）
+ * ApplicationRunner（缓存服务加载完毕）
  *
  * @author xiajhuan
  * @date 2023/4/20
@@ -44,7 +44,7 @@ public class CacheReadyRunner implements ApplicationRunner {
     private static final Log LOGGER = LogFactory.get();
 
     @Resource
-    private ServerCacheProperties serverCacheProperties;
+    private ApplicationCacheProperties applicationCacheProperties;
 
     @Resource
     private SecurityDeptService securityDeptService;
@@ -53,19 +53,19 @@ public class CacheReadyRunner implements ApplicationRunner {
     private MonitorOnlineService monitorOnlineService;
 
     /**
-     * 服务名称
+     * 应用名称
      */
     private final String applicationName = SystemUtil.getApplicationName();
 
     @Override
     public void run(ApplicationArguments args) {
-        LOGGER.info("【{}】缓存设施加载完毕，缓存类型【{}】", applicationName,
-                serverCacheProperties.getType());
+        LOGGER.info("【{}】缓存服务加载完毕，缓存类型【{}】", applicationName,
+                applicationCacheProperties.getType());
         // 设置当前线程的数据源为“system”
         DynamicDataSourceContextHolder.push(DataSourceConst.SYSTEM);
 
         // 缓存类型为“HEAP”时清理遗留在线用户
-        if (CacheConst.Type.HEAP.equalsIgnoreCase(serverCacheProperties.getType())
+        if (CacheConst.Type.HEAP.equalsIgnoreCase(applicationCacheProperties.getType())
                 && monitorOnlineService.remove(null)) {
             LOGGER.info("【{}】清理遗留在线用户成功", applicationName);
         }

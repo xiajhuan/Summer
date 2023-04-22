@@ -236,7 +236,7 @@ public class RateLimiterAspect {
             }
 
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("接口【{}[{}]】设置的Qps为：【{}】，当前服务节点实际的Qps为：【{}】，key-Class【{}】，LoadBalance-Class【{}】{}",
+                LOGGER.debug("接口【{}[{}]】设置的Qps为：【{}】，当前节点实际的Qps为：【{}】，key-Class【{}】，LoadBalance-Class【{}】{}",
                         request.getRequestURI(), request.getMethod(), setQps, RATE_LIMITER_CACHE.get(rateLimiterKey).getRate(),
                         keyStrategyClass.getSimpleName(), loadBalanceStrategyClass.getSimpleName(),
                         StrUtil.isNotBlank(msgTemplate) ? StrUtil.format(msgTemplate, StrUtil.subAfter(rateLimiterKey, "#", true)) : StrUtil.EMPTY);

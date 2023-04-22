@@ -12,6 +12,10 @@
 
 package me.xiajhuan.summer.core.constant;
 
+import cn.hutool.cache.impl.FIFOCache;
+import cn.hutool.cache.impl.LFUCache;
+import cn.hutool.cache.impl.LRUCache;
+
 /**
  * 缓存常量
  *
@@ -71,16 +75,22 @@ public class CacheConst {
 
         /**
          * 先入先出
+         *
+         * @see FIFOCache
          */
         public static final String FIFO = "FIFO";
 
         /**
          * 最少使用
+         *
+         * @see LFUCache
          */
         public static final String LFU = "LFU";
 
         /**
          * 最近最久未使用
+         *
+         * @see LRUCache
          */
         public static final String LRU = "LRU";
 

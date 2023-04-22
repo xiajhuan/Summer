@@ -7,14 +7,16 @@ project:
   # 项目版本
   version: "@project.version@"
 
-server:
+application:
   cache:
     # 缓存类型，值：REDIS/HEAP
     # 使用HEAP（堆内缓存）的注意事项：
-    #    1.在服务集群部署时数据无法共享！
-    #    2.在服务关闭或重启时数据会丢失！
-    #    3.当且仅当“服务单机部署且不想依赖Redis”或“集群部署作为Redis的次级缓存”时推荐使用！
+    #    1.在应用集群部署时数据无法共享！
+    #    2.在应用关闭或重启时数据会丢失！
+    #    3.当且仅当“应用单机部署且不想依赖Redis”或“集群部署作为Redis的次级缓存”时推荐使用！
     type: REDIS
+
+server:
   # Tomcat
   tomcat:
     threads:
@@ -69,7 +71,7 @@ spring:
         max-lifetime: 180000
         max-pool-size: 10
         min-idle: 5
-  # Redis，只有server.cache.type: REDIS 时会生效
+  # Redis，只有application.cache.type: REDIS 时会生效
   redis:
     timeout: 6000
     lettuce:
@@ -104,9 +106,9 @@ mybatis-plus:
     # 当没有为参数指定特定的 JDBC 类型时，空值的默认 JDBC 类型
     jdbc-type-for-null: NULL
 
-limit:
+batch:
   # 批量操作限制
-  batch:
+  limit:
     # 每次批量插入数（JDBC批量提交）
     real-save-num-every-time: 100
     # Excel最大导出数

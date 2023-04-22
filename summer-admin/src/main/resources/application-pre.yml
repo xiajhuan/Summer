@@ -20,7 +20,7 @@ spring:
           url: jdbc:mysql://192.168.0.142:3306/summer-system?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true
           username: root
           password: jack%2021#2@6XJH
-  # Redis，只有server.cache.type: REDIS 时会生效
+  # Redis，只有application.cache.type: REDIS 时会生效
   redis:
     host: 192.168.0.7
     port: 6379
@@ -47,10 +47,10 @@ logging:
             ratelimiter: info
           # system模块
           system:
-            # common
-            common:
+            # handler
+            handler:
               # 异常处理
-              handler: info
+              exception: info
           # admin模块
           admin:
             # api

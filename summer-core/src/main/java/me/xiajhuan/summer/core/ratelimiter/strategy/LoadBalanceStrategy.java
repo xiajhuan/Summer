@@ -24,7 +24,7 @@ import java.math.BigDecimal;
 public interface LoadBalanceStrategy {
 
     /**
-     * 计算当前服务节点实际的Qps
+     * 计算当前节点实际的Qps
      *
      * @param setQps  设置的Qps
      * @param nodeNum 节点数

@@ -39,7 +39,7 @@ import java.time.Duration;
  * @date 2022/11/30
  */
 @Configuration
-@ConditionalOnProperty(prefix = "server.cache", name = "type", havingValue = "REDIS")
+@ConditionalOnProperty(prefix = "application.cache", name = "type", havingValue = "REDIS")
 public class RedisTemplateConfig {
 
     /**

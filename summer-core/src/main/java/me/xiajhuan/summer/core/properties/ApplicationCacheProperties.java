@@ -14,34 +14,28 @@ package me.xiajhuan.summer.core.properties;
 
 import lombok.Getter;
 import lombok.Setter;
-import me.xiajhuan.summer.core.mp.mapper.CustomBaseMapper;
+import me.xiajhuan.summer.core.constant.CacheConst;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 /**
- * 批量操作限制
+ * 应用缓存
  *
  * @author xiajhuan
- * @date 2023/3/31
+ * @date 2022/11/30
  */
 @Setter
 @Getter
 @Component
-@ConfigurationProperties("limit.batch")
-public class LimitBatchProperties {
+@ConfigurationProperties("application.cache")
+public class ApplicationCacheProperties {
 
     /**
-     * 每次批量插入数（JDBC批量提交）
+     * 类型，默认为：REDIS
      *
-     * @see CustomBaseMapper#realSaveBatch(List)
+     * @see CacheConst.Type#REDIS
+     * @see CacheConst.Type#HEAP
      */
-    private int realSaveNumEveryTime = 100;
-
-    /**
-     * Excel最大导出数
-     */
-    private long excelMaxExport = 40000L;
+    private String type = CacheConst.Type.REDIS;
 
 }

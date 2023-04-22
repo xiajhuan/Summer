@@ -22,7 +22,7 @@ import me.xiajhuan.summer.core.constant.DataSourceConst;
 import me.xiajhuan.summer.core.exception.code.ErrorCode;
 import me.xiajhuan.summer.core.exception.custom.ValidationException;
 import me.xiajhuan.summer.core.mp.helper.MpHelper;
-import me.xiajhuan.summer.core.properties.LimitBatchProperties;
+import me.xiajhuan.summer.core.properties.BatchLimitProperties;
 import me.xiajhuan.summer.core.utils.BeanUtil;
 import me.xiajhuan.summer.system.locale.dto.LocaleNameDto;
 import me.xiajhuan.summer.system.locale.entity.LocaleNameEntity;
@@ -48,7 +48,7 @@ import java.util.stream.Collectors;
 public class LocaleNameServiceImpl extends ServiceImpl<LocaleNameMapper, LocaleNameEntity> implements LocaleNameService, MpHelper<LocaleNameDto, LocaleNameEntity> {
 
     @Resource
-    private LimitBatchProperties limitBatchProperties;
+    private BatchLimitProperties batchLimitProperties;
 
     //*******************MpHelper覆写开始********************
 
@@ -136,7 +136,7 @@ public class LocaleNameServiceImpl extends ServiceImpl<LocaleNameMapper, LocaleN
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean saveBatch(Collection<LocaleNameEntity> entityList) {
-        ListUtil.split(ListUtil.toList(entityList), limitBatchProperties.getRealSaveNumEveryTime())
+        ListUtil.split(ListUtil.toList(entityList), batchLimitProperties.getRealSaveNumEveryTime())
                 .forEach(baseMapper::realSaveBatch);
         return true;
     }
