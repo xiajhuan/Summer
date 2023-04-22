@@ -59,11 +59,13 @@ batch-trigger-acquisition-max-count = 1
 
 # *******************日志配置********************
 [Log]
+# 是否保存系统异常日志（SystemException），值：true/false
+enable-system = true
 # 是否保存业务异常日志（BusinessException），值：true/false
 enable-business = true
-# 当 enable-business = true 时忽略的消息代码，以“,”分隔，值参考 ErrorCode
-# note：当BusinessException的消息为该消息代码匹配消息时将不会“保存错误日志”和“打印异常堆栈信息（开启debug日志级别除外）”
-ignore-business-codes = 1001,1002
+# 忽略的消息代码，以“,”分隔，值参考 ErrorCode
+# note：当SystemException或BusinessException的消息为该消息代码匹配消息时将不会“保存错误日志”和“打印异常堆栈信息（开启debug日志级别除外）”
+ignore-codes = 1001,1002
 
 # 操作日志清理天数限制，-n则清理n天以前的日志
 operation.clear-days-limit = -30

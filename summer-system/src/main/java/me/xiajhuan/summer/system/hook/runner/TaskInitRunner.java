@@ -16,11 +16,7 @@ import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
 import me.xiajhuan.summer.core.properties.QuartzStartupProperties;
 import me.xiajhuan.summer.core.utils.SystemUtil;
-import me.xiajhuan.summer.system.schedule.quartz.helper.QuartzHelper;
-import me.xiajhuan.summer.system.schedule.entity.ScheduleTaskEntity;
 import me.xiajhuan.summer.system.schedule.service.ScheduleTaskService;
-import org.quartz.CronTrigger;
-import org.quartz.Scheduler;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.core.Ordered;
@@ -28,15 +24,13 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
- * ApplicationRunner（定时任务初始化）
+ * ApplicationRunner（定时任务初始化完毕）
  *
  * @author xiajhuan
  * @date 2023/4/20
  * @see ApplicationRunner
- * @see Scheduler
  */
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE + 1)
@@ -48,30 +42,12 @@ public class TaskInitRunner implements ApplicationRunner {
     private QuartzStartupProperties quartzStartupProperties;
 
     @Resource
-    private Scheduler scheduler;
-
-    @Resource
     private ScheduleTaskService scheduleTaskService;
 
     @Override
     public void run(ApplicationArguments args) {
-        if (quartzStartupProperties.isAuto()) {
-            // 全部任务
-            List<ScheduleTaskEntity> entityList = scheduleTaskService.getAll();
-
-            if (entityList.size() > 0) {
-                entityList.forEach(entity -> {
-                    CronTrigger cronTrigger = QuartzHelper.getCronTrigger(scheduler, entity.getId());
-                    if (cronTrigger == null) {
-                        // 新增任务
-                        QuartzHelper.addTask(scheduler, entity);
-                    } else {
-                        // 修改任务
-                        QuartzHelper.updateTask(scheduler, entity);
-                    }
-                });
-                LOGGER.info("【{}】定时任务初始化完毕", SystemUtil.getApplicationName());
-            }
+        if (quartzStartupProperties.isAuto() && scheduleTaskService.initSchedule()) {
+            LOGGER.info("【{}】定时任务初始化完毕", SystemUtil.getApplicationName());
         }
     }
 

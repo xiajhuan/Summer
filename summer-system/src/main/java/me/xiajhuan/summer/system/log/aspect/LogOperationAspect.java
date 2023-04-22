@@ -15,6 +15,7 @@ package me.xiajhuan.summer.system.log.aspect;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.date.TimeInterval;
 import cn.hutool.core.util.StrUtil;
+import me.xiajhuan.summer.core.ratelimiter.aspect.RateLimiterAspect;
 import me.xiajhuan.summer.core.enums.NonLoggedUserEnum;
 import me.xiajhuan.summer.core.enums.OperationGroupEnum;
 import me.xiajhuan.summer.core.enums.OperationStatusEnum;
@@ -29,6 +30,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.core.annotation.AnnotationUtils;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -39,13 +41,15 @@ import java.lang.reflect.Method;
 import static me.xiajhuan.summer.core.constant.OperationConst.*;
 
 /**
- * 操作日志切面
+ * 操作日志切面<br>
+ * note：执行顺序在 {@link RateLimiterAspect} 之后，若被限流则不会记录日志
  *
  * @author xiajhuan
  * @date 2022/11/28
  */
 @Aspect
 @Component
+@Order
 public class LogOperationAspect {
 
     @Resource

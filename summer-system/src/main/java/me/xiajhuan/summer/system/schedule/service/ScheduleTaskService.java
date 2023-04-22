@@ -17,8 +17,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import me.xiajhuan.summer.system.schedule.dto.ScheduleTaskDto;
 import me.xiajhuan.summer.system.schedule.entity.ScheduleTaskEntity;
 
-import java.util.List;
-
 /**
  * 任务 Service
  *
@@ -43,11 +41,13 @@ public interface ScheduleTaskService extends IService<ScheduleTaskEntity> {
 
     void resume(Long[] ids);
 
+    void manualStart();
+
     /**
-     * 获取全部任务
+     * 初始化定时任务
      *
-     * @return 任务Entity列表
+     * @return 是否初始化成功，true：是 false：否
      */
-    List<ScheduleTaskEntity> getAll();
+    boolean initSchedule();
 
 }

@@ -20,8 +20,8 @@ import cn.hutool.log.LogFactory;
 import cn.hutool.setting.Setting;
 import me.xiajhuan.summer.core.constant.SettingConst;
 import me.xiajhuan.summer.core.enums.NonLoggedUserEnum;
-import me.xiajhuan.summer.core.exception.custom.BusinessException;
 import me.xiajhuan.summer.core.exception.code.ErrorCode;
+import me.xiajhuan.summer.core.exception.custom.SystemException;
 import me.xiajhuan.summer.core.ratelimiter.annotation.RateLimiter;
 import me.xiajhuan.summer.core.ratelimiter.strategy.KeyStrategy;
 import me.xiajhuan.summer.core.ratelimiter.strategy.LoadBalanceStrategy;
@@ -35,7 +35,9 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.core.Ordered;
 import org.springframework.core.annotation.AnnotationUtils;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -57,6 +59,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Aspect
 @Component
+@Order(Ordered.LOWEST_PRECEDENCE - 1)
 public class RateLimiterAspect {
 
     private static final Log LOGGER = LogFactory.get();
@@ -262,7 +265,7 @@ public class RateLimiterAspect {
                     // 没有设置或设置的值小于0则使用配置中的提示消息
                     message = msg;
                 }
-                throw BusinessException.of(message);
+                throw SystemException.of(message);
             }
         }
     }

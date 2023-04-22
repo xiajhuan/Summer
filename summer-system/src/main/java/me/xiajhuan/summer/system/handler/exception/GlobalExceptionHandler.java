@@ -20,11 +20,8 @@ import cn.hutool.log.LogFactory;
 import cn.hutool.setting.Setting;
 import me.xiajhuan.summer.core.constant.SettingConst;
 import me.xiajhuan.summer.core.data.Result;
+import me.xiajhuan.summer.core.exception.custom.*;
 import me.xiajhuan.summer.core.exception.code.ErrorCode;
-import me.xiajhuan.summer.core.exception.custom.BusinessException;
-import me.xiajhuan.summer.core.exception.custom.FileDownloadException;
-import me.xiajhuan.summer.core.exception.custom.FileUploadException;
-import me.xiajhuan.summer.core.exception.custom.ValidationException;
 import me.xiajhuan.summer.core.utils.AssertUtil;
 import me.xiajhuan.summer.core.utils.LocaleUtil;
 import me.xiajhuan.summer.core.utils.ServletUtil;
@@ -51,6 +48,7 @@ import java.util.Locale;
  * @author xiajhuan
  * @date 2022/11/26
  * @see Exception
+ * @see SystemException
  * @see BusinessException
  * @see BindException
  * @see ValidationException
@@ -70,27 +68,34 @@ public class GlobalExceptionHandler {
     private LogErrorService logErrorService;
 
     /**
-     * 是否保存业务异常（BusinessException）日志
+     * 是否保存 {@link SystemException} 日志
      */
-    private boolean enableBusinessErrorLog;
+    private boolean enableSystem;
 
     /**
-     * 忽略的消息代码数组
+     * 是否保存 {@link BusinessException} 日志
+     */
+    private boolean enableBusiness;
+
+    /**
+     * 忽略的消息代码数组<br>
+     * note：仅对 {@link SystemException} 和 {@link BusinessException} 生效
      *
      * @see ErrorCode
      */
-    private int[] ignoreBusinessCodeArray;
+    private int[] ignoreCodeArray;
 
     /**
-     * 初始化 {@link enableBusinessErrorLog} {@link ignoreBusinessCodeArray}
+     * 初始化 {@link enableSystem} {@link enableBusiness} {@link ignoreCodeArray}
      */
     @PostConstruct
     private void init() {
-        enableBusinessErrorLog = setting.getBool("enable-business", "Log", true);
-        if (enableBusinessErrorLog) {
-            String ignoreBusinessCodes = setting.getByGroup("ignore-business-codes", "Log");
-            if (StrUtil.isNotBlank(ignoreBusinessCodes)) {
-                ignoreBusinessCodeArray = Arrays.stream(ignoreBusinessCodes.split(StrPool.COMMA))
+        enableSystem = setting.getBool("enable-system", "Log", true);
+        enableBusiness = setting.getBool("enable-business", "Log", true);
+        if (enableSystem || enableBusiness) {
+            String ignoreCodes = setting.getByGroup("ignore-codes", "Log");
+            if (StrUtil.isNotBlank(ignoreCodes)) {
+                ignoreCodeArray = Arrays.stream(ignoreCodes.split(StrPool.COMMA))
                         .mapToInt(Integer::parseInt).toArray();
             }
         }
@@ -105,33 +110,31 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Result handleException(Exception e) {
-        // 处理限流切面的异常
-        Exception cause = (Exception) e.getCause();
-        if (cause instanceof BusinessException) {
-            e = cause;
-        }
-
         return logAndResponse(e, true);
     }
 
     /**
-     * 业务异常处理
+     * 系统/业务异常处理
      *
-     * @param e 业务异常
+     * @param e {@link RuntimeException}
      * @return 响应结果
      */
-    @ExceptionHandler(BusinessException.class)
+    @ExceptionHandler({SystemException.class, BusinessException.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public Result handleBusinessException(BusinessException e) {
-        return logAndResponse(e, enableBusinessErrorLog);
+    public Result handleSystemOrBusinessException(RuntimeException e) {
+        if (e instanceof SystemException) {
+            return logAndResponse(e, enableSystem);
+        } else {
+            return logAndResponse(e, enableBusiness);
+        }
     }
 
     /**
-     * 参数校验（Dto类型）异常处理（注解校验）
+     * 校验异常处理<br>
+     * note：参数校验（Dto类型）（注解 {@link Validated} 校验）
      *
      * @param e {@link BindException}
      * @return 响应结果
-     * @see Validated
      */
     @ExceptionHandler(BindException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -169,21 +172,14 @@ public class GlobalExceptionHandler {
     /**
      * 文件上传/下载异常处理
      *
-     * @param uploadException   文件上传异常
-     * @param downloadException 文件下载异常
+     * @param e {@link RuntimeException}
+     * @return 响应结果
      */
     @ExceptionHandler({FileUploadException.class, FileDownloadException.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public Result handleFileUploadOrDownloadException(FileUploadException uploadException, FileDownloadException downloadException) {
-        final String msg;
-        if (uploadException != null) {
-            msg = uploadException.getMessage();
-            LOGGER.error(uploadException, msg);
-        } else {
-            msg = downloadException.getMessage();
-            LOGGER.error(downloadException, msg);
-        }
-
+    public Result handleFileUploadOrDownloadException(RuntimeException e) {
+        String msg = e.getMessage();
+        LOGGER.error(e, msg);
         return Result.ofFail(msg);
     }
 
@@ -208,14 +204,14 @@ public class GlobalExceptionHandler {
      * @return 响应结果
      */
     private Result logAndResponse(Exception e, boolean isSaveErrorLog) {
-        boolean isIgnore = isIgnoreBusinessException(e);
-        if (isSaveErrorLog && !isIgnore) {
+        boolean isIgnored = isIgnoredCode(e);
+        if (isSaveErrorLog && !isIgnored) {
             // 异步保存错误日志
             logErrorService.saveAsync(e, ServletUtil.getHttpRequest());
         }
 
         String msg = e.getMessage();
-        if (isIgnore) {
+        if (isIgnored) {
             logInfoOrDebugStacktrace(e, msg);
         } else {
             LOGGER.error(e, msg);
@@ -224,16 +220,16 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * 是否是忽略的BusinessException
+     * 是否是忽略的消息代码
      *
      * @param e {@link Exception}
-     * @return 是否是忽略的BusinessException，true：是 false：不是
+     * @return 是否是忽略的消息代码，true：是 false：不是
      */
-    private boolean isIgnoreBusinessException(Exception e) {
-        if (e instanceof BusinessException && ArrayUtil.isNotEmpty(ignoreBusinessCodeArray)) {
+    private boolean isIgnoredCode(Exception e) {
+        if ((e instanceof SystemException || e instanceof BusinessException) && ArrayUtil.isNotEmpty(ignoreCodeArray)) {
             String msg = e.getMessage();
             Locale locale = LocaleUtil.getLocalePriority();
-            return Arrays.stream(ignoreBusinessCodeArray)
+            return Arrays.stream(ignoreCodeArray)
                     .anyMatch(code -> msg.equals(LocaleUtil.getI18nMessage(locale, code)));
         }
         return false;

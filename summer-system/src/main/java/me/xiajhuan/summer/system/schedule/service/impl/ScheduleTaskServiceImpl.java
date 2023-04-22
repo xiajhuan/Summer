@@ -19,17 +19,23 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import me.xiajhuan.summer.core.constant.DataSourceConst;
 import me.xiajhuan.summer.core.enums.StatusEnum;
+import me.xiajhuan.summer.core.enums.UserTypeEnum;
 import me.xiajhuan.summer.core.exception.code.ErrorCode;
+import me.xiajhuan.summer.core.exception.custom.SystemException;
 import me.xiajhuan.summer.core.exception.custom.ValidationException;
 import me.xiajhuan.summer.core.mp.helper.MpHelper;
+import me.xiajhuan.summer.core.properties.QuartzStartupProperties;
 import me.xiajhuan.summer.core.utils.BeanUtil;
+import me.xiajhuan.summer.core.utils.SecurityUtil;
 import me.xiajhuan.summer.system.schedule.quartz.helper.QuartzHelper;
 import me.xiajhuan.summer.system.schedule.dto.ScheduleTaskDto;
 import me.xiajhuan.summer.system.schedule.entity.ScheduleTaskEntity;
 import me.xiajhuan.summer.system.schedule.mapper.ScheduleTaskMapper;
 import me.xiajhuan.summer.system.schedule.service.ScheduleTaskService;
 import org.quartz.CronExpression;
+import org.quartz.CronTrigger;
 import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -50,6 +56,9 @@ import java.util.stream.Collectors;
 @Service
 @DS(DataSourceConst.SYSTEM)
 public class ScheduleTaskServiceImpl extends ServiceImpl<ScheduleTaskMapper, ScheduleTaskEntity> implements ScheduleTaskService, MpHelper<ScheduleTaskDto, ScheduleTaskEntity> {
+
+    @Resource
+    private QuartzStartupProperties quartzStartupProperties;
 
     @Resource
     private Scheduler scheduler;
@@ -157,6 +166,8 @@ public class ScheduleTaskServiceImpl extends ServiceImpl<ScheduleTaskMapper, Sch
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void execute(Long[] ids) {
+        checkStartup();
+
         LambdaQueryWrapper<ScheduleTaskEntity> queryWrapper = addSelectFieldForQuartz();
         queryWrapper.in(ScheduleTaskEntity::getId, ids);
         List<ScheduleTaskEntity> entityList = list(queryWrapper);
@@ -170,6 +181,8 @@ public class ScheduleTaskServiceImpl extends ServiceImpl<ScheduleTaskMapper, Sch
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void pause(Long[] ids) {
+        checkStartup();
+
         Arrays.stream(ids).forEach(id -> {
             if (updateById(ScheduleTaskEntity.builder()
                     .id(id).status(StatusEnum.DISABLE.getValue())
@@ -183,6 +196,8 @@ public class ScheduleTaskServiceImpl extends ServiceImpl<ScheduleTaskMapper, Sch
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void resume(Long[] ids) {
+        checkStartup();
+
         Arrays.stream(ids).forEach(id -> {
             if (updateById(ScheduleTaskEntity.builder()
                     .id(id).status(StatusEnum.ENABLE.getValue())
@@ -194,8 +209,61 @@ public class ScheduleTaskServiceImpl extends ServiceImpl<ScheduleTaskMapper, Sch
     }
 
     @Override
-    public List<ScheduleTaskEntity> getAll() {
-        return list(addSelectFieldForQuartz());
+    @Transactional(rollbackFor = Exception.class)
+    public void manualStart() {
+        if (UserTypeEnum.SUPER_ADMIN.getValue() != SecurityUtil.getLoginUser().getUserType()) {
+            // 只有超级管理员可以手动启动定时任务
+            throw ValidationException.of(ErrorCode.MANUAL_START_ERROR);
+        }
+
+        try {
+            if (scheduler.isStarted()) {
+                // 不允许重复启动
+                throw SystemException.of(ErrorCode.REPEAT_START_ERROR);
+            }
+            // 初始化定时任务
+            initSchedule();
+            // 启动定时任务
+            scheduler.startDelayed(quartzStartupProperties.getDelay());
+        } catch (SchedulerException e) {
+            throw SystemException.of(e, ErrorCode.MANUAL_START_FAILURE, e.getMessage());
+        }
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean initSchedule() {
+        // 全部任务
+        List<ScheduleTaskEntity> entityList = list(addSelectFieldForQuartz());
+
+        if (entityList.size() > 0) {
+            entityList.forEach(entity -> {
+                CronTrigger cronTrigger = QuartzHelper.getCronTrigger(scheduler, entity.getId());
+                if (cronTrigger == null) {
+                    // 新增任务
+                    QuartzHelper.addTask(scheduler, entity);
+                } else {
+                    // 修改任务
+                    QuartzHelper.updateTask(scheduler, entity);
+                }
+            });
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 检查定时任务是否已被启动
+     */
+    private void checkStartup() {
+        try {
+            if (!scheduler.isStarted()) {
+                // 定时任务未启动
+                throw SystemException.of(ErrorCode.NOT_STARTED_ERROR);
+            }
+        } catch (SchedulerException e) {
+            throw SystemException.of(ErrorCode.CHECK_STARTUP_FAILURE);
+        }
     }
 
     /**

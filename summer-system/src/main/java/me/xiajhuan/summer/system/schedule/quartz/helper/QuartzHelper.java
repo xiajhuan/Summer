@@ -15,7 +15,7 @@ package me.xiajhuan.summer.system.schedule.quartz.helper;
 import cn.hutool.core.util.StrUtil;
 import me.xiajhuan.summer.core.enums.StatusEnum;
 import me.xiajhuan.summer.core.exception.code.ErrorCode;
-import me.xiajhuan.summer.core.exception.custom.BusinessException;
+import me.xiajhuan.summer.core.exception.custom.SystemException;
 import me.xiajhuan.summer.system.schedule.quartz.executor.QuartzTaskExecutor;
 import me.xiajhuan.summer.system.schedule.entity.ScheduleTaskEntity;
 import org.quartz.*;
@@ -72,7 +72,7 @@ public class QuartzHelper {
         try {
             return (CronTrigger) scheduler.getTrigger(getTriggerKey(taskId));
         } catch (SchedulerException e) {
-            throw BusinessException.of(e, ErrorCode.SCHEDULE_ERROR, "getCronTrigger");
+            throw SystemException.of(e, ErrorCode.SCHEDULE_ERROR, "getCronTrigger");
         }
     }
 
@@ -102,7 +102,7 @@ public class QuartzHelper {
             // 新增任务
             scheduler.scheduleJob(jobDetail, trigger);
         } catch (SchedulerException e) {
-            throw BusinessException.of(e, ErrorCode.SCHEDULE_ERROR, "addTask");
+            throw SystemException.of(e, ErrorCode.SCHEDULE_ERROR, "addTask");
         }
 
         // 暂停任务
@@ -136,7 +136,7 @@ public class QuartzHelper {
             // 修改任务
             scheduler.rescheduleJob(triggerKey, trigger);
         } catch (SchedulerException e) {
-            throw BusinessException.of(e, ErrorCode.SCHEDULE_ERROR, "updateTask");
+            throw SystemException.of(e, ErrorCode.SCHEDULE_ERROR, "updateTask");
         }
 
         // 暂停任务
@@ -156,7 +156,7 @@ public class QuartzHelper {
             // 删除任务
             scheduler.deleteJob(getJobKey(taskId));
         } catch (SchedulerException e) {
-            throw BusinessException.of(e, ErrorCode.SCHEDULE_ERROR, "deleteTask");
+            throw SystemException.of(e, ErrorCode.SCHEDULE_ERROR, "deleteTask");
         }
     }
 
@@ -177,7 +177,7 @@ public class QuartzHelper {
             // 执行任务
             scheduler.triggerJob(getJobKey(taskId), jobDataMap);
         } catch (SchedulerException e) {
-            throw BusinessException.of(e, ErrorCode.SCHEDULE_ERROR, "executeTask");
+            throw SystemException.of(e, ErrorCode.SCHEDULE_ERROR, "executeTask");
         }
     }
 
@@ -192,7 +192,7 @@ public class QuartzHelper {
             // 暂停任务
             scheduler.pauseJob(getJobKey(taskId));
         } catch (SchedulerException e) {
-            throw BusinessException.of(e, ErrorCode.SCHEDULE_ERROR, "pauseTask");
+            throw SystemException.of(e, ErrorCode.SCHEDULE_ERROR, "pauseTask");
         }
     }
 
@@ -207,7 +207,7 @@ public class QuartzHelper {
             // 恢复任务
             scheduler.resumeJob(getJobKey(taskId));
         } catch (SchedulerException e) {
-            throw BusinessException.of(e, ErrorCode.SCHEDULE_ERROR, "resumeTask");
+            throw SystemException.of(e, ErrorCode.SCHEDULE_ERROR, "resumeTask");
         }
     }
 

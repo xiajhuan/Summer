@@ -166,4 +166,16 @@ public class ScheduleTaskController {
         return Result.ofSuccess();
     }
 
+    /**
+     * 手动启动
+     *
+     * @return 响应结果
+     */
+    @PostMapping("manualStart")
+    @LogOperation("手动启动")
+    public Result manualStart() {
+        mainService.manualStart();
+        return Result.ofSuccess();
+    }
+
 }

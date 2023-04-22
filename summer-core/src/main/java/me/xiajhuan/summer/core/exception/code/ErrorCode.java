@@ -225,6 +225,31 @@ public interface ErrorCode {
      */
     int BEAN_NAME_EXISTS = 13001;
 
+    /**
+     * 操作失败，定时任务未启动
+     */
+    int NOT_STARTED_ERROR = 13002;
+
+    /**
+     * 检查定时任务启动状态失败
+     */
+    int CHECK_STARTUP_FAILURE = 13003;
+
+    /**
+     * 只有超级管理员可以手动启动定时任务
+     */
+    int MANUAL_START_ERROR = 13004;
+
+    /**
+     * 定时任务已启动，请勿重复操作
+     */
+    int REPEAT_START_ERROR = 13005;
+
+    /**
+     * 手动启动定时任务失败【{0}】
+     */
+    int MANUAL_START_FAILURE = 13006;
+
     //*******************business********************
 
 }
