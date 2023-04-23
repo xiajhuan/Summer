@@ -28,7 +28,7 @@ import me.xiajhuan.summer.system.log.excel.converter.TaskTypeConverter;
 import java.util.Date;
 
 /**
- * 任务日志 Dto
+ * 定时任务日志 Dto
  *
  * @author xiajhuan
  * @date 2023/4/19

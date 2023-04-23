@@ -19,7 +19,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 /**
- * 任务 Mapper
+ * 定时任务 Mapper
  *
  * @author xiajhuan
  * @date 2023/4/17

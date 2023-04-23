@@ -80,7 +80,7 @@ public class QuartzHelper {
      * 新增任务
      *
      * @param scheduler {@link Scheduler}
-     * @param entity    任务Entity
+     * @param entity    定时任务Entity
      */
     public static void addTask(Scheduler scheduler, ScheduleTaskEntity entity) {
         Long taskId = entity.getId();
@@ -115,7 +115,7 @@ public class QuartzHelper {
      * 修改任务
      *
      * @param scheduler {@link Scheduler}
-     * @param entity    任务Entity
+     * @param entity    定时任务Entity
      */
     public static void updateTask(Scheduler scheduler, ScheduleTaskEntity entity) {
         Long taskId = entity.getId();
@@ -164,7 +164,7 @@ public class QuartzHelper {
      * 执行任务
      *
      * @param scheduler {@link Scheduler}
-     * @param entity    任务Entity
+     * @param entity    定时任务Entity
      */
     public static void executeTask(Scheduler scheduler, ScheduleTaskEntity entity) {
         Long taskId = entity.getId();

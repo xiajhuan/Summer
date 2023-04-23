@@ -16,7 +16,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import me.xiajhuan.summer.system.log.entity.LogTaskEntity;
 
 /**
- * 任务日志 Mapper
+ * 定时任务日志 Mapper
  *
  * @author xiajhuan
  * @date 2023/4/19

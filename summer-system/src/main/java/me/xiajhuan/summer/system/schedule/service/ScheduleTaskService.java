@@ -18,7 +18,7 @@ import me.xiajhuan.summer.system.schedule.dto.ScheduleTaskDto;
 import me.xiajhuan.summer.system.schedule.entity.ScheduleTaskEntity;
 
 /**
- * 任务 Service
+ * 定时任务 Service
  *
  * @author xiajhuan
  * @date 2023/4/17

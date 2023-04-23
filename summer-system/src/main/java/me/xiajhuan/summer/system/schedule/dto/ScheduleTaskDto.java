@@ -29,7 +29,7 @@ import javax.validation.constraints.Null;
 import java.util.Date;
 
 /**
- * 任务 Dto
+ * 定时任务 Dto
  *
  * @author xiajhuan
  * @date 2023/4/15

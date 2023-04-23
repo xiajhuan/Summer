@@ -78,7 +78,7 @@ error.clear-days-limit = -90
 # 登录日志清理天数限制，-n则清理n天以前的日志
 login.clear-days-limit = -30
 
-# 保存任务日志时，异常堆栈的最大长度，note：不能超过表字段限制的长度
+# 保存定时任务日志时，异常堆栈的最大长度，note：不能超过表字段限制的长度
 task.stacktrace-length = 65535
-# 任务日志清理天数限制，-n则清理n天以前的日志
+# 定时任务日志清理天数限制，-n则清理n天以前的日志
 task.clear-days-limit = -90

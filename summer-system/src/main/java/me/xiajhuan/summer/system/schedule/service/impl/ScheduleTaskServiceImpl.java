@@ -46,7 +46,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * 任务 ServiceImpl
+ * 定时任务 ServiceImpl
  *
  * @author xiajhuan
  * @date 2023/4/17
@@ -233,7 +233,7 @@ public class ScheduleTaskServiceImpl extends ServiceImpl<ScheduleTaskMapper, Sch
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean initSchedule() {
-        // 全部任务
+        // 全部定时任务
         List<ScheduleTaskEntity> entityList = list(addSelectFieldForQuartz());
 
         if (entityList.size() > 0) {

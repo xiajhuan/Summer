@@ -34,7 +34,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 任务日志 ServiceImpl
+ * 定时任务日志 ServiceImpl
  *
  * @author xiajhuan
  * @date 2023/4/19
@@ -114,7 +114,7 @@ public class LogTaskServiceImpl extends ServiceImpl<LogTaskMapper, LogTaskEntity
 
     @Override
     public void clear() {
-        // 删除任务日志
+        // 删除定时任务日志
         LambdaQueryWrapper<LogTaskEntity> queryWrapper = getEmptyWrapper();
         queryWrapper.lt(LogTaskEntity::getCreateTime, DateUtil.offsetDay(DateUtil.date(),
                 setting.getInt("task.clear-days-limit", "Log", -90)));

@@ -56,7 +56,7 @@ public class QuartzTaskExecutor extends QuartzJobBean {
     private static final String END_MSG_FORMAT = "【{}】【{}】执行{}，耗时【{}】ms";
 
     /**
-     * 任务日志 Service
+     * 定时任务日志 Service
      */
     private final LogTaskService logTaskService = SpringUtil.getBean("logTaskServiceImpl", LogTaskService.class);
 
@@ -75,7 +75,7 @@ public class QuartzTaskExecutor extends QuartzJobBean {
         String json = jobDataMap.getString(JSON);
         int type = jobDataMap.getInt(TYPE);
 
-        // 构建任务日志
+        // 构建定时任务日志
         LogTaskEntity entity = LogTaskEntity.builder()
                 .taskId(jobDataMap.getLong(TASK_ID))
                 .beanName(beanName).json(json)

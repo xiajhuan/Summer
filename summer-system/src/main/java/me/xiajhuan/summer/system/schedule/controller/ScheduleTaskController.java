@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 
 /**
- * 任务 Controller
+ * 定时任务 Controller
  *
  * @author xiajhuan
  * @date 2023/4/17
@@ -46,7 +46,7 @@ public class ScheduleTaskController {
     /**
      * 分页
      *
-     * @param dto 任务Dto
+     * @param dto 定时任务Dto
      * @return 响应结果
      */
     @GetMapping("page")
@@ -73,7 +73,7 @@ public class ScheduleTaskController {
     /**
      * 新增
      *
-     * @param dto 任务Dto
+     * @param dto 定时任务Dto
      * @return 响应结果
      */
     @PostMapping("add")
@@ -88,7 +88,7 @@ public class ScheduleTaskController {
     /**
      * 修改
      *
-     * @param dto 任务Dto
+     * @param dto 定时任务Dto
      * @return 响应结果
      */
     @PutMapping("update")

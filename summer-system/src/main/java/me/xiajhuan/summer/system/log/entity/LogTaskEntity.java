@@ -22,7 +22,7 @@ import me.xiajhuan.summer.core.enums.TaskTypeEnum;
 import java.util.Date;
 
 /**
- * 任务日志 Entity
+ * 定时任务日志 Entity
  *
  * @author xiajhuan
  * @date 2023/4/19

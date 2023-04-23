@@ -32,7 +32,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * 任务日志 Controller
+ * 定时任务日志 Controller
  *
  * @author xiajhuan
  * @date 2023/4/19
@@ -49,7 +49,7 @@ public class LogTaskController extends BaseController {
     /**
      * 分页
      *
-     * @param dto 任务日志Dto
+     * @param dto 定时任务日志Dto
      * @return 响应结果
      */
     @GetMapping("page")
@@ -78,7 +78,7 @@ public class LogTaskController extends BaseController {
     /**
      * Excel导出
      *
-     * @param dto      任务日志Dto
+     * @param dto      定时任务日志Dto
      * @param response {@link HttpServletResponse}
      */
     @GetMapping("excelExport")
@@ -87,7 +87,7 @@ public class LogTaskController extends BaseController {
     @LogOperation(OperationConst.EXCEL_EXPORT)
     public void excelExport(LogTaskDto dto, HttpServletResponse response) {
         validateMaxExport(mainService.count(dto));
-        ExcelUtil.export(response, "任务日志", "任务日志", mainService.list(dto),
+        ExcelUtil.export(response, "定时任务日志", "定时任务日志", mainService.list(dto),
                 LogTaskDto.class, ErrorCode.EXCEL_EXPORT_FAILURE);
     }
 

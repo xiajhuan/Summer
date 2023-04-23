@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 
 /**
- * 任务日志清理
+ * 定时任务日志清理
  *
  * @author xiajhuan
  * @date 2023/4/20

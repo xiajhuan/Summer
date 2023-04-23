@@ -23,7 +23,7 @@ import me.xiajhuan.summer.core.enums.TaskTypeEnum;
 import org.springframework.stereotype.Component;
 
 /**
- * 任务 Entity
+ * 定时任务 Entity
  *
  * @author xiajhuan
  * @date 2023/4/15

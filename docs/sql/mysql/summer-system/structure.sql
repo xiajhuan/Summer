@@ -311,7 +311,7 @@ CREATE TABLE `log_task`
     INDEX `idx_create_time` (`create_time`) USING BTREE
 ) ENGINE = InnoDB
   CHARACTER SET = utf8mb4
-  COLLATE = utf8mb4_general_ci COMMENT = '任务日志'
+  COLLATE = utf8mb4_general_ci COMMENT = '定时任务日志'
   ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -357,7 +357,7 @@ CREATE TABLE `schedule_task`
     INDEX `idx_create_time` (`create_time`) USING BTREE
 ) ENGINE = InnoDB
   CHARACTER SET = utf8mb4
-  COLLATE = utf8mb4_general_ci COMMENT = '任务'
+  COLLATE = utf8mb4_general_ci COMMENT = '定时任务'
   ROW_FORMAT = Dynamic;
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -22,7 +22,7 @@ import org.springframework.scheduling.annotation.Async;
 import java.util.List;
 
 /**
- * 任务日志 Service
+ * 定时任务日志 Service
  *
  * @author xiajhuan
  * @date 2023/4/19
@@ -38,7 +38,7 @@ public interface LogTaskService extends IService<LogTaskEntity> {
     /**
      * 统计记录数
      *
-     * @param dto 任务日志Dto
+     * @param dto 定时任务日志Dto
      * @return 记录数
      */
     long count(LogTaskDto dto);
@@ -46,7 +46,7 @@ public interface LogTaskService extends IService<LogTaskEntity> {
     /**
      * 异步保存
      *
-     * @param entity 任务日志Entity
+     * @param entity 定时任务日志Entity
      */
     @Async(ThreadPoolConst.ASYNC_COMMON)
     void saveAsync(LogTaskEntity entity);
