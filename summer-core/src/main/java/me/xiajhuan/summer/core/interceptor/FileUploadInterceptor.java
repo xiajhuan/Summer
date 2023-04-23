@@ -46,7 +46,7 @@ public class FileUploadInterceptor implements HandlerInterceptor {
      * <pre>
      *   1.配置位置：/custom/upload-limit.json
      *   2.Key：支持的文件类型后缀名 Value：大小限制
-     *   3.Value不能超过 spring.servlet.multipart.max-file-size 中的配置
+     *   3.Value不能超过 spring.servlet.multipart.max-file-size 配置的值
      * </pre>
      */
     private Map<String, String> uploadLimit;

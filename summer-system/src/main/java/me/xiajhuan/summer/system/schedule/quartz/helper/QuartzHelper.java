@@ -216,11 +216,13 @@ public class QuartzHelper {
      *
      * @param cronExpression Cron表达式
      * @return {@link CronScheduleBuilder}
+     * @see CronTrigger#MISFIRE_INSTRUCTION_DO_NOTHING
      * @see CronTrigger#MISFIRE_INSTRUCTION_FIRE_ONCE_NOW
      */
     private static CronScheduleBuilder getScheduleBuilder(String cronExpression) {
         return CronScheduleBuilder.cronSchedule(cronExpression)
-                .withMisfireHandlingInstructionFireAndProceed();
+                .withMisfireHandlingInstructionDoNothing();
+//                .withMisfireHandlingInstructionFireAndProceed();
     }
 
     /**

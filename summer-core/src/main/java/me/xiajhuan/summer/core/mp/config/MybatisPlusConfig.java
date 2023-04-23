@@ -46,12 +46,11 @@ public class MybatisPlusConfig {
         // 分页插件
         mybatisPlusInterceptor.addInnerInterceptor(new PaginationInnerInterceptor());
         // 乐观锁
-        mybatisPlusInterceptor.addInnerInterceptor(new OptimisticLockerInnerInterceptor());
+        mybatisPlusInterceptor.addInnerInterceptor(new OptimisticLockerInnerInterceptor(true));
         // 防止全表更新与删除
         mybatisPlusInterceptor.addInnerInterceptor(new BlockAttackInnerInterceptor());
         // 数据权限
-        DataPermissionInterceptor dataPermissionInterceptor = new DataPermissionInterceptor();
-        dataPermissionInterceptor.setDataPermissionHandler(dataScopeHandler);
+        DataPermissionInterceptor dataPermissionInterceptor = new DataPermissionInterceptor(dataScopeHandler);
         mybatisPlusInterceptor.addInnerInterceptor(dataPermissionInterceptor);
 
         return mybatisPlusInterceptor;

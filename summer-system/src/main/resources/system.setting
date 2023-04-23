@@ -47,7 +47,7 @@ wait-for-jobs-to-complete-on-shutdown = true
 # 最大触发超时时间（ms），超时则认为“错过触发”
 misfire-threshold = 15000
 # 能处理“错过触发”的Trigger最大数量，note：数量大时将导致表被锁过长时间，会影响别的Trigger的执行性能
-max-misfires-to-handle-at-time = 2
+max-misfires-to-handle-at-time = 1
 
 # 是否是集群模式，值：true/false
 is-cluster = true

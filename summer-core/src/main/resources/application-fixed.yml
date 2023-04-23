@@ -114,6 +114,14 @@ batch:
     # Excel最大导出数
     excel-max-export: 40000
 
+fail:
+  # 失败重试次数
+  retry-times:
+    # 乐观锁
+    optimistic-lock: 20
+    # 调用外部Api
+    call-outside-api: 5
+
 mica:
   # XSS过滤
   xss:

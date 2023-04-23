@@ -52,9 +52,6 @@ sort.field-camel-to-underscore = true
 # 支持通配符：“*”（任意匹配）和“?”（单值匹配）
 data-scope.ignore = log_*,security_*
 
-# 乐观锁控制更新失败时的重试次数
-optimistic-lock.retry-times = 20
-
 
 # *******************接口限流配置********************
 [RateLimiter]

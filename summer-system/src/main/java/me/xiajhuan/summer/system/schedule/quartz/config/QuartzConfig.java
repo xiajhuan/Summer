@@ -149,7 +149,7 @@ public class QuartzConfig {
         props.setProperty("org.quartz.jobStore.misfireThreshold",
                 setting.getLong("misfire-threshold", "Schedule", 15000L));
         props.setProperty("org.quartz.jobStore.maxMisfiresToHandleAtATime",
-                setting.getInt("max-misfires-to-handle-at-time", "Schedule", 3));
+                setting.getInt("max-misfires-to-handle-at-time", "Schedule", 1));
 
         boolean isCluster = setting.getBool("is-cluster", "Schedule", true);
         if (isCluster) {
