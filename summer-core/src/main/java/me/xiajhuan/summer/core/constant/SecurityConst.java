@@ -13,7 +13,7 @@
 package me.xiajhuan.summer.core.constant;
 
 /**
- * 权限相关常量
+ * 权限管理常量
  *
  * @author xiajhuan
  * @date 2023/2/27

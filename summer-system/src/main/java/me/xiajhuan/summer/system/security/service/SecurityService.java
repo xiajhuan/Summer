@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * 权限相关 Service
+ * 权限管理 Service
  *
  * @author xiajhuan
  * @date 2023/2/28

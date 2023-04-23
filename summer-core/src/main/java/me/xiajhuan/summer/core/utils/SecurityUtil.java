@@ -24,7 +24,7 @@ import org.apache.shiro.subject.Subject;
 import me.xiajhuan.summer.core.enums.NonLoggedUserEnum;
 
 /**
- * 权限相关工具
+ * 权限管理工具
  *
  * @author xiajhuan
  * @date 2023/02/27

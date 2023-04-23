@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * 权限相关工具 Test
+ * 权限管理工具 Test
  *
  * @author xiajhuan
  * @date 2023/3/11

@@ -28,7 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * 权限相关 Controller
+ * 权限管理 Controller
  *
  * @author xiajhuan
  * @date 2023/3/3

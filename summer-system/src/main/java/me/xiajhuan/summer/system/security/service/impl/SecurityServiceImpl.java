@@ -59,7 +59,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * 权限相关 ServiceImpl
+ * 权限管理 ServiceImpl
  *
  * @author xiajhuan
  * @date 2023/2/28

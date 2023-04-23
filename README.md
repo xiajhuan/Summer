@@ -50,7 +50,7 @@ Summer
 │    │         └─business        业务定时任务
 │    │
 │    └─resources
-│         └─mapper        Mapper.xml
+│         └─mapper        业务模块Mapper.xml
 │
 ├─summer-system      系统模块（专注于系统基本功能支持）
 │    └─system 
@@ -59,12 +59,11 @@ Summer
 │    │    ├─locale        国际化模块
 │    │    ├─log           日志模块
 │    │    ├─monitor       监控模块
-│    │    ├─runner        SpringBoot-Runner
 │    │    ├─schedule      定时任务模块
-│    │    └─security      权限相关模块
+│    │    └─security      权限管理模块
 │    │
 │    └─resources 
-│         └─mapper        Mapper.xml
+│         └─mapper        系统模块Mapper.xml
 │ 
 ├─summer-core        核心模块（专注于核心功能、工具集和配置项的封装支持）
 │    └─core 
