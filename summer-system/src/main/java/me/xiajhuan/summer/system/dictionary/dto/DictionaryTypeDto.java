@@ -10,12 +10,12 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.system.security.dto;
+package me.xiajhuan.summer.system.dictionary.dto;
 
-import cn.hutool.core.collection.ListUtil;
-import cn.hutool.core.lang.tree.TreeNode;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import me.xiajhuan.summer.core.base.dto.PageSortDto;
 import me.xiajhuan.summer.core.validation.group.AddGroup;
 import me.xiajhuan.summer.core.validation.group.UpdateGroup;
 
@@ -24,39 +24,28 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import java.util.Date;
-import java.util.List;
 
 /**
- * 部门 Dto
+ * 字典类型 Dto
  *
  * @author xiajhuan
- * @date 2023/3/10
- * @see TreeNode
+ * @date 2023/4/24
  */
 @Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class SecurityDeptDto extends TreeNode {
+public class DictionaryTypeDto extends PageSortDto {
 
     /**
-     * 主键ID
+     * 字典编码
      */
-    @Null(message = "{id.null}", groups = AddGroup.class)
-    @NotNull(message = "{id.require}", groups = UpdateGroup.class)
-    private Long id;
+    @Null(message = "{dictionary.type.code.null}", groups = UpdateGroup.class)
+    @NotBlank(message = "{dictionary.type.code.require}", groups = AddGroup.class)
+    private String code;
 
     /**
-     * 上级部门ID
+     * 字典名称
      */
-    @NotNull(message = "{security.dept.parentId.require}", groups = {AddGroup.class, UpdateGroup.class})
-    private Long parentId;
-
-    /**
-     * 部门名称
-     */
-    @NotBlank(message = "{security.dept.name.require}", groups = {AddGroup.class, UpdateGroup.class})
+    @NotBlank(message = "{dictionary.type.name.require}", groups = {AddGroup.class, UpdateGroup.class})
     private String name;
 
     /**
@@ -67,20 +56,14 @@ public class SecurityDeptDto extends TreeNode {
     private Integer weight;
 
     /**
+     * 描述
+     */
+    private String description;
+
+    /**
      * 创建时间
      */
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date createTime;
-
-    /**
-     * 子节点
-     */
-    private List<SecurityDeptDto> children = ListUtil.of();
-
-    /**
-     * 上级部门名称
-     */
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private String parentName;
 
 }

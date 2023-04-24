@@ -50,7 +50,7 @@ sort.field-camel-to-underscore = true
 
 # 数据权限忽略的表名配置，以“,”分隔
 # 支持通配符：“*”（任意匹配）和“?”（单值匹配）
-data-scope.ignore = log_*,security_*
+data-scope.ignore = security_*,log_*
 
 
 # *******************接口限流配置********************

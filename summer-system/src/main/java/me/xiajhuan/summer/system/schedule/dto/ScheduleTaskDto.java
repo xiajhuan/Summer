@@ -12,6 +12,7 @@
 
 package me.xiajhuan.summer.system.schedule.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.stereotype.Component;
@@ -84,6 +85,7 @@ public class ScheduleTaskDto extends PageSortDto {
     /**
      * 创建时间
      */
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date createTime;
 
 }

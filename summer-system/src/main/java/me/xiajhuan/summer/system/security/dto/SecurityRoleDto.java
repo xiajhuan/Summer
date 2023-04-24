@@ -13,6 +13,7 @@
 package me.xiajhuan.summer.system.security.dto;
 
 import cn.hutool.core.collection.CollUtil;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import me.xiajhuan.summer.core.base.dto.PageSortDto;
@@ -47,6 +48,7 @@ public class SecurityRoleDto extends PageSortDto {
     /**
      * 创建时间
      */
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date createTime;
 
     /**

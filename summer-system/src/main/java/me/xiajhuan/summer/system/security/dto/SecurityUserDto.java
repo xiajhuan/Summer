@@ -138,6 +138,7 @@ public class SecurityUserDto extends ExcelDto {
     /**
      * 创建时间
      */
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @DateTimeFormat(DateFormatConst.DATE_TIME)
     @ExcelProperty(value = "创建时间", index = 8)
     private Date createTime;
@@ -145,6 +146,7 @@ public class SecurityUserDto extends ExcelDto {
     /**
      * 本部门名称
      */
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @ExcelProperty(value = "本部门名称", index = 9)
     private String deptName;
 

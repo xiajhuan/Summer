@@ -14,6 +14,7 @@ package me.xiajhuan.summer.system.security.dto;
 
 import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.lang.tree.TreeNode;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import me.xiajhuan.summer.system.security.enums.ComponentTypeEnum;
 import me.xiajhuan.summer.system.security.enums.OpenModeEnum;
@@ -106,6 +107,7 @@ public class SecurityMenuDto extends TreeNode {
     /**
      * 创建时间
      */
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date createTime;
 
     /**
@@ -116,6 +118,7 @@ public class SecurityMenuDto extends TreeNode {
     /**
      * 上级菜单名称
      */
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String parentName;
 
 }

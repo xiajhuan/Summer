@@ -45,7 +45,7 @@
         <guava.version>31.1-jre</guava.version>
         <hutool.version>5.8.18</hutool.version>
         <easyexcel.version>3.2.1</easyexcel.version>
-        <mica-xss.version>2.7.10</mica-xss.version>
+        <mica-xss.version>2.7.11</mica-xss.version>
         <compiler-plugin.version>3.11.0</compiler-plugin.version>
         <surefire-plugin.version>3.0.0</surefire-plugin.version>
     </properties>

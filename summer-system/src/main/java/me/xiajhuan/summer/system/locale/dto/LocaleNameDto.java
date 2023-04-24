@@ -13,9 +13,12 @@
 package me.xiajhuan.summer.system.locale.dto;
 
 import com.alibaba.excel.annotation.ExcelProperty;
+import com.alibaba.excel.annotation.format.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import me.xiajhuan.summer.core.base.dto.ExcelDto;
+import me.xiajhuan.summer.core.constant.DateFormatConst;
 import me.xiajhuan.summer.core.enums.LocaleSupportEnum;
 import me.xiajhuan.summer.core.validation.group.AddGroup;
 import me.xiajhuan.summer.core.validation.group.UpdateGroup;
@@ -79,6 +82,9 @@ public class LocaleNameDto extends ExcelDto {
     /**
      * 创建时间
      */
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @DateTimeFormat(DateFormatConst.DATE_TIME)
+    @ExcelProperty(value = "创建时间", index = 5)
     private Date createTime;
 
 }

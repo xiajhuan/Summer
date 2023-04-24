@@ -61,6 +61,7 @@ public class SecurityPostDto extends PageSortDto {
     /**
      * 创建时间
      */
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date createTime;
 
     //*******************查询参数********************
