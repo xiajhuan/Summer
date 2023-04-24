@@ -82,7 +82,7 @@ public class LocaleNameServiceImpl extends ServiceImpl<LocaleNameMapper, LocaleN
         long lineId = dto.getLineId();
         String locale = dto.getLocale();
         if (exist(lineId, locale)) {
-            throw ValidationException.of(ErrorCode.NAME_LINE_ID_AND_LOCALE_EXISTS, String.valueOf(lineId), locale);
+            throw ValidationException.of(ErrorCode.LINE_ID_AND_LOCALE_EXISTS, String.valueOf(lineId), locale);
         }
     }
 

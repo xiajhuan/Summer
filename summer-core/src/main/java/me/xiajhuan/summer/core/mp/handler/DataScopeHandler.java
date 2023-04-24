@@ -22,6 +22,7 @@ import me.xiajhuan.summer.core.data.LoginUser;
 import me.xiajhuan.summer.core.base.entity.CommonEntity;
 import me.xiajhuan.summer.core.constant.DataScopeConst;
 import me.xiajhuan.summer.core.constant.SettingConst;
+import me.xiajhuan.summer.core.enums.NonLoggedUserEnum;
 import me.xiajhuan.summer.core.enums.UserTypeEnum;
 import me.xiajhuan.summer.core.utils.SecurityUtil;
 import me.xiajhuan.summer.core.utils.WildcardUtil;
@@ -108,10 +109,14 @@ public class DataScopeHandler implements MultiDataPermissionHandler {
      *
      * @param prefix 前缀
      * @return {@link Parenthesis} 或 {@code null}
+     * @see NonLoggedUserEnum
      */
     private Parenthesis getParenthesis(String prefix) {
-        // note：这里默认是内部接口，开放接口不适用数据权限功能，所以必然存在登录用户
         LoginUser loginUser = SecurityUtil.getLoginUser();
+        // note：数据权限功能只适用于内部接口，非登录用户不受限制
+        if (loginUser.getId() == null) {
+            return null;
+        }
 
         // 超级管理员或拥有所有数据权限的用户不做处理
         if (UserTypeEnum.SUPER_ADMIN.getValue() == loginUser.getUserType()

@@ -90,12 +90,10 @@ public class SecurityRoleServiceImpl extends ServiceImpl<SecurityRoleMapper, Sec
 
     @Override
     public void handleDtoBefore(SecurityRoleDto dto) {
-        // 新增时角色名称不能重复
-        if (dto.getId() == null) {
-            String name = dto.getName();
-            if (baseMapper.exist(name) != null) {
-                throw ValidationException.of(ErrorCode.ROLE_EXISTS, name);
-            }
+        // 角色名称不能重复
+        String name = dto.getName();
+        if (baseMapper.exist(name) != null) {
+            throw ValidationException.of(ErrorCode.ROLE_EXISTS, name);
         }
     }
 
@@ -152,8 +150,6 @@ public class SecurityRoleServiceImpl extends ServiceImpl<SecurityRoleMapper, Sec
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void update(SecurityRoleDto dto) {
-        handleDtoBefore(dto);
-
         SecurityRoleEntity entity = BeanUtil.convert(dto, SecurityRoleEntity.class);
 
         if (updateById(entity)) {

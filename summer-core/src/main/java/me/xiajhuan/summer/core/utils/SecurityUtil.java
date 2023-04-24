@@ -171,7 +171,11 @@ public class SecurityUtil extends SecurityUtils {
         try {
             return getSubject();
         } catch (Exception e) {
-            LOGGER.error(e, "获取Subject失败【{}】", e.getMessage());
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug(e, "获取Subject失败【{}】", e.getMessage());
+            } else {
+                LOGGER.warn("获取Subject失败【{}】", e.getMessage());
+            }
 
             return null;
         }

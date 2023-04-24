@@ -14,6 +14,8 @@ package me.xiajhuan.summer.system.dictionary.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import me.xiajhuan.summer.system.dictionary.entity.DictionaryItemEntity;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 /**
  * 字典项 Mapper
@@ -22,4 +24,15 @@ import me.xiajhuan.summer.system.dictionary.entity.DictionaryItemEntity;
  * @date 2023/4/24
  */
 public interface DictionaryItemMapper extends BaseMapper<DictionaryItemEntity> {
+
+    /**
+     * 判断是否存在
+     *
+     * @param categoryId 类别ID
+     * @param value      值
+     * @return 返回 {@code null} 则不存在
+     */
+    @Select("SELECT 1 FROM dictionary_item WHERE categoryId = #{categoryId} AND value = #{value} LIMIT 1")
+    Integer exist(@Param("categoryId") long categoryId, @Param("value") int value);
+
 }

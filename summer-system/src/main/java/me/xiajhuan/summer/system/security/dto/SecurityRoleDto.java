@@ -21,6 +21,7 @@ import me.xiajhuan.summer.core.validation.group.AddGroup;
 import me.xiajhuan.summer.core.validation.group.UpdateGroup;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Null;
 import java.util.Date;
 import java.util.Set;
 
@@ -37,7 +38,8 @@ public class SecurityRoleDto extends PageSortDto {
     /**
      * 角色名称
      */
-    @NotBlank(message = "{security.role.name.require}", groups = {AddGroup.class, UpdateGroup.class})
+    @Null(message = "{security.role.name.null}", groups = UpdateGroup.class)
+    @NotBlank(message = "{security.role.name.require}", groups = AddGroup.class)
     private String name;
 
     /**

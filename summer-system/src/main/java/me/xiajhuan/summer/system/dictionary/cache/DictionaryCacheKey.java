@@ -10,26 +10,23 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.core.cache.key;
-
-import cn.hutool.core.util.StrUtil;
+package me.xiajhuan.summer.system.dictionary.cache;
 
 /**
- * 通用 缓存Key
+ * 字典 缓存Key
  *
  * @author xiajhuan
- * @date 2023/3/17
+ * @date 2023/4/24
  */
-public class CommonCacheKey {
+public class DictionaryCacheKey {
 
     /**
-     * Excel数据 Key
+     * 字典数据 key
      *
-     * @param keyParam 填充参数
-     * @return Excel数据 Key
+     * @return 字典数据 key
      */
-    public static String excelData(String keyParam) {
-        return StrUtil.format("EXCEL_DATA_{}", keyParam);
+    public static String dictionaryData() {
+        return "DICTIONARY_DATA";
     }
 
 }

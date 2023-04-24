@@ -14,6 +14,8 @@ package me.xiajhuan.summer.system.dictionary.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import me.xiajhuan.summer.system.dictionary.entity.DictionaryCategoryEntity;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 /**
  * 字典类别 Mapper
@@ -22,4 +24,14 @@ import me.xiajhuan.summer.system.dictionary.entity.DictionaryCategoryEntity;
  * @date 2023/4/24
  */
 public interface DictionaryCategoryMapper extends BaseMapper<DictionaryCategoryEntity> {
+
+    /**
+     * 判断是否存在
+     *
+     * @param code 类别编码
+     * @return 返回 {@code null} 则不存在
+     */
+    @Select("SELECT 1 FROM dictionary_category WHERE code = #{code} LIMIT 1")
+    Integer exist(@Param("code") String code);
+
 }

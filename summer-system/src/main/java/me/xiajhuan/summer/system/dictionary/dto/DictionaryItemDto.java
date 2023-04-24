@@ -80,4 +80,12 @@ public class DictionaryItemDto extends PageSortDto {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date updateTime;
 
+    //*******************查询参数********************
+
+    /**
+     * 项标签或值
+     */
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String labelOrValue;
+
 }

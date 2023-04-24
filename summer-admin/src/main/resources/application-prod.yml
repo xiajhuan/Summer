@@ -45,6 +45,8 @@ logging:
             excel: info
             # 限流
             ratelimiter: info
+            # 工具
+            utils: info
           # system模块
           system:
             # handler

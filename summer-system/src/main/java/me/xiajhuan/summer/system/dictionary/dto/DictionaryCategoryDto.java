@@ -12,6 +12,7 @@
 
 package me.xiajhuan.summer.system.dictionary.dto;
 
+import cn.hutool.core.collection.ListUtil;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -24,6 +25,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 字典类别 Dto
@@ -65,5 +67,18 @@ public class DictionaryCategoryDto extends PageSortDto {
      */
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date createTime;
+
+    /**
+     * 项列表
+     */
+    private List<DictionaryItemDto> itemList = ListUtil.of();
+
+    //*******************查询参数********************
+
+    /**
+     * 类别编码或名称
+     */
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String codeOrName;
 
 }

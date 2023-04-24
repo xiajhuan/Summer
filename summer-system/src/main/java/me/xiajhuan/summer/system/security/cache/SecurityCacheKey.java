@@ -15,7 +15,7 @@ package me.xiajhuan.summer.system.security.cache;
 import cn.hutool.core.util.StrUtil;
 
 /**
- * security模块缓存Key
+ * 权限管理 缓存Key
  *
  * @author xiajhuan
  * @date 2023/3/17

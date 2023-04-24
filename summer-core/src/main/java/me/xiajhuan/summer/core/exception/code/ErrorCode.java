@@ -208,7 +208,7 @@ public interface ErrorCode {
     /**
      * 行ID【{0}】+地区语言【{1}】已存在
      */
-    int NAME_LINE_ID_AND_LOCALE_EXISTS = 11000;
+    int LINE_ID_AND_LOCALE_EXISTS = 11000;
 
     /**
      * 只有超级管理员可以踢出用户
@@ -249,6 +249,16 @@ public interface ErrorCode {
      * 手动启动定时任务失败【{0}】
      */
     int MANUAL_START_FAILURE = 13006;
+
+    /**
+     * 字典【{0}】已存在
+     */
+    int DICTIONARY_EXISTS = 14000;
+
+    /**
+     * 值【{0}】已存在
+     */
+    int VALUE_EXISTS = 14001;
 
     //*******************business********************
 
