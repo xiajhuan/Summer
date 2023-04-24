@@ -26,27 +26,27 @@ import javax.validation.constraints.Null;
 import java.util.Date;
 
 /**
- * 字典类型 Dto
+ * 字典项 Dto
  *
  * @author xiajhuan
  * @date 2023/4/24
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class DictionaryTypeDto extends PageSortDto {
+public class DictionaryItemDto extends PageSortDto {
 
     /**
-     * 字典编码
+     * 项标签
      */
-    @Null(message = "{dictionary.type.code.null}", groups = UpdateGroup.class)
-    @NotBlank(message = "{dictionary.type.code.require}", groups = AddGroup.class)
-    private String code;
+    @NotBlank(message = "{dictionary.item.label.require}", groups = {AddGroup.class, UpdateGroup.class})
+    private String label;
 
     /**
-     * 字典名称
+     * 项值
      */
-    @NotBlank(message = "{dictionary.type.name.require}", groups = {AddGroup.class, UpdateGroup.class})
-    private String name;
+    @Null(message = "{dictionary.item.value.null}", groups = UpdateGroup.class)
+    @NotNull(message = "{dictionary.item.value.require}", groups = AddGroup.class)
+    private Integer value;
 
     /**
      * 顺序，越小优先级越高
@@ -61,9 +61,23 @@ public class DictionaryTypeDto extends PageSortDto {
     private String description;
 
     /**
+     * 类别ID
+     */
+    @Null(message = "{dictionary.item.categoryId.null}", groups = UpdateGroup.class)
+    @NotNull(message = "{dictionary.item.categoryId.require}", groups = AddGroup.class)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Long categoryId;
+
+    /**
      * 创建时间
      */
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date createTime;
+
+    /**
+     * 更新时间
+     */
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private Date updateTime;
 
 }

@@ -18,23 +18,23 @@ import lombok.EqualsAndHashCode;
 import me.xiajhuan.summer.core.base.entity.CommonEntity;
 
 /**
- * 字典类型 Entity
+ * 字典类别 Entity
  *
  * @author xiajhuan
  * @date 2023/4/24
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("dictionary_type")
-public class DictionaryTypeEntity extends CommonEntity {
+@TableName("dictionary_category")
+public class DictionaryCategoryEntity extends CommonEntity {
 
     /**
-     * 字典代码
+     * 类别代码
      */
     private String code;
 
     /**
-     * 字典名称
+     * 类别名称
      */
     private String name;
 

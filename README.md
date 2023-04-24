@@ -54,6 +54,7 @@ Summer
 │
 ├─summer-system      系统模块（专注于系统基本功能支持）
 │    └─system 
+│    │    ├─dictionary    字典模块
 │    │    ├─handler       处理器定义
 │    │    ├─hook          SpringBoot钩子
 │    │    ├─locale        国际化模块

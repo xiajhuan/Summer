@@ -13,13 +13,13 @@
 package me.xiajhuan.summer.system.dictionary.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import me.xiajhuan.summer.system.dictionary.entity.DictionaryTypeEntity;
+import me.xiajhuan.summer.system.dictionary.entity.DictionaryCategoryEntity;
 
 /**
- * 字典类型 Mapper
+ * 字典类别 Mapper
  *
  * @author xiajhuan
  * @date 2023/4/24
  */
-public interface DictionaryTypeMapper extends BaseMapper<DictionaryTypeEntity> {
+public interface DictionaryCategoryMapper extends BaseMapper<DictionaryCategoryEntity> {
 }

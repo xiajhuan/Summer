@@ -361,10 +361,10 @@ CREATE TABLE `schedule_task`
   ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Table structure for dictionary_type
+-- Table structure for dictionary_category
 -- ----------------------------
-DROP TABLE IF EXISTS `dictionary_type`;
-CREATE TABLE `dictionary_type`
+DROP TABLE IF EXISTS `dictionary_category`;
+CREATE TABLE `dictionary_category`
 (
     `id`          bigint(20)                                                    NOT NULL COMMENT '主键ID',
     `create_by`   varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL COMMENT '创建者',
@@ -372,15 +372,40 @@ CREATE TABLE `dictionary_type`
     `update_by`   varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL COMMENT '更新者',
     `update_time` datetime(0)                                                   NULL DEFAULT NULL COMMENT '更新时间',
     `dept_id`     bigint(20)                                                    NULL DEFAULT NULL COMMENT '部门ID',
-    `code`        varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT '0' COMMENT '字典编码',
-    `name`        varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT '0' COMMENT '字典名称',
+    `code`        varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT '0' COMMENT '类别编码',
+    `name`        varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT '0' COMMENT '类别名称',
     `weight`      int(11)                                                       NULL DEFAULT NULL COMMENT '顺序，越小优先级越高',
     `description` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
     PRIMARY KEY (`id`) USING BTREE,
     INDEX `idx_create_time` (`create_time`) USING BTREE
 ) ENGINE = InnoDB
   CHARACTER SET = utf8mb4
-  COLLATE = utf8mb4_general_ci COMMENT = '字典类型'
+  COLLATE = utf8mb4_general_ci COMMENT = '字典类别'
+  ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for dictionary_item
+-- ----------------------------
+DROP TABLE IF EXISTS `dictionary_item`;
+CREATE TABLE `dictionary_item`
+(
+    `id`          bigint(20)                                                    NOT NULL COMMENT '主键ID',
+    `create_by`   varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL COMMENT '创建者',
+    `create_time` datetime(0)                                                   NULL DEFAULT NULL COMMENT '创建时间',
+    `update_by`   varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL COMMENT '更新者',
+    `update_time` datetime(0)                                                   NULL DEFAULT NULL COMMENT '更新时间',
+    `dept_id`     bigint(20)                                                    NULL DEFAULT NULL COMMENT '部门ID',
+    `label`       varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL COMMENT '项标签',
+    `value`       int(11)                                                       NULL DEFAULT NULL COMMENT '项值',
+    `weight`      int(11)                                                       NULL DEFAULT NULL COMMENT '顺序，越小优先级越高',
+    `description` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
+    `categoryId`  bigint(20)                                                    NULL DEFAULT NULL COMMENT '类别ID',
+    PRIMARY KEY (`id`) USING BTREE,
+    INDEX `idx_create_time` (`create_time`) USING BTREE,
+    INDEX `idx_category_id` (`categoryId`) USING BTREE
+) ENGINE = InnoDB
+  CHARACTER SET = utf8mb4
+  COLLATE = utf8mb4_general_ci COMMENT = '字典项'
   ROW_FORMAT = Dynamic;
 
 SET FOREIGN_KEY_CHECKS = 1;
