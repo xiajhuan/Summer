@@ -12,6 +12,7 @@
 
 package me.xiajhuan.summer.core.config;
 
+import org.apache.shiro.web.servlet.ShiroFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,6 +24,7 @@ import org.springframework.web.filter.DelegatingFilterProxy;
  *
  * @author xiajhuan
  * @date 2023/2/27
+ * @see ShiroFilter
  */
 @Configuration
 public class FilterConfig {

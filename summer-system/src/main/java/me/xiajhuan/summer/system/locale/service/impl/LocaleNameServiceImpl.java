@@ -38,7 +38,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * 名称 ServiceImpl
+ * 国际化名称 ServiceImpl
  *
  * @author xiajhuan
  * @date 2023/3/16

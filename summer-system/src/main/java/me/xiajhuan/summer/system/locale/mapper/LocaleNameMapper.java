@@ -19,7 +19,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 /**
- * 名称 Mapper
+ * 国际化名称 Mapper
  *
  * @author xiajhuan
  * @date 2023/3/16

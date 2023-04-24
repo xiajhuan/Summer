@@ -20,7 +20,7 @@ import me.xiajhuan.summer.system.locale.entity.LocaleNameEntity;
 import java.util.List;
 
 /**
- * 名称 Service
+ * 国际化名称 Service
  *
  * @author xiajhuan
  * @date 2023/3/16
@@ -42,7 +42,7 @@ public interface LocaleNameService extends IService<LocaleNameEntity> {
     /**
      * 模板数据
      *
-     * @return 名称Dto列表 或 {@code null}
+     * @return 国际化名称Dto列表 或 {@code null}
      */
     default List<LocaleNameDto> template() {
         return null;
@@ -51,7 +51,7 @@ public interface LocaleNameService extends IService<LocaleNameEntity> {
     /**
      * 统计记录数
      *
-     * @param dto 名称Dto
+     * @param dto 国际化名称Dto
      * @return 记录数
      */
     long count(LocaleNameDto dto);

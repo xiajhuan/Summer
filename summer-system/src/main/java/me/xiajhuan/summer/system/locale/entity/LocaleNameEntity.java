@@ -19,7 +19,7 @@ import me.xiajhuan.summer.core.base.entity.CommonEntity;
 import me.xiajhuan.summer.core.enums.LocaleSupportEnum;
 
 /**
- * 名称 Entity
+ * 国际化名称 Entity
  *
  * @author xiajhuan
  * @date 2023/3/16

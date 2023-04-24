@@ -22,6 +22,7 @@ import org.springframework.context.annotation.Configuration;
  *
  * @author xiajhuan
  * @date 2023/3/9
+ * @see Setting
  */
 @Configuration
 public class SettingConfig {

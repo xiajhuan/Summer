@@ -33,6 +33,9 @@ public class Result<T> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * 构造Result
+     */
     private Result() {
     }
 

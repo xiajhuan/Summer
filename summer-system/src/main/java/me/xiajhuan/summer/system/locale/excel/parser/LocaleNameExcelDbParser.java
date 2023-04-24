@@ -22,7 +22,7 @@ import me.xiajhuan.summer.system.locale.service.LocaleNameService;
 import java.util.stream.Collectors;
 
 /**
- * 名称 Excel数据解析（保存到Db）
+ * 国际化名称 Excel数据解析（保存到Db）
  *
  * @author xiajhuan
  * @date 2023/3/16
@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 public class LocaleNameExcelDbParser extends ExcelDbParser<LocaleNameDto, LocaleNameEntity> {
 
     /**
-     * 名称 Service
+     * 国际化名称 Service
      */
     private final LocaleNameService localeNameService;
 

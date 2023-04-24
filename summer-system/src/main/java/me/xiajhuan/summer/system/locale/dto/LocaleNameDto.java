@@ -26,7 +26,7 @@ import javax.validation.constraints.Null;
 import java.util.Date;
 
 /**
- * 名称 Dto
+ * 国际化名称 Dto
  *
  * @author xiajhuan
  * @date 2023/3/16

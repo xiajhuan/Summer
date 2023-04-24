@@ -33,6 +33,9 @@ public class PageData<T> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * 构造PageData
+     */
     private PageData() {
     }
 

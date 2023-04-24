@@ -206,7 +206,7 @@ public interface ErrorCode {
     int DEPT_USER_DELETE_ERROR = 10015;
 
     /**
-     * 名称行ID【{0}】+地区语言【{1}】已存在
+     * 行ID【{0}】+地区语言【{1}】已存在
      */
     int NAME_LINE_ID_AND_LOCALE_EXISTS = 11000;
 

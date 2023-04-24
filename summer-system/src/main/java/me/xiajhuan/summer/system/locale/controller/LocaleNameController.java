@@ -36,7 +36,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * 名称 Controller
+ * 国际化名称 Controller
  *
  * @author xiajhuan
  * @date 2023/3/16
@@ -53,7 +53,7 @@ public class LocaleNameController extends BaseController {
     /**
      * 分页
      *
-     * @param dto 名称Dto
+     * @param dto 国际化名称Dto
      * @return 响应结果
      */
     @GetMapping("page")
@@ -80,7 +80,7 @@ public class LocaleNameController extends BaseController {
     /**
      * 新增
      *
-     * @param dto 名称Dto
+     * @param dto 国际化名称Dto
      * @return 响应结果
      */
     @PostMapping("add")
@@ -95,7 +95,7 @@ public class LocaleNameController extends BaseController {
     /**
      * 修改
      *
-     * @param dto 名称Dto
+     * @param dto 国际化名称Dto
      * @return 响应结果
      */
     @PutMapping("update")
@@ -135,7 +135,7 @@ public class LocaleNameController extends BaseController {
     @RateLimiter(0.2)
     @LogOperation(OperationConst.EXCEL_TEMPLATE)
     public void excelTemplate(HttpServletResponse response) {
-        ExcelUtil.export(response, "名称模板", "名称", mainService.template(),
+        ExcelUtil.export(response, "国际化名称模板", "国际化名称", mainService.template(),
                 LocaleNameDto.class, ErrorCode.EXCEL_TEMPLATE_DOWNLOAD_FAILURE);
     }
 
@@ -158,7 +158,7 @@ public class LocaleNameController extends BaseController {
     /**
      * Excel导出
      *
-     * @param dto      名称Dto
+     * @param dto      国际化名称Dto
      * @param response {@link HttpServletResponse}
      */
     @GetMapping("excelExport")
@@ -167,7 +167,7 @@ public class LocaleNameController extends BaseController {
     @LogOperation(OperationConst.EXCEL_EXPORT)
     public void excelExport(LocaleNameDto dto, HttpServletResponse response) {
         validateMaxExport(mainService.count(dto));
-        ExcelUtil.export(response, "名称", "名称", mainService.list(dto),
+        ExcelUtil.export(response, "国际化名称", "国际化名称", mainService.list(dto),
                 LocaleNameDto.class, ErrorCode.EXCEL_EXPORT_FAILURE);
     }
 

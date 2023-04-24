@@ -218,7 +218,7 @@ CREATE TABLE `locale_name`
     INDEX `idx_create_time` (`create_time`) USING BTREE
 ) ENGINE = InnoDB
   CHARACTER SET = utf8mb4
-  COLLATE = utf8mb4_general_ci COMMENT = '名称'
+  COLLATE = utf8mb4_general_ci COMMENT = '国际化名称'
   ROW_FORMAT = Dynamic;
 
 -- ----------------------------
