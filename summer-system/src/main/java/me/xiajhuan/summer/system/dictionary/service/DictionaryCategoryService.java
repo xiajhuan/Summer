@@ -39,11 +39,4 @@ public interface DictionaryCategoryService extends IService<DictionaryCategoryEn
 
     List<DictionaryCategoryDto> all();
 
-    /**
-     * 缓存全部
-     *
-     * @return 是否缓存成功，true：是 false：否
-     */
-    boolean cacheAll();
-
 }

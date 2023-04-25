@@ -20,9 +20,7 @@ import me.xiajhuan.summer.core.base.dto.PageSortDto;
 import me.xiajhuan.summer.core.validation.group.AddGroup;
 import me.xiajhuan.summer.core.validation.group.UpdateGroup;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import java.util.Date;
 import java.util.List;
@@ -49,13 +47,6 @@ public class DictionaryCategoryDto extends PageSortDto {
      */
     @NotBlank(message = "{dictionary.category.name.require}", groups = {AddGroup.class, UpdateGroup.class})
     private String name;
-
-    /**
-     * 顺序，越小优先级越高
-     */
-    @Min(value = 0, message = "{weight.number}", groups = {AddGroup.class, UpdateGroup.class})
-    @NotNull(message = "{weight.require}", groups = {AddGroup.class, UpdateGroup.class})
-    private Integer weight;
 
     /**
      * 描述

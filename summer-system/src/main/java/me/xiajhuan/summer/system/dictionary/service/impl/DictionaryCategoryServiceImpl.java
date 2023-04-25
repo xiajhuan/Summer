@@ -13,12 +13,10 @@
 package me.xiajhuan.summer.system.dictionary.service.impl;
 
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.json.JSONUtil;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import me.xiajhuan.summer.core.cache.factory.CacheServerFactory;
 import me.xiajhuan.summer.core.constant.DataSourceConst;
 import me.xiajhuan.summer.core.exception.code.ErrorCode;
 import me.xiajhuan.summer.core.exception.custom.ValidationException;
@@ -29,9 +27,6 @@ import me.xiajhuan.summer.system.dictionary.entity.DictionaryCategoryEntity;
 import me.xiajhuan.summer.system.dictionary.mapper.DictionaryCategoryMapper;
 import me.xiajhuan.summer.system.dictionary.service.DictionaryCategoryService;
 import me.xiajhuan.summer.system.dictionary.service.DictionaryItemService;
-
-import static me.xiajhuan.summer.system.dictionary.cache.DictionaryCacheKey.dictionaryData;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -80,7 +75,7 @@ public class DictionaryCategoryServiceImpl extends ServiceImpl<DictionaryCategor
     @Override
     public LambdaQueryWrapper<DictionaryCategoryEntity> addSelectField(LambdaQueryWrapper<DictionaryCategoryEntity> queryWrapper) {
         return queryWrapper.select(DictionaryCategoryEntity::getId, DictionaryCategoryEntity::getCode, DictionaryCategoryEntity::getName,
-                DictionaryCategoryEntity::getWeight, DictionaryCategoryEntity::getDescription, DictionaryCategoryEntity::getCreateTime);
+                DictionaryCategoryEntity::getDescription, DictionaryCategoryEntity::getCreateTime);
     }
 
     @Override
@@ -96,6 +91,8 @@ public class DictionaryCategoryServiceImpl extends ServiceImpl<DictionaryCategor
 
     @Override
     public Page<DictionaryCategoryDto> page(DictionaryCategoryDto dto) {
+        dto.setField("weight");
+        dto.setOrder("asc");
         return BeanUtil.convert(page(handlePageSort(dto), getSelectWrapper(dto)), DictionaryCategoryDto.class);
     }
 
@@ -132,34 +129,19 @@ public class DictionaryCategoryServiceImpl extends ServiceImpl<DictionaryCategor
 
     @Override
     public List<DictionaryCategoryDto> all() {
-        List<String> jsonList = CacheServerFactory.getCacheServer().getList(dictionaryData());
-        if (jsonList != null) {
-            return jsonList.stream()
-                    .map(json -> JSONUtil.toBean(json, DictionaryCategoryDto.class))
-                    .collect(Collectors.toList());
-        }
-        return null;
-    }
-
-    @Override
-    public boolean cacheAll() {
         // 全部类别
         LambdaQueryWrapper<DictionaryCategoryEntity> queryWrapper = getEmptyWrapper();
         queryWrapper.select(DictionaryCategoryEntity::getCode);
-        queryWrapper.orderByAsc(DictionaryCategoryEntity::getWeight);
         List<DictionaryCategoryEntity> entityList = list(queryWrapper);
 
         if (entityList.size() > 0) {
             List<DictionaryCategoryDto> dtoList = BeanUtil.convert(entityList, DictionaryCategoryDto.class);
-
             // 字典项
             dtoList.forEach(dto -> dto.setItemList(dictionaryItemService.list(dto.getId())));
 
-            CacheServerFactory.getCacheServer().setList(dictionaryData(),
-                    dtoList.stream().map(JSONUtil::toJsonStr).collect(Collectors.toList()));
-            return true;
+            return dtoList;
         }
-        return false;
+        return null;
     }
 
 }

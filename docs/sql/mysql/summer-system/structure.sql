@@ -374,7 +374,6 @@ CREATE TABLE `dictionary_category`
     `dept_id`     bigint(20)                                                    NULL DEFAULT NULL COMMENT '部门ID',
     `code`        varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT '0' COMMENT '类别编码',
     `name`        varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT '0' COMMENT '类别名称',
-    `weight`      int(11)                                                       NULL DEFAULT NULL COMMENT '顺序，越小优先级越高',
     `description` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
     PRIMARY KEY (`id`) USING BTREE,
     INDEX `idx_create_time` (`create_time`) USING BTREE

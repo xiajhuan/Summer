@@ -39,11 +39,6 @@ public class DictionaryCategoryEntity extends CommonEntity {
     private String name;
 
     /**
-     * 顺序，越小优先级越高
-     */
-    private Integer weight;
-
-    /**
      * 描述
      */
     private String description;

@@ -19,7 +19,6 @@ import me.xiajhuan.summer.core.constant.CacheConst;
 import me.xiajhuan.summer.core.constant.DataSourceConst;
 import me.xiajhuan.summer.core.properties.ApplicationCacheProperties;
 import me.xiajhuan.summer.core.utils.SystemUtil;
-import me.xiajhuan.summer.system.dictionary.service.DictionaryCategoryService;
 import me.xiajhuan.summer.system.monitor.service.MonitorOnlineService;
 import me.xiajhuan.summer.system.security.service.SecurityDeptService;
 import org.springframework.boot.ApplicationArguments;
@@ -53,9 +52,6 @@ public class CacheReadyRunner implements ApplicationRunner {
     @Resource
     private MonitorOnlineService monitorOnlineService;
 
-    @Resource
-    private DictionaryCategoryService dictionaryCategoryService;
-
     /**
      * 应用名称
      */
@@ -85,11 +81,6 @@ public class CacheReadyRunner implements ApplicationRunner {
         // 缓存部门数据
         if (securityDeptService.cacheAll()) {
             LOGGER.info("【{}】缓存部门数据成功", applicationName);
-        }
-
-        // 缓存字典数据
-        if (dictionaryCategoryService.cacheAll()) {
-            LOGGER.info("【{}】缓存字典数据成功", applicationName);
         }
     }
 
