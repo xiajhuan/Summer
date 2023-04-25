@@ -39,6 +39,12 @@ me.xiajhuan.summer.core.validation.group
 me.xiajhuan.summer.core.validation.resolver
 me.xiajhuan.summer.core.validation.validator
 me.xiajhuan.summer.core.validation.validator.subClass
+me.xiajhuan.summer.system.dictionary.controller
+me.xiajhuan.summer.system.dictionary.dto
+me.xiajhuan.summer.system.dictionary.entity
+me.xiajhuan.summer.system.dictionary.mapper
+me.xiajhuan.summer.system.dictionary.service
+me.xiajhuan.summer.system.dictionary.service.impl
 me.xiajhuan.summer.system.handler.exception
 me.xiajhuan.summer.system.hook.listener
 me.xiajhuan.summer.system.hook.runner
