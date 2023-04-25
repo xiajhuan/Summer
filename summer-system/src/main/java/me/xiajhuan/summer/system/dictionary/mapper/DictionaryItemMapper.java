@@ -12,10 +12,15 @@
 
 package me.xiajhuan.summer.system.dictionary.mapper;
 
+import com.baomidou.mybatisplus.annotation.InterceptorIgnore;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.toolkit.Constants;
 import me.xiajhuan.summer.system.dictionary.entity.DictionaryItemEntity;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
 
 /**
  * 字典项 Mapper
@@ -34,5 +39,14 @@ public interface DictionaryItemMapper extends BaseMapper<DictionaryItemEntity> {
      */
     @Select("SELECT 1 FROM dictionary_item WHERE category_id = #{categoryId} AND value = #{value} LIMIT 1")
     Integer exist(@Param("categoryId") long categoryId, @Param("value") String value);
+
+    /**
+     * 查询列表（忽略数据权限）
+     *
+     * @param queryWrapper {@link Wrapper}
+     * @return 字典项Entity列表
+     */
+    @InterceptorIgnore
+    List<DictionaryItemEntity> selectList(@Param(Constants.WRAPPER) Wrapper<DictionaryItemEntity> queryWrapper);
 
 }

@@ -49,6 +49,9 @@ public class DictionaryCategoryServiceImpl extends ServiceImpl<DictionaryCategor
     @Resource
     private DictionaryItemService dictionaryItemService;
 
+    @Resource
+    private DictionaryCategoryMapper mainMapper;
+
     //*******************MpHelper覆写开始********************
 
     @Override
@@ -57,11 +60,9 @@ public class DictionaryCategoryServiceImpl extends ServiceImpl<DictionaryCategor
         // 查询条件
         // 类别编码或名称
         String codeOrName = dto.getCodeOrName();
-        if (StrUtil.isNotBlank(codeOrName)) {
-            // Sql片段示例：AND (code = xxx OR name = xxx)
-            queryWrapper.and(i -> i.eq(DictionaryCategoryEntity::getCode, codeOrName)
-                    .or().eq(DictionaryCategoryEntity::getName, codeOrName));
-        }
+        // Sql片段示例：AND (code = xxx OR name = xxx)
+        queryWrapper.and(StrUtil.isNotBlank(codeOrName), i -> i.eq(DictionaryCategoryEntity::getCode, codeOrName)
+                .or().eq(DictionaryCategoryEntity::getName, codeOrName));
 
         return queryWrapper;
     }
@@ -82,7 +83,7 @@ public class DictionaryCategoryServiceImpl extends ServiceImpl<DictionaryCategor
     public void handleDtoBefore(DictionaryCategoryDto dto) {
         // 类别编码不能重复
         String code = dto.getCode();
-        if (baseMapper.exist(code) != null) {
+        if (mainMapper.exist(code) != null) {
             throw ValidationException.of(ErrorCode.DICTIONARY_EXISTS, code);
         }
     }
@@ -129,13 +130,17 @@ public class DictionaryCategoryServiceImpl extends ServiceImpl<DictionaryCategor
     public List<DictionaryCategoryDto> all() {
         // 全部类别
         LambdaQueryWrapper<DictionaryCategoryEntity> queryWrapper = getEmptyWrapper();
-        queryWrapper.select(DictionaryCategoryEntity::getCode);
-        List<DictionaryCategoryEntity> entityList = list(queryWrapper);
+        queryWrapper.select(DictionaryCategoryEntity::getId, DictionaryCategoryEntity::getCode);
+        List<DictionaryCategoryEntity> entityList = mainMapper.selectList(queryWrapper);
 
         if (entityList.size() > 0) {
             List<DictionaryCategoryDto> dtoList = BeanUtil.convert(entityList, DictionaryCategoryDto.class);
-            // 字典项
-            dtoList.forEach(dto -> dto.setItemList(dictionaryItemService.list(dto.getId())));
+            dtoList.forEach(dto -> {
+                // 字典项
+                dto.setItemList(dictionaryItemService.list(dto.getId()));
+                // 清理ID
+                dto.setId(null);
+            });
 
             return dtoList;
         }

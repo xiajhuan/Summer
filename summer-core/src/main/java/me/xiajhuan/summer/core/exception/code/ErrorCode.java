@@ -260,6 +260,11 @@ public interface ErrorCode {
      */
     int VALUE_EXISTS = 14001;
 
+    /**
+     * 类别ID不能为空
+     */
+    int CATEGORY_ID_NOT_NULL = 14002;
+
     //*******************business********************
 
 }

@@ -28,6 +28,7 @@ import me.xiajhuan.summer.system.dictionary.mapper.DictionaryItemMapper;
 import me.xiajhuan.summer.system.dictionary.service.DictionaryItemService;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -43,19 +44,28 @@ import java.util.stream.Collectors;
 @DS(DataSourceConst.SYSTEM)
 public class DictionaryItemServiceImpl extends ServiceImpl<DictionaryItemMapper, DictionaryItemEntity> implements DictionaryItemService, MpHelper<DictionaryItemDto, DictionaryItemEntity> {
 
+    @Resource
+    private DictionaryItemMapper mainMapper;
+
     //*******************MpHelper覆写开始********************
 
     @Override
     public LambdaQueryWrapper<DictionaryItemEntity> getQueryWrapper(DictionaryItemDto dto) {
+        // 类别ID不能为空
+        Long categoryId = dto.getCategoryId();
+        if (categoryId == null) {
+            throw ValidationException.of(ErrorCode.CATEGORY_ID_NOT_NULL);
+        }
+
         LambdaQueryWrapper<DictionaryItemEntity> queryWrapper = getEmptyWrapper();
         // 查询条件
+        // 类别ID
+        queryWrapper.eq(DictionaryItemEntity::getCategoryId, categoryId);
         // 标签或值
         String labelOrValue = dto.getLabelOrValue();
-        if (StrUtil.isNotBlank(labelOrValue)) {
-            // Sql片段示例：AND (label = xxx OR value = xxx)
-            queryWrapper.and(i -> i.eq(DictionaryItemEntity::getLabel, labelOrValue)
-                    .or().eq(DictionaryItemEntity::getValue, labelOrValue));
-        }
+        // Sql片段示例：AND (label = xxx OR value = xxx)
+        queryWrapper.and(StrUtil.isNotBlank(labelOrValue), i -> i.eq(DictionaryItemEntity::getLabel, labelOrValue)
+                .or().eq(DictionaryItemEntity::getValue, labelOrValue));
 
         return queryWrapper;
     }
@@ -77,7 +87,7 @@ public class DictionaryItemServiceImpl extends ServiceImpl<DictionaryItemMapper,
     public void handleDtoBefore(DictionaryItemDto dto) {
         // 值不能重复
         String value = dto.getValue();
-        if (baseMapper.exist(dto.getCategoryId(), value) != null) {
+        if (mainMapper.exist(dto.getCategoryId(), value) != null) {
             throw ValidationException.of(ErrorCode.VALUE_EXISTS, value);
         }
     }
@@ -123,7 +133,7 @@ public class DictionaryItemServiceImpl extends ServiceImpl<DictionaryItemMapper,
         queryWrapper.select(DictionaryItemEntity::getLabel, DictionaryItemEntity::getValue);
         queryWrapper.orderByAsc(DictionaryItemEntity::getWeight);
 
-        return BeanUtil.convert(list(queryWrapper), DictionaryItemDto.class);
+        return BeanUtil.convert(mainMapper.selectList(queryWrapper), DictionaryItemDto.class);
     }
 
     @Override

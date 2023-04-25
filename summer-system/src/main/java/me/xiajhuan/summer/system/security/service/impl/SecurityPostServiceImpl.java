@@ -58,11 +58,9 @@ public class SecurityPostServiceImpl extends ServiceImpl<SecurityPostMapper, Sec
         // 查询条件
         // 岗位编码或名称
         String codeOrName = dto.getCodeOrName();
-        if (StrUtil.isNotBlank(codeOrName)) {
-            // Sql片段示例：AND (code = xxx OR name = xxx)
-            queryWrapper.and(i -> i.eq(SecurityPostEntity::getCode, codeOrName)
-                    .or().eq(SecurityPostEntity::getName, codeOrName));
-        }
+        // Sql片段示例：AND (code = xxx OR name = xxx)
+        queryWrapper.and(StrUtil.isNotBlank(codeOrName), i -> i.eq(SecurityPostEntity::getCode, codeOrName)
+                .or().eq(SecurityPostEntity::getName, codeOrName));
         // 状态
         Integer status = dto.getStatus();
         queryWrapper.eq(status != null, SecurityPostEntity::getStatus, status);

@@ -373,4 +373,27 @@ INSERT INTO `schedule_task` VALUES (1649248434837475330, 'superAdmin', '2023-04-
 INSERT INTO `schedule_task` VALUES (1649250094074777602, 'superAdmin', '2023-04-21 11:13:59', 'superAdmin', '2023-04-21 11:13:59', 'apiDemoTask', '{\"url\": \"http://xxx\"}', '0/20 * * * * ? *', 1, 1, 'ApiDemo');
 INSERT INTO `schedule_task` VALUES (1649250416746778626, 'superAdmin', '2023-04-21 11:15:16', 'superAdmin', '2023-04-21 11:15:16', 'businessDemoTask', '{\"test\": \"xxx\"}', '5/20 * * * * ? *', 2, 1, 'BusinessDemo');
 
+-- ----------------------------
+-- Records of dictionary_category
+-- ----------------------------
+INSERT INTO `dictionary_category` VALUES (1650677507430207490, 'superAdmin', '2023-04-25 09:46:01', 'superAdmin', '2023-04-25 09:46:01', 1636548298722242561, 'gender', '性别', '性别字典');
+INSERT INTO `dictionary_category` VALUES (1650678676042993666, 'superAdmin', '2023-04-25 09:50:39', 'superAdmin', '2023-04-25 09:50:39', 1636548298722242561, 'status', '状态', '状态字典');
+INSERT INTO `dictionary_category` VALUES (1650678893593153538, 'test', '2023-04-25 09:51:31', 'test', '2023-04-25 09:51:31', 1636549260430012417, 'operationGroup', '操作分组', '操作分组字典');
+INSERT INTO `dictionary_category` VALUES (1650678983418368002, 'test', '2023-04-25 09:51:52', 'test', '2023-04-25 09:51:52', 1636549260430012417, 'taskType', '定时任务类型', '定时任务类型字典');
+
+-- ----------------------------
+-- Records of dictionary_item
+-- ----------------------------
+INSERT INTO `dictionary_item` VALUES (1650706970222223361, 'systemAdmin', '2023-04-25 11:43:05', 'systemAdmin', '2023-04-25 11:43:05', 1636548298722242561, '男', '0', 0, '男性', 1650677507430207490);
+INSERT INTO `dictionary_item` VALUES (1650707163546083329, 'systemAdmin', '2023-04-25 11:43:51', 'systemAdmin', '2023-04-25 11:43:51', 1636548298722242561, '女', '1', 1, '女性', 1650677507430207490);
+INSERT INTO `dictionary_item` VALUES (1650707466240614401, 'systemAdmin', '2023-04-25 11:45:03', 'systemAdmin', '2023-04-25 11:45:03', 1636548298722242561, '保密', '2', 2, '性别保密', 1650677507430207490);
+INSERT INTO `dictionary_item` VALUES (1650707832030060545, 'systemAdmin', '2023-04-25 11:46:30', 'systemAdmin', '2023-04-25 11:46:30', 1636548298722242561, '正常', '1', 0, '状态正常', 1650678676042993666);
+INSERT INTO `dictionary_item` VALUES (1650707893451448321, 'systemAdmin', '2023-04-25 11:46:45', 'systemAdmin', '2023-04-25 11:46:45', 1636548298722242561, '停用', '0', 1, '状态停用', 1650678676042993666);
+INSERT INTO `dictionary_item` VALUES (1650731407269117954, 'test', '2023-04-25 13:20:11', 'test', '2023-04-25 13:20:11', 1636549260430012417, 'Common Crud', '0', 0, '通用CRUD，包含：分页/列表/根据ID获取/新增/修改/删除', 1650678893593153538);
+INSERT INTO `dictionary_item` VALUES (1650731581617946626, 'test', '2023-04-25 13:20:53', 'test', '2023-04-25 13:20:53', 1636549260430012417, 'Excel Operation', '1', 1, 'Excel操作，包含：Excel模板下载/Excel导入/Excel导出', 1650678893593153538);
+INSERT INTO `dictionary_item` VALUES (1650731759020228609, 'test', '2023-04-25 13:21:35', 'test', '2023-04-25 13:21:35', 1636549260430012417, 'Other Operation', '2', 2, '其他操作', 1650678893593153538);
+INSERT INTO `dictionary_item` VALUES (1650734545891966978, 'test', '2023-04-25 13:32:40', 'test', '2023-04-25 13:32:40', 1636549260430012417, '系统定时任务', '0', 0, '系统模块定时任务', 1650678983418368002);
+INSERT INTO `dictionary_item` VALUES (1650734609926406145, 'test', '2023-04-25 13:32:55', 'test', '2023-04-25 13:32:55', 1636549260430012417, 'api定时任务', '1', 1, 'api模块定时任务', 1650678983418368002);
+INSERT INTO `dictionary_item` VALUES (1650734665651929090, 'test', '2023-04-25 13:33:08', 'test', '2023-04-25 13:33:08', 1636549260430012417, '业务定时任务', '2', 2, '业务模块定时任务', 1650678983418368002);
+
 SET FOREIGN_KEY_CHECKS = 1;

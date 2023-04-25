@@ -50,9 +50,10 @@ import java.util.stream.Collectors;
  * 数据权限处理器，note：
  * <pre>
  *   1.表对应Entity必须包含create_by,dept_id字段，推荐继承 {@link CommonEntity}
- *   2.若想局部关闭数据权限过滤，可以采用以下两种方式：
- *     2.1 在Mapper和Mapper.Method上使用 {@link InterceptorIgnore}
- *     2.2 在common.setting中配置Mp组下的dataScope.ignore
+ *   2.对”SELECT/COUNT/UPDATE/DELETE语句“生效
+ *   3.若想局部关闭数据权限过滤，可以采用以下两种方式：
+ *     3.1 在Mapper和Mapper.Method上使用 {@link InterceptorIgnore}
+ *     3.2 在common.setting中配置Mp组下的dataScope.ignore
  * </pre>
  * 参考：https://gitee.com/baomidou/mybatis-plus/pulls/219
  *
@@ -86,32 +87,6 @@ public class DataScopeHandler implements MultiDataPermissionHandler {
 
     @Override
     public Expression getSqlSegment(Table table, Expression where, String mappedStatementId) {
-        if (ArrayUtil.isNotEmpty(dataScopeIgnoreArray)
-                && Arrays.stream(dataScopeIgnoreArray)
-                .anyMatch(ignore -> WildcardUtil.matches(table.getName(), ignore))) {
-            // 表名匹配被忽略的表配置，则不过滤数据权限
-            return null;
-        }
-
-        // 为了兼容隐式内连接，没有别名时条件就需要加上表名
-        final String prefix;
-        if (table.getAlias() != null) {
-            prefix = table.getAlias().getName() + StrPool.DOT;
-        } else {
-            prefix = table.getName() + StrPool.DOT;
-        }
-
-        return getParenthesis(prefix);
-    }
-
-    /**
-     * 获取 {@link Parenthesis}
-     *
-     * @param prefix 前缀
-     * @return {@link Parenthesis} 或 {@code null}
-     * @see NonLoggedUserEnum
-     */
-    private Parenthesis getParenthesis(String prefix) {
         LoginUser loginUser = SecurityUtil.getLoginUser();
         // note：数据权限功能只适用于内部接口，非登录用户不受限制
         if (loginUser.getId() == null) {
@@ -124,8 +99,33 @@ public class DataScopeHandler implements MultiDataPermissionHandler {
             return null;
         }
 
-        //*******************追加过滤Sql片段********************
+        // 表名匹配被忽略的表配置则不过滤数据权限
+        if (ArrayUtil.isNotEmpty(dataScopeIgnoreArray)
+                && Arrays.stream(dataScopeIgnoreArray)
+                .anyMatch(ignore -> WildcardUtil.matches(table.getName(), ignore))) {
+            return null;
+        }
 
+        // 为了兼容隐式内连接，没有别名时条件就需要加上表名
+        final String prefix;
+        if (table.getAlias() != null) {
+            prefix = table.getAlias().getName() + StrPool.DOT;
+        } else {
+            prefix = table.getName() + StrPool.DOT;
+        }
+
+        return getParenthesis(prefix, loginUser);
+    }
+
+    /**
+     * 获取 {@link Parenthesis}（追加过滤Sql片段）
+     *
+     * @param prefix    前缀
+     * @param loginUser 登录用户信息
+     * @return {@link Parenthesis}
+     * @see NonLoggedUserEnum
+     */
+    private Parenthesis getParenthesis(String prefix, LoginUser loginUser) {
         final Expression filterCondition;
         switch (loginUser.getDataScope()) {
             case 1:

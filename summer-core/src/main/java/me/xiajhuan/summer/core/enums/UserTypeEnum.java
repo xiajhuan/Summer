@@ -28,15 +28,17 @@ public enum UserTypeEnum {
     /**
      * 超级管理员用户
      */
-    SUPER_ADMIN(0, "超级管理员用户"),
+    SUPER_ADMIN(0, "超级管理员用户", "RBAC架构外的特殊用户，拥有所有权限，没有角色和本部门ID"),
 
     /**
      * 普通用户
      */
-    GENERAL(1, "普通用户");
+    GENERAL(1, "普通用户", "RBAC架构下的用户，拥有至少一个角色和本部门ID");
 
     private final int value;
 
     private final String name;
+
+    private final String desc;
 
 }

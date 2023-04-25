@@ -26,22 +26,24 @@ import lombok.Getter;
 public enum OperationGroupEnum {
 
     /**
-     * 通用CRUD，包含：分页/列表/根据ID获取/新增/修改/删除
+     * Common Crud
      */
-    COMMON_CRUD(0, "Common Crud"),
+    COMMON_CRUD(0, "Common Crud", "通用CRUD，包含：分页/列表/根据ID获取/新增/修改/删除"),
 
     /**
-     * Excel操作，包含：Excel模板下载/Excel导入/Excel导出
+     * Excel Operation
      */
-    EXCEL_OPERATION(1, "Excel Operation"),
+    EXCEL_OPERATION(1, "Excel Operation", "Excel操作，包含：Excel模板下载/Excel导入/Excel导出"),
 
     /**
-     * 其他操作
+     * Other Operation
      */
-    OTHER_OPERATION(2, "Other Operation");
+    OTHER_OPERATION(2, "Other Operation", "其他操作");
 
     private final int value;
 
     private final String name;
+
+    private final String desc;
 
 }
