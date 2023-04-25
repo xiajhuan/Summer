@@ -395,13 +395,13 @@ CREATE TABLE `dictionary_item`
     `update_time` datetime(0)                                                   NULL DEFAULT NULL COMMENT '更新时间',
     `dept_id`     bigint(20)                                                    NULL DEFAULT NULL COMMENT '部门ID',
     `label`       varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL COMMENT '项标签',
-    `value`       int(11)                                                       NULL DEFAULT NULL COMMENT '项值',
+    `value`       varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL COMMENT '项值',
     `weight`      int(11)                                                       NULL DEFAULT NULL COMMENT '顺序，越小优先级越高',
     `description` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
-    `categoryId`  bigint(20)                                                    NULL DEFAULT NULL COMMENT '类别ID',
+    `category_id` bigint(20)                                                    NULL DEFAULT NULL COMMENT '类别ID',
     PRIMARY KEY (`id`) USING BTREE,
     INDEX `idx_create_time` (`create_time`) USING BTREE,
-    INDEX `idx_category_id` (`categoryId`) USING BTREE
+    INDEX `idx_category_id` (`category_id`) USING BTREE
 ) ENGINE = InnoDB
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_general_ci COMMENT = '字典项'

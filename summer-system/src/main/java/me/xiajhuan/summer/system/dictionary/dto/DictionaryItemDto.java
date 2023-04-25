@@ -46,7 +46,7 @@ public class DictionaryItemDto extends PageSortDto {
      */
     @Null(message = "{dictionary.item.value.null}", groups = UpdateGroup.class)
     @NotNull(message = "{dictionary.item.value.require}", groups = AddGroup.class)
-    private Integer value;
+    private String value;
 
     /**
      * 顺序，越小优先级越高

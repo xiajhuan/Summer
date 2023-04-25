@@ -36,7 +36,7 @@ public class DictionaryItemEntity extends CommonEntity {
     /**
      * 项值
      */
-    private Integer value;
+    private String value;
 
     /**
      * 顺序，越小优先级越高

@@ -32,7 +32,7 @@ public interface DictionaryItemMapper extends BaseMapper<DictionaryItemEntity> {
      * @param value      值
      * @return 返回 {@code null} 则不存在
      */
-    @Select("SELECT 1 FROM dictionary_item WHERE categoryId = #{categoryId} AND value = #{value} LIMIT 1")
-    Integer exist(@Param("categoryId") long categoryId, @Param("value") int value);
+    @Select("SELECT 1 FROM dictionary_item WHERE category_id = #{categoryId} AND value = #{value} LIMIT 1")
+    Integer exist(@Param("categoryId") long categoryId, @Param("value") String value);
 
 }

@@ -76,9 +76,9 @@ public class DictionaryItemServiceImpl extends ServiceImpl<DictionaryItemMapper,
     @Override
     public void handleDtoBefore(DictionaryItemDto dto) {
         // 值不能重复
-        int value = dto.getValue();
+        String value = dto.getValue();
         if (baseMapper.exist(dto.getCategoryId(), value) != null) {
-            throw ValidationException.of(ErrorCode.VALUE_EXISTS, String.valueOf(value));
+            throw ValidationException.of(ErrorCode.VALUE_EXISTS, value);
         }
     }
 
@@ -86,6 +86,8 @@ public class DictionaryItemServiceImpl extends ServiceImpl<DictionaryItemMapper,
 
     @Override
     public Page<DictionaryItemDto> page(DictionaryItemDto dto) {
+        dto.setField("weight");
+        dto.setOrder("asc");
         return BeanUtil.convert(page(handlePageSort(dto), getSelectWrapper(dto)), DictionaryItemDto.class);
     }
 

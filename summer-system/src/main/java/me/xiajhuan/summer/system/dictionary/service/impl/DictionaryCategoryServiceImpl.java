@@ -91,8 +91,6 @@ public class DictionaryCategoryServiceImpl extends ServiceImpl<DictionaryCategor
 
     @Override
     public Page<DictionaryCategoryDto> page(DictionaryCategoryDto dto) {
-        dto.setField("weight");
-        dto.setOrder("asc");
         return BeanUtil.convert(page(handlePageSort(dto), getSelectWrapper(dto)), DictionaryCategoryDto.class);
     }
 

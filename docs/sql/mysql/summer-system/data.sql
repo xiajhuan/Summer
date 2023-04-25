@@ -176,6 +176,11 @@ INSERT INTO `security_menu` VALUES (1649741628071149570, 'superAdmin', '2023-04-
 INSERT INTO `security_menu` VALUES (1649750393847742465, 'superAdmin', '2023-04-22 20:21:59', 'superAdmin', '2023-04-22 20:21:59', 1644249552424505346, 'log/task', '', 0, 0, 'icon-dashboard', 3);
 INSERT INTO `security_menu` VALUES (1649751116480184322, 'superAdmin', '2023-04-22 20:24:52', 'superAdmin', '2023-04-22 20:24:52', 1649750393847742465, '', 'log:task:page,log:task:getById', 1, NULL, '', 0);
 INSERT INTO `security_menu` VALUES (1649751675778039809, 'superAdmin', '2023-04-22 20:27:05', 'superAdmin', '2023-04-22 20:27:05', 1649750393847742465, '', 'log:task:excelExport', 1, NULL, '', 1);
+INSERT INTO `security_menu` VALUES (1650667326864564225, 'superAdmin', '2023-04-25 09:05:33', 'superAdmin', '2023-04-25 09:05:33', 1644159962489536514, 'dictionary/category', '', 0, 0, 'icon-golden-fill', 2);
+INSERT INTO `security_menu` VALUES (1650671467846377473, 'superAdmin', '2023-04-25 09:22:01', 'superAdmin', '2023-04-25 09:22:01', 1650667326864564225, '', 'dictionary:category:page,dictionary:category:getById,dictionary:item:page,dictionary:item:getById', 1, NULL, '', 0);
+INSERT INTO `security_menu` VALUES (1650672003832291329, 'superAdmin', '2023-04-25 09:24:08', 'superAdmin', '2023-04-25 09:24:08', 1650667326864564225, '', 'dictionary:category:add,dictionary:item:add', 1, NULL, '', 1);
+INSERT INTO `security_menu` VALUES (1650672417248059394, 'superAdmin', '2023-04-25 09:25:47', 'superAdmin', '2023-04-25 09:25:47', 1650667326864564225, '', 'dictionary:category:update,dictionary:item:update', 1, NULL, '', 2);
+INSERT INTO `security_menu` VALUES (1650672850913927169, 'superAdmin', '2023-04-25 09:27:30', 'superAdmin', '2023-04-25 09:27:30', 1650667326864564225, '', 'dictionary:category:delete,dictionary:item:delete', 1, NULL, '', 3);
 
 -- ----------------------------
 -- Records of security_role_dept
@@ -331,6 +336,16 @@ INSERT INTO `locale_name` VALUES (1649751116744425474, 'superAdmin', '2023-04-22
 INSERT INTO `locale_name` VALUES (1649751311762784258, 'superAdmin', '2023-04-22 20:25:38', 'superAdmin', '2023-04-22 20:25:38', 'security_menu', 1649751116480184322, 'name', 'View', 'en_US');
 INSERT INTO `locale_name` VALUES (1649751676113584130, 'superAdmin', '2023-04-22 20:27:05', 'superAdmin', '2023-04-22 20:27:05', 'security_menu', 1649751675778039809, 'name', '导出', 'zh_CN');
 INSERT INTO `locale_name` VALUES (1649751739472740354, 'superAdmin', '2023-04-22 20:27:20', 'superAdmin', '2023-04-22 20:27:20', 'security_menu', 1649751675778039809, 'name', 'Export', 'en_US');
+INSERT INTO `locale_name` VALUES (1650667326940061697, 'superAdmin', '2023-04-25 09:05:33', 'superAdmin', '2023-04-25 09:05:33', 'security_menu', 1650667326864564225, 'name', '字典管理', 'zh_CN');
+INSERT INTO `locale_name` VALUES (1650668447356100609, 'superAdmin', '2023-04-25 09:10:00', 'superAdmin', '2023-04-25 09:10:00', 'security_menu', 1650667326864564225, 'name', 'Dictionary management', 'en_US');
+INSERT INTO `locale_name` VALUES (1650671467846377474, 'superAdmin', '2023-04-25 09:22:01', 'superAdmin', '2023-04-25 09:22:01', 'security_menu', 1650671467846377473, 'name', '查看', 'zh_CN');
+INSERT INTO `locale_name` VALUES (1650671595965587459, 'superAdmin', '2023-04-25 09:22:31', 'superAdmin', '2023-04-25 09:22:31', 'security_menu', 1650671467846377473, 'name', 'View', 'en_US');
+INSERT INTO `locale_name` VALUES (1650672003832291330, 'superAdmin', '2023-04-25 09:24:08', 'superAdmin', '2023-04-25 09:24:08', 'security_menu', 1650672003832291329, 'name', '新增', 'zh_CN');
+INSERT INTO `locale_name` VALUES (1650672102234857475, 'superAdmin', '2023-04-25 09:24:32', 'superAdmin', '2023-04-25 09:24:32', 'security_menu', 1650672003832291329, 'name', 'Add', 'en_US');
+INSERT INTO `locale_name` VALUES (1650672417315168257, 'superAdmin', '2023-04-25 09:25:47', 'superAdmin', '2023-04-25 09:25:47', 'security_menu', 1650672417248059394, 'name', '修改', 'zh_CN');
+INSERT INTO `locale_name` VALUES (1650672521371656195, 'superAdmin', '2023-04-25 09:26:12', 'superAdmin', '2023-04-25 09:26:12', 'security_menu', 1650672417248059394, 'name', 'Update', 'en_US');
+INSERT INTO `locale_name` VALUES (1650672850913927170, 'superAdmin', '2023-04-25 09:27:30', 'superAdmin', '2023-04-25 09:27:30', 'security_menu', 1650672850913927169, 'name', '删除', 'zh_CN');
+INSERT INTO `locale_name` VALUES (1650672966022406147, 'superAdmin', '2023-04-25 09:27:58', 'superAdmin', '2023-04-25 09:27:58', 'security_menu', 1650672850913927169, 'name', 'Delete', 'en_US');
 
 -- ----------------------------
 -- Records of schedule_task
