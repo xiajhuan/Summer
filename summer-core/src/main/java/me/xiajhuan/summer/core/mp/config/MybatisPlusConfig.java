@@ -43,15 +43,15 @@ public class MybatisPlusConfig {
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor(DataScopeHandler dataScopeHandler) {
         MybatisPlusInterceptor mybatisPlusInterceptor = new MybatisPlusInterceptor();
+        // 数据权限，note：必须在分页插件之前初始化，否则“count(*)语句”不会加入数据权限过滤条件
+        DataPermissionInterceptor dataPermissionInterceptor = new DataPermissionInterceptor(dataScopeHandler);
+        mybatisPlusInterceptor.addInnerInterceptor(dataPermissionInterceptor);
         // 分页插件
         mybatisPlusInterceptor.addInnerInterceptor(new PaginationInnerInterceptor());
         // 乐观锁
         mybatisPlusInterceptor.addInnerInterceptor(new OptimisticLockerInnerInterceptor(true));
         // 防止全表更新与删除
         mybatisPlusInterceptor.addInnerInterceptor(new BlockAttackInnerInterceptor());
-        // 数据权限
-        DataPermissionInterceptor dataPermissionInterceptor = new DataPermissionInterceptor(dataScopeHandler);
-        mybatisPlusInterceptor.addInnerInterceptor(dataPermissionInterceptor);
 
         return mybatisPlusInterceptor;
     }
