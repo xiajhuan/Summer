@@ -41,26 +41,55 @@ public class TreeUtilTest implements CommonMsg {
      */
     @BeforeEach
     void init() {
-        menuDtoList = ListUtil.of(
-                SecurityMenuDto.builder()
-                        .id(1L).parentId(TreeConst.ROOT).name("系统管理").weight(5)
-                        .url("/sys").permissions("sys").build(),
-                SecurityMenuDto.builder()
-                        .id(2L).parentId(1L).name("用户管理").weight(222222)
-                        .url("/sys/user").permissions("sys:user").build(),
-                SecurityMenuDto.builder()
-                        .id(3L).parentId(1L).name("用户添加").weight(0)
-                        .url("/sys/userAdd").permissions("sys:userAdd").build(),
-                SecurityMenuDto.builder()
-                        .id(4L).parentId(TreeConst.ROOT).name("店铺管理").weight(1)
-                        .url("/shop").permissions("shop").build(),
-                SecurityMenuDto.builder()
-                        .id(5L).parentId(4L).name("商品管理").weight(44)
-                        .url("/shop/product").permissions("shop:product").build(),
-                SecurityMenuDto.builder()
-                        .id(6L).parentId(4L).name("商品管理2").weight(2)
-                        .url("/shop/product2").permissions("shop:product2").build()
-        );
+        SecurityMenuDto dto1 = new SecurityMenuDto();
+        dto1.setId(1L);
+        dto1.setParentId(TreeConst.ROOT);
+        dto1.setName("系统管理");
+        dto1.setWeight(5);
+        dto1.setUrl("/sys");
+        dto1.setPermissions("sys");
+
+        SecurityMenuDto dto2 = new SecurityMenuDto();
+        dto2.setId(2L);
+        dto2.setParentId(1L);
+        dto2.setName("用户管理");
+        dto2.setWeight(222222);
+        dto2.setUrl("/sys/user");
+        dto2.setPermissions("sys:user");
+
+        SecurityMenuDto dto3 = new SecurityMenuDto();
+        dto3.setId(3L);
+        dto3.setParentId(1L);
+        dto3.setName("用户添加");
+        dto3.setWeight(0);
+        dto3.setUrl("/sys/userAdd");
+        dto3.setPermissions("sys:userAdd");
+
+        SecurityMenuDto dto4 = new SecurityMenuDto();
+        dto4.setId(4L);
+        dto4.setParentId(TreeConst.ROOT);
+        dto4.setName("店铺管理");
+        dto4.setWeight(1);
+        dto4.setUrl("/shop");
+        dto4.setPermissions("shop");
+
+        SecurityMenuDto dto5 = new SecurityMenuDto();
+        dto5.setId(5L);
+        dto5.setParentId(4L);
+        dto5.setName("商品管理");
+        dto5.setWeight(44);
+        dto5.setUrl("/shop/product");
+        dto5.setPermissions("shop:product");
+
+        SecurityMenuDto dto6 = new SecurityMenuDto();
+        dto6.setId(6L);
+        dto6.setParentId(4L);
+        dto6.setName("商品管理2");
+        dto6.setWeight(2);
+        dto6.setUrl("/shop/product2");
+        dto6.setPermissions("shop:product2");
+
+        menuDtoList = ListUtil.of(dto1, dto2, dto3, dto4, dto5, dto6);
     }
 
     /**

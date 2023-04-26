@@ -30,7 +30,7 @@ spring:
 quartz:
   # 定时任务启动
   startup:
-    auto: false
+    auto: true
     delay: 20
 
 logging:

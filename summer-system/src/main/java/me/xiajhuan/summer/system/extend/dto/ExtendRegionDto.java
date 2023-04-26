@@ -10,26 +10,38 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.system.security.dto;
+package me.xiajhuan.summer.system.extend.dto;
 
 import cn.hutool.core.collection.ListUtil;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import me.xiajhuan.summer.core.base.dto.TreeDto;
+import me.xiajhuan.summer.core.validation.group.AddGroup;
+import me.xiajhuan.summer.core.validation.group.UpdateGroup;
+import me.xiajhuan.summer.system.extend.enums.RegionLevelEnum;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
 /**
- * 部门 Dto
+ * 行政区域 Dto
  *
  * @author xiajhuan
- * @date 2023/3/10
+ * @date 2023/4/26
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class SecurityDeptDto extends TreeDto<Long> {
+public class ExtendRegionDto extends TreeDto<Long> {
+
+    /**
+     * 区域级别
+     *
+     * @see RegionLevelEnum
+     */
+    @NotNull(message = "{extend.region.level.require}", groups = {AddGroup.class, UpdateGroup.class})
+    private Integer level;
 
     /**
      * 创建时间
@@ -41,10 +53,10 @@ public class SecurityDeptDto extends TreeDto<Long> {
      * 子节点
      */
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private List<SecurityDeptDto> children = ListUtil.of();
+    private List<ExtendRegionDto> children = ListUtil.of();
 
     /**
-     * 上级部门名称
+     * 上级区域名称
      */
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String parentName;

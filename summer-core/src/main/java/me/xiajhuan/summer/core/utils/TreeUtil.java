@@ -13,7 +13,6 @@
 package me.xiajhuan.summer.core.utils;
 
 import cn.hutool.core.lang.tree.Tree;
-import cn.hutool.core.lang.tree.TreeNode;
 import cn.hutool.core.lang.tree.TreeNodeConfig;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.ArrayUtil;
@@ -21,6 +20,7 @@ import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
+import me.xiajhuan.summer.core.base.dto.TreeDto;
 import me.xiajhuan.summer.core.constant.TreeConst;
 
 import java.lang.reflect.InvocationTargetException;
@@ -34,9 +34,9 @@ import java.util.stream.Collectors;
 /**
  * 树形结构工具
  * <pre>
- *   1.Dto类型必须继承 {@link TreeNode}
- *   2.【id,parentId】必须为 {@link Long}，【weight】必须可比较 {@link Comparable}
- *   3.【id,parentId,name,weight】以外的属性都为扩展属性 {@link TreeConst.Extra}
+ *   1.Dto类型必须继承 {@link TreeDto}
+ *   2.【id,parentId,name,weight】以外的属性都为扩展属性
+ *   3.扩展属性在 {@link TreeConst.Extra} 中统一配置
  * </pre>
  *
  * @author xiajhuan
@@ -70,7 +70,7 @@ public class TreeUtil extends cn.hutool.core.lang.tree.TreeUtil {
      * @param <D>        Dto类型
      * @return 树形结构列表（DtoClass）
      */
-    public static <D extends TreeNode> List<D> buildDto(Class<D> dtoClass, List<D> dtoList, long rootId, String... extraField) {
+    public static <D extends TreeDto<Long>> List<D> buildDto(Class<D> dtoClass, List<D> dtoList, long rootId, String... extraField) {
         return BeanUtil.convert(build(dtoClass, dtoList, rootId, extraField), dtoClass);
     }
 
@@ -84,7 +84,7 @@ public class TreeUtil extends cn.hutool.core.lang.tree.TreeUtil {
      * @param <D>        Dto类型
      * @return 树形结构列表（{@link Tree}）
      */
-    public static <D extends TreeNode> List<Tree<Long>> build(Class<D> dtoClass, List<D> dtoList, long rootId, String... extraField) {
+    public static <D extends TreeDto<Long>> List<Tree<Long>> build(Class<D> dtoClass, List<D> dtoList, long rootId, String... extraField) {
         AssertUtil.isNotNull("rootId", rootId);
 
         // 获取扩展属性的Getter
@@ -92,8 +92,8 @@ public class TreeUtil extends cn.hutool.core.lang.tree.TreeUtil {
 
         return build(dtoList, rootId, config,
                 (treeNode, tree) -> {
-                    tree.setId((Long) treeNode.getId());
-                    tree.setParentId((Long) treeNode.getParentId());
+                    tree.setId(treeNode.getId());
+                    tree.setParentId(treeNode.getParentId());
                     tree.setName(treeNode.getName());
                     tree.setWeight(treeNode.getWeight());
                     // 扩展属性
@@ -118,7 +118,7 @@ public class TreeUtil extends cn.hutool.core.lang.tree.TreeUtil {
      * @param <D>        Dto类型
      * @return 扩展属性的Getter Map
      */
-    private static <D extends TreeNode> Map<String, Method> getExtraGetters(Class<D> dtoClass, String... extraField) {
+    private static <D extends TreeDto<Long>> Map<String, Method> getExtraGetters(Class<D> dtoClass, String... extraField) {
         final Map<String, Method> extraGetters = MapUtil.newHashMap(true);
         if (ArrayUtil.isNotEmpty(extraField)) {
             // 去重

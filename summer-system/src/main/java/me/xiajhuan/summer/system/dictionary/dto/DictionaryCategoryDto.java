@@ -62,6 +62,7 @@ public class DictionaryCategoryDto extends PageSortDto {
     /**
      * 项列表
      */
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private List<DictionaryItemDto> itemList = ListUtil.of();
 
     //*******************查询参数********************

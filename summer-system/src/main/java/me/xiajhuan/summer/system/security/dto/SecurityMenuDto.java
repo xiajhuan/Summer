@@ -13,9 +13,9 @@
 package me.xiajhuan.summer.system.security.dto;
 
 import cn.hutool.core.collection.ListUtil;
-import cn.hutool.core.lang.tree.TreeNode;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
+import me.xiajhuan.summer.core.base.dto.TreeDto;
 import me.xiajhuan.summer.system.security.enums.ComponentTypeEnum;
 import me.xiajhuan.summer.system.security.enums.OpenModeEnum;
 import me.xiajhuan.summer.core.validation.group.AddGroup;
@@ -23,10 +23,7 @@ import me.xiajhuan.summer.core.validation.group.UpdateGroup;
 import me.xiajhuan.summer.system.security.entity.SecurityMenuEntity;
 import org.hibernate.validator.constraints.Range;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
 import java.util.Date;
 import java.util.List;
 
@@ -35,33 +32,10 @@ import java.util.List;
  *
  * @author xiajhuan
  * @date 2023/3/10
- * @see TreeNode
  */
 @Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class SecurityMenuDto extends TreeNode {
-
-    /**
-     * 主键ID
-     */
-    @Null(message = "{id.null}", groups = AddGroup.class)
-    @NotNull(message = "{id.require}", groups = UpdateGroup.class)
-    private Long id;
-
-    /**
-     * 上级菜单ID
-     */
-    @NotNull(message = "{security.menu.parentId.require}", groups = {AddGroup.class, UpdateGroup.class})
-    private Long parentId;
-
-    /**
-     * 菜单名称
-     */
-    @NotBlank(message = "{security.menu.name.require}", groups = {AddGroup.class, UpdateGroup.class})
-    private String name;
+public class SecurityMenuDto extends TreeDto<Long> {
 
     /**
      * 菜单URL
@@ -98,13 +72,6 @@ public class SecurityMenuDto extends TreeNode {
     private String icon;
 
     /**
-     * 顺序，越小优先级越高
-     */
-    @Min(value = 0, message = "{weight.number}", groups = {AddGroup.class, UpdateGroup.class})
-    @NotNull(message = "{weight.require}", groups = {AddGroup.class, UpdateGroup.class})
-    private Integer weight;
-
-    /**
      * 创建时间
      */
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
@@ -113,6 +80,7 @@ public class SecurityMenuDto extends TreeNode {
     /**
      * 子节点
      */
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private List<SecurityMenuDto> children = ListUtil.of();
 
     /**

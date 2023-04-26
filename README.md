@@ -55,6 +55,7 @@ Summer
 ├─summer-system      系统模块（专注于系统基本功能支持）
 │    └─system 
 │    │    ├─dictionary    字典模块
+│    │    ├─extend        扩展模块
 │    │    ├─handler       处理器定义
 │    │    ├─hook          SpringBoot钩子
 │    │    ├─locale        国际化模块
@@ -97,7 +98,7 @@ Summer
 - P6spy：3.9.1
 - Lombok：1.18.26
 - Shiro：1.11.0
-- Quartz：2.3.2
+- Quartz：2.4.0-rc2
 - CommonsPool2：2.11.1
 - Guava：31.1-jre
 - Hutool：5.8.18
@@ -155,20 +156,20 @@ Summer
 ## 参与贡献
 - 欢迎提交PR，注意提交到dev分支
 - 欢迎提交Issue，请注明使用版本、问题原因、重现步骤等
-- gitee为主，github为辅
+- 以gitee为主，github为辅
 
 ### Commit规范
-- feat: 新功能
-- fix: 修复 Bug
-- docs: 文档修改
-- perf: 性能优化
-- revert: 版本回退
-- ci: CICD 集成相关
-- test: 添加测试代码
-- refactor: 代码重构
-- build: 影响项目构建或依赖修改
-- style: 不影响程序逻辑的代码修改
-- chore: 不属于以上类型的其他类型(日常事务)
+- feat：新功能
+- fix：修复 Bug
+- docs：文档修改
+- perf：性能优化
+- revert：版本回退
+- ci：CICD 集成相关
+- test：添加测试代码
+- refactor：代码重构
+- build：影响项目构建或依赖修改
+- style：不影响程序逻辑的代码修改
+- chore：不属于以上类型的其他类型(日常事务)
 
 ## 用户权益
 - 任何个人、组织、企业可免费使用本项目代码，但请遵守开源协议保留原作者声明
