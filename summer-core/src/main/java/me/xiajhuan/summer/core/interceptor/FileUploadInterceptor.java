@@ -19,13 +19,11 @@ import cn.hutool.core.map.MapUtil;
 import cn.hutool.json.JSONUtil;
 import me.xiajhuan.summer.core.exception.code.ErrorCode;
 import me.xiajhuan.summer.core.exception.custom.ValidationException;
-import org.springframework.stereotype.Component;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.FileNotFoundException;
@@ -38,7 +36,6 @@ import java.util.Map;
  * @date 2023/4/2
  * @see HandlerInterceptor
  */
-@Component
 public class FileUploadInterceptor implements HandlerInterceptor {
 
     /**
@@ -49,18 +46,27 @@ public class FileUploadInterceptor implements HandlerInterceptor {
      *   3.Value不能超过 spring.servlet.multipart.max-file-size 配置的值
      * </pre>
      */
-    private Map<String, String> uploadLimit;
+    private final Map<String, String> uploadLimit;
 
     /**
-     * 初始化 {@link uploadLimit}
+     * 构造FileUploadInterceptor
      *
      * @throws FileNotFoundException 文件没找到异常
      */
-    @PostConstruct
-    private void init() throws FileNotFoundException {
+    private FileUploadInterceptor() throws FileNotFoundException {
         FileReader fileReader = FileReader.create(ResourceUtils
                 .getFile("classpath:custom/upload-limit.json"));
         uploadLimit = JSONUtil.toBean(fileReader.readString(), Map.class);
+    }
+
+    /**
+     * 构建FileUploadInterceptor
+     *
+     * @return FileUploadInterceptor
+     * @throws FileNotFoundException 文件没找到异常
+     */
+    public static FileUploadInterceptor of() throws FileNotFoundException {
+        return new FileUploadInterceptor();
     }
 
     @Override

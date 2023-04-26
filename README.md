@@ -2,7 +2,7 @@
 
 ## 介绍
 ### 基于SpringBoot2.7的轻量级权限管理系统（后端）
-高质量的Java代码、分包结构和代码注释，致力于提供一套代码规范，注释详尽，文档齐全的应用系统模板，
+高质量的Java代码、分包结构和代码注释，致力于提供一套代码规范，注释详尽，文档齐全的应用系统模板（后端），
 让大家在这浮躁的代码世界里感受一股把代码写好的清流！
 
 ## 主要特性:
@@ -50,7 +50,7 @@ Summer
 │    │         └─business        业务定时任务
 │    │
 │    └─resources
-│         └─mapper        业务模块Mapper.xml
+│         └─mapper        业务模块 Mapper.xml
 │
 ├─summer-system      系统模块（专注于系统基本功能支持）
 │    └─system 
@@ -64,7 +64,7 @@ Summer
 │    │    └─security      权限管理模块
 │    │
 │    └─resources 
-│         └─mapper        系统模块Mapper.xml
+│         └─mapper        系统模块 Mapper.xml
 │ 
 ├─summer-core        核心模块（专注于核心功能、工具集和配置项的封装支持）
 │    └─core 
@@ -153,7 +153,8 @@ Summer
 - Wechat：ASDA-xiajhuan
 
 ## 参与贡献
-本项目还处于孵化阶段，暂不接受PR，欢迎各类Feature Issue/Bug Issue
+- 欢迎提交PR，注意提交到dev分支
+- 欢迎提交Issue，请注明使用版本、问题原因、重现步骤等
 
 ### Commit规范
 - feat: 新功能
@@ -167,3 +168,7 @@ Summer
 - build: 影响项目构建或依赖修改
 - style: 不影响程序逻辑的代码修改
 - chore: 不属于以上类型的其他类型(日常事务)
+
+## 用户权益
+任何个人、组织、企业可免费使用本项目代码，但请遵守开源协议保留原作者声明，授权协议：MulanPSL2
+

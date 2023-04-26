@@ -33,8 +33,14 @@ cors.allowed-method = GET,POST,PUT,DELETE,OPTIONS
 # 跨域请求可被客户端缓存的时间（s）
 cors.max-age = 3600
 
-# 支持的请求体类型，以”,“分隔，值：FORM-DATA/JSON/XML/JAVASCRIPT/TEXT/HTML
+# 是否开启请求体类型过滤，值：true/false
+enable-content-type-filter = true
+# 支持的请求体类型，以”,“分隔，值：FORM-DATA/JSON/XML/JAVASCRIPT/TEXT/HTML，只有enable-content-type-filter = true 时会生效
 content-type-support = FORM-DATA,JSON
+
+# 是否开启文件上传过滤，值：true/false
+# note：必须配置“/custom/upload-limit.json”文件才能生效
+enable-file-upload-filter = true
 
 
 # *******************MybatisPlus配置********************
@@ -77,7 +83,7 @@ p6spy.quartz-sql-replace = true
 
 # 是否开启Sql注入过滤，值：true/false
 enable-injection-filter = false
-# 非法关键字（不区分大小写），以“,”分隔
+# 非法关键字（不区分大小写），以“,”分隔，只有enable-injection-filter = true 时会生效
 injection.illegal-key-word = SELECT,UPDATE,AND,OR,DELETE,INSERT,TRUNCATE,SUBSTR,DECLARE,MASTER,DROP,EXECUTE,UNION,',",;,\
 
 

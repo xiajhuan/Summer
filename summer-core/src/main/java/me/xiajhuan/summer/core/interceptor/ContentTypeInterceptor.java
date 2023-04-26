@@ -18,14 +18,10 @@ import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.setting.Setting;
 import me.xiajhuan.summer.core.constant.ContentTypeConst;
-import me.xiajhuan.summer.core.constant.SettingConst;
 import me.xiajhuan.summer.core.exception.code.ErrorCode;
 import me.xiajhuan.summer.core.exception.custom.ValidationException;
-import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Set;
@@ -38,11 +34,7 @@ import java.util.Set;
  * @see HandlerInterceptor
  * @see ContentTypeConst
  */
-@Component
 public class ContentTypeInterceptor implements HandlerInterceptor {
-
-    @Resource(name = SettingConst.CORE)
-    private Setting setting;
 
     /**
      * 请求体类型集合
@@ -50,16 +42,27 @@ public class ContentTypeInterceptor implements HandlerInterceptor {
     private final Set<String> contentTypeSet = CollUtil.newHashSet();
 
     /**
-     * 初始化 {@link contentTypeSet}
+     * 构造ContentTypeInterceptor
+     *
+     * @param setting {@link Setting}
      */
-    @PostConstruct
-    private void init() {
+    private ContentTypeInterceptor(Setting setting) {
         String contentType = setting.getByGroupWithLog("content-type-support", "Http");
         if (StrUtil.isBlank(contentType)) {
             // 没有配置则默认为：FORM-DATA,JSON
             contentType = "FORM-DATA,JSON";
         }
-        initInternal(contentType);
+        initContentTypeSet(contentType);
+    }
+
+    /**
+     * 构建ContentTypeInterceptor
+     *
+     * @param setting {@link Setting}
+     * @return ContentTypeInterceptor
+     */
+    public static ContentTypeInterceptor of(Setting setting) {
+        return new ContentTypeInterceptor(setting);
     }
 
     @Override
@@ -82,7 +85,7 @@ public class ContentTypeInterceptor implements HandlerInterceptor {
      *
      * @param contentType 配置的请求体类型
      */
-    private void initInternal(String contentType) {
+    private void initContentTypeSet(String contentType) {
         if (StrUtil.containsIgnoreCase(contentType, "FORM-DATA")) {
             contentTypeSet.addAll(ListUtil.of(ContentTypeConst.FORM_DATA));
         }

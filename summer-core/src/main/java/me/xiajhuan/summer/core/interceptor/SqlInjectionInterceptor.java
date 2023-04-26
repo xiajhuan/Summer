@@ -15,15 +15,11 @@ package me.xiajhuan.summer.core.interceptor;
 import cn.hutool.core.text.StrPool;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.setting.Setting;
-import me.xiajhuan.summer.core.constant.SettingConst;
 import me.xiajhuan.summer.core.exception.code.ErrorCode;
 import me.xiajhuan.summer.core.exception.custom.ValidationException;
-import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import me.xiajhuan.summer.core.utils.ServletUtil;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -38,45 +34,42 @@ import java.util.Map;
  * @see HandlerInterceptor
  * @see ServletUtil#getParamMap(ServletRequest)
  */
-@Component
 public class SqlInjectionInterceptor implements HandlerInterceptor {
-
-    @Resource(name = SettingConst.CORE)
-    private Setting setting;
-
-    /**
-     * 是否开启Sql注入过滤
-     */
-    private boolean enable;
 
     /**
      * 非法关键字数组
      */
-    private String[] illegalKeyWordArray;
+    private final String[] illegalKeyWordArray;
 
     /**
-     * 初始化 {@link enable} {@link illegalKeyWordArray}
+     * 构造SqlInjectionInterceptor
+     *
+     * @param setting {@link Setting}
      */
-    @PostConstruct
-    private void init() {
-        enable = setting.getBool("enable-injection-filter", "Sql", false);
-        if (enable) {
-            String illegalKeyWord = setting.getByGroupWithLog("injection.illegal-key-word", "Sql");
-            if (StrUtil.isBlank(illegalKeyWord)) {
-                // 没有配置时的默认关键字
-                illegalKeyWord = "SELECT,UPDATE,AND,OR,DELETE,INSERT,TRUNCATE,SUBSTR,DECLARE,MASTER,DROP,EXECUTE,UNION,',\",;,\\";
-            }
-            illegalKeyWordArray = illegalKeyWord.split(StrPool.COMMA);
+    private SqlInjectionInterceptor(Setting setting) {
+        String illegalKeyWord = setting.getByGroupWithLog("injection.illegal-key-word", "Sql");
+        if (StrUtil.isBlank(illegalKeyWord)) {
+            // 没有配置时的默认关键字
+            illegalKeyWord = "SELECT,UPDATE,AND,OR,DELETE,INSERT,TRUNCATE,SUBSTR,DECLARE,MASTER,DROP,EXECUTE,UNION,',\",;,\\";
         }
+        illegalKeyWordArray = illegalKeyWord.split(StrPool.COMMA);
+    }
+
+    /**
+     * 构建SqlInjectionInterceptor
+     *
+     * @param setting {@link Setting}
+     * @return SqlInjectionInterceptor
+     */
+    public static SqlInjectionInterceptor of(Setting setting) {
+        return new SqlInjectionInterceptor(setting);
     }
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        if (enable) {
-            Map<String, String> paramMap = ServletUtil.getParamMap(request);
-            if (paramMap.size() > 0) {
-                filter(paramMap);
-            }
+        Map<String, String> paramMap = ServletUtil.getParamMap(request);
+        if (paramMap.size() > 0) {
+            filter(paramMap);
         }
         return true;
     }

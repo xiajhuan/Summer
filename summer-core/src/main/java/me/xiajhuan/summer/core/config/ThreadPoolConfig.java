@@ -20,12 +20,12 @@ import cn.hutool.setting.Setting;
 import me.xiajhuan.summer.core.constant.SettingConst;
 import me.xiajhuan.summer.core.constant.ThreadPoolConst;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.AsyncConfigurer;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
-import javax.annotation.Resource;
 import java.lang.reflect.Method;
 import java.util.concurrent.ThreadPoolExecutor;
 
@@ -41,16 +41,14 @@ public class ThreadPoolConfig {
 
     private static final Log LOGGER = LogFactory.get();
 
-    @Resource(name = SettingConst.CORE)
-    private Setting setting;
-
     /**
      * 注册通用异步任务线程池
      *
+     * @param setting {@link Setting}
      * @return {@link ThreadPoolTaskExecutor}
      */
     @Bean(ThreadPoolConst.ASYNC_COMMON)
-    public ThreadPoolTaskExecutor threadPoolTaskExecutor() {
+    public ThreadPoolTaskExecutor threadPoolTaskExecutor(@Qualifier(SettingConst.CORE) Setting setting) {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         executor.setCorePoolSize(setting.getInt("core-pool-size", "Async", 8));
         executor.setAllowCoreThreadTimeOut(setting.getBool("allow-core-thread-timeout", "Async", false));
