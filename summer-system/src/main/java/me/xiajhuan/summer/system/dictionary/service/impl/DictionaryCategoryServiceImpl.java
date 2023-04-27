@@ -49,9 +49,6 @@ public class DictionaryCategoryServiceImpl extends ServiceImpl<DictionaryCategor
     @Resource
     private DictionaryItemService dictionaryItemService;
 
-    @Resource
-    private DictionaryCategoryMapper mainMapper;
-
     //*******************MpHelper覆写开始********************
 
     @Override
@@ -83,7 +80,7 @@ public class DictionaryCategoryServiceImpl extends ServiceImpl<DictionaryCategor
     public void handleDtoBefore(DictionaryCategoryDto dto) {
         // 类别编码不能重复
         String code = dto.getCode();
-        if (mainMapper.exist(code) != null) {
+        if (baseMapper.exist(code) != null) {
             throw ValidationException.of(ErrorCode.DICTIONARY_EXISTS, code);
         }
     }
@@ -131,7 +128,7 @@ public class DictionaryCategoryServiceImpl extends ServiceImpl<DictionaryCategor
         // 全部类别
         LambdaQueryWrapper<DictionaryCategoryEntity> queryWrapper = getEmptyWrapper();
         queryWrapper.select(DictionaryCategoryEntity::getId, DictionaryCategoryEntity::getCode);
-        List<DictionaryCategoryEntity> entityList = mainMapper.selectList(queryWrapper);
+        List<DictionaryCategoryEntity> entityList = baseMapper.selectList(queryWrapper);
 
         if (entityList.size() > 0) {
             List<DictionaryCategoryDto> dtoList = BeanUtil.convert(entityList, DictionaryCategoryDto.class);

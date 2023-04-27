@@ -265,6 +265,16 @@ public interface ErrorCode {
      */
     int CATEGORY_ID_NOT_NULL = 14002;
 
+    /**
+     * 上级区域级别必须大于自身
+     */
+    int SUPERIOR_REGION_LEVEL_ERROR = 15000;
+
+    /**
+     * 请先删除下级区域
+     */
+    int REGION_SUB_DELETE_ERROR = 15001;
+
     //*******************business********************
 
 }

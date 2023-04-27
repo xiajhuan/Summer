@@ -68,6 +68,7 @@ public class SecurityDeptServiceImpl extends ServiceImpl<SecurityDeptMapper, Sec
     public List<SecurityDeptDto> treeList(boolean needAll) {
         Set<Long> idSet = null;
         LoginUser loginUser = SecurityUtil.getLoginUser();
+
         // 非超级管理员，一律只能查询本部门及本部门下子部门
         boolean isGeneral = false;
         if (!needAll && UserTypeEnum.GENERAL.getValue() == loginUser.getUserType()) {
@@ -76,12 +77,15 @@ public class SecurityDeptServiceImpl extends ServiceImpl<SecurityDeptMapper, Sec
         }
 
         // 部门列表
-        List<SecurityDeptDto> dtoList = BeanUtil.convert(
-                baseMapper.getList(idSet), SecurityDeptDto.class);
+        List<SecurityDeptEntity> entityList = baseMapper.getList(idSet);
 
-        // 构建部门树形结构列表
-        return isGeneral ? TreeUtil.buildDto(SecurityDeptDto.class, dtoList, loginUser.getDeptId(), TreeConst.Extra.DEPT)
-                : TreeUtil.buildDto(SecurityDeptDto.class, dtoList, TreeConst.ROOT, TreeConst.Extra.DEPT);
+        if (entityList.size() > 0) {
+            List<SecurityDeptDto> dtoList = BeanUtil.convert(entityList, SecurityDeptDto.class);
+            // 构建部门树形结构列表
+            return isGeneral ? TreeUtil.buildDto(SecurityDeptDto.class, dtoList, loginUser.getDeptId(), TreeConst.Extra.DEPT)
+                    : TreeUtil.buildDto(SecurityDeptDto.class, dtoList, TreeConst.ROOT, TreeConst.Extra.DEPT);
+        }
+        return null;
     }
 
     @Override

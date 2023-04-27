@@ -31,7 +31,7 @@ public interface SecurityDeptMapper extends BaseMapper<SecurityDeptEntity> {
      * 获取部门列表
      *
      * @param idSet ID集合
-     * @return 部门列表
+     * @return 部门Entity列表
      */
     List<SecurityDeptEntity> getList(@Param("idSet") Set<Long> idSet);
 
@@ -39,7 +39,7 @@ public interface SecurityDeptMapper extends BaseMapper<SecurityDeptEntity> {
      * 根据ID获取
      *
      * @param id ID
-     * @return 部门
+     * @return 部门Entity
      */
     SecurityDeptEntity getById(@Param("id") Long id);
 

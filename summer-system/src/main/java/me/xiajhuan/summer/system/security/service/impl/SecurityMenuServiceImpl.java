@@ -73,14 +73,17 @@ public class SecurityMenuServiceImpl extends ServiceImpl<SecurityMenuMapper, Sec
             entityList = baseMapper.getMenusAll(locale, type);
         }
 
-        // 构建菜单树形结构列表
-        return TreeUtil.buildDto(SecurityMenuDto.class, BeanUtil.convert(entityList, SecurityMenuDto.class),
-                TreeConst.ROOT, TreeConst.Extra.MENU);
+        if (entityList.size() > 0) {
+            // 构建菜单树形结构列表
+            return TreeUtil.buildDto(SecurityMenuDto.class, BeanUtil.convert(entityList, SecurityMenuDto.class),
+                    TreeConst.ROOT, TreeConst.Extra.MENU);
+        }
+        return null;
     }
 
     @Override
     public SecurityMenuDto getById(Long id) {
-        return BeanUtil.convert(baseMapper.getById(id, LocaleUtil.getAcceptLanguage(ServletUtil.getHttpRequest())),
+        return BeanUtil.convert(baseMapper.getByIdAndLocale(id, LocaleUtil.getAcceptLanguage(ServletUtil.getHttpRequest())),
                 SecurityMenuDto.class);
     }
 

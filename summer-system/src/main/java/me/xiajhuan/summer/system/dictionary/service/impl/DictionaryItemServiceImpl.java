@@ -28,7 +28,6 @@ import me.xiajhuan.summer.system.dictionary.mapper.DictionaryItemMapper;
 import me.xiajhuan.summer.system.dictionary.service.DictionaryItemService;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -43,9 +42,6 @@ import java.util.stream.Collectors;
 @Service
 @DS(DataSourceConst.SYSTEM)
 public class DictionaryItemServiceImpl extends ServiceImpl<DictionaryItemMapper, DictionaryItemEntity> implements DictionaryItemService, MpHelper<DictionaryItemDto, DictionaryItemEntity> {
-
-    @Resource
-    private DictionaryItemMapper mainMapper;
 
     //*******************MpHelper覆写开始********************
 
@@ -87,7 +83,7 @@ public class DictionaryItemServiceImpl extends ServiceImpl<DictionaryItemMapper,
     public void handleDtoBefore(DictionaryItemDto dto) {
         // 值不能重复
         String value = dto.getValue();
-        if (mainMapper.exist(dto.getCategoryId(), value) != null) {
+        if (baseMapper.exist(dto.getCategoryId(), value) != null) {
             throw ValidationException.of(ErrorCode.VALUE_EXISTS, value);
         }
     }
@@ -133,7 +129,7 @@ public class DictionaryItemServiceImpl extends ServiceImpl<DictionaryItemMapper,
         queryWrapper.select(DictionaryItemEntity::getLabel, DictionaryItemEntity::getValue);
         queryWrapper.orderByAsc(DictionaryItemEntity::getWeight);
 
-        return BeanUtil.convert(mainMapper.selectList(queryWrapper), DictionaryItemDto.class);
+        return BeanUtil.convert(baseMapper.selectList(queryWrapper), DictionaryItemDto.class);
     }
 
     @Override

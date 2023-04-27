@@ -29,13 +29,21 @@ import java.util.Set;
  */
 public interface SecurityMenuMapper extends BaseMapper<SecurityMenuEntity> {
 
-    SecurityMenuEntity getById(@Param("id") Long id, @Param("locale") String locale);
+    /**
+     * 根据ID和地区语言获取
+     *
+     * @param id     ID
+     * @param locale 地区语言
+     * @return 菜单Entity
+     */
+    SecurityMenuEntity getByIdAndLocale(@Param("id") Long id, @Param("locale") String locale);
 
     /**
-     * 获取所有菜单
+     * 获取全部菜单
      *
      * @param locale 地区语言
      * @param type   类型 {@link ComponentTypeEnum}
+     * @return 菜单Entity列表
      */
     List<SecurityMenuEntity> getMenusAll(@Param("locale") String locale, @Param("type") Integer type);
 
@@ -45,11 +53,12 @@ public interface SecurityMenuMapper extends BaseMapper<SecurityMenuEntity> {
      * @param locale 地区语言
      * @param type   类型 {@link ComponentTypeEnum}
      * @param userId 用户ID
+     * @return 菜单Entity列表
      */
     List<SecurityMenuEntity> getMenus(@Param("locale") String locale, @Param("type") Integer type, @Param("userId") Long userId);
 
     /**
-     * 获取所有菜单权限
+     * 获取全部菜单权限
      *
      * @return 菜单权限集合
      */

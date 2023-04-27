@@ -407,4 +407,28 @@ CREATE TABLE `dictionary_item`
   COLLATE = utf8mb4_general_ci COMMENT = '字典项'
   ROW_FORMAT = Dynamic;
 
+-- ----------------------------
+-- Table structure for extend_region
+-- ----------------------------
+DROP TABLE IF EXISTS `extend_region`;
+CREATE TABLE `extend_region`
+(
+    `id`          bigint(20)                                                   NOT NULL COMMENT '主键ID',
+    `create_by`   varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '创建者',
+    `create_time` datetime(0)                                                  NULL DEFAULT NULL COMMENT '创建时间',
+    `update_by`   varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '更新者',
+    `update_time` datetime(0)                                                  NULL DEFAULT NULL COMMENT '更新时间',
+    `dept_id`     bigint(20)                                                   NULL DEFAULT NULL COMMENT '部门ID',
+    `parent_id`   bigint(20)                                                   NULL DEFAULT 0 COMMENT '上级区域ID',
+    `name`        varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '0' COMMENT '区域名称',
+    `weight`      int(11)                                                      NULL DEFAULT NULL COMMENT '顺序，越小优先级越高',
+    `level`       varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '区域级别 0：省直辖市 1：地级市 2：区县',
+    PRIMARY KEY (`id`) USING BTREE,
+    INDEX `idx_parent_id` (`parent_id`) USING BTREE,
+    INDEX `idx_weight` (`weight`) USING BTREE
+) ENGINE = InnoDB
+  CHARACTER SET = utf8mb4
+  COLLATE = utf8mb4_general_ci COMMENT = '行政区域'
+  ROW_FORMAT = Dynamic;
+
 SET FOREIGN_KEY_CHECKS = 1;

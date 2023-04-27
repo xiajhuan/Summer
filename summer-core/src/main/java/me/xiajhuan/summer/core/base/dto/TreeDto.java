@@ -59,7 +59,7 @@ public abstract class TreeDto<Long> extends TreeNode<Long> {
     private Integer weight;
 
     /**
-     * 扩展字段（不 序列化/反序列化）
+     * 扩展字段（不参与 序列化/反序列化）
      *
      * @see TreeNode#extra
      */

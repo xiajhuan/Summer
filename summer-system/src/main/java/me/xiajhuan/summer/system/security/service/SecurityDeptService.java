@@ -31,7 +31,7 @@ public interface SecurityDeptService extends IService<SecurityDeptEntity> {
      * 树形结构列表
      *
      * @param needAll 是否需要全部，true：是 false：不是
-     * @return 部门列表（树形结构）
+     * @return 部门列表（树形结构）或 {@code null}
      */
     List<SecurityDeptDto> treeList(boolean needAll);
 

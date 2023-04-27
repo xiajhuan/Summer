@@ -24,7 +24,7 @@
 	      AND t2.locale = #{locale} ) AS name
     </sql>
 
-    <select id="getById" resultType="SecurityMenuEntity">
+    <select id="getByIdAndLocale" resultType="SecurityMenuEntity">
         SELECT
         <include refid="column"/>,
         ( SELECT

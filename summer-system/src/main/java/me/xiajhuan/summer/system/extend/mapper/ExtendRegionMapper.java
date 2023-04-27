@@ -12,8 +12,16 @@
 
 package me.xiajhuan.summer.system.extend.mapper;
 
+import com.baomidou.mybatisplus.annotation.InterceptorIgnore;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.toolkit.Constants;
 import me.xiajhuan.summer.system.extend.entity.ExtendRegionEntity;
+import me.xiajhuan.summer.system.extend.enums.RegionLevelEnum;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
 
 /**
  * 行政区域 Mapper
@@ -22,4 +30,38 @@ import me.xiajhuan.summer.system.extend.entity.ExtendRegionEntity;
  * @date 2023/4/26
  */
 public interface ExtendRegionMapper extends BaseMapper<ExtendRegionEntity> {
+
+    /**
+     * 获取行政区域列表
+     *
+     * @return 行政区域Entity列表
+     */
+    List<ExtendRegionEntity> getList();
+
+    /**
+     * 根据ID获取
+     *
+     * @param id ID
+     * @return 行政区域Entity
+     */
+    ExtendRegionEntity getById(@Param("id") Long id);
+
+    /**
+     * 根据ID获取区域级别 {@link RegionLevelEnum}
+     *
+     * @param id ID
+     * @return 区域级别
+     */
+    @Select("SELECT level FROM extend_region WHERE id = #{id}")
+    Integer getLevelById(@Param("id") Long id);
+
+    /**
+     * 查询列表（忽略数据权限）
+     *
+     * @param queryWrapper {@link Wrapper}
+     * @return 行政区域Entity列表
+     */
+    @InterceptorIgnore
+    List<ExtendRegionEntity> selectList(@Param(Constants.WRAPPER) Wrapper<ExtendRegionEntity> queryWrapper);
+
 }
