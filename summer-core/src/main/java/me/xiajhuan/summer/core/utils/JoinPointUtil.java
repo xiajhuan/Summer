@@ -66,7 +66,7 @@ public class JoinPointUtil {
         Method method = getMethod(point);
 
         if (method != null) {
-            final Stream<Class> paramStream = Arrays.stream(method.getParameterTypes());
+            final Stream<Class<?>> paramStream = Arrays.stream(method.getParameterTypes());
             String paramType = isSimple ?
                     paramStream.map(Class::getSimpleName).collect(Collectors.joining(StrPool.COMMA)) :
                     paramStream.map(Class::getName).collect(Collectors.joining(StrPool.COMMA));

@@ -109,7 +109,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public Result handleException(Exception e) {
+    public Result<?> handleException(Exception e) {
         return logAndResponse(e, true);
     }
 
@@ -121,7 +121,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler({SystemException.class, BusinessException.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public Result handleSystemOrBusinessException(RuntimeException e) {
+    public Result<?> handleSystemOrBusinessException(RuntimeException e) {
         if (e instanceof SystemException) {
             return logAndResponse(e, enableSystem);
         } else {
@@ -138,7 +138,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(BindException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Result handleBindException(BindException e) {
+    public Result<?> handleBindException(BindException e) {
         StringBuilder message = StrUtil.builder();
         List<FieldError> fieldErrors = e.getBindingResult().getFieldErrors();
         fieldErrors.forEach(error -> message.append(error.getField())
@@ -163,7 +163,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(ValidationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Result handleValidationException(ValidationException e) {
+    public Result<?> handleValidationException(ValidationException e) {
         String msg = e.getMessage();
         logInfoOrDebugStacktrace(e, msg);
         return Result.ofFail(msg);
@@ -177,7 +177,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler({FileUploadException.class, FileDownloadException.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public Result handleFileUploadOrDownloadException(RuntimeException e) {
+    public Result<?> handleFileUploadOrDownloadException(RuntimeException e) {
         String msg = e.getMessage();
         LOGGER.error(e, msg);
         return Result.ofFail(msg);
@@ -191,7 +191,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(AuthorizationException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
-    public Result handleAuthorizationException(AuthorizationException e) {
+    public Result<?> handleAuthorizationException(AuthorizationException e) {
         logInfoOrDebugStacktrace(e, null);
         return Result.ofFail(ErrorCode.FORBIDDEN);
     }
@@ -203,7 +203,7 @@ public class GlobalExceptionHandler {
      * @param isSaveErrorLog 是否保存错误日志，true：保存 false：不保存
      * @return 响应结果
      */
-    private Result logAndResponse(Exception e, boolean isSaveErrorLog) {
+    private Result<?> logAndResponse(Exception e, boolean isSaveErrorLog) {
         boolean isIgnored = isIgnoredCode(e);
         if (isSaveErrorLog && !isIgnored) {
             // 异步保存错误日志

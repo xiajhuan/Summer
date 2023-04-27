@@ -30,7 +30,7 @@ import static me.xiajhuan.summer.system.security.enums.GenderEnum.*;
 public class GenderConverter implements Converter<Integer> {
 
     @Override
-    public Class supportJavaTypeKey() {
+    public Class<Integer> supportJavaTypeKey() {
         return Integer.class;
     }
 
@@ -40,6 +40,7 @@ public class GenderConverter implements Converter<Integer> {
     }
 
     @Override
+    @SuppressWarnings("rawtypes")
     public WriteCellData convertToExcelData(Integer value, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration) {
         switch (value) {
             case 0:

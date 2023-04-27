@@ -83,7 +83,7 @@ public class SecurityController {
      * @return 响应结果
      */
     @PostMapping("logout")
-    public Result logout(HttpServletRequest request) {
+    public Result<?> logout(HttpServletRequest request) {
         mainService.logoutAndLog(SecurityUtil.getLoginUser(), request);
         return Result.ofSuccess();
     }

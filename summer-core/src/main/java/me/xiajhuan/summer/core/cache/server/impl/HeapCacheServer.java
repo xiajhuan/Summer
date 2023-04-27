@@ -183,6 +183,7 @@ public class HeapCacheServer implements CacheServer {
      * @param strategy 缓存满后对象的移除策略
      * @return {@link AbstractCache}
      */
+    @SuppressWarnings("rawtypes")
     private AbstractCache initCacheInternal(int capacity, String strategy) {
         switch (strategy) {
             case CacheConst.Heap.FIFO:

@@ -65,7 +65,7 @@ public class MonitorOnlineController {
      */
     @DeleteMapping("kick")
     @LogOperation("踢出")
-    public Result kick(Long[] userIds) {
+    public Result<?> kick(Long[] userIds) {
         AssertUtil.isNotEmpty("userIds", userIds);
         mainService.kick(userIds);
         return Result.ofSuccess();

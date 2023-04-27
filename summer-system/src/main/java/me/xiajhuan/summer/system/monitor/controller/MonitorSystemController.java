@@ -45,7 +45,7 @@ public class MonitorSystemController {
     @GetMapping("info")
     @RequiresPermissions("monitor:system:info")
     @LogOperation("信息")
-    public Result info() {
+    public Result<?> info() {
         return Result.ofSuccess(mainService.info());
     }
 

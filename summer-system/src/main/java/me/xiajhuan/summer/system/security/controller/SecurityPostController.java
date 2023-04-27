@@ -93,7 +93,7 @@ public class SecurityPostController {
     @RequiresPermissions("security:post:add")
     @RateLimiter(0.5)
     @LogOperation(OperationConst.ADD)
-    public Result add(@Validated(AddGroup.class) SecurityPostDto dto) {
+    public Result<?> add(@Validated(AddGroup.class) SecurityPostDto dto) {
         mainService.add(dto);
         return Result.ofSuccess();
     }
@@ -108,7 +108,7 @@ public class SecurityPostController {
     @RequiresPermissions("security:post:update")
     @RateLimiter(0.5)
     @LogOperation(OperationConst.UPDATE)
-    public Result update(@Validated(UpdateGroup.class) SecurityPostDto dto) {
+    public Result<?> update(@Validated(UpdateGroup.class) SecurityPostDto dto) {
         mainService.update(dto);
         return Result.ofSuccess();
     }
@@ -123,7 +123,7 @@ public class SecurityPostController {
     @RequiresPermissions("security:post:delete")
     @RateLimiter(0.5)
     @LogOperation(OperationConst.DELETE)
-    public Result delete(Long[] ids) {
+    public Result<?> delete(Long[] ids) {
         AssertUtil.isNotEmpty("ids", ids);
         mainService.delete(ids);
         return Result.ofSuccess();

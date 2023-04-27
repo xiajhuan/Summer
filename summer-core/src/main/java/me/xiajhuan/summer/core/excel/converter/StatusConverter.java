@@ -32,7 +32,7 @@ import static me.xiajhuan.summer.core.enums.StatusEnum.ENABLE;
 public class StatusConverter implements Converter<Integer> {
 
     @Override
-    public Class supportJavaTypeKey() {
+    public Class<Integer> supportJavaTypeKey() {
         return Integer.class;
     }
 
@@ -54,6 +54,7 @@ public class StatusConverter implements Converter<Integer> {
     }
 
     @Override
+    @SuppressWarnings("rawtypes")
     public WriteCellData convertToExcelData(Integer value, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration) {
         switch (value) {
             case 0:

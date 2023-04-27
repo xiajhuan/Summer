@@ -27,6 +27,7 @@ import java.util.concurrent.TimeUnit;
  * @date 2022/11/22
  * @see RedisTemplate
  */
+@SuppressWarnings("all")
 public class RedisCacheServer implements CacheServer {
 
     /**

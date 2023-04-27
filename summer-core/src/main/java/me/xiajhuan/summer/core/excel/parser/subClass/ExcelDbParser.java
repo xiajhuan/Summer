@@ -60,6 +60,7 @@ public class ExcelDbParser<D, T> extends AbstractExcelParser<D, T> {
      * @param <T>                Entity类型
      * @return ExcelDbParser
      */
+    @SuppressWarnings({"rawtypes", "unchecked"})
     public static <T> ExcelDbParser build(IService<T> service, Class<T> currentEntityClass) {
         return new ExcelDbParser(service, currentEntityClass);
     }

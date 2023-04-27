@@ -35,7 +35,7 @@ public class FilterConfig {
      * @return {@link FilterRegistrationBean}
      */
     @Bean
-    @SuppressWarnings("all")
+    @SuppressWarnings({"rawtypes", "unchecked"})
     public FilterRegistrationBean shiroFilterRegistration() {
         FilterRegistrationBean registration = new FilterRegistrationBean();
         registration.setFilter(new DelegatingFilterProxy("shiroFilter"));

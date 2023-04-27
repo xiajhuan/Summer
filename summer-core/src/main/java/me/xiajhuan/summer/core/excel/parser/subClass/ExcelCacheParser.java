@@ -68,6 +68,7 @@ public class ExcelCacheParser<D, T> extends AbstractExcelParser<D, T> {
      * @param <T>                Entity类型
      * @return ExcelCacheParser
      */
+    @SuppressWarnings({"rawtypes", "unchecked"})
     public static <T> ExcelCacheParser build(Class<T> currentEntityClass) {
         return new ExcelCacheParser(currentEntityClass);
     }

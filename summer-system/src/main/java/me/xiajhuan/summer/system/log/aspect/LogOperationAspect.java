@@ -102,7 +102,7 @@ public class LogOperationAspect {
      */
     private void saveLog(ProceedingJoinPoint point, long cost, OperationStatusEnum status) {
         // 获取切入点方法所属Controller上的RequestMapping注解
-        Class controllerClass = point.getTarget().getClass();
+        Class<?> controllerClass = point.getTarget().getClass();
         RequestMapping requestMapping = AnnotationUtils.findAnnotation(controllerClass, RequestMapping.class);
         if (requestMapping == null) {
             return;

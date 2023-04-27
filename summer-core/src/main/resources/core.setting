@@ -87,7 +87,7 @@ enable-injection-filter = false
 injection.illegal-key-word = SELECT,UPDATE,AND,OR,DELETE,INSERT,TRUNCATE,SUBSTR,DECLARE,MASTER,DROP,EXECUTE,UNION,',",;,\
 
 
-# *******************地区语言配置********************
+# *******************国际化配置********************
 [Locale]
 # 请求头“Accept-Language”的值是中英文以外时的默认语言，值：zh_CN/en_US
 default.request-header = zh_CN

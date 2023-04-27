@@ -82,7 +82,7 @@ public class DictionaryCategoryController {
     @RequiresPermissions("dictionary:category:add")
     @RateLimiter(0.5)
     @LogOperation(OperationConst.ADD)
-    public Result add(@Validated(AddGroup.class) DictionaryCategoryDto dto) {
+    public Result<?> add(@Validated(AddGroup.class) DictionaryCategoryDto dto) {
         mainService.add(dto);
         return Result.ofSuccess();
     }
@@ -97,7 +97,7 @@ public class DictionaryCategoryController {
     @RequiresPermissions("dictionary:category:update")
     @RateLimiter(0.5)
     @LogOperation(OperationConst.UPDATE)
-    public Result update(@Validated(UpdateGroup.class) DictionaryCategoryDto dto) {
+    public Result<?> update(@Validated(UpdateGroup.class) DictionaryCategoryDto dto) {
         mainService.update(dto);
         return Result.ofSuccess();
     }
@@ -112,7 +112,7 @@ public class DictionaryCategoryController {
     @RequiresPermissions(value = {"dictionary:category:delete", "dictionary:item:delete"}, logical = Logical.AND)
     @RateLimiter(0.5)
     @LogOperation(OperationConst.DELETE)
-    public Result delete(Long[] ids) {
+    public Result<?> delete(Long[] ids) {
         AssertUtil.isNotEmpty("ids", ids);
         mainService.delete(ids);
         return Result.ofSuccess();

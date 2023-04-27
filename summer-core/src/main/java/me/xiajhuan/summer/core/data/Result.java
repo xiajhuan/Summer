@@ -59,7 +59,7 @@ public class Result<T> implements Serializable {
      *
      * @return 响应结果
      */
-    public static Result ofSuccess() {
+    public static Result<?> ofSuccess() {
         return ofSuccess(LocaleUtil.getI18nMessage(SuccessCode.OPERATION));
     }
 
@@ -82,7 +82,7 @@ public class Result<T> implements Serializable {
      * @param param 消息填充参数
      * @return 响应结果
      */
-    public static Result ofSuccess(int code, String... param) {
+    public static Result<?> ofSuccess(int code, String... param) {
         return ofSuccess(null, LocaleUtil.getI18nMessage(code, param));
     }
 
@@ -92,7 +92,7 @@ public class Result<T> implements Serializable {
      * @param msg 消息
      * @return 响应结果
      */
-    public static Result ofSuccess(String msg) {
+    public static Result<?> ofSuccess(String msg) {
         return ofSuccess(null, msg);
     }
 
@@ -119,7 +119,7 @@ public class Result<T> implements Serializable {
      * @return 响应结果
      */
     public static <T> Result<T> ofSuccess(T data, String msg) {
-        Result<T> result = new Result();
+        Result<T> result = new Result<>();
         result.setCode("1");
         result.setData(data);
         result.setMsg(msg);
@@ -131,7 +131,7 @@ public class Result<T> implements Serializable {
      *
      * @return 响应结果
      */
-    public static Result ofFail() {
+    public static Result<?> ofFail() {
         return ofFail(ErrorCode.OPERATION_FAILURE);
     }
 
@@ -142,7 +142,7 @@ public class Result<T> implements Serializable {
      * @param param 消息填充参数
      * @return 响应结果
      */
-    public static Result ofFail(int code, String... param) {
+    public static Result<?> ofFail(int code, String... param) {
         return ofFail(null, LocaleUtil.getI18nMessage(code, param));
     }
 
@@ -152,7 +152,7 @@ public class Result<T> implements Serializable {
      * @param msg 消息
      * @return 响应结果
      */
-    public static Result ofFail(String msg) {
+    public static Result<?> ofFail(String msg) {
         return ofFail(null, msg);
     }
 
@@ -178,7 +178,7 @@ public class Result<T> implements Serializable {
      * @return 响应结果
      */
     public static <T> Result<T> ofFail(T data, String msg) {
-        Result<T> result = new Result();
+        Result<T> result = new Result<>();
         result.setCode("0");
         result.setData(data);
         result.setMsg(msg);

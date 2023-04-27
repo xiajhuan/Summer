@@ -83,7 +83,7 @@ public class SecurityMenuController {
     @RequiresPermissions("security:menu:add")
     @RateLimiter(0.5)
     @LogOperation(OperationConst.ADD)
-    public Result add(@Validated(AddGroup.class) SecurityMenuDto dto) {
+    public Result<?> add(@Validated(AddGroup.class) SecurityMenuDto dto) {
         mainService.add(dto);
         return Result.ofSuccess();
     }
@@ -98,7 +98,7 @@ public class SecurityMenuController {
     @RequiresPermissions("security:menu:update")
     @RateLimiter(0.5)
     @LogOperation(OperationConst.UPDATE)
-    public Result update(@Validated(UpdateGroup.class) SecurityMenuDto dto) {
+    public Result<?> update(@Validated(UpdateGroup.class) SecurityMenuDto dto) {
         mainService.update(dto);
         return Result.ofSuccess();
     }
@@ -113,7 +113,7 @@ public class SecurityMenuController {
     @RequiresPermissions("security:menu:delete")
     @RateLimiter(0.5)
     @LogOperation(OperationConst.DELETE)
-    public Result delete(Long id) {
+    public Result<?> delete(Long id) {
         AssertUtil.isNotNull("id", id);
         mainService.delete(id);
         return Result.ofSuccess();

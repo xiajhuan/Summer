@@ -69,7 +69,7 @@ public class PageData<T> implements Serializable {
      * @return 分页数据
      */
     public static <T> PageData<T> of(long total, List<T> rows) {
-        PageData pageData = new PageData();
+        PageData<T> pageData = new PageData<>();
         pageData.setTotal(total);
         pageData.setRows(rows);
         return pageData;

@@ -55,6 +55,7 @@ public class ExcelUtil extends EasyExcelFactory {
      * @param <D>         Dto类型
      * @param <T>         Entity类型
      */
+    @SuppressWarnings("unchecked")
     public static <D, T> void importDb(MultipartFile file, Class<D> dtoClass, IService<T> service, Class<T> entityClass) {
         importDb(file, dtoClass, ExcelDbParser.build(service, entityClass));
     }
@@ -88,6 +89,7 @@ public class ExcelUtil extends EasyExcelFactory {
      * @param <D>         Dto类型
      * @param <T>         Entity类型
      */
+    @SuppressWarnings("unchecked")
     public static <D, T> void importCache(MultipartFile file, Class<D> dtoClass, Class<T> entityClass) {
         importCache(file, dtoClass, ExcelCacheParser.build(entityClass));
     }

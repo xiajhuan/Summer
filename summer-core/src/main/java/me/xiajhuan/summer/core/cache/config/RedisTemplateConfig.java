@@ -104,7 +104,7 @@ public class RedisTemplateConfig {
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
         // 连接池配置
-        GenericObjectPoolConfig poolConfig = new GenericObjectPoolConfig();
+        @SuppressWarnings("rawtypes") GenericObjectPoolConfig poolConfig = new GenericObjectPoolConfig();
         poolConfig.setMinIdle(minIdle);
         poolConfig.setMaxIdle(maxIdle);
         poolConfig.setMaxTotal(maxActive);

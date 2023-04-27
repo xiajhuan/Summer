@@ -37,7 +37,7 @@ public class DemoController {
      * @return 响应结果
      */
     @PostMapping("hello")
-    public Result hello(@RequestBody String json) {
+    public Result<?> hello(@RequestBody String json) {
         return printAndResponse(json);
     }
 
@@ -47,7 +47,7 @@ public class DemoController {
      * @param json Json格式参数
      * @return 响应结果
      */
-    private Result printAndResponse(String json) {
+    private Result<?> printAndResponse(String json) {
         if (JSONUtil.isTypeJSON(json)) {
             Console.log("接收到Json数据：{}", json);
             return Result.ofSuccess();

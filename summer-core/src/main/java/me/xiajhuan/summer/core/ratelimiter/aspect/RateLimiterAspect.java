@@ -60,6 +60,7 @@ import java.util.concurrent.TimeUnit;
 @Aspect
 @Component
 @Order(Ordered.LOWEST_PRECEDENCE - 1)
+@SuppressWarnings("all")
 public class RateLimiterAspect {
 
     private static final Log LOGGER = LogFactory.get();
