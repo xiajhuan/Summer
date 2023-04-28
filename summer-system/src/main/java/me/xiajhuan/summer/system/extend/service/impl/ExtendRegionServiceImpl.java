@@ -66,16 +66,14 @@ public class ExtendRegionServiceImpl extends ServiceImpl<ExtendRegionMapper, Ext
 
     @Override
     public void add(ExtendRegionDto dto) {
+        checkLevel(dto);
+
         save(BeanUtil.convert(dto, ExtendRegionEntity.class));
     }
 
     @Override
     public void update(ExtendRegionDto dto) {
-        // 上级区域级别必须大于自身
-        if (baseMapper.getLevelById(dto.getId()) >=
-                baseMapper.getLevelById(dto.getParentId())) {
-            throw ValidationException.of(ErrorCode.SUPERIOR_REGION_LEVEL_ERROR);
-        }
+        checkLevel(dto);
 
         updateById(BeanUtil.convert(dto, ExtendRegionEntity.class));
     }
@@ -110,6 +108,25 @@ public class ExtendRegionServiceImpl extends ServiceImpl<ExtendRegionMapper, Ext
         queryWrapper.select(ExtendRegionEntity::getId, ExtendRegionEntity::getParentId, ExtendRegionEntity::getName);
 
         return queryWrapper;
+    }
+
+    /**
+     * 校验区域级别
+     *
+     * @param dto 行政区域Dto
+     */
+    private void checkLevel(ExtendRegionDto dto) {
+        // 上级区域级别，没有上级时为：-1
+        int parentLevel = -1;
+        long parentId = dto.getParentId();
+        if (parentId > 0L) {
+            parentLevel = baseMapper.getLevelById(dto.getParentId());
+        }
+
+        // 上级区域级别必须比自身大一级
+        if (dto.getLevel() - parentLevel != 1) {
+            throw ValidationException.of(ErrorCode.SUPERIOR_REGION_LEVEL_ERROR);
+        }
     }
 
 }

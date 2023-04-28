@@ -20,9 +20,9 @@ import me.xiajhuan.summer.core.base.dto.TreeDto;
 import me.xiajhuan.summer.core.validation.group.AddGroup;
 import me.xiajhuan.summer.core.validation.group.UpdateGroup;
 import me.xiajhuan.summer.system.extend.enums.RegionLevelEnum;
+import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
 import java.util.Date;
 import java.util.List;
 
@@ -41,8 +41,8 @@ public class ExtendRegionDto extends TreeDto<Long> {
      *
      * @see RegionLevelEnum
      */
-    @Null(message = "{extend.region.level.null}", groups = UpdateGroup.class)
-    @NotNull(message = "{extend.region.level.require}", groups = AddGroup.class)
+    @NotNull(message = "{extend.region.level.require}", groups = {AddGroup.class, UpdateGroup.class})
+    @Range(min = 0, max = 2, message = "{extend.region.level.range}", groups = {AddGroup.class, UpdateGroup.class})
     private Integer level;
 
     /**

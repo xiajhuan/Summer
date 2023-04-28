@@ -47,15 +47,6 @@ public interface ExtendRegionMapper extends BaseMapper<ExtendRegionEntity> {
     ExtendRegionEntity getById(@Param("id") Long id);
 
     /**
-     * 根据ID获取区域级别 {@link RegionLevelEnum}
-     *
-     * @param id ID
-     * @return 区域级别
-     */
-    @Select("SELECT level FROM extend_region WHERE id = #{id}")
-    Integer getLevelById(@Param("id") Long id);
-
-    /**
      * 查询列表（忽略数据权限）
      *
      * @param queryWrapper {@link Wrapper}
@@ -63,5 +54,14 @@ public interface ExtendRegionMapper extends BaseMapper<ExtendRegionEntity> {
      */
     @InterceptorIgnore
     List<ExtendRegionEntity> selectList(@Param(Constants.WRAPPER) Wrapper<ExtendRegionEntity> queryWrapper);
+
+    /**
+     * 根据ID获取区域级别 {@link RegionLevelEnum}
+     *
+     * @param id ID
+     * @return 区域级别
+     */
+    @Select("SELECT level FROM extend_region WHERE id = #{id}")
+    Integer getLevelById(@Param("id") Long id);
 
 }

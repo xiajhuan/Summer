@@ -266,7 +266,7 @@ public interface ErrorCode {
     int CATEGORY_ID_NOT_NULL = 14002;
 
     /**
-     * 上级区域级别必须大于自身
+     * 上级区域级别必须比自身大一级
      */
     int SUPERIOR_REGION_LEVEL_ERROR = 15000;
 
