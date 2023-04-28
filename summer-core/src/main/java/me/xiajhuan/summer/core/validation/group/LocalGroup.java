@@ -13,10 +13,10 @@
 package me.xiajhuan.summer.core.validation.group;
 
 /**
- * 修改 Group
+ * 本地 Group
  *
  * @author xiajhuan
- * @date 2022/11/19
+ * @date 2023/4/28
  */
-public interface UpdateGroup {
+public interface LocalGroup {
 }

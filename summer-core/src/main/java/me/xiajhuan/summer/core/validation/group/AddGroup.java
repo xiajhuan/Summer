@@ -13,7 +13,7 @@
 package me.xiajhuan.summer.core.validation.group;
 
 /**
- * 新增Group
+ * 新增 Group
  *
  * @author xiajhuan
  * @date 2022/11/19

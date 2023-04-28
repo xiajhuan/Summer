@@ -10,13 +10,40 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.core.validation.group;
+package me.xiajhuan.summer.core.enums;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 /**
- * 修改 Group
+ * 对象存储支持枚举
  *
  * @author xiajhuan
- * @date 2022/11/19
+ * @date 2023/4/28
  */
-public interface UpdateGroup {
+@Getter
+@AllArgsConstructor
+public enum OssSupportEnum {
+
+    /**
+     * 本地
+     */
+    LOCAL(0, "本地", "本地服务器存储"),
+
+    /**
+     * MinIo
+     */
+    MINIO(1, "MinIo", "MinIo对象存储"),
+
+    /**
+     * Qiniu
+     */
+    QINIU(2, "七牛云", "七牛云对象存储");
+
+    private final int value;
+
+    private final String name;
+
+    private final String desc;
+
 }

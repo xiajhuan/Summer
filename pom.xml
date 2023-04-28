@@ -46,6 +46,8 @@
         <hutool.version>5.8.18</hutool.version>
         <easyexcel.version>3.2.1</easyexcel.version>
         <mica-xss.version>2.7.11</mica-xss.version>
+        <minio.version>8.5.2</minio.version>
+        <qiniu.version>7.13.0</qiniu.version>
         <compiler-plugin.version>3.11.0</compiler-plugin.version>
         <surefire-plugin.version>3.0.0</surefire-plugin.version>
     </properties>
@@ -173,6 +175,18 @@
                 <groupId>net.dreamlu</groupId>
                 <artifactId>mica-xss</artifactId>
                 <version>${mica-xss.version}</version>
+            </dependency>
+            <!--minio-->
+            <dependency>
+                <groupId>io.minio</groupId>
+                <artifactId>minio</artifactId>
+                <version>${minio.version}</version>
+            </dependency>
+            <!--qiniu-->
+            <dependency>
+                <groupId>com.qiniu</groupId>
+                <artifactId>qiniu-java-sdk</artifactId>
+                <version>${qiniu.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

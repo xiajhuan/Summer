@@ -104,6 +104,8 @@ Summer
 - Hutool：5.8.18
 - EasyExcel：3.2.1
 - MicaXss：2.7.11
+- MinIo：8.5.2
+- Qiniu：7.13.0
 
 ### 功能支持
 |  服务     | 使用技术     |   进度         |    备注   |

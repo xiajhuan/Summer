@@ -136,6 +136,16 @@
             <groupId>net.dreamlu</groupId>
             <artifactId>mica-xss</artifactId>
         </dependency>
+        <!--minio-->
+        <dependency>
+            <groupId>io.minio</groupId>
+            <artifactId>minio</artifactId>
+        </dependency>
+        <!--qiniu-->
+        <dependency>
+            <groupId>com.qiniu</groupId>
+            <artifactId>qiniu-java-sdk</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
