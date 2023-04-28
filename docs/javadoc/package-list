@@ -45,6 +45,13 @@ me.xiajhuan.summer.system.dictionary.entity
 me.xiajhuan.summer.system.dictionary.mapper
 me.xiajhuan.summer.system.dictionary.service
 me.xiajhuan.summer.system.dictionary.service.impl
+me.xiajhuan.summer.system.extend.controller
+me.xiajhuan.summer.system.extend.dto
+me.xiajhuan.summer.system.extend.entity
+me.xiajhuan.summer.system.extend.enums
+me.xiajhuan.summer.system.extend.mapper
+me.xiajhuan.summer.system.extend.service
+me.xiajhuan.summer.system.extend.service.impl
 me.xiajhuan.summer.system.handler.exception
 me.xiajhuan.summer.system.hook.listener
 me.xiajhuan.summer.system.hook.runner
