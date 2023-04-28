@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>me.xiajhuan</groupId>
     <artifactId>Summer</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <packaging>pom</packaging>
 
     <name>Summer</name>
@@ -29,7 +29,7 @@
     </modules>
 
     <properties>
-        <Summer.version>1.0.0</Summer.version>
+        <Summer.version>1.0.1</Summer.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>

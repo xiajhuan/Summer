@@ -56,12 +56,13 @@ public interface ExtendRegionMapper extends BaseMapper<ExtendRegionEntity> {
     List<ExtendRegionEntity> selectList(@Param(Constants.WRAPPER) Wrapper<ExtendRegionEntity> queryWrapper);
 
     /**
-     * 根据ID获取区域级别 {@link RegionLevelEnum}
+     * 根据ID获取区域级别 {@link RegionLevelEnum}（忽略数据权限）
      *
      * @param id ID
      * @return 区域级别
      */
     @Select("SELECT level FROM extend_region WHERE id = #{id}")
+    @InterceptorIgnore
     Integer getLevelById(@Param("id") Long id);
 
 }
