@@ -14,9 +14,8 @@ package me.xiajhuan.summer.system.hook.runner;
 
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
-import me.xiajhuan.summer.core.properties.QuartzStartupProperties;
+import me.xiajhuan.summer.core.properties.ApplicationProperties;
 import me.xiajhuan.summer.core.utils.SystemUtil;
-import me.xiajhuan.summer.system.schedule.service.ScheduleTaskService;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.core.Ordered;
@@ -26,29 +25,31 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 
 /**
- * ApplicationRunner（定时任务初始化完毕）
+ * ApplicationRunner（对象存储服务加载完毕）
  *
  * @author xiajhuan
- * @date 2023/4/20
- * @see ApplicationRunner
+ * @date 2023/4/29
  */
 @Component
-@Order(Ordered.HIGHEST_PRECEDENCE + 2)
-public class TaskInitRunner implements ApplicationRunner {
+@Order(Ordered.HIGHEST_PRECEDENCE)
+public class OssReadyRunner implements ApplicationRunner {
 
     private static final Log LOGGER = LogFactory.get();
 
     @Resource
-    private QuartzStartupProperties quartzStartupProperties;
-
-    @Resource
-    private ScheduleTaskService scheduleTaskService;
+    private ApplicationProperties applicationProperties;
 
     @Override
     public void run(ApplicationArguments args) {
-        if (quartzStartupProperties.isAuto() && scheduleTaskService.initSchedule()) {
-            LOGGER.info("【{}】定时任务初始化完毕", SystemUtil.getApplicationName());
+        ApplicationProperties.Oss oss = applicationProperties.getOss();
+        // 校验对象存储配置
+        if (oss.isStrict()) {
+            // TODO
+        } else {
+            // TODO
         }
+
+        LOGGER.info("【{}】对象存储服务加载完毕，类型【{}】", SystemUtil.getApplicationName(), oss.getType());
     }
 
 }

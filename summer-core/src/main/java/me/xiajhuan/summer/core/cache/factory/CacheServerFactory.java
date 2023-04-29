@@ -18,7 +18,7 @@ import me.xiajhuan.summer.core.cache.server.CacheServer;
 import me.xiajhuan.summer.core.cache.server.impl.HeapCacheServer;
 import me.xiajhuan.summer.core.cache.server.impl.RedisCacheServer;
 import me.xiajhuan.summer.core.constant.CacheConst;
-import me.xiajhuan.summer.core.properties.ApplicationCacheProperties;
+import me.xiajhuan.summer.core.properties.ApplicationProperties;
 
 /**
  * 缓存服务工厂
@@ -43,7 +43,8 @@ public class CacheServerFactory {
      * 初始化 {@link CACHE_TYPE}
      */
     static {
-        CACHE_TYPE = SpringUtil.getBean("applicationCacheProperties", ApplicationCacheProperties.class).getType();
+        CACHE_TYPE = SpringUtil.getBean("applicationProperties", ApplicationProperties.class)
+                .getCache().getType();
         if (StrUtil.isBlank(CACHE_TYPE)) {
             // 没有配置则默认为：REDIS
             CACHE_TYPE = CacheConst.Type.REDIS;

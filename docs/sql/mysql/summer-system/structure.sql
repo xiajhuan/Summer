@@ -431,4 +431,40 @@ CREATE TABLE `extend_region`
   COLLATE = utf8mb4_general_ci COMMENT = '行政区域'
   ROW_FORMAT = Dynamic;
 
+-- ----------------------------
+-- Table structure for extend_param
+-- ----------------------------
+DROP TABLE IF EXISTS `extend_param`;
+CREATE TABLE `extend_param`
+(
+    `id`          bigint(20)                                                     NOT NULL COMMENT '主键ID',
+    `create_by`   varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci   NULL DEFAULT NULL COMMENT '创建者',
+    `create_time` datetime(0)                                                    NULL DEFAULT NULL COMMENT '创建时间',
+    `update_by`   varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci   NULL DEFAULT NULL COMMENT '更新者',
+    `update_time` datetime(0)                                                    NULL DEFAULT NULL COMMENT '更新时间',
+    `key`         varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci   NULL DEFAULT '0' COMMENT '参数键',
+    `value`       varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '参数值（Json格式）',
+    PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB
+  CHARACTER SET = utf8mb4
+  COLLATE = utf8mb4_general_ci COMMENT = '配置参数'
+  ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for extend_oss
+-- ----------------------------
+DROP TABLE IF EXISTS `extend_oss`;
+CREATE TABLE `extend_oss`
+(
+    `id`          bigint(20)                                                    NOT NULL COMMENT '主键ID',
+    `create_by`   varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL COMMENT '创建者',
+    `create_time` datetime(0)                                                   NULL DEFAULT NULL COMMENT '创建时间',
+    `url`         varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '0' COMMENT 'URL',
+    PRIMARY KEY (`id`) USING BTREE,
+    INDEX `idx_create_time` (`create_time`) USING BTREE
+) ENGINE = InnoDB
+  CHARACTER SET = utf8mb4
+  COLLATE = utf8mb4_general_ci COMMENT = '对象存储'
+  ROW_FORMAT = Dynamic;
+
 SET FOREIGN_KEY_CHECKS = 1;

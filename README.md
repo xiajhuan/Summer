@@ -80,6 +80,7 @@ Summer
 │    │    ├─exception     异常定义
 │    │    ├─interceptor   拦截器定义
 │    │    ├─mp            MybatisPlus支持
+│    │    ├─oss           对象存储支持
 │    │    ├─properties    自定义属性配置
 │    │    ├─ratelimiter   接口限流支持
 │    │    ├─utils         工具封装支持

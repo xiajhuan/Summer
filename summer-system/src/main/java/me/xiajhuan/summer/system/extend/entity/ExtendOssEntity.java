@@ -10,13 +10,28 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.core.validation.group;
+package me.xiajhuan.summer.system.extend.entity;
+
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import me.xiajhuan.summer.core.base.entity.SimpleEntity;
 
 /**
- * MinIo Group
+ * 对象存储 Entity<br>
+ * note：该表仅用于持久化对象存储信息
  *
  * @author xiajhuan
- * @date 2023/4/28
+ * @date 2023/4/29
  */
-public interface MinIoGroup {
+@Data
+@EqualsAndHashCode(callSuper = true)
+@TableName("extend_oss")
+public class ExtendOssEntity extends SimpleEntity {
+
+    /**
+     * URL
+     */
+    private String url;
+
 }

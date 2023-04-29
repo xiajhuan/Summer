@@ -10,13 +10,16 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.core.validation.group;
+package me.xiajhuan.summer.system.extend.mapper;
+
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import me.xiajhuan.summer.system.extend.entity.ExtendParamEntity;
 
 /**
- * 本地 Group
+ * 配置参数 Mapper
  *
  * @author xiajhuan
- * @date 2023/4/28
+ * @date 2023/4/29
  */
-public interface LocalGroup {
+public interface ExtendParamMapper extends BaseMapper<ExtendParamEntity> {
 }

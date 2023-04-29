@@ -111,3 +111,36 @@ keep-alive-seconds = 30
 wait-for-tasks-to-complete-on-shutdown = true
 # 应用关闭时等待线程执行的时间（s），超时则强制销毁
 await-termination-Seconds = 30
+
+
+# *******************对象存储配置********************
+[Oss]
+# 本地存储配置，只有application.oss.type: LOCAL 时会生效
+# 绑定域名
+local.domain =
+# 路径前缀
+local.prefix =
+# 存储目录
+local.path =
+
+# MinIo配置，只有application.oss.type: MIN_IO 时会生效
+# endPoint
+min-io.end-point =
+# accessKey
+min-io.access-key =
+# secretKey
+min-io.secret-key =
+# bucketName
+min-io.bucket-mame =
+# 路径前缀
+min-io.prefix =
+
+# 七牛云配置，只有application.oss.type: QI_NIU 时会生效
+# accessKey
+qi-niu.access-key =
+# secretKey
+qi-niu.secret-key =
+# bucketName
+qi-niu.bucket-mame =
+# 路径前缀
+qi-niu.prefix =

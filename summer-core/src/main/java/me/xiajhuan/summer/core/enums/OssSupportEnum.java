@@ -33,12 +33,12 @@ public enum OssSupportEnum {
     /**
      * MinIo
      */
-    MINIO(1, "MinIo", "MinIo对象存储"),
+    MIN_IO(1, "MinIo", "MinIo对象存储"),
 
     /**
-     * Qiniu
+     * 七牛云
      */
-    QINIU(2, "七牛云", "七牛云对象存储");
+    QI_NIU(2, "七牛云", "七牛云对象存储");
 
     private final int value;
 
