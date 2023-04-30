@@ -14,9 +14,7 @@ package me.xiajhuan.summer.system.hook.runner;
 
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
-import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import me.xiajhuan.summer.core.constant.CacheConst;
-import me.xiajhuan.summer.core.constant.DataSourceConst;
 import me.xiajhuan.summer.core.properties.ApplicationProperties;
 import me.xiajhuan.summer.core.utils.SystemUtil;
 import me.xiajhuan.summer.system.monitor.service.MonitorOnlineService;
@@ -35,7 +33,6 @@ import javax.annotation.Resource;
  * @author xiajhuan
  * @date 2023/4/20
  * @see ApplicationRunner
- * @see DynamicDataSourceContextHolder
  */
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE + 1)
@@ -61,8 +58,6 @@ public class CacheReadyRunner implements ApplicationRunner {
     public void run(ApplicationArguments args) {
         String cacheType = applicationProperties.getCache().getType();
         LOGGER.info("【{}】缓存服务加载完毕，类型【{}】", applicationName, cacheType);
-        // 设置当前线程的数据源为“system”
-        DynamicDataSourceContextHolder.push(DataSourceConst.SYSTEM);
 
         // 缓存类型为“HEAP”时清理遗留在线用户
         if (CacheConst.Type.HEAP.equalsIgnoreCase(cacheType)

@@ -124,23 +124,25 @@ local.prefix =
 local.path =
 
 # MinIo配置，只有application.oss.type: MIN_IO 时会生效
-# endPoint
+# endPoint（协议://IP:端口）
 min-io.end-point =
-# accessKey
+# accessKey（密钥AK）
 min-io.access-key =
-# secretKey
+# secretKey（密钥SK）
 min-io.secret-key =
-# bucketName
+# bucketName（逻辑空间名）
 min-io.bucket-mame =
 # 路径前缀
 min-io.prefix =
 
 # 七牛云配置，只有application.oss.type: QI_NIU 时会生效
-# accessKey
+# 绑定域名
+qi-niu.domain =
+# accessKey（密钥AK）
 qi-niu.access-key =
-# secretKey
+# secretKey（密钥SK）
 qi-niu.secret-key =
-# bucketName
+# bucketName（逻辑空间名）
 qi-niu.bucket-mame =
 # 路径前缀
 qi-niu.prefix =

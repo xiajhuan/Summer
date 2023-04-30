@@ -43,9 +43,6 @@ public class AppStartupRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
-        // 强制清空本地线程，防止内存泄漏
-        DynamicDataSourceContextHolder.clear();
-
         if (context.isActive()) {
             LOGGER.info("  _   _   _   _   _");
             LOGGER.info(" / \\ / \\ / \\ / \\ / \\");
@@ -53,6 +50,9 @@ public class AppStartupRunner implements ApplicationRunner {
             LOGGER.info(" \\_/ \\_/ \\_/ \\_/ \\_/");
             LOGGER.info("【{}】应用启动完毕", SystemUtil.getApplicationName());
         }
+
+        // 强制清空本地线程，防止内存泄漏
+        DynamicDataSourceContextHolder.clear();
     }
 
 }

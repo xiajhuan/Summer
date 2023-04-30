@@ -75,9 +75,9 @@ public class CacheServerFactory {
      *   3.当缓存类型不为“REDIS”时将抛出 {@link UnsupportedOperationException}
      * </pre>
      *
-     * @return 缓存服务
+     * @return Redis缓存服务
      */
-    public static CacheServer getRedisCacheServer() {
+    public static RedisCacheServer getRedisCacheServer() {
         if (CACHE_TYPE.equalsIgnoreCase(CacheConst.Type.REDIS)) {
             return RedisCacheServer.getInstance();
         }
@@ -92,9 +92,9 @@ public class CacheServerFactory {
      *     这将便于在缓存类型切换时保证代码通用
      * </pre>
      *
-     * @return 缓存服务
+     * @return 堆内缓存服务
      */
-    public static CacheServer getHeapCacheServer() {
+    public static HeapCacheServer getHeapCacheServer() {
         return HeapCacheServer.getInstance();
     }
 

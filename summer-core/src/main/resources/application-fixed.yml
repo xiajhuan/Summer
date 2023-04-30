@@ -18,8 +18,6 @@ application:
   oss:
     # 对象存储类型，值：LOCAL/MIN_IO/QI_NIU
     type: LOCAL
-    # 是否严格匹配
-    strict: false
 
 server:
   # Tomcat

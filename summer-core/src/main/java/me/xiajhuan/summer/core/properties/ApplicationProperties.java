@@ -65,19 +65,11 @@ public class ApplicationProperties {
         /**
          * 类型，默认为：LOCAL
          *
-         * @see OssSupportEnum
+         * @see OssSupportEnum#LOCAL
+         * @see OssSupportEnum#MIN_IO
+         * @see OssSupportEnum#QI_NIU
          */
         private String type = OssSupportEnum.LOCAL.toString();
-
-        /**
-         * 是否严格匹配，默认为：false
-         * <p>
-         * 严格匹配时将检查类型对应的oss配置项是否完整，不完整直接报错！
-         * 非严格匹配时如果检查到对应的oss配置项不完整则切换为“LOCAL”，
-         * 如果“LOCAL”的oss配置项也不完整则报错！
-         * </p>
-         */
-        private boolean strict = false;
 
     }
 

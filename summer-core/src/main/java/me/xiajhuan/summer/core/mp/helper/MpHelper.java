@@ -136,7 +136,7 @@ public interface MpHelper<D extends PageSortDto, T> {
 
     /**
      * 自定义分页钩子<br>
-     * note：必须覆写该方法才能调用！否则将抛出 {@link UnsupportedOperationException}，
+     * note：必须覆写该方法才能调用！否则将抛出 {@link UnsupportedOperationException}
      *
      * @param dto Dto类型对象
      * @return {@link Page}

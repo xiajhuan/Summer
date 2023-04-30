@@ -14,6 +14,8 @@ package me.xiajhuan.summer.system.hook.runner;
 
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
+import me.xiajhuan.summer.core.constant.DataSourceConst;
 import me.xiajhuan.summer.core.properties.ApplicationProperties;
 import me.xiajhuan.summer.core.utils.SystemUtil;
 import org.springframework.boot.ApplicationArguments;
@@ -29,6 +31,8 @@ import javax.annotation.Resource;
  *
  * @author xiajhuan
  * @date 2023/4/29
+ * @see ApplicationRunner
+ * @see DynamicDataSourceContextHolder
  */
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
@@ -41,15 +45,11 @@ public class OssReadyRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
-        ApplicationProperties.Oss oss = applicationProperties.getOss();
-        // 校验对象存储配置
-        if (oss.isStrict()) {
-            // TODO
-        } else {
-            // TODO
-        }
+        // 设置当前线程的数据源为“system”
+        DynamicDataSourceContextHolder.push(DataSourceConst.SYSTEM);
 
-        LOGGER.info("【{}】对象存储服务加载完毕，类型【{}】", SystemUtil.getApplicationName(), oss.getType());
+        LOGGER.info("【{}】对象存储服务加载完毕，类型【{}】", SystemUtil.getApplicationName(),
+                applicationProperties.getOss().getType());
     }
 
 }

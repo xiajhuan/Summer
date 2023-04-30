@@ -39,42 +39,42 @@ public class HeapCacheServer implements CacheServer {
     /**
      * 缓存容量（String）
      */
-    private static int capacityString;
+    private final int capacityString;
 
     /**
      * 缓存满后对象的移除策略（String）
      */
-    private static String strategyString;
+    private String strategyString;
 
     /**
      * 缓存容量（Auto）
      */
-    private static int capacityAuto;
+    private final int capacityAuto;
 
     /**
      * 缓存满后对象的移除策略（Auto）
      */
-    private static String strategyAuto;
+    private String strategyAuto;
 
     /**
      * 缓存容量（Hash）
      */
-    private static int capacityHash;
+    private final int capacityHash;
 
     /**
      * 缓存满后对象的移除策略（Hash）
      */
-    private static String strategyHash;
+    private String strategyHash;
 
     /**
      * 缓存容量（List）
      */
-    private static int capacityList;
+    private final int capacityList;
 
     /**
      * 缓存满后对象的移除策略（List）
      */
-    private static String strategyList;
+    private String strategyList;
 
     //*******************单例处理开始********************
 
@@ -127,28 +127,29 @@ public class HeapCacheServer implements CacheServer {
     /**
      * String缓存
      */
-    private static AbstractCache<String, String> cacheString;
+    private AbstractCache<String, String> cacheString;
 
     /**
      * Auto缓存
      */
-    private static AbstractCache<String, Long> cacheAuto;
+    private AbstractCache<String, Long> cacheAuto;
 
     /**
      * Hash缓存
      */
-    private static AbstractCache<String, Map<String, Object>> cacheHash;
+    private AbstractCache<String, Map<String, Object>> cacheHash;
 
     /**
      * List缓存
      */
-    private static AbstractCache<String, List<String>> cacheList;
+    private AbstractCache<String, List<String>> cacheList;
 
     /**
      * 初始化缓存
      *
      * @param type 值类型
      */
+    @SuppressWarnings("unchecked")
     private void initCache(String type) {
         switch (type) {
             case CacheConst.Value.STRING:

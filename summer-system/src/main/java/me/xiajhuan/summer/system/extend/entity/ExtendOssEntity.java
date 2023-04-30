@@ -16,6 +16,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import me.xiajhuan.summer.core.base.entity.SimpleEntity;
+import me.xiajhuan.summer.core.enums.OssSupportEnum;
 
 /**
  * 对象存储 Entity<br>
@@ -33,5 +34,12 @@ public class ExtendOssEntity extends SimpleEntity {
      * URL
      */
     private String url;
+
+    /**
+     * 类型
+     *
+     * @see OssSupportEnum
+     */
+    private Integer type;
 
 }

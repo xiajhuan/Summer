@@ -27,10 +27,29 @@ public class FileUploadException extends RuntimeException {
      * 构造文件上传异常
      *
      * @param message 消息
+     */
+    private FileUploadException(String message) {
+        super(message);
+    }
+
+    /**
+     * 构造文件上传异常
+     *
+     * @param message 消息
      * @param cause   原始异常
      */
     private FileUploadException(String message, Throwable cause) {
         super(message, cause);
+    }
+
+    /**
+     * 构建文件上传异常
+     *
+     * @param message 消息
+     * @return 文件上传异常
+     */
+    public static FileUploadException of(String message) {
+        return new FileUploadException(message);
     }
 
     /**

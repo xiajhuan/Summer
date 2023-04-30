@@ -33,7 +33,7 @@ public class RedisCacheServer implements CacheServer {
     /**
      * {@link RedisTemplate}
      */
-    private static RedisTemplate redisTemplate;
+    private final RedisTemplate redisTemplate;
 
     //*******************单例处理开始********************
 

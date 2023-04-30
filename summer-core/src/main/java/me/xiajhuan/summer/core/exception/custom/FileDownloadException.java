@@ -27,10 +27,29 @@ public class FileDownloadException extends RuntimeException {
      * 构造文件下载异常
      *
      * @param message 消息
+     */
+    private FileDownloadException(String message) {
+        super(message);
+    }
+
+    /**
+     * 构造文件下载异常
+     *
+     * @param message 消息
      * @param cause   原始异常
      */
     private FileDownloadException(String message, Throwable cause) {
         super(message, cause);
+    }
+
+    /**
+     * 构建文件下载异常
+     *
+     * @param message 消息
+     * @return 文件下载异常
+     */
+    public static FileDownloadException of(String message) {
+        return new FileDownloadException(message);
     }
 
     /**
