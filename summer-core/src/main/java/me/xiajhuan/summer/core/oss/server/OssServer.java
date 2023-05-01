@@ -36,7 +36,7 @@ public interface OssServer {
      */
     default String getPath(String prefix, String suffix) {
         String date = DateUtil.format(DateUtil.date(), "yyyyMMdd");
-        String uuid = UUID.fastUUID().toString();
+        String uuid = UUID.fastUUID().toString(true);
 
         return StrUtil.isBlank(prefix) ?
                 StrUtil.format("{}/{}.{}", date, uuid, suffix) :

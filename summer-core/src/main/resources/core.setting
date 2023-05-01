@@ -116,12 +116,12 @@ await-termination-Seconds = 30
 # *******************对象存储配置********************
 [Oss]
 # 本地存储配置，只有application.oss.type: LOCAL 时会生效
-# 绑定域名
-local.domain =
+# endPoint（协议://IP:端口）
+local.end-point = http://localhost:8888
 # 路径前缀
-local.prefix =
+local.prefix = files/local
 # 存储目录
-local.path =
+local.path = D:\\Job\\devPrograms\\apache-tomcat-9.0.74\\webapps
 
 # MinIo配置，只有application.oss.type: MIN_IO 时会生效
 # endPoint（协议://IP:端口）

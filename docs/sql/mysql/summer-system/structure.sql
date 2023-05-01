@@ -459,6 +459,7 @@ CREATE TABLE `extend_oss`
     `id`          bigint(20)                                                    NOT NULL COMMENT '主键ID',
     `create_by`   varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL COMMENT '创建者',
     `create_time` datetime(0)                                                   NULL DEFAULT NULL COMMENT '创建时间',
+    `dept_id`     bigint(20)                                                    NULL DEFAULT NULL COMMENT '部门ID',
     `url`         varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '0' COMMENT 'URL',
     `type`        varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL COMMENT '类型 0：本地 1：MinIo 2：七牛云',
     PRIMARY KEY (`id`) USING BTREE,

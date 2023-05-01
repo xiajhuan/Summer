@@ -34,9 +34,9 @@ import java.io.InputStream;
 public class LocalOssServer implements OssServer {
 
     /**
-     * 绑定域名
+     * endPoint（协议://IP:端口）
      */
-    private final String localDomain;
+    private final String localEndPoint;
 
     /**
      * 路径前缀
@@ -52,7 +52,7 @@ public class LocalOssServer implements OssServer {
 
     private LocalOssServer() {
         Setting setting = SpringUtil.getBean(SettingConst.CORE, Setting.class);
-        localDomain = setting.getByGroupWithLog("local.domain", "Oss");
+        localEndPoint = setting.getByGroupWithLog("local.end-point", "Oss");
         localPrefix = setting.getByGroupWithLog("local.prefix", "Oss");
         localPath = setting.getByGroupWithLog("local.path", "Oss");
     }
@@ -94,7 +94,7 @@ public class LocalOssServer implements OssServer {
         }
 
         // 存储的URL
-        return StrUtil.format("{}/{}", localDomain, path);
+        return StrUtil.format("{}/{}", localEndPoint, path);
     }
 
 }

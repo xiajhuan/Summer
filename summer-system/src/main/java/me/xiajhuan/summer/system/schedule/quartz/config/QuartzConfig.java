@@ -181,7 +181,7 @@ public class QuartzConfig {
         if (ip != null && port != null) {
             return StrUtil.subAfter(ip, StrPool.DOT, true) + StrPool.COLON + port;
         } else {
-            return UUID.fastUUID().toString();
+            return UUID.fastUUID().toString(true);
         }
     }
 

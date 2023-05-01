@@ -10,35 +10,24 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.system.extend.entity;
+package me.xiajhuan.summer.system.extend.dto;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.*;
-import me.xiajhuan.summer.core.base.entity.SimpleEntity;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import me.xiajhuan.summer.core.base.dto.PageSortDto;
 import me.xiajhuan.summer.core.enums.OssSupportEnum;
 
+import java.util.Date;
+
 /**
- * 对象存储 Entity
+ * 对象存储 Dto
  *
  * @author xiajhuan
- * @date 2023/4/29
+ * @date 2023/4/30
  */
 @Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@TableName("extend_oss")
-public class ExtendOssEntity extends SimpleEntity {
-
-    /**
-     * 部门ID<br>
-     * note：使用数据权限功能则必须包含此字段
-     */
-    @TableField(fill = FieldFill.INSERT)
-    private Long deptId;
+public class ExtendOssDto extends PageSortDto {
 
     /**
      * URL
@@ -51,5 +40,10 @@ public class ExtendOssEntity extends SimpleEntity {
      * @see OssSupportEnum
      */
     private Integer type;
+
+    /**
+     * 创建时间
+     */
+    private Date createTime;
 
 }
