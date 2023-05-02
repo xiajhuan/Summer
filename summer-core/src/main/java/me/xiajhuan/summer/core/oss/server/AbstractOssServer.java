@@ -50,7 +50,7 @@ public abstract class AbstractOssServer {
     }
 
     /**
-     * 上传，默认逻辑空间名
+     * 上传，使用默认逻辑空间名
      *
      * @param multipartFile {@link MultipartFile}
      * @return {@link Dict}或 {@code null}，{@link Dict} 包含的Key有：<br>

@@ -62,13 +62,13 @@ public class LocaleUtil {
     private static final MessageSource MESSAGE_SOURCE;
 
     /**
-     * 请求头“Accept-Language”的值是中英文以外时的默认语言<br>
+     * 请求头“Accept-Language”的值的语言是中英文以外时的默认值<br>
      * note：此默认值只适用于 {@link LocaleUtil#getAcceptLanguage(HttpServletRequest)}
      */
     private static String defaultRequestHeader;
 
     /**
-     * 服务器JVM设置的语言是中英文以外时的默认语言
+     * 服务器JVM的语言是中英文以外时的默认值
      */
     private static String defaultJvm;
 

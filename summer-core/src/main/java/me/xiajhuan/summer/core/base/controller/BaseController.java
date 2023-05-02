@@ -48,7 +48,7 @@ public abstract class BaseController {
     }
 
     /**
-     * 多文件上传，默认逻辑空间名
+     * 多文件上传，使用默认逻辑空间名
      *
      * @param files {@link MultipartFile} 数组
      * @return {@link Dict} 数组
@@ -58,7 +58,7 @@ public abstract class BaseController {
     }
 
     /**
-     * 文件上传，默认逻辑空间名
+     * 文件上传，使用默认逻辑空间名
      *
      * @param file {@link MultipartFile}
      * @return {@link Dict}

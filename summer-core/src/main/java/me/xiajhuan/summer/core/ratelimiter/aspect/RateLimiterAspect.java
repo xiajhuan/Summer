@@ -80,9 +80,9 @@ public class RateLimiterAspect {
     private LFUCache<String, com.google.common.util.concurrent.RateLimiter> RATE_LIMITER_CACHE;
 
     /**
-     * 提示消息
+     * 默认提示消息
      */
-    private int msg;
+    private int defaultMsg;
 
     /**
      * 默认限流key策略Class
@@ -114,7 +114,7 @@ public class RateLimiterAspect {
     private void init() throws ClassNotFoundException {
         RATE_LIMITER_CACHE = CacheUtil.newLFUCache(setting.getInt("key-num", "RateLimiter", 10000));
 
-        msg = setting.getInt("msg", "RateLimiter", ErrorCode.FREQUENT_OPERATION);
+        defaultMsg = setting.getInt("msg", "RateLimiter", ErrorCode.FREQUENT_OPERATION);
 
         String keySetting = setting.getByGroupWithLog("strategy.key", "RateLimiter");
         if (StrUtil.isBlank(keySetting)) {
@@ -265,7 +265,7 @@ public class RateLimiterAspect {
                 int message = rateLimiter.msg();
                 if (message < 0) {
                     // 没有设置或设置的值小于0则使用配置中的提示消息
-                    message = msg;
+                    message = defaultMsg;
                 }
                 throw SystemException.of(message);
             }

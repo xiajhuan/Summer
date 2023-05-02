@@ -56,7 +56,7 @@ public class PageSortUtil {
     private static final String[] DESC = {"desc", "descend", "descending"};
 
     /**
-     * 单页分页条数限制
+     * 分页单页条数限制
      */
     private static final long MAX_LIMIT;
 

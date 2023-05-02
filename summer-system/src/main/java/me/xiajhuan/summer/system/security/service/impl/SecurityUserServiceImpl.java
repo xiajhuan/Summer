@@ -308,7 +308,7 @@ public class SecurityUserServiceImpl extends ServiceImpl<SecurityUserMapper, Sec
             throw ValidationException.of(ErrorCode.PASSWORD_RESET_ERROR);
         }
 
-        // 重置密码
+        // 重置后的密码
         String passwordReset = setting.getByGroupWithLog("password-reset", "Security");
         if (StrUtil.isBlank(passwordReset)) {
             // 没有配置则默认为：123456

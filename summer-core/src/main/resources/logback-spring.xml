@@ -75,7 +75,7 @@
             neverBlock：控制队列满时，加入的日志是否直接丢弃，不会阻塞等待（默认false）
         2.坑点：
             queueSize过大可能导致OOM
-            queueSize过小且discardingThreshold设置大于0（或默认值），队列剩余容量小于阈值就会丢弃<=INFO的日志
+            queueSize过小且discardingThreshold设置大于0（或默认值），队列剩余容量小于阈值就会丢弃“<=INFO的日志”
             discardingThreshold为“日志条数”，不是“百分比”
             neverBlock默认false意味着可能会出现阻塞
         3.建议：

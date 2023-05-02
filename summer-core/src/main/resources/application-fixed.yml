@@ -158,11 +158,11 @@ management:
     # Beans
     beans:
       enabled: true
-    # 健康
+    # 健康状况
     health:
       enabled: true
       show-details: ALWAYS
-    # 信息
+    # 应用信息
     info:
       enabled: true
     # Conditions
@@ -172,13 +172,13 @@ management:
     # curl -X POST http://localhost:6666/summer/appMonitor/shutdown
     shutdown:
       enabled: false
-    # 配置
+    # 应用配置
     configprops:
       enabled: true
-    # 环境
+    # 应用环境
     env:
       enabled: true
-    # 日志
+    # 应用日志
     loggers:
       enabled: true
     # 堆转储
@@ -187,7 +187,7 @@ management:
     # 线程转储
     threaddump:
       enabled: false
-    # 指标
+    # 应用指标
     metrics:
       enabled: true
     # 定时任务（Quartz）

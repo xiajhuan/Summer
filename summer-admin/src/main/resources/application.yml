@@ -5,7 +5,7 @@ spring:
   application:
     name: Summer
   profiles:
-    # 包含其他配置
+    # 包含配置
     include:
       - fixed
       - custom

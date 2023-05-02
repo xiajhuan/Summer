@@ -19,11 +19,11 @@ password-reset = 123456
 
 # 图形验证码背景干扰类型，值：Line（线段干扰）/Circle（圆圈干扰）/Shear（扭曲干扰）
 captcha.type = Line
-# 干扰线个数，note：只有captcha.type = Line 时会生效
+# 干扰线个数，只有captcha.type = Line 时会生效
 captcha.line-num = 10
-# 干扰元素个数，note：只有captcha.type = Circle 时会生效
+# 干扰元素个数，只有captcha.type = Circle 时会生效
 captcha.circle-num = 10
-# 干扰线宽度，note：只有captcha.type = Shear 时会生效
+# 干扰线宽度，只有captcha.type = Shear 时会生效
 captcha.shear-width = 4
 # 图形验证码宽/高
 captcha.width = 150
@@ -64,7 +64,7 @@ enable-system = true
 # 是否保存业务异常日志（BusinessException），值：true/false
 enable-business = true
 # 忽略的消息代码，以“,”分隔，值参考 ErrorCode
-# note：当SystemException或BusinessException的消息为该消息代码匹配消息时将不会“保存错误日志”和“打印异常堆栈信息（开启debug日志级别除外）”
+# note：当SystemException或BusinessException的消息为该消息代码匹配消息时将不会“保存错误日志”和“打印异常堆栈信息（开启debug日志级别时除外）”
 ignore-codes = 1001,1002
 
 # 操作日志清理天数限制，-n则清理n天以前的日志

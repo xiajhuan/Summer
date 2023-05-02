@@ -45,7 +45,7 @@ enable-file-upload-filter = true
 
 # *******************MybatisPlus配置********************
 [Mp]
-# 单页分页条数限制
+# 分页单页条数限制
 page.max-limit = 2000
 # 默认排序字段，以“,”分隔，为空则不排序
 sort.default-field = create_time
@@ -54,16 +54,16 @@ sort.default-order = desc
 # 排序字段是否驼峰转下划线
 sort.field-camel-to-underscore = true
 
-# 数据权限忽略的表名配置，以“,”分隔
-# 支持通配符：“*”（任意匹配）和“?”（单值匹配）
+# 数据权限忽略的表名，以“,”分隔
+# 支持通配符“*”（任意匹配）和“?”（单值匹配）
 data-scope.ignore = security_*,log_*
 
 
 # *******************接口限流配置********************
 [RateLimiter]
 # 策略Key估算数量（RATE_LIMITER_CACHE的大小）
-key-num = 10000
-# 提示消息，值参考 ErrorCode
+key-num = 20000
+# 默认提示消息，值参考 ErrorCode
 msg = 1002
 # 默认策略Class（简单类名）
 strategy.key = IpKeyStrategy
@@ -76,7 +76,7 @@ timeout = 0
 
 # *******************Sql相关配置********************
 [Sql]
-# p6spy不详细打印的Sql配置，替换格式：操作关键字->表名,操作关键字->表名，例如：INSERT->log_operation,INSERT->log_error
+# p6spy不详细打印的Sql，替换格式：操作关键字->表名，以“,”分隔，例如：INSERT->log_operation,INSERT->log_error
 p6spy.sql-replace = INSERT->log_operation,INSERT->log_error,INSERT->log_login,INSERT->log_task
 # 是否替换Quartz相关Sql，值：true/false
 p6spy.quartz-sql-replace = true
@@ -89,9 +89,9 @@ injection.illegal-key-word = SELECT,UPDATE,AND,OR,DELETE,INSERT,TRUNCATE,SUBSTR,
 
 # *******************国际化配置********************
 [Locale]
-# 请求头“Accept-Language”的值是中英文以外时的默认语言，值：zh_CN/en_US
+# 请求头“Accept-Language”的值的语言是中英文以外时的默认值，值：zh_CN/en_US
 default.request-header = zh_CN
-# 服务器JVM设置的语言是中英文以外时的默认语言，值：zh_CN/en_US
+# 服务器JVM的语言是中英文以外时的默认值，值：zh_CN/en_US
 default.jvm = en_US
 
 
@@ -105,11 +105,11 @@ allow-core-thread-timeout = false
 max-pool-size = 32
 # 阻塞队列大小
 queue-capacity = 512
-# 空闲线程存活时间（s），note：如果是核心线程，则必须 allow-core-thread-timeout = true 时才生效
+# 空闲线程存活时间（s），note：如果是核心线程，则必须allow-core-thread-timeout = true 时才生效
 keep-alive-seconds = 30
 # 应用关闭时是否等待所有线程执行完，值：true/false
 wait-for-tasks-to-complete-on-shutdown = true
-# 应用关闭时等待线程执行的时间（s），超时则强制销毁
+# 应用关闭时等待线程执行的时间（s），超时则强制销毁，只有wait-for-tasks-to-complete-on-shutdown = true 时才生效
 await-termination-Seconds = 30
 
 
