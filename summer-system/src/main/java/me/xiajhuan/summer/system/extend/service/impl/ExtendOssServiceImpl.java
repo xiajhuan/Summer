@@ -12,23 +12,26 @@
 
 package me.xiajhuan.summer.system.extend.service.impl;
 
+import cn.hutool.core.lang.Dict;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import me.xiajhuan.summer.core.constant.DataSourceConst;
-import me.xiajhuan.summer.core.enums.OssSupportEnum;
 import me.xiajhuan.summer.core.mp.helper.MpHelper;
-import me.xiajhuan.summer.core.properties.ApplicationProperties;
+import me.xiajhuan.summer.core.oss.factory.OssServerFactory;
+import me.xiajhuan.summer.core.oss.server.AbstractOssServer;
 import me.xiajhuan.summer.core.utils.BeanUtil;
 import me.xiajhuan.summer.system.extend.dto.ExtendOssDto;
 import me.xiajhuan.summer.system.extend.entity.ExtendOssEntity;
 import me.xiajhuan.summer.system.extend.mapper.ExtendOssMapper;
 import me.xiajhuan.summer.system.extend.service.ExtendOssService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
 import java.util.Arrays;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * 对象存储 ServiceImpl
@@ -40,9 +43,6 @@ import java.util.Arrays;
 @DS(DataSourceConst.SYSTEM)
 public class ExtendOssServiceImpl extends ServiceImpl<ExtendOssMapper, ExtendOssEntity> implements ExtendOssService, MpHelper<ExtendOssDto, ExtendOssEntity> {
 
-    @Resource
-    private ApplicationProperties applicationProperties;
-
     //*******************MpHelper覆写开始********************
 
     @Override
@@ -50,8 +50,7 @@ public class ExtendOssServiceImpl extends ServiceImpl<ExtendOssMapper, ExtendOss
         LambdaQueryWrapper<ExtendOssEntity> queryWrapper = getEmptyWrapper();
         // 查询条件
         // 类型
-        Integer type = dto.getType();
-        queryWrapper.eq(type != null, ExtendOssEntity::getType, type);
+        queryWrapper.eq(ExtendOssEntity::getType, OssServerFactory.getOssServer().getType());
 
         return queryWrapper;
     }
@@ -60,8 +59,8 @@ public class ExtendOssServiceImpl extends ServiceImpl<ExtendOssMapper, ExtendOss
     public LambdaQueryWrapper<ExtendOssEntity> getSelectWrapper(ExtendOssDto dto) {
         LambdaQueryWrapper<ExtendOssEntity> queryWrapper = getQueryWrapper(dto);
         // 查询字段
-        queryWrapper.select(ExtendOssEntity::getId, ExtendOssEntity::getUrl, ExtendOssEntity::getType,
-                ExtendOssEntity::getCreateTime);
+        queryWrapper.select(ExtendOssEntity::getId, ExtendOssEntity::getName, ExtendOssEntity::getUrl,
+                ExtendOssEntity::getType, ExtendOssEntity::getCreateTime);
 
         return queryWrapper;
     }
@@ -74,33 +73,27 @@ public class ExtendOssServiceImpl extends ServiceImpl<ExtendOssMapper, ExtendOss
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void delete(Long[] ids) {
-        // TODO
+        Set<Long> idSet = Arrays.stream(ids).collect(Collectors.toSet());
+        // 路径（相对路径）集合
+        Set<String> pathSet = baseMapper.getPathSet(idSet);
+
+        if (pathSet.size() > 0 && removeByIds(idSet)) {
+            // 删除文件
+            AbstractOssServer ossServer = OssServerFactory.getOssServer();
+            pathSet.forEach(ossServer::delete);
+        }
     }
 
     @Override
-    public void addBatch(String[] urls) {
-        int type = getType();
-        Arrays.stream(urls).forEach(url -> save(
+    public void addBatch(Dict[] dictArray) {
+        Arrays.stream(dictArray).forEach(dict -> save(
                 ExtendOssEntity.builder()
-                        .url(url).type(type)
-                        .build()));
-    }
-
-    /**
-     * 获取对象存储类型
-     *
-     * @return 对象存储类型
-     */
-    private int getType() {
-        switch (applicationProperties.getOss().getType()) {
-            case "LOCAL":
-                return OssSupportEnum.LOCAL.getValue();
-            case "MIN_IO":
-                return OssSupportEnum.MIN_IO.getValue();
-            default:
-                return OssSupportEnum.QI_NIU.getValue();
-        }
+                        .name(dict.getStr("name"))
+                        .url(dict.getStr("url"))
+                        .path(dict.getStr("path"))
+                        .type(dict.getInt("type")).build()));
     }
 
 }

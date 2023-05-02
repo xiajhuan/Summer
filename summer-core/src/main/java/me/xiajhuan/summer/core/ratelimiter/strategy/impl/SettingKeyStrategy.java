@@ -13,6 +13,9 @@
 package me.xiajhuan.summer.core.ratelimiter.strategy.impl;
 
 import me.xiajhuan.summer.core.ratelimiter.strategy.KeyStrategy;
+import org.aspectj.lang.JoinPoint;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * <p>
@@ -24,4 +27,21 @@ import me.xiajhuan.summer.core.ratelimiter.strategy.KeyStrategy;
  * @date 2023/3/14
  */
 public class SettingKeyStrategy implements KeyStrategy {
+
+    /**
+     * 构造SettingKeyStrategy（不允许实例化）
+     */
+    private SettingKeyStrategy() {
+    }
+
+    @Override
+    public String getKey(JoinPoint point, HttpServletRequest request, String username) {
+        throw new UnsupportedOperationException("不允许调用配置策略类的方法");
+    }
+
+    @Override
+    public String extraMsgTemplate() {
+        throw new UnsupportedOperationException("不允许调用配置策略类的方法");
+    }
+
 }

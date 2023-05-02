@@ -15,14 +15,16 @@ package me.xiajhuan.summer.core.oss.server.impl;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import cn.hutool.setting.Setting;
-import io.minio.BucketExistsArgs;
-import io.minio.MakeBucketArgs;
-import io.minio.MinioClient;
-import io.minio.PutObjectArgs;
+import io.minio.*;
 import io.minio.errors.*;
 import me.xiajhuan.summer.core.constant.SettingConst;
+import me.xiajhuan.summer.core.enums.OssSupportEnum;
+import me.xiajhuan.summer.core.exception.code.ErrorCode;
 import me.xiajhuan.summer.core.exception.custom.FileUploadException;
-import me.xiajhuan.summer.core.oss.server.OssServer;
+import me.xiajhuan.summer.core.exception.custom.SystemException;
+import me.xiajhuan.summer.core.oss.server.AbstractOssServer;
+import me.xiajhuan.summer.core.utils.AssertUtil;
+import org.springframework.http.MediaType;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -36,22 +38,7 @@ import java.security.NoSuchAlgorithmException;
  * @date 2023/4/29
  * @see MinioClient
  */
-public class MinIoOssServer implements OssServer {
-
-    /**
-     * endPoint（协议://IP:端口）
-     */
-    private final String minIoEndPoint;
-
-    /**
-     * bucketName（逻辑空间名）
-     */
-    private final String minIoBucketName;
-
-    /**
-     * 路径前缀
-     */
-    private final String minIoPrefix;
+public class MinIoOssServer extends AbstractOssServer {
 
     /**
      * 客户端
@@ -62,14 +49,19 @@ public class MinIoOssServer implements OssServer {
 
     private MinIoOssServer() {
         Setting setting = SpringUtil.getBean(SettingConst.CORE, Setting.class);
-        minIoEndPoint = setting.getByGroupWithLog("min-io.end-point", "Oss");
+        endPoint = setting.getByGroupWithLog("min-io.end-point", "Oss");
+        AssertUtil.isNotBlank("endPoint", endPoint);
+
         // 构建客户端
-        minioClient = MinioClient.builder().endpoint(minIoEndPoint)
+        minioClient = MinioClient.builder().endpoint(endPoint)
                 .credentials(setting.getByGroupWithLog("min-io.access-key", "Oss"),
                         setting.getByGroupWithLog("min-io.secret-key", "Oss")).build();
 
-        minIoBucketName = setting.getByGroupWithLog("min-io.bucket-mame", "Oss");
-        minIoPrefix = setting.getByGroupWithLog("min-io.prefix", "Oss");
+        defaultBucketName = setting.getByGroupWithLog("min-io.default-bucket-mame", "Oss");
+        if (StrUtil.isBlank(defaultBucketName)) {
+            // 没有配置则默认为：files
+            defaultBucketName = "files";
+        }
     }
 
     private static volatile MinIoOssServer instance = null;
@@ -88,39 +80,46 @@ public class MinIoOssServer implements OssServer {
     //*******************单例处理结束********************
 
     @Override
-    public String upload(InputStream inputStream, String suffix) {
-        return uploadInternal(inputStream, getPath(minIoPrefix, suffix));
+    public int getType() {
+        return OssSupportEnum.MIN_IO.getValue();
     }
 
-    /**
-     * 上传处理
-     *
-     * @param inputStream {@link InputStream}
-     * @param path        上传路径
-     * @return 存储的URL
-     */
-    private String uploadInternal(InputStream inputStream, String path) {
+    @Override
+    public void delete(String path, String bucketName) {
         try {
-            if (!minioClient.bucketExists(BucketExistsArgs.builder().bucket(minIoBucketName).build())) {
-                // 逻辑空间不存在则创建
-                minioClient.makeBucket(MakeBucketArgs.builder().bucket(minIoBucketName).build());
-            }
+            // 删除文件
+            minioClient.removeObject(RemoveObjectArgs.builder()
+                    .bucket(getRealBucketName(bucketName))
+                    .object(path).build());
+        } catch (ErrorResponseException | InsufficientDataException | InternalException
+                | InvalidKeyException | InvalidResponseException | IOException
+                | NoSuchAlgorithmException | ServerException | XmlParserException e) {
+            throw SystemException.of(e, ErrorCode.FILE_DELETE_FAILURE, e.getMessage());
+        }
+    }
 
+    @Override
+    protected String uploadInternal(InputStream inputStream, String bucketName, String path) {
+        bucketName = getRealBucketName(bucketName);
+        try {
+            if (!minioClient.bucketExists(BucketExistsArgs.builder().bucket(bucketName).build())) {
+                // 逻辑空间不存在则创建
+                minioClient.makeBucket(MakeBucketArgs.builder().bucket(bucketName).build());
+            }
             // 存储文件
             minioClient.putObject(PutObjectArgs.builder()
-                    .bucket(minIoBucketName)
+                    .bucket(bucketName)
                     .object(path)
                     .stream(inputStream, inputStream.available(), -1)
-                    .contentType("application/octet-stream")
-                    .build());
+                    .contentType(MediaType.APPLICATION_OCTET_STREAM_VALUE).build());
         } catch (ErrorResponseException | InsufficientDataException | InternalException
                 | InvalidKeyException | InvalidResponseException | IOException
                 | NoSuchAlgorithmException | ServerException | XmlParserException e) {
             throw FileUploadException.of(e);
         }
 
-        // 存储的URL
-        return StrUtil.format("{}/{}/{}", minIoEndPoint, minIoBucketName, path);
+        // URL
+        return getUrl(bucketName, path);
     }
 
 }

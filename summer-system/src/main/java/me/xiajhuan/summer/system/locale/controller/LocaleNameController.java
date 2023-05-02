@@ -25,7 +25,7 @@ import me.xiajhuan.summer.core.validation.group.UpdateGroup;
 import me.xiajhuan.summer.system.log.annotation.LogOperation;
 import me.xiajhuan.summer.system.locale.dto.LocaleNameDto;
 import me.xiajhuan.summer.system.locale.entity.LocaleNameEntity;
-import me.xiajhuan.summer.system.locale.excel.parser.LocaleNameExcelDbParser;
+import me.xiajhuan.summer.system.locale.excel.parser.LocaleNameDbExcelParser;
 import me.xiajhuan.summer.system.locale.service.LocaleNameService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.validation.annotation.Validated;
@@ -151,7 +151,7 @@ public class LocaleNameController extends BaseController {
     @LogOperation(OperationConst.EXCEL_IMPORT)
     public Result<?> excelImport(MultipartFile file) {
         ExcelUtil.importDb(file, LocaleNameDto.class,
-                LocaleNameExcelDbParser.of(mainService, LocaleNameEntity.class));
+                LocaleNameDbExcelParser.of(mainService, LocaleNameEntity.class));
         return Result.ofSuccess();
     }
 

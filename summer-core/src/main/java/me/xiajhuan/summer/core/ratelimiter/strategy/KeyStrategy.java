@@ -12,7 +12,6 @@
 
 package me.xiajhuan.summer.core.ratelimiter.strategy;
 
-import cn.hutool.core.util.StrUtil;
 import org.aspectj.lang.JoinPoint;
 import me.xiajhuan.summer.core.utils.ServletUtil;
 import me.xiajhuan.summer.core.ratelimiter.aspect.RateLimiterAspect;
@@ -35,7 +34,7 @@ public interface KeyStrategy {
     /**
      * Key格式
      */
-    String FORMAT = "{}#{}";
+    String KEY_FORMAT = "{}#{}";
 
     /**
      * 获取限流key<br>
@@ -46,18 +45,14 @@ public interface KeyStrategy {
      * @param username 用户名
      * @return 限流Key
      */
-    default String getKey(JoinPoint point, HttpServletRequest request, String username) {
-        return StrUtil.format(FORMAT, ServletUtil.getInterfaceSignature(request), StrUtil.EMPTY);
-    }
+    String getKey(JoinPoint point, HttpServletRequest request, String username);
 
     /**
-     * 限流日志附加信息模板钩子<br>
+     * 限流日志附加消息模板<br>
      * 格式：，Key-xxx【{}】，如：，Key-IP【{}】
      *
-     * @return 附加信息模板
+     * @return 附加消息模板
      */
-    default String extraMsgTemplate() {
-        return StrUtil.EMPTY;
-    }
+    String extraMsgTemplate();
 
 }

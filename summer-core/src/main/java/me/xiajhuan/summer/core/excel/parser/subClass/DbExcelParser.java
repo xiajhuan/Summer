@@ -28,11 +28,10 @@ import me.xiajhuan.summer.core.excel.parser.AbstractExcelParser;
  * @author xiajhuan
  * @date 2022/12/1
  */
-public class ExcelDbParser<D, T> extends AbstractExcelParser<D, T> {
+public class DbExcelParser<D, T> extends AbstractExcelParser<D, T> {
 
     /**
-     * {@link IService}<br>
-     * 用于提供Db保存接口
+     * {@link IService}，提供Db保存接口
      */
     protected IService<T> service;
 
@@ -42,27 +41,27 @@ public class ExcelDbParser<D, T> extends AbstractExcelParser<D, T> {
     protected Class<T> currentEntityClass;
 
     /**
-     * 构造ExcelDbParser
+     * 构造DbExcelParser
      *
      * @param service            {@link IService}
      * @param currentEntityClass 当前EntityClass
      */
-    protected ExcelDbParser(IService<T> service, Class<T> currentEntityClass) {
+    protected DbExcelParser(IService<T> service, Class<T> currentEntityClass) {
         this.service = service;
         this.currentEntityClass = currentEntityClass;
     }
 
     /**
-     * 构建ExcelDbParser
+     * 构建DbExcelParser
      *
      * @param service            {@link IService}
      * @param currentEntityClass 当前EntityClass
      * @param <T>                Entity类型
-     * @return ExcelDbParser
+     * @return DbExcelParser
      */
     @SuppressWarnings({"rawtypes", "unchecked"})
-    public static <T> ExcelDbParser build(IService<T> service, Class<T> currentEntityClass) {
-        return new ExcelDbParser(service, currentEntityClass);
+    public static <T> DbExcelParser build(IService<T> service, Class<T> currentEntityClass) {
+        return new DbExcelParser(service, currentEntityClass);
     }
 
     @Override

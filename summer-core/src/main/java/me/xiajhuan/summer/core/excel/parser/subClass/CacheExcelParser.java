@@ -39,7 +39,7 @@ import java.util.stream.Collectors;
  * @author xiajhuan
  * @date 2022/12/1
  */
-public class ExcelCacheParser<D, T> extends AbstractExcelParser<D, T> {
+public class CacheExcelParser<D, T> extends AbstractExcelParser<D, T> {
 
     /**
      * 缓存过期时间（h）
@@ -53,24 +53,24 @@ public class ExcelCacheParser<D, T> extends AbstractExcelParser<D, T> {
     protected Class<T> currentEntityClass;
 
     /**
-     * 构造ExcelCacheParser
+     * 构造CacheExcelParser
      *
      * @param currentEntityClass 当前EntityClass
      */
-    protected ExcelCacheParser(Class<T> currentEntityClass) {
+    protected CacheExcelParser(Class<T> currentEntityClass) {
         this.currentEntityClass = currentEntityClass;
     }
 
     /**
-     * 构建ExcelCacheParser
+     * 构建CacheExcelParser
      *
      * @param currentEntityClass 当前EntityClass
      * @param <T>                Entity类型
-     * @return ExcelCacheParser
+     * @return CacheExcelParser
      */
     @SuppressWarnings({"rawtypes", "unchecked"})
-    public static <T> ExcelCacheParser build(Class<T> currentEntityClass) {
-        return new ExcelCacheParser(currentEntityClass);
+    public static <T> CacheExcelParser build(Class<T> currentEntityClass) {
+        return new CacheExcelParser(currentEntityClass);
     }
 
     @Override

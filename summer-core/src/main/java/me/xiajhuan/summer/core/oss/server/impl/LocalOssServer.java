@@ -18,8 +18,12 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import cn.hutool.setting.Setting;
 import me.xiajhuan.summer.core.constant.SettingConst;
+import me.xiajhuan.summer.core.enums.OssSupportEnum;
+import me.xiajhuan.summer.core.exception.code.ErrorCode;
 import me.xiajhuan.summer.core.exception.custom.FileUploadException;
-import me.xiajhuan.summer.core.oss.server.OssServer;
+import me.xiajhuan.summer.core.exception.custom.SystemException;
+import me.xiajhuan.summer.core.oss.server.AbstractOssServer;
+import me.xiajhuan.summer.core.utils.AssertUtil;
 
 import java.io.File;
 import java.io.InputStream;
@@ -31,30 +35,28 @@ import java.io.InputStream;
  * @date 2023/4/29
  * @see FileUtil
  */
-public class LocalOssServer implements OssServer {
-
-    /**
-     * endPoint（协议://IP:端口）
-     */
-    private final String localEndPoint;
-
-    /**
-     * 路径前缀
-     */
-    private final String localPrefix;
+public class LocalOssServer extends AbstractOssServer {
 
     /**
      * 存储目录
      */
-    private final String localPath;
+    private final String storageDirectory;
 
     //*******************单例处理开始********************
 
     private LocalOssServer() {
         Setting setting = SpringUtil.getBean(SettingConst.CORE, Setting.class);
-        localEndPoint = setting.getByGroupWithLog("local.end-point", "Oss");
-        localPrefix = setting.getByGroupWithLog("local.prefix", "Oss");
-        localPath = setting.getByGroupWithLog("local.path", "Oss");
+        endPoint = setting.getByGroupWithLog("local.end-point", "Oss");
+        AssertUtil.isNotBlank("endPoint", endPoint);
+
+        storageDirectory = setting.getByGroupWithLog("local.storage-directory", "Oss");
+        AssertUtil.isNotBlank("storageDirectory", storageDirectory);
+
+        defaultBucketName = setting.getByGroupWithLog("local.default-bucket-name", "Oss");
+        if (StrUtil.isBlank(defaultBucketName)) {
+            // 没有配置则默认为：files
+            defaultBucketName = "files";
+        }
     }
 
     private static volatile LocalOssServer instance = null;
@@ -73,28 +75,47 @@ public class LocalOssServer implements OssServer {
     //*******************单例处理结束********************
 
     @Override
-    public String upload(InputStream inputStream, String suffix) {
-        return uploadInternal(inputStream, getPath(localPrefix, suffix));
+    public int getType() {
+        return OssSupportEnum.LOCAL.getValue();
     }
 
-    /**
-     * 上传处理
-     *
-     * @param inputStream {@link InputStream}
-     * @param path        上传路径
-     * @return 存储的URL
-     */
-    private String uploadInternal(InputStream inputStream, String path) {
+    @Override
+    public void delete(String path, String bucketName) {
+        try {
+            // 删除文件
+            if (!FileUtil.del(getFile(path, getRealBucketName(bucketName)))) {
+                throw SystemException.of(ErrorCode.FILE_DELETE_FAILURE, StrUtil.EMPTY);
+            }
+        } catch (IORuntimeException e) {
+            throw SystemException.of(e, ErrorCode.FILE_DELETE_FAILURE, e.getMessage());
+        }
+    }
+
+    @Override
+    protected String uploadInternal(InputStream inputStream, String bucketName, String path) {
+        bucketName = getRealBucketName(bucketName);
         try {
             // 将流的内容写入到文件（自动关闭输入流）
-            FileUtil.writeFromStream(inputStream,
-                    new File(localPath + File.separator + path));
+            FileUtil.writeFromStream(inputStream, getFile(path, bucketName));
         } catch (IORuntimeException e) {
             throw FileUploadException.of(e);
         }
 
-        // 存储的URL
-        return StrUtil.format("{}/{}", localEndPoint, path);
+        // URL
+        return getUrl(bucketName, path);
+    }
+
+    /**
+     * 获取 {@link File}
+     *
+     * @param path       路径（相对路径）
+     * @param bucketName 逻辑空间名
+     * @return {@link File}
+     */
+    private File getFile(String path, String bucketName) {
+        return new File(storageDirectory + File.separator
+                + bucketName + File.separator
+                + path);
     }
 
 }

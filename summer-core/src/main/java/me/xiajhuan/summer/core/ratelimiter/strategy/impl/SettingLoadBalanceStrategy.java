@@ -24,4 +24,16 @@ import me.xiajhuan.summer.core.ratelimiter.strategy.LoadBalanceStrategy;
  * @date 2023/3/14
  */
 public class SettingLoadBalanceStrategy implements LoadBalanceStrategy {
+
+    /**
+     * 构造SettingLoadBalanceStrategy（不允许实例化）
+     */
+    private SettingLoadBalanceStrategy() {
+    }
+
+    @Override
+    public double calRealQps(double setQps, int nodeNum) {
+        throw new UnsupportedOperationException("不允许调用配置策略类的方法");
+    }
+
 }

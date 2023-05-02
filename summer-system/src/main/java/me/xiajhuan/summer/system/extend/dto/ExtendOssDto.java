@@ -30,6 +30,11 @@ import java.util.Date;
 public class ExtendOssDto extends PageSortDto {
 
     /**
+     * 文件名称
+     */
+    private String name;
+
+    /**
      * URL
      */
     private String url;

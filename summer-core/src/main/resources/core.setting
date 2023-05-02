@@ -116,33 +116,29 @@ await-termination-Seconds = 30
 # *******************对象存储配置********************
 [Oss]
 # 本地存储配置，只有application.oss.type: LOCAL 时会生效
-# endPoint（协议://IP:端口）
+# 端点（协议://ip:端口 或 域名）
 local.end-point = http://localhost:8888
-# 路径前缀
-local.prefix = files/local
+# 默认逻辑空间名
+local.default-bucket-name = files
 # 存储目录
-local.path = D:\\Job\\devPrograms\\apache-tomcat-9.0.74\\webapps
+local.storage-directory = D:\\Job\\devPrograms\\apache-tomcat-9.0.74\\webapps
 
 # MinIo配置，只有application.oss.type: MIN_IO 时会生效
-# endPoint（协议://IP:端口）
+# 端点（协议://ip:端口 或 域名）
 min-io.end-point =
-# accessKey（密钥AK）
+# 默认逻辑空间名
+min-io.default-bucket-mame = files
+# 密钥AK
 min-io.access-key =
-# secretKey（密钥SK）
+# 密钥SK
 min-io.secret-key =
-# bucketName（逻辑空间名）
-min-io.bucket-mame =
-# 路径前缀
-min-io.prefix =
 
 # 七牛云配置，只有application.oss.type: QI_NIU 时会生效
-# 绑定域名
-qi-niu.domain =
-# accessKey（密钥AK）
+# 端点（协议://ip:端口 或 域名）
+qi-niu.end-point =
+# 默认逻辑空间名
+qi-niu.default-bucket-mame = files
+# 密钥AK
 qi-niu.access-key =
-# secretKey（密钥SK）
+# 密钥SK
 qi-niu.secret-key =
-# bucketName（逻辑空间名）
-qi-niu.bucket-mame =
-# 路径前缀
-qi-niu.prefix =

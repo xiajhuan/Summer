@@ -17,13 +17,18 @@ import cn.hutool.extra.spring.SpringUtil;
 import cn.hutool.setting.Setting;
 import com.qiniu.common.QiniuException;
 import com.qiniu.http.Response;
+import com.qiniu.storage.BucketManager;
 import com.qiniu.storage.Configuration;
 import com.qiniu.storage.Region;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.util.Auth;
 import me.xiajhuan.summer.core.constant.SettingConst;
+import me.xiajhuan.summer.core.enums.OssSupportEnum;
+import me.xiajhuan.summer.core.exception.code.ErrorCode;
 import me.xiajhuan.summer.core.exception.custom.FileUploadException;
-import me.xiajhuan.summer.core.oss.server.OssServer;
+import me.xiajhuan.summer.core.exception.custom.SystemException;
+import me.xiajhuan.summer.core.oss.server.AbstractOssServer;
+import me.xiajhuan.summer.core.utils.AssertUtil;
 
 import java.io.InputStream;
 
@@ -34,41 +39,46 @@ import java.io.InputStream;
  * @date 2023/4/29
  * @see Auth
  * @see UploadManager
+ * @see BucketManager
  */
-public class QiNiuOssServer implements OssServer {
+public class QiNiuOssServer extends AbstractOssServer {
 
     /**
-     * 绑定域名
+     * 凭证
      */
-    private final String qiNiuDomain;
+    private final Auth auth;
 
     /**
-     * 路径前缀
-     */
-    private final String qiuNiuPrefix;
-
-    /**
-     * Token
-     */
-    private final String token;
-
-    /**
-     * 文件上传管理器
+     * 上传管理器
      */
     private final UploadManager uploadManager;
+
+    /**
+     * 逻辑空间管理器
+     */
+    private final BucketManager bucketManager;
 
     //*******************单例处理开始********************
 
     private QiNiuOssServer() {
         Setting setting = SpringUtil.getBean(SettingConst.CORE, Setting.class);
-        token = Auth.create(setting.getByGroupWithLog("qi-niu.access-key", "Oss"),
-                setting.getByGroupWithLog("qi-niu.secret-key", "Oss"))
-                .uploadToken(setting.getByGroupWithLog("qi-niu.bucket-mame", "Oss"));
+        endPoint = setting.getByGroupWithLog("qi-niu.end-point", "Oss");
+        AssertUtil.isNotBlank("endPoint", endPoint);
 
-        qiNiuDomain = setting.getByGroupWithLog("qi-niu.domain", "Oss");
-        qiuNiuPrefix = setting.getByGroupWithLog("qi-niu.prefix", "Oss");
+        // 凭证
+        auth = Auth.create(setting.getByGroupWithLog("qi-niu.access-key", "Oss"),
+                setting.getByGroupWithLog("qi-niu.secret-key", "Oss"));
 
-        uploadManager = new UploadManager(new Configuration(Region.autoRegion()));
+        // 配置
+        Configuration configuration = new Configuration(Region.autoRegion());
+        uploadManager = new UploadManager(configuration);
+        bucketManager = new BucketManager(auth, configuration);
+
+        defaultBucketName = setting.getByGroupWithLog("qi-niu.default-bucket-mame", "Oss");
+        if (StrUtil.isBlank(defaultBucketName)) {
+            // 没有配置则默认为：files
+            defaultBucketName = "files";
+        }
     }
 
     private static volatile QiNiuOssServer instance = null;
@@ -87,21 +97,29 @@ public class QiNiuOssServer implements OssServer {
     //*******************单例处理结束********************
 
     @Override
-    public String upload(InputStream inputStream, String suffix) {
-        return uploadInternal(inputStream, getPath(qiuNiuPrefix, suffix));
+    public int getType() {
+        return OssSupportEnum.QI_NIU.getValue();
     }
 
-    /**
-     * 上传处理
-     *
-     * @param inputStream {@link InputStream}
-     * @param path        上传路径
-     * @return 存储的URL
-     */
-    private String uploadInternal(InputStream inputStream, String path) {
+    @Override
+    public void delete(String path, String bucketName) {
+        try {
+            // 删除文件
+            Response response = bucketManager.delete(getRealBucketName(bucketName), path);
+            if (!response.isOK()) {
+                throw SystemException.of(ErrorCode.FILE_DELETE_FAILURE, response.error);
+            }
+        } catch (QiniuException e) {
+            throw SystemException.of(e, ErrorCode.FILE_DELETE_FAILURE, e.getMessage());
+        }
+    }
+
+    @Override
+    protected String uploadInternal(InputStream inputStream, String bucketName, String path) {
         try {
             // 存储文件
-            Response response = uploadManager.put(inputStream, path, token, null, null);
+            Response response = uploadManager.put(inputStream, path,
+                    auth.uploadToken(getRealBucketName(bucketName)), null, null);
             if (!response.isOK()) {
                 throw FileUploadException.of(StrUtil.format("文件上传失败【{}】", response.error));
             }
@@ -109,8 +127,8 @@ public class QiNiuOssServer implements OssServer {
             throw FileUploadException.of(e);
         }
 
-        // 存储的URL
-        return StrUtil.format("{}/{}", qiNiuDomain, path);
+        // URL
+        return StrUtil.format("{}/{}", endPoint, path);
     }
 
 }

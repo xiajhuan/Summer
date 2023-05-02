@@ -42,8 +42,10 @@ public abstract class AbstractExcelParser<D, T> extends AnalysisEventListener<D>
     protected static final Log LOGGER = LogFactory.get();
 
     /**
-     * Excel数据解析后的最大批量操作数<br>
+     * <p>
+     * Excel数据解析后的最大批量操作数，
      * 最多每隔该数量的数据后清理List，方便GC
+     * </p>
      */
     private static final int MAX_BATCH_NUM = SpringUtil.getBean(SettingConst.CORE, Setting.class)
             .getInt("parser.max-batch-num", "Excel", 2000);
@@ -54,7 +56,7 @@ public abstract class AbstractExcelParser<D, T> extends AnalysisEventListener<D>
     protected List<T> entityList;
 
     /**
-     * 初始化 {@link entityList}
+     * 构造AbstractExcelParser，初始化 {@link entityList}
      */
     protected AbstractExcelParser() {
         entityList = new ArrayList<>(MAX_BATCH_NUM);

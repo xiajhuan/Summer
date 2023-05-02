@@ -14,7 +14,7 @@ package me.xiajhuan.summer.system.locale.excel.parser;
 
 import cn.hutool.extra.spring.SpringUtil;
 import com.baomidou.mybatisplus.extension.service.IService;
-import me.xiajhuan.summer.core.excel.parser.subClass.ExcelDbParser;
+import me.xiajhuan.summer.core.excel.parser.subClass.DbExcelParser;
 import me.xiajhuan.summer.system.locale.dto.LocaleNameDto;
 import me.xiajhuan.summer.system.locale.entity.LocaleNameEntity;
 import me.xiajhuan.summer.system.locale.service.LocaleNameService;
@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
  * @author xiajhuan
  * @date 2023/3/16
  */
-public class LocaleNameExcelDbParser extends ExcelDbParser<LocaleNameDto, LocaleNameEntity> {
+public class LocaleNameDbExcelParser extends DbExcelParser<LocaleNameDto, LocaleNameEntity> {
 
     /**
      * 国际化名称 Service
@@ -35,26 +35,26 @@ public class LocaleNameExcelDbParser extends ExcelDbParser<LocaleNameDto, Locale
     private final LocaleNameService localeNameService;
 
     /**
-     * 构造LocaleNameExcelDbParser
+     * 构造LocaleNameDbExcelParser
      *
      * @param service            {@link IService}
      * @param currentEntityClass 当前EntityClass
      */
-    private LocaleNameExcelDbParser(IService<LocaleNameEntity> service, Class<LocaleNameEntity> currentEntityClass) {
+    private LocaleNameDbExcelParser(IService<LocaleNameEntity> service, Class<LocaleNameEntity> currentEntityClass) {
         super(service, currentEntityClass);
 
         localeNameService = SpringUtil.getBean("localeNameServiceImpl", LocaleNameService.class);
     }
 
     /**
-     * 构建LocaleNameExcelDbParser
+     * 构建LocaleNameDbExcelParser
      *
      * @param service            {@link IService}
      * @param currentEntityClass 当前EntityClass
-     * @return LocaleNameExcelDbParser
+     * @return LocaleNameDbExcelParser
      */
-    public static LocaleNameExcelDbParser of(IService<LocaleNameEntity> service, Class<LocaleNameEntity> currentEntityClass) {
-        return new LocaleNameExcelDbParser(service, currentEntityClass);
+    public static LocaleNameDbExcelParser of(IService<LocaleNameEntity> service, Class<LocaleNameEntity> currentEntityClass) {
+        return new LocaleNameDbExcelParser(service, currentEntityClass);
     }
 
     @Override

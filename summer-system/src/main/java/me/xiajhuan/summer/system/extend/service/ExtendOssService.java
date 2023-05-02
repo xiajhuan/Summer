@@ -12,6 +12,7 @@
 
 package me.xiajhuan.summer.system.extend.service;
 
+import cn.hutool.core.lang.Dict;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import me.xiajhuan.summer.system.extend.dto.ExtendOssDto;
@@ -32,8 +33,8 @@ public interface ExtendOssService extends IService<ExtendOssEntity> {
     /**
      * 批量新增
      *
-     * @param urls URL数组
+     * @param dictArray {@link Dict} 数组
      */
-    void addBatch(String[] urls);
+    void addBatch(Dict[] dictArray);
 
 }

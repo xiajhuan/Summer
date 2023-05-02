@@ -15,7 +15,7 @@ package me.xiajhuan.summer.core.oss.factory;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import me.xiajhuan.summer.core.enums.OssSupportEnum;
-import me.xiajhuan.summer.core.oss.server.OssServer;
+import me.xiajhuan.summer.core.oss.server.AbstractOssServer;
 import me.xiajhuan.summer.core.oss.server.impl.LocalOssServer;
 import me.xiajhuan.summer.core.oss.server.impl.MinIoOssServer;
 import me.xiajhuan.summer.core.oss.server.impl.QiNiuOssServer;
@@ -57,7 +57,7 @@ public class OssServerFactory {
      *
      * @return 对象存储服务
      */
-    public static OssServer getOssServer() {
+    public static AbstractOssServer getOssServer() {
         if (OSS_TYPE.equalsIgnoreCase(OssSupportEnum.LOCAL.toString())) {
             return LocalOssServer.getInstance();
         } else if (OSS_TYPE.equalsIgnoreCase(OssSupportEnum.MIN_IO.toString())) {

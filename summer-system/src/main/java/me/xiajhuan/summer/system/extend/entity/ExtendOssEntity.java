@@ -34,16 +34,25 @@ import me.xiajhuan.summer.core.enums.OssSupportEnum;
 public class ExtendOssEntity extends SimpleEntity {
 
     /**
-     * 部门ID<br>
-     * note：使用数据权限功能则必须包含此字段
+     * 部门ID
      */
     @TableField(fill = FieldFill.INSERT)
     private Long deptId;
 
     /**
+     * 文件名称
+     */
+    private String name;
+
+    /**
      * URL
      */
     private String url;
+
+    /**
+     * 路径（相对路径）
+     */
+    private String path;
 
     /**
      * 类型

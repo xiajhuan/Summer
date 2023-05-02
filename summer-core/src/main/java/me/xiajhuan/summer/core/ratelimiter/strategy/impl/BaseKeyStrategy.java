@@ -12,7 +12,12 @@
 
 package me.xiajhuan.summer.core.ratelimiter.strategy.impl;
 
+import cn.hutool.core.util.StrUtil;
 import me.xiajhuan.summer.core.ratelimiter.strategy.KeyStrategy;
+import me.xiajhuan.summer.core.utils.ServletUtil;
+import org.aspectj.lang.JoinPoint;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * <p>
@@ -44,5 +49,15 @@ public class BaseKeyStrategy implements KeyStrategy {
     }
 
     //*******************单例处理结束********************
+
+    @Override
+    public String getKey(JoinPoint point, HttpServletRequest request, String username) {
+        return StrUtil.format(KEY_FORMAT, ServletUtil.getInterfaceSignature(request), StrUtil.EMPTY);
+    }
+
+    @Override
+    public String extraMsgTemplate() {
+        return StrUtil.EMPTY;
+    }
 
 }

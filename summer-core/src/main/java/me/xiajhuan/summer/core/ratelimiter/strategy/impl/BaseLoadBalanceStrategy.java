@@ -14,6 +14,8 @@ package me.xiajhuan.summer.core.ratelimiter.strategy.impl;
 
 import me.xiajhuan.summer.core.ratelimiter.strategy.LoadBalanceStrategy;
 
+import java.math.BigDecimal;
+
 /**
  * 基本限流负载均衡策略（轮询），note：
  * <pre>
@@ -45,5 +47,11 @@ public class BaseLoadBalanceStrategy implements LoadBalanceStrategy {
     }
 
     //*******************单例处理结束********************
+
+    @Override
+    public double calRealQps(double setQps, int nodeNum) {
+        return BigDecimal.valueOf(setQps / nodeNum)
+                .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+    }
 
 }

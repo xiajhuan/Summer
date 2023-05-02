@@ -188,9 +188,10 @@ public class RateLimiterAspect {
 
                 msgTemplate = keyStrategy.extraMsgTemplate();
             } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
-                LOGGER.error(e, "key-Class【{}】获取Key失败，自动切换为基本Key策略，请参考【KeyStrategy】编写", keyStrategyClass.getSimpleName());
+                LOGGER.error(e, "key-Class【{}】获取Key失败，自动切换为基本Key策略，请参考【BaseKeyStrategy】编写", keyStrategyClass.getSimpleName());
 
-                rateLimiterKey = StrUtil.format(KeyStrategy.FORMAT, ServletUtil.getInterfaceSignature(request), StrUtil.EMPTY);
+                rateLimiterKey = StrUtil.format(KeyStrategy.KEY_FORMAT, ServletUtil.getInterfaceSignature(request), StrUtil.EMPTY);
+                msgTemplate = StrUtil.EMPTY;
             }
 
             //*******************实际Qps获取********************
@@ -225,7 +226,7 @@ public class RateLimiterAspect {
 
                 realQps = loadBalanceStrategy.calRealQps(setQps, nodeNum);
             } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
-                LOGGER.error(e, "LoadBalance-Class【{}】获取realQps失败，自动切换为基本负载均衡策略，请参考【LoadBalanceStrategy】编写", loadBalanceStrategyClass.getSimpleName());
+                LOGGER.error(e, "LoadBalance-Class【{}】获取realQps失败，自动切换为基本负载均衡策略，请参考【BaseLoadBalanceStrategy】编写", loadBalanceStrategyClass.getSimpleName());
 
                 realQps = BigDecimal.valueOf(setQps / nodeNum).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
             }

@@ -12,9 +12,9 @@
 
 package me.xiajhuan.summer.core.base.controller;
 
-import cn.hutool.core.io.file.FileNameUtil;
+import cn.hutool.core.lang.Dict;
+import me.xiajhuan.summer.core.oss.server.AbstractOssServer;
 import me.xiajhuan.summer.core.exception.code.ErrorCode;
-import me.xiajhuan.summer.core.exception.custom.FileUploadException;
 import me.xiajhuan.summer.core.exception.custom.ValidationException;
 import me.xiajhuan.summer.core.oss.factory.OssServerFactory;
 import me.xiajhuan.summer.core.properties.BatchLimitProperties;
@@ -22,7 +22,6 @@ import me.xiajhuan.summer.core.utils.AssertUtil;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import java.io.IOException;
 import java.util.Arrays;
 
 /**
@@ -30,7 +29,7 @@ import java.util.Arrays;
  *
  * @author xiajhuan
  * @date 2023/4/8
- * @see FileNameUtil
+ * @see AbstractOssServer#upload(MultipartFile, String)
  */
 public abstract class BaseController {
 
@@ -49,28 +48,47 @@ public abstract class BaseController {
     }
 
     /**
-     * 多文件上传
+     * 多文件上传，默认逻辑空间名
      *
      * @param files {@link MultipartFile} 数组
-     * @return 存储的URL数组
+     * @return {@link Dict} 数组
      */
-    protected String[] multiFileUpload(MultipartFile[] files) {
-        return Arrays.stream(files).map(this::fileUpload).toArray(String[]::new);
+    protected Dict[] multiFileUpload(MultipartFile[] files) {
+        return multiFileUpload(files, null);
     }
 
     /**
-     * 文件上传
+     * 文件上传，默认逻辑空间名
      *
      * @param file {@link MultipartFile}
-     * @return 存储的URL
+     * @return {@link Dict}
      */
-    protected String fileUpload(MultipartFile file) {
-        try {
-            return OssServerFactory.getOssServer().upload(file.getBytes(),
-                    FileNameUtil.getSuffix(file.getOriginalFilename()));
-        } catch (IOException e) {
-            throw FileUploadException.of(e);
-        }
+    protected Dict fileUpload(MultipartFile file) {
+        return fileUpload(file, null);
+    }
+
+    /**
+     * 多文件上传，指定逻辑空间名
+     *
+     * @param files      {@link MultipartFile} 数组
+     * @param bucketName 逻辑空间名
+     * @return {@link Dict} 数组
+     */
+    protected Dict[] multiFileUpload(MultipartFile[] files, String bucketName) {
+        return Arrays.stream(files)
+                .map(file -> fileUpload(file, bucketName))
+                .toArray(Dict[]::new);
+    }
+
+    /**
+     * 文件上传，指定逻辑空间名
+     *
+     * @param file       {@link MultipartFile}
+     * @param bucketName 逻辑空间名
+     * @return {@link Dict}
+     */
+    protected Dict fileUpload(MultipartFile file, String bucketName) {
+        return OssServerFactory.getOssServer().upload(file, bucketName);
     }
 
 }

@@ -12,8 +12,6 @@
 
 package me.xiajhuan.summer.core.ratelimiter.strategy;
 
-import java.math.BigDecimal;
-
 /**
  * 限流负载均衡策略<br>
  * note：通过实现该接口覆写 {@link LoadBalanceStrategy#calRealQps} 可以个性化自己的限流负载均衡策略
@@ -30,9 +28,6 @@ public interface LoadBalanceStrategy {
      * @param nodeNum 节点数
      * @return 实际的Qps
      */
-    default double calRealQps(double setQps, int nodeNum) {
-        // Polling Strategy -> realQps = setQps / nodeNum
-        return BigDecimal.valueOf(setQps / nodeNum).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
-    }
+    double calRealQps(double setQps, int nodeNum);
 
 }

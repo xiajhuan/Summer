@@ -18,8 +18,8 @@ import com.alibaba.excel.EasyExcelFactory;
 import com.alibaba.excel.context.AnalysisContext;
 import com.baomidou.mybatisplus.extension.service.IService;
 import me.xiajhuan.summer.core.excel.parser.AbstractExcelParser;
-import me.xiajhuan.summer.core.excel.parser.subClass.ExcelCacheParser;
-import me.xiajhuan.summer.core.excel.parser.subClass.ExcelDbParser;
+import me.xiajhuan.summer.core.excel.parser.subClass.CacheExcelParser;
+import me.xiajhuan.summer.core.excel.parser.subClass.DbExcelParser;
 import me.xiajhuan.summer.core.exception.code.ErrorCode;
 import me.xiajhuan.summer.core.exception.custom.FileDownloadException;
 import me.xiajhuan.summer.core.exception.custom.FileUploadException;
@@ -57,7 +57,7 @@ public class ExcelUtil extends EasyExcelFactory {
      */
     @SuppressWarnings("unchecked")
     public static <D, T> void importDb(MultipartFile file, Class<D> dtoClass, IService<T> service, Class<T> entityClass) {
-        importDb(file, dtoClass, ExcelDbParser.build(service, entityClass));
+        importDb(file, dtoClass, DbExcelParser.build(service, entityClass));
     }
 
     /**
@@ -65,14 +65,14 @@ public class ExcelUtil extends EasyExcelFactory {
      *
      * @param file           {@link MultipartFile}
      * @param dtoClass       DtoClass
-     * @param customDbParser 自定义DbParser，需继承 {@link ExcelDbParser}，可覆写：
+     * @param customDbParser 自定义DbExcelParser，需继承 {@link DbExcelParser}，可覆写：
      *                       {@link AbstractExcelParser#handleDtoBefore(Object, AnalysisContext)}，
      *                       {@link AbstractExcelParser#handleEntityListBefore()}，
      *                       {@link AbstractExcelParser#handleEntityListAfter()}
      * @param <D>            Dto类型
      * @param <T>            Entity类型
      */
-    public static <D, T> void importDb(MultipartFile file, Class<D> dtoClass, ExcelDbParser<D, T> customDbParser) {
+    public static <D, T> void importDb(MultipartFile file, Class<D> dtoClass, DbExcelParser<D, T> customDbParser) {
         try {
             read(file.getInputStream(), dtoClass, customDbParser).sheet().doRead();
         } catch (IOException e) {
@@ -91,7 +91,7 @@ public class ExcelUtil extends EasyExcelFactory {
      */
     @SuppressWarnings("unchecked")
     public static <D, T> void importCache(MultipartFile file, Class<D> dtoClass, Class<T> entityClass) {
-        importCache(file, dtoClass, ExcelCacheParser.build(entityClass));
+        importCache(file, dtoClass, CacheExcelParser.build(entityClass));
     }
 
     /**
@@ -99,14 +99,14 @@ public class ExcelUtil extends EasyExcelFactory {
      *
      * @param file              {@link MultipartFile}
      * @param dtoClass          DtoClass
-     * @param customCacheParser 自定义CacheParser，需继承 {@link ExcelCacheParser}，可覆写：
+     * @param customCacheParser 自定义CacheExcelParser，需继承 {@link CacheExcelParser}，可覆写：
      *                          {@link AbstractExcelParser#handleDtoBefore(Object, AnalysisContext)}，
      *                          {@link AbstractExcelParser#handleEntityListBefore()}，
      *                          {@link AbstractExcelParser#handleEntityListAfter()}
      * @param <D>               Dto类型
      * @param <T>               Entity类型
      */
-    public static <D, T> void importCache(MultipartFile file, Class<D> dtoClass, ExcelCacheParser<D, T> customCacheParser) {
+    public static <D, T> void importCache(MultipartFile file, Class<D> dtoClass, CacheExcelParser<D, T> customCacheParser) {
         try {
             read(file.getInputStream(), dtoClass, customCacheParser).sheet().doRead();
         } catch (IOException e) {
