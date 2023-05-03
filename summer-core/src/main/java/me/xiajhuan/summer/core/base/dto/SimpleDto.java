@@ -41,7 +41,7 @@ public abstract class SimpleDto implements Serializable {
     private Long id;
 
     /**
-     * Json参数
+     * Json格式参数
      */
     @Json(groups = {AddGroup.class, UpdateGroup.class})
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

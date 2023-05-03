@@ -42,7 +42,7 @@ public class ContentTypeInterceptor implements HandlerInterceptor {
     private final Set<String> contentTypeSet = CollUtil.newHashSet();
 
     /**
-     * 构造ContentTypeInterceptor
+     * 构造私有化
      *
      * @param setting {@link Setting}
      */

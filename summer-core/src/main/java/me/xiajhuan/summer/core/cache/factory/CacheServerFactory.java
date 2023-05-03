@@ -29,7 +29,7 @@ import me.xiajhuan.summer.core.properties.ApplicationProperties;
 public class CacheServerFactory {
 
     /**
-     * 构造CacheServerFactory（不允许实例化）
+     * 不允许实例化
      */
     private CacheServerFactory() {
     }
@@ -39,14 +39,11 @@ public class CacheServerFactory {
      */
     private static String CACHE_TYPE;
 
-    /**
-     * 初始化 {@link CACHE_TYPE}
-     */
     static {
         CACHE_TYPE = SpringUtil.getBean("applicationProperties", ApplicationProperties.class)
                 .getCache().getType();
         if (StrUtil.isBlank(CACHE_TYPE)) {
-            // 没有配置则默认为：REDIS
+            // 没有配置则默认为REDIS
             CACHE_TYPE = CacheConst.Type.REDIS;
         }
     }
@@ -68,12 +65,14 @@ public class CacheServerFactory {
 
     /**
      * 获取Redis缓存服务，note：
-     * <pre>
-     *   1.当缓存类型为“REDIS”时，若有分级缓存需求，可以通过该方法获取Redis缓存服务
-     *   2.当没有分级缓存需求时，推荐使用 {@link CacheServerFactory#getCacheServer()}，
+     * <ul>
+     *   <li>当缓存类型为REDIS时，若有分级缓存需求，可以通过该方法获取Redis缓存服务</li>
+     *   <li>
+     *     当没有分级缓存需求时，推荐使用{@link CacheServerFactory#getCacheServer()}，<br>
      *     这将便于在缓存类型切换时保证代码通用
-     *   3.当缓存类型不为“REDIS”时将抛出 {@link UnsupportedOperationException}
-     * </pre>
+     *   </li>
+     *   <li>当缓存类型不为REDIS时将抛出{@link UnsupportedOperationException}</li>
+     * </ul>
      *
      * @return Redis缓存服务
      */
@@ -86,11 +85,13 @@ public class CacheServerFactory {
 
     /**
      * 获取堆内缓存服务，note：
-     * <pre>
-     *   1.当缓存类型为“REDIS”时，若有分级缓存需求，可以通过该方法获取堆内缓存服务
-     *   2.当缓存类型为“HEAP”时，推荐使用 {@link CacheServerFactory#getCacheServer()}，
+     * <ul>
+     *   <li>当缓存类型为REDIS时，若有分级缓存需求，可以通过该方法获取堆内缓存服务</li>
+     *   <li>
+     *     当缓存类型为HEAP时，推荐使用{@link CacheServerFactory#getCacheServer()}，<br>
      *     这将便于在缓存类型切换时保证代码通用
-     * </pre>
+     *   </li>
+     * </ul>
      *
      * @return 堆内缓存服务
      */

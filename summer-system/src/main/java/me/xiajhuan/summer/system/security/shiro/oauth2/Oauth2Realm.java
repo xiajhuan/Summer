@@ -15,7 +15,6 @@ package me.xiajhuan.summer.system.security.shiro.oauth2;
 import cn.hutool.core.collection.CollUtil;
 import me.xiajhuan.summer.core.cache.factory.CacheServerFactory;
 import me.xiajhuan.summer.core.cache.server.CacheServer;
-import me.xiajhuan.summer.core.constant.SecurityConst;
 import me.xiajhuan.summer.core.data.LoginUser;
 import me.xiajhuan.summer.core.exception.code.ErrorCode;
 import me.xiajhuan.summer.core.utils.LocaleUtil;
@@ -60,7 +59,7 @@ public class Oauth2Realm extends AuthorizingRealm {
         }
 
         // 获取登录用户信息
-        final LoginUser loginUser = (LoginUser) cacheServer.getHash(loginInfo(Long.parseLong(userId)), SecurityConst.LoginInfo.LOGIN_USER);
+        final LoginUser loginUser = (LoginUser) cacheServer.getHash(loginInfo(Long.parseLong(userId)), "loginUser");
 
         return new SimpleAuthenticationInfo(loginUser, accessToken, getName());
     }

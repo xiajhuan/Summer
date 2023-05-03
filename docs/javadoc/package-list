@@ -27,6 +27,9 @@ me.xiajhuan.summer.core.mp.handler
 me.xiajhuan.summer.core.mp.helper
 me.xiajhuan.summer.core.mp.injector
 me.xiajhuan.summer.core.mp.mapper
+me.xiajhuan.summer.core.oss.factory
+me.xiajhuan.summer.core.oss.server
+me.xiajhuan.summer.core.oss.server.impl
 me.xiajhuan.summer.core.properties
 me.xiajhuan.summer.core.ratelimiter.annotation
 me.xiajhuan.summer.core.ratelimiter.aspect

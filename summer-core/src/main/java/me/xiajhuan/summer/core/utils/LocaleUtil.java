@@ -27,23 +27,21 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Locale;
 
 /**
- * 国际化工具
- * <p>
- * Locale：表示特定的地理，政治，或文化区域
- * 优先级从上到下依次：
- * <pre>
- *   1.请求头“Accept-Language”有值且以“zh”或“en”开头，
- *     以“Accept-Language”为准
- *   2.请求头“Accept-Language”没有值或有值但不以“zh”或“en”开头，
- *     以服务器JVM设置的值为准 {@link Locale#getDefault()}
- *   3.满足2但JVM设置的值语言不为“zh”或“en”，
- *     以core.setting中extra-default配置值为准
- * </pre>
- * </p>
+ * 国际化工具<br>
+ * Locale：表示特定的地理、政治或文化区域，{@link LocaleUtil#getLocalePriority()}的优先级规则如下：
+ * <ul>
+ *   <li>请求头“Accept-Language”有值且以“zh”或“en”开头，以“Accept-Language”的值为准</li>
+ *   <li>
+ *     请求头“Accept-Language”没有值或有值但不以“zh”或“en”开头，<br>
+ *     以服务器JVM为准，JVM设置值参考{@link Locale#getDefault()}
+ *   </li>
+ *   <li>JVM语言不为“zh”或“en”，以core.setting中extra-default配置的值为准</li>
+ * </ul>
  *
  * @author xiajhuan
  * @date 2023/2/24
  * @see Locale
+ * @see MessageSource
  * @see LocaleSupportEnum
  */
 public class LocaleUtil {
@@ -51,19 +49,19 @@ public class LocaleUtil {
     private static final Log LOGGER = LogFactory.get();
 
     /**
-     * 构造LocaleUtil（不允许实例化）
+     * 不允许实例化
      */
     private LocaleUtil() {
     }
 
     /**
-     * {@link MessageSource}
+     * 消息管理器
      */
     private static final MessageSource MESSAGE_SOURCE;
 
     /**
-     * 请求头“Accept-Language”的值的语言是中英文以外时的默认值<br>
-     * note：此默认值只适用于 {@link LocaleUtil#getAcceptLanguage(HttpServletRequest)}
+     * 请求头“Accept-Language”的语言是中英文以外时的默认值<br>
+     * note：此默认值只适用于{@link LocaleUtil#getAcceptLanguage(HttpServletRequest)}
      */
     private static String defaultRequestHeader;
 
@@ -72,9 +70,6 @@ public class LocaleUtil {
      */
     private static String defaultJvm;
 
-    /**
-     * 初始化 {@link MESSAGE_SOURCE} {@link defaultRequestHeader} {@link defaultJvm}
-     */
     static {
         MESSAGE_SOURCE = SpringUtil.getBean("messageSource", MessageSource.class);
 
@@ -94,7 +89,7 @@ public class LocaleUtil {
     /**
      * 获取国际化消息
      *
-     * @param code   错误编码 {@link ErrorCode}
+     * @param code   错误编码，参考{@link ErrorCode}
      * @param params 消息填充参数
      * @return 国际化消息
      */
@@ -106,7 +101,7 @@ public class LocaleUtil {
      * 获取国际化消息
      *
      * @param locale {@link Locale}
-     * @param code   错误编码 {@link ErrorCode}
+     * @param code   错误编码，参考{@link ErrorCode}
      * @param params 消息填充参数
      * @return 国际化消息
      */
@@ -115,16 +110,16 @@ public class LocaleUtil {
     }
 
     /**
-     * 根据优先级获取 {@link Locale}
+     * 根据优先级获取{@link Locale}
      *
      * @return {@link Locale}
      */
     public static Locale getLocalePriority() {
-        // 优先取请求头“Accept-Language”的值
+        // 优先获取请求头“Accept-Language”的值
         Locale locale = getLocaleAcceptLanguage(ServletUtil.getHttpRequest());
 
         if (locale == null) {
-            // 取JVM设置的值
+            // 获取JVM的值
             locale = Locale.getDefault();
 
             // 中国（中文）
@@ -138,7 +133,7 @@ public class LocaleUtil {
                 // 所有英文地区，强制为：美国（英语）
                 locale = americaLocale;
             } else {
-                LOGGER.warn("中英文以外的地区【{}】，自动调整为默认地区【{}】", locale.toString(), defaultJvm);
+                LOGGER.warn("中英文以外地区【{}】，自动调整为默认地区【{}】", locale.toString(), defaultJvm);
 
                 locale = LocaleSupportEnum.ZH_CN.getName().equalsIgnoreCase(defaultJvm)
                         ? chineseLocale : americaLocale;
@@ -161,16 +156,16 @@ public class LocaleUtil {
     }
 
     /**
-     * 根据请求头“Accept-Language”获取 {@link Locale}
+     * 根据请求头“Accept-Language”获取{@link Locale}
      *
      * @param request {@link HttpServletRequest}
-     * @return {@link Locale} 或 {@code null}
+     * @return {@link Locale}或{@code null}
      */
     private static Locale getLocaleAcceptLanguage(HttpServletRequest request) {
         if (request == null) {
             return null;
         }
-        // 请求语言
+        // 请求的地区语言
         String languageHeader = request.getHeader(HttpHeaders.ACCEPT_LANGUAGE);
         if (languageHeader != null && languageHeader.length() >= 2) {
             if ("zh".equalsIgnoreCase(languageHeader.substring(0, 2))) {

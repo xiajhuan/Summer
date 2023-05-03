@@ -34,7 +34,7 @@ public abstract class SimpleEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 主键ID，默认策略：分配ID（雪花算法）
+     * 主键ID，默认策略为分配ID（雪花算法）
      *
      * @see IdType
      */
@@ -42,8 +42,7 @@ public abstract class SimpleEntity implements Serializable {
     private Long id;
 
     /**
-     * 创建者<br>
-     * note：使用数据权限功能则必须包含此字段
+     * 创建者（数据权限必须包含此字段）
      */
     @TableField(fill = FieldFill.INSERT, value = "create_by")
     private String createBy;

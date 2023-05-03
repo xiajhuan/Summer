@@ -74,8 +74,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     private boolean enableInjectionFilter;
 
     /**
-     * 初始化 {@link allowedMethodArray} {@link maxAge} {@link enableContentTypeFilter}<br>
-     * {@link enableFileUploadFilter} {@link enableInjectionFilter}
+     * 初始化
      */
     @PostConstruct
     private void init() {

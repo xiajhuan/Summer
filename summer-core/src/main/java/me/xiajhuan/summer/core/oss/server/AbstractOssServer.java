@@ -44,7 +44,7 @@ public abstract class AbstractOssServer {
     protected String defaultBucketName;
 
     /**
-     * 构造AbstractOssServer
+     * 构造保护化
      */
     protected AbstractOssServer() {
     }
@@ -53,7 +53,7 @@ public abstract class AbstractOssServer {
      * 上传，使用默认逻辑空间名
      *
      * @param multipartFile {@link MultipartFile}
-     * @return {@link Dict}或 {@code null}，{@link Dict} 包含的Key有：<br>
+     * @return {@link Dict}或{@code null}，{@link Dict}包含的Key有：<br>
      * 【type（类型）,name（文件名称）,path（路径（相对路径））,url（URL）】
      */
     public Dict upload(MultipartFile multipartFile) {
@@ -65,7 +65,7 @@ public abstract class AbstractOssServer {
      *
      * @param multipartFile {@link MultipartFile}
      * @param bucketName    逻辑空间名
-     * @return {@link Dict}或 {@code null}，{@link Dict} 包含的Key有：<br>
+     * @return {@link Dict}或{@code null}，{@link Dict}包含的Key有：<br>
      * 【type（类型）,name（文件名称）,path（路径（相对路径））,url（URL）】
      */
     public Dict upload(MultipartFile multipartFile, String bucketName) {
@@ -89,7 +89,7 @@ public abstract class AbstractOssServer {
     }
 
     /**
-     * 获取对象存储类型 {@link OssSupportEnum}
+     * 获取对象存储类型，参考{@link OssSupportEnum}
      *
      * @return 对象存储类型
      */
@@ -123,10 +123,10 @@ public abstract class AbstractOssServer {
     protected abstract String uploadInternal(InputStream inputStream, String bucketName, String path);
 
     /**
-     * 获取实际的逻辑空间名
+     * 获取实际逻辑空间名
      *
      * @param bucketName 逻辑空间名
-     * @return 实际的逻辑空间名
+     * @return 实际逻辑空间名
      */
     protected String getRealBucketName(String bucketName) {
         if (bucketName == null) {

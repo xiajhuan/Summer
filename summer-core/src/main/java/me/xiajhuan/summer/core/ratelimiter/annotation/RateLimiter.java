@@ -24,11 +24,13 @@ import java.lang.annotation.*;
 
 /**
  * 限流注解，note：
- * <pre>
- *   1.添加了 {@link AliasFor} 必须通过 {@link AnnotationUtils} 获取，才会生效
- *   2.msg/keyStrategy/loadBalanceStrategy/nodeNum/timeout的生效优先级为：
+ * <ul>
+ *   <li>添加了{@link AliasFor}必须通过{@link AnnotationUtils}获取才会生效</li>
+ *   <li>
+ *     msg/keyStrategy/loadBalanceStrategy/nodeNum/timeout的生效优先级为：<br>
  *     注解中设置的 > core.setting中配置的
- * </pre>
+ *   </li>
+ * </ul>
  *
  * @author xiajhuan
  * @date 2022/12/1
@@ -44,8 +46,7 @@ public @interface RateLimiter {
     double value() default NOT_LIMITED;
 
     /**
-     * query per second<br>
-     * note：必须大于0才能生效
+     * query per second（必须大于0才生效）
      */
     @AliasFor("value")
     double qps() default NOT_LIMITED;
@@ -79,7 +80,7 @@ public @interface RateLimiter {
 
     /**
      * 尝试获取令牌的超时时长（ms）<br>
-     * note：为0，则只尝试获取一次，大于0时如果获取不到则自旋至超时
+     * note：为0则只尝试获取一次，大于0时如果获取不到则自旋至超时
      */
     long timeout() default -1L;
 

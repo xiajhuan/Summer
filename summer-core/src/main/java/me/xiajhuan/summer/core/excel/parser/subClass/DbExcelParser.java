@@ -17,7 +17,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import me.xiajhuan.summer.core.excel.parser.AbstractExcelParser;
 
 /**
- * Excel数据解析（保存到Db），note：
+ * Excel解析（保存到Db），note：
  * <pre>
  *   想个性化前/后置处理，请自定义Parser继承当前类，可覆写：
  *   {@link AbstractExcelParser#handleDtoBefore(Object, AnalysisContext)}，
@@ -31,7 +31,7 @@ import me.xiajhuan.summer.core.excel.parser.AbstractExcelParser;
 public class DbExcelParser<D, T> extends AbstractExcelParser<D, T> {
 
     /**
-     * {@link IService}，提供Db保存接口
+     * Service
      */
     protected IService<T> service;
 
@@ -41,7 +41,7 @@ public class DbExcelParser<D, T> extends AbstractExcelParser<D, T> {
     protected Class<T> currentEntityClass;
 
     /**
-     * 构造DbExcelParser
+     * 构造保护化
      *
      * @param service            {@link IService}
      * @param currentEntityClass 当前EntityClass

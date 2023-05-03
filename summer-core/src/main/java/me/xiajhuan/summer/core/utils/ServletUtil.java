@@ -30,7 +30,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
 
 /**
- * Servlet相关工具
+ * Servlet工具
  *
  * @author xiajhuan
  * @date 2023/3/30
@@ -39,7 +39,7 @@ import java.util.Arrays;
 public class ServletUtil extends cn.hutool.extra.servlet.ServletUtil {
 
     /**
-     * 构造ServletUtil（不允许实例化）
+     * 不允许实例化
      */
     private ServletUtil() {
     }
@@ -47,7 +47,7 @@ public class ServletUtil extends cn.hutool.extra.servlet.ServletUtil {
     /**
      * 获取HTTP请求
      *
-     * @return {@link HttpServletRequest} 或 {@code null}
+     * @return {@link HttpServletRequest}或{@code null}
      */
     public static HttpServletRequest getHttpRequest() {
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
@@ -104,16 +104,16 @@ public class ServletUtil extends cn.hutool.extra.servlet.ServletUtil {
     }
 
     /**
-     * 获取请求参数（切入点方法），参数格式示例：
-     * <pre>
-     *   1.Query -> Query【pageNum=1&pageSize=10】
-     *   2.Form-Data -> Form-Data【pageNum=1&pageSize=10】 或 Form-Data【status=1【文件上传】】
-     *   3.Json -> Json【{...}】 或 Json【[...]】
-     *   4.Xml -> Xml【...】
-     *   5.Javascript -> Javascript【...】
-     *   6.Text -> Text【...】
-     *   7.Html -> Html【...】
-     * </pre>
+     * 获取请求参数（切入点方法），参数格式如下：
+     * <ul>
+     *   <li>Query：Query【pageNum=1&pageSize=10】</li>
+     *   <li>Form-Data：Form-Data【pageNum=1&pageSize=10】或Form-Data【status=1【文件上传】】</li>
+     *   <li>Json：Json【{...}】或Json【[...]】</li>
+     *   <li>Xml：Xml【...】</li>
+     *   <li>Javascript：Javascript【...】</li>
+     *   <li>Text：Text【...】</li>
+     *   <li>Html：Html【...】</li>
+     * </ul>
      *
      * @param point   {@link JoinPoint}
      * @param request {@link HttpServletRequest}
@@ -121,7 +121,7 @@ public class ServletUtil extends cn.hutool.extra.servlet.ServletUtil {
      * @see ContentTypeConst
      */
     public static String getParamPoint(JoinPoint point, HttpServletRequest request) {
-        // 请求参数，note：这里如果没有参数会返回空数组
+        // 请求参数，note：如果没有参数会返回空数组
         Object[] args = point.getArgs();
 
         if (request != null && args.length > 0) {
@@ -201,17 +201,17 @@ public class ServletUtil extends cn.hutool.extra.servlet.ServletUtil {
 
     /**
      * 获取表单参数，若包含文件上传则末尾标记【文件上传】<br>
-     * 参数格式示例：Form-Data【pageNum=1&pageSize=10】 或 Form-Data【status=1【文件上传】】
+     * 参数格式示例：Form-Data【pageNum=1&pageSize=10】或Form-Data【status=1【文件上传】】
      *
      * @param args 参数数组
-     * @return 表单参数或 {@code null}
+     * @return 表单参数或{@code null}
      */
     private static String getFormParam(Object[] args) {
-        // 排除参数值为空的参数（包括空数组）
+        // 排除值为空的参数（包括空数组）
         args = Arrays.stream(args).filter(ObjectUtil::isNotEmpty).toArray();
 
         if (args.length > 0) {
-            // 标记是否为文件上传，true：不是 false：是
+            // 标记是否为文件上传，true：否 false：是
             boolean notMultipart = true;
 
             StringBuilder formParam = StrUtil.builder();

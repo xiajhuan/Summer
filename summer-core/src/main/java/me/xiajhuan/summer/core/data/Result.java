@@ -34,28 +34,28 @@ public class Result<T> implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 构造Result
+     * 构造私有化
      */
     private Result() {
     }
 
     /**
-     * 响应是否成功，成功：“1” 失败：“0”
+     * 状态，“1”：成功 “0”：失败
      */
     private String code;
 
     /**
-     * 响应消息
+     * 消息
      */
     private String msg;
 
     /**
-     * 响应数据
+     * 数据
      */
     private T data;
 
     /**
-     * 成功（不带数据），默认消息：“操作成功”
+     * 成功（不带数据），默认消息为“操作成功”
      *
      * @return 响应结果
      */
@@ -64,10 +64,10 @@ public class Result<T> implements Serializable {
     }
 
     /**
-     * 成功（带数据）（不带消息）
+     * 成功（带数据、不带消息）
      *
-     * @param data 响应数据
-     * @param <T>  响应数据类型
+     * @param data 数据
+     * @param <T>  数据类型
      * @return 响应结果
      */
     public static <T> Result<T> ofSuccess(T data) {
@@ -75,8 +75,8 @@ public class Result<T> implements Serializable {
     }
 
     /**
-     * 成功（不带数据）（消息国际化）<br>
-     * note：预留方法，需自定义成功消息的国际化编码，如：{@link SuccessCode#OPERATION}
+     * 成功（不带数据、消息国际化）<br>
+     * note：预留方法，需自定义成功消息编码，参考{@link SuccessCode#OPERATION}
      *
      * @param code  成功编码
      * @param param 消息填充参数
@@ -87,7 +87,7 @@ public class Result<T> implements Serializable {
     }
 
     /**
-     * 成功（不带数据）（带消息）
+     * 成功（不带数据、带消息）
      *
      * @param msg 消息
      * @return 响应结果
@@ -97,13 +97,13 @@ public class Result<T> implements Serializable {
     }
 
     /**
-     * 成功（带数据）（消息国际化）<br>
-     * note：预留方法，需自定义成功消息的国际化编码，如：{@link SuccessCode#OPERATION}
+     * 成功（带数据、消息国际化）<br>
+     * note：预留方法，需自定义成功消息编码，参考{@link SuccessCode#OPERATION}
      *
-     * @param data  响应数据
+     * @param data  数据
      * @param code  成功编码
      * @param param 消息填充参数
-     * @param <T>   响应数据类型
+     * @param <T>   数据类型
      * @return 响应结果
      */
     public static <T> Result<T> ofSuccess(T data, int code, String... param) {
@@ -111,11 +111,11 @@ public class Result<T> implements Serializable {
     }
 
     /**
-     * 成功（带数据）（带消息）
+     * 成功（带数据、带消息）
      *
-     * @param data 响应数据
+     * @param data 数据
      * @param msg  消息
-     * @param <T>  响应数据类型
+     * @param <T>  数据类型
      * @return 响应结果
      */
     public static <T> Result<T> ofSuccess(T data, String msg) {
@@ -127,7 +127,7 @@ public class Result<T> implements Serializable {
     }
 
     /**
-     * 失败（不带数据），默认消息：“操作失败”
+     * 失败（不带数据），默认消息为“操作失败”
      *
      * @return 响应结果
      */
@@ -136,9 +136,9 @@ public class Result<T> implements Serializable {
     }
 
     /**
-     * 失败（不带数据）（消息国际化）
+     * 失败（不带数据、消息国际化）
      *
-     * @param code  错误编码 {@link ErrorCode}
+     * @param code  错误编码，参考{@link ErrorCode}
      * @param param 消息填充参数
      * @return 响应结果
      */
@@ -147,7 +147,7 @@ public class Result<T> implements Serializable {
     }
 
     /**
-     * 失败（不带数据）（带消息）
+     * 失败（不带数据、带消息）
      *
      * @param msg 消息
      * @return 响应结果
@@ -157,12 +157,12 @@ public class Result<T> implements Serializable {
     }
 
     /**
-     * 失败（带数据）（消息国际化）
+     * 失败（带数据、消息国际化）
      *
-     * @param data  响应数据
-     * @param code  错误编码 {@link ErrorCode}
+     * @param data  数据
+     * @param code  错误编码，参考{@link ErrorCode}
      * @param param 消息填充参数
-     * @param <T>   响应数据类型
+     * @param <T>   数据类型
      * @return 响应结果
      */
     public static <T> Result<T> ofFail(T data, int code, String... param) {
@@ -170,11 +170,11 @@ public class Result<T> implements Serializable {
     }
 
     /**
-     * 失败（带数据）（带消息）
+     * 失败（带数据、带消息）
      *
-     * @param data 响应数据
+     * @param data 数据
      * @param msg  消息
-     * @param <T>  响应数据类型
+     * @param <T>  数据类型
      * @return 响应结果
      */
     public static <T> Result<T> ofFail(T data, String msg) {

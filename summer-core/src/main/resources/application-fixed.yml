@@ -118,7 +118,7 @@ batch:
     excel-max-export: 40000
 
 fail:
-  # 失败重试次数
+  # 失败重试数
   retry-times:
     # 乐观锁
     optimistic-lock: 20

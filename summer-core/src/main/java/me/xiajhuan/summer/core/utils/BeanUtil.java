@@ -26,15 +26,15 @@ import java.util.List;
 public class BeanUtil extends cn.hutool.core.bean.BeanUtil {
 
     /**
-     * 构造BeanUtil（不允许实例化）
+     * 不允许实例化
      */
     private BeanUtil() {
     }
 
     /**
-     * 单一对象转换
+     * 转换（单一对象）
      *
-     * @param source 源
+     * @param source 源对象
      * @param target 目标Class
      * @param <T>    目标类型
      * @return 目标对象
@@ -44,7 +44,7 @@ public class BeanUtil extends cn.hutool.core.bean.BeanUtil {
     }
 
     /**
-     * 列表对象转换
+     * 转换（对象列表）
      *
      * @param sourceList 源列表
      * @param target     目标Class
@@ -56,7 +56,7 @@ public class BeanUtil extends cn.hutool.core.bean.BeanUtil {
     }
 
     /**
-     * 分页对象转换
+     * 转换（分页对象）
      *
      * @param page   {@link Page}
      * @param target 目标Class

@@ -43,7 +43,7 @@ public class TreeConst {
         /**
          * 行政区域
          */
-        public static final String[] REGION = {"level"};
+        public static final String[] REGION = {"level", "createTime"};
 
     }
 

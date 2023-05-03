@@ -33,9 +33,8 @@ public class QuartzStartupProperties {
     /**
      * 是否自动启动，true：是 false：否
      * <p>
-     * note：仅推荐在不需要定时任务执行的开发/测试环境下设置为“false”，可通过调用
-     * {@link Scheduler#start()} 或 {@link Scheduler#startDelayed(int)}
-     * 手动启动定时任务
+     * note：仅推荐在不需要定时任务执行的开发/测试环境下设置为false，
+     * 可通过调用{@link Scheduler#start()}或{@link Scheduler#startDelayed(int)}手动启动
      * </p>
      */
     private boolean auto = true;

@@ -31,7 +31,7 @@ import java.util.concurrent.TimeUnit;
 public class RedisCacheServer implements CacheServer {
 
     /**
-     * {@link RedisTemplate}
+     * Redis模板
      */
     private final RedisTemplate redisTemplate;
 

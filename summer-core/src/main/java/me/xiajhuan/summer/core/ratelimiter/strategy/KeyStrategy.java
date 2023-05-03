@@ -20,11 +20,16 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * 限流Key策略，note：
- * <pre>
- *   1.通过实现该接口覆写 {@link KeyStrategy#getKey} 可以个性化自己的限流Key策略
- *   2.所有Key必须以“接口签名#”作为前缀，接口签名参考：
+ * <ul>
+ *   <li>
+ *     通过实现该接口覆写{@link KeyStrategy#getKey}和<br>
+ *     {@link KeyStrategy#extraMsgTemplate()}可个性化自己的限流Key策略
+ *   </li>
+ *   <li>
+ *     所有Key必须以“接口签名#”作为前缀，接口签名参考<br>
  *     {@link ServletUtil#getInterfaceSignature(HttpServletRequest)}
- * </pre>
+ *   </li>
+ * </ul>
  *
  * @author xiajhuan
  * @date 2022/12/4
@@ -38,7 +43,7 @@ public interface KeyStrategy {
 
     /**
      * 获取限流key<br>
-     * note：这里为了切面 {@link RateLimiterAspect} 代码通用必须包含3个参数（固定写法）
+     * note：这里为了切面{@link RateLimiterAspect}代码通用必须包含3个参数（固定写法）
      *
      * @param point    {@link JoinPoint}
      * @param request  {@link HttpServletRequest}
@@ -48,7 +53,7 @@ public interface KeyStrategy {
     String getKey(JoinPoint point, HttpServletRequest request, String username);
 
     /**
-     * 限流日志附加消息模板<br>
+     * 附加消息模板<br>
      * 格式：，Key-xxx【{}】，如：，Key-IP【{}】
      *
      * @return 附加消息模板

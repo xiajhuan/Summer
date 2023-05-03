@@ -33,30 +33,29 @@ import java.util.stream.Collectors;
 
 /**
  * 树形结构工具
- * <pre>
- *   1.Dto类型必须继承 {@link TreeDto}
- *   2.【id,parentId,name,weight】以外的属性都为扩展属性
- *   3.扩展属性在 {@link TreeConst.Extra} 中统一配置
- * </pre>
+ * <ul>
+ *   <li>Dto必须继承{@link TreeDto}</li>
+ *   <li>【id,parentId,name,weight】以外的属性都为扩展属性</li>
+ *   <li>扩展属性在{@link TreeConst.Extra}中统一配置</li>
+ * </ul>
  *
  * @author xiajhuan
  * @date 2023/3/10
  * @see cn.hutool.core.lang.tree.TreeUtil
+ * @see ReflectUtil
  */
 public class TreeUtil extends cn.hutool.core.lang.tree.TreeUtil {
 
     private static final Log LOGGER = LogFactory.get();
 
     /**
-     * 构造TreeUtil（不允许实例化）
+     * 不允许实例化
      */
     private TreeUtil() {
     }
 
     /**
-     * 树形结构配置
-     *
-     * @see TreeNodeConfig
+     * 树形结构配置，参考{@link TreeNodeConfig}
      */
     private static final TreeNodeConfig config = TreeNodeConfig.DEFAULT_CONFIG.setDeep(5);
 
@@ -110,13 +109,13 @@ public class TreeUtil extends cn.hutool.core.lang.tree.TreeUtil {
     }
 
     /**
-     * 获取扩展属性的Getter Map<br>
+     * 获取扩展属性的Getter<br>
      * Key：扩展属性 Value：扩展属性的Getter
      *
      * @param dtoClass   DtoClass
      * @param extraField 扩展属性
      * @param <D>        Dto类型
-     * @return 扩展属性的Getter Map
+     * @return 扩展属性的Getter
      */
     private static <D extends TreeDto<Long>> Map<String, Method> getExtraGetters(Class<D> dtoClass, String... extraField) {
         final Map<String, Method> extraGetters = MapUtil.newHashMap(true);

@@ -18,7 +18,7 @@ import lombok.EqualsAndHashCode;
 
 /**
  * 逻辑删除 Entity基类<br>
- * 包含【id,create_by,create_time,update_by,update_time,dept_id,is_del】字段
+ * 包含【id,create_by,create_time,update_by,update_time,dept_id,delete_flag】字段
  *
  * @author xiajhuan
  * @date 2022/11/19
@@ -28,10 +28,10 @@ import lombok.EqualsAndHashCode;
 public abstract class LogicEntity extends CommonEntity {
 
     /**
-     * 逻辑删除标识（0：未删除 1：已删除）<br>
-     * note：表字段“is_del”默认值应为0
+     * 删除标识 0：未删除 1：已删除<br>
+     * note：Entity对应表的delete_flag字段默认值应设为0
      */
     @TableLogic
-    private Integer isDel;
+    private Integer deleteFlag;
 
 }

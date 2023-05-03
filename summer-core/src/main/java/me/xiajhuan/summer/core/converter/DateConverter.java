@@ -41,7 +41,7 @@ public class DateConverter implements Converter<String, Date> {
     private List<Pattern> patternList;
 
     /**
-     * 初始化 {@link patternList}
+     * 初始化
      */
     @PostConstruct
     private void init() {

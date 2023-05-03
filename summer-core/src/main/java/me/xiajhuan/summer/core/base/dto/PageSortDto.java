@@ -51,7 +51,7 @@ public abstract class PageSortDto extends SimpleDto {
 
     /**
      * 排序规则<br>
-     * note：多字段排序时以“,”分隔（必须与 {@link field} 匹配），为空则不排序
+     * note：多字段排序时以“,”分隔（必须与field匹配），为空则不排序
      */
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String order;

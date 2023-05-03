@@ -37,13 +37,13 @@ import java.util.Set;
 public class ValidationUtil {
 
     /**
-     * 构造ValidationUtil（不允许实例化）
+     * 不允许实例化
      */
     private ValidationUtil() {
     }
 
     /**
-     * {@link Validator}
+     * 校验器
      */
     private static final Validator VALIDATOR = SpringUtil.getBean("getValidator", Validator.class);
 
@@ -51,7 +51,7 @@ public class ValidationUtil {
      * 校验List<Dto>
      *
      * @param dtoList Dto类型列表
-     * @param group   校验分组 {@link AddGroup} {@link UpdateGroup} {@link DefaultGroup}
+     * @param group   校验分组，参考{@link AddGroup}/{@link UpdateGroup}/{@link DefaultGroup}
      * @param <D>     Dto类型
      */
     public static <D> void validate(List<D> dtoList, Class<?>... group) {
@@ -62,9 +62,9 @@ public class ValidationUtil {
      * 校验List<Dto>，带消息前缀
      *
      * @param dtoList    Dto类型列表
-     * @param prefixDesc 消息前缀描述，必须包含“code”（{@link ErrorCode}），如有消息填充参数，
+     * @param prefixDesc 消息前缀描述，必须包含“code”（{@link ErrorCode}），如有消息填充参数，<br>
      *                   则还应包含“params”（{@code String[]}）
-     * @param group      校验分组 {@link AddGroup} {@link UpdateGroup} {@link DefaultGroup}
+     * @param group      校验分组，参考{@link AddGroup}/{@link UpdateGroup}/{@link DefaultGroup}
      * @param <D>        Dto类型
      */
     public static <D> void validate(List<D> dtoList, Dict prefixDesc, Class<?>... group) {
@@ -75,7 +75,7 @@ public class ValidationUtil {
      * 校验Dto
      *
      * @param dto   Dto类型对象
-     * @param group 校验分组 {@link AddGroup} {@link UpdateGroup} {@link DefaultGroup}
+     * @param group 校验分组，参考{@link AddGroup}/{@link UpdateGroup}/{@link DefaultGroup}
      * @param <D>   Dto类型
      */
     public static <D> void validate(D dto, Class<?>... group) {
@@ -86,9 +86,9 @@ public class ValidationUtil {
      * 校验Dto，带消息前缀
      *
      * @param dto        Dto类型对象
-     * @param prefixDesc 消息前缀描述，必须包含“code”（{@link ErrorCode}），如有消息填充参数，
+     * @param prefixDesc 消息前缀描述，必须包含“code”（{@link ErrorCode}），如有消息填充参数，<br>
      *                   则还应包含“params”（{@code String[]}）
-     * @param group      校验分组 {@link AddGroup} {@link UpdateGroup} {@link DefaultGroup}
+     * @param group      校验分组，参考{@link AddGroup}/{@link UpdateGroup}/{@link DefaultGroup}
      * @param <D>        Dto类型
      */
     public static <D> void validate(D dto, Dict prefixDesc, Class<?>... group) {
@@ -100,7 +100,7 @@ public class ValidationUtil {
      *
      * @param dto       Dto类型对象
      * @param fieldName 属性名
-     * @param group     校验分组 {@link AddGroup} {@link UpdateGroup} {@link DefaultGroup}
+     * @param group     校验分组，参考{@link AddGroup}/{@link UpdateGroup}/{@link DefaultGroup}
      * @param <D>       Dto类型
      */
     public static <D> void validate(D dto, String fieldName, Class<?>... group) {
@@ -112,9 +112,9 @@ public class ValidationUtil {
      *
      * @param dto        Dto类型对象
      * @param fieldName  属性名
-     * @param prefixDesc 消息前缀描述，必须包含“code”（{@link ErrorCode}），如有消息填充参数，
+     * @param prefixDesc 消息前缀描述，必须包含“code”（{@link ErrorCode}），如有消息填充参数，<br>
      *                   则还应包含“params”（{@code String[]}）
-     * @param group      校验分组 {@link AddGroup} {@link UpdateGroup} {@link DefaultGroup}
+     * @param group      校验分组，参考{@link AddGroup}/{@link UpdateGroup}/{@link DefaultGroup}
      * @param <D>        Dto类型
      */
     public static <D> void validate(D dto, String fieldName, Dict prefixDesc, Class<?>... group) {
@@ -126,9 +126,9 @@ public class ValidationUtil {
      *
      * @param dto        Dto类型对象
      * @param fieldName  属性名
-     * @param prefixDesc 消息前缀描述，必须包含“code”（{@link ErrorCode}），如有消息填充参数，
+     * @param prefixDesc 消息前缀描述，必须包含“code”（{@link ErrorCode}），如有消息填充参数，<br>
      *                   则还应包含“params”（{@code String[]}）
-     * @param group      校验分组 {@link AddGroup} {@link UpdateGroup} {@link DefaultGroup}
+     * @param group      校验分组，参考{@link AddGroup}/{@link UpdateGroup}/{@link DefaultGroup}
      * @param <D>        Dto类型
      */
     private static <D> void validateInternal(D dto, String fieldName, Dict prefixDesc, Class<?>... group) {

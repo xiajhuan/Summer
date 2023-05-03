@@ -34,8 +34,8 @@ import org.springframework.context.annotation.Configuration;
 public class MybatisPlusConfig {
 
     /**
-     * 注册 {@link MybatisPlusInterceptor}<br>
-     * 集成【分页/乐观锁/防止全表更新与删除/数据权限】功能
+     * 注册{@link MybatisPlusInterceptor}，<br>
+     * 集成【数据权限/分页/乐观锁/防止全表更新与删除】插件功能
      *
      * @param dataScopeHandler 数据权限处理器
      * @return {@link MybatisPlusInterceptor}
@@ -43,7 +43,7 @@ public class MybatisPlusConfig {
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor(DataScopeHandler dataScopeHandler) {
         MybatisPlusInterceptor mybatisPlusInterceptor = new MybatisPlusInterceptor();
-        // 数据权限，note：必须在分页插件之前初始化，否则“count(*)语句”不会加入数据权限过滤条件
+        // 数据权限，note：必须在分页插件之前，否则“COUNT(*)语句”不会加入数据权限过滤条件
         DataPermissionInterceptor dataPermissionInterceptor = new DataPermissionInterceptor(dataScopeHandler);
         mybatisPlusInterceptor.addInnerInterceptor(dataPermissionInterceptor);
         // 分页插件
@@ -57,7 +57,7 @@ public class MybatisPlusConfig {
     }
 
     /**
-     * 注册 自定义Sql注入器
+     * 注册自定义Sql注入器
      *
      * @return 自定义Sql注入器
      */

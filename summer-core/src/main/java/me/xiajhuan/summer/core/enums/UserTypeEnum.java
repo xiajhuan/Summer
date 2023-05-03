@@ -26,9 +26,9 @@ import lombok.Getter;
 public enum UserTypeEnum {
 
     /**
-     * 超级管理员用户
+     * 超级管理员
      */
-    SUPER_ADMIN(0, "超级管理员用户", "RBAC架构外的特殊用户，拥有所有权限，没有角色和本部门ID"),
+    SUPER_ADMIN(0, "超级管理员", "RBAC架构外的特殊用户，拥有所有权限，没有角色和本部门ID"),
 
     /**
      * 普通用户

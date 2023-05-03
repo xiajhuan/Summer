@@ -21,16 +21,17 @@ import java.util.regex.Pattern;
 
 /**
  * 正则校验器基类<br>
- * 子类需实现 {@link AbstractPatternValidator#initialize(Annotation)}
+ * 子类需实现{@link AbstractPatternValidator#initialize(Annotation)}
  *
  * @author xiajhuan
  * @date 2023/3/4
  * @see ConstraintValidator
+ * @see Pattern
  */
 public abstract class AbstractPatternValidator<A extends Annotation> implements ConstraintValidator<A, String> {
 
     /**
-     * {@link Pattern}
+     * 正则匹配器
      */
     protected Pattern pattern;
 

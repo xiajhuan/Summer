@@ -76,9 +76,6 @@ public class SqlFormatConfig implements MessageFormattingStrategy {
      */
     private static final Set<String> SQL_REPLACE_SET = new HashSet<>(64);
 
-    /**
-     * 初始化 {@link SQL_REPLACE_SET}
-     */
     static {
         Setting setting = SpringUtil.getBean(SettingConst.CORE, Setting.class);
 
@@ -107,11 +104,11 @@ public class SqlFormatConfig implements MessageFormattingStrategy {
     /**
      * <p>
      * 判断Sql是否是被替换的Sql，
-     * 若是则返回替换的字符串，若不是则返回 {@code null}
+     * 若是则返回替换的字符串，若不是则返回{@code null}
      * </p>
      *
      * @param sql Sql
-     * @return 替换的字符串或 {@code null}
+     * @return 替换的字符串或{@code null}
      */
     private String getReplacedSql(String sql) {
         return SQL_REPLACE_SET.stream().filter(replace -> {

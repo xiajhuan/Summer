@@ -49,7 +49,7 @@ public class ApplicationProperties {
     public static class Cache {
 
         /**
-         * 类型，默认为：REDIS
+         * 类型，默认为REDIS
          *
          * @see CacheConst.Type#REDIS
          * @see CacheConst.Type#HEAP
@@ -63,7 +63,7 @@ public class ApplicationProperties {
     public static class Oss {
 
         /**
-         * 类型，默认为：LOCAL
+         * 类型，默认为LOCAL
          *
          * @see OssSupportEnum#LOCAL
          * @see OssSupportEnum#MIN_IO

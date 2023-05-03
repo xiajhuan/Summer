@@ -25,21 +25,21 @@ import java.util.Arrays;
 public class WildcardUtil {
 
     /**
-     * 构造WildcardUtil（不允许实例化）
+     * 不允许实例化
      */
     private WildcardUtil() {
     }
 
     /**
      * 检查源字符串是否匹配指定的通配符模板字符串数组中的任意一个，note：
-     * <pre>
-     *   1.仅支持“*”（任意匹配）和“?”（单值匹配）
-     *   2.数组为空时，源为 {@code null} 则返回“true”，否则返回“false”
-     * </pre>
+     * <ul>
+     *   <li>仅支持“*”（任意匹配）和“?”（单值匹配）</li>
+     *   <li>数组为空时，源为{@code null}则返回true，否则返回false</li>
+     * </ul>
      *
      * @param source       待匹配源字符串
      * @param patternArray 通配符模板字符串数组
-     * @return 是否匹配，true：匹配 false：不匹配
+     * @return 是否匹配，true：是 false：否
      */
     public static boolean matches(String source, String[] patternArray) {
         // 数组为空
@@ -52,11 +52,11 @@ public class WildcardUtil {
 
     /**
      * 检查源字符串是否匹配指定的通配符模板字符串，note：
-     * <pre>
-     *   1.仅支持“*”（任意匹配）和“?”（单值匹配）
-     *   2.都为 {@code null} 则返回“true”，任一为 {@code null} 则返回“false”
-     * </pre>
-     *
+     * <ul>
+     *   <li>仅支持“*”（任意匹配）和“?”（单值匹配）</li>
+     *   <li>都为{@code null}则返回true，任一为{@code null}则返回false</li>
+     * </ul>
+     * <p>
      * 失效回溯法：
      * <pre>
      *   1.对于通配符匹配方案，我们主要的难点问题是在于通配符*的匹配，
@@ -92,22 +92,23 @@ public class WildcardUtil {
      *      在我们判断目标串中某个字符和模板串中的某个字符是否相等时，如果模板串中的字符是单值通配符，直接按照匹配成功，放行即可。
      *      至此，所有的疑点都已经一一击破，真相已经水落石出。
      * </pre>
+     * </p>
      *
      * @param source  待匹配源字符串
      * @param pattern 通配符模板字符串
-     * @return 是否匹配，true：匹配 false：不匹配
+     * @return 是否匹配，true：是 false：否
      */
     public static boolean matches(String source, String pattern) {
-        // 引用同一对象或都为“null”
+        // 引用同一对象或都为null
         if (source == pattern) {
             return true;
         }
-        // 任一为“null”
+        // 任一为null
         if ((source == null && pattern != null) || (source != null && pattern == null)) {
             return false;
         }
 
-        // 都不为“null”
+        // 都不为null
         // i 用来记录source串检测的索引的位置
         int i = 0;
         // j 用来记录pattern串检测的索引的位置
@@ -126,7 +127,7 @@ public class WildcardUtil {
                 jj = j;
                 j++;
             } else if (j < pattern.length() // 检测pattern串是否结束
-                    && (source.charAt(i) == pattern.charAt(j)   // 检测两串当前位置的值是否相等
+                    && (source.charAt(i) == pattern.charAt(j) // 检测两串当前位置的值是否相等
                     || pattern.charAt(j) == '?')) { // 检测pattern串中j位置是否是单值通配符？
                 // 如果此时pattern串还在有效位置上，那么两串当前位置相等或者pattern串中是单值通配符，表明此时匹配通过，两串均向前移动一步
                 i++;
@@ -136,7 +137,7 @@ public class WildcardUtil {
                 // 因为在首次判断中如果碰到通配符*，我们会将他当前索引的位置记录在jj的位置上，
                 // 如果jj = -1 表明匹配失败，当前source串不在监听位置上
                 if (jj == -1) return false;
-                // 如果此时在source串在通配符*的监听下， 让pattern串回到通配符*的位置上继续监听下一个字符
+                // 如果此时在source串在通配符*的监听下，让pattern串回到通配符*的位置上继续监听下一个字符
                 j = jj;
                 // 让i回到source串中与通配符对应的当前字符的下一个字符上，也就是此轮匹配只放行一个字符
                 i = ii + 1;

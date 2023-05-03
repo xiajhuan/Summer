@@ -26,7 +26,7 @@ public class SecurityConst {
     public static class Inner {
 
         /**
-         * 携带accessToken的请求头名称
+         * 携带accessToken的请求头
          */
         public static final String TOKEN_HEADER = "AccessToken";
 
@@ -38,26 +38,9 @@ public class SecurityConst {
     public static class Open {
 
         /**
-         * 携带签名的请求头名称
+         * 携带签名的请求头
          */
         public static final String SIGNATURE_HEADER = "Signature";
-
-    }
-
-    /**
-     * 登录信息（Hash缓存）
-     */
-    public static class LoginInfo {
-
-        /**
-         * Field-accessToken
-         */
-        public static final String ACCESS_TOKEN = "accessToken";
-
-        /**
-         * Field-loginUser
-         */
-        public static final String LOGIN_USER = "loginUser";
 
     }
 

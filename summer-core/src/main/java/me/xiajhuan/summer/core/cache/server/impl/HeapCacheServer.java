@@ -82,7 +82,7 @@ public class HeapCacheServer implements CacheServer {
         // 初始化缓存容量和缓存满后对象的移除策略
         Setting setting = SpringUtil.getBean(SettingConst.CORE, Setting.class);
         // 默认移除策略
-        String defaultStrategy = CacheConst.Heap.LRU;
+        String defaultStrategy = CacheConst.Strategy.LRU;
 
         capacityString = setting.getInt("heap-string.capacity", "Cache", 1000);
         strategyString = setting.getByGroupWithLog("heap-string.remove-strategy", "Cache");
@@ -178,7 +178,7 @@ public class HeapCacheServer implements CacheServer {
     }
 
     /**
-     * 根据配置初始化缓存
+     * 初始化缓存处理
      *
      * @param capacity 缓存容量
      * @param strategy 缓存满后对象的移除策略
@@ -187,11 +187,11 @@ public class HeapCacheServer implements CacheServer {
     @SuppressWarnings("rawtypes")
     private AbstractCache initCacheInternal(int capacity, String strategy) {
         switch (strategy) {
-            case CacheConst.Heap.FIFO:
+            case CacheConst.Strategy.FIFO:
                 return CacheUtil.newFIFOCache(capacity);
-            case CacheConst.Heap.LFU:
+            case CacheConst.Strategy.LFU:
                 return CacheUtil.newLFUCache(capacity);
-            case CacheConst.Heap.LRU:
+            case CacheConst.Strategy.LRU:
                 return CacheUtil.newLRUCache(capacity);
             default:
                 throw new IllegalArgumentException(StrUtil.format("不支持的缓存移除策略【{}】", strategy));

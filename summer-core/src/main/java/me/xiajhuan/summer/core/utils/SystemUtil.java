@@ -40,7 +40,7 @@ public class SystemUtil {
     private static final Log LOGGER = LogFactory.get();
 
     /**
-     * 构造SystemUtil（不允许实例化）
+     * 不允许实例化
      */
     private SystemUtil() {
     }
@@ -51,15 +51,15 @@ public class SystemUtil {
     private static final OperatingSystemMXBean osMX = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
 
     /**
-     * 获取IP（IPv4）
+     * 获取ip（IPv4）
      *
-     * @return IP（IPv4）或 {@code null}
+     * @return ip（IPv4）或{@code null}
      */
     public static String getIp() {
         try {
             return Inet4Address.getLocalHost().getHostAddress();
         } catch (UnknownHostException e) {
-            LOGGER.error(e, "获取IP失败【{}】", e.getMessage());
+            LOGGER.error(e, "获取ip失败【{}】", e.getMessage());
             return null;
         }
     }
@@ -67,7 +67,7 @@ public class SystemUtil {
     /**
      * 获取端口（server.port）
      *
-     * @return 端口或 {@code null}
+     * @return 端口或{@code null}
      */
     public static String getPort() {
         return SpringUtil.getProperty("server.port");
@@ -76,7 +76,7 @@ public class SystemUtil {
     /**
      * 获取应用名称（spring.application.name）
      *
-     * @return 应用名称或 {@code null}
+     * @return 应用名称或{@code null}
      */
     public static String getApplicationName() {
         return SpringUtil.getApplicationName();
@@ -86,7 +86,7 @@ public class SystemUtil {
      * 获取环境（spring.profiles.active）<br>
      * note：多个环境只取第一个
      *
-     * @return 环境或 {@code null}
+     * @return 环境或{@code null}
      */
     public static String getProfile() {
         return SpringUtil.getActiveProfile();
@@ -94,9 +94,9 @@ public class SystemUtil {
 
     /**
      * 获取CPU核心数<br>
-     * note：如果获取不到则返回 7，真实的CPU基本都是偶数，方便区分
+     * note：如果获取不到则返回7，真实的CPU基本都是偶数，方便区分
      *
-     * @return CPU核心数或 {@code 7}
+     * @return CPU核心数或7
      */
     public static int getCpuCoreNum() {
         return RuntimeUtil.getProcessorCount();

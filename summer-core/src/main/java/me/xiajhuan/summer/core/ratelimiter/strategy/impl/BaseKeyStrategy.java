@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * <p>
- * 基本限流Key策略（Key为：接口签名#），
+ * 基本限流Key策略，Key为：接口签名#，
  * 例如：/summer/security/user/page[GET]#
  * </p>
  *

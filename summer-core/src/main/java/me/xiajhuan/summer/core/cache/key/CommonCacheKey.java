@@ -25,11 +25,11 @@ public class CommonCacheKey {
     /**
      * Excel数据 Key
      *
-     * @param keyParam 填充参数
+     * @param param 参数
      * @return Excel数据 Key
      */
-    public static String excelData(String keyParam) {
-        return StrUtil.format("EXCEL_DATA_{}", keyParam);
+    public static String excelData(String param) {
+        return StrUtil.format("EXCEL_DATA_{}", param);
     }
 
 }

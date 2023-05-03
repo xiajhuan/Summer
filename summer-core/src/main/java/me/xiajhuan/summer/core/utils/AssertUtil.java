@@ -32,41 +32,37 @@ import java.util.Map;
 public class AssertUtil extends Assert {
 
     /**
-     * 构造AssertUtil（不允许实例化）
+     * 不允许实例化
      */
     private AssertUtil() {
     }
 
     /**
-     * <p>
-     * 默认参数Key，用于填充断言失败时的业务异常消息，
-     * 例如：”default不能为空“
-     * </p>
+     * 默认参数Key，用于填充断言失败时的提示消息
      *
      * @see ErrorCode#NOT_NULL
      */
     private static final String DEFAULT_PARAM_KEY = "default";
 
     /**
-     * 判空类型：blank<br>
-     * 支持 {@link CharSequence}
+     * 判空类型Blank，支持{@link CharSequence}
      */
     private static final String BLANK = "blank";
 
     /**
-     * 判空类型：empty<br>
-     * 支持 {@link CharSequence}/{@link Iterable}/{@link Iterator}/{@code Array}/{@link Map}
+     * 判空类型Empty<br>
+     * 支持{@link CharSequence}/{@link Iterable}/{@link Iterator}/{@code Array}/{@link Map}
      */
     private static final String EMPTY = "empty";
 
     /**
-     * 判空类型：null<br>
-     * 支持基本类型外的所有类型，如果是字符串则判断不为：{@code null}、“null”、“undefined”
+     * 判空类型Null<br>
+     * 支持基本类型外的所有类型，如果是字符串则判断不为{@code null}，“null”和“undefined”
      */
     private static final String NULL = "null";
 
     /**
-     * 非空断言（Blank），默认参数key：default
+     * 非空断言（Blank），默认参数key为default
      *
      * @param paramValue 参数值
      */
@@ -85,7 +81,7 @@ public class AssertUtil extends Assert {
     }
 
     /**
-     * 非空断言（Empty），默认参数key：default
+     * 非空断言（Empty），默认参数key为default
      *
      * @param paramValue 参数值
      */
@@ -104,7 +100,7 @@ public class AssertUtil extends Assert {
     }
 
     /**
-     * 非空断言（Null），默认参数key：default
+     * 非空断言（Null），默认参数key为default
      *
      * @param paramValue 参数值
      */
@@ -161,7 +157,7 @@ public class AssertUtil extends Assert {
     }
 
     /**
-     * 抛出 {@link UnsupportedOperationException}
+     * 抛出{@link UnsupportedOperationException}
      *
      * @param paramType 参数类型
      * @param judgeType 判空类型

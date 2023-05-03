@@ -27,7 +27,7 @@ public class JsonValidator extends AbstractPatternValidator<Json> {
 
     @Override
     public void initialize(Json constraintAnnotation) {
-        pattern = Pattern.compile("^\\s*(\\{.*\\}|\\[.*\\])\\s*$");
+        pattern = Pattern.compile("^\\s*(\\{.*}|\\[.*])\\s*$");
     }
 
 }

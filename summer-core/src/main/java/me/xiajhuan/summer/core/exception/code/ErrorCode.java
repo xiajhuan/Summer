@@ -16,7 +16,7 @@ package me.xiajhuan.summer.core.exception.code;
  * 错误编码
  * <p>
  * 编码定义规则：由5位数字组成，前2位为模块编码，后3位为业务编码，
- * 例如：10004（10代表权限管理模块，004代表具体业务）
+ * 例如：10004，其中10代表权限管理模块，004代表具体业务
  * </p>
  *
  * @author xiajhuan
@@ -206,7 +206,7 @@ public interface ErrorCode {
     int DEPT_SUB_DELETE_ERROR = 10014;
 
     /**
-     * 请先删除部门下的用户
+     * 请先删除部门下用户
      */
     int DEPT_USER_DELETE_ERROR = 10015;
 

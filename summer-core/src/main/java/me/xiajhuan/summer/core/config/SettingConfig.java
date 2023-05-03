@@ -18,7 +18,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * 注册setting配置文件Bean
+ * 注册“setting配置文件”Bean
  *
  * @author xiajhuan
  * @date 2023/3/9
@@ -28,7 +28,7 @@ import org.springframework.context.annotation.Configuration;
 public class SettingConfig {
 
     /**
-     * 注册 core.setting的配置文件Bean
+     * 注册“core.setting配置文件“Bean
      *
      * @return {@link Setting}
      */
@@ -38,7 +38,7 @@ public class SettingConfig {
     }
 
     /**
-     * 注册 system.setting的配置文件Bean
+     * 注册”system.setting配置文件“Bean
      *
      * @return {@link Setting}
      */

@@ -46,7 +46,7 @@ enable-file-upload-filter = true
 # *******************MybatisPlus配置********************
 [Mp]
 # 分页单页条数限制
-page.max-limit = 2000
+page.max-size-limit = 2000
 # 默认排序字段，以“,”分隔，为空则不排序
 sort.default-field = create_time
 # 默认排序规则，以“,”分隔（必须与 sort.default-field 匹配），为空则不排序
@@ -89,7 +89,7 @@ injection.illegal-key-word = SELECT,UPDATE,AND,OR,DELETE,INSERT,TRUNCATE,SUBSTR,
 
 # *******************国际化配置********************
 [Locale]
-# 请求头“Accept-Language”的值的语言是中英文以外时的默认值，值：zh_CN/en_US
+# 请求头“Accept-Language”的语言是中英文以外时的默认值，值：zh_CN/en_US
 default.request-header = zh_CN
 # 服务器JVM的语言是中英文以外时的默认值，值：zh_CN/en_US
 default.jvm = en_US

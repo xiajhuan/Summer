@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * <p>
  * 配置限流Key策略，不会实例化，
- * 标识将使用core.setting下RateLimiter组下strategy.key设置的策略
+ * 标识将使用core.setting下RateLimiter组下strategy.key配置的策略
  * </p>
  *
  * @author xiajhuan
@@ -29,7 +29,7 @@ import javax.servlet.http.HttpServletRequest;
 public class SettingKeyStrategy implements KeyStrategy {
 
     /**
-     * 构造SettingKeyStrategy（不允许实例化）
+     * 不允许实例化
      */
     private SettingKeyStrategy() {
     }

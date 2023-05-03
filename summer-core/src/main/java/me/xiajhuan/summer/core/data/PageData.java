@@ -34,7 +34,7 @@ public class PageData<T> implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 构造PageData
+     * 构造私有化
      */
     private PageData() {
     }
@@ -45,28 +45,28 @@ public class PageData<T> implements Serializable {
     private Long total;
 
     /**
-     * 列表数据
+     * 数据列表
      */
     private List<T> rows;
 
     /**
-     * 构建分页数据
+     * 构建PageData
      *
      * @param page {@link Page}
-     * @param <T>  列表数据类型
-     * @return 分页数据
+     * @param <T>  数据类型
+     * @return PageData
      */
     public static <T> PageData<T> of(Page<T> page) {
         return of(page.getTotal(), page.getRecords());
     }
 
     /**
-     * 构建分页数据
+     * 构建PageData
      *
      * @param total 总记录数
      * @param rows  数据列表
-     * @param <T>   列表数据类型
-     * @return 分页数据
+     * @param <T>   数据类型
+     * @return PageData
      */
     public static <T> PageData<T> of(long total, List<T> rows) {
         PageData<T> pageData = new PageData<>();

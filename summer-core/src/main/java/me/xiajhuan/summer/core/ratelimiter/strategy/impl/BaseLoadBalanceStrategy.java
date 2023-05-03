@@ -17,11 +17,11 @@ import me.xiajhuan.summer.core.ratelimiter.strategy.LoadBalanceStrategy;
 import java.math.BigDecimal;
 
 /**
- * 基本限流负载均衡策略（轮询），note：
- * <pre>
- *   1.realQps = setQps / nodeNum
- *   2.最好能够整除，否则会存在精度问题，默认四舍五入保留2位小数
- * </pre>
+ * 基本限流负载均衡策略，轮询，note：
+ * <ul>
+ *   <li>realQps = setQps / nodeNum</li>
+ *   <li>最好能整除，否则会存在精度问题，默认四舍五入保留2位小数</li>
+ * </ul>
  *
  * @author xiajhuan
  * @date 2022/12/5

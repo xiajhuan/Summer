@@ -40,7 +40,7 @@ import java.util.List;
 public class ExcelUtil extends EasyExcelFactory {
 
     /**
-     * 构造ExcelUtil（不允许实例化）
+     * 不允许实例化
      */
     private ExcelUtil() {
     }
@@ -61,20 +61,22 @@ public class ExcelUtil extends EasyExcelFactory {
     }
 
     /**
-     * 导入（保存到Db，自定义前/后置处理）
+     * 导入（保存到Db、自定义前/后置处理）
      *
-     * @param file           {@link MultipartFile}
-     * @param dtoClass       DtoClass
-     * @param customDbParser 自定义DbExcelParser，需继承 {@link DbExcelParser}，可覆写：
-     *                       {@link AbstractExcelParser#handleDtoBefore(Object, AnalysisContext)}，
-     *                       {@link AbstractExcelParser#handleEntityListBefore()}，
-     *                       {@link AbstractExcelParser#handleEntityListAfter()}
-     * @param <D>            Dto类型
-     * @param <T>            Entity类型
+     * @param file         {@link MultipartFile}
+     * @param dtoClass     DtoClass
+     * @param customParser 自定义Parser，需继承{@link DbExcelParser}，可覆写：
+     *                     <ul>
+     *                       <li>{@link AbstractExcelParser#handleDtoBefore(Object, AnalysisContext)}</li>
+     *                       <li>{@link AbstractExcelParser#handleEntityListBefore()}</li>
+     *                       <li>{@link AbstractExcelParser#handleEntityListAfter()}</li>
+     *                     </ul>
+     * @param <D>          Dto类型
+     * @param <T>          Entity类型
      */
-    public static <D, T> void importDb(MultipartFile file, Class<D> dtoClass, DbExcelParser<D, T> customDbParser) {
+    public static <D, T> void importDb(MultipartFile file, Class<D> dtoClass, DbExcelParser<D, T> customParser) {
         try {
-            read(file.getInputStream(), dtoClass, customDbParser).sheet().doRead();
+            read(file.getInputStream(), dtoClass, customParser).sheet().doRead();
         } catch (IOException e) {
             throw FileUploadException.of(e, ErrorCode.FILE_UPLOAD_FAILURE);
         }
@@ -95,14 +97,16 @@ public class ExcelUtil extends EasyExcelFactory {
     }
 
     /**
-     * 导入（缓存，自定义前/后置处理），谨慎使用！
+     * 导入（缓存、自定义前/后置处理），谨慎使用！
      *
      * @param file              {@link MultipartFile}
      * @param dtoClass          DtoClass
-     * @param customCacheParser 自定义CacheExcelParser，需继承 {@link CacheExcelParser}，可覆写：
-     *                          {@link AbstractExcelParser#handleDtoBefore(Object, AnalysisContext)}，
-     *                          {@link AbstractExcelParser#handleEntityListBefore()}，
-     *                          {@link AbstractExcelParser#handleEntityListAfter()}
+     * @param customCacheParser 自定义Parser，需继承{@link CacheExcelParser}，可覆写：
+     *                          <ul>
+     *                            <li>{@link AbstractExcelParser#handleDtoBefore(Object, AnalysisContext)}</li>
+     *                            <li>{@link AbstractExcelParser#handleEntityListBefore()}</li>
+     *                            <li>{@link AbstractExcelParser#handleEntityListAfter()}</li>
+     *                          </ul>
      * @param <D>               Dto类型
      * @param <T>               Entity类型
      */
@@ -122,7 +126,7 @@ public class ExcelUtil extends EasyExcelFactory {
      * @param sheetName sheet名
      * @param dtoList   Dto类型列表
      * @param dtoClass  DtoClass
-     * @param code      错误编码 {@link ErrorCode#EXCEL_TEMPLATE_DOWNLOAD_FAILURE} {@link ErrorCode#EXCEL_EXPORT_FAILURE}
+     * @param code      错误编码，参考{@link ErrorCode#EXCEL_TEMPLATE_DOWNLOAD_FAILURE}和{@link ErrorCode#EXCEL_EXPORT_FAILURE}
      * @param <D>       Dto类型
      */
     public static <D> void export(HttpServletResponse response, String fileName, String sheetName,

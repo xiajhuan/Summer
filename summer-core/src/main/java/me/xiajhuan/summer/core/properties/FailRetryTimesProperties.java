@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
 
 /**
- * 失败重试次数
+ * 失败重试数
  *
  * @author xiajhuan
  * @date 2023/4/23

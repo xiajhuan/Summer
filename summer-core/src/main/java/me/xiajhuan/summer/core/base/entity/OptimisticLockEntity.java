@@ -31,7 +31,7 @@ public abstract class OptimisticLockEntity extends CommonEntity {
 
     /**
      * 乐观锁控制<br>
-     * note：表字段“version”默认值应为0
+     * note：Entity对应表的version字段默认值应设为0
      */
     @Version
     @TableField(fill = FieldFill.INSERT, value = "version")

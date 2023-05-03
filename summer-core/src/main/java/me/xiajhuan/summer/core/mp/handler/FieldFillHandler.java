@@ -20,7 +20,7 @@ import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.stereotype.Component;
 
 /**
- * 基础字段自动填充
+ * 字段自动填充
  *
  * @author xiajhuan
  * @date 2022/11/29
@@ -97,7 +97,7 @@ public class FieldFillHandler implements MetaObjectHandler {
     private Object[] currentUsernameAndDateTime() {
         Object[] array = ArrayUtil.newArray(2);
 
-        // 当前用户名，未登录则默认为：systemUser
+        // 当前用户名，未登录默认为systemUser
         array[0] = SecurityUtil.getCurrentUsername();
         // 当前时间
         array[1] = DateUtil.date();

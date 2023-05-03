@@ -24,7 +24,7 @@ import me.xiajhuan.summer.core.utils.LocaleUtil;
 public class FileDownloadException extends RuntimeException {
 
     /**
-     * 构造文件下载异常
+     * 构造私有化
      *
      * @param message 消息
      */
@@ -33,7 +33,7 @@ public class FileDownloadException extends RuntimeException {
     }
 
     /**
-     * 构造文件下载异常
+     * 构造私有化
      *
      * @param message 消息
      * @param cause   原始异常
@@ -53,7 +53,7 @@ public class FileDownloadException extends RuntimeException {
     }
 
     /**
-     * 构建文件下载异常，默认消息：”文件下载失败“
+     * 构建文件下载异常，默认消息为”文件下载失败“
      *
      * @param cause 原始异常
      * @return 文件下载异常
@@ -66,7 +66,7 @@ public class FileDownloadException extends RuntimeException {
      * 构建文件下载异常，消息国际化
      *
      * @param cause 原始异常
-     * @param code  错误编码 {@link ErrorCode}
+     * @param code  错误编码，参考{@link ErrorCode}
      * @param param 消息填充参数
      * @return 文件下载异常
      */

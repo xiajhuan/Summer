@@ -30,7 +30,7 @@ import org.springframework.web.filter.DelegatingFilterProxy;
 public class FilterConfig {
 
     /**
-     * 将shiroFilter从Spring容器中注册到Servlet容器
+     * 将{@link ShiroFilter}从Spring容器中注册到Servlet容器
      *
      * @return {@link FilterRegistrationBean}
      */
@@ -39,7 +39,7 @@ public class FilterConfig {
     public FilterRegistrationBean shiroFilterRegistration() {
         FilterRegistrationBean registration = new FilterRegistrationBean();
         registration.setFilter(new DelegatingFilterProxy("shiroFilter"));
-        // 该值缺省为false，表示生命周期由Spring容器管理，设置为true则表示由Servlet容器管理
+        // note：该值缺省为false，表示生命周期由Spring容器管理，设置为true表示由Servlet容器管理
         registration.addInitParameter("targetFilterLifecycle", "true");
         registration.setEnabled(true);
         registration.setOrder(Ordered.LOWEST_PRECEDENCE);

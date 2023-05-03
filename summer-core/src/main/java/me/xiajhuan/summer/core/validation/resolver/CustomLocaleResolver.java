@@ -30,15 +30,15 @@ import java.util.Locale;
 public class CustomLocaleResolver implements LocaleResolver {
 
     /**
-     * 构造MyLocaleResolver
+     * 构造私有化
      */
     private CustomLocaleResolver() {
     }
 
     /**
-     * 构建MyLocaleResolver
+     * 构建CustomLocaleResolver
      *
-     * @return MyLocaleResolver
+     * @return CustomLocaleResolver
      */
     public static CustomLocaleResolver of() {
         return new CustomLocaleResolver();

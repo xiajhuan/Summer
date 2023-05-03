@@ -14,7 +14,7 @@ package me.xiajhuan.summer.core.ratelimiter.strategy;
 
 /**
  * 限流负载均衡策略<br>
- * note：通过实现该接口覆写 {@link LoadBalanceStrategy#calRealQps} 可以个性化自己的限流负载均衡策略
+ * note：通过实现该接口覆写{@link LoadBalanceStrategy#calRealQps}可个性化自己的限流负载均衡策略
  *
  * @author xiajhuan
  * @date 2022/12/5
@@ -22,7 +22,7 @@ package me.xiajhuan.summer.core.ratelimiter.strategy;
 public interface LoadBalanceStrategy {
 
     /**
-     * 计算当前节点实际的Qps
+     * 计算实际的Qps
      *
      * @param setQps  设置的Qps
      * @param nodeNum 节点数

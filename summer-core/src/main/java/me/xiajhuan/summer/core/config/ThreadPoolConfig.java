@@ -58,7 +58,7 @@ public class ThreadPoolConfig {
         executor.setThreadNamePrefix(ThreadPoolConst.ASYNC_COMMON_PREFIX);
         executor.setWaitForTasksToCompleteOnShutdown(setting.getBool("wait-for-tasks-to-complete-on-shutdown", "Async", true));
         executor.setAwaitTerminationSeconds(setting.getInt("await-termination-Seconds", "Async", 30));
-        // 拒绝策略：由调用的线程处理任务
+        // 拒绝策略：任务交由调用的线程处理
         executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
         return executor;
     }

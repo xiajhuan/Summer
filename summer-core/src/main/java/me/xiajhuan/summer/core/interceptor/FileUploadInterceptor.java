@@ -40,18 +40,18 @@ public class FileUploadInterceptor implements HandlerInterceptor {
 
     /**
      * 文件上传限制，note：
-     * <pre>
-     *   1.配置位置：/custom/upload-limit.json
-     *   2.Key：支持的文件类型后缀名 Value：大小限制
-     *   3.Value不能超过 spring.servlet.multipart.max-file-size 配置的值
-     * </pre>
+     * <ul>
+     *   <li>配置位置：/custom/upload-limit.json</li>
+     *   <li>Key：支持的文件类型后缀（不包括”.“） Value：大小限制</li>
+     *   <li>Value不能超过 spring.servlet.multipart.max-file-size 配置的值</li>
+     * </ul>
      */
     private final Map<String, String> uploadLimit;
 
     /**
-     * 构造FileUploadInterceptor
+     * 构造私有化
      *
-     * @throws FileNotFoundException 文件没找到异常
+     * @throws FileNotFoundException 如果文件没找到
      */
     private FileUploadInterceptor() throws FileNotFoundException {
         FileReader fileReader = FileReader.create(ResourceUtils
@@ -63,7 +63,7 @@ public class FileUploadInterceptor implements HandlerInterceptor {
      * 构建FileUploadInterceptor
      *
      * @return FileUploadInterceptor
-     * @throws FileNotFoundException 文件没找到异常
+     * @throws FileNotFoundException 如果文件没找到
      */
     public static FileUploadInterceptor of() throws FileNotFoundException {
         return new FileUploadInterceptor();
@@ -86,10 +86,10 @@ public class FileUploadInterceptor implements HandlerInterceptor {
      * @param file {@link MultipartFile}
      */
     private void validateFile(MultipartFile file) {
-        // 文件类型是否支持，true：支持 false：不支持
+        // 文件类型是否支持，true：是 false：否
         boolean supported = false;
 
-        // 文件后缀名（扩展名不带“.”）
+        // 文件后缀名（不带“.”）
         String fileSuffix = FileNameUtil.getSuffix(file.getOriginalFilename());
         // 文件大小（B）
         long fileSize = file.getSize();

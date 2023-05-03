@@ -27,14 +27,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Excel数据解析（缓存），note：
- * <pre>
- *   1.通常情况下不建议将Excel数据缓存，如确有需求，应注意防止OOM！
- *   2.想个性化前/后置处理，请自定义Parser继承当前类，可覆写：
- *     {@link AbstractExcelParser#handleDtoBefore(Object, AnalysisContext)}，
- *     {@link AbstractExcelParser#handleEntityListBefore()}，
+ * Excel解析（缓存），note：
+ * <ul>
+ *   <li>通常情况下不建议将Excel数据缓存，如确有需求，应注意防止OOM！</li>
+ *   <li>
+ *     想个性化前/后置处理，请自定义Parser继承当前类，可覆写：<br>
+ *     {@link AbstractExcelParser#handleDtoBefore(Object, AnalysisContext)}，<br>
+ *     {@link AbstractExcelParser#handleEntityListBefore()}，<br>
  *     {@link AbstractExcelParser#handleEntityListAfter()}
- * </pre>
+ *   </li>
+ * </ul>
  *
  * @author xiajhuan
  * @date 2022/12/1
@@ -53,7 +55,7 @@ public class CacheExcelParser<D, T> extends AbstractExcelParser<D, T> {
     protected Class<T> currentEntityClass;
 
     /**
-     * 构造CacheExcelParser
+     * 构造保护化
      *
      * @param currentEntityClass 当前EntityClass
      */

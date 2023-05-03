@@ -58,7 +58,7 @@ public class OperationConst {
 
     /**
      * Excel模板下载<br>
-     * GET 无参数
+     * GET none
      */
     public static final String EXCEL_TEMPLATE = "Excel模板下载";
 

@@ -20,7 +20,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 /**
- * 自定义 BaseMapper
+ * 自定义BaseMapper
  *
  * @author xiajhuan
  * @date 2023/3/29
@@ -38,7 +38,7 @@ public interface CustomBaseMapper<T> extends BaseMapper<T> {
     int realSaveBatch(List<T> entityList);
 
     /**
-     * 根据ID更新固定的几个字段（不忽略值为 {@code null} 的字段）
+     * 根据ID更新固定几个字段（不忽略值为{@code null}的字段）
      *
      * @param entity Entity类型对象
      * @return 更新数量

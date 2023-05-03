@@ -105,14 +105,13 @@ public class RateLimiterAspect {
     private long defaultTimeout;
 
     /**
-     * 初始化 {@link RATE_LIMITER_CACHE} {@link msg} {@link defaultKeyStrategy}<br>
-     * {@link defaultLoadBalanceStrategy} {@link defaultNodeNum} {@link defaultTimeout}
+     * 初始化
      *
-     * @throws ClassNotFoundException 类找不到异常
+     * @throws ClassNotFoundException 如果类找不到
      */
     @PostConstruct
     private void init() throws ClassNotFoundException {
-        RATE_LIMITER_CACHE = CacheUtil.newLFUCache(setting.getInt("key-num", "RateLimiter", 10000));
+        RATE_LIMITER_CACHE = CacheUtil.newLFUCache(setting.getInt("key-num", "RateLimiter", 20000));
 
         defaultMsg = setting.getInt("msg", "RateLimiter", ErrorCode.FREQUENT_OPERATION);
 
@@ -177,7 +176,7 @@ public class RateLimiterAspect {
             final KeyStrategy keyStrategy;
             // 限流Key
             String rateLimiterKey;
-            // 附加信息模板
+            // 附加消息模板
             String msgTemplate = null;
 
             try {
@@ -241,7 +240,7 @@ public class RateLimiterAspect {
             }
 
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("接口【{}[{}]】设置的Qps为：【{}】，当前节点实际的Qps为：【{}】，key-Class【{}】，LoadBalance-Class【{}】{}",
+                LOGGER.debug("接口【{}[{}]】设置Qps为：【{}】，当前节点实际Qps为：【{}】，key-Class【{}】，LoadBalance-Class【{}】{}",
                         request.getRequestURI(), request.getMethod(), setQps, RATE_LIMITER_CACHE.get(rateLimiterKey).getRate(),
                         keyStrategyClass.getSimpleName(), loadBalanceStrategyClass.getSimpleName(),
                         StrUtil.isNotBlank(msgTemplate) ? StrUtil.format(msgTemplate, StrUtil.subAfter(rateLimiterKey, "#", true)) : StrUtil.EMPTY);

@@ -13,7 +13,7 @@
 package me.xiajhuan.summer.core.constant;
 
 /**
- * setting配置常量
+ * setting常量
  *
  * @author xiajhuan
  * @date 2022/11/26
@@ -21,12 +21,12 @@ package me.xiajhuan.summer.core.constant;
 public class SettingConst {
 
     /**
-     * core.setting配置Bean名称
+     * “core.setting配置文件”Bean名称
      */
     public static final String CORE = "coreSetting";
 
     /**
-     * system.setting配置Bean名称
+     * ”system.setting配置文件“Bean名称
      */
     public static final String SYSTEM = "systemSetting";
 

@@ -35,7 +35,7 @@ import java.util.Arrays;
 public class PageSortUtil {
 
     /**
-     * 构造PageSortUtil（不允许实例化）
+     * 不允许实例化
      */
     private PageSortUtil() {
     }
@@ -58,7 +58,7 @@ public class PageSortUtil {
     /**
      * 分页单页条数限制
      */
-    private static final long MAX_LIMIT;
+    private static final long MAX_SIZE_LIMIT;
 
     /**
      * 默认排序字段数组
@@ -75,14 +75,10 @@ public class PageSortUtil {
      */
     private static final boolean CAMEL_TO_UNDERSCORE;
 
-    /**
-     * 初始化 {@link MAX_LIMIT} {@link defaultFieldArray}<br>
-     * {@link defaultOrderArray} {@link CAMEL_TO_UNDERSCORE}
-     */
     static {
         Setting setting = SpringUtil.getBean(SettingConst.CORE, Setting.class);
 
-        MAX_LIMIT = setting.getLong("page.max-limit", "Mp", 2000L);
+        MAX_SIZE_LIMIT = setting.getLong("page.max-size-limit", "Mp", 2000L);
 
         String defaultField = setting.getByGroup("sort.default-field", "Mp");
         if (StrUtil.isNotBlank(defaultField)) {
@@ -97,7 +93,7 @@ public class PageSortUtil {
     }
 
     /**
-     * 处理排序参数<br>
+     * 处理排序<br>
      * note：拼接排序条件至最后，有Sql注入风险，谨慎使用！
      *
      * @param pageSortDto  分页排序Dto
@@ -138,7 +134,7 @@ public class PageSortUtil {
     }
 
     /**
-     * 处理分页排序参数
+     * 处理分页排序
      *
      * @param pageSortDto 分页排序Dto
      * @param <D>         Dto类型
@@ -150,10 +146,10 @@ public class PageSortUtil {
     }
 
     /**
-     * 处理分页排序参数
+     * 处理分页排序
      *
      * @param pageSortDto 分页排序Dto
-     * @param customTotal 自定义分页总记录数（值不等于0时不 count）
+     * @param customTotal 自定义分页总记录数（值不等于0时不COUNT）
      * @param <D>         Dto类型
      * @param <T>         Entity类型
      * @return {@link Page}
@@ -167,13 +163,13 @@ public class PageSortUtil {
         long pageSize = pageSortDto.getPageSize();
 
         if (customTotal == 0L) {
-            // count查询分页总记录数
+            // COUNT分页总记录数
             page = Page.of(pageNum, pageSize);
         } else {
             // 自定义分页总记录数
             page = Page.of(pageNum, pageSize, customTotal, false);
         }
-        page.setMaxLimit(MAX_LIMIT);
+        page.setMaxLimit(MAX_SIZE_LIMIT);
 
         //*******************排序处理********************
 
@@ -213,11 +209,11 @@ public class PageSortUtil {
     }
 
     /**
-     * 处理排序参数
+     * 处理排序
      *
      * @param field 字段
      * @param order 规则
-     * @return {@link Dict} 或 {@code null}
+     * @return {@link Dict}或{@code null}
      */
     private static Dict handleSortInternal(String field, String order) {
         // 默认字段和规则

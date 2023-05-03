@@ -30,7 +30,7 @@ import me.xiajhuan.summer.core.properties.ApplicationProperties;
 public class OssServerFactory {
 
     /**
-     * 构造OssServerFactory（不允许实例化）
+     * 不允许实例化
      */
     private OssServerFactory() {
     }
@@ -40,9 +40,6 @@ public class OssServerFactory {
      */
     private static String OSS_TYPE;
 
-    /**
-     * 初始化 {@link OSS_TYPE}
-     */
     static {
         OSS_TYPE = SpringUtil.getBean("applicationProperties", ApplicationProperties.class)
                 .getOss().getType();
@@ -71,11 +68,13 @@ public class OssServerFactory {
 
     /**
      * 获取本地存储服务，note：
-     * <pre>
-     *   1.当对象存储类型为“MIN_IO”或“QI_NIU”时，若有分级存储需求，可通过该方法获取本地存储服务
-     *   2.当对象存储类型为“LOCAL”时，推荐使用 {@link OssServerFactory#getOssServer()}，
+     * <ul>
+     *   <li>当对象存储类型为“MIN_IO”或“QI_NIU”时，若有分级存储需求，可通过该方法获取本地存储服务</li>
+     *   <li>
+     *     当对象存储类型为“LOCAL”时，推荐使用{@link OssServerFactory#getOssServer()}，<br>
      *     这将便于在对象存储类型切换时保证代码通用
-     * </pre>
+     *   </li>
+     * </ul>
      *
      * @return 本地存储服务
      */
@@ -85,12 +84,14 @@ public class OssServerFactory {
 
     /**
      * 获取MinIo对象存储服务，note：
-     * <pre>
-     *   1.当对象存储类型为“MIN_IO”时，若有分级存储需求，可以通过该方法获取MinIo对象存储服务
-     *   2.当没有分级存储需求时，推荐使用 {@link OssServerFactory#getOssServer()}，
+     * <ul>
+     *   <li>当对象存储类型为“MIN_IO”时，若有分级存储需求，可以通过该方法获取MinIo对象存储服务</li>
+     *   <li>
+     *     当没有分级存储需求时，推荐使用{@link OssServerFactory#getOssServer()}，<br>
      *     这将便于在对象存储类型切换时保证代码通用
-     *   3.当对象存储类型不为“MIN_IO”时将抛出 {@link UnsupportedOperationException}
-     * </pre>
+     *   </li>
+     *   <li>当对象存储类型不为“MIN_IO”时将抛出{@link UnsupportedOperationException}</li>
+     * </ul>
      *
      * @return MinIo对象存储服务
      */
@@ -103,12 +104,14 @@ public class OssServerFactory {
 
     /**
      * 获取七牛云对象存储服务，note：
-     * <pre>
-     *   1.当对象存储类型为“QI_NIU”时，若有分级存储需求，可以通过该方法获取七牛云对象存储服务
-     *   2.当没有分级存储需求时，推荐使用 {@link OssServerFactory#getOssServer()}，
+     * <ul>
+     *   <li>当对象存储类型为“QI_NIU”时，若有分级存储需求，可以通过该方法获取七牛云对象存储服务</li>
+     *   <li>
+     *     当没有分级存储需求时，推荐使用{@link OssServerFactory#getOssServer()}，<br>
      *     这将便于在对象存储类型切换时保证代码通用
-     *   3.当对象存储类型不为“QI_NIU”时将抛出 {@link UnsupportedOperationException}
-     * </pre>
+     *   </li>
+     *   <li>当对象存储类型不为“QI_NIU”时将抛出{@link UnsupportedOperationException}</li>
+     * </ul>
      *
      * @return 七牛云对象存储服务
      */

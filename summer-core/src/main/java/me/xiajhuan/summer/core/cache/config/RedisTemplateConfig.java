@@ -43,7 +43,7 @@ import java.time.Duration;
 public class RedisTemplateConfig {
 
     /**
-     * 主机（IP）
+     * 主机（ip）
      */
     @Value("${spring.redis.host}")
     private String host;
@@ -97,7 +97,7 @@ public class RedisTemplateConfig {
     private long maxWait;
 
     /**
-     * 注册 {@link RedisConnectionFactory}
+     * 注册{@link RedisConnectionFactory}
      *
      * @return {@link RedisConnectionFactory}
      */
@@ -116,17 +116,17 @@ public class RedisTemplateConfig {
                 .shutdownTimeout(Duration.ofMillis(timeout))
                 .poolConfig(poolConfig).build();
 
-        // Standalone模式的客户端
+        // Standalone模式客户端
         RedisStandaloneConfiguration serverConfig = new RedisStandaloneConfiguration(host, port);
         serverConfig.setDatabase(database);
         serverConfig.setPassword(password);
 
-        // 创建Lettuce客户端连接工厂
+        // Lettuce客户端连接工厂
         return new LettuceConnectionFactory(serverConfig, clientConfig);
     }
 
     /**
-     * 注册 {@link RedisTemplate}
+     * 注册{@link RedisTemplate}
      *
      * @param factory {@link RedisConnectionFactory}
      * @return {@link RedisTemplate}
@@ -149,13 +149,13 @@ public class RedisTemplateConfig {
         // String的序列化方式
         StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
 
-        // Key采用 String的序列化方式
+        // Key采用String的序列化方式
         template.setKeySerializer(stringRedisSerializer);
-        // Hash的Field采用 String的序列化方式
+        // Hash的Field采用String的序列化方式
         template.setHashKeySerializer(stringRedisSerializer);
-        // Value采用 Jackson的序列化方式
+        // Value采用Jackson的序列化方式
         template.setValueSerializer(jackson2JsonRedisSerializer);
-        // Hash的Value采用 Jackson的序列化方式
+        // Hash的Value采用Jackson的序列化方式
         template.setHashValueSerializer(jackson2JsonRedisSerializer);
 
         template.afterPropertiesSet();

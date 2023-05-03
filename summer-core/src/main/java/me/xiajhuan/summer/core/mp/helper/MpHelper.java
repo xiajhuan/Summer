@@ -23,11 +23,13 @@ import me.xiajhuan.summer.core.utils.PageSortUtil;
 
 /**
  * MybatisPlus Helper，note：
- * <pre>
- *   1.非侵入式api，提供Mp的一些通用操作模板，可根据实际需求自行选择是否引入
- *   2.Dto必须继承 {@link PageSortDto} 或 {@link ExcelDto}，ServiceImpl类写法示例：
+ * <ul>
+ *   <li>Mp常用api封装，可根据实际需求选择是否引入</li>
+ *   <li>
+ *     Dto必须继承{@link PageSortDto}或{@link ExcelDto}，ServiceImpl类写法示例：<br>
  *     {@code public class LogErrorServiceImpl extends ... implements LogErrorService, MpHelper<LogErrorDto, LogErrorEntity>}
- * </pre>
+ *   </li>
+ * </ul>
  *
  * @author xiajhuan
  * @date 2022/11/21
@@ -38,8 +40,8 @@ public interface MpHelper<D extends PageSortDto, T> {
      * 当前EntityClass
      *
      * @return EntityClass
-     * @see ServiceImpl#currentModelClass()
      */
+    @SuppressWarnings("unchecked")
     default Class<T> currentEntityClass() {
         return (Class<T>) ReflectionKit.getSuperClassGenericType(getClass(), ServiceImpl.class, 1);
     }
@@ -50,7 +52,7 @@ public interface MpHelper<D extends PageSortDto, T> {
     // 获取空Wrapper->获取查询条件Wrapper->获取查询条件+查询字段Wrapper->获取查询条件+查询字段+排序条件Wrapper
 
     /**
-     * 获取空 {@link LambdaQueryWrapper}
+     * 获取空{@link LambdaQueryWrapper}
      *
      * @return {@link LambdaQueryWrapper}
      */
@@ -58,10 +60,10 @@ public interface MpHelper<D extends PageSortDto, T> {
         return Wrappers.lambdaQuery(currentEntityClass());
     }
 
-    // note：以下三个方法覆写时一定要先调用上面的一个方法！
+    // note：以下三个方法覆写时一定要先调用上面一个方法！
 
     /**
-     * 获取 {@link LambdaQueryWrapper}（指定查询条件，默认无条件）<br>
+     * 获取{@link LambdaQueryWrapper}（指定查询条件，默认无条件）<br>
      * note：调用后包含【查询条件】
      *
      * @param dto Dto类型对象
@@ -73,25 +75,25 @@ public interface MpHelper<D extends PageSortDto, T> {
     }
 
     /**
-     * 获取 {@link LambdaQueryWrapper}（指定查询条件/查询字段，默认无条件/所有Entity字段）<br>
+     * 获取{@link LambdaQueryWrapper}（指定查询条件/查询字段，默认无条件/全部Entity字段）<br>
      * note：调用后包含【查询条件,查询字段】
      *
      * @param dto Dto类型对象
      * @return {@link LambdaQueryWrapper}
      */
     default LambdaQueryWrapper<T> getSelectWrapper(D dto) {
-        // 查询条件（无），查询字段（所有Entity字段）
+        // 查询条件（无），查询字段（全部Entity字段）
         return getQueryWrapper(dto).select(currentEntityClass(), i -> true);
     }
 
     /**
-     * 获取 {@link LambdaQueryWrapper}（指定查询条件/查询字段/排序条件），note：
-     * <pre>
-     *   1.调用后包含【查询条件,查询字段，排序条件】
-     *   2.默认无条件/所有Entity字段
-     *   3.默认排序条件依据 {@link PageSortDto#field} {@link PageSortDto#order} 的值指定
-     *   4.{@link PageSortUtil#handleSort(PageSortDto, LambdaQueryWrapper)} 有Sql注入风险！推荐根据实际需求覆写
-     * </pre>
+     * 获取{@link LambdaQueryWrapper}（指定查询条件/查询字段/排序条件），note：
+     * <ul>
+     *   <li>调用后包含【查询条件,查询字段,排序条件】</li>
+     *   <li>默认无条件/全部Entity字段</li>
+     *   <li>默认排序条件依据{@link PageSortDto}的field和order值指定</li>
+     *   <li>{@link PageSortUtil#handleSort(PageSortDto, LambdaQueryWrapper)}有Sql注入风险！推荐根据实际需求覆写</li>
+     * </ul>
      *
      * @param dto Dto类型对象
      * @return {@link LambdaQueryWrapper}
@@ -100,10 +102,10 @@ public interface MpHelper<D extends PageSortDto, T> {
         return PageSortUtil.handleSort(dto, getSelectWrapper(dto));
     }
 
-    //*******************分页排序参数统一处理********************
+    //*******************分页排序统一处理********************
 
     /**
-     * 分页排序参数处理，默认 count 总记录数
+     * 分页排序处理，默认COUNT总记录数
      *
      * @param dto Dto类型对象
      * @return {@link Page}
@@ -112,22 +114,22 @@ public interface MpHelper<D extends PageSortDto, T> {
         return PageSortUtil.handlePageSort(dto);
     }
 
-    //*******************自选扩展钩子********************
+    //*******************自选钩子********************
 
     /**
-     * 添加查询字段（默认所有Entity字段）<br>
-     * note：这个钩子只是为了防止相同的查询字段重复写，如“page”和“getById”，不会参与上面的模板流程！
+     * 添加查询字段（默认全部Entity字段）<br>
+     * note：这个钩子只是为了避免相同的查询字段重复写（如“page”和“getById”要查询的字段相同时），不会参与上面的模板流程！
      *
      * @param queryWrapper {@link LambdaQueryWrapper}
      * @return {@link LambdaQueryWrapper}
      */
     default LambdaQueryWrapper<T> addSelectField(LambdaQueryWrapper<T> queryWrapper) {
-        // 查询字段（所有Entity字段）
+        // 查询字段（全部Entity字段）
         return queryWrapper.select(currentEntityClass(), i -> true);
     }
 
     /**
-     * Dto类型对象前置处理钩子，可重写该钩子个性化前置处理，如校验/属性运算/属性填充等
+     * Dto前置处理钩子，可重写该钩子个性化前置处理，如校验/属性运算/属性填充等
      *
      * @param dto Dto类型对象
      */
@@ -136,7 +138,7 @@ public interface MpHelper<D extends PageSortDto, T> {
 
     /**
      * 自定义分页钩子<br>
-     * note：必须覆写该方法才能调用！否则将抛出 {@link UnsupportedOperationException}
+     * note：必须覆写该方法才能调用！否则将抛出{@link UnsupportedOperationException}
      *
      * @param dto Dto类型对象
      * @return {@link Page}
@@ -146,7 +148,7 @@ public interface MpHelper<D extends PageSortDto, T> {
     }
 
     /**
-     * Entity类型对象后置处理钩子，可重写该钩子个性化后置处理，如属性运算/属性填充等
+     * Entity后置处理钩子，可重写该钩子个性化后置处理，如属性运算/属性填充等
      *
      * @param entity Entity类型对象
      */

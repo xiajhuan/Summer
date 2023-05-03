@@ -95,7 +95,7 @@ public class LocalOssServer extends AbstractOssServer {
     protected String uploadInternal(InputStream inputStream, String bucketName, String path) {
         bucketName = getRealBucketName(bucketName);
         try {
-            // 将流的内容写入到文件（自动关闭输入流）
+            // 将流的内容写入文件（自动关闭输入流）
             FileUtil.writeFromStream(inputStream, getFile(path, bucketName));
         } catch (IORuntimeException e) {
             throw FileUploadException.of(e);
@@ -106,7 +106,7 @@ public class LocalOssServer extends AbstractOssServer {
     }
 
     /**
-     * 获取 {@link File}
+     * 获取{@link File}
      *
      * @param path       路径（相对路径）
      * @param bucketName 逻辑空间名

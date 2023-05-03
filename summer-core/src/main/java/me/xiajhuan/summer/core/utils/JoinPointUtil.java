@@ -32,7 +32,7 @@ import java.util.stream.Stream;
 public class JoinPointUtil {
 
     /**
-     * 构造JoinPointUtil（不允许实例化）
+     * 不允许实例化
      */
     private JoinPointUtil() {
     }
@@ -41,7 +41,7 @@ public class JoinPointUtil {
      * 获取切入点方法
      *
      * @param point {@link JoinPoint}
-     * @return {@link Method} 或 {@code null}
+     * @return {@link Method}或{@code null}
      */
     public static Method getMethod(JoinPoint point) {
         Signature signature = point.getSignature();
@@ -59,8 +59,8 @@ public class JoinPointUtil {
      * </p>
      *
      * @param point    {@link JoinPoint}
-     * @param isSimple 是否是简单类名，true：是 false：不是
-     * @return 切入点方法签名 或 {@code null}
+     * @param isSimple 是否是简单类名，true：是 false：否
+     * @return 切入点方法签名或{@code null}
      */
     public static String getMethodSignature(JoinPoint point, boolean isSimple) {
         Method method = getMethod(point);

@@ -69,9 +69,9 @@ public class CacheConst {
     }
 
     /**
-     * 堆内缓存
+     * 堆内缓存满后对象的移除策略
      */
-    public static class Heap {
+    public static class Strategy {
 
         /**
          * 先入先出

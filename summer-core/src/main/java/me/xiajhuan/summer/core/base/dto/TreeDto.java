@@ -59,7 +59,7 @@ public abstract class TreeDto<Long> extends TreeNode<Long> {
     private Integer weight;
 
     /**
-     * 扩展字段（不参与 序列化/反序列化）
+     * 扩展字段（不参与序列化/反序列化）
      *
      * @see TreeNode#extra
      */
@@ -107,8 +107,8 @@ public abstract class TreeDto<Long> extends TreeNode<Long> {
     /**
      * weight Setter
      * <p>
-     * note：这里不能 {@link Override} {@link TreeNode#setWeight(Comparable)}，
-     * 必须明确形参为 {@link Integer}，否则“weight属性”会反序列化失败！
+     * note：这里不能{@link Override}{@link TreeNode#setWeight(Comparable)}，
+     * 必须明确形参为{@link Integer}，否则weight会反序列化失败！
      * </p>
      *
      * @param weight 顺序

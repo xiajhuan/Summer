@@ -50,8 +50,8 @@ public abstract class BaseController {
     /**
      * 多文件上传，使用默认逻辑空间名
      *
-     * @param files {@link MultipartFile} 数组
-     * @return {@link Dict} 数组
+     * @param files {@link MultipartFile}数组
+     * @return {@link Dict}数组
      */
     protected Dict[] multiFileUpload(MultipartFile[] files) {
         return multiFileUpload(files, null);
@@ -70,9 +70,9 @@ public abstract class BaseController {
     /**
      * 多文件上传，指定逻辑空间名
      *
-     * @param files      {@link MultipartFile} 数组
+     * @param files      {@link MultipartFile}数组
      * @param bucketName 逻辑空间名
-     * @return {@link Dict} 数组
+     * @return {@link Dict}数组
      */
     protected Dict[] multiFileUpload(MultipartFile[] files, String bucketName) {
         return Arrays.stream(files)

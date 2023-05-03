@@ -206,7 +206,7 @@ public class SecurityServiceImpl implements SecurityService {
         String loginInfoKey = loginInfo(userId);
         if (cacheServer.hasHash(loginInfoKey)) {
             // 获取accessToken
-            String accessToken = String.valueOf(cacheServer.getHash(loginInfoKey, SecurityConst.LoginInfo.ACCESS_TOKEN));
+            String accessToken = String.valueOf(cacheServer.getHash(loginInfoKey, "accessToken"));
 
             // 删除用户ID
             cacheServer.delete(userId(accessToken));
@@ -282,12 +282,12 @@ public class SecurityServiceImpl implements SecurityService {
             loginInfo = MapUtil.newHashMap(2, true);
         } else {
             // 让原来的accessToken失效
-            cacheServer.delete(userId(String.valueOf(loginInfo.get(SecurityConst.LoginInfo.ACCESS_TOKEN))));
+            cacheServer.delete(userId(String.valueOf(loginInfo.get("accessToken"))));
         }
         // 缓存登录信息（覆盖刷新）
-        loginInfo.put(SecurityConst.LoginInfo.ACCESS_TOKEN, accessToken);
+        loginInfo.put("accessToken", accessToken);
         LoginUser loginUser = getLoginUser(entity);
-        loginInfo.put(SecurityConst.LoginInfo.LOGIN_USER, loginUser);
+        loginInfo.put("loginUser", loginUser);
         cacheServer.setHash(loginInfoKey, loginInfo, cacheTtl);
 
         // 缓存用户权限集合（覆盖刷新）

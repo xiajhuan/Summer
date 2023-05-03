@@ -12,7 +12,9 @@
 
 package me.xiajhuan.summer.core.data;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import me.xiajhuan.summer.core.constant.DataScopeConst;
 import me.xiajhuan.summer.core.enums.UserTypeEnum;
 
@@ -20,13 +22,14 @@ import java.io.Serializable;
 import java.util.Set;
 
 /**
- * 登录用户信息<br>
- * note：只包含必要字段
+ * 登录用户信息（只包含必要字段）
  *
  * @author xiajhuan
  * @date 2023/02/27
  */
-@Data
+@Setter
+@Getter
+@ToString
 public class LoginUser implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -71,12 +74,12 @@ public class LoginUser implements Serializable {
     private Integer dataScope;
 
     /**
-     * 部门ID集合（这里指用户所有角色关联的所有部门ID）
+     * 部门ID集合（用户所有角色关联的所有部门ID）
      */
     private Set<Long> deptIdRoleBasedSet;
 
     /**
-     * 本部门及本部门下子部门ID
+     * 本部门及本部门下子部门ID集合
      */
     private Set<Long> deptAndChildIdSet;
 

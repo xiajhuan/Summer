@@ -31,7 +31,7 @@ public interface CacheServer {
      * 判断是否存在key（String）
      *
      * @param key Key
-     * @return 是否存在Key，true：存在 false：不存在
+     * @return 是否存在Key，true：是 false：否
      */
     boolean hasString(String key);
 
@@ -39,7 +39,7 @@ public interface CacheServer {
      * 判断是否存在key（Auto）
      *
      * @param key Key
-     * @return 是否存在Key，true：存在 false：不存在
+     * @return 是否存在Key，true：是 false：否
      */
     boolean hasAuto(String key);
 
@@ -47,7 +47,7 @@ public interface CacheServer {
      * 判断是否存在key（Hash）
      *
      * @param key Key
-     * @return 是否存在Key，true：存在 false：不存在
+     * @return 是否存在Key，true：是 false：否
      */
     boolean hasHash(String key);
 
@@ -55,13 +55,13 @@ public interface CacheServer {
      * 判断是否存在key（List）
      *
      * @param key Key
-     * @return 是否存在Key，true：存在 false：不存在
+     * @return 是否存在Key，true：是 false：否
      */
     boolean hasList(String key);
 
     /**
      * 删除Key<br>
-     * note：堆内缓存需指定值类型，不指定则默认STRING
+     * note：堆内缓存需指定值类型，不指定则默认为STRING
      *
      * @param key Key
      * @see CacheConst.Value#STRING
@@ -83,7 +83,7 @@ public interface CacheServer {
     //*******************Value-String********************
 
     /**
-     * 设值（String）
+     * 设置值（String）
      *
      * @param key   Key
      * @param value Value（String）
@@ -91,16 +91,16 @@ public interface CacheServer {
     void setString(String key, String value);
 
     /**
-     * 设值（String）（禁止覆盖）
+     * 设置值（String），不允许覆盖
      *
      * @param key   Key
      * @param value Value（String）
-     * @return 是否设值成功，true：成功 false：失败
+     * @return 是否设置值成功，true：是 false：否
      */
     boolean setStringAbsent(String key, String value);
 
     /**
-     * 设值（String）,有过期时间
+     * 设置值（String），有过期时间
      *
      * @param key   Key
      * @param value Value（String）
@@ -109,12 +109,12 @@ public interface CacheServer {
     void setString(String key, String value, long ttl);
 
     /**
-     * 设值（String）,有过期时间（禁止覆盖）
+     * 设置值（String），有过期时间、禁止覆盖
      *
      * @param key   Key
      * @param value Value（String）
      * @param ttl   过期时间（ms）
-     * @return 是否设值成功，true：成功 false：失败
+     * @return 是否设置值成功，true：是 false：否
      */
     boolean setStringAbsent(String key, String value, long ttl);
 
@@ -122,14 +122,14 @@ public interface CacheServer {
      * 获取值（String）
      *
      * @param key Key
-     * @return Value（String）或 {@code null}
+     * @return Value（String）或{@code null}
      */
     String getString(String key);
 
     //*******************Value-Auto********************
 
     /**
-     * 自增，默认步长为：1
+     * 自增，默认步长为1
      *
      * @param key Key
      */
@@ -144,7 +144,7 @@ public interface CacheServer {
     void increment(String key, int step);
 
     /**
-     * 自增，默认步长为：1，有过期时间
+     * 自增，默认步长为1、有过期时间
      *
      * @param key Key
      * @param ttl 过期时间（ms）
@@ -161,7 +161,7 @@ public interface CacheServer {
     void increment(String key, int step, long ttl);
 
     /**
-     * 自减，默认步长为：1
+     * 自减，默认步长为1
      *
      * @param key Key
      */
@@ -176,7 +176,7 @@ public interface CacheServer {
     void decrement(String key, int step);
 
     /**
-     * 自减，默认步长为：1，有过期时间
+     * 自减，默认步长为1、有过期时间
      *
      * @param key Key
      * @param ttl 过期时间（ms）
@@ -195,7 +195,7 @@ public interface CacheServer {
     //*******************Value-Hash********************
 
     /**
-     * 设值（Hash）
+     * 设置值（Hash）
      *
      * @param key  Key
      * @param hash Value（Hash）
@@ -203,16 +203,16 @@ public interface CacheServer {
     void setHash(String key, Map<String, Object> hash);
 
     /**
-     * 设值（Hash）（禁止覆盖）
+     * 设置值（Hash），不允许覆盖
      *
      * @param key  Key
      * @param hash Value（Hash）
-     * @return 是否设值成功，true：成功 false：失败
+     * @return 是否设置值成功，true：是 false：否
      */
     boolean setHashAbsent(String key, Map<String, Object> hash);
 
     /**
-     * 设值（Field->Hash）
+     * 设置值（Hash-Field）
      *
      * @param key   Key
      * @param field Field（String）
@@ -221,17 +221,17 @@ public interface CacheServer {
     void setHash(String key, String field, Object value);
 
     /**
-     * 设值（Field->Hash）（禁止覆盖）
+     * 设置值（Hash-Field），不允许覆盖
      *
      * @param key   Key
      * @param field Field（String）
      * @param value Value（String）
-     * @return 是否设值成功，true：成功 false：失败
+     * @return 是否设置值成功，true：是 false：否
      */
     boolean setHashAbsent(String key, String field, Object value);
 
     /**
-     * 设值（Hash）,有过期时间
+     * 设置值（Hash），有过期时间
      *
      * @param key  Key
      * @param hash Value（Hash）
@@ -240,17 +240,17 @@ public interface CacheServer {
     void setHash(String key, Map<String, Object> hash, long ttl);
 
     /**
-     * 设值（Hash）,有过期时间（禁止覆盖）
+     * 设置值（Hash），有过期时间、不允许覆盖
      *
      * @param key  Key
      * @param hash Value（Hash）
      * @param ttl  过期时间（ms）
-     * @return 是否设值成功，true：成功 false：失败
+     * @return 是否设置值成功，true：是 false：否
      */
     boolean setHashAbsent(String key, Map<String, Object> hash, long ttl);
 
     /**
-     * 设值（Field->Hash）,有过期时间
+     * 设置值（Hash-Field），有过期时间
      *
      * @param key   Key
      * @param field Field（String）
@@ -260,13 +260,13 @@ public interface CacheServer {
     void setHash(String key, String field, Object value, long ttl);
 
     /**
-     * 设值（Field->Hash）,有过期时间（禁止覆盖）
+     * 设置值（Hash-Field），有过期时间、不允许覆盖
      *
      * @param key   Key
      * @param field Field（String）
      * @param value Value（String）
      * @param ttl   过期时间（ms）
-     * @return 是否设值成功，true：成功 false：失败
+     * @return 是否设置值成功，true：是 false：否
      */
     boolean setHashAbsent(String key, String field, Object value, long ttl);
 
@@ -274,23 +274,23 @@ public interface CacheServer {
      * 获取值（Hash）
      *
      * @param key Key
-     * @return Value（Hash）或 {@code null}
+     * @return Value（Hash）或{@code null}
      */
     Map<String, Object> getHash(String key);
 
     /**
-     * 获取值（Hash-Value）
+     * 获取值（Hash-Field）
      *
      * @param key   Key
      * @param field Field（String）
-     * @return Value（String）或 {@code null}
+     * @return Value（String）或{@code null}
      */
     Object getHash(String key, String field);
 
     //*******************Value-List********************
 
     /**
-     * 设值（List）
+     * 设置值（List）
      *
      * @param key  Key
      * @param list Value（List）
@@ -298,7 +298,7 @@ public interface CacheServer {
     void setList(String key, List<String> list);
 
     /**
-     * 设值（List）（追加）
+     * 设置值（List），追加至末尾
      *
      * @param key  Key
      * @param list Value（List）
@@ -306,16 +306,16 @@ public interface CacheServer {
     void setListAppend(String key, List<String> list);
 
     /**
-     * 设值（List）（禁止覆盖）
+     * 设置值（List），不允许覆盖
      *
      * @param key  Key
      * @param list Value（List）
-     * @return 是否设值成功，true：成功 false：失败
+     * @return 是否设置值成功，true：是 false：否
      */
     boolean setListAbsent(String key, List<String> list);
 
     /**
-     * 设值（Value（List-Element）->rPush（往列表末尾添加））
+     * 设置值（List-Element），rPush（添加至末尾）
      *
      * @param key     Key
      * @param element Value（List-Element）
@@ -323,7 +323,7 @@ public interface CacheServer {
     void setListRPush(String key, String element);
 
     /**
-     * 设值（List）,有过期时间
+     * 设置值（List），有过期时间
      *
      * @param key  Key
      * @param list Value（List）
@@ -332,7 +332,7 @@ public interface CacheServer {
     void setList(String key, List<String> list, long ttl);
 
     /**
-     * 设值（List）,有过期时间（追加）
+     * 设置值（List），有过期时间、追加至末尾
      *
      * @param key  Key
      * @param list Value（List）
@@ -341,17 +341,17 @@ public interface CacheServer {
     void setListAppend(String key, List<String> list, long ttl);
 
     /**
-     * 设值（List）,有过期时间（禁止覆盖）
+     * 设置值（List），有过期时间，不允许覆盖
      *
      * @param key  Key
      * @param list Value（List）
      * @param ttl  过期时间（ms）
-     * @return 是否设值成功，true：成功 false：失败
+     * @return 是否设置值成功，true：是 false：否
      */
     boolean setListAbsent(String key, List<String> list, long ttl);
 
     /**
-     * 设值（Value（List-Element）->rPush（往列表末尾添加））,有过期时间
+     * 设置值（List-Element），rPush（添加至末尾）、有过期时间
      *
      * @param key     Key
      * @param element Value（List-Element）
@@ -363,16 +363,16 @@ public interface CacheServer {
      * 获取值（List）
      *
      * @param key Key
-     * @return Value（List）或 {@code null}
+     * @return Value（List）或{@code null}
      */
     List<String> getList(String key);
 
     /**
-     * 获取值Value（List-Element）（根据索引下标）
+     * 获取值（List-Element）
      *
      * @param key   Key
-     * @param index 索引下标
-     * @return Value（List-Element）或 {@code null}
+     * @param index 索引
+     * @return Value（List-Element）或{@code null}
      */
     String getListElement(String key, int index);
 

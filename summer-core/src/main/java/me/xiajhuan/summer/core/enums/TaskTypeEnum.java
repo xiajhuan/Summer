@@ -26,17 +26,17 @@ import lombok.Getter;
 public enum TaskTypeEnum {
 
     /**
-     * 系统定时任务
+     * System
      */
     SYSTEM(0, "System", "系统定时任务"),
 
     /**
-     * api定时任务
+     * Api
      */
     API(1, "Api", "api定时任务"),
 
     /**
-     * 业务定时任务
+     * Business
      */
     BUSINESS(2, "Business", "业务定时任务");
 

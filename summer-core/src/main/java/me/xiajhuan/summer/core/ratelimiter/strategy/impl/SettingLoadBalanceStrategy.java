@@ -17,7 +17,7 @@ import me.xiajhuan.summer.core.ratelimiter.strategy.LoadBalanceStrategy;
 /**
  * <p>
  * 配置限流负载均衡策略，不会实例化，
- * 标识将使用core.setting下RateLimiter组下strategy.load-balance设置的策略
+ * 标识将使用core.setting下RateLimiter组下strategy.load-balance配置的策略
  * </p>
  *
  * @author xiajhuan
@@ -26,7 +26,7 @@ import me.xiajhuan.summer.core.ratelimiter.strategy.LoadBalanceStrategy;
 public class SettingLoadBalanceStrategy implements LoadBalanceStrategy {
 
     /**
-     * 构造SettingLoadBalanceStrategy（不允许实例化）
+     * 不允许实例化
      */
     private SettingLoadBalanceStrategy() {
     }

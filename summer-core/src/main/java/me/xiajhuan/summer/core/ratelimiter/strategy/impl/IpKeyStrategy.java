@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * <p>
- * IP限流Key策略（Key为：接口签名#调用者IP），
+ * ip限流Key策略，Key为：接口签名#调用者ip，
  * 例如：/summer/security/user/page[GET]#192.168.1.100
  * </p>
  *

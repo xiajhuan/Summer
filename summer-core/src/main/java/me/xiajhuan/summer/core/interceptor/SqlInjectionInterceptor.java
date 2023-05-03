@@ -42,7 +42,7 @@ public class SqlInjectionInterceptor implements HandlerInterceptor {
     private final String[] illegalKeyWordArray;
 
     /**
-     * 构造SqlInjectionInterceptor
+     * 构造私有化
      *
      * @param setting {@link Setting}
      */
@@ -77,7 +77,7 @@ public class SqlInjectionInterceptor implements HandlerInterceptor {
     /**
      * 过滤
      *
-     * @param paramMap 参数 Map
+     * @param paramMap 参数Map
      */
     private void filter(Map<String, String> paramMap) {
         paramMap.values().forEach(value -> {

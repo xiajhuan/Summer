@@ -37,7 +37,7 @@ public class SecurityUtil extends SecurityUtils {
     private static final Log LOGGER = LogFactory.get();
 
     /**
-     * 构造SecurityUtil（不允许实例化）
+     * 不允许实例化
      */
     private SecurityUtil() {
     }
@@ -66,7 +66,7 @@ public class SecurityUtil extends SecurityUtils {
      *
      * @param plaintext 明文
      * @param hashed    密文
-     * @return 是否匹配，true：匹配 false：不匹配
+     * @return 是否匹配，true：是 false：否
      */
     public static boolean matches(String plaintext, String hashed) {
         return BCrypt.checkpw(plaintext, hashed);
@@ -82,10 +82,10 @@ public class SecurityUtil extends SecurityUtils {
     }
 
     /**
-     * 获取当前用户名，若不存在则默认为：systemUser
+     * 获取当前用户名，若不存在则默认为systemUser
      *
      * @return 当前用户名
-     * @see NonLoggedUserEnum
+     * @see NonLoggedUserEnum#SYSTEM_USER
      */
     public static String getCurrentUsername() {
         return getCurrentUsername(NonLoggedUserEnum.SYSTEM_USER.getValue());
@@ -108,10 +108,10 @@ public class SecurityUtil extends SecurityUtils {
     }
 
     /**
-     * 获取当前用户真实姓名，若不存在则默认为：系统用户
+     * 获取当前用户真实姓名，若不存在则默认为系统用户
      *
      * @return 当前用户真实姓名
-     * @see NonLoggedUserEnum
+     * @see NonLoggedUserEnum#SYSTEM_USER
      */
     public static String getCurrentRealName() {
         return getCurrentRealName(NonLoggedUserEnum.SYSTEM_USER.getName());
@@ -162,10 +162,10 @@ public class SecurityUtil extends SecurityUtils {
     }
 
     /**
-     * 获取 {@link Subject}<br>
+     * 获取{@link Subject}<br>
      * Subject：表示单个应用程序用户的状态和安全操作
      *
-     * @return {@link Subject} 或 {@code null}
+     * @return {@link Subject}或{@code null}
      */
     private static Subject acquireSubject() {
         try {

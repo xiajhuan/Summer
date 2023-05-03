@@ -27,6 +27,7 @@ import javax.validation.Validator;
  *
  * @author xiajhuan
  * @date 2023/02/25
+ * @see MessageSource
  */
 @Configuration
 public class ValidatorConfig {
@@ -35,7 +36,7 @@ public class ValidatorConfig {
     private MessageSource messageSource;
 
     /**
-     * 注册 {@link Validator}
+     * 注册{@link Validator}
      *
      * @return {@link Validator}
      */
@@ -47,7 +48,7 @@ public class ValidatorConfig {
     }
 
     /**
-     * 注册 {@link LocaleResolver}
+     * 注册{@link LocaleResolver}
      *
      * @return {@link LocaleResolver}
      */
