@@ -97,7 +97,7 @@ public class QiNiuOssServer extends AbstractOssServer {
     //*******************单例处理结束********************
 
     @Override
-    public int getType() {
+    protected String getType() {
         return OssSupportEnum.QI_NIU.getValue();
     }
 

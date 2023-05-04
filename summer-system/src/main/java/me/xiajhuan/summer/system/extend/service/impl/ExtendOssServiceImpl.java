@@ -21,6 +21,7 @@ import me.xiajhuan.summer.core.constant.DataSourceConst;
 import me.xiajhuan.summer.core.mp.helper.MpHelper;
 import me.xiajhuan.summer.core.oss.factory.OssServerFactory;
 import me.xiajhuan.summer.core.oss.server.AbstractOssServer;
+import me.xiajhuan.summer.core.properties.ApplicationProperties;
 import me.xiajhuan.summer.core.utils.BeanUtil;
 import me.xiajhuan.summer.system.extend.dto.ExtendOssDto;
 import me.xiajhuan.summer.system.extend.entity.ExtendOssEntity;
@@ -29,6 +30,7 @@ import me.xiajhuan.summer.system.extend.service.ExtendOssService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -43,6 +45,9 @@ import java.util.stream.Collectors;
 @DS(DataSourceConst.SYSTEM)
 public class ExtendOssServiceImpl extends ServiceImpl<ExtendOssMapper, ExtendOssEntity> implements ExtendOssService, MpHelper<ExtendOssDto, ExtendOssEntity> {
 
+    @Resource
+    private ApplicationProperties applicationProperties;
+
     //*******************MpHelper覆写开始********************
 
     @Override
@@ -50,7 +55,7 @@ public class ExtendOssServiceImpl extends ServiceImpl<ExtendOssMapper, ExtendOss
         LambdaQueryWrapper<ExtendOssEntity> queryWrapper = getEmptyWrapper();
         // 查询条件
         // 类型
-        queryWrapper.eq(ExtendOssEntity::getType, OssServerFactory.getOssServer().getType());
+        queryWrapper.eq(ExtendOssEntity::getType, applicationProperties.getOss().getType());
 
         return queryWrapper;
     }
@@ -94,7 +99,7 @@ public class ExtendOssServiceImpl extends ServiceImpl<ExtendOssMapper, ExtendOss
                         .url(dict.getStr("url"))
                         .bucketName(dict.getStr("bucketName"))
                         .path(dict.getStr("path"))
-                        .type(dict.getInt("type")).build()));
+                        .type(dict.getStr("type")).build()));
     }
 
 }

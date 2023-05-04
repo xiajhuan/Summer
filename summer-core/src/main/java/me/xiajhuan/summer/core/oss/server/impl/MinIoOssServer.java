@@ -80,7 +80,7 @@ public class MinIoOssServer extends AbstractOssServer {
     //*******************单例处理结束********************
 
     @Override
-    public int getType() {
+    protected String getType() {
         return OssSupportEnum.MIN_IO.getValue();
     }
 

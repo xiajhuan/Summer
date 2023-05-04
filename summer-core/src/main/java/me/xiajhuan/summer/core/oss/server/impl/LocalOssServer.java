@@ -75,7 +75,7 @@ public class LocalOssServer extends AbstractOssServer {
     //*******************单例处理结束********************
 
     @Override
-    public int getType() {
+    protected String getType() {
         return OssSupportEnum.LOCAL.getValue();
     }
 

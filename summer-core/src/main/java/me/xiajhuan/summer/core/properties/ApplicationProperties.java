@@ -69,7 +69,7 @@ public class ApplicationProperties {
          * @see OssSupportEnum#MIN_IO
          * @see OssSupportEnum#QI_NIU
          */
-        private String type = OssSupportEnum.LOCAL.toString();
+        private String type = OssSupportEnum.LOCAL.getValue();
 
     }
 

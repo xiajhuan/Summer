@@ -26,24 +26,22 @@ import lombok.Getter;
 public enum OssSupportEnum {
 
     /**
-     * 本地
+     * 本地服务器存储
      */
-    LOCAL(0, "本地", "本地服务器存储"),
+    LOCAL("LOCAL", "本地服务器存储"),
 
     /**
-     * MinIo
+     * MinIo对象存储
      */
-    MIN_IO(1, "MinIo", "MinIo对象存储"),
+    MIN_IO("MIN_IO", "MinIo对象存储"),
 
     /**
-     * 七牛云
+     * 七牛云对象存储
      */
-    QI_NIU(2, "七牛云", "七牛云对象存储");
+    QI_NIU("QI_NIU", "七牛云对象存储");
 
-    private final int value;
+    private final String value;
 
     private final String name;
-
-    private final String desc;
 
 }

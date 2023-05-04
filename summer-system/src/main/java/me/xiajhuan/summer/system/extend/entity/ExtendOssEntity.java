@@ -64,6 +64,6 @@ public class ExtendOssEntity extends SimpleEntity {
      *
      * @see OssSupportEnum
      */
-    private Integer type;
+    private String type;
 
 }

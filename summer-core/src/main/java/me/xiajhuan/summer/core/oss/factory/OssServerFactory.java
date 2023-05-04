@@ -45,7 +45,7 @@ public class OssServerFactory {
                 .getOss().getType();
         if (StrUtil.isBlank(OSS_TYPE)) {
             // 没有配置则默认为：LOCAL
-            OSS_TYPE = OssSupportEnum.LOCAL.toString();
+            OSS_TYPE = OssSupportEnum.LOCAL.getValue();
         }
     }
 
@@ -55,11 +55,11 @@ public class OssServerFactory {
      * @return 对象存储服务
      */
     public static AbstractOssServer getOssServer() {
-        if (OSS_TYPE.equalsIgnoreCase(OssSupportEnum.LOCAL.toString())) {
+        if (OSS_TYPE.equalsIgnoreCase(OssSupportEnum.LOCAL.getValue())) {
             return LocalOssServer.getInstance();
-        } else if (OSS_TYPE.equalsIgnoreCase(OssSupportEnum.MIN_IO.toString())) {
+        } else if (OSS_TYPE.equalsIgnoreCase(OssSupportEnum.MIN_IO.getValue())) {
             return MinIoOssServer.getInstance();
-        } else if (OSS_TYPE.equalsIgnoreCase(OssSupportEnum.QI_NIU.toString())) {
+        } else if (OSS_TYPE.equalsIgnoreCase(OssSupportEnum.QI_NIU.getValue())) {
             return QiNiuOssServer.getInstance();
         } else {
             throw new IllegalArgumentException(StrUtil.format("不支持的对象存储类型【{}】", OSS_TYPE));
@@ -69,9 +69,9 @@ public class OssServerFactory {
     /**
      * 获取本地存储服务，note：
      * <ul>
-     *   <li>当对象存储类型为“MIN_IO”或“QI_NIU”时，若有分级存储需求，可通过该方法获取本地存储服务</li>
+     *   <li>当对象存储类型为MIN_IO或QI_NIU时，若有分级存储需求，可通过该方法获取本地存储服务</li>
      *   <li>
-     *     当对象存储类型为“LOCAL”时，推荐使用{@link OssServerFactory#getOssServer()}，<br>
+     *     当对象存储类型为LOCAL时，推荐使用{@link OssServerFactory#getOssServer()}，<br>
      *     这将便于在对象存储类型切换时保证代码通用
      *   </li>
      * </ul>
@@ -85,18 +85,18 @@ public class OssServerFactory {
     /**
      * 获取MinIo对象存储服务，note：
      * <ul>
-     *   <li>当对象存储类型为“MIN_IO”时，若有分级存储需求，可以通过该方法获取MinIo对象存储服务</li>
+     *   <li>当对象存储类型为MIN_IO时，若有分级存储需求，可以通过该方法获取MinIo对象存储服务</li>
      *   <li>
      *     当没有分级存储需求时，推荐使用{@link OssServerFactory#getOssServer()}，<br>
      *     这将便于在对象存储类型切换时保证代码通用
      *   </li>
-     *   <li>当对象存储类型不为“MIN_IO”时将抛出{@link UnsupportedOperationException}</li>
+     *   <li>当对象存储类型不为MIN_IO时将抛出{@link UnsupportedOperationException}</li>
      * </ul>
      *
      * @return MinIo对象存储服务
      */
     public static MinIoOssServer getMinIoOssServer() {
-        if (OSS_TYPE.equalsIgnoreCase(OssSupportEnum.MIN_IO.toString())) {
+        if (OSS_TYPE.equalsIgnoreCase(OssSupportEnum.MIN_IO.getValue())) {
             return MinIoOssServer.getInstance();
         }
         throw new UnsupportedOperationException("对象存储类型必须为MIN_IO才能调用!");
@@ -105,18 +105,18 @@ public class OssServerFactory {
     /**
      * 获取七牛云对象存储服务，note：
      * <ul>
-     *   <li>当对象存储类型为“QI_NIU”时，若有分级存储需求，可以通过该方法获取七牛云对象存储服务</li>
+     *   <li>当对象存储类型为QI_NIU时，若有分级存储需求，可以通过该方法获取七牛云对象存储服务</li>
      *   <li>
      *     当没有分级存储需求时，推荐使用{@link OssServerFactory#getOssServer()}，<br>
      *     这将便于在对象存储类型切换时保证代码通用
      *   </li>
-     *   <li>当对象存储类型不为“QI_NIU”时将抛出{@link UnsupportedOperationException}</li>
+     *   <li>当对象存储类型不为QI_NIU时将抛出{@link UnsupportedOperationException}</li>
      * </ul>
      *
      * @return 七牛云对象存储服务
      */
     public static QiNiuOssServer getQiNiuOssServer() {
-        if (OSS_TYPE.equalsIgnoreCase(OssSupportEnum.QI_NIU.toString())) {
+        if (OSS_TYPE.equalsIgnoreCase(OssSupportEnum.QI_NIU.getValue())) {
             return QiNiuOssServer.getInstance();
         }
         throw new UnsupportedOperationException("对象存储类型必须为QI_NIU才能调用!");

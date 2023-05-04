@@ -43,7 +43,7 @@ public class CacheServerFactory {
         CACHE_TYPE = SpringUtil.getBean("applicationProperties", ApplicationProperties.class)
                 .getCache().getType();
         if (StrUtil.isBlank(CACHE_TYPE)) {
-            // 没有配置则默认为REDIS
+            // 没有配置则默认为：REDIS
             CACHE_TYPE = CacheConst.Type.REDIS;
         }
     }

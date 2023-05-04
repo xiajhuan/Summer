@@ -85,13 +85,6 @@ public abstract class AbstractOssServer {
     }
 
     /**
-     * 获取对象存储类型，参考{@link OssSupportEnum}
-     *
-     * @return 对象存储类型
-     */
-    public abstract int getType();
-
-    /**
      * 下载
      *
      * @param url      URL（外链）
@@ -123,6 +116,13 @@ public abstract class AbstractOssServer {
         // 删除处理
         deleteInternal(getRealBucketName(bucketName), path);
     }
+
+    /**
+     * 获取对象存储类型，参考{@link OssSupportEnum}
+     *
+     * @return 对象存储类型
+     */
+    protected abstract String getType();
 
     /**
      * 上传处理

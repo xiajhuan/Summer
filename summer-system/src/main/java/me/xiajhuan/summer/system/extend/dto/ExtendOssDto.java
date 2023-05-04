@@ -50,7 +50,7 @@ public class ExtendOssDto extends PageSortDto {
      * @see OssSupportEnum
      */
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private Integer type;
+    private String type;
 
     /**
      * 创建时间
