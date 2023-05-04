@@ -13,12 +13,14 @@
 package me.xiajhuan.summer.core.base.controller;
 
 import cn.hutool.core.lang.Dict;
+import me.xiajhuan.summer.core.data.LoginUser;
 import me.xiajhuan.summer.core.oss.server.AbstractOssServer;
 import me.xiajhuan.summer.core.exception.code.ErrorCode;
 import me.xiajhuan.summer.core.exception.custom.ValidationException;
 import me.xiajhuan.summer.core.oss.factory.OssServerFactory;
 import me.xiajhuan.summer.core.properties.BatchLimitProperties;
 import me.xiajhuan.summer.core.utils.AssertUtil;
+import me.xiajhuan.summer.core.utils.SecurityUtil;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -35,6 +37,15 @@ public abstract class BaseController {
 
     @Resource
     private BatchLimitProperties batchLimitProperties;
+
+    /**
+     * 获取登录用户信息
+     *
+     * @return 登录用户信息
+     */
+    protected LoginUser getLoginUser() {
+        return SecurityUtil.getLoginUser();
+    }
 
     /**
      * 校验最大导出数

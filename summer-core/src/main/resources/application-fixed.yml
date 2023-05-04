@@ -67,14 +67,14 @@ spring:
       strict: true
       # 连接池配置
       hikari:
-        # 配置项说明参考 com.zaxxer.hikari.HikariConfigMXBean
+        # 配置项说明参考com.zaxxer.hikari.HikariConfigMXBean
         connection-timeout: 10000
         validation-timeout: 3000
         idle-timeout: 60000
         max-lifetime: 180000
         max-pool-size: 10
         min-idle: 5
-  # Redis，只有application.cache.type: REDIS 时会生效
+  # Redis，只有application.cache.type: REDIS时会生效
   redis:
     timeout: 6000
     lettuce:
@@ -104,9 +104,9 @@ mybatis-plus:
     map-underscore-to-camel-case: true
     # 全局缓存
     cache-enabled: false
-    # 指定当结果集中值为 null 的时候是否调用映射对象的 setter（map 对象时为 put）方法
+    # 指定当结果集中值为null的时候是否调用映射对象的setter（map对象时为put）方法
     call-setters-on-nulls: true
-    # 当没有为参数指定特定的 JDBC 类型时，空值的默认 JDBC 类型
+    # 当没有为参数指定特定的JDBC类型时，空值的默认JDBC类型
     jdbc-type-for-null: NULL
 
 batch:

@@ -12,11 +12,11 @@
 
 package me.xiajhuan.summer.system.security.controller;
 
+import me.xiajhuan.summer.core.base.controller.BaseController;
 import me.xiajhuan.summer.core.constant.OperationConst;
 import me.xiajhuan.summer.core.data.Result;
 import me.xiajhuan.summer.core.ratelimiter.annotation.RateLimiter;
 import me.xiajhuan.summer.core.utils.AssertUtil;
-import me.xiajhuan.summer.core.utils.SecurityUtil;
 import me.xiajhuan.summer.core.validation.group.AddGroup;
 import me.xiajhuan.summer.core.validation.group.UpdateGroup;
 import me.xiajhuan.summer.system.log.annotation.LogOperation;
@@ -40,7 +40,7 @@ import java.util.Set;
  */
 @RestController
 @RequestMapping("security/menu")
-public class SecurityMenuController {
+public class SecurityMenuController extends BaseController {
 
     @Resource
     private SecurityMenuService mainService;
@@ -154,7 +154,7 @@ public class SecurityMenuController {
     @GetMapping("permissions")
     @LogOperation("用户权限集合")
     public Result<Set<String>> permissions() {
-        return Result.ofSuccess(mainService.getPermissions(SecurityUtil.getLoginUser()));
+        return Result.ofSuccess(mainService.getPermissions(getLoginUser()));
     }
 
 }

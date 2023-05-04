@@ -109,13 +109,13 @@ public class WildcardUtil {
         }
 
         // 都不为null
-        // i 用来记录source串检测的索引的位置
+        // i用来记录source串检测的索引的位置
         int i = 0;
-        // j 用来记录pattern串检测的索引的位置
+        // j用来记录pattern串检测的索引的位置
         int j = 0;
-        // 记录 待测串i的回溯点
+        // 记录待测串i的回溯点
         int ii = -1;
-        // 记录 通配符*的回溯点
+        // 记录通配符*的回溯点
         int jj = -1;
 
         // 以source字符串的长度为循环基数，用i来记录source串当前的位置
@@ -135,7 +135,7 @@ public class WildcardUtil {
             } else {
                 // 如果在以上两种情况下均放行，表明此次匹配是失败的，那么此时就要明确一点，source串是否在被pattern串中的通配符*监听着，
                 // 因为在首次判断中如果碰到通配符*，我们会将他当前索引的位置记录在jj的位置上，
-                // 如果jj = -1 表明匹配失败，当前source串不在监听位置上
+                // 如果jj = -1表明匹配失败，当前source串不在监听位置上
                 if (jj == -1) return false;
                 // 如果此时在source串在通配符*的监听下，让pattern串回到通配符*的位置上继续监听下一个字符
                 j = jj;

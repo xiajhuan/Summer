@@ -12,9 +12,11 @@
 
 package me.xiajhuan.summer.system.security.controller;
 
+import me.xiajhuan.summer.core.base.controller.BaseController;
 import me.xiajhuan.summer.core.data.Result;
 import me.xiajhuan.summer.core.ratelimiter.annotation.RateLimiter;
-import me.xiajhuan.summer.core.utils.*;
+import me.xiajhuan.summer.core.utils.AssertUtil;
+import me.xiajhuan.summer.core.utils.BeanUtil;
 import me.xiajhuan.summer.core.validation.group.DefaultGroup;
 import me.xiajhuan.summer.system.security.dto.LoginDto;
 import me.xiajhuan.summer.system.security.dto.SecurityUserDto;
@@ -35,7 +37,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @RestController
 @RequestMapping("security")
-public class SecurityController {
+public class SecurityController extends BaseController {
 
     @Resource
     private SecurityService mainService;
@@ -73,7 +75,7 @@ public class SecurityController {
      */
     @GetMapping("info")
     public Result<SecurityUserDto> info() {
-        return Result.ofSuccess(BeanUtil.convert(SecurityUtil.getLoginUser(), SecurityUserDto.class));
+        return Result.ofSuccess(BeanUtil.convert(getLoginUser(), SecurityUserDto.class));
     }
 
     /**
@@ -84,7 +86,7 @@ public class SecurityController {
      */
     @PostMapping("logout")
     public Result<?> logout(HttpServletRequest request) {
-        mainService.logoutAndLog(SecurityUtil.getLoginUser(), request);
+        mainService.logoutAndLog(getLoginUser(), request);
         return Result.ofSuccess();
     }
 

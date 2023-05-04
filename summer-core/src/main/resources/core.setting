@@ -5,7 +5,7 @@
 
 # *******************缓存配置********************
 [Cache]
-# 堆内缓存配置，只有application.cache.type: HEAP 时会生效
+# 堆内缓存配置，只有application.cache.type: HEAP时会生效
 # capacity：最大缓存容量
 # remove-strategy：缓存满后对象的移除策略，值：FIF0（先入先出）/LFU（最少使用）/LRU（最近最久未使用）
 heap-string.capacity = 2000
@@ -35,7 +35,7 @@ cors.max-age = 3600
 
 # 是否开启请求体类型过滤，值：true/false
 enable-content-type-filter = true
-# 支持的请求体类型，以”,“分隔，值：FORM-DATA/JSON/XML/JAVASCRIPT/TEXT/HTML，只有enable-content-type-filter = true 时会生效
+# 支持的请求体类型，以”,“分隔，值：FORM-DATA/JSON/XML/JAVASCRIPT/TEXT/HTML，只有enable-content-type-filter = true时会生效
 content-type-support = FORM-DATA,JSON
 
 # 是否开启文件上传过滤，值：true/false
@@ -63,7 +63,7 @@ data-scope.ignore = security_*,log_*
 [RateLimiter]
 # 策略Key估算数量（RATE_LIMITER_CACHE的大小）
 key-num = 20000
-# 默认提示消息，值参考 ErrorCode
+# 默认提示消息，值参考ErrorCode
 msg = 1002
 # 默认策略Class（简单类名）
 strategy.key = IpKeyStrategy
@@ -83,7 +83,7 @@ p6spy.quartz-sql-replace = true
 
 # 是否开启Sql注入过滤，值：true/false
 enable-injection-filter = false
-# 非法关键字（不区分大小写），以“,”分隔，只有enable-injection-filter = true 时会生效
+# 非法关键字（不区分大小写），以“,”分隔，只有enable-injection-filter = true时会生效
 injection.illegal-key-word = SELECT,UPDATE,AND,OR,DELETE,INSERT,TRUNCATE,SUBSTR,DECLARE,MASTER,DROP,EXECUTE,UNION,',",;,\
 
 
@@ -105,17 +105,17 @@ allow-core-thread-timeout = false
 max-pool-size = 32
 # 阻塞队列大小
 queue-capacity = 512
-# 空闲线程存活时间（s），note：如果是核心线程，则必须allow-core-thread-timeout = true 时才生效
+# 空闲线程存活时间（s），note：如果是核心线程，则必须allow-core-thread-timeout = true时才生效
 keep-alive-seconds = 30
 # 应用关闭时是否等待所有线程执行完，值：true/false
 wait-for-tasks-to-complete-on-shutdown = true
-# 应用关闭时等待线程执行的时间（s），超时则强制销毁，只有wait-for-tasks-to-complete-on-shutdown = true 时才生效
+# 应用关闭时等待线程执行的时间（s），超时则强制销毁，只有wait-for-tasks-to-complete-on-shutdown = true时才生效
 await-termination-Seconds = 30
 
 
 # *******************对象存储配置********************
 [Oss]
-# 本地存储配置，只有application.oss.type: LOCAL 时会生效
+# 本地存储配置，只有application.oss.type: LOCAL时会生效
 # 端点（协议://ip:端口或域名）
 local.end-point = http://localhost:8888
 # 默认逻辑空间名
@@ -123,7 +123,7 @@ local.default-bucket-name = summer-files
 # 存储目录
 local.storage-directory = D:\\Job\\devPrograms\\apache-tomcat-9.0.74\\webapps
 
-# MinIo配置，只有application.oss.type: MIN_IO 时会生效
+# MinIo配置，只有application.oss.type: MIN_IO时会生效
 # 端点（协议://ip:端口或域名）
 min-io.end-point =
 # 默认逻辑空间名
@@ -133,7 +133,7 @@ min-io.access-key =
 # 密钥SK
 min-io.secret-key =
 
-# 七牛云配置，只有application.oss.type: QI_NIU 时会生效
+# 七牛云配置，只有application.oss.type: QI_NIU时会生效
 # 端点（协议://ip:端口或域名）
 qi-niu.end-point =
 # 默认逻辑空间名
