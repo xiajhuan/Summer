@@ -13,16 +13,21 @@
 package me.xiajhuan.summer.core.oss.server;
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.io.file.FileNameUtil;
 import cn.hutool.core.lang.Dict;
 import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.http.HttpUtil;
 import me.xiajhuan.summer.core.enums.OssSupportEnum;
+import me.xiajhuan.summer.core.exception.custom.FileDownloadException;
 import me.xiajhuan.summer.core.exception.custom.FileUploadException;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URLEncoder;
 
 /**
  * 对象存储服务
@@ -50,18 +55,7 @@ public abstract class AbstractOssServer {
     }
 
     /**
-     * 上传，使用默认逻辑空间名
-     *
-     * @param multipartFile {@link MultipartFile}
-     * @return {@link Dict}或{@code null}，{@link Dict}包含的Key有：<br>
-     * 【type（类型）,name（文件名称）,bucketName（逻辑空间名）,path（路径（相对路径））,url（URL（外链））】
-     */
-    public Dict upload(MultipartFile multipartFile) {
-        return upload(multipartFile, null);
-    }
-
-    /**
-     * 上传，指定逻辑空间名
+     * 上传
      *
      * @param multipartFile {@link MultipartFile}
      * @param bucketName    逻辑空间名
@@ -98,16 +92,29 @@ public abstract class AbstractOssServer {
     public abstract int getType();
 
     /**
-     * 删除，使用默认逻辑空间名
+     * 下载
      *
-     * @param path 路径（相对路径）
+     * @param url      URL（外链）
+     * @param fileName 文件名称
+     * @param response {@link HttpServletResponse}
      */
-    public void delete(String path) {
-        delete(null, path);
+    public void download(String url, String fileName, HttpServletResponse response) {
+        // 处理URL（外链）
+        url = handleUrl(url);
+        // TODO
+        try {
+            byte[] data = HttpUtil.downloadBytes(url);
+            fileName = URLEncoder.encode(fileName, "UTF-8");
+            response.setHeader("Content-Disposition",
+                    StrUtil.format("attachment;filename={}", fileName));
+            IoUtil.write(response.getOutputStream(), true, data);
+        } catch (Exception e) {
+            throw FileDownloadException.of(e);
+        }
     }
 
     /**
-     * 删除，指定逻辑空间名
+     * 删除
      *
      * @param bucketName 逻辑空间名
      * @param path       路径（相对路径）
@@ -149,14 +156,13 @@ public abstract class AbstractOssServer {
     }
 
     /**
-     * 获取URL（外链），格式：端点/逻辑空间名/路径（相对路径）
+     * URL处理钩子，默认不处理，可重写该钩子个性化URL处理
      *
-     * @param bucketName 逻辑空间名
-     * @param path       路径（相对路径）
-     * @return URL（外链）
+     * @param url URL（外链）
+     * @return 处理后的URL（外链）
      */
-    protected String getUrl(String bucketName, String path) {
-        return StrUtil.format("{}/{}/{}", endPoint, bucketName, path);
+    protected String handleUrl(String url) {
+        return url;
     }
 
 }

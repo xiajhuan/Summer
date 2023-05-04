@@ -59,8 +59,8 @@ public class MinIoOssServer extends AbstractOssServer {
 
         defaultBucketName = setting.getByGroupWithLog("min-io.default-bucket-mame", "Oss");
         if (StrUtil.isBlank(defaultBucketName)) {
-            // 没有配置则默认为：files
-            defaultBucketName = "files";
+            // 没有配置则默认为：summer-files
+            defaultBucketName = "summer-files";
         }
     }
 
@@ -104,11 +104,11 @@ public class MinIoOssServer extends AbstractOssServer {
         }
 
         // URL（外链）
-        return getUrl(bucketName, path);
+        return StrUtil.format("{}/{}/{}", endPoint, bucketName, path);
     }
 
     @Override
-    public void deleteInternal(String path, String bucketName) {
+    protected void deleteInternal(String bucketName, String path) {
         try {
             // 删除文件
             minioClient.removeObject(RemoveObjectArgs.builder()
@@ -119,6 +119,11 @@ public class MinIoOssServer extends AbstractOssServer {
                 | NoSuchAlgorithmException | ServerException | XmlParserException e) {
             throw SystemException.of(e, ErrorCode.FILE_DELETE_FAILURE, e.getMessage());
         }
+    }
+
+    @Override
+    protected String handleUrl(String url) {
+        return url;
     }
 
 }

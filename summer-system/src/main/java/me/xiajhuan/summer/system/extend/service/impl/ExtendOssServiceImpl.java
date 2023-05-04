@@ -82,7 +82,7 @@ public class ExtendOssServiceImpl extends ServiceImpl<ExtendOssMapper, ExtendOss
         if (pathSet.size() > 0 && removeByIds(idSet)) {
             // 删除文件
             AbstractOssServer ossServer = OssServerFactory.getOssServer();
-            pathSet.forEach(ossServer::delete);
+            pathSet.forEach(path -> ossServer.delete(null, path));
         }
     }
 

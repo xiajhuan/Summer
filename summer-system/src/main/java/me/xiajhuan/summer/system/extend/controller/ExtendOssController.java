@@ -18,14 +18,17 @@ import me.xiajhuan.summer.core.data.PageData;
 import me.xiajhuan.summer.core.data.Result;
 import me.xiajhuan.summer.core.ratelimiter.annotation.RateLimiter;
 import me.xiajhuan.summer.core.utils.AssertUtil;
+import me.xiajhuan.summer.core.validation.group.DefaultGroup;
 import me.xiajhuan.summer.system.extend.dto.ExtendOssDto;
 import me.xiajhuan.summer.system.extend.service.ExtendOssService;
 import me.xiajhuan.summer.system.log.annotation.LogOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * 对象存储 Controller
@@ -88,6 +91,20 @@ public class ExtendOssController extends BaseController {
         AssertUtil.isNotNull("files", files);
         mainService.addBatch(multiFileUpload(files));
         return Result.ofSuccess();
+    }
+
+    /**
+     * 下载
+     *
+     * @param dto      对象存储Dto
+     * @param response {@link HttpServletResponse}
+     */
+    @GetMapping("download")
+    @RequiresPermissions("extend:oss:download")
+    @RateLimiter(0.2)
+    @LogOperation("下载")
+    public void download(@Validated(DefaultGroup.class) ExtendOssDto dto, HttpServletResponse response) {
+        fileDownload(dto.getUrl(), dto.getName(), response);
     }
 
 }

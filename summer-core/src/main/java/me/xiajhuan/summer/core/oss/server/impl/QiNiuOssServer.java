@@ -76,8 +76,8 @@ public class QiNiuOssServer extends AbstractOssServer {
 
         defaultBucketName = setting.getByGroupWithLog("qi-niu.default-bucket-mame", "Oss");
         if (StrUtil.isBlank(defaultBucketName)) {
-            // 没有配置则默认为：files
-            defaultBucketName = "files";
+            // 没有配置则默认为：summer-files
+            defaultBucketName = "summer-files";
         }
     }
 
@@ -119,7 +119,7 @@ public class QiNiuOssServer extends AbstractOssServer {
     }
 
     @Override
-    public void deleteInternal(String path, String bucketName) {
+    protected void deleteInternal(String bucketName, String path) {
         try {
             // 删除文件
             Response response = bucketManager.delete(bucketName, path);
@@ -129,6 +129,11 @@ public class QiNiuOssServer extends AbstractOssServer {
         } catch (QiniuException e) {
             throw SystemException.of(e, ErrorCode.FILE_DELETE_FAILURE, e.getMessage());
         }
+    }
+
+    @Override
+    protected String handleUrl(String url) {
+        return auth.privateDownloadUrl(url);
     }
 
 }

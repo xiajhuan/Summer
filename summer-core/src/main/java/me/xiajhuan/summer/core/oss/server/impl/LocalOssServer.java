@@ -54,8 +54,8 @@ public class LocalOssServer extends AbstractOssServer {
 
         defaultBucketName = setting.getByGroupWithLog("local.default-bucket-name", "Oss");
         if (StrUtil.isBlank(defaultBucketName)) {
-            // 没有配置则默认为：files
-            defaultBucketName = "files";
+            // 没有配置则默认为：summer-files
+            defaultBucketName = "summer-files";
         }
     }
 
@@ -83,20 +83,20 @@ public class LocalOssServer extends AbstractOssServer {
     protected String uploadInternal(InputStream inputStream, String bucketName, String path) {
         try {
             // 将流的内容写入文件（自动关闭输入流）
-            FileUtil.writeFromStream(inputStream, getFile(path, bucketName));
+            FileUtil.writeFromStream(inputStream, getFile(bucketName, path));
         } catch (IORuntimeException e) {
             throw FileUploadException.of(e);
         }
 
         // URL（外链）
-        return getUrl(bucketName, path);
+        return StrUtil.format("{}/{}/{}", endPoint, bucketName, path);
     }
 
     @Override
-    public void deleteInternal(String path, String bucketName) {
+    protected void deleteInternal(String bucketName, String path) {
         try {
             // 删除文件
-            if (!FileUtil.del(getFile(path, bucketName))) {
+            if (!FileUtil.del(getFile(bucketName, path))) {
                 throw SystemException.of(ErrorCode.FILE_DELETE_FAILURE, StrUtil.EMPTY);
             }
         } catch (IORuntimeException e) {
@@ -107,11 +107,11 @@ public class LocalOssServer extends AbstractOssServer {
     /**
      * 获取{@link File}
      *
-     * @param path       路径（相对路径）
      * @param bucketName 逻辑空间名
+     * @param path       路径（相对路径）
      * @return {@link File}
      */
-    private File getFile(String path, String bucketName) {
+    private File getFile(String bucketName, String path) {
         return new File(storageDirectory + File.separator
                 + bucketName + File.separator
                 + path);

@@ -13,8 +13,9 @@
 package me.xiajhuan.summer.core.base.controller;
 
 import cn.hutool.core.lang.Dict;
+import cn.hutool.core.text.StrPool;
+import cn.hutool.core.util.StrUtil;
 import me.xiajhuan.summer.core.data.LoginUser;
-import me.xiajhuan.summer.core.oss.server.AbstractOssServer;
 import me.xiajhuan.summer.core.exception.code.ErrorCode;
 import me.xiajhuan.summer.core.exception.custom.ValidationException;
 import me.xiajhuan.summer.core.oss.factory.OssServerFactory;
@@ -24,6 +25,7 @@ import me.xiajhuan.summer.core.utils.SecurityUtil;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
 
 /**
@@ -31,7 +33,6 @@ import java.util.Arrays;
  *
  * @author xiajhuan
  * @date 2023/4/8
- * @see AbstractOssServer#upload(MultipartFile, String)
  */
 public abstract class BaseController {
 
@@ -100,6 +101,27 @@ public abstract class BaseController {
      */
     protected Dict fileUpload(MultipartFile file, String bucketName) {
         return OssServerFactory.getOssServer().upload(file, bucketName);
+    }
+
+    /**
+     * 文件下载，使用默认文件名称
+     *
+     * @param url      URL（外链）
+     * @param response {@link HttpServletResponse}
+     */
+    protected void fileDownload(String url, HttpServletResponse response) {
+        fileDownload(url, StrUtil.subAfter(url, StrPool.SLASH, true), response);
+    }
+
+    /**
+     * 文件下载，指定文件名称
+     *
+     * @param url      URL（外链）
+     * @param fileName 文件名称
+     * @param response {@link HttpServletResponse}
+     */
+    protected void fileDownload(String url, String fileName, HttpServletResponse response) {
+        OssServerFactory.getOssServer().download(url, fileName, response);
     }
 
 }

@@ -12,11 +12,14 @@
 
 package me.xiajhuan.summer.system.extend.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import me.xiajhuan.summer.core.base.dto.PageSortDto;
 import me.xiajhuan.summer.core.enums.OssSupportEnum;
+import me.xiajhuan.summer.core.validation.group.DefaultGroup;
 
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 /**
@@ -32,11 +35,13 @@ public class ExtendOssDto extends PageSortDto {
     /**
      * 文件名称
      */
+    @NotBlank(message = "{extend.oss.name.require}", groups = DefaultGroup.class)
     private String name;
 
     /**
      * URL（外链）
      */
+    @NotBlank(message = "{extend.oss.url.require}", groups = DefaultGroup.class)
     private String url;
 
     /**
@@ -44,11 +49,13 @@ public class ExtendOssDto extends PageSortDto {
      *
      * @see OssSupportEnum
      */
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Integer type;
 
     /**
      * 创建时间
      */
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date createTime;
 
 }

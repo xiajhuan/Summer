@@ -122,8 +122,8 @@ public class ExcelUtil extends EasyExcelFactory {
      * 导出
      *
      * @param response  {@link HttpServletResponse}
-     * @param fileName  文件名
-     * @param sheetName sheet名
+     * @param fileName  文件名称
+     * @param sheetName sheet名称
      * @param dtoList   Dto类型列表
      * @param dtoClass  DtoClass
      * @param code      错误编码，参考{@link ErrorCode#EXCEL_TEMPLATE_DOWNLOAD_FAILURE}和{@link ErrorCode#EXCEL_EXPORT_FAILURE}
@@ -142,7 +142,8 @@ public class ExcelUtil extends EasyExcelFactory {
 
         try {
             fileName = URLEncoder.encode(fileName, "UTF-8");
-            response.setHeader("Content-disposition", StrUtil.format("attachment;filename={}.xlsx", fileName));
+            response.setHeader("Content-disposition",
+                    StrUtil.format("attachment;filename={}.xlsx", fileName));
 
             write(response.getOutputStream(), dtoClass).sheet(sheetName).doWrite(dtoList);
         } catch (IOException e) {
