@@ -48,6 +48,6 @@ public interface ScheduleTaskService extends IService<ScheduleTaskEntity> {
      *
      * @return 是否初始化成功，true：是 false：否
      */
-    boolean initSchedule();
+    boolean initTask();
 
 }

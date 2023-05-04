@@ -73,9 +73,9 @@ public class LogOperationDto extends ExcelDto {
     private String requestParams;
 
     /**
-     * 请求时长（ms）
+     * 请求耗时（ms）
      */
-    @ExcelProperty(value = "请求时长（ms）", index = 5)
+    @ExcelProperty(value = "请求耗时（ms）", index = 5)
     private Integer requestTime;
 
     /**
@@ -86,9 +86,9 @@ public class LogOperationDto extends ExcelDto {
     private String userAgent;
 
     /**
-     * 操作IP
+     * 操作ip
      */
-    @ExcelProperty(value = "操作IP", index = 7)
+    @ExcelProperty(value = "操作ip", index = 7)
     private String ip;
 
     /**

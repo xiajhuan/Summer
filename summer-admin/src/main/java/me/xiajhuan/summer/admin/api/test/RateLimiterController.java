@@ -48,7 +48,7 @@ public class RateLimiterController {
     }
 
     /**
-     * IP限流策略
+     * ip限流策略
      *
      * @param json Json格式参数
      * @return 响应结果

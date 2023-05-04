@@ -41,7 +41,7 @@ public class ScheduleTaskDto extends PageSortDto {
 
     /**
      * Bean名称<br>
-     * note：值为“简单类名（首字母小写）”或 {@link Component} 指定的名称
+     * note：值为简单类名（首字母小写）或{@link Component#value()}指定的名称
      */
     @Null(message = "{schedule.task.beanName.null}", groups = UpdateGroup.class)
     @NotBlank(message = "{schedule.task.beanName.require}", groups = AddGroup.class)

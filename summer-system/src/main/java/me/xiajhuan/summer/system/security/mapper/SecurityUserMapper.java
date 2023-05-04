@@ -29,7 +29,7 @@ public interface SecurityUserMapper extends BaseMapper<SecurityUserEntity> {
      * 判断是否存在
      *
      * @param username 用户名
-     * @return 返回 {@code null} 则不存在
+     * @return 返回{@code null}则不存在
      */
     @Select("SELECT 1 FROM security_user WHERE username = #{username} LIMIT 1")
     Integer exist(@Param("username") String username);

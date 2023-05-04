@@ -20,7 +20,7 @@ import me.xiajhuan.summer.core.base.entity.CommonEntity;
 
 /**
  * 配置参数 Entity<br>
- * note：该表仅用于持久化一些系统配置参数
+ * note：该表仅用于持久化系统配置参数
  *
  * @author xiajhuan
  * @date 2023/4/29

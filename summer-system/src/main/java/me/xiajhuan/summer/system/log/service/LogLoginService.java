@@ -48,8 +48,8 @@ public interface LogLoginService extends IService<LogLoginEntity> {
      * 异步保存
      *
      * @param loginUser      登录用户名
-     * @param loginOperation 登录操作 {@link LoginOperationEnum}
-     * @param loginStatus    登录状态 {@link LoginStatusEnum}
+     * @param loginOperation 登录操作，参考{@link LoginOperationEnum}
+     * @param loginStatus    登录状态，参考{@link LoginStatusEnum}
      * @param request        {@link HttpServletRequest}
      */
     @Async(ThreadPoolConst.ASYNC_COMMON)

@@ -59,7 +59,7 @@ public class CacheReadyRunner implements ApplicationRunner {
         String cacheType = applicationProperties.getCache().getType();
         LOGGER.info("【{}】缓存服务加载完毕，类型【{}】", applicationName, cacheType);
 
-        // 缓存类型为“HEAP”时清理遗留在线用户
+        // 缓存类型为HEAP时清理遗留在线用户
         if (CacheConst.Type.HEAP.equalsIgnoreCase(cacheType)
                 && monitorOnlineService.remove(null)) {
             LOGGER.info("【{}】清理遗留在线用户成功", applicationName);

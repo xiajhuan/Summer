@@ -12,7 +12,9 @@
 
 package me.xiajhuan.summer.system.security.dto;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.io.Serializable;
 
@@ -22,7 +24,9 @@ import java.io.Serializable;
  * @author xiajhuan
  * @date 2023/3/4
  */
-@Data
+@Setter
+@Getter
+@ToString
 public class TokenDto implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -37,9 +37,7 @@ import org.springframework.stereotype.Component;
 public class ScheduleTaskEntity extends CommonEntity {
 
     /**
-     * 主键ID，默认策略：分配ID（雪花算法）
-     *
-     * @see IdType
+     * 主键ID（雪花算法）
      */
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Long id;
@@ -52,7 +50,7 @@ public class ScheduleTaskEntity extends CommonEntity {
 
     /**
      * Bean名称<br>
-     * note：值为“简单类名（首字母小写）”或 {@link Component} 指定的名称
+     * note：值为简单类名（首字母小写）或{@link Component#value()}指定的名称
      */
     private String beanName;
 

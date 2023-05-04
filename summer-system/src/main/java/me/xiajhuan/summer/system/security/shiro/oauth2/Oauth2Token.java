@@ -29,7 +29,7 @@ public class Oauth2Token implements AuthenticationToken {
     private final String accessToken;
 
     /**
-     * 构造Oauth2Token
+     * 构造私有化
      *
      * @param accessToken accessToken
      */

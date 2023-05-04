@@ -114,7 +114,7 @@ public class SecurityMenuServiceImpl extends ServiceImpl<SecurityMenuMapper, Sec
 
         if (updateById(entity)) {
             // 更新国际化名称
-            // note：通过 update(LambdaUpdateWrapper) 更新时基础字段自动填充不会生效
+            // note：通过 update(LambdaUpdateWrapper) 更新时字段自动填充不会生效
             LambdaUpdateWrapper<LocaleNameEntity> updateWrapper = Wrappers.lambdaUpdate();
             updateWrapper.eq(LocaleNameEntity::getLineId, entity.getId());
             updateWrapper.eq(LocaleNameEntity::getLocale, LocaleUtil.getAcceptLanguage(ServletUtil.getHttpRequest()));

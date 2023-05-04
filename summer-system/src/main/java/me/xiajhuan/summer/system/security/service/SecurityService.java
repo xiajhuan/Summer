@@ -42,7 +42,7 @@ public interface SecurityService {
      *
      * @param uuid    唯一标识，作为验证码 Key的一部分
      * @param captcha 验证码
-     * @return 校验结果，true：成功 false：失败
+     * @return 是否校验成功，true：是 false：否
      */
     boolean validateCaptcha(String uuid, String captcha);
 
@@ -51,7 +51,7 @@ public interface SecurityService {
     /**
      * 用户登录
      *
-     * @param loginDto 登录Dto
+     * @param loginDto 用户登录Dto
      * @param request  {@link HttpServletRequest}
      * @return TokenDto
      */
@@ -70,7 +70,7 @@ public interface SecurityService {
      *
      * @param userId    用户ID
      * @param delOnline 是否删除在线用户，true：是 false：否
-     * @return 是否退出成功，true：成功 false：失败
+     * @return 是否退出成功，true：是 false：否
      */
     boolean logout(Long userId, boolean delOnline);
 

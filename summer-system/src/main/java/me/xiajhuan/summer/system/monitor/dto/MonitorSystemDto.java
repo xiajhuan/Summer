@@ -64,12 +64,12 @@ public class MonitorSystemDto implements Serializable {
     private Integer cpuCoreNum;
 
     /**
-     * 系统总内存（MB）
+     * 系统总内存
      */
     private String sysTotalMemory;
 
     /**
-     * 系统剩余内存（MB）
+     * 系统剩余内存
      */
     private String sysFreeMemory;
 
@@ -104,17 +104,17 @@ public class MonitorSystemDto implements Serializable {
     private String workDirectory;
 
     /**
-     * JVM占用内存（MB）
+     * JVM占用内存
      */
     private String jvmOccupyMemory;
 
     /**
-     * JVM空闲内存（MB）
+     * JVM空闲内存
      */
     private String jvmFreeMemory;
 
     /**
-     * JVM最大内存（MB），-Xmx
+     * JVM最大内存，-Xmx
      */
     private String jvmMaxMemory;
 

@@ -30,7 +30,7 @@ public interface ExtendRegionService extends IService<ExtendRegionEntity> {
      * 树形结构列表
      *
      * @param isFiltered 是否需要数据权限过滤，true：是 false：否
-     * @return 行政区域列表（树形结构）或 {@code null}
+     * @return 行政区域列表（树形结构）或{@code null}
      */
     List<ExtendRegionDto> treeList(boolean isFiltered);
 

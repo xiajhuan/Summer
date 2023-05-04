@@ -52,7 +52,7 @@ public interface SecurityUserService extends IService<SecurityUserEntity> {
      * 根据用户名获取
      *
      * @param username 用户名
-     * @return 用户Entity
+     * @return 用户Entity或{@code null}
      */
     SecurityUserEntity getByUsername(String username);
 
@@ -67,7 +67,7 @@ public interface SecurityUserService extends IService<SecurityUserEntity> {
      * 重置密码
      *
      * @param ids ID数组
-     * @return 重置的密码或 {@code null}
+     * @return 重置后的密码或{@code null}
      */
     String reset(Long[] ids);
 

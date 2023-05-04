@@ -38,8 +38,7 @@ import static me.xiajhuan.summer.system.schedule.quartz.helper.QuartzHelper.*;
  *
  * @author xiajhuan
  * @date 2023/4/19
- * @see QuartzJobBean
- * @see JobExecutionContext
+ * @see QuartzJobBean#executeInternal(JobExecutionContext)
  */
 public class QuartzTaskExecutor extends QuartzJobBean {
 
@@ -61,9 +60,9 @@ public class QuartzTaskExecutor extends QuartzJobBean {
     private final LogTaskService logTaskService = SpringUtil.getBean("logTaskServiceImpl", LogTaskService.class);
 
     /**
-     * 异常堆栈长度限制
+     * 异常堆栈最大长度
      */
-    private final int stacktraceLength = SpringUtil.getBean(SettingConst.SYSTEM, Setting.class)
+    private final int stacktraceMaxLength = SpringUtil.getBean(SettingConst.SYSTEM, Setting.class)
             .getInt("task.stacktrace-length", "Log", 65535);
 
     @Override
@@ -100,10 +99,10 @@ public class QuartzTaskExecutor extends QuartzJobBean {
 
             entity.setTaskTime((int) cost);
             entity.setStatus(OperationStatusEnum.FAIL.getValue());
-            entity.setErrorInfo(ExceptionUtil.stacktraceToString(e, stacktraceLength));
+            entity.setErrorInfo(ExceptionUtil.stacktraceToString(e, stacktraceMaxLength));
         } finally {
             entity.setCreateTime(DateUtil.date());
-            // 异步保存日志
+            // 异步保存定时任务日志
             logTaskService.saveAsync(entity);
         }
     }
@@ -111,7 +110,7 @@ public class QuartzTaskExecutor extends QuartzJobBean {
     /**
      * 开始消息
      *
-     * @param type      类型 {@link TaskTypeEnum}
+     * @param type      类型，参考{@link TaskTypeEnum}
      * @param className 类名称
      * @return 开始消息
      */
@@ -131,9 +130,9 @@ public class QuartzTaskExecutor extends QuartzJobBean {
     /**
      * 结束消息
      *
-     * @param type      类型 {@link TaskTypeEnum}
+     * @param type      类型，参考{@link TaskTypeEnum}
      * @param className 类名称
-     * @param result    结果 {@link OperationStatusEnum}
+     * @param result    结果，参考{@link OperationStatusEnum}
      * @param cost      耗时（ms）
      * @return 结束消息
      */

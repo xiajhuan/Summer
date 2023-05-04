@@ -34,7 +34,7 @@ public interface DictionaryCategoryMapper extends BaseMapper<DictionaryCategoryE
      * 判断是否存在
      *
      * @param code 类别编码
-     * @return 返回 {@code null} 则不存在
+     * @return 返回{@code null}则不存在
      */
     @Select("SELECT 1 FROM dictionary_category WHERE code = #{code} LIMIT 1")
     Integer exist(@Param("code") String code);

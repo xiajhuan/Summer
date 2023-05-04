@@ -47,10 +47,10 @@ public class QuartzConfig {
     private Setting setting;
 
     @Resource
-    private QuartzStartupProperties quartzStartupProperties;
+    private DynamicRoutingDataSource dynamicRoutingDataSource;
 
     @Resource
-    private DynamicRoutingDataSource dynamicRoutingDataSource;
+    private QuartzStartupProperties quartzStartupProperties;
 
     /**
      * 线程池Class
@@ -73,18 +73,18 @@ public class QuartzConfig {
 
     /**
      * 加锁Sql<br>
-     * note：{0}会被 {@link TABLE_PREFIX} 替换
+     * note：{0}会被”表前缀“替换
      */
     private static final String LOCK_SQL = "SELECT * FROM {0}LOCKS WHERE LOCK_NAME = ? FOR UPDATE";
 
     /**
      * 实例名称<br>
-     * note：集群模式下每个实例必须使用相同的名称
+     * note：集群模式下每个实例必须使用相同名称
      */
     private static final String INSTANCE_NAME = "Business";
 
     /**
-     * 注册 {@link SchedulerFactoryBean}
+     * 注册{@link SchedulerFactoryBean}
      *
      * @return {@link SchedulerFactoryBean}
      */
@@ -92,20 +92,20 @@ public class QuartzConfig {
     public SchedulerFactoryBean SchedulerFactoryBean() {
         SchedulerFactoryBean factory = new SchedulerFactoryBean();
 
-        // 数据源为“system”
+        // 数据源
         factory.setDataSource(dynamicRoutingDataSource.getDataSource(DataSourceConst.SYSTEM));
 
         // 自定义Quartz属性配置
         factory.setQuartzProperties(buildCustomProps());
 
-        // 应用关闭时等待所有任务执行完
+        // 应用关闭时是否等待所有任务执行完
         factory.setWaitForJobsToCompleteOnShutdown(setting
                 .getBool("wait-for-jobs-to-complete-on-shutdown", "Schedule", true));
 
         // 将Spring的applicationContext加入到Quartz的schedulerContext中
         factory.setApplicationContextSchedulerContextKey("springContext");
 
-        // 启动时更新己存在的Task，这样就不用每次修改schedule_task表记录后删除QUARTZ_JOB_DETAILS表对应的记录了
+        // 启动时更新己存在Task，这样就不用每次修改schedule_task表记录后删除QUARTZ_JOB_DETAILS表对应记录了
         factory.setOverwriteExistingJobs(true);
 
         if (quartzStartupProperties.isAuto()) {

@@ -16,6 +16,7 @@ import cn.hutool.core.util.StrUtil;
 import me.xiajhuan.summer.core.enums.StatusEnum;
 import me.xiajhuan.summer.core.exception.code.ErrorCode;
 import me.xiajhuan.summer.core.exception.custom.SystemException;
+import me.xiajhuan.summer.core.enums.TaskTypeEnum;
 import me.xiajhuan.summer.system.schedule.quartz.executor.QuartzTaskExecutor;
 import me.xiajhuan.summer.system.schedule.entity.ScheduleTaskEntity;
 import org.quartz.*;
@@ -36,7 +37,7 @@ import org.quartz.*;
 public class QuartzHelper {
 
     /**
-     * 构造QuartzHelper（不允许实例化）
+     * 不允许实例化
      */
     private QuartzHelper() {
     }
@@ -62,7 +63,7 @@ public class QuartzHelper {
     public static final String TYPE = "type";
 
     /**
-     * 获取 {@link CronTrigger}
+     * 获取{@link CronTrigger}
      *
      * @param scheduler {@link Scheduler}
      * @param taskId    任务ID
@@ -89,11 +90,10 @@ public class QuartzHelper {
         JobDetail jobDetail = JobBuilder.newJob(QuartzTaskExecutor.class)
                 .withIdentity(getJobKey(taskId)).build();
 
-        // 根据Cron表达式构建一个新的Trigger
+        // 根据Cron表达式构建一个新Trigger
         CronTrigger trigger = TriggerBuilder.newTrigger()
                 .withIdentity(getTriggerKey(taskId))
-                .withSchedule(getScheduleBuilder(entity.getCronExpression()))
-                .build();
+                .withSchedule(getScheduleBuilder(entity.getCronExpression())).build();
 
         // 任务信息放入JobDataMap，用于运行时获取
         fillDataMap(jobDetail.getJobDataMap(), taskId, entity.getBeanName(), entity.getJson(), entity.getType());
@@ -126,8 +126,7 @@ public class QuartzHelper {
         CronTrigger trigger = getCronTrigger(scheduler, taskId)
                 .getTriggerBuilder()
                 .withIdentity(triggerKey)
-                .withSchedule(getScheduleBuilder(entity.getCronExpression()))
-                .build();
+                .withSchedule(getScheduleBuilder(entity.getCronExpression())).build();
 
         // 任务信息放入JobDataMap，用于运行时获取
         fillDataMap(trigger.getJobDataMap(), taskId, entity.getBeanName(), entity.getJson(), entity.getType());
@@ -212,7 +211,7 @@ public class QuartzHelper {
     }
 
     /**
-     * 获取表达式调度构建器
+     * 获取Cron表达式调度构建器
      *
      * @param cronExpression Cron表达式
      * @return {@link CronScheduleBuilder}
@@ -226,13 +225,13 @@ public class QuartzHelper {
     }
 
     /**
-     * 填充 {@link JobDataMap}
+     * 填充{@link JobDataMap}
      *
      * @param jobDataMap {@link JobDataMap}
      * @param taskId     任务ID
      * @param beanName   Bean名称
      * @param json       参数（Json格式）
-     * @param type       类型
+     * @param type       类型，参考{@link TaskTypeEnum}
      */
     private static void fillDataMap(JobDataMap jobDataMap, Long taskId, String beanName, String json, Integer type) {
         jobDataMap.put(TASK_ID, taskId);
@@ -242,7 +241,7 @@ public class QuartzHelper {
     }
 
     /**
-     * 获取 {@link JobKey}
+     * 获取{@link JobKey}
      *
      * @param taskId 任务ID
      * @return {@link JobKey}
@@ -252,7 +251,7 @@ public class QuartzHelper {
     }
 
     /**
-     * 获取 {@link TriggerKey}
+     * 获取{@link TriggerKey}
      *
      * @param taskId 任务ID
      * @return {@link TriggerKey}

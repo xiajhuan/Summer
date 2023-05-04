@@ -12,7 +12,8 @@
 
 package me.xiajhuan.summer.system.security.dto;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import me.xiajhuan.summer.system.security.cache.SecurityCacheKey;
 import me.xiajhuan.summer.core.validation.group.DefaultGroup;
 
@@ -25,7 +26,8 @@ import java.io.Serializable;
  * @author xiajhuan
  * @date 2023/3/3
  */
-@Data
+@Setter
+@Getter
 public class LoginDto implements Serializable {
 
     private static final long serialVersionUID = 1L;

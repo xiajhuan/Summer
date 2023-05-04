@@ -42,7 +42,7 @@ public interface LocaleNameService extends IService<LocaleNameEntity> {
     /**
      * 模板数据
      *
-     * @return 国际化名称Dto列表 或 {@code null}
+     * @return 国际化名称Dto列表或{@code null}
      */
     default List<LocaleNameDto> template() {
         return null;
@@ -61,7 +61,7 @@ public interface LocaleNameService extends IService<LocaleNameEntity> {
      *
      * @param lineId 行ID
      * @param locale 地区语言
-     * @return 是否存在，true：存在 false：不存在
+     * @return 是否存在，true：是 false：否
      */
     boolean exist(long lineId, String locale);
 

@@ -37,7 +37,7 @@ public class MonitorSystemServiceImpl implements MonitorSystemService {
     /**
      * 应用名称格式
      */
-    private static final String appNameFormat = "{}【{}】";
+    private static final String APP_NAME_FORMAT = "{}【{}】";
 
     /**
      * 项目描述
@@ -59,11 +59,11 @@ public class MonitorSystemServiceImpl implements MonitorSystemService {
 
     @Override
     public MonitorSystemDto info() {
-        // 总内存
+        // 系统总内存
         long totalMemory = SystemUtil.getTotalMemory();
-        // 剩余内存
+        // 系统剩余内存
         long freeMemory = SystemUtil.getFreeMemory();
-        // 内存使用率：(总内存 - 剩余内存) / 总内存 * 100
+        // 系统内存使用率：(系统总内存 - 系统剩余内存) / 系统总内存 * 100
         double memoryRate = BigDecimal.valueOf(NumberUtil.div(totalMemory - freeMemory, totalMemory) * 100.0)
                 .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
         // CPU负载
@@ -78,7 +78,7 @@ public class MonitorSystemServiceImpl implements MonitorSystemService {
 
         // 构建系统信息
         return MonitorSystemDto.builder()
-                .appName(StrUtil.format(appNameFormat, projectDescription, projectLicense))
+                .appName(StrUtil.format(APP_NAME_FORMAT, projectDescription, projectLicense))
                 .appVersion(projectVersion)
                 .osName(osInfo.getStr("osName"))
                 .osVersion(osInfo.getStr("osVersion"))

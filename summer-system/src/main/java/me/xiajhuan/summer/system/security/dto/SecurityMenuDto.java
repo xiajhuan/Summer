@@ -20,7 +20,6 @@ import me.xiajhuan.summer.system.security.enums.ComponentTypeEnum;
 import me.xiajhuan.summer.system.security.enums.OpenModeEnum;
 import me.xiajhuan.summer.core.validation.group.AddGroup;
 import me.xiajhuan.summer.core.validation.group.UpdateGroup;
-import me.xiajhuan.summer.system.security.entity.SecurityMenuEntity;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotNull;
@@ -43,9 +42,12 @@ public class SecurityMenuDto extends TreeDto<Long> {
     private String url;
 
     /**
-     * 授权
-     *
-     * @see SecurityMenuEntity#permissions
+     * 授权<br>
+     * 多个授权以“,”分隔，格式：模块名:业务名:操作名，例如：
+     * <ul>
+     *   <li>security:user:page,security:user:add</li>
+     *   <li>log:error:page,log:error:excelExport</li>
+     * </ul>
      */
     private String permissions;
 

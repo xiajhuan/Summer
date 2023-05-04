@@ -35,7 +35,7 @@ public class LocaleNameDbExcelParser extends DbExcelParser<LocaleNameDto, Locale
     private final LocaleNameService localeNameService;
 
     /**
-     * 构造LocaleNameDbExcelParser
+     * 构造私有化
      *
      * @param service            {@link IService}
      * @param currentEntityClass 当前EntityClass

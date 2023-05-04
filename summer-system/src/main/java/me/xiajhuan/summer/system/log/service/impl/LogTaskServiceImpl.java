@@ -61,7 +61,7 @@ public class LogTaskServiceImpl extends ServiceImpl<LogTaskMapper, LogTaskEntity
         // 状态
         Integer status = dto.getStatus();
         queryWrapper.eq(status != null, LogTaskEntity::getStatus, status);
-        // 创建时间（闭区间）
+        // 创建时间范围（闭区间）
         Date createTimeStart = dto.getCreateTimeStart();
         queryWrapper.ge(createTimeStart != null, LogTaskEntity::getCreateTime, createTimeStart);
         Date createTimeEnd = dto.getCreateTimeEnd();

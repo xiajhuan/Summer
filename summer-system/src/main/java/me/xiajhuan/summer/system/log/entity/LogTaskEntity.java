@@ -36,7 +36,7 @@ import java.util.Date;
 public class LogTaskEntity extends SimpleEntity {
 
     /**
-     * 创建者，固定为“quartzTask”
+     * 创建者，固定为quartzTask
      *
      * @see NonLoggedUserEnum#QUARTZ_TASK
      */
@@ -64,7 +64,7 @@ public class LogTaskEntity extends SimpleEntity {
     private String json;
 
     /**
-     * 任务时长（ms）
+     * 任务耗时（ms）
      */
     private Integer taskTime;
 

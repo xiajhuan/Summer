@@ -52,13 +52,13 @@ public class Oauth2Realm extends AuthorizingRealm {
         String accessToken = String.valueOf(token.getPrincipal());
 
         CacheServer cacheServer = CacheServerFactory.getCacheServer();
-        // 获取用户ID
+        // 用户ID
         String userId = cacheServer.getString(userId(accessToken));
         if (userId == null) {
             throw new IncorrectCredentialsException(LocaleUtil.getI18nMessage(ErrorCode.TOKEN_INVALID));
         }
 
-        // 获取登录用户信息
+        // 登录用户信息
         final LoginUser loginUser = (LoginUser) cacheServer.getHash(loginInfo(Long.parseLong(userId)), "loginUser");
 
         return new SimpleAuthenticationInfo(loginUser, accessToken, getName());

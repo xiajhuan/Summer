@@ -46,7 +46,7 @@ public class TaskInitRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
-        if (quartzStartupProperties.isAuto() && scheduleTaskService.initSchedule()) {
+        if (quartzStartupProperties.isAuto() && scheduleTaskService.initTask()) {
             LOGGER.info("【{}】定时任务初始化完毕", SystemUtil.getApplicationName());
         }
     }

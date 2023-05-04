@@ -55,7 +55,7 @@ public class ShiroConfig {
     private static final String OAUTH2 = "oauth2";
 
     /**
-     * 注册 {@link DefaultWebSessionManager}
+     * 注册{@link DefaultWebSessionManager}
      *
      * @return {@link DefaultWebSessionManager}
      */
@@ -70,9 +70,9 @@ public class ShiroConfig {
     }
 
     /**
-     * 注册 {@link SecurityManager}
+     * 注册{@link SecurityManager}
      *
-     * @param oauth2Realm    {@link Oauth2Realm}
+     * @param oauth2Realm    Oauth2Realm
      * @param sessionManager {@link SessionManager}
      * @return {@link SecurityManager}
      */
@@ -86,7 +86,7 @@ public class ShiroConfig {
     }
 
     /**
-     * 注册 {@link ShiroFilter}
+     * 注册{@link ShiroFilter}
      *
      * @param securityManager {@link SecurityManager}
      * @return {@link ShiroFilterFactoryBean}
@@ -124,7 +124,7 @@ public class ShiroConfig {
     }
 
     /**
-     * 注册 {@link LifecycleBeanPostProcessor}
+     * 注册{@link LifecycleBeanPostProcessor}
      *
      * @return {@link LifecycleBeanPostProcessor}
      */
@@ -134,7 +134,7 @@ public class ShiroConfig {
     }
 
     /**
-     * 注册 {@link AuthorizationAttributeSourceAdvisor}
+     * 注册{@link AuthorizationAttributeSourceAdvisor}
      *
      * @param securityManager {@link SecurityManager}
      * @return {@link AuthorizationAttributeSourceAdvisor}

@@ -38,7 +38,7 @@ import javax.servlet.http.HttpServletResponse;
 public class Oauth2Filter extends AuthenticatingFilter {
 
     /**
-     * 构造Oauth2Filter
+     * 构造私有化
      */
     private Oauth2Filter() {
     }
@@ -65,15 +65,12 @@ public class Oauth2Filter extends AuthenticatingFilter {
 
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
-        if (((HttpServletRequest) request).getMethod().equals(RequestMethod.OPTIONS.name())) {
-            return true;
-        }
-        return false;
+        return ((HttpServletRequest) request).getMethod().equals(RequestMethod.OPTIONS.name());
     }
 
     @Override
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
-        // 获取accessToken，若accessToken不存在则直接返回401
+        // 获取accessToken，若不存在直接返回401
         String accessToken = getAccessToken((HttpServletRequest) request);
 
         if (StrUtil.isBlank(accessToken)) {
@@ -92,7 +89,7 @@ public class Oauth2Filter extends AuthenticatingFilter {
     protected boolean onLoginFailure(AuthenticationToken token, AuthenticationException authException, ServletRequest request, ServletResponse response) {
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         setResponseHeader((HttpServletRequest) request, httpResponse);
-        // 处理登录失败的异常
+        // 处理登录失败异常
         Throwable cause = authException.getCause() == null ? authException : authException.getCause();
 
         ServletUtil.response(httpResponse, StrUtil.format("{};{}", ContentTypeConst.JSON, "charset=utf-8"),
@@ -118,10 +115,10 @@ public class Oauth2Filter extends AuthenticatingFilter {
      * @return accessToken
      */
     private String getAccessToken(HttpServletRequest request) {
-        // 从header中获取accessToken
+        // 从请求头获取accessToken
         String accessToken = request.getHeader(SecurityConst.Inner.TOKEN_HEADER);
 
-        // 如果header中不存在accessToken，则从参数中获取
+        // 如果请求头不存在accessToken，从参数中获取
         if (StrUtil.isBlank(accessToken)) {
             accessToken = request.getParameter(SecurityConst.Inner.TOKEN_HEADER);
         }

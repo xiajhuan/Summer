@@ -56,7 +56,7 @@ public class LogErrorServiceImpl extends ServiceImpl<LogErrorMapper, LogErrorEnt
     public LambdaQueryWrapper<LogErrorEntity> getQueryWrapper(LogErrorDto dto) {
         LambdaQueryWrapper<LogErrorEntity> queryWrapper = getEmptyWrapper();
         // 查询条件
-        // 创建时间（闭区间）
+        // 创建时间范围（闭区间）
         Date createTimeStart = dto.getCreateTimeStart();
         queryWrapper.ge(createTimeStart != null, LogErrorEntity::getCreateTime, createTimeStart);
         Date createTimeEnd = dto.getCreateTimeEnd();

@@ -28,7 +28,7 @@ import java.util.Set;
 public interface SecurityDeptMapper extends BaseMapper<SecurityDeptEntity> {
 
     /**
-     * 获取部门列表
+     * 获取列表
      *
      * @param idSet ID集合
      * @return 部门Entity列表

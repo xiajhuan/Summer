@@ -234,9 +234,9 @@ CREATE TABLE `log_operation`
     `request_uri`     varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '请求URI',
     `request_method`  varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL COMMENT '请求方式',
     `request_params`  text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci         NULL COMMENT '请求参数',
-    `request_time`    int(11)                                                       NULL DEFAULT NULL COMMENT '请求时长（ms）',
+    `request_time`    int(11)                                                       NULL DEFAULT NULL COMMENT '请求耗时（ms）',
     `user_agent`      varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '用户代理',
-    `ip`              varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL COMMENT '操作IP',
+    `ip`              varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL COMMENT '操作ip',
     `status`          tinyint(1)                                                    NULL DEFAULT NULL COMMENT '状态  0：失败 1：成功',
     `operate_by`      varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL COMMENT '操作人',
     `operation_group` tinyint(1)                                                    NULL DEFAULT NULL COMMENT '操作分组 0：Common Crud 1：Excel Opeation 2：Other Operation',
@@ -260,7 +260,7 @@ CREATE TABLE `log_error`
     `request_method` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL COMMENT '请求方式',
     `request_params` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci         NULL COMMENT '请求参数',
     `user_agent`     varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '用户代理',
-    `ip`             varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL COMMENT '操作IP',
+    `ip`             varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL COMMENT '操作ip',
     `error_info`     text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci         NULL COMMENT '异常堆栈信息',
     PRIMARY KEY (`id`) USING BTREE,
     INDEX `idx_create_time` (`create_time`) USING BTREE
@@ -282,7 +282,7 @@ CREATE TABLE `log_login`
     `operation`   tinyint(1)                                                    NULL DEFAULT NULL COMMENT '用户操作 0：用户登录 1：用户退出',
     `status`      tinyint(1)                                                    NULL DEFAULT NULL COMMENT '登录状态 0：失败1：成功 2：账号已停用',
     `user_agent`  varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '用户代理',
-    `ip`          varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL COMMENT '操作IP',
+    `ip`          varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL COMMENT '操作ip',
     PRIMARY KEY (`id`) USING BTREE,
     INDEX `idx_create_time` (`create_time`) USING BTREE
 ) ENGINE = InnoDB
@@ -302,7 +302,7 @@ CREATE TABLE `log_task`
     `task_id`     bigint(20)                                                     NULL DEFAULT NULL COMMENT '任务ID',
     `bean_name`   varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT '0' COMMENT 'Bean名称',
     `json`        varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '0' COMMENT '参数（Json格式）',
-    `task_time`   int(11)                                                        NULL DEFAULT NULL COMMENT '任务时长（ms）',
+    `task_time`   int(11)                                                        NULL DEFAULT NULL COMMENT '任务耗时（ms）',
     `type`        tinyint(1)                                                     NULL DEFAULT NULL COMMENT '类型 0：System 1：Api 2：Business',
     `status`      tinyint(1)                                                     NULL DEFAULT NULL COMMENT '状态  0：失败 1：成功',
     `error_info`  text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci          NULL COMMENT '异常堆栈信息',

@@ -47,7 +47,7 @@ public class ExtendRegionServiceImpl extends ServiceImpl<ExtendRegionMapper, Ext
             // 过滤数据权限
             entityList = baseMapper.getList();
         } else {
-            // 不过滤数据权限
+            // 忽略数据权限
             entityList = baseMapper.selectList(addSelectFieldForComponent());
         }
 
@@ -116,7 +116,7 @@ public class ExtendRegionServiceImpl extends ServiceImpl<ExtendRegionMapper, Ext
      * @param dto 行政区域Dto
      */
     private void checkLevel(ExtendRegionDto dto) {
-        // 上级区域级别，没有上级时为：-1
+        // 上级区域级别，没有上级时为-1
         int parentLevel = -1;
         long parentId = dto.getParentId();
         if (parentId > 0L) {

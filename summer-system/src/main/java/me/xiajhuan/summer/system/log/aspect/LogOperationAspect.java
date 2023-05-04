@@ -42,7 +42,7 @@ import static me.xiajhuan.summer.core.constant.OperationConst.*;
 
 /**
  * 操作日志切面<br>
- * note：执行顺序在 {@link RateLimiterAspect} 之后，若被限流则不会记录日志
+ * note：执行顺序在{@link RateLimiterAspect}之后，若被限流不会记录日志
  *
  * @author xiajhuan
  * @date 2022/11/28
@@ -56,7 +56,7 @@ public class LogOperationAspect {
     private LogOperationService logOperationService;
 
     /**
-     * 操作格式
+     * 操作名称格式
      */
     private static final String OPERATION_FORMAT = "【{}】{}";
 
@@ -72,7 +72,7 @@ public class LogOperationAspect {
      *
      * @param point {@link ProceedingJoinPoint}
      * @return 切入点方法执行结果
-     * @throws Throwable 异常/错误
+     * @throws Throwable 如果出现异常或错误
      */
     @Around("pointCut()")
     public Object around(ProceedingJoinPoint point) throws Throwable {
@@ -138,13 +138,13 @@ public class LogOperationAspect {
                 entity.setRequestParams(ServletUtil.getParamPoint(point, request));
             }
 
-            // 异步保存日志
+            // 异步保存操作日志
             logOperationService.saveAsync(entity);
         }
     }
 
     /**
-     * 获取操作分组
+     * 获取操作分组，参考{@link OperationGroupEnum}
      *
      * @param name 操作名称
      * @return 操作分组

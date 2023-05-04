@@ -51,7 +51,7 @@ public class LogErrorEntity extends SimpleEntity {
     private String userAgent;
 
     /**
-     * 操作IP
+     * 操作ip
      */
     private String ip;
 

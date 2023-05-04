@@ -209,7 +209,7 @@ public class SecurityDeptServiceImpl extends ServiceImpl<SecurityDeptMapper, Sec
             return String.valueOf(parentId);
         }
 
-        // 所有部门的id,parentId（到这里至少已经存在顶级部门）
+        // 所有部门【id,parentId】（到这里至少已存在顶级部门）
         LambdaQueryWrapper<SecurityDeptEntity> queryWrapper = Wrappers.lambdaQuery();
         queryWrapper.select(SecurityDeptEntity::getId, SecurityDeptEntity::getParentId);
         List<SecurityDeptEntity> entityList = list(queryWrapper);
@@ -230,7 +230,7 @@ public class SecurityDeptServiceImpl extends ServiceImpl<SecurityDeptMapper, Sec
      * 递归获取所有上级部门ID集合
      *
      * @param parentId    上级部门ID
-     * @param idToDeptMap 部门ID和部门Entity Map
+     * @param idToDeptMap 部门ID和部门Entity映射
      * @param parentIdSet 上级部门ID集合
      */
     private void getParentIdSetRecursion(Long parentId, Map<Long, SecurityDeptEntity> idToDeptMap, Set<Long> parentIdSet) {

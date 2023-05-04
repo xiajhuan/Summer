@@ -20,7 +20,7 @@ import java.lang.annotation.*;
 
 /**
  * 操作日志注解<br>
- * note：添加了 {@link AliasFor} 必须通过 {@link AnnotationUtils} 获取，才会生效
+ * note：添加了{@link AliasFor}必须通过{@link AnnotationUtils}获取才会生效
  *
  * @author xiajhuan
  * @date 2022/11/28
@@ -40,7 +40,7 @@ public @interface LogOperation {
     String name() default StrUtil.EMPTY;
 
     /**
-     * 是否保存请求参数，true：保存 false：不保存
+     * 是否保存请求参数，true：是 false：否
      */
     boolean saveRequestParam() default true;
 

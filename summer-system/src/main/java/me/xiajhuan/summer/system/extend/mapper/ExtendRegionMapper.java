@@ -32,7 +32,7 @@ import java.util.List;
 public interface ExtendRegionMapper extends BaseMapper<ExtendRegionEntity> {
 
     /**
-     * 获取行政区域列表
+     * 获取列表
      *
      * @return 行政区域Entity列表
      */
@@ -56,7 +56,7 @@ public interface ExtendRegionMapper extends BaseMapper<ExtendRegionEntity> {
     List<ExtendRegionEntity> selectList(@Param(Constants.WRAPPER) Wrapper<ExtendRegionEntity> queryWrapper);
 
     /**
-     * 根据ID获取区域级别 {@link RegionLevelEnum}（忽略数据权限）
+     * 根据ID获取区域级别，参考{@link RegionLevelEnum}（忽略数据权限）
      *
      * @param id ID
      * @return 区域级别

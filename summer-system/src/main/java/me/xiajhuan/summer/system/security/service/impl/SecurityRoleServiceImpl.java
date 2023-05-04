@@ -187,22 +187,22 @@ public class SecurityRoleServiceImpl extends ServiceImpl<SecurityRoleMapper, Sec
     }
 
     /**
-     * 保存或修改角色菜单关联
+     * 保存/修改角色菜单关联
      *
      * @param id        ID
      * @param menuIdSet 菜单ID集合
-     * @param isUpdate  是否为更新，true：是 false：不是
+     * @param isUpdate  是否为更新，true：是 false：否
      */
     private void saveOrUpdateRoleMenu(Long id, Set<Long> menuIdSet, boolean isUpdate) {
         if (isUpdate) {
-            // 是更新则删除原来的角色菜单关联
+            // 更新则先删除原来的角色菜单关联
             LambdaQueryWrapper<SecurityRoleMenuEntity> queryWrapper = Wrappers.lambdaQuery();
             queryWrapper.eq(SecurityRoleMenuEntity::getRoleId, id);
             securityRoleMenuMapper.delete(queryWrapper);
         }
 
         if (menuIdSet.size() > 0) {
-            // 保存新的角色菜单关联，note：这里数据量不会很大，直接循环插入就好
+            // 保存新角色菜单关联，note：这里数据量不会很大，直接循环插入就好
             menuIdSet.forEach(menuId -> {
                 SecurityRoleMenuEntity entity = new SecurityRoleMenuEntity();
                 entity.setRoleId(id);
@@ -213,28 +213,28 @@ public class SecurityRoleServiceImpl extends ServiceImpl<SecurityRoleMapper, Sec
     }
 
     /**
-     * 保存或修改角色部门关联
+     * 保存/修改角色部门关联
      *
      * @param id        ID
      * @param deptIdSet 部门ID集合
-     * @param isUpdate  是否为更新，true：是 false：不是
+     * @param isUpdate  是否为更新，true：是 false：否
      */
     private void saveOrUpdateRoleDept(Long id, Set<Long> deptIdSet, boolean isUpdate) {
         if (isUpdate) {
-            // 是更新则删除原来的角色部门关联
+            // 更新则先删除原来的角色部门关联
             LambdaQueryWrapper<SecurityRoleDeptEntity> queryWrapper = Wrappers.lambdaQuery();
             queryWrapper.eq(SecurityRoleDeptEntity::getRoleId, id);
             securityRoleDeptMapper.delete(queryWrapper);
         }
 
         if (deptIdSet.size() > 0) {
-            // 保存新的角色部门关联，note：这里数据量不会很大，直接循环插入就好
+            // 保存新角色部门关联，note：这里数据量不会很大，直接循环插入就好
             String currentUsername = SecurityUtil.getCurrentUsername();
             deptIdSet.forEach(deptId -> {
                 SecurityRoleDeptEntity entity = new SecurityRoleDeptEntity();
                 entity.setRoleId(id);
                 entity.setDeptId(deptId);
-                // note：这里不能使用字段自动填充，否则“deptId”会被覆盖！
+                // note：这里不能使用字段自动填充，否则deptId会被覆盖！
                 entity.setCreateBy(currentUsername);
                 entity.setCreateTime(DateUtil.date());
                 securityRoleDeptMapper.insert(entity);

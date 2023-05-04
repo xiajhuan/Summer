@@ -61,9 +61,9 @@ public class LogErrorDto extends ExcelDto {
     private String userAgent;
 
     /**
-     * 操作IP
+     * 操作ip
      */
-    @ExcelProperty(value = "操作IP", index = 4)
+    @ExcelProperty(value = "操作ip", index = 4)
     private String ip;
 
     /**

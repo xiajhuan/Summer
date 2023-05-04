@@ -31,7 +31,7 @@ public interface ScheduleTaskMapper extends BaseMapper<ScheduleTaskEntity> {
      * 判断是否存在
      *
      * @param beanName Bean名称
-     * @return 返回 {@code null} 则不存在
+     * @return 返回{@code null}则不存在
      */
     @Select("SELECT 1 FROM schedule_task WHERE bean_name = #{beanName} LIMIT 1")
     Integer exist(@Param("beanName") String beanName);

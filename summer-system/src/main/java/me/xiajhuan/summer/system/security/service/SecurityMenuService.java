@@ -32,9 +32,9 @@ public interface SecurityMenuService extends IService<SecurityMenuEntity> {
     /**
      * 树形结构列表（菜单名称国际化）
      *
-     * @param type    类型 {@link ComponentTypeEnum}
-     * @param needAll 是否需要全部，true：是 false：不是
-     * @return 菜单列表（树形结构，菜单名称国际化）或 {@code null}
+     * @param type    类型，参考{@link ComponentTypeEnum}
+     * @param needAll 是否需要全部，true：是 false：否
+     * @return 菜单列表（树形结构、菜单名称国际化）或{@code null}
      */
     List<SecurityMenuDto> treeList(Integer type, boolean needAll);
 
@@ -50,7 +50,7 @@ public interface SecurityMenuService extends IService<SecurityMenuEntity> {
      * 获取用户权限集合
      *
      * @param loginUser 登录用户信息
-     * @return 用户权限集合 或 {@code null}
+     * @return 用户权限集合或{@code null}
      */
     Set<String> getPermissions(LoginUser loginUser);
 

@@ -16,6 +16,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import me.xiajhuan.summer.system.security.entity.SecurityMenuEntity;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import me.xiajhuan.summer.core.enums.LocaleSupportEnum;
 import me.xiajhuan.summer.system.security.enums.ComponentTypeEnum;
 
 import java.util.List;
@@ -33,7 +34,7 @@ public interface SecurityMenuMapper extends BaseMapper<SecurityMenuEntity> {
      * 根据ID和地区语言获取
      *
      * @param id     ID
-     * @param locale 地区语言
+     * @param locale 地区语言，参考{@link LocaleSupportEnum}
      * @return 菜单Entity
      */
     SecurityMenuEntity getByIdAndLocale(@Param("id") Long id, @Param("locale") String locale);
@@ -41,8 +42,8 @@ public interface SecurityMenuMapper extends BaseMapper<SecurityMenuEntity> {
     /**
      * 获取全部菜单
      *
-     * @param locale 地区语言
-     * @param type   类型 {@link ComponentTypeEnum}
+     * @param locale 地区语言，参考{@link LocaleSupportEnum}
+     * @param type   类型，参考{@link ComponentTypeEnum}
      * @return 菜单Entity列表
      */
     List<SecurityMenuEntity> getMenusAll(@Param("locale") String locale, @Param("type") Integer type);
@@ -50,8 +51,8 @@ public interface SecurityMenuMapper extends BaseMapper<SecurityMenuEntity> {
     /**
      * 获取菜单
      *
-     * @param locale 地区语言
-     * @param type   类型 {@link ComponentTypeEnum}
+     * @param locale 地区语言，参考{@link LocaleSupportEnum}
+     * @param type   类型，参考{@link ComponentTypeEnum}
      * @param userId 用户ID
      * @return 菜单Entity列表
      */

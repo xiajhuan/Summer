@@ -37,31 +37,31 @@ public class SecurityUserEntity extends CommonEntity {
 
     /**
      * 创建者<br>
-     * note：不使用字段自动填充，否则“deptId”会被填充覆盖！
+     * note：不使用字段自动填充，否则deptId会被填充覆盖！
      */
     private String createBy;
 
     /**
      * 创建时间<br>
-     * note：不使用字段自动填充，否则“deptId”会被填充覆盖！
+     * note：不使用字段自动填充，否则deptId会被填充覆盖！
      */
     private Date createTime;
 
     /**
      * 更新者<br>
-     * note：不使用字段自动填充，否则“deptId”会被填充覆盖！
+     * note：不使用字段自动填充，否则deptId会被填充覆盖！
      */
     private String updateBy;
 
     /**
      * 更新时间<br>
-     * note：不使用字段自动填充，否则“deptId”会被填充覆盖！
+     * note：不使用字段自动填充，否则deptId会被填充覆盖！
      */
     private Date updateTime;
 
     /**
      * 本部门ID<br>
-     * note：不使用字段自动填充，否则“deptId”会被填充覆盖！
+     * note：不使用字段自动填充，否则deptId会被填充覆盖！
      */
     private Long deptId;
 

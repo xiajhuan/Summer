@@ -36,7 +36,7 @@ import java.util.Date;
 public class LogLoginEntity extends SimpleEntity {
 
     /**
-     * 创建者，固定为“systemUser”
+     * 创建者，固定为systemUser
      *
      * @see NonLoggedUserEnum#SYSTEM_USER
      */
@@ -73,7 +73,7 @@ public class LogLoginEntity extends SimpleEntity {
     private String userAgent;
 
     /**
-     * 操作IP
+     * 操作ip
      */
     private String ip;
 

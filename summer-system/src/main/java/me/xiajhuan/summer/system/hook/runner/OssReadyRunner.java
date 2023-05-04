@@ -45,7 +45,7 @@ public class OssReadyRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
-        // 设置当前线程的数据源为“system”
+        // 设置当前线程的数据源为system
         DynamicDataSourceContextHolder.push(DataSourceConst.SYSTEM);
 
         LOGGER.info("【{}】对象存储服务加载完毕，类型【{}】", SystemUtil.getApplicationName(),

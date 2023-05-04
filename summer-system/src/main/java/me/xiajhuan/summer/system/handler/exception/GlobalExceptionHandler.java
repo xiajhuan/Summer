@@ -68,25 +68,25 @@ public class GlobalExceptionHandler {
     private LogErrorService logErrorService;
 
     /**
-     * 是否保存 {@link SystemException} 日志
+     * 是否保存{@link SystemException}日志
      */
     private boolean enableSystem;
 
     /**
-     * 是否保存 {@link BusinessException} 日志
+     * 是否保存{@link BusinessException}日志
      */
     private boolean enableBusiness;
 
     /**
      * 忽略的消息代码数组<br>
-     * note：仅对 {@link SystemException} 和 {@link BusinessException} 生效
+     * note：仅对{@link SystemException}和{@link BusinessException}生效
      *
      * @see ErrorCode
      */
     private int[] ignoreCodeArray;
 
     /**
-     * 初始化 {@link enableSystem} {@link enableBusiness} {@link ignoreCodeArray}
+     * 初始化
      */
     @PostConstruct
     private void init() {
@@ -131,7 +131,7 @@ public class GlobalExceptionHandler {
 
     /**
      * 校验异常处理<br>
-     * note：参数校验（Dto类型）（注解 {@link Validated} 校验）
+     * note：参数校验（Dto类型{@link Validated}校验）
      *
      * @param e {@link BindException}
      * @return 响应结果
@@ -152,11 +152,11 @@ public class GlobalExceptionHandler {
 
     /**
      * 校验异常处理，note：
-     * <pre>
-     *   1.参数校验（Dto类型）（{@link ValidationUtil} api校验）
-     *   2.{@link AssertUtil} 断言失败
-     *   3.直接抛出 {@link ValidationException}
-     * </pre>
+     * <ul>
+     *   <li>参数校验（Dto类型{@link ValidationUtil}api校验）</li>
+     *   <li>{@link AssertUtil}断言失败</li>
+     *   <li>直接抛出{@link ValidationException}</li>
+     * </ul>
      *
      * @param e 校验异常
      * @return 响应结果
@@ -200,7 +200,7 @@ public class GlobalExceptionHandler {
      * 记录日志并响应
      *
      * @param e              {@link Exception}
-     * @param isSaveErrorLog 是否保存错误日志，true：保存 false：不保存
+     * @param isSaveErrorLog 是否保存错误日志，true：是 false：否
      * @return 响应结果
      */
     private Result<?> logAndResponse(Exception e, boolean isSaveErrorLog) {
@@ -220,10 +220,10 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * 是否是忽略的消息代码
+     * 是否为忽略的消息代码
      *
      * @param e {@link Exception}
-     * @return 是否是忽略的消息代码，true：是 false：不是
+     * @return 是否为忽略的消息代码，true：是 false：否
      */
     private boolean isIgnoredCode(Exception e) {
         if ((e instanceof SystemException || e instanceof BusinessException) && ArrayUtil.isNotEmpty(ignoreCodeArray)) {

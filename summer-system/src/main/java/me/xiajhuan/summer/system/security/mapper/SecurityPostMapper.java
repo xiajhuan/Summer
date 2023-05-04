@@ -29,7 +29,7 @@ public interface SecurityPostMapper extends BaseMapper<SecurityPostEntity> {
      * 判断是否存在
      *
      * @param code 岗位编码
-     * @return 返回 {@code null} 则不存在
+     * @return 返回{@code null}则不存在
      */
     @Select("SELECT 1 FROM security_post WHERE code = #{code} LIMIT 1")
     Integer exist(@Param("code") String code);

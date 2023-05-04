@@ -76,7 +76,7 @@ public class ExtendOssController extends BaseController {
     /**
      * 批量上传
      *
-     * @param files {@link MultipartFile} 数组
+     * @param files {@link MultipartFile}数组
      * @return 响应结果
      */
     @PostMapping("uploadBatch")

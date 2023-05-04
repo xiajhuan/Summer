@@ -32,13 +32,13 @@ public class SecurityRoleDeptEntity extends SimpleEntity {
 
     /**
      * 创建者<br>
-     * note：不使用字段自动填充，否则“deptId”会被填充覆盖！
+     * note：不使用字段自动填充，否则deptId会被填充覆盖！
      */
     private String createBy;
 
     /**
      * 创建时间<br>
-     * note：不使用字段自动填充，否则“deptId”会被填充覆盖！
+     * note：不使用字段自动填充，否则deptId会被填充覆盖！
      */
     private Date createTime;
 

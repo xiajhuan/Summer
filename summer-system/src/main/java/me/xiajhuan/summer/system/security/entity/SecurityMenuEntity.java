@@ -48,15 +48,12 @@ public class SecurityMenuEntity extends CommonEntity {
     private String url;
 
     /**
-     * 授权
-     * <p>
-     * 多个授权以“,”分隔
-     * 格式：模块名:业务名:操作名，例如：
-     * <pre>
-     *   security:user:page,security:user:add
-     *   log:error:page,log:error:excelExport
-     * </pre>
-     * </p>
+     * 授权<br>
+     * 多个授权以“,”分隔，格式：模块名:业务名:操作名，例如：
+     * <ul>
+     *   <li>security:user:page,security:user:add</li>
+     *   <li>log:error:page,log:error:excelExport</li>
+     * </ul>
      */
     private String permissions;
 

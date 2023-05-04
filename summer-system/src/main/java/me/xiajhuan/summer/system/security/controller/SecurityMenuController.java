@@ -123,7 +123,7 @@ public class SecurityMenuController {
 
     /**
      * 导航<br>
-     * note：列表，不包含按钮
+     * note：不包含按钮
      *
      * @return 响应结果
      */

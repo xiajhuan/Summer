@@ -57,7 +57,7 @@ public class LogOperationServiceImpl extends ServiceImpl<LogOperationMapper, Log
         // 状态
         Integer status = dto.getStatus();
         queryWrapper.eq(status != null, LogOperationEntity::getStatus, status);
-        // 创建时间（闭区间）
+        // 创建时间范围（闭区间）
         Date createTimeStart = dto.getCreateTimeStart();
         queryWrapper.ge(createTimeStart != null, LogOperationEntity::getCreateTime, createTimeStart);
         Date createTimeEnd = dto.getCreateTimeEnd();

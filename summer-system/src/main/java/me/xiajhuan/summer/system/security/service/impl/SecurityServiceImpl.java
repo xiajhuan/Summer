@@ -205,7 +205,7 @@ public class SecurityServiceImpl implements SecurityService {
         CacheServer cacheServer = CacheServerFactory.getCacheServer();
         String loginInfoKey = loginInfo(userId);
         if (cacheServer.hasHash(loginInfoKey)) {
-            // 获取accessToken
+            // accessToken
             String accessToken = String.valueOf(cacheServer.getHash(loginInfoKey, "accessToken"));
 
             // 删除用户ID
@@ -274,7 +274,7 @@ public class SecurityServiceImpl implements SecurityService {
         long userId = entity.getId();
         cacheServer.setString(userId(accessToken), String.valueOf(userId), cacheTtl);
 
-        // 获取登录信息
+        // 登录信息
         String loginInfoKey = loginInfo(userId);
         Map<String, Object> loginInfo = cacheServer.getHash(loginInfoKey);
         if (loginInfo == null) {
@@ -284,13 +284,13 @@ public class SecurityServiceImpl implements SecurityService {
             // 让原来的accessToken失效
             cacheServer.delete(userId(String.valueOf(loginInfo.get("accessToken"))));
         }
-        // 缓存登录信息（覆盖刷新）
+        // 缓存登录信息（覆盖）
         loginInfo.put("accessToken", accessToken);
         LoginUser loginUser = getLoginUser(entity);
         loginInfo.put("loginUser", loginUser);
         cacheServer.setHash(loginInfoKey, loginInfo, cacheTtl);
 
-        // 缓存用户权限集合（覆盖刷新）
+        // 缓存用户权限集合（覆盖）
         Set<String> permissions = securityMenuService.getPermissions(loginUser);
         if (permissions == null) {
             permissions = CollUtil.newHashSet(StrUtil.EMPTY);
@@ -315,7 +315,7 @@ public class SecurityServiceImpl implements SecurityService {
         LoginUser loginUser = BeanUtil.convert(entity, LoginUser.class);
 
         if (isGeneralUser(entity.getUserType())) {
-            // 部门ID集合（这里指用户所有角色关联的所有部门ID）
+            // 部门ID集合（用户所有角色关联的所有部门ID）
             loginUser.setDeptIdRoleBasedSet(securityRoleDeptMapper.getDeptIdRoleBasedSet(loginUser.getId()));
 
             // 本部门及本部门下子部门ID
@@ -329,10 +329,10 @@ public class SecurityServiceImpl implements SecurityService {
     }
 
     /**
-     * 是否是普通用户
+     * 是否为普通用户
      *
-     * @param userType 用户类型 {@link UserTypeEnum}
-     * @return 是否是普通用户，true：是 false：不是
+     * @param userType 用户类型，参考{@link UserTypeEnum}
+     * @return 是否为普通用户，true：是 false：否
      */
     private boolean isGeneralUser(int userType) {
         return UserTypeEnum.GENERAL.getValue() == userType;

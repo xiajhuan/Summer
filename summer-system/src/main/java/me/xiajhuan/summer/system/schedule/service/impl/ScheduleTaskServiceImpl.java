@@ -58,10 +58,10 @@ import java.util.stream.Collectors;
 public class ScheduleTaskServiceImpl extends ServiceImpl<ScheduleTaskMapper, ScheduleTaskEntity> implements ScheduleTaskService, MpHelper<ScheduleTaskDto, ScheduleTaskEntity> {
 
     @Resource
-    private QuartzStartupProperties quartzStartupProperties;
+    private Scheduler scheduler;
 
     @Resource
-    private Scheduler scheduler;
+    private QuartzStartupProperties quartzStartupProperties;
 
     //*******************MpHelper覆写开始********************
 
@@ -222,7 +222,7 @@ public class ScheduleTaskServiceImpl extends ServiceImpl<ScheduleTaskMapper, Sch
                 throw SystemException.of(ErrorCode.REPEAT_START_ERROR);
             }
             // 初始化定时任务
-            initSchedule();
+            initTask();
             // 启动定时任务
             scheduler.startDelayed(quartzStartupProperties.getDelay());
         } catch (SchedulerException e) {
@@ -232,7 +232,7 @@ public class ScheduleTaskServiceImpl extends ServiceImpl<ScheduleTaskMapper, Sch
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean initSchedule() {
+    public boolean initTask() {
         // 全部定时任务
         List<ScheduleTaskEntity> entityList = list(addSelectFieldForQuartz());
 

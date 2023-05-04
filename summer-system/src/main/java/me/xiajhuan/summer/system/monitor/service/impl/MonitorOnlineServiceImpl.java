@@ -65,7 +65,7 @@ public class MonitorOnlineServiceImpl extends ServiceImpl<MonitorOnlineMapper, M
     public LambdaQueryWrapper<MonitorOnlineEntity> getQueryWrapper(MonitorOnlineDto dto) {
         LambdaQueryWrapper<MonitorOnlineEntity> queryWrapper = getEmptyWrapper();
         // 查询条件
-        // 排除“Token过期的”
+        // 排除Token过期的
         queryWrapper.gt(MonitorOnlineEntity::getExpireTime, DateUtil.date());
         // 创建者（用户名）
         String createBy = dto.getCreateBy();
@@ -145,7 +145,7 @@ public class MonitorOnlineServiceImpl extends ServiceImpl<MonitorOnlineMapper, M
     }
 
     /**
-     * 获取 {@link LambdaQueryWrapper}（用户ID条件）
+     * 获取{@link LambdaQueryWrapper}（用户ID条件）
      *
      * @param userId 用户ID
      * @return {@link LambdaQueryWrapper}

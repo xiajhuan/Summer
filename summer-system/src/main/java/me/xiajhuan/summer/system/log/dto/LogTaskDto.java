@@ -56,9 +56,9 @@ public class LogTaskDto extends ExcelDto {
     private String json;
 
     /**
-     * 任务时长（ms）
+     * 任务耗时（ms）
      */
-    @ExcelProperty(value = "任务时长（ms）", index = 2)
+    @ExcelProperty(value = "任务耗时（ms）", index = 2)
     private Integer taskTime;
 
     /**

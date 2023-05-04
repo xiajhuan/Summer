@@ -33,7 +33,7 @@ public interface ExtendOssService extends IService<ExtendOssEntity> {
     /**
      * 批量新增
      *
-     * @param dictArray {@link Dict} 数组
+     * @param dictArray {@link Dict}数组
      */
     void addBatch(Dict[] dictArray);
 

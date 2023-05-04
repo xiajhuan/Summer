@@ -29,7 +29,7 @@ public interface SecurityRoleMapper extends BaseMapper<SecurityRoleEntity> {
      * 判断是否存在
      *
      * @param name 角色名称
-     * @return 返回 {@code null} 则不存在
+     * @return 返回{@code null}则不存在
      */
     @Select("SELECT 1 FROM security_role WHERE name = #{name} LIMIT 1")
     Integer exist(@Param("name") String name);
