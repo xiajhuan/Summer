@@ -102,24 +102,11 @@ public class QiNiuOssServer extends AbstractOssServer {
     }
 
     @Override
-    public void delete(String path, String bucketName) {
-        try {
-            // 删除文件
-            Response response = bucketManager.delete(getRealBucketName(bucketName), path);
-            if (!response.isOK()) {
-                throw SystemException.of(ErrorCode.FILE_DELETE_FAILURE, response.error);
-            }
-        } catch (QiniuException e) {
-            throw SystemException.of(e, ErrorCode.FILE_DELETE_FAILURE, e.getMessage());
-        }
-    }
-
-    @Override
     protected String uploadInternal(InputStream inputStream, String bucketName, String path) {
         try {
             // 存储文件
             Response response = uploadManager.put(inputStream, path,
-                    auth.uploadToken(getRealBucketName(bucketName)), null, null);
+                    auth.uploadToken(bucketName), null, null);
             if (!response.isOK()) {
                 throw FileUploadException.of(StrUtil.format("文件上传失败【{}】", response.error));
             }
@@ -127,8 +114,21 @@ public class QiNiuOssServer extends AbstractOssServer {
             throw FileUploadException.of(e);
         }
 
-        // URL
+        // URL（外链）
         return StrUtil.format("{}/{}", endPoint, path);
+    }
+
+    @Override
+    public void deleteInternal(String path, String bucketName) {
+        try {
+            // 删除文件
+            Response response = bucketManager.delete(bucketName, path);
+            if (!response.isOK()) {
+                throw SystemException.of(ErrorCode.FILE_DELETE_FAILURE, response.error);
+            }
+        } catch (QiniuException e) {
+            throw SystemException.of(e, ErrorCode.FILE_DELETE_FAILURE, e.getMessage());
+        }
     }
 
 }

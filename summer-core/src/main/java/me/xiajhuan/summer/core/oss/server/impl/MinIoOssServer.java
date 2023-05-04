@@ -85,22 +85,7 @@ public class MinIoOssServer extends AbstractOssServer {
     }
 
     @Override
-    public void delete(String path, String bucketName) {
-        try {
-            // 删除文件
-            minioClient.removeObject(RemoveObjectArgs.builder()
-                    .bucket(getRealBucketName(bucketName))
-                    .object(path).build());
-        } catch (ErrorResponseException | InsufficientDataException | InternalException
-                | InvalidKeyException | InvalidResponseException | IOException
-                | NoSuchAlgorithmException | ServerException | XmlParserException e) {
-            throw SystemException.of(e, ErrorCode.FILE_DELETE_FAILURE, e.getMessage());
-        }
-    }
-
-    @Override
     protected String uploadInternal(InputStream inputStream, String bucketName, String path) {
-        bucketName = getRealBucketName(bucketName);
         try {
             if (!minioClient.bucketExists(BucketExistsArgs.builder().bucket(bucketName).build())) {
                 // 逻辑空间不存在则创建
@@ -118,8 +103,22 @@ public class MinIoOssServer extends AbstractOssServer {
             throw FileUploadException.of(e);
         }
 
-        // URL
+        // URL（外链）
         return getUrl(bucketName, path);
+    }
+
+    @Override
+    public void deleteInternal(String path, String bucketName) {
+        try {
+            // 删除文件
+            minioClient.removeObject(RemoveObjectArgs.builder()
+                    .bucket(bucketName)
+                    .object(path).build());
+        } catch (ErrorResponseException | InsufficientDataException | InternalException
+                | InvalidKeyException | InvalidResponseException | IOException
+                | NoSuchAlgorithmException | ServerException | XmlParserException e) {
+            throw SystemException.of(e, ErrorCode.FILE_DELETE_FAILURE, e.getMessage());
+        }
     }
 
 }

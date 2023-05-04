@@ -34,7 +34,7 @@ import java.io.InputStream;
 public abstract class AbstractOssServer {
 
     /**
-     * 端点（协议://ip:端口 或 域名）
+     * 端点（协议://ip:端口或域名）
      */
     protected String endPoint;
 
@@ -54,7 +54,7 @@ public abstract class AbstractOssServer {
      *
      * @param multipartFile {@link MultipartFile}
      * @return {@link Dict}或{@code null}，{@link Dict}包含的Key有：<br>
-     * 【type（类型）,name（文件名称）,path（路径（相对路径））,url（URL）】
+     * 【type（类型）,name（文件名称）,bucketName（逻辑空间名）,path（路径（相对路径））,url（URL（外链））】
      */
     public Dict upload(MultipartFile multipartFile) {
         return upload(multipartFile, null);
@@ -66,12 +66,14 @@ public abstract class AbstractOssServer {
      * @param multipartFile {@link MultipartFile}
      * @param bucketName    逻辑空间名
      * @return {@link Dict}或{@code null}，{@link Dict}包含的Key有：<br>
-     * 【type（类型）,name（文件名称）,path（路径（相对路径））,url（URL）】
+     * 【type（类型）,name（文件名称）,bucketName（逻辑空间名）,path（路径（相对路径））,url（URL（外链））】
      */
     public Dict upload(MultipartFile multipartFile, String bucketName) {
         if (multipartFile != null) {
             // 文件名称
             String name = multipartFile.getOriginalFilename();
+            // 逻辑空间名
+            bucketName = getRealBucketName(bucketName);
             // 路径（相对路径），格式：日期/随机串.后缀
             String path = StrUtil.format("{}/{}.{}",
                     DateUtil.format(DateUtil.date(), "yyyyMMdd"),
@@ -79,7 +81,7 @@ public abstract class AbstractOssServer {
                     FileNameUtil.getSuffix(name));
             try {
                 // 上传处理
-                return Dict.of("type", getType(), "name", name, "path", path, "url",
+                return Dict.of("type", getType(), "name", name, "bucketName", bucketName, "path", path, "url",
                         uploadInternal(multipartFile.getInputStream(), bucketName, path));
             } catch (IOException e) {
                 throw FileUploadException.of(e);
@@ -101,16 +103,19 @@ public abstract class AbstractOssServer {
      * @param path 路径（相对路径）
      */
     public void delete(String path) {
-        delete(path, null);
+        delete(null, path);
     }
 
     /**
      * 删除，指定逻辑空间名
      *
-     * @param path       路径（相对路径）
      * @param bucketName 逻辑空间名
+     * @param path       路径（相对路径）
      */
-    public abstract void delete(String path, String bucketName);
+    public void delete(String bucketName, String path) {
+        // 删除处理
+        deleteInternal(getRealBucketName(bucketName), path);
+    }
 
     /**
      * 上传处理
@@ -118,9 +123,17 @@ public abstract class AbstractOssServer {
      * @param inputStream {@link InputStream}
      * @param bucketName  逻辑空间名
      * @param path        路径（相对路径）
-     * @return URL
+     * @return URL（外链）
      */
     protected abstract String uploadInternal(InputStream inputStream, String bucketName, String path);
+
+    /**
+     * 删除处理
+     *
+     * @param bucketName 逻辑空间名
+     * @param path       路径（相对路径）
+     */
+    protected abstract void deleteInternal(String bucketName, String path);
 
     /**
      * 获取实际逻辑空间名
@@ -136,11 +149,11 @@ public abstract class AbstractOssServer {
     }
 
     /**
-     * 获取URL，格式：端点/逻辑空间名/路径（相对路径）
+     * 获取URL（外链），格式：端点/逻辑空间名/路径（相对路径）
      *
      * @param bucketName 逻辑空间名
      * @param path       路径（相对路径）
-     * @return URL
+     * @return URL（外链）
      */
     protected String getUrl(String bucketName, String path) {
         return StrUtil.format("{}/{}/{}", endPoint, bucketName, path);

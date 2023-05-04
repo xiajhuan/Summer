@@ -116,28 +116,28 @@ await-termination-Seconds = 30
 # *******************对象存储配置********************
 [Oss]
 # 本地存储配置，只有application.oss.type: LOCAL 时会生效
-# 端点（协议://ip:端口 或 域名）
+# 端点（协议://ip:端口或域名）
 local.end-point = http://localhost:8888
 # 默认逻辑空间名
-local.default-bucket-name = files
+local.default-bucket-name = summer-files
 # 存储目录
 local.storage-directory = D:\\Job\\devPrograms\\apache-tomcat-9.0.74\\webapps
 
 # MinIo配置，只有application.oss.type: MIN_IO 时会生效
-# 端点（协议://ip:端口 或 域名）
+# 端点（协议://ip:端口或域名）
 min-io.end-point =
 # 默认逻辑空间名
-min-io.default-bucket-mame = files
+min-io.default-bucket-mame = summer-files
 # 密钥AK
 min-io.access-key =
 # 密钥SK
 min-io.secret-key =
 
 # 七牛云配置，只有application.oss.type: QI_NIU 时会生效
-# 端点（协议://ip:端口 或 域名）
+# 端点（协议://ip:端口或域名）
 qi-niu.end-point =
 # 默认逻辑空间名
-qi-niu.default-bucket-mame = files
+qi-niu.default-bucket-mame = summer-files
 # 密钥AK
 qi-niu.access-key =
 # 密钥SK

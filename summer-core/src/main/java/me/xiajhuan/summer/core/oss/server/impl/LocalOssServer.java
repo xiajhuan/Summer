@@ -80,20 +80,7 @@ public class LocalOssServer extends AbstractOssServer {
     }
 
     @Override
-    public void delete(String path, String bucketName) {
-        try {
-            // 删除文件
-            if (!FileUtil.del(getFile(path, getRealBucketName(bucketName)))) {
-                throw SystemException.of(ErrorCode.FILE_DELETE_FAILURE, StrUtil.EMPTY);
-            }
-        } catch (IORuntimeException e) {
-            throw SystemException.of(e, ErrorCode.FILE_DELETE_FAILURE, e.getMessage());
-        }
-    }
-
-    @Override
     protected String uploadInternal(InputStream inputStream, String bucketName, String path) {
-        bucketName = getRealBucketName(bucketName);
         try {
             // 将流的内容写入文件（自动关闭输入流）
             FileUtil.writeFromStream(inputStream, getFile(path, bucketName));
@@ -101,8 +88,20 @@ public class LocalOssServer extends AbstractOssServer {
             throw FileUploadException.of(e);
         }
 
-        // URL
+        // URL（外链）
         return getUrl(bucketName, path);
+    }
+
+    @Override
+    public void deleteInternal(String path, String bucketName) {
+        try {
+            // 删除文件
+            if (!FileUtil.del(getFile(path, bucketName))) {
+                throw SystemException.of(ErrorCode.FILE_DELETE_FAILURE, StrUtil.EMPTY);
+            }
+        } catch (IORuntimeException e) {
+            throw SystemException.of(e, ErrorCode.FILE_DELETE_FAILURE, e.getMessage());
+        }
     }
 
     /**

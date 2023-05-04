@@ -45,9 +45,14 @@ public class ExtendOssEntity extends SimpleEntity {
     private String name;
 
     /**
-     * URL
+     * URL（外链）
      */
     private String url;
+
+    /**
+     * 逻辑空间名
+     */
+    private String bucketName;
 
     /**
      * 路径（相对路径）

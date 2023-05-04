@@ -35,7 +35,7 @@ public class ExtendOssDto extends PageSortDto {
     private String name;
 
     /**
-     * URL
+     * URL（外链）
      */
     private String url;
 

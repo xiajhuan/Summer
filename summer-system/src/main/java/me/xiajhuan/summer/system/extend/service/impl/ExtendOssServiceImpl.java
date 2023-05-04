@@ -92,6 +92,7 @@ public class ExtendOssServiceImpl extends ServiceImpl<ExtendOssMapper, ExtendOss
                 ExtendOssEntity.builder()
                         .name(dict.getStr("name"))
                         .url(dict.getStr("url"))
+                        .bucketName(dict.getStr("bucketName"))
                         .path(dict.getStr("path"))
                         .type(dict.getInt("type")).build()));
     }
