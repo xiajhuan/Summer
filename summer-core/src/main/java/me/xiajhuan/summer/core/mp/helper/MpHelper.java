@@ -118,7 +118,7 @@ public interface MpHelper<D extends PageSortDto, T> {
 
     /**
      * 添加查询字段（默认全部Entity字段）<br>
-     * note：这个钩子只是为了避免相同的查询字段重复写（如“page”和“getById”要查询的字段相同时），不会参与上面的模板流程！
+     * note：这个钩子只是为了避免相同的查询字段重复写（如page和getById要查询的字段相同时），不会参与上面的模板流程！
      *
      * @param queryWrapper {@link LambdaQueryWrapper}
      * @return {@link LambdaQueryWrapper}

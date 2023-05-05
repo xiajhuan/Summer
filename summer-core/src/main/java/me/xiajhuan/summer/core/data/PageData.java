@@ -34,12 +34,6 @@ public class PageData<T> implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 构造私有化
-     */
-    private PageData() {
-    }
-
-    /**
      * 总记录数
      */
     private Long total;
@@ -48,6 +42,12 @@ public class PageData<T> implements Serializable {
      * 数据列表
      */
     private List<T> rows;
+
+    /**
+     * 构造私有化
+     */
+    private PageData() {
+    }
 
     /**
      * 构建PageData

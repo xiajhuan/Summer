@@ -76,7 +76,7 @@
         2.坑点：
             queueSize过大可能导致OOM
             queueSize过小且discardingThreshold设置大于0（或默认值），队列剩余容量小于阈值就会丢弃“<=INFO的日志”
-            discardingThreshold为“日志条数”，不是“百分比”
+            discardingThreshold为日志条数，不是百分比
             neverBlock默认false意味着可能会出现阻塞
         3.建议：
             若优先绝对性能，设置 neverBlock = true，永不阻塞

@@ -75,8 +75,9 @@ public abstract class AbstractOssServer {
                     FileNameUtil.getSuffix(name));
             try {
                 // 上传处理
-                return Dict.of("type", getType(), "name", name, "bucketName", bucketName, "path", path, "url",
-                        uploadInternal(multipartFile.getInputStream(), bucketName, path));
+                return Dict.of("type", getType(), "name", name,
+                        "bucketName", bucketName, "path", path,
+                        "url", uploadInternal(multipartFile.getInputStream(), bucketName, path));
             } catch (IOException e) {
                 throw FileUploadException.of(e);
             }
@@ -94,7 +95,6 @@ public abstract class AbstractOssServer {
     public void download(String url, String fileName, HttpServletResponse response) {
         // 处理URL（外链）
         url = handleUrl(url);
-        // TODO
         try {
             byte[] data = HttpUtil.downloadBytes(url);
             fileName = URLEncoder.encode(fileName, "UTF-8");

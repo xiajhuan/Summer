@@ -48,7 +48,7 @@ import java.util.stream.Collectors;
  * 数据权限处理器，note：
  * <ul>
  *   <li>表对应Entity必须包含create_by和dept_id字段，推荐继承{@link CommonEntity}</li>
- *   <li>对”SELECT/COUNT/UPDATE/DELETE语句“生效</li>
+ *   <li>对SELECT/COUNT/UPDATE/DELETE语句生效</li>
  *   <li>
  *     若想局部忽略数据权限，可采用以下两种方式：<br>
  *     1.在Mapper或Mapper.Method上使用{@link InterceptorIgnore}<br>
@@ -92,7 +92,7 @@ public class DataScopeHandler implements MultiDataPermissionHandler {
             return null;
         }
 
-        // 超级管理员或数据权限类型为”ALL“的用户不做处理
+        // 超级管理员或数据权限类型为ALL的用户不做处理
         if (UserTypeEnum.SUPER_ADMIN.getValue() == loginUser.getUserType()
                 || DataScopeConst.Type.ALL.getValue() == loginUser.getDataScope()) {
             return null;

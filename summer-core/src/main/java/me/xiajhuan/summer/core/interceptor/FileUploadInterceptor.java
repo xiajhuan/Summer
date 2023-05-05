@@ -89,7 +89,7 @@ public class FileUploadInterceptor implements HandlerInterceptor {
         // 文件类型是否支持，true：是 false：否
         boolean supported = false;
 
-        // 文件后缀名（不带“.”）
+        // 文件后缀名（不包括“.”）
         String fileSuffix = FileNameUtil.getSuffix(file.getOriginalFilename());
         // 文件大小（B）
         long fileSize = file.getSize();

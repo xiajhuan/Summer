@@ -64,7 +64,7 @@ enable-system = true
 # 是否保存业务异常日志（BusinessException），值：true/false
 enable-business = true
 # 忽略的消息代码，以“,”分隔，值参考ErrorCode
-# note：当SystemException或BusinessException的消息为该消息代码匹配消息时将不会“保存错误日志”和“打印异常堆栈信息（开启debug日志级别时除外）”
+# note：当SystemException或BusinessException的消息为该消息代码匹配消息时将不会“保存错误日志”和“打印异常堆栈信息”，开启debug日志级别时除外
 ignore-codes = 1001,1002
 
 # 操作日志清理天数限制，-n则清理n天以前的日志

@@ -107,7 +107,7 @@ public class CustomSqlInjector extends DefaultSqlInjector {
      * Sql示例：UPDATE table SET 填充字段 = xxx,逻辑删除字段 = 1 WHERE id IN (主键1,主键2,主键3);note：
      * <ul>
      *   <li>只有Entity支持逻辑删除时才生效，推荐继承{@link LogicEntity}</li>
-     *   <li>若无法接受所有记录填充字段以第一条记录为准，如要求字段“update_time”的时间精确，请使用循环删除</li>
+     *   <li>若无法接受所有记录填充字段以第一条记录为准，如要求字段update_time的时间精确，请使用循环删除</li>
      * </ul>
      *
      * @return {@link AbstractMethod}

@@ -341,7 +341,7 @@ public interface CacheServer {
     void setListAppend(String key, List<String> list, long ttl);
 
     /**
-     * 设置值（List），有过期时间，不允许覆盖
+     * 设置值（List），有过期时间、不允许覆盖
      *
      * @param key  Key
      * @param list Value（List）

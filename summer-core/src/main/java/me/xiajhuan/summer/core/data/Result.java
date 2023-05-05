@@ -34,13 +34,7 @@ public class Result<T> implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 构造私有化
-     */
-    private Result() {
-    }
-
-    /**
-     * 状态，“1”：成功 “0”：失败
+     * 状态，1：成功 0：失败
      */
     private String code;
 
@@ -53,6 +47,12 @@ public class Result<T> implements Serializable {
      * 数据
      */
     private T data;
+
+    /**
+     * 构造私有化
+     */
+    private Result() {
+    }
 
     /**
      * 成功（不带数据），默认消息为“操作成功”
