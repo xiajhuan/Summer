@@ -41,8 +41,14 @@ public class ExtendOssDto extends PageSortDto {
     /**
      * URL（外链）
      */
-    @NotBlank(message = "{extend.oss.url.require}", groups = DefaultGroup.class)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String url;
+
+    /**
+     * 路径（相对路径）
+     */
+    @NotBlank(message = "{extend.oss.path.require}", groups = DefaultGroup.class)
+    private String path;
 
     /**
      * 类型

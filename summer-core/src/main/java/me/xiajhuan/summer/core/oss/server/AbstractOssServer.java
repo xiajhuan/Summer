@@ -22,6 +22,7 @@ import cn.hutool.http.HttpUtil;
 import me.xiajhuan.summer.core.enums.OssSupportEnum;
 import me.xiajhuan.summer.core.exception.custom.FileDownloadException;
 import me.xiajhuan.summer.core.exception.custom.FileUploadException;
+import org.springframework.http.MediaType;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -88,18 +89,24 @@ public abstract class AbstractOssServer {
     /**
      * 下载
      *
-     * @param url      URL（外链）
-     * @param fileName 文件名称
-     * @param response {@link HttpServletResponse}
+     * @param bucketName 逻辑空间名
+     * @param path       路径（相对路径）
+     * @param fileName   文件名称
+     * @param response   {@link HttpServletResponse}
      */
-    public void download(String url, String fileName, HttpServletResponse response) {
-        // 处理URL（外链）
-        url = handleUrl(url);
+    public void download(String bucketName, String path, String fileName, HttpServletResponse response) {
         try {
-            byte[] data = HttpUtil.downloadBytes(url);
-            fileName = URLEncoder.encode(fileName, "UTF-8");
+            // 请求下载URL
+            byte[] data = HttpUtil.downloadBytes(
+                    getDownloadUrl(getRealBucketName(bucketName), path));
+            // 设置响应头
+            response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
+            response.setCharacterEncoding("UTF-8");
             response.setHeader("Content-Disposition",
-                    StrUtil.format("attachment;filename={}", fileName));
+                    StrUtil.format("attachment;filename={}",
+                            URLEncoder.encode(fileName, "UTF-8")));
+
+            // 将byte数组写入流（自动关闭输出流）
             IoUtil.write(response.getOutputStream(), true, data);
         } catch (Exception e) {
             throw FileDownloadException.of(e);
@@ -135,6 +142,15 @@ public abstract class AbstractOssServer {
     protected abstract String uploadInternal(InputStream inputStream, String bucketName, String path);
 
     /**
+     * 获取下载URL
+     *
+     * @param bucketName 逻辑空间名
+     * @param path       路径（相对路径）
+     * @return 下载URL
+     */
+    protected abstract String getDownloadUrl(String bucketName, String path);
+
+    /**
      * 删除处理
      *
      * @param bucketName 逻辑空间名
@@ -153,16 +169,6 @@ public abstract class AbstractOssServer {
             bucketName = defaultBucketName;
         }
         return bucketName;
-    }
-
-    /**
-     * URL处理钩子，默认不处理，可重写该钩子个性化URL处理
-     *
-     * @param url URL（外链）
-     * @return 处理后的URL（外链）
-     */
-    protected String handleUrl(String url) {
-        return url;
     }
 
 }

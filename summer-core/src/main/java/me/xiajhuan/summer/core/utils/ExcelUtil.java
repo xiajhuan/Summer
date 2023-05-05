@@ -139,11 +139,10 @@ public class ExcelUtil extends EasyExcelFactory {
         // 设置响应头
         response.setContentType("application/vnd.ms-excel");
         response.setCharacterEncoding("UTF-8");
-
         try {
-            fileName = URLEncoder.encode(fileName, "UTF-8");
             response.setHeader("Content-disposition",
-                    StrUtil.format("attachment;filename={}.xlsx", fileName));
+                    StrUtil.format("attachment;filename={}.xlsx",
+                            URLEncoder.encode(fileName, "UTF-8")));
 
             write(response.getOutputStream(), dtoClass).sheet(sheetName).doWrite(dtoList);
         } catch (IOException e) {

@@ -115,7 +115,13 @@ public class QiNiuOssServer extends AbstractOssServer {
         }
 
         // URL（外链）
-        return StrUtil.format("{}/{}", endPoint, path);
+        return getUrl(path);
+    }
+
+    @Override
+    protected String getDownloadUrl(String bucketName, String path) {
+        // 下载签名
+        return auth.privateDownloadUrl(getUrl(path));
     }
 
     @Override
@@ -131,9 +137,14 @@ public class QiNiuOssServer extends AbstractOssServer {
         }
     }
 
-    @Override
-    protected String handleUrl(String url) {
-        return auth.privateDownloadUrl(url);
+    /**
+     * 获取URL（外链）
+     *
+     * @param path 路径（相对路径）
+     * @return URL（外链）
+     */
+    private String getUrl(String path) {
+        return StrUtil.format("{}/{}", endPoint, path);
     }
 
 }

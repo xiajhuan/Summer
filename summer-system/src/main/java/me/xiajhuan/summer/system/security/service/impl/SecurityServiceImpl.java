@@ -48,6 +48,7 @@ import me.xiajhuan.summer.system.security.service.SecurityDeptService;
 import me.xiajhuan.summer.system.security.service.SecurityMenuService;
 import me.xiajhuan.summer.system.security.service.SecurityService;
 import me.xiajhuan.summer.system.security.service.SecurityUserService;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -96,7 +97,7 @@ public class SecurityServiceImpl implements SecurityService {
         AbstractCaptcha captcha = buildGraphicCaptcha();
 
         // 响应验证码
-        response.setContentType("image/png");
+        response.setContentType(MediaType.IMAGE_PNG_VALUE);
         response.setHeader("Pragma", "No-cache");
         response.setHeader("Cache-Control", "no-cache");
         response.setDateHeader("Expires", 0);

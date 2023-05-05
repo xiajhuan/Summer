@@ -89,6 +89,11 @@ public class LocalOssServer extends AbstractOssServer {
         }
 
         // URL（外链）
+        return getDownloadUrl(bucketName, path);
+    }
+
+    @Override
+    protected String getDownloadUrl(String bucketName, String path) {
         return StrUtil.format("{}/{}/{}", endPoint, bucketName, path);
     }
 

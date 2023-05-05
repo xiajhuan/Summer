@@ -66,7 +66,7 @@ public abstract class BaseController {
      * @return {@link Dict}数组
      */
     protected Dict[] multiFileUpload(MultipartFile[] files) {
-        return multiFileUpload(files, null);
+        return multiFileUploadSpec(files, null);
     }
 
     /**
@@ -76,7 +76,7 @@ public abstract class BaseController {
      * @return {@link Dict}
      */
     protected Dict fileUpload(MultipartFile file) {
-        return fileUpload(file, null);
+        return fileUploadSpec(file, null);
     }
 
     /**
@@ -86,9 +86,9 @@ public abstract class BaseController {
      * @param bucketName 逻辑空间名
      * @return {@link Dict}数组
      */
-    protected Dict[] multiFileUpload(MultipartFile[] files, String bucketName) {
+    protected Dict[] multiFileUploadSpec(MultipartFile[] files, String bucketName) {
         return Arrays.stream(files)
-                .map(file -> fileUpload(file, bucketName))
+                .map(file -> fileUploadSpec(file, bucketName))
                 .toArray(Dict[]::new);
     }
 
@@ -99,29 +99,52 @@ public abstract class BaseController {
      * @param bucketName 逻辑空间名
      * @return {@link Dict}
      */
-    protected Dict fileUpload(MultipartFile file, String bucketName) {
+    protected Dict fileUploadSpec(MultipartFile file, String bucketName) {
         return OssServerFactory.getOssServer().upload(file, bucketName);
     }
 
     /**
-     * 文件下载，使用默认文件名称
+     * 文件下载，使用默认逻辑空间名、文件名称
      *
-     * @param url      URL（外链）
+     * @param path     路径（相对路径）
      * @param response {@link HttpServletResponse}
      */
-    protected void fileDownload(String url, HttpServletResponse response) {
-        fileDownload(url, StrUtil.subAfter(url, StrPool.SLASH, true), response);
+    protected void fileDownload(String path, HttpServletResponse response) {
+        fileDownload(path, StrUtil.subAfter(path, StrPool.SLASH, true), response);
     }
 
     /**
-     * 文件下载，指定文件名称
+     * 文件下载，使用默认逻辑空间名、指定文件名称
      *
-     * @param url      URL（外链）
+     * @param path     路径（相对路径）
      * @param fileName 文件名称
      * @param response {@link HttpServletResponse}
      */
-    protected void fileDownload(String url, String fileName, HttpServletResponse response) {
-        OssServerFactory.getOssServer().download(url, fileName, response);
+    protected void fileDownload(String path, String fileName, HttpServletResponse response) {
+        fileDownloadSpec(null, path, fileName, response);
+    }
+
+    /**
+     * 文件下载，指定逻辑空间名、使用默认文件名称
+     *
+     * @param bucketName 逻辑空间名
+     * @param path       路径（相对路径）
+     * @param response   {@link HttpServletResponse}
+     */
+    protected void fileDownloadSpec(String bucketName, String path, HttpServletResponse response) {
+        fileDownloadSpec(bucketName, path, StrUtil.subAfter(path, StrPool.SLASH, true), response);
+    }
+
+    /**
+     * 文件下载，指定逻辑空间名、文件名称
+     *
+     * @param bucketName 逻辑空间名
+     * @param path       路径（相对路径）
+     * @param fileName   文件名称
+     * @param response   {@link HttpServletResponse}
+     */
+    protected void fileDownloadSpec(String bucketName, String path, String fileName, HttpServletResponse response) {
+        OssServerFactory.getOssServer().download(bucketName, path, fileName, response);
     }
 
 }

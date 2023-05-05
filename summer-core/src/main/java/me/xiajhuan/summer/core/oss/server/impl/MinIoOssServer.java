@@ -17,6 +17,7 @@ import cn.hutool.extra.spring.SpringUtil;
 import cn.hutool.setting.Setting;
 import io.minio.*;
 import io.minio.errors.*;
+import io.minio.http.Method;
 import me.xiajhuan.summer.core.constant.SettingConst;
 import me.xiajhuan.summer.core.enums.OssSupportEnum;
 import me.xiajhuan.summer.core.exception.code.ErrorCode;
@@ -97,14 +98,29 @@ public class MinIoOssServer extends AbstractOssServer {
                     .object(path)
                     .stream(inputStream, inputStream.available(), -1)
                     .contentType(MediaType.APPLICATION_OCTET_STREAM_VALUE).build());
+
+            // URL（外链）
+            return StrUtil.format("{}/{}/{}", endPoint, bucketName, path);
         } catch (ErrorResponseException | InsufficientDataException | InternalException
                 | InvalidKeyException | InvalidResponseException | IOException
                 | NoSuchAlgorithmException | ServerException | XmlParserException e) {
             throw FileUploadException.of(e);
         }
+    }
 
-        // URL（外链）
-        return StrUtil.format("{}/{}/{}", endPoint, bucketName, path);
+    @Override
+    protected String getDownloadUrl(String bucketName, String path) {
+        try {
+            // 获取下载URL
+            return minioClient.getPresignedObjectUrl(GetPresignedObjectUrlArgs.builder()
+                    .bucket(bucketName)
+                    .object(path)
+                    .method(Method.GET).build());
+        } catch (ErrorResponseException | InsufficientDataException | InternalException
+                | InvalidKeyException | InvalidResponseException | IOException
+                | NoSuchAlgorithmException | ServerException | XmlParserException e) {
+            throw FileUploadException.of(e);
+        }
     }
 
     @Override
@@ -119,11 +135,6 @@ public class MinIoOssServer extends AbstractOssServer {
                 | NoSuchAlgorithmException | ServerException | XmlParserException e) {
             throw SystemException.of(e, ErrorCode.FILE_DELETE_FAILURE, e.getMessage());
         }
-    }
-
-    @Override
-    protected String handleUrl(String url) {
-        return url;
     }
 
 }

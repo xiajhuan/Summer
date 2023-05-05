@@ -104,7 +104,7 @@ public class ExtendOssController extends BaseController {
     @RateLimiter(0.2)
     @LogOperation("下载")
     public void download(@Validated(DefaultGroup.class) ExtendOssDto dto, HttpServletResponse response) {
-        fileDownload(dto.getUrl(), dto.getName(), response);
+        fileDownload(dto.getPath(), dto.getName(), response);
     }
 
 }
