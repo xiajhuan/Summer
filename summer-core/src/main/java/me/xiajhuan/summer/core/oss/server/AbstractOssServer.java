@@ -124,15 +124,15 @@ public abstract class AbstractOssServer {
     public void download(String path, String fileName, boolean isPrivate, HttpServletResponse response) {
         // byte数组（文件内容）
         final byte[] data;
-        // 下载URL，note：“本地私有下载”为绝对路径
+        // 下载URL，note：本地服务器存储时为绝对路径
         String url = getDownloadUrl(path, isPrivate);
         try {
             // 下载处理
-            if (OssSupportEnum.LOCAL.getValue().equals(getSupportType()) && isPrivate) {
-                // 本地私有下载
+            if (OssSupportEnum.LOCAL.getValue().equals(getSupportType())) {
+                // 本地下载
                 data = FileUtil.readBytes(url);
             } else {
-                // 请求下载URL
+                // 远程下载
                 data = HttpUtil.downloadBytes(url);
             }
             // 设置响应头

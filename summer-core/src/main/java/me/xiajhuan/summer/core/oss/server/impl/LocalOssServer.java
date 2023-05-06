@@ -52,7 +52,6 @@ public class LocalOssServer extends AbstractOssServer {
     private LocalOssServer() {
         Setting setting = SpringUtil.getBean(SettingConst.CORE, Setting.class);
         endPoint = setting.getByGroupWithLog("local.public-end-point", "Oss");
-        AssertUtil.isNotBlank("endPoint", endPoint);
 
         privateLocation = setting.getByGroupWithLog("local.private-location", "Oss");
         AssertUtil.isNotBlank("privateLocation", privateLocation);
@@ -110,12 +109,14 @@ public class LocalOssServer extends AbstractOssServer {
             // 存储文件
             if (isPrivate) {
                 localStore(inputStream, getFile(privateLocation, privateBucket, path));
-                return StrUtil.EMPTY;
             } else {
                 localStore(inputStream, getFile(publicLocation, publicBucket, path));
-                // URL（外链）
-                return localUrl(path);
+                if (StrUtil.isNotBlank(endPoint)) {
+                    // URL（外链）
+                    return StrUtil.format("{}/{}/{}", endPoint, publicBucket, path);
+                }
             }
+            return StrUtil.EMPTY;
         } catch (IORuntimeException e) {
             throw FileUploadException.of(e);
         }
@@ -126,8 +127,7 @@ public class LocalOssServer extends AbstractOssServer {
         return isPrivate ?
                 // 绝对路径
                 StrUtil.format("{}/{}/{}", privateLocation, privateBucket, path) :
-                // URL（外链）
-                localUrl(path);
+                StrUtil.format("{}/{}/{}", publicLocation, publicBucket, path);
     }
 
     /**
@@ -157,16 +157,6 @@ public class LocalOssServer extends AbstractOssServer {
         } catch (IORuntimeException e) {
             throw FileUploadException.of(e);
         }
-    }
-
-    /**
-     * 本地存储 URL（外链）
-     *
-     * @param path 路径（相对路径）
-     * @return 本地存储 URL（外链）
-     */
-    private String localUrl(String path) {
-        return StrUtil.format("{}/{}/{}", endPoint, publicBucket, path);
     }
 
 }
