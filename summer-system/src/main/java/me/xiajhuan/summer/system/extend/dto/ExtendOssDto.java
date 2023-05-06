@@ -16,10 +16,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import me.xiajhuan.summer.core.base.dto.PageSortDto;
+import me.xiajhuan.summer.core.enums.BucketTypeEnum;
 import me.xiajhuan.summer.core.enums.OssSupportEnum;
 import me.xiajhuan.summer.core.validation.group.DefaultGroup;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
@@ -51,12 +53,20 @@ public class ExtendOssDto extends PageSortDto {
     private String path;
 
     /**
-     * 类型
+     * 空间类型
+     *
+     * @see BucketTypeEnum
+     */
+    @NotNull(message = "{extend.oss.bucketType.require}", groups = DefaultGroup.class)
+    private Integer bucketType;
+
+    /**
+     * 支持类型
      *
      * @see OssSupportEnum
      */
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private String type;
+    private String supportType;
 
     /**
      * 创建时间

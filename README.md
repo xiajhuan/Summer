@@ -104,7 +104,7 @@ Summer
 - CommonsPool2：2.11.1
 - Guava：31.1-jre
 - Hutool：5.8.18
-- EasyExcel：3.2.1
+- EasyExcel：3.3.0
 - MicaXss：2.7.11
 - MinIo：8.5.2
 - Qiniu：7.13.0

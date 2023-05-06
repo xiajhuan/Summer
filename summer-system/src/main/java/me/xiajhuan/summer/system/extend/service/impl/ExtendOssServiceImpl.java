@@ -18,6 +18,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import me.xiajhuan.summer.core.constant.DataSourceConst;
+import me.xiajhuan.summer.core.enums.BucketTypeEnum;
 import me.xiajhuan.summer.core.mp.helper.MpHelper;
 import me.xiajhuan.summer.core.oss.factory.OssServerFactory;
 import me.xiajhuan.summer.core.oss.server.AbstractOssServer;
@@ -32,6 +33,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -55,8 +57,8 @@ public class ExtendOssServiceImpl extends ServiceImpl<ExtendOssMapper, ExtendOss
     public LambdaQueryWrapper<ExtendOssEntity> getQueryWrapper(ExtendOssDto dto) {
         LambdaQueryWrapper<ExtendOssEntity> queryWrapper = getEmptyWrapper();
         // 查询条件
-        // 类型
-        queryWrapper.eq(ExtendOssEntity::getType, applicationProperties.getOss().getType());
+        // 支持类型
+        queryWrapper.eq(ExtendOssEntity::getSupportType, applicationProperties.getOss().getType());
 
         return queryWrapper;
     }
@@ -66,7 +68,8 @@ public class ExtendOssServiceImpl extends ServiceImpl<ExtendOssMapper, ExtendOss
         LambdaQueryWrapper<ExtendOssEntity> queryWrapper = getQueryWrapper(dto);
         // 查询字段
         queryWrapper.select(ExtendOssEntity::getId, ExtendOssEntity::getName, ExtendOssEntity::getUrl,
-                ExtendOssEntity::getType, ExtendOssEntity::getCreateTime);
+                ExtendOssEntity::getPath, ExtendOssEntity::getBucketType, ExtendOssEntity::getSupportType,
+                ExtendOssEntity::getCreateTime);
 
         return queryWrapper;
     }
@@ -82,13 +85,17 @@ public class ExtendOssServiceImpl extends ServiceImpl<ExtendOssMapper, ExtendOss
     @Transactional(rollbackFor = Exception.class)
     public void delete(Long[] ids) {
         Set<Long> idSet = Arrays.stream(ids).collect(Collectors.toSet());
-        // 路径（相对路径）集合
-        Set<String> pathSet = baseMapper.getPathSet(idSet);
 
-        if (pathSet.size() > 0 && removeByIds(idSet)) {
+        LambdaQueryWrapper<ExtendOssEntity> queryWrapper = getEmptyWrapper();
+        queryWrapper.in(ExtendOssEntity::getId, idSet);
+        queryWrapper.select(ExtendOssEntity::getPath, ExtendOssEntity::getBucketType);
+        List<ExtendOssEntity> entityList = list(queryWrapper);
+
+        if (entityList.size() > 0 && removeByIds(idSet)) {
             // 删除文件
             AbstractOssServer ossServer = OssServerFactory.getOssServer();
-            pathSet.forEach(path -> ossServer.delete(null, path));
+            entityList.forEach(entity -> ossServer.delete(entity.getPath(),
+                    entity.getBucketType() == BucketTypeEnum.PRIVATE.getValue()));
         }
     }
 
@@ -99,9 +106,9 @@ public class ExtendOssServiceImpl extends ServiceImpl<ExtendOssMapper, ExtendOss
                 .forEach(dict -> save(ExtendOssEntity.builder()
                         .name(dict.getStr("name"))
                         .url(dict.getStr("url"))
-                        .bucketName(dict.getStr("bucketName"))
                         .path(dict.getStr("path"))
-                        .type(dict.getStr("type")).build()));
+                        .bucketType(dict.getInt("bucketType"))
+                        .supportType(dict.getStr("supportType")).build()));
     }
 
 }

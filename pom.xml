@@ -44,7 +44,7 @@
         <commons-pool2.version>2.11.1</commons-pool2.version>
         <guava.version>31.1-jre</guava.version>
         <hutool.version>5.8.18</hutool.version>
-        <easyexcel.version>3.2.1</easyexcel.version>
+        <easyexcel.version>3.3.0</easyexcel.version>
         <mica-xss.version>2.7.11</mica-xss.version>
         <minio.version>8.5.2</minio.version>
         <qiniu.version>7.13.0</qiniu.version>

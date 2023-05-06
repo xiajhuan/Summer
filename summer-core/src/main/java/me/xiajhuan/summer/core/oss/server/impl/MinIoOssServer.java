@@ -21,6 +21,7 @@ import io.minio.http.Method;
 import me.xiajhuan.summer.core.constant.SettingConst;
 import me.xiajhuan.summer.core.enums.OssSupportEnum;
 import me.xiajhuan.summer.core.exception.code.ErrorCode;
+import me.xiajhuan.summer.core.exception.custom.FileDownloadException;
 import me.xiajhuan.summer.core.exception.custom.FileUploadException;
 import me.xiajhuan.summer.core.exception.custom.SystemException;
 import me.xiajhuan.summer.core.oss.server.AbstractOssServer;
@@ -58,10 +59,15 @@ public class MinIoOssServer extends AbstractOssServer {
                 .credentials(setting.getByGroupWithLog("min-io.access-key", "Oss"),
                         setting.getByGroupWithLog("min-io.secret-key", "Oss")).build();
 
-        defaultBucketName = setting.getByGroupWithLog("min-io.default-bucket-mame", "Oss");
-        if (StrUtil.isBlank(defaultBucketName)) {
-            // 没有配置则默认为：summer-files
-            defaultBucketName = "summer-files";
+        privateBucket = setting.getByGroupWithLog("min-io.private-bucket", "Oss");
+        if (StrUtil.isBlank(privateBucket)) {
+            // 没有配置则默认为：summer-private
+            privateBucket = "summer-private";
+        }
+        publicBucket = setting.getByGroupWithLog("min-io.public-bucket", "Oss");
+        if (StrUtil.isBlank(publicBucket)) {
+            // 没有配置则默认为：summer-public
+            publicBucket = "summer-public";
         }
     }
 
@@ -81,60 +87,98 @@ public class MinIoOssServer extends AbstractOssServer {
     //*******************单例处理结束********************
 
     @Override
-    protected String getType() {
+    public void delete(String path, boolean isPrivate) {
+        // 删除文件
+        if (isPrivate) {
+            minIoDelete(privateBucket, path);
+        } else {
+            minIoDelete(publicBucket, path);
+        }
+    }
+
+    @Override
+    protected String getSupportType() {
         return OssSupportEnum.MIN_IO.getValue();
     }
 
     @Override
-    protected String uploadInternal(InputStream inputStream, String bucketName, String path) {
-        try {
-            if (!minioClient.bucketExists(BucketExistsArgs.builder().bucket(bucketName).build())) {
-                // 逻辑空间不存在则创建
-                minioClient.makeBucket(MakeBucketArgs.builder().bucket(bucketName).build());
-            }
-            // 存储文件
-            minioClient.putObject(PutObjectArgs.builder()
-                    .bucket(bucketName)
-                    .object(path)
-                    .stream(inputStream, inputStream.available(), -1)
-                    .contentType(MediaType.APPLICATION_OCTET_STREAM_VALUE).build());
-
+    protected String uploadInternal(InputStream inputStream, String path, boolean isPrivate) {
+        // 存储文件
+        if (isPrivate) {
+            minIoStore(privateBucket, path, inputStream);
+            return StrUtil.EMPTY;
+        } else {
+            minIoStore(publicBucket, path, inputStream);
             // URL（外链）
-            return StrUtil.format("{}/{}/{}", endPoint, bucketName, path);
-        } catch (ErrorResponseException | InsufficientDataException | InternalException
-                | InvalidKeyException | InvalidResponseException | IOException
-                | NoSuchAlgorithmException | ServerException | XmlParserException e) {
-            throw FileUploadException.of(e);
+            return minIoUrl(path);
         }
     }
 
     @Override
-    protected String getDownloadUrl(String bucketName, String path) {
+    protected String getDownloadUrl(String path, boolean isPrivate) {
         try {
-            // 获取下载URL
-            return minioClient.getPresignedObjectUrl(GetPresignedObjectUrlArgs.builder()
-                    .bucket(bucketName)
-                    .object(path)
-                    .method(Method.GET).build());
+            return isPrivate ?
+                    // URL（带签名）
+                    minioClient.getPresignedObjectUrl(GetPresignedObjectUrlArgs.builder()
+                            .bucket(privateBucket)
+                            .object(path)
+                            .method(Method.GET).build()) :
+                    // URL（外链）
+                    minIoUrl(path);
         } catch (ErrorResponseException | InsufficientDataException | InternalException
                 | InvalidKeyException | InvalidResponseException | IOException
                 | NoSuchAlgorithmException | ServerException | XmlParserException e) {
-            throw FileUploadException.of(e);
+            throw FileDownloadException.of(e);
         }
     }
 
-    @Override
-    protected void deleteInternal(String bucketName, String path) {
+    /**
+     * MinIo删除
+     *
+     * @param bucket 空间
+     * @param path   路径（相对路径）
+     */
+    private void minIoDelete(String bucket, String path) {
         try {
-            // 删除文件
             minioClient.removeObject(RemoveObjectArgs.builder()
-                    .bucket(bucketName)
+                    .bucket(bucket)
                     .object(path).build());
         } catch (ErrorResponseException | InsufficientDataException | InternalException
                 | InvalidKeyException | InvalidResponseException | IOException
                 | NoSuchAlgorithmException | ServerException | XmlParserException e) {
             throw SystemException.of(e, ErrorCode.FILE_DELETE_FAILURE, e.getMessage());
         }
+    }
+
+    /**
+     * MinIo存储
+     *
+     * @param bucket      空间
+     * @param path        路径（相对路径）
+     * @param inputStream {@link InputStream}
+     */
+    private void minIoStore(String bucket, String path, InputStream inputStream) {
+        try {
+            minioClient.putObject(PutObjectArgs.builder()
+                    .bucket(bucket)
+                    .object(path)
+                    .stream(inputStream, inputStream.available(), -1)
+                    .contentType(MediaType.APPLICATION_OCTET_STREAM_VALUE).build());
+        } catch (ErrorResponseException | InsufficientDataException | InternalException
+                | InvalidKeyException | InvalidResponseException | IOException
+                | NoSuchAlgorithmException | ServerException | XmlParserException e) {
+            throw FileUploadException.of(e);
+        }
+    }
+
+    /**
+     * MinIo URL（外链）
+     *
+     * @param path 路径（相对路径）
+     * @return MinIo URL（外链）
+     */
+    private String minIoUrl(String path) {
+        return StrUtil.format("{}/{}/{}", endPoint, publicBucket, path);
     }
 
 }

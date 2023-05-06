@@ -176,8 +176,8 @@ public class RateLimiterAspect {
             final KeyStrategy keyStrategy;
             // 限流Key
             String rateLimiterKey;
-            // 附加消息模板
-            String msgTemplate = null;
+            // 附加消息格式
+            String extraMsgFormat = null;
 
             try {
                 // 获取限流key策略实例
@@ -185,12 +185,12 @@ public class RateLimiterAspect {
 
                 rateLimiterKey = keyStrategy.getKey(point, request, SecurityUtil.getCurrentUsername(NonLoggedUserEnum.THIRD_PART.getValue()));
 
-                msgTemplate = keyStrategy.extraMsgTemplate();
+                extraMsgFormat = keyStrategy.extraMsgFormat();
             } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
                 LOGGER.error(e, "key-Class【{}】获取Key失败，自动切换为基本Key策略，请参考【BaseKeyStrategy】编写", keyStrategyClass.getSimpleName());
 
                 rateLimiterKey = StrUtil.format(KeyStrategy.KEY_FORMAT, ServletUtil.getInterfaceSignature(request), StrUtil.EMPTY);
-                msgTemplate = StrUtil.EMPTY;
+                extraMsgFormat = StrUtil.EMPTY;
             }
 
             //*******************实际Qps获取********************
@@ -243,7 +243,7 @@ public class RateLimiterAspect {
                 LOGGER.debug("接口【{}[{}]】设置Qps为：【{}】，当前节点实际Qps为：【{}】，key-Class【{}】，LoadBalance-Class【{}】{}",
                         request.getRequestURI(), request.getMethod(), setQps, RATE_LIMITER_CACHE.get(rateLimiterKey).getRate(),
                         keyStrategyClass.getSimpleName(), loadBalanceStrategyClass.getSimpleName(),
-                        StrUtil.isNotBlank(msgTemplate) ? StrUtil.format(msgTemplate, StrUtil.subAfter(rateLimiterKey, "#", true)) : StrUtil.EMPTY);
+                        StrUtil.isNotBlank(extraMsgFormat) ? StrUtil.format(extraMsgFormat, StrUtil.subAfter(rateLimiterKey, "#", true)) : StrUtil.EMPTY);
             }
 
             // 尝试获取令牌
@@ -257,7 +257,7 @@ public class RateLimiterAspect {
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("接口【{}[{}]】限流成功，key-Class【{}】，LoadBalance-Class【{}】{}",
                             request.getRequestURI(), request.getMethod(), keyStrategyClass.getSimpleName(), loadBalanceStrategyClass.getSimpleName(),
-                            StrUtil.isNotBlank(msgTemplate) ? StrUtil.format(msgTemplate, StrUtil.subAfter(rateLimiterKey, "#", true)) : StrUtil.EMPTY);
+                            StrUtil.isNotBlank(extraMsgFormat) ? StrUtil.format(extraMsgFormat, StrUtil.subAfter(rateLimiterKey, "#", true)) : StrUtil.EMPTY);
                 }
 
                 // 注解中设置的提示消息

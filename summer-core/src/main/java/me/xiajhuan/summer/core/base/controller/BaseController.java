@@ -60,91 +60,50 @@ public abstract class BaseController {
     }
 
     /**
-     * 多文件上传，使用默认逻辑空间名
+     * 多文件上传
      *
-     * @param files {@link MultipartFile}数组
+     * @param files     {@link MultipartFile}数组
+     * @param isPrivate 是否私有，true：是 false：否
      * @return {@link Dict}数组
      */
-    protected Dict[] multiFileUpload(MultipartFile[] files) {
-        return multiFileUploadSpec(files, null);
-    }
-
-    /**
-     * 文件上传，使用默认逻辑空间名
-     *
-     * @param file {@link MultipartFile}
-     * @return {@link Dict}
-     */
-    protected Dict fileUpload(MultipartFile file) {
-        return fileUploadSpec(file, null);
-    }
-
-    /**
-     * 多文件上传，指定逻辑空间名
-     *
-     * @param files      {@link MultipartFile}数组
-     * @param bucketName 逻辑空间名
-     * @return {@link Dict}数组
-     */
-    protected Dict[] multiFileUploadSpec(MultipartFile[] files, String bucketName) {
+    protected Dict[] multiFileUpload(MultipartFile[] files, boolean isPrivate) {
         return Arrays.stream(files)
-                .map(file -> fileUploadSpec(file, bucketName))
+                .map(file -> fileUpload(file, isPrivate))
                 .toArray(Dict[]::new);
     }
 
     /**
-     * 文件上传，指定逻辑空间名
+     * 文件上传
      *
-     * @param file       {@link MultipartFile}
-     * @param bucketName 逻辑空间名
+     * @param file      {@link MultipartFile}
+     * @param isPrivate 是否私有，true：是 false：否
      * @return {@link Dict}
      */
-    protected Dict fileUploadSpec(MultipartFile file, String bucketName) {
-        return OssServerFactory.getOssServer().upload(file, bucketName);
+    protected Dict fileUpload(MultipartFile file, boolean isPrivate) {
+        return OssServerFactory.getOssServer().upload(file, isPrivate);
     }
 
     /**
-     * 文件下载，使用默认逻辑空间名、文件名称
+     * 文件下载，使用默认文件名称
      *
-     * @param path     路径（相对路径）
-     * @param response {@link HttpServletResponse}
+     * @param path      路径（相对路径）
+     * @param isPrivate 是否私有，true：是 false：否
+     * @param response  {@link HttpServletResponse}
      */
-    protected void fileDownload(String path, HttpServletResponse response) {
-        fileDownload(path, StrUtil.subAfter(path, StrPool.SLASH, true), response);
+    protected void fileDownload(String path, boolean isPrivate, HttpServletResponse response) {
+        fileDownload(path, StrUtil.subAfter(path, StrPool.SLASH, true), isPrivate, response);
     }
 
     /**
-     * 文件下载，使用默认逻辑空间名、指定文件名称
+     * 文件下载，指定文件名称
      *
-     * @param path     路径（相对路径）
-     * @param fileName 文件名称
-     * @param response {@link HttpServletResponse}
+     * @param path      路径（相对路径）
+     * @param fileName  文件名称
+     * @param isPrivate 是否私有，true：是 false：否
+     * @param response  {@link HttpServletResponse}
      */
-    protected void fileDownload(String path, String fileName, HttpServletResponse response) {
-        fileDownloadSpec(null, path, fileName, response);
-    }
-
-    /**
-     * 文件下载，指定逻辑空间名、使用默认文件名称
-     *
-     * @param bucketName 逻辑空间名
-     * @param path       路径（相对路径）
-     * @param response   {@link HttpServletResponse}
-     */
-    protected void fileDownloadSpec(String bucketName, String path, HttpServletResponse response) {
-        fileDownloadSpec(bucketName, path, StrUtil.subAfter(path, StrPool.SLASH, true), response);
-    }
-
-    /**
-     * 文件下载，指定逻辑空间名、文件名称
-     *
-     * @param bucketName 逻辑空间名
-     * @param path       路径（相对路径）
-     * @param fileName   文件名称
-     * @param response   {@link HttpServletResponse}
-     */
-    protected void fileDownloadSpec(String bucketName, String path, String fileName, HttpServletResponse response) {
-        OssServerFactory.getOssServer().download(bucketName, path, fileName, response);
+    protected void fileDownload(String path, String fileName, boolean isPrivate, HttpServletResponse response) {
+        OssServerFactory.getOssServer().download(path, fileName, isPrivate, response);
     }
 
 }

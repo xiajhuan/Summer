@@ -115,30 +115,40 @@ await-termination-Seconds = 30
 
 # *******************对象存储配置********************
 [Oss]
-# 本地存储配置，只有application.oss.type: LOCAL时会生效
-# 端点（协议://ip:端口或域名）
-local.end-point = http://localhost:8888
-# 默认逻辑空间名
-local.default-bucket-name = summer-files
-# 存储目录，可使用Nginx、Tomcat等充当文件服务器
-local.storage-directory = D:\\Job\\devPrograms\\apache-tomcat-9.0.74\\webapps
+# 本地服务器存储，只有application.oss.type: LOCAL时会生效
+# 私有空间
+local.private-bucket = summer-private
+# 私有存储位置
+local.private-location = D:\\Job\\oss
+# 公有端点（协议://ip:端口或域名）
+local.public-end-point = http://localhost:8888
+# 公有空间
+local.public-bucket = summer-public
+# 公有存储位置，可使用Nginx、Tomcat等充当文件服务器
+local.public-location = D:\\Job\\devPrograms\\apache-tomcat-9.0.74\\webapps
 
-# MinIo配置，只有application.oss.type: MIN_IO时会生效
-# 端点（协议://ip:端口或域名）
-min-io.end-point = http://192.168.0.143:9000
-# 默认逻辑空间名
-min-io.default-bucket-mame = summer-files
+# MinIo对象存储，只有application.oss.type: MIN_IO时会生效
 # 密钥AK
 min-io.access-key = admin
 # 密钥SK
 min-io.secret-key = admin123
-
-# 七牛云配置，只有application.oss.type: QI_NIU时会生效
 # 端点（协议://ip:端口或域名）
-qi-niu.end-point =
-# 默认逻辑空间名
-qi-niu.default-bucket-mame = summer-files
+min-io.end-point = http://192.168.0.143:9000
+# 私有空间，note：需在MinIo控制台创建并指定为private
+min-io.private-bucket = summer-private
+# 公有空间，note：需在MinIo控制台创建并指定为public
+min-io.public-bucket = summer-public
+
+# 七牛云对象存储，只有application.oss.type: QI_NIU时会生效
 # 密钥AK
-qi-niu.access-key =
+qi-niu.access-key = 4HMNlNPx7dgAgVteVoawQPF4Le2Ts3gy9PCyIJDg
 # 密钥SK
-qi-niu.secret-key =
+qi-niu.secret-key = JApizufx6381gGHCaZrOnZICImFi4RupPSF9qq6U
+# 绑定域名（私有空间）
+qi-niu.private-domain = http://ru7ogaunv.hd-bkt.clouddn.com
+# 私有空间，note：需在七牛云控制台创建并指定为private
+qi-niu.private-bucket = summer-private
+# 绑定域名（公有空间）
+qi-niu.public-domain = http://ru7om0hnr.hd-bkt.clouddn.com
+# 公有空间，note：需在七牛云控制台创建并指定为public
+qi-niu.public-bucket = summer-public

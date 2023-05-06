@@ -44,6 +44,16 @@ import java.io.InputStream;
 public class QiNiuOssServer extends AbstractOssServer {
 
     /**
+     * 绑定域名（私有空间）
+     */
+    private final String privateDomain;
+
+    /**
+     * 绑定域名（公有空间）
+     */
+    private final String publicDomain;
+
+    /**
      * 凭证
      */
     private final Auth auth;
@@ -54,7 +64,7 @@ public class QiNiuOssServer extends AbstractOssServer {
     private final UploadManager uploadManager;
 
     /**
-     * 逻辑空间管理器
+     * 空间管理器
      */
     private final BucketManager bucketManager;
 
@@ -62,8 +72,10 @@ public class QiNiuOssServer extends AbstractOssServer {
 
     private QiNiuOssServer() {
         Setting setting = SpringUtil.getBean(SettingConst.CORE, Setting.class);
-        endPoint = setting.getByGroupWithLog("qi-niu.end-point", "Oss");
-        AssertUtil.isNotBlank("endPoint", endPoint);
+        privateDomain = setting.getByGroupWithLog("qi-niu.private-domain", "Oss");
+        AssertUtil.isNotBlank("privateDomain", privateDomain);
+        publicDomain = setting.getByGroupWithLog("qi-niu.public-domain", "Oss");
+        AssertUtil.isNotBlank("publicDomain", publicDomain);
 
         // 凭证
         auth = Auth.create(setting.getByGroupWithLog("qi-niu.access-key", "Oss"),
@@ -74,10 +86,15 @@ public class QiNiuOssServer extends AbstractOssServer {
         uploadManager = new UploadManager(configuration);
         bucketManager = new BucketManager(auth, configuration);
 
-        defaultBucketName = setting.getByGroupWithLog("qi-niu.default-bucket-mame", "Oss");
-        if (StrUtil.isBlank(defaultBucketName)) {
-            // 没有配置则默认为：summer-files
-            defaultBucketName = "summer-files";
+        privateBucket = setting.getByGroupWithLog("qi-niu.private-bucket", "Oss");
+        if (StrUtil.isBlank(privateBucket)) {
+            // 没有配置则默认为：summer-private
+            privateBucket = "summer-private";
+        }
+        publicBucket = setting.getByGroupWithLog("qi-niu.public-bucket", "Oss");
+        if (StrUtil.isBlank(publicBucket)) {
+            // 没有配置则默认为：summer-public
+            publicBucket = "summer-public";
         }
     }
 
@@ -97,38 +114,51 @@ public class QiNiuOssServer extends AbstractOssServer {
     //*******************单例处理结束********************
 
     @Override
-    protected String getType() {
+    public void delete(String path, boolean isPrivate) {
+        // 删除文件
+        if (isPrivate) {
+            qiNiuDelete(privateBucket, path);
+        } else {
+            qiNiuDelete(publicBucket, path);
+        }
+    }
+
+    @Override
+    protected String getSupportType() {
         return OssSupportEnum.QI_NIU.getValue();
     }
 
     @Override
-    protected String uploadInternal(InputStream inputStream, String bucketName, String path) {
-        try {
-            // 存储文件
-            Response response = uploadManager.put(inputStream, path,
-                    auth.uploadToken(bucketName), null, null);
-            if (!response.isOK()) {
-                throw FileUploadException.of(StrUtil.format("文件上传失败【{}】", response.error));
-            }
-        } catch (QiniuException e) {
-            throw FileUploadException.of(e);
+    protected String uploadInternal(InputStream inputStream, String path, boolean isPrivate) {
+        // 存储文件
+        if (isPrivate) {
+            qiNiuStore(privateBucket, path, inputStream);
+            return StrUtil.EMPTY;
+        } else {
+            qiNiuStore(publicBucket, path, inputStream);
+            // URL（外链）
+            return qiNiuUrl(publicDomain, path);
         }
-
-        // URL（外链）
-        return getUrl(path);
     }
 
     @Override
-    protected String getDownloadUrl(String bucketName, String path) {
-        // 下载签名
-        return auth.privateDownloadUrl(getUrl(path));
+    protected String getDownloadUrl(String path, boolean isPrivate) {
+        return isPrivate ?
+                // URL（带签名）
+                auth.privateDownloadUrl(qiNiuUrl(privateDomain, path)) :
+                // URL（外链）
+                qiNiuUrl(publicDomain, path);
     }
 
-    @Override
-    protected void deleteInternal(String bucketName, String path) {
+    /**
+     * 七牛云删除
+     *
+     * @param bucket 空间
+     * @param path   路径（相对路径）
+     */
+    private void qiNiuDelete(String bucket, String path) {
         try {
-            // 删除文件
-            Response response = bucketManager.delete(bucketName, path);
+            Response response = bucketManager.delete(bucket, path);
             if (!response.isOK()) {
                 throw SystemException.of(ErrorCode.FILE_DELETE_FAILURE, response.error);
             }
@@ -138,13 +168,33 @@ public class QiNiuOssServer extends AbstractOssServer {
     }
 
     /**
-     * 获取URL（外链）
+     * 七牛云存储
      *
-     * @param path 路径（相对路径）
-     * @return URL（外链）
+     * @param bucket      空间
+     * @param path        路径（相对路径）
+     * @param inputStream {@link InputStream}
      */
-    private String getUrl(String path) {
-        return StrUtil.format("{}/{}", endPoint, path);
+    private void qiNiuStore(String bucket, String path, InputStream inputStream) {
+        try {
+            Response response = uploadManager.put(inputStream, path,
+                    auth.uploadToken(bucket), null, null);
+            if (!response.isOK()) {
+                throw FileUploadException.of(StrUtil.format("文件上传失败【{}】", response.error));
+            }
+        } catch (QiniuException e) {
+            throw FileUploadException.of(e);
+        }
+    }
+
+    /**
+     * 七牛云 URL（外链）
+     *
+     * @param domain 绑定域名
+     * @param path   路径（相对路径）
+     * @return 七牛云 URL（外链）
+     */
+    private String qiNiuUrl(String domain, String path) {
+        return StrUtil.format("{}/{}", domain, path);
     }
 
 }

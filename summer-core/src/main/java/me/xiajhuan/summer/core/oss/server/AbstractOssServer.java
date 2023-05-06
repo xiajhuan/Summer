@@ -13,6 +13,7 @@
 package me.xiajhuan.summer.core.oss.server;
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.io.file.FileNameUtil;
 import cn.hutool.core.lang.Dict;
@@ -21,6 +22,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
+import me.xiajhuan.summer.core.enums.BucketTypeEnum;
 import me.xiajhuan.summer.core.enums.OssSupportEnum;
 import me.xiajhuan.summer.core.exception.custom.FileDownloadException;
 import me.xiajhuan.summer.core.exception.custom.FileUploadException;
@@ -38,6 +40,7 @@ import java.net.URLEncoder;
  * @author xiajhuan
  * @date 2023/4/29
  * @see MultipartFile
+ * @see FileUtil
  * @see HttpUtil
  * @see IoUtil
  */
@@ -51,9 +54,14 @@ public abstract class AbstractOssServer {
     protected String endPoint;
 
     /**
-     * 默认逻辑空间名
+     * 私有空间
      */
-    protected String defaultBucketName;
+    protected String privateBucket;
+
+    /**
+     * 公有空间
+     */
+    protected String publicBucket;
 
     /**
      * 构造保护化
@@ -65,17 +73,17 @@ public abstract class AbstractOssServer {
      * 上传
      *
      * @param multipartFile {@link MultipartFile}
-     * @param bucketName    逻辑空间名
+     * @param isPrivate     是否私有，true：是 false：否
      * @return {@link Dict}或{@code null}，{@link Dict}包含的Key有：
      * <ul>
-     *   <li>type（类型）</li>
      *   <li>name（文件名称）</li>
-     *   <li>bucketName（逻辑空间名）</li>
-     *   <li>path（路径（相对路径））</li>
      *   <li>url（URL（外链））</li>
+     *   <li>path（路径（相对路径））</li>
+     *   <li>bucketType（空间类型，参考{@link BucketTypeEnum}）</li>
+     *   <li>supportType（支持类型，参考{@link OssSupportEnum}）</li>
      * </ul>
      */
-    public Dict upload(MultipartFile multipartFile, String bucketName) {
+    public Dict upload(MultipartFile multipartFile, boolean isPrivate) {
         if (multipartFile != null) {
             // 文件名称
             String name = multipartFile.getOriginalFilename();
@@ -84,18 +92,20 @@ public abstract class AbstractOssServer {
                 LOGGER.warn("不允许上传空文件【{}】", name);
                 return null;
             }
-            // 逻辑空间名
-            bucketName = getRealBucketName(bucketName);
-            // 路径（相对路径），格式：日期/随机串.后缀
-            String path = StrUtil.format("{}/{}.{}",
+            // 后缀（不包括”.“）
+            String suffix = FileNameUtil.getSuffix(name);
+            // 路径（相对路径），格式：日期/后缀/随机串.后缀
+            String path = StrUtil.format("{}/{}/{}.{}",
                     DateUtil.format(DateUtil.date(), "yyyyMMdd"),
+                    suffix,
                     UUID.fastUUID().toString(true),
-                    FileNameUtil.getSuffix(name));
+                    suffix);
             try {
                 // 上传处理
-                return Dict.of("type", getType(), "name", name,
-                        "bucketName", bucketName, "path", path,
-                        "url", uploadInternal(multipartFile.getInputStream(), bucketName, path));
+                return Dict.of("name", name, "path", path,
+                        "bucketType", isPrivate ? BucketTypeEnum.PRIVATE.getValue() : BucketTypeEnum.PUBLIC.getValue(),
+                        "supportType", getSupportType(),
+                        "url", uploadInternal(multipartFile.getInputStream(), path, isPrivate));
             } catch (IOException e) {
                 throw FileUploadException.of(e);
             }
@@ -106,16 +116,25 @@ public abstract class AbstractOssServer {
     /**
      * 下载
      *
-     * @param bucketName 逻辑空间名
-     * @param path       路径（相对路径）
-     * @param fileName   文件名称
-     * @param response   {@link HttpServletResponse}
+     * @param path      路径（相对路径）
+     * @param fileName  文件名称
+     * @param isPrivate 是否私有，true：是 false：否
+     * @param response  {@link HttpServletResponse}
      */
-    public void download(String bucketName, String path, String fileName, HttpServletResponse response) {
+    public void download(String path, String fileName, boolean isPrivate, HttpServletResponse response) {
+        // byte数组（文件内容）
+        final byte[] data;
+        // 下载URL，note：“本地私有下载”为绝对路径
+        String url = getDownloadUrl(path, isPrivate);
         try {
-            // 请求下载URL
-            byte[] data = HttpUtil.downloadBytes(
-                    getDownloadUrl(getRealBucketName(bucketName), path));
+            // 下载处理
+            if (OssSupportEnum.LOCAL.getValue().equals(getSupportType()) && isPrivate) {
+                // 本地私有下载
+                data = FileUtil.readBytes(url);
+            } else {
+                // 请求下载URL
+                data = HttpUtil.downloadBytes(url);
+            }
             // 设置响应头
             response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
             response.setCharacterEncoding("UTF-8");
@@ -133,59 +152,35 @@ public abstract class AbstractOssServer {
     /**
      * 删除
      *
-     * @param bucketName 逻辑空间名
-     * @param path       路径（相对路径）
+     * @param path      路径（相对路径）
+     * @param isPrivate 是否私有，true：是 false：否
      */
-    public void delete(String bucketName, String path) {
-        // 删除处理
-        deleteInternal(getRealBucketName(bucketName), path);
-    }
+    public abstract void delete(String path, boolean isPrivate);
 
     /**
-     * 获取对象存储类型，参考{@link OssSupportEnum}
+     * 获取支持类型，参考{@link OssSupportEnum}
      *
-     * @return 对象存储类型
+     * @return 支持类型
      */
-    protected abstract String getType();
+    protected abstract String getSupportType();
 
     /**
      * 上传处理
      *
      * @param inputStream {@link InputStream}
-     * @param bucketName  逻辑空间名
      * @param path        路径（相对路径）
+     * @param isPrivate   是否私有，true：是 false：否
      * @return URL（外链）
      */
-    protected abstract String uploadInternal(InputStream inputStream, String bucketName, String path);
+    protected abstract String uploadInternal(InputStream inputStream, String path, boolean isPrivate);
 
     /**
      * 获取下载URL
      *
-     * @param bucketName 逻辑空间名
-     * @param path       路径（相对路径）
+     * @param path      路径（相对路径）
+     * @param isPrivate 是否私有，true：是 false：否
      * @return 下载URL
      */
-    protected abstract String getDownloadUrl(String bucketName, String path);
-
-    /**
-     * 删除处理
-     *
-     * @param bucketName 逻辑空间名
-     * @param path       路径（相对路径）
-     */
-    protected abstract void deleteInternal(String bucketName, String path);
-
-    /**
-     * 获取实际逻辑空间名
-     *
-     * @param bucketName 逻辑空间名
-     * @return 实际逻辑空间名
-     */
-    protected String getRealBucketName(String bucketName) {
-        if (bucketName == null) {
-            bucketName = defaultBucketName;
-        }
-        return bucketName;
-    }
+    protected abstract String getDownloadUrl(String path, boolean isPrivate);
 
 }

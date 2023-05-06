@@ -56,7 +56,7 @@ public class BaseKeyStrategy implements KeyStrategy {
     }
 
     @Override
-    public String extraMsgTemplate() {
+    public String extraMsgFormat() {
         return StrUtil.EMPTY;
     }
 

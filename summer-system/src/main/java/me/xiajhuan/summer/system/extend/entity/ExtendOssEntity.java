@@ -17,6 +17,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
 import me.xiajhuan.summer.core.base.entity.SimpleEntity;
+import me.xiajhuan.summer.core.enums.BucketTypeEnum;
 import me.xiajhuan.summer.core.enums.OssSupportEnum;
 
 /**
@@ -50,20 +51,22 @@ public class ExtendOssEntity extends SimpleEntity {
     private String url;
 
     /**
-     * 逻辑空间名
-     */
-    private String bucketName;
-
-    /**
      * 路径（相对路径）
      */
     private String path;
 
     /**
-     * 类型
+     * 空间类型
+     *
+     * @see BucketTypeEnum
+     */
+    private Integer bucketType;
+
+    /**
+     * 支持类型
      *
      * @see OssSupportEnum
      */
-    private String type;
+    private String supportType;
 
 }

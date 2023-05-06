@@ -40,7 +40,7 @@ public class SettingKeyStrategy implements KeyStrategy {
     }
 
     @Override
-    public String extraMsgTemplate() {
+    public String extraMsgFormat() {
         throw new UnsupportedOperationException("不允许调用配置策略类的方法");
     }
 

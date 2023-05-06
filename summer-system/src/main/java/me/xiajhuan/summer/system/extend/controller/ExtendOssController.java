@@ -16,6 +16,7 @@ import me.xiajhuan.summer.core.base.controller.BaseController;
 import me.xiajhuan.summer.core.constant.OperationConst;
 import me.xiajhuan.summer.core.data.PageData;
 import me.xiajhuan.summer.core.data.Result;
+import me.xiajhuan.summer.core.enums.BucketTypeEnum;
 import me.xiajhuan.summer.core.ratelimiter.annotation.RateLimiter;
 import me.xiajhuan.summer.core.utils.AssertUtil;
 import me.xiajhuan.summer.core.validation.group.DefaultGroup;
@@ -86,10 +87,11 @@ public class ExtendOssController extends BaseController {
     @RequiresPermissions("extend:oss:uploadBatch")
     @RateLimiter(0.2)
     @LogOperation("批量上传")
-    public Result<?> uploadBatch(MultipartFile[] files) {
+    public Result<?> uploadBatch(Boolean isPrivate, MultipartFile[] files) {
+        AssertUtil.isNotNull("isPrivate", isPrivate);
         // note：若没有文件上传，files为null而不是空数组
         AssertUtil.isNotNull("files", files);
-        mainService.addBatch(multiFileUpload(files));
+        mainService.addBatch(multiFileUpload(files, isPrivate));
         return Result.ofSuccess();
     }
 
@@ -104,7 +106,8 @@ public class ExtendOssController extends BaseController {
     @RateLimiter(0.2)
     @LogOperation("下载")
     public void download(@Validated(DefaultGroup.class) ExtendOssDto dto, HttpServletResponse response) {
-        fileDownload(dto.getPath(), dto.getName(), response);
+        fileDownload(dto.getPath(), dto.getName(),
+                dto.getBucketType() == BucketTypeEnum.PRIVATE.getValue(), response);
     }
 
 }

@@ -10,16 +10,33 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.system.extend.mapper;
+package me.xiajhuan.summer.core.enums;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import me.xiajhuan.summer.system.extend.entity.ExtendOssEntity;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 /**
- * 对象存储 Mapper
+ * 空间类型枚举
  *
  * @author xiajhuan
- * @date 2023/4/29
+ * @date 2023/5/6
  */
-public interface ExtendOssMapper extends BaseMapper<ExtendOssEntity> {
+@Getter
+@AllArgsConstructor
+public enum BucketTypeEnum {
+
+    /**
+     * 私有
+     */
+    PRIVATE(0, "私有"),
+
+    /**
+     * 公有
+     */
+    PUBLIC(1, "公有");
+
+    private final int value;
+
+    private final String name;
+
 }

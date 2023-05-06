@@ -57,7 +57,7 @@ public class UsernameKeyStrategy implements KeyStrategy {
     }
 
     @Override
-    public String extraMsgTemplate() {
+    public String extraMsgFormat() {
         return "，Key-Username【{}】";
     }
 

@@ -56,8 +56,8 @@ public class IpKeyStrategy implements KeyStrategy {
     }
 
     @Override
-    public String extraMsgTemplate() {
-        return "，Key-IP【{}】";
+    public String extraMsgFormat() {
+        return "，Key-Ip【{}】";
     }
 
 }

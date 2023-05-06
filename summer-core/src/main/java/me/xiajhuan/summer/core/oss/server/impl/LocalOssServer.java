@@ -38,24 +38,36 @@ import java.io.InputStream;
 public class LocalOssServer extends AbstractOssServer {
 
     /**
-     * 存储目录
+     * 私有存储位置
      */
-    private final String storageDirectory;
+    private final String privateLocation;
+
+    /**
+     * 公有存储位置
+     */
+    private final String publicLocation;
 
     //*******************单例处理开始********************
 
     private LocalOssServer() {
         Setting setting = SpringUtil.getBean(SettingConst.CORE, Setting.class);
-        endPoint = setting.getByGroupWithLog("local.end-point", "Oss");
+        endPoint = setting.getByGroupWithLog("local.public-end-point", "Oss");
         AssertUtil.isNotBlank("endPoint", endPoint);
 
-        storageDirectory = setting.getByGroupWithLog("local.storage-directory", "Oss");
-        AssertUtil.isNotBlank("storageDirectory", storageDirectory);
+        privateLocation = setting.getByGroupWithLog("local.private-location", "Oss");
+        AssertUtil.isNotBlank("privateLocation", privateLocation);
+        publicLocation = setting.getByGroupWithLog("local.public-location", "Oss");
+        AssertUtil.isNotBlank("publicLocation", publicLocation);
 
-        defaultBucketName = setting.getByGroupWithLog("local.default-bucket-name", "Oss");
-        if (StrUtil.isBlank(defaultBucketName)) {
-            // 没有配置则默认为：summer-files
-            defaultBucketName = "summer-files";
+        privateBucket = setting.getByGroupWithLog("local.private-bucket", "Oss");
+        if (StrUtil.isBlank(privateBucket)) {
+            // 没有配置则默认为：summer-private
+            privateBucket = "summer-private";
+        }
+        publicBucket = setting.getByGroupWithLog("local.public-bucket", "Oss");
+        if (StrUtil.isBlank(publicBucket)) {
+            // 没有配置则默认为：summer-public
+            publicBucket = "summer-public";
         }
     }
 
@@ -75,33 +87,11 @@ public class LocalOssServer extends AbstractOssServer {
     //*******************单例处理结束********************
 
     @Override
-    protected String getType() {
-        return OssSupportEnum.LOCAL.getValue();
-    }
-
-    @Override
-    protected String uploadInternal(InputStream inputStream, String bucketName, String path) {
-        try {
-            // 将流的内容写入文件（自动关闭输入流）
-            FileUtil.writeFromStream(inputStream, getFile(bucketName, path));
-        } catch (IORuntimeException e) {
-            throw FileUploadException.of(e);
-        }
-
-        // URL（外链）
-        return getDownloadUrl(bucketName, path);
-    }
-
-    @Override
-    protected String getDownloadUrl(String bucketName, String path) {
-        return StrUtil.format("{}/{}/{}", endPoint, bucketName, path);
-    }
-
-    @Override
-    protected void deleteInternal(String bucketName, String path) {
+    public void delete(String path, boolean isPrivate) {
         try {
             // 删除文件
-            if (!FileUtil.del(getFile(bucketName, path))) {
+            if (!(isPrivate ? FileUtil.del(getFile(privateLocation, privateBucket, path))
+                    : FileUtil.del(getFile(publicLocation, publicBucket, path)))) {
                 throw SystemException.of(ErrorCode.FILE_DELETE_FAILURE, StrUtil.EMPTY);
             }
         } catch (IORuntimeException e) {
@@ -109,17 +99,74 @@ public class LocalOssServer extends AbstractOssServer {
         }
     }
 
+    @Override
+    protected String getSupportType() {
+        return OssSupportEnum.LOCAL.getValue();
+    }
+
+    @Override
+    protected String uploadInternal(InputStream inputStream, String path, boolean isPrivate) {
+        try {
+            // 存储文件
+            if (isPrivate) {
+                localStore(inputStream, getFile(privateLocation, privateBucket, path));
+                return StrUtil.EMPTY;
+            } else {
+                localStore(inputStream, getFile(publicLocation, publicBucket, path));
+                // URL（外链）
+                return localUrl(path);
+            }
+        } catch (IORuntimeException e) {
+            throw FileUploadException.of(e);
+        }
+    }
+
+    @Override
+    protected String getDownloadUrl(String path, boolean isPrivate) {
+        return isPrivate ?
+                // 绝对路径
+                StrUtil.format("{}/{}/{}", privateLocation, privateBucket, path) :
+                // URL（外链）
+                localUrl(path);
+    }
+
     /**
      * 获取{@link File}
      *
-     * @param bucketName 逻辑空间名
-     * @param path       路径（相对路径）
+     * @param location 存储位置
+     * @param bucket   空间
+     * @param path     路径（相对路径）
      * @return {@link File}
      */
-    private File getFile(String bucketName, String path) {
-        return new File(storageDirectory + File.separator
-                + bucketName + File.separator
-                + path);
+    private File getFile(String location, String bucket, String path) {
+        return new File(location
+                + File.separator + bucket
+                + File.separator + path);
+    }
+
+    /**
+     * 本地存储
+     *
+     * @param inputStream {@link InputStream}
+     * @param file        {@link File}
+     */
+    private void localStore(InputStream inputStream, File file) {
+        try {
+            // 将流的内容写入文件（自动关闭输入流）
+            FileUtil.writeFromStream(inputStream, file);
+        } catch (IORuntimeException e) {
+            throw FileUploadException.of(e);
+        }
+    }
+
+    /**
+     * 本地存储 URL（外链）
+     *
+     * @param path 路径（相对路径）
+     * @return 本地存储 URL（外链）
+     */
+    private String localUrl(String path) {
+        return StrUtil.format("{}/{}/{}", endPoint, publicBucket, path);
     }
 
 }

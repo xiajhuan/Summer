@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletRequest;
  * <ul>
  *   <li>
  *     通过实现该接口覆写{@link KeyStrategy#getKey}和<br>
- *     {@link KeyStrategy#extraMsgTemplate()}可个性化自己的限流Key策略
+ *     {@link KeyStrategy#extraMsgFormat()}可个性化自己的限流Key策略
  *   </li>
  *   <li>
  *     所有Key必须以“接口签名#”作为前缀，接口签名参考<br>
@@ -53,11 +53,10 @@ public interface KeyStrategy {
     String getKey(JoinPoint point, HttpServletRequest request, String username);
 
     /**
-     * 附加消息模板<br>
-     * 格式：，Key-xxx【{}】，如：，Key-IP【{}】
+     * 附加消息格式，例如：，Key-Ip【{}】
      *
-     * @return 附加消息模板
+     * @return 附加消息格式
      */
-    String extraMsgTemplate();
+    String extraMsgFormat();
 
 }

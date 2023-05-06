@@ -57,7 +57,7 @@ public class ParamKeyStrategy implements KeyStrategy {
     }
 
     @Override
-    public String extraMsgTemplate() {
+    public String extraMsgFormat() {
         return "，Key-Param【{}】";
     }
 
