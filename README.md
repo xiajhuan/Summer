@@ -94,7 +94,7 @@ Summer
 
 ### 依赖清单
 - SpringBoot：2.7.11
-- MysqlConnector：8.0.33
+- MysqlDriver：8.0.33
 - DynamicDatasource：3.6.1
 - MybatisPlus：3.5.3.1
 - P6spy：3.9.1
@@ -104,10 +104,10 @@ Summer
 - CommonsPool2：2.11.1
 - Guava：31.1-jre
 - Hutool：5.8.18
-- EasyExcel：3.3.0
+- EasyExcel：3.3.1
 - MicaXss：2.7.11
-- MinIo：8.5.2
-- Qiniu：7.13.0
+- MinIo-SDK：8.5.2
+- QiNiu-SDK：7.13.0
 
 ### 功能支持
 |  服务     | 使用技术     |   进度         |    备注   |

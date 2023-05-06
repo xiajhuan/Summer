@@ -10,7 +10,7 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.core.oss.server.impl;
+package me.xiajhuan.summer.core.oss.server.subClass;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
@@ -72,10 +72,15 @@ public class QiNiuOssServer extends AbstractOssServer {
 
     private QiNiuOssServer() {
         Setting setting = SpringUtil.getBean(SettingConst.CORE, Setting.class);
+
         privateDomain = setting.getByGroupWithLog("qi-niu.private-domain", "Oss");
         AssertUtil.isNotBlank("privateDomain", privateDomain);
         publicDomain = setting.getByGroupWithLog("qi-niu.public-domain", "Oss");
         AssertUtil.isNotBlank("publicDomain", publicDomain);
+
+        privateBucket = setting.getByGroupWithLog("qi-niu.private-bucket", "Oss");
+        publicBucket = setting.getByGroupWithLog("qi-niu.public-bucket", "Oss");
+        validateConfig(false);
 
         // 凭证
         auth = Auth.create(setting.getByGroupWithLog("qi-niu.access-key", "Oss"),
@@ -85,17 +90,6 @@ public class QiNiuOssServer extends AbstractOssServer {
         Configuration configuration = new Configuration(Region.autoRegion());
         uploadManager = new UploadManager(configuration);
         bucketManager = new BucketManager(auth, configuration);
-
-        privateBucket = setting.getByGroupWithLog("qi-niu.private-bucket", "Oss");
-        if (StrUtil.isBlank(privateBucket)) {
-            // 没有配置则默认为：summer-private
-            privateBucket = "summer-private";
-        }
-        publicBucket = setting.getByGroupWithLog("qi-niu.public-bucket", "Oss");
-        if (StrUtil.isBlank(publicBucket)) {
-            // 没有配置则默认为：summer-public
-            publicBucket = "summer-public";
-        }
     }
 
     private static volatile QiNiuOssServer instance = null;
@@ -187,11 +181,11 @@ public class QiNiuOssServer extends AbstractOssServer {
     }
 
     /**
-     * 七牛云 URL（外链）
+     * 七牛云 URL
      *
      * @param domain 绑定域名
      * @param path   路径（相对路径）
-     * @return 七牛云 URL（外链）
+     * @return 七牛云 URL
      */
     private String qiNiuUrl(String domain, String path) {
         return StrUtil.format("{}/{}", domain, path);

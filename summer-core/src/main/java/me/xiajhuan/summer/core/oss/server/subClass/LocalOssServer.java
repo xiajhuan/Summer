@@ -10,7 +10,7 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.core.oss.server.impl;
+package me.xiajhuan.summer.core.oss.server.subClass;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.IORuntimeException;
@@ -51,23 +51,16 @@ public class LocalOssServer extends AbstractOssServer {
 
     private LocalOssServer() {
         Setting setting = SpringUtil.getBean(SettingConst.CORE, Setting.class);
-        endPoint = setting.getByGroupWithLog("local.public-end-point", "Oss");
 
         privateLocation = setting.getByGroupWithLog("local.private-location", "Oss");
         AssertUtil.isNotBlank("privateLocation", privateLocation);
         publicLocation = setting.getByGroupWithLog("local.public-location", "Oss");
         AssertUtil.isNotBlank("publicLocation", publicLocation);
 
+        endPoint = setting.getByGroupWithLog("local.public-end-point", "Oss");
         privateBucket = setting.getByGroupWithLog("local.private-bucket", "Oss");
-        if (StrUtil.isBlank(privateBucket)) {
-            // 没有配置则默认为：summer-private
-            privateBucket = "summer-private";
-        }
         publicBucket = setting.getByGroupWithLog("local.public-bucket", "Oss");
-        if (StrUtil.isBlank(publicBucket)) {
-            // 没有配置则默认为：summer-public
-            publicBucket = "summer-public";
-        }
+        validateConfig(false);
     }
 
     private static volatile LocalOssServer instance = null;
@@ -124,8 +117,8 @@ public class LocalOssServer extends AbstractOssServer {
 
     @Override
     protected String getDownloadUrl(String path, boolean isPrivate) {
+        // 绝对路径
         return isPrivate ?
-                // 绝对路径
                 StrUtil.format("{}/{}/{}", privateLocation, privateBucket, path) :
                 StrUtil.format("{}/{}/{}", publicLocation, publicBucket, path);
     }

@@ -16,9 +16,9 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import me.xiajhuan.summer.core.enums.OssSupportEnum;
 import me.xiajhuan.summer.core.oss.server.AbstractOssServer;
-import me.xiajhuan.summer.core.oss.server.impl.LocalOssServer;
-import me.xiajhuan.summer.core.oss.server.impl.MinIoOssServer;
-import me.xiajhuan.summer.core.oss.server.impl.QiNiuOssServer;
+import me.xiajhuan.summer.core.oss.server.subClass.LocalOssServer;
+import me.xiajhuan.summer.core.oss.server.subClass.MinIoOssServer;
+import me.xiajhuan.summer.core.oss.server.subClass.QiNiuOssServer;
 import me.xiajhuan.summer.core.properties.ApplicationProperties;
 
 /**

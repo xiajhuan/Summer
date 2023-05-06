@@ -10,7 +10,7 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.core.oss.server.impl;
+package me.xiajhuan.summer.core.oss.server.subClass;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
@@ -25,7 +25,6 @@ import me.xiajhuan.summer.core.exception.custom.FileDownloadException;
 import me.xiajhuan.summer.core.exception.custom.FileUploadException;
 import me.xiajhuan.summer.core.exception.custom.SystemException;
 import me.xiajhuan.summer.core.oss.server.AbstractOssServer;
-import me.xiajhuan.summer.core.utils.AssertUtil;
 import org.springframework.http.MediaType;
 
 import java.io.IOException;
@@ -51,24 +50,16 @@ public class MinIoOssServer extends AbstractOssServer {
 
     private MinIoOssServer() {
         Setting setting = SpringUtil.getBean(SettingConst.CORE, Setting.class);
+
         endPoint = setting.getByGroupWithLog("min-io.end-point", "Oss");
-        AssertUtil.isNotBlank("endPoint", endPoint);
+        privateBucket = setting.getByGroupWithLog("min-io.private-bucket", "Oss");
+        publicBucket = setting.getByGroupWithLog("min-io.public-bucket", "Oss");
+        validateConfig(true);
 
         // 构建客户端
         minioClient = MinioClient.builder().endpoint(endPoint)
                 .credentials(setting.getByGroupWithLog("min-io.access-key", "Oss"),
                         setting.getByGroupWithLog("min-io.secret-key", "Oss")).build();
-
-        privateBucket = setting.getByGroupWithLog("min-io.private-bucket", "Oss");
-        if (StrUtil.isBlank(privateBucket)) {
-            // 没有配置则默认为：summer-private
-            privateBucket = "summer-private";
-        }
-        publicBucket = setting.getByGroupWithLog("min-io.public-bucket", "Oss");
-        if (StrUtil.isBlank(publicBucket)) {
-            // 没有配置则默认为：summer-public
-            publicBucket = "summer-public";
-        }
     }
 
     private static volatile MinIoOssServer instance = null;
@@ -126,8 +117,8 @@ public class MinIoOssServer extends AbstractOssServer {
                     // URL（外链）
                     minIoUrl(path);
         } catch (ErrorResponseException | InsufficientDataException | InternalException
-                | InvalidKeyException | InvalidResponseException | IOException
-                | NoSuchAlgorithmException | ServerException | XmlParserException e) {
+                 | InvalidKeyException | InvalidResponseException | IOException
+                 | NoSuchAlgorithmException | ServerException | XmlParserException e) {
             throw FileDownloadException.of(e);
         }
     }
@@ -144,8 +135,8 @@ public class MinIoOssServer extends AbstractOssServer {
                     .bucket(bucket)
                     .object(path).build());
         } catch (ErrorResponseException | InsufficientDataException | InternalException
-                | InvalidKeyException | InvalidResponseException | IOException
-                | NoSuchAlgorithmException | ServerException | XmlParserException e) {
+                 | InvalidKeyException | InvalidResponseException | IOException
+                 | NoSuchAlgorithmException | ServerException | XmlParserException e) {
             throw SystemException.of(e, ErrorCode.FILE_DELETE_FAILURE, e.getMessage());
         }
     }
@@ -165,17 +156,17 @@ public class MinIoOssServer extends AbstractOssServer {
                     .stream(inputStream, inputStream.available(), -1)
                     .contentType(MediaType.APPLICATION_OCTET_STREAM_VALUE).build());
         } catch (ErrorResponseException | InsufficientDataException | InternalException
-                | InvalidKeyException | InvalidResponseException | IOException
-                | NoSuchAlgorithmException | ServerException | XmlParserException e) {
+                 | InvalidKeyException | InvalidResponseException | IOException
+                 | NoSuchAlgorithmException | ServerException | XmlParserException e) {
             throw FileUploadException.of(e);
         }
     }
 
     /**
-     * MinIo URL（外链）
+     * MinIo URL
      *
      * @param path 路径（相对路径）
-     * @return MinIo URL（外链）
+     * @return MinIo URL
      */
     private String minIoUrl(String path) {
         return StrUtil.format("{}/{}/{}", endPoint, publicBucket, path);

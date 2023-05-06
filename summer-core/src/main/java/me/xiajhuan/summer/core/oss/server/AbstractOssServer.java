@@ -26,6 +26,7 @@ import me.xiajhuan.summer.core.enums.BucketTypeEnum;
 import me.xiajhuan.summer.core.enums.OssSupportEnum;
 import me.xiajhuan.summer.core.exception.custom.FileDownloadException;
 import me.xiajhuan.summer.core.exception.custom.FileUploadException;
+import me.xiajhuan.summer.core.utils.AssertUtil;
 import org.springframework.http.MediaType;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -77,7 +78,7 @@ public abstract class AbstractOssServer {
      * @return {@link Dict}或{@code null}，{@link Dict}包含的Key有：
      * <ul>
      *   <li>name（文件名称）</li>
-     *   <li>url（URL（外链））</li>
+     *   <li>url（URL（外链，私有时值为空串））</li>
      *   <li>path（路径（相对路径））</li>
      *   <li>bucketType（空间类型，参考{@link BucketTypeEnum}）</li>
      *   <li>supportType（支持类型，参考{@link OssSupportEnum}）</li>
@@ -182,5 +183,18 @@ public abstract class AbstractOssServer {
      * @return 下载URL
      */
     protected abstract String getDownloadUrl(String path, boolean isPrivate);
+
+    /**
+     * 校验配置
+     *
+     * @param needEndPoint 是否需要端点，true：是 false：否
+     */
+    protected void validateConfig(boolean needEndPoint) {
+        if (needEndPoint) {
+            AssertUtil.isNotBlank("endPoint", endPoint);
+        }
+        AssertUtil.isNotBlank("privateBucket", privateBucket);
+        AssertUtil.isNotBlank("publicBucket", publicBucket);
+    }
 
 }

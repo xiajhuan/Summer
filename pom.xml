@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>me.xiajhuan</groupId>
     <artifactId>Summer</artifactId>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
     <packaging>pom</packaging>
 
     <name>Summer</name>
@@ -12,7 +12,7 @@
     <licenses>
         <license>
             <name>Mulan Permissive Software License，Version 2</name>
-            <url>http://license.coscl.org.cn/MulanPSL2</url>
+            <url>https://license.coscl.org.cn/MulanPSL2</url>
         </license>
     </licenses>
     <developers>
@@ -29,14 +29,14 @@
     </modules>
 
     <properties>
-        <Summer.version>1.1.0</Summer.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
+        <summer.version>1.1.1</summer.version>
         <spring-boot.version>2.7.11</spring-boot.version>
         <mysql.version>8.0.33</mysql.version>
         <dynamic-datasource.version>3.6.1</dynamic-datasource.version>
-        <mybatisplus.version>3.5.3.1</mybatisplus.version>
+        <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
         <p6spy.version>3.9.1</p6spy.version>
         <lombok.version>1.18.26</lombok.version>
         <shiro.version>1.11.0</shiro.version>
@@ -44,12 +44,12 @@
         <commons-pool2.version>2.11.1</commons-pool2.version>
         <guava.version>31.1-jre</guava.version>
         <hutool.version>5.8.18</hutool.version>
-        <easyexcel.version>3.3.0</easyexcel.version>
+        <easyexcel.version>3.3.1</easyexcel.version>
         <mica-xss.version>2.7.11</mica-xss.version>
         <minio.version>8.5.2</minio.version>
         <qiniu.version>7.13.0</qiniu.version>
-        <compiler-plugin.version>3.11.0</compiler-plugin.version>
-        <surefire-plugin.version>3.0.0</surefire-plugin.version>
+        <maven-compiler.version>3.11.0</maven-compiler.version>
+        <maven-surefire.version>3.0.0</maven-surefire.version>
     </properties>
 
     <dependencyManagement>
@@ -58,15 +58,15 @@
             <dependency>
                 <groupId>me.xiajhuan</groupId>
                 <artifactId>summer-system</artifactId>
-                <version>${Summer.version}</version>
+                <version>${summer.version}</version>
             </dependency>
             <!--Summer核心模块-->
             <dependency>
                 <groupId>me.xiajhuan</groupId>
                 <artifactId>summer-core</artifactId>
-                <version>${Summer.version}</version>
+                <version>${summer.version}</version>
             </dependency>
-            <!--springBoot依赖-->
+            <!--SpringBoot-->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
@@ -74,37 +74,37 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <!--mysql驱动-->
+            <!--MysqlDriver-->
             <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
                 <version>${mysql.version}</version>
             </dependency>
-            <!--dynamic-datasource-->
+            <!--DynamicDatasource-->
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
                 <version>${dynamic-datasource.version}</version>
             </dependency>
-            <!--mybatis-plus-->
+            <!--MybatisPlus-->
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
-                <version>${mybatisplus.version}</version>
+                <version>${mybatis-plus.version}</version>
             </dependency>
-            <!--p6spy-->
+            <!--P6spy-->
             <dependency>
                 <groupId>p6spy</groupId>
                 <artifactId>p6spy</artifactId>
                 <version>${p6spy.version}</version>
             </dependency>
-            <!--lombok-->
+            <!--Lombok-->
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>${lombok.version}</version>
             </dependency>
-            <!--shiro-->
+            <!--Shiro-->
             <dependency>
                 <groupId>org.apache.shiro</groupId>
                 <artifactId>shiro-core</artifactId>
@@ -115,25 +115,25 @@
                 <artifactId>shiro-spring</artifactId>
                 <version>${shiro.version}</version>
             </dependency>
-            <!--quartz-->
+            <!--Quartz-->
             <dependency>
                 <groupId>org.quartz-scheduler</groupId>
                 <artifactId>quartz</artifactId>
                 <version>${quartz.version}</version>
             </dependency>
-            <!--commons-pool2-->
+            <!--CommonsPool2-->
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-pool2</artifactId>
                 <version>${commons-pool2.version}</version>
             </dependency>
-            <!--google-guava-->
+            <!--Guava-->
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
                 <version>${guava.version}</version>
             </dependency>
-            <!--hutool-->
+            <!--Hutool-->
             <dependency>
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-cache</artifactId>
@@ -169,25 +169,25 @@
                 <artifactId>hutool-setting</artifactId>
                 <version>${hutool.version}</version>
             </dependency>
-            <!--easyExcel-->
+            <!--EasyExcel-->
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>easyexcel</artifactId>
                 <version>${easyexcel.version}</version>
             </dependency>
-            <!--mica-xss-->
+            <!--MicaXss-->
             <dependency>
                 <groupId>net.dreamlu</groupId>
                 <artifactId>mica-xss</artifactId>
                 <version>${mica-xss.version}</version>
             </dependency>
-            <!--minio-->
+            <!--MinIo-SDK-->
             <dependency>
                 <groupId>io.minio</groupId>
                 <artifactId>minio</artifactId>
                 <version>${minio.version}</version>
             </dependency>
-            <!--qiniu-->
+            <!--QiNiu-SDK-->
             <dependency>
                 <groupId>com.qiniu</groupId>
                 <artifactId>qiniu-java-sdk</artifactId>
@@ -201,7 +201,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>${compiler-plugin.version}</version>
+                <version>${maven-compiler.version}</version>
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
