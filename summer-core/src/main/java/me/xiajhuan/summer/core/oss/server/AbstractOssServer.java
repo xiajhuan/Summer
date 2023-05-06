@@ -19,6 +19,8 @@ import cn.hutool.core.lang.Dict;
 import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.HttpUtil;
+import cn.hutool.log.Log;
+import cn.hutool.log.LogFactory;
 import me.xiajhuan.summer.core.enums.OssSupportEnum;
 import me.xiajhuan.summer.core.exception.custom.FileDownloadException;
 import me.xiajhuan.summer.core.exception.custom.FileUploadException;
@@ -36,8 +38,12 @@ import java.net.URLEncoder;
  * @author xiajhuan
  * @date 2023/4/29
  * @see MultipartFile
+ * @see HttpUtil
+ * @see IoUtil
  */
 public abstract class AbstractOssServer {
+
+    protected static final Log LOGGER = LogFactory.get();
 
     /**
      * 端点（协议://ip:端口或域名）
@@ -60,13 +66,24 @@ public abstract class AbstractOssServer {
      *
      * @param multipartFile {@link MultipartFile}
      * @param bucketName    逻辑空间名
-     * @return {@link Dict}或{@code null}，{@link Dict}包含的Key有：<br>
-     * 【type（类型）,name（文件名称）,bucketName（逻辑空间名）,path（路径（相对路径））,url（URL（外链））】
+     * @return {@link Dict}或{@code null}，{@link Dict}包含的Key有：
+     * <ul>
+     *   <li>type（类型）</li>
+     *   <li>name（文件名称）</li>
+     *   <li>bucketName（逻辑空间名）</li>
+     *   <li>path（路径（相对路径））</li>
+     *   <li>url（URL（外链））</li>
+     * </ul>
      */
     public Dict upload(MultipartFile multipartFile, String bucketName) {
         if (multipartFile != null) {
             // 文件名称
             String name = multipartFile.getOriginalFilename();
+            if (multipartFile.isEmpty()) {
+                // 空文件
+                LOGGER.warn("不允许上传空文件【{}】", name);
+                return null;
+            }
             // 逻辑空间名
             bucketName = getRealBucketName(bucketName);
             // 路径（相对路径），格式：日期/随机串.后缀

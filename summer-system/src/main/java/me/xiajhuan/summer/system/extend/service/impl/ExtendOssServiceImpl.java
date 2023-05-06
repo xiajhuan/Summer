@@ -32,6 +32,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -92,9 +93,10 @@ public class ExtendOssServiceImpl extends ServiceImpl<ExtendOssMapper, ExtendOss
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void addBatch(Dict[] dictArray) {
-        Arrays.stream(dictArray).forEach(dict -> save(
-                ExtendOssEntity.builder()
+        Arrays.stream(dictArray).filter(Objects::nonNull)
+                .forEach(dict -> save(ExtendOssEntity.builder()
                         .name(dict.getStr("name"))
                         .url(dict.getStr("url"))
                         .bucketName(dict.getStr("bucketName"))
