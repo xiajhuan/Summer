@@ -91,6 +91,11 @@
             <groupId>org.quartz-scheduler</groupId>
             <artifactId>quartz</artifactId>
         </dependency>
+        <!--CommonsCompress-->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-compress</artifactId>
+        </dependency>
         <!--CommonsPool2-->
         <dependency>
             <groupId>org.apache.commons</groupId>

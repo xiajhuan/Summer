@@ -101,6 +101,7 @@ Summer
 - Lombok：1.18.26
 - Shiro：1.11.0
 - Quartz：2.4.0-rc2
+- CommonsCompress：1.23.0
 - CommonsPool2：2.11.1
 - Guava：31.1-jre
 - Hutool：5.8.18

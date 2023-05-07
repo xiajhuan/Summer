@@ -41,6 +41,7 @@
         <lombok.version>1.18.26</lombok.version>
         <shiro.version>1.11.0</shiro.version>
         <quartz.version>2.4.0-rc2</quartz.version>
+        <commons-compress.version>1.23.0</commons-compress.version>
         <commons-pool2.version>2.11.1</commons-pool2.version>
         <guava.version>31.1-jre</guava.version>
         <hutool.version>5.8.18</hutool.version>
@@ -120,6 +121,12 @@
                 <groupId>org.quartz-scheduler</groupId>
                 <artifactId>quartz</artifactId>
                 <version>${quartz.version}</version>
+            </dependency>
+            <!--CommonsCompress-->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-compress</artifactId>
+                <version>${commons-compress.version}</version>
             </dependency>
             <!--CommonsPool2-->
             <dependency>
