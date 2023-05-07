@@ -21,7 +21,7 @@
             <groupId>me.xiajhuan</groupId>
             <artifactId>summer-system</artifactId>
         </dependency>
-        <!--test-->
+        <!--Test-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>

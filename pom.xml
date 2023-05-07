@@ -34,7 +34,7 @@
         <java.version>1.8</java.version>
         <summer.version>1.1.1</summer.version>
         <spring-boot.version>2.7.11</spring-boot.version>
-        <mysql.version>8.0.33</mysql.version>
+        <mysql-connector.version>8.0.33</mysql-connector.version>
         <dynamic-datasource.version>3.6.1</dynamic-datasource.version>
         <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
         <p6spy.version>3.9.1</p6spy.version>
@@ -74,11 +74,11 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <!--MysqlDriver-->
+            <!--MysqlConnector-->
             <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
-                <version>${mysql.version}</version>
+                <version>${mysql-connector.version}</version>
             </dependency>
             <!--DynamicDatasource-->
             <dependency>
