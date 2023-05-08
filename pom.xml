@@ -41,10 +41,12 @@
         <lombok.version>1.18.26</lombok.version>
         <shiro.version>1.11.0</shiro.version>
         <quartz.version>2.4.0-rc2</quartz.version>
+        <okhttp.version>4.11.0</okhttp.version>
         <commons-compress.version>1.23.0</commons-compress.version>
         <commons-pool2.version>2.11.1</commons-pool2.version>
         <guava.version>31.1-jre</guava.version>
         <hutool.version>5.8.18</hutool.version>
+        <javax-mail.version>1.6.2</javax-mail.version>
         <easyexcel.version>3.3.1</easyexcel.version>
         <mica-xss.version>2.7.11</mica-xss.version>
         <minio.version>8.5.2</minio.version>
@@ -122,6 +124,12 @@
                 <artifactId>quartz</artifactId>
                 <version>${quartz.version}</version>
             </dependency>
+            <!--OkHttp-->
+            <dependency>
+                <groupId>com.squareup.okhttp3</groupId>
+                <artifactId>okhttp</artifactId>
+                <version>${okhttp.version}</version>
+            </dependency>
             <!--CommonsCompress-->
             <dependency>
                 <groupId>org.apache.commons</groupId>
@@ -175,6 +183,12 @@
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-setting</artifactId>
                 <version>${hutool.version}</version>
+            </dependency>
+            <!--JavaxMail-->
+            <dependency>
+                <groupId>com.sun.mail</groupId>
+                <artifactId>javax.mail</artifactId>
+                <version>${javax-mail.version}</version>
             </dependency>
             <!--EasyExcel-->
             <dependency>

@@ -60,6 +60,7 @@ Summer
 │    │    ├─handler       处理器定义
 │    │    ├─hook          SpringBoot钩子
 │    │    ├─locale        国际化模块
+│    │    ├─message       消息模块
 │    │    ├─log           日志模块
 │    │    ├─monitor       监控模块
 │    │    ├─schedule      定时调度模块
@@ -101,10 +102,12 @@ Summer
 - Lombok：1.18.26
 - Shiro：1.11.0
 - Quartz：2.4.0-rc2
+- OkHttp：4.11.0
 - CommonsCompress：1.23.0
 - CommonsPool2：2.11.1
 - Guava：31.1-jre
 - Hutool：5.8.18
+- JavaxMail：1.6.2
 - EasyExcel：3.3.1
 - MicaXss：2.7.11
 - MinIo-SDK：8.5.2
