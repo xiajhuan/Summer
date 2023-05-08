@@ -24,7 +24,6 @@ import me.xiajhuan.summer.core.exception.code.ErrorCode;
 import me.xiajhuan.summer.core.exception.custom.SystemException;
 import me.xiajhuan.summer.core.exception.custom.ValidationException;
 import me.xiajhuan.summer.core.mp.helper.MpHelper;
-import me.xiajhuan.summer.core.properties.QuartzStartupProperties;
 import me.xiajhuan.summer.core.utils.BeanUtil;
 import me.xiajhuan.summer.core.utils.SecurityUtil;
 import me.xiajhuan.summer.system.schedule.quartz.helper.QuartzHelper;
@@ -36,6 +35,7 @@ import org.quartz.CronExpression;
 import org.quartz.CronTrigger;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -57,11 +57,11 @@ import java.util.stream.Collectors;
 @DS(DataSourceConst.SYSTEM)
 public class ScheduleTaskServiceImpl extends ServiceImpl<ScheduleTaskMapper, ScheduleTaskEntity> implements ScheduleTaskService, MpHelper<ScheduleTaskDto, ScheduleTaskEntity> {
 
-    @Resource
-    private Scheduler scheduler;
+    @Value("${quartz.startup.delay}")
+    private int delay;
 
     @Resource
-    private QuartzStartupProperties quartzStartupProperties;
+    private Scheduler scheduler;
 
     //*******************MpHelper覆写开始********************
 
@@ -224,7 +224,7 @@ public class ScheduleTaskServiceImpl extends ServiceImpl<ScheduleTaskMapper, Sch
             // 初始化定时任务
             initTask();
             // 启动定时任务
-            scheduler.startDelayed(quartzStartupProperties.getDelay());
+            scheduler.startDelayed(delay);
         } catch (SchedulerException e) {
             throw SystemException.of(e, ErrorCode.MANUAL_START_FAILURE, e.getMessage());
         }

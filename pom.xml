@@ -202,13 +202,13 @@
                 <artifactId>mica-xss</artifactId>
                 <version>${mica-xss.version}</version>
             </dependency>
-            <!--MinIo-SDK-->
+            <!--MinIoSdk-->
             <dependency>
                 <groupId>io.minio</groupId>
                 <artifactId>minio</artifactId>
                 <version>${minio.version}</version>
             </dependency>
-            <!--QiNiu-SDK-->
+            <!--QiNiuSdk-->
             <dependency>
                 <groupId>com.qiniu</groupId>
                 <artifactId>qiniu-java-sdk</artifactId>

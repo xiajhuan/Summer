@@ -52,6 +52,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -91,6 +92,97 @@ public class SecurityServiceImpl implements SecurityService {
     @Resource
     private SecurityRoleDeptMapper securityRoleDeptMapper;
 
+    /**
+     * accessToken过期时间（h）
+     */
+    private int tokenExpire;
+
+    /**
+     * 是否开启登录验证码校验
+     */
+    private boolean enableCaptcha;
+
+    /**
+     * 图形验证码背景干扰类型
+     */
+    private String captchaType;
+
+    /**
+     * 干扰线个数
+     */
+    private int captchaLineNum;
+
+    /**
+     * 干扰元素个数
+     */
+    private int captchaCircleNum;
+
+    /**
+     * 干扰线宽度
+     */
+    private int captchaShearWidth;
+
+    /**
+     * 图形验证码宽度
+     */
+    private int captchaWidth;
+
+    /**
+     * 图形验证码高度
+     */
+    private int captchaHeight;
+
+    /**
+     * 图形验证码字符个数
+     */
+    private int captchaCharNum;
+
+    /**
+     * 图形验证码缓存（失效）时间（min）
+     */
+    private int captchaCacheTtl;
+
+    /**
+     * 初始化
+     */
+    @PostConstruct
+    private void init() {
+        tokenExpire = setting.getInt("token-expire", "Security", 12);
+
+        // 验证码
+        enableCaptcha = setting.getBool("enable-captcha", "Security", false);
+        if (enableCaptcha) {
+            captchaType = setting.getByGroupWithLog("captcha.type", "Security");
+            if (StrUtil.isBlank(captchaType)) {
+                // 没有配置则默认为：Line
+                captchaType = CaptchaTypeEnum.Line.getValue();
+            }
+            switch (captchaType) {
+                case "Line":
+                    captchaLineNum = setting.getInt("captcha.line-num", "Security", 10);
+                    break;
+                case "Circle":
+                    captchaCircleNum = setting.getInt("captcha.circle-num", "Security", 10);
+                    break;
+                case "Shear":
+                    captchaShearWidth = setting.getInt("captcha.shear-width", "Security", 4);
+                    break;
+                default:
+                    throw new IllegalArgumentException(StrUtil.format("不支持的验证码类型【{}】", captchaType));
+            }
+            captchaWidth = setting.getInt("captcha.width", "Security", 150);
+            captchaHeight = setting.getInt("captcha.height", "Security", 40);
+            captchaCharNum = setting.getInt("captcha.char-num", "Security", 5);
+
+            captchaCacheTtl = setting.getInt("captcha.cache-ttl", "Security", 5);
+        }
+    }
+
+    @Override
+    public boolean isEnableCaptcha() {
+        return enableCaptcha;
+    }
+
     @Override
     public void buildCaptchaAndCache(HttpServletResponse response, String uuid) {
         // 构建验证码
@@ -108,9 +200,8 @@ public class SecurityServiceImpl implements SecurityService {
         }
 
         // 缓存验证码
-        CacheServerFactory.getCacheServer()
-                .setString(captchaCode(uuid), captcha.getCode(),
-                        setting.getInt("captcha.cache-ttl", "Security", 5) * TimeUnitConst.MINUTE);
+        CacheServerFactory.getCacheServer().setString(
+                captchaCode(uuid), captcha.getCode(), captchaCacheTtl * TimeUnitConst.MINUTE);
     }
 
     @Override
@@ -129,7 +220,7 @@ public class SecurityServiceImpl implements SecurityService {
 
     @Override
     public TokenDto login(LoginDto loginDto, HttpServletRequest request) {
-        if (setting.getBool("enable-captcha", "Security", true)) {
+        if (enableCaptcha) {
             // 校验验证码
             AssertUtil.isNotBlank("uuid", loginDto.getUuid());
             if (StrUtil.isBlank(loginDto.getCaptcha())) {
@@ -230,29 +321,16 @@ public class SecurityServiceImpl implements SecurityService {
      * @see CaptchaTypeEnum
      */
     private AbstractCaptcha buildGraphicCaptcha() {
-        // 验证码类型
-        String type = setting.getByGroupWithLog("captcha.type", "Security");
-        if (StrUtil.isBlank(type)) {
-            // 没有配置则默认为：Line
-            type = CaptchaTypeEnum.Line.getValue();
-        }
-        // 验证码宽/高
-        int width = setting.getInt("captcha.width", "Security", 150);
-        int height = setting.getInt("captcha.height", "Security", 40);
-        // 验证码字符个数
-        int charNum = setting.getInt("captcha.char-num", "Security", 5);
-        switch (type) {
+        switch (captchaType) {
             case "Line":
-                return CaptchaUtil.createLineCaptcha(width, height, charNum,
-                        setting.getInt("captcha.line-num", "Security", 10));
+                return CaptchaUtil.createLineCaptcha(captchaWidth, captchaHeight,
+                        captchaCharNum, captchaLineNum);
             case "Circle":
-                return CaptchaUtil.createCircleCaptcha(width, height, charNum,
-                        setting.getInt("captcha.circle-num", "Security", 10));
-            case "Shear":
-                return CaptchaUtil.createShearCaptcha(width, height, charNum,
-                        setting.getInt("captcha.shear-width", "Security", 4));
+                return CaptchaUtil.createCircleCaptcha(captchaWidth, captchaHeight,
+                        captchaCharNum, captchaCircleNum);
             default:
-                throw new IllegalArgumentException(StrUtil.format("不支持的验证码类型【{}】", type));
+                return CaptchaUtil.createShearCaptcha(captchaWidth, captchaHeight,
+                        captchaCharNum, captchaShearWidth);
         }
     }
 
@@ -267,8 +345,6 @@ public class SecurityServiceImpl implements SecurityService {
 
         // 生成accessToken
         String accessToken = SecurityUtil.generateToken();
-        // Token过期时间（h）
-        int tokenExpire = setting.getInt("token-expire", "Security", 12);
         // 缓存过期时间（ms）
         long cacheTtl = tokenExpire * TimeUnitConst.HOUR;
         // 缓存用户ID

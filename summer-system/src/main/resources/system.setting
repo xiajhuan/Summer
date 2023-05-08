@@ -11,11 +11,11 @@ anon-uris = /api/open/**,/api/test/**
 # accessToken过期时间（h）
 token-expire = 12
 
-# 是否开启登录验证码校验，值：true/false
-enable-captcha = true
-
 # 重置后的密码
 password-reset = 123456
+
+# 是否开启登录验证码校验，值：true/false
+enable-captcha = false
 
 # 图形验证码背景干扰类型，值：Line（线段干扰）/Circle（圆圈干扰）/Shear（扭曲干扰）
 captcha.type = Line
@@ -25,8 +25,9 @@ captcha.line-num = 10
 captcha.circle-num = 10
 # 干扰线宽度，只有captcha.type = Shear时会生效
 captcha.shear-width = 4
-# 图形验证码宽/高
+# 图形验证码宽度
 captcha.width = 150
+# 图形验证码高度
 captcha.height = 40
 # 图形验证码字符个数
 captcha.char-num = 5
@@ -67,9 +68,13 @@ enable-business = true
 # note：当SystemException或BusinessException的消息为该消息代码匹配消息时将不会“保存错误日志”和“打印异常堆栈信息”，开启debug日志级别时除外
 ignore-codes = 1001,1002
 
+# 保存操作日志时，请求参数的最大长度，note：不能超过表字段限制的长度
+operation.param-length = 65535
 # 操作日志清理天数限制，-n则清理n天以前的日志
 operation.clear-days-limit = -30
 
+# 保存错误日志时，请求参数的最大长度，note：不能超过表字段限制的长度
+error.param-length = 65535
 # 保存错误日志时，异常堆栈的最大长度，note：不能超过表字段限制的长度
 error.stacktrace-length = 65535
 # 错误日志清理天数限制，-n则清理n天以前的日志
@@ -82,3 +87,8 @@ login.clear-days-limit = -30
 task.stacktrace-length = 65535
 # 定时任务日志清理天数限制，-n则清理n天以前的日志
 task.clear-days-limit = -90
+
+# 保存邮件日志时，邮件正文的最大长度，note：不能超过表字段限制的长度
+mail.content-length = 65535
+# 邮件日志清理天数限制，-n则清理n天以前的日志
+mail.clear-days-limit = -90

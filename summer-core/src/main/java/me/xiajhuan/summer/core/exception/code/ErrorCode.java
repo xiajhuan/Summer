@@ -89,44 +89,49 @@ public interface ErrorCode {
     int FILE_DELETE_FAILURE = 1008;
 
     /**
+     * 没有开启验证码校验功能
+     */
+    int CAPTCHA_DISABLE = 1009;
+
+    /**
      * 验证码获取失败
      */
-    int CAPTCHA_GET_FAILURE = 1009;
+    int CAPTCHA_GET_FAILURE = 1010;
 
     /**
      * Excel导入失败，第{0}行：
      */
-    int EXCEL_IMPORT_FAILURE_PREFIX = 1010;
+    int EXCEL_IMPORT_FAILURE_PREFIX = 1011;
 
     /**
      * Excel模板下载失败
      */
-    int EXCEL_TEMPLATE_DOWNLOAD_FAILURE = 1011;
+    int EXCEL_TEMPLATE_DOWNLOAD_FAILURE = 1012;
 
     /**
      * Excel导出失败
      */
-    int EXCEL_EXPORT_FAILURE = 1012;
+    int EXCEL_EXPORT_FAILURE = 1013;
 
     /**
      * 最多导出{0}条记录
      */
-    int EXCEL_EXPORT_MAXIMUM_LIMIT = 1013;
+    int EXCEL_EXPORT_MAXIMUM_LIMIT = 1014;
 
     /**
      * 不能包含非法字符
      */
-    int INVALID_SYMBOL = 1014;
+    int INVALID_SYMBOL = 1015;
 
     /**
      * {0}不能为空
      */
-    int NOT_NULL = 1015;
+    int NOT_NULL = 1016;
 
     /**
      * 定时任务异常【{0}】
      */
-    int SCHEDULE_ERROR = 1016;
+    int SCHEDULE_ERROR = 1017;
 
     //*******************system********************
 

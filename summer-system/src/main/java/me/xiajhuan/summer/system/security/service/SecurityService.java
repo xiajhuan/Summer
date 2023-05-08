@@ -30,6 +30,13 @@ public interface SecurityService {
     //*******************验证码********************
 
     /**
+     * 是否开启登录验证码校验
+     *
+     * @return 是否开启登录验证码校验，true：是 false：否
+     */
+    boolean isEnableCaptcha();
+
+    /**
      * 构建图形验证码并缓存
      *
      * @param response {@link HttpServletResponse}

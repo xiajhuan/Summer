@@ -49,6 +49,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.Date;
@@ -81,6 +82,23 @@ public class SecurityUserServiceImpl extends ServiceImpl<SecurityUserMapper, Sec
 
     @Resource
     private SecurityUserPostMapper securityUserPostMapper;
+
+    /**
+     * 重置后的密码
+     */
+    private String passwordReset;
+
+    /**
+     * 初始化
+     */
+    @PostConstruct
+    private void init() {
+        passwordReset = setting.getByGroupWithLog("password-reset", "Security");
+        if (StrUtil.isBlank(passwordReset)) {
+            // 没有配置则默认为：123456
+            passwordReset = "123456";
+        }
+    }
 
     //*******************MpHelper覆写开始********************
 
@@ -306,13 +324,6 @@ public class SecurityUserServiceImpl extends ServiceImpl<SecurityUserMapper, Sec
         if (UserTypeEnum.SUPER_ADMIN.getValue() != loginUser.getUserType()) {
             // 只有超级管理员可以重置密码
             throw ValidationException.of(ErrorCode.PASSWORD_RESET_ERROR);
-        }
-
-        // 重置后的密码
-        String passwordReset = setting.getByGroupWithLog("password-reset", "Security");
-        if (StrUtil.isBlank(passwordReset)) {
-            // 没有配置则默认为：123456
-            passwordReset = "123456";
         }
 
         LambdaUpdateWrapper<SecurityUserEntity> updateWrapper = addUserSetField(SecurityUtil.encode(passwordReset), "superAdmin");

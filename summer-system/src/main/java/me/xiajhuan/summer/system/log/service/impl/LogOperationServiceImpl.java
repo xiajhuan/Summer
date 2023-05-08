@@ -28,6 +28,7 @@ import me.xiajhuan.summer.system.log.mapper.LogOperationMapper;
 import me.xiajhuan.summer.system.log.service.LogOperationService;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
@@ -44,6 +45,19 @@ public class LogOperationServiceImpl extends ServiceImpl<LogOperationMapper, Log
 
     @Resource(name = SettingConst.SYSTEM)
     private Setting setting;
+
+    /**
+     * 日志清理天数限制
+     */
+    private int clearDaysLimit;
+
+    /**
+     * 初始化
+     */
+    @PostConstruct
+    private void init() {
+        clearDaysLimit = setting.getInt("operation.clear-days-limit", "Log", -30);
+    }
 
     //*******************MpHelper覆写开始********************
 
@@ -104,8 +118,7 @@ public class LogOperationServiceImpl extends ServiceImpl<LogOperationMapper, Log
     public void clear() {
         // 删除操作日志
         LambdaQueryWrapper<LogOperationEntity> queryWrapper = getEmptyWrapper();
-        queryWrapper.lt(LogOperationEntity::getCreateTime, DateUtil.offsetDay(DateUtil.date(),
-                setting.getInt("operation.clear-days-limit", "Log", -30)));
+        queryWrapper.lt(LogOperationEntity::getCreateTime, DateUtil.offsetDay(DateUtil.date(), clearDaysLimit));
         remove(queryWrapper);
     }
 

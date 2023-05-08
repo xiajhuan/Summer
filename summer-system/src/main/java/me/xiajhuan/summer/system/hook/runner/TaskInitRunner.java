@@ -14,9 +14,9 @@ package me.xiajhuan.summer.system.hook.runner;
 
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
-import me.xiajhuan.summer.core.properties.QuartzStartupProperties;
 import me.xiajhuan.summer.core.utils.SystemUtil;
 import me.xiajhuan.summer.system.schedule.service.ScheduleTaskService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.core.Ordered;
@@ -38,15 +38,15 @@ public class TaskInitRunner implements ApplicationRunner {
 
     private static final Log LOGGER = LogFactory.get();
 
-    @Resource
-    private QuartzStartupProperties quartzStartupProperties;
+    @Value("${quartz.startup.auto}")
+    private boolean isAuto;
 
     @Resource
     private ScheduleTaskService scheduleTaskService;
 
     @Override
     public void run(ApplicationArguments args) {
-        if (quartzStartupProperties.isAuto() && scheduleTaskService.initTask()) {
+        if (isAuto && scheduleTaskService.initTask()) {
             LOGGER.info("【{}】定时任务初始化完毕", SystemUtil.getApplicationName());
         }
     }

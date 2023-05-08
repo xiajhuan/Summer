@@ -16,15 +16,13 @@ import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import me.xiajhuan.summer.core.constant.DataSourceConst;
-import me.xiajhuan.summer.core.properties.ApplicationProperties;
 import me.xiajhuan.summer.core.utils.SystemUtil;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-
-import javax.annotation.Resource;
 
 /**
  * ApplicationRunner（对象存储服务加载完毕）
@@ -40,16 +38,16 @@ public class OssReadyRunner implements ApplicationRunner {
 
     private static final Log LOGGER = LogFactory.get();
 
-    @Resource
-    private ApplicationProperties applicationProperties;
+    @Value("${application.oss.type}")
+    private String ossType;
 
     @Override
     public void run(ApplicationArguments args) {
         // 设置当前线程的数据源为system
         DynamicDataSourceContextHolder.push(DataSourceConst.SYSTEM);
 
-        LOGGER.info("【{}】对象存储服务加载完毕，类型【{}】", SystemUtil.getApplicationName(),
-                applicationProperties.getOss().getType());
+        LOGGER.info("【{}】对象存储服务加载完毕，类型【{}】",
+                SystemUtil.getApplicationName(), ossType);
     }
 
 }

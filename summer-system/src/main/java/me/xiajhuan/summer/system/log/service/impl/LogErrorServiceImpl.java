@@ -31,6 +31,7 @@ import me.xiajhuan.summer.system.log.mapper.LogErrorMapper;
 import me.xiajhuan.summer.system.log.service.LogErrorService;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -49,6 +50,31 @@ public class LogErrorServiceImpl extends ServiceImpl<LogErrorMapper, LogErrorEnt
 
     @Resource(name = SettingConst.SYSTEM)
     private Setting setting;
+
+    /**
+     * 请求参数最大长度
+     */
+    private int paramMaxLength;
+
+    /**
+     * 异常堆栈最大长度
+     */
+    private int stacktraceMaxLength;
+
+    /**
+     * 日志清理天数限制
+     */
+    private int clearDaysLimit;
+
+    /**
+     * 初始化
+     */
+    @PostConstruct
+    private void init() {
+        paramMaxLength = setting.getInt("error.param-length", "Log", 65535);
+        stacktraceMaxLength = setting.getInt("error.stacktrace-length", "Log", 65535);
+        clearDaysLimit = setting.getInt("error.clear-days-limit", "Log", -90);
+    }
 
     //*******************MpHelper覆写开始********************
 
@@ -114,12 +140,13 @@ public class LogErrorServiceImpl extends ServiceImpl<LogErrorMapper, LogErrorEnt
         // 请求参数，note：这里只能获取Query/FORM-DATA参数
         Map<String, String> params = ServletUtil.getParamMap(request);
         if (params.size() > 0) {
-            entity.setRequestParams(JSONUtil.toJsonStr(params));
+            String paramJson = JSONUtil.toJsonStr(params);
+            entity.setRequestParams(paramJson.length() > paramMaxLength ?
+                    paramJson.substring(0, paramMaxLength) : paramJson);
         }
 
         // 异常堆栈信息
-        entity.setErrorInfo(ExceptionUtil.stacktraceToString(e,
-                setting.getInt("error.stacktrace-length", "Log", 65535)));
+        entity.setErrorInfo(ExceptionUtil.stacktraceToString(e, stacktraceMaxLength));
 
         save(entity);
     }
@@ -128,8 +155,7 @@ public class LogErrorServiceImpl extends ServiceImpl<LogErrorMapper, LogErrorEnt
     public void clear() {
         // 删除错误日志
         LambdaQueryWrapper<LogErrorEntity> queryWrapper = getEmptyWrapper();
-        queryWrapper.lt(LogErrorEntity::getCreateTime, DateUtil.offsetDay(DateUtil.date(),
-                setting.getInt("error.clear-days-limit", "Log", -90)));
+        queryWrapper.lt(LogErrorEntity::getCreateTime, DateUtil.offsetDay(DateUtil.date(), clearDaysLimit));
         remove(queryWrapper);
     }
 

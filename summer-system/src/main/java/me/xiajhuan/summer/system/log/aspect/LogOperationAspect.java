@@ -15,6 +15,8 @@ package me.xiajhuan.summer.system.log.aspect;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.date.TimeInterval;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.setting.Setting;
+import me.xiajhuan.summer.core.constant.SettingConst;
 import me.xiajhuan.summer.core.ratelimiter.aspect.RateLimiterAspect;
 import me.xiajhuan.summer.core.enums.NonLoggedUserEnum;
 import me.xiajhuan.summer.system.log.enums.OperationGroupEnum;
@@ -34,6 +36,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
@@ -52,6 +55,9 @@ import static me.xiajhuan.summer.core.constant.OperationConst.*;
 @Order
 public class LogOperationAspect {
 
+    @Resource(name = SettingConst.SYSTEM)
+    private Setting setting;
+
     @Resource
     private LogOperationService logOperationService;
 
@@ -59,6 +65,19 @@ public class LogOperationAspect {
      * 操作名称格式
      */
     private static final String OPERATION_FORMAT = "【{}】{}";
+
+    /**
+     * 请求参数最大长度
+     */
+    private int paramMaxLength;
+
+    /**
+     * 初始化
+     */
+    @PostConstruct
+    private void init() {
+        paramMaxLength = setting.getInt("operation.param-length", "Log", 65535);
+    }
 
     /**
      * 切入点
@@ -135,7 +154,9 @@ public class LogOperationAspect {
 
             if (logOperation.saveRequestParam()) {
                 // 请求参数
-                entity.setRequestParams(ServletUtil.getParamPoint(point, request));
+                String param = ServletUtil.getParamPoint(point, request);
+                entity.setRequestParams(param.length() > paramMaxLength ?
+                        param.substring(0, paramMaxLength) : param);
             }
 
             // 异步保存操作日志

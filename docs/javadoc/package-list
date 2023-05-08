@@ -70,11 +70,15 @@ me.xiajhuan.summer.system.log.aspect
 me.xiajhuan.summer.system.log.controller
 me.xiajhuan.summer.system.log.dto
 me.xiajhuan.summer.system.log.entity
+me.xiajhuan.summer.system.log.enums
 me.xiajhuan.summer.system.log.excel.converter
 me.xiajhuan.summer.system.log.mapper
 me.xiajhuan.summer.system.log.service
 me.xiajhuan.summer.system.log.service.impl
 me.xiajhuan.summer.system.log.task
+me.xiajhuan.summer.system.message.dto
+me.xiajhuan.summer.system.message.entity
+me.xiajhuan.summer.system.message.mapper
 me.xiajhuan.summer.system.monitor.controller
 me.xiajhuan.summer.system.monitor.dto
 me.xiajhuan.summer.system.monitor.entity

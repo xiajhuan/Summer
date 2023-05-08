@@ -15,10 +15,10 @@ package me.xiajhuan.summer.system.hook.runner;
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
 import me.xiajhuan.summer.core.constant.CacheConst;
-import me.xiajhuan.summer.core.properties.ApplicationProperties;
 import me.xiajhuan.summer.core.utils.SystemUtil;
 import me.xiajhuan.summer.system.monitor.service.MonitorOnlineService;
 import me.xiajhuan.summer.system.security.service.SecurityDeptService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.core.Ordered;
@@ -40,8 +40,8 @@ public class CacheReadyRunner implements ApplicationRunner {
 
     private static final Log LOGGER = LogFactory.get();
 
-    @Resource
-    private ApplicationProperties applicationProperties;
+    @Value("${application.cache.type}")
+    private String cacheType;
 
     @Resource
     private SecurityDeptService securityDeptService;
@@ -56,7 +56,6 @@ public class CacheReadyRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
-        String cacheType = applicationProperties.getCache().getType();
         LOGGER.info("【{}】缓存服务加载完毕，类型【{}】", applicationName, cacheType);
 
         // 缓存类型为HEAP时清理遗留在线用户

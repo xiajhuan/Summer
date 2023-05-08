@@ -155,12 +155,12 @@
             <groupId>net.dreamlu</groupId>
             <artifactId>mica-xss</artifactId>
         </dependency>
-        <!--MinIo-SDK-->
+        <!--MinIoSdk-->
         <dependency>
             <groupId>io.minio</groupId>
             <artifactId>minio</artifactId>
         </dependency>
-        <!--QiNiu-SDK-->
+        <!--QiNiuSdk-->
         <dependency>
             <groupId>com.qiniu</groupId>
             <artifactId>qiniu-java-sdk</artifactId>

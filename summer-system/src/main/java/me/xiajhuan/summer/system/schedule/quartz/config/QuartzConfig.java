@@ -21,8 +21,8 @@ import com.baomidou.dynamic.datasource.DynamicRoutingDataSource;
 import me.xiajhuan.summer.core.constant.DataSourceConst;
 import me.xiajhuan.summer.core.constant.SettingConst;
 import me.xiajhuan.summer.core.constant.ThreadPoolConst;
-import me.xiajhuan.summer.core.properties.QuartzStartupProperties;
 import me.xiajhuan.summer.core.utils.SystemUtil;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
@@ -43,14 +43,17 @@ import javax.annotation.Resource;
 @Configuration
 public class QuartzConfig {
 
+    @Value("${quartz.startup.auto}")
+    private boolean isAuto;
+
+    @Value("${quartz.startup.delay}")
+    private int delay;
+
     @Resource(name = SettingConst.SYSTEM)
     private Setting setting;
 
     @Resource
     private DynamicRoutingDataSource dynamicRoutingDataSource;
-
-    @Resource
-    private QuartzStartupProperties quartzStartupProperties;
 
     /**
      * 线程池Class
@@ -108,12 +111,12 @@ public class QuartzConfig {
         // 启动时更新己存在Task，这样就不用每次修改schedule_task表记录后删除QUARTZ_JOB_DETAILS表对应记录了
         factory.setOverwriteExistingJobs(true);
 
-        if (quartzStartupProperties.isAuto()) {
+        if (isAuto) {
             // 自动启动
             factory.setAutoStartup(true);
 
             // 延迟启动（s）
-            factory.setStartupDelay(quartzStartupProperties.getDelay());
+            factory.setStartupDelay(delay);
         } else {
             // 不自动启动
             factory.setAutoStartup(false);

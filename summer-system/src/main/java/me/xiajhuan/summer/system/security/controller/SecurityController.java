@@ -14,6 +14,8 @@ package me.xiajhuan.summer.system.security.controller;
 
 import me.xiajhuan.summer.core.base.controller.BaseController;
 import me.xiajhuan.summer.core.data.Result;
+import me.xiajhuan.summer.core.exception.code.ErrorCode;
+import me.xiajhuan.summer.core.exception.custom.SystemException;
 import me.xiajhuan.summer.core.ratelimiter.annotation.RateLimiter;
 import me.xiajhuan.summer.core.utils.AssertUtil;
 import me.xiajhuan.summer.core.utils.BeanUtil;
@@ -51,8 +53,12 @@ public class SecurityController extends BaseController {
     @GetMapping("captcha")
     @RateLimiter(1)
     public void captcha(String uuid, HttpServletResponse response) {
-        AssertUtil.isNotBlank("uuid", uuid);
-        mainService.buildCaptchaAndCache(response, uuid);
+        if (mainService.isEnableCaptcha()) {
+            AssertUtil.isNotBlank("uuid", uuid);
+            mainService.buildCaptchaAndCache(response, uuid);
+        } else {
+            throw SystemException.of(ErrorCode.CAPTCHA_DISABLE);
+        }
     }
 
     /**

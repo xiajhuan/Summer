@@ -22,16 +22,15 @@ import me.xiajhuan.summer.core.enums.BucketTypeEnum;
 import me.xiajhuan.summer.core.mp.helper.MpHelper;
 import me.xiajhuan.summer.core.oss.factory.OssServerFactory;
 import me.xiajhuan.summer.core.oss.server.AbstractOssServer;
-import me.xiajhuan.summer.core.properties.ApplicationProperties;
 import me.xiajhuan.summer.core.utils.BeanUtil;
 import me.xiajhuan.summer.system.extend.dto.ExtendOssDto;
 import me.xiajhuan.summer.system.extend.entity.ExtendOssEntity;
 import me.xiajhuan.summer.system.extend.mapper.ExtendOssMapper;
 import me.xiajhuan.summer.system.extend.service.ExtendOssService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -48,8 +47,8 @@ import java.util.stream.Collectors;
 @DS(DataSourceConst.SYSTEM)
 public class ExtendOssServiceImpl extends ServiceImpl<ExtendOssMapper, ExtendOssEntity> implements ExtendOssService, MpHelper<ExtendOssDto, ExtendOssEntity> {
 
-    @Resource
-    private ApplicationProperties applicationProperties;
+    @Value("${application.oss.type}")
+    private String ossType;
 
     //*******************MpHelper覆写开始********************
 
@@ -58,7 +57,7 @@ public class ExtendOssServiceImpl extends ServiceImpl<ExtendOssMapper, ExtendOss
         LambdaQueryWrapper<ExtendOssEntity> queryWrapper = getEmptyWrapper();
         // 查询条件
         // 支持类型
-        queryWrapper.eq(ExtendOssEntity::getSupportType, applicationProperties.getOss().getType());
+        queryWrapper.eq(ExtendOssEntity::getSupportType, ossType);
 
         return queryWrapper;
     }
