@@ -16,34 +16,27 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * 操作分组枚举
+ * 邮件正文类型枚举
  *
  * @author xiajhuan
- * @date 2022/12/3
+ * @date 2023/5/8
  */
 @Getter
 @AllArgsConstructor
-public enum OperationGroupEnum {
+public enum MailContentTypeEnum {
 
     /**
-     * Common Crud
+     * 普通文本
      */
-    COMMON_CRUD(0, "Common Crud", "通用CRUD，包含：分页/列表/根据ID获取/新增/修改/删除"),
+    TEXT(0, "普通文本"),
 
     /**
-     * Excel Operation
+     * Html文本
      */
-    EXCEL_OPERATION(1, "Excel Operation", "Excel操作，包含：Excel模板下载/Excel导入/Excel导出"),
-
-    /**
-     * Other Operation
-     */
-    OTHER_OPERATION(2, "Other Operation", "其他操作");
+    HTML(1, "Html文本");
 
     private final int value;
 
     private final String name;
-
-    private final String desc;
 
 }

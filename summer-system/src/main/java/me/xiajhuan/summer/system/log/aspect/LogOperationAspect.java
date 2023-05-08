@@ -17,7 +17,7 @@ import cn.hutool.core.date.TimeInterval;
 import cn.hutool.core.util.StrUtil;
 import me.xiajhuan.summer.core.ratelimiter.aspect.RateLimiterAspect;
 import me.xiajhuan.summer.core.enums.NonLoggedUserEnum;
-import me.xiajhuan.summer.core.enums.OperationGroupEnum;
+import me.xiajhuan.summer.system.log.enums.OperationGroupEnum;
 import me.xiajhuan.summer.core.enums.OperationStatusEnum;
 import me.xiajhuan.summer.core.utils.JoinPointUtil;
 import me.xiajhuan.summer.core.utils.SecurityUtil;

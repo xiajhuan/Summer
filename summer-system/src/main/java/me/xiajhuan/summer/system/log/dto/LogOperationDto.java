@@ -20,7 +20,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import me.xiajhuan.summer.core.constant.DateFormatConst;
 import me.xiajhuan.summer.core.base.dto.ExcelDto;
-import me.xiajhuan.summer.core.enums.OperationGroupEnum;
+import me.xiajhuan.summer.system.log.enums.OperationGroupEnum;
 import me.xiajhuan.summer.core.enums.OperationStatusEnum;
 import me.xiajhuan.summer.system.log.excel.converter.OperationGroupConverter;
 import me.xiajhuan.summer.system.log.excel.converter.OperationStatusConverter;

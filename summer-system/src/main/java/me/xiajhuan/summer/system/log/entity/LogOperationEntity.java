@@ -20,7 +20,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import me.xiajhuan.summer.core.base.entity.SimpleEntity;
 import me.xiajhuan.summer.core.enums.NonLoggedUserEnum;
-import me.xiajhuan.summer.core.enums.OperationGroupEnum;
+import me.xiajhuan.summer.system.log.enums.OperationGroupEnum;
 import me.xiajhuan.summer.core.enums.OperationStatusEnum;
 
 import java.util.Date;

@@ -315,6 +315,30 @@ CREATE TABLE `log_task`
   ROW_FORMAT = Dynamic;
 
 -- ----------------------------
+-- Table structure for log_mail
+-- ----------------------------
+DROP TABLE IF EXISTS `log_mail`;
+CREATE TABLE `log_mail`
+(
+    `id`            bigint(20)                                                     NOT NULL COMMENT '主键ID',
+    `create_by`     varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci   NULL DEFAULT NULL COMMENT '创建者',
+    `create_time`   datetime(0)                                                    NULL DEFAULT NULL COMMENT '创建时间',
+    `mail_name`     varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci   NULL DEFAULT NULL COMMENT '邮件名称',
+    `sender`        varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci   NULL DEFAULT NULL COMMENT '发送人',
+    `receivers_to`  varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '收件人，多个以“,”分隔',
+    `receivers_cc`  varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '抄送人，多个以“,”分隔',
+    `receivers_bcc` varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '密送人，多个以“,”分隔',
+    `subject`       varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL COMMENT '邮件标题',
+    `content`       text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci          NULL COMMENT '邮件正文',
+    `status`        tinyint(1)                                                     NULL DEFAULT NULL COMMENT '状态  0：失败 1：成功',
+    PRIMARY KEY (`id`) USING BTREE,
+    INDEX `idx_create_time` (`create_time`) USING BTREE
+) ENGINE = InnoDB
+  CHARACTER SET = utf8mb4
+  COLLATE = utf8mb4_general_ci COMMENT = '邮件日志'
+  ROW_FORMAT = Dynamic;
+
+-- ----------------------------
 -- Table structure for monitor_online
 -- ----------------------------
 DROP TABLE IF EXISTS `monitor_online`;
@@ -470,6 +494,29 @@ CREATE TABLE `extend_oss`
 ) ENGINE = InnoDB
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_general_ci COMMENT = '对象存储'
+  ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for message_mail
+-- ----------------------------
+DROP TABLE IF EXISTS `message_mail`;
+CREATE TABLE `message_mail`
+(
+    `id`          bigint(20)                                                    NOT NULL COMMENT '主键ID',
+    `create_by`   varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL COMMENT '创建者',
+    `create_time` datetime(0)                                                   NULL DEFAULT NULL COMMENT '创建时间',
+    `update_by`   varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL COMMENT '更新者',
+    `update_time` datetime(0)                                                   NULL DEFAULT NULL COMMENT '更新时间',
+    `dept_id`     bigint(20)                                                    NULL DEFAULT NULL COMMENT '部门ID',
+    `name`        varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT '0' COMMENT '邮件名称',
+    `subject`     varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '邮件标题',
+    `content`     text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci         NULL COMMENT '邮件正文',
+    `contentType` tinyint(1)                                                    NULL DEFAULT NULL COMMENT '正文类型 0：普通文本 1：Html文本',
+    PRIMARY KEY (`id`) USING BTREE,
+    INDEX `idx_create_time` (`create_time`) USING BTREE
+) ENGINE = InnoDB
+  CHARACTER SET = utf8mb4
+  COLLATE = utf8mb4_general_ci COMMENT = '邮件'
   ROW_FORMAT = Dynamic;
 
 SET FOREIGN_KEY_CHECKS = 1;
