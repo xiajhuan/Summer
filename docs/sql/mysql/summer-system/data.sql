@@ -466,4 +466,10 @@ INSERT INTO `extend_region` VALUES (1651789286688362498, 'test', '2023-04-28 11:
 INSERT INTO `extend_region` VALUES (1651789907546017794, 'test', '2023-04-28 11:26:17', 'test', '2023-04-28 11:26:17', 1636549260430012417, 1651789286688362498, '武汉市', 0, '1');
 INSERT INTO `extend_region` VALUES (1651790017646497794, 'test', '2023-04-28 11:26:44', 'test', '2023-04-28 11:26:44', 1636549260430012417, 1651789907546017794, '武昌区', 0, '2');
 
+-- ----------------------------
+-- Records of message_mail
+-- ----------------------------
+INSERT INTO `message_mail` VALUES (1655809466175283202, 'systemAdmin', '2023-05-09 13:38:35', 'systemAdmin', '2023-05-09 13:38:35', 1636548298722242561, '注册验证码', 'Summer注册验证码', '<p><strong><em>Summer注册验证码</em></strong><em>：</em>${code}</p>\n<p>${expire}<em>分钟后过期！</em></p>\n<p><br></p>', 1);
+INSERT INTO `message_mail` VALUES (1655811238914646017, 'systemAdmin', '2023-05-09 13:45:38', 'systemAdmin', '2023-05-09 13:54:25', 1636548298722242561, '测试邮件', '邮件发送测试', '这是一个测试邮件，请不要回复！uuid：${uuid}，date：${date}', 0);
+
 SET FOREIGN_KEY_CHECKS = 1;

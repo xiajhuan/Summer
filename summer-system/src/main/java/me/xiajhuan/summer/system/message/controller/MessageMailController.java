@@ -18,13 +18,16 @@ import me.xiajhuan.summer.core.data.Result;
 import me.xiajhuan.summer.core.ratelimiter.annotation.RateLimiter;
 import me.xiajhuan.summer.core.utils.AssertUtil;
 import me.xiajhuan.summer.core.validation.group.AddGroup;
+import me.xiajhuan.summer.core.validation.group.DefaultGroup;
 import me.xiajhuan.summer.core.validation.group.UpdateGroup;
 import me.xiajhuan.summer.system.log.annotation.LogOperation;
 import me.xiajhuan.summer.system.message.dto.MessageMailDto;
+import me.xiajhuan.summer.system.message.dto.SendMailDto;
 import me.xiajhuan.summer.system.message.service.MessageMailService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 
@@ -117,5 +120,22 @@ public class MessageMailController {
     }
 
     //*******************Other Operation********************
+
+    /**
+     * 发送
+     *
+     * @param dto   发送邮件Dto
+     * @param files {@link MultipartFile}数组
+     * @return 响应结果
+     */
+    @PostMapping("send")
+    @RequiresPermissions("message:mail:send")
+    @RateLimiter(0.2)
+    @LogOperation("发送")
+    public Result<?> send(@Validated(DefaultGroup.class) SendMailDto dto, MultipartFile[] files) {
+        // note：若没有文件上传，files为null而不是空数组
+        mainService.send(dto, files);
+        return Result.ofSuccess();
+    }
 
 }

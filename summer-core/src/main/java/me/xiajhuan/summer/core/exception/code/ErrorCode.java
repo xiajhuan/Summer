@@ -290,6 +290,11 @@ public interface ErrorCode {
      */
     int MAIL_EXISTS = 16000;
 
+    /**
+     * 邮件【{0}】不存在
+     */
+    int MAIL_NOT_EXISTS = 16001;
+
     //*******************business********************
 
 }

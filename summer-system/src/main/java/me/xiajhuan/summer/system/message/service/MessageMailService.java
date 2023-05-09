@@ -15,7 +15,9 @@ package me.xiajhuan.summer.system.message.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import me.xiajhuan.summer.system.message.dto.MessageMailDto;
+import me.xiajhuan.summer.system.message.dto.SendMailDto;
 import me.xiajhuan.summer.system.message.entity.MessageMailEntity;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 邮件 Service
@@ -34,5 +36,7 @@ public interface MessageMailService extends IService<MessageMailEntity> {
     void update(MessageMailDto dto);
 
     void delete(Long[] ids);
+
+    void send(SendMailDto dto, MultipartFile[] files);
 
 }
