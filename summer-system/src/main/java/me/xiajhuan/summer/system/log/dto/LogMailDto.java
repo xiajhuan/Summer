@@ -15,6 +15,7 @@ package me.xiajhuan.summer.system.log.dto;
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.annotation.format.DateTimeFormat;
 import com.alibaba.excel.annotation.write.style.ColumnWidth;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import me.xiajhuan.summer.core.base.dto.ExcelDto;
@@ -94,5 +95,19 @@ public class LogMailDto extends ExcelDto {
     @DateTimeFormat(DateFormatConst.DATE_TIME)
     @ExcelProperty(value = "创建时间", index = 8)
     private Date createTime;
+
+    //*******************查询参数********************
+
+    /**
+     * 创建时间区间（开始）
+     */
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Date createTimeStart;
+
+    /**
+     * 创建时间区间（结束）
+     */
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Date createTimeEnd;
 
 }

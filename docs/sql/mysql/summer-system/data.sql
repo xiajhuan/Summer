@@ -419,9 +419,10 @@ INSERT INTO `locale_name` VALUES (1654410301851521027, 'superAdmin', '2023-05-05
 INSERT INTO `schedule_task` VALUES (1649246831678017538, 'superAdmin', '2023-04-21 11:01:01', 'superAdmin', '2023-04-21 11:01:01', 'logOperationClearTask', '', '0 0 1 * * ? *', 0, 1, '操作日志清理');
 INSERT INTO `schedule_task` VALUES (1649247935891460098, 'superAdmin', '2023-04-21 11:05:24', 'superAdmin', '2023-04-21 11:05:24', 'logErrorClearTask', '', '0 30 1 * * ? *', 0, 1, '错误日志清理');
 INSERT INTO `schedule_task` VALUES (1649248244256690177, 'superAdmin', '2023-04-21 11:06:38', 'superAdmin', '2023-04-21 11:06:38', 'logLoginClearTask', '', '0 0 2 * * ? *', 0, 1, '登录日志清理');
-INSERT INTO `schedule_task` VALUES (1649248434837475330, 'superAdmin', '2023-04-21 11:07:23', 'superAdmin', '2023-04-21 11:07:23', 'logTaskClearTask', '', '0 30 2 * * ? *', 0, 1, '任务日志清理');
+INSERT INTO `schedule_task` VALUES (1649248434837475330, 'superAdmin', '2023-04-21 11:07:23', 'superAdmin', '2023-04-21 11:07:23', 'logTaskClearTask', '', '0 30 2 * * ? *', 0, 1, '定时任务日志清理');
 INSERT INTO `schedule_task` VALUES (1649250094074777602, 'superAdmin', '2023-04-21 11:13:59', 'superAdmin', '2023-04-21 11:13:59', 'apiDemoTask', '{\"url\": \"http://xxx\"}', '0/20 * * * * ? *', 1, 1, 'ApiDemo');
 INSERT INTO `schedule_task` VALUES (1649250416746778626, 'superAdmin', '2023-04-21 11:15:16', 'superAdmin', '2023-04-21 11:15:16', 'businessDemoTask', '{\"test\": \"xxx\"}', '5/20 * * * * ? *', 2, 1, 'BusinessDemo');
+INSERT INTO `schedule_task` VALUES (1655756146748342273, 'superAdmin', '2023-05-09 10:06:43', 'superAdmin', '2023-05-09 10:06:43', 'logMailClearTask', '', '0 0 3 * * ? *', 0, 1, '邮件日志清理');
 
 -- ----------------------------
 -- Records of dictionary_category
