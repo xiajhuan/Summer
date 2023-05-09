@@ -60,7 +60,7 @@ public class MessageMailDto extends PageSortDto {
      * @see MailContentTypeEnum
      */
     @NotNull(message = "{message.mail.contentType.require}", groups = {AddGroup.class, UpdateGroup.class})
-    private String contentType;
+    private Integer contentType;
 
     /**
      * 创建时间

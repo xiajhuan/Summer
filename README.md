@@ -103,6 +103,7 @@ Summer
 - Shiro：1.11.0
 - Quartz：2.4.0-rc2
 - OkHttp：4.11.0
+- Freemarker：2.3.32
 - CommonsCompress：1.23.0
 - CommonsPool2：2.11.1
 - Guava：31.1-jre

@@ -49,6 +49,6 @@ public class MessageMailEntity extends CommonEntity {
      *
      * @see MailContentTypeEnum
      */
-    private String contentType;
+    private Integer contentType;
 
 }

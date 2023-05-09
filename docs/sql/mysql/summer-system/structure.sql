@@ -502,16 +502,16 @@ CREATE TABLE `extend_oss`
 DROP TABLE IF EXISTS `message_mail`;
 CREATE TABLE `message_mail`
 (
-    `id`          bigint(20)                                                    NOT NULL COMMENT '主键ID',
-    `create_by`   varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL COMMENT '创建者',
-    `create_time` datetime(0)                                                   NULL DEFAULT NULL COMMENT '创建时间',
-    `update_by`   varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL COMMENT '更新者',
-    `update_time` datetime(0)                                                   NULL DEFAULT NULL COMMENT '更新时间',
-    `dept_id`     bigint(20)                                                    NULL DEFAULT NULL COMMENT '部门ID',
-    `name`        varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT '0' COMMENT '邮件名称',
-    `subject`     varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '邮件标题',
-    `content`     text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci         NULL COMMENT '邮件正文',
-    `contentType` tinyint(1)                                                    NULL DEFAULT NULL COMMENT '正文类型 0：普通文本 1：Html文本',
+    `id`           bigint(20)                                                    NOT NULL COMMENT '主键ID',
+    `create_by`    varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL COMMENT '创建者',
+    `create_time`  datetime(0)                                                   NULL DEFAULT NULL COMMENT '创建时间',
+    `update_by`    varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL COMMENT '更新者',
+    `update_time`  datetime(0)                                                   NULL DEFAULT NULL COMMENT '更新时间',
+    `dept_id`      bigint(20)                                                    NULL DEFAULT NULL COMMENT '部门ID',
+    `name`         varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT '0' COMMENT '邮件名称',
+    `subject`      varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '邮件标题',
+    `content`      text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci         NULL COMMENT '邮件正文',
+    `content_type` tinyint(1)                                                    NULL DEFAULT NULL COMMENT '正文类型 0：普通文本 1：Html文本',
     PRIMARY KEY (`id`) USING BTREE,
     INDEX `idx_create_time` (`create_time`) USING BTREE
 ) ENGINE = InnoDB

@@ -285,6 +285,11 @@ public interface ErrorCode {
      */
     int REGION_SUB_DELETE_ERROR = 15001;
 
+    /**
+     * 邮件【{0}】已存在
+     */
+    int MAIL_EXISTS = 16000;
+
     //*******************business********************
 
 }

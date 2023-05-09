@@ -42,6 +42,7 @@
         <shiro.version>1.11.0</shiro.version>
         <quartz.version>2.4.0-rc2</quartz.version>
         <okhttp.version>4.11.0</okhttp.version>
+        <freemarker.version>2.3.32</freemarker.version>
         <commons-compress.version>1.23.0</commons-compress.version>
         <commons-pool2.version>2.11.1</commons-pool2.version>
         <guava.version>31.1-jre</guava.version>
@@ -129,6 +130,12 @@
                 <groupId>com.squareup.okhttp3</groupId>
                 <artifactId>okhttp</artifactId>
                 <version>${okhttp.version}</version>
+            </dependency>
+            <!--Freemarker-->
+            <dependency>
+                <groupId>org.freemarker</groupId>
+                <artifactId>freemarker</artifactId>
+                <version>${freemarker.version}</version>
             </dependency>
             <!--CommonsCompress-->
             <dependency>

@@ -96,6 +96,11 @@
             <groupId>com.squareup.okhttp3</groupId>
             <artifactId>okhttp</artifactId>
         </dependency>
+        <!--Freemarker-->
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+        </dependency>
         <!--CommonsCompress-->
         <dependency>
             <groupId>org.apache.commons</groupId>
