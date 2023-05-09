@@ -175,9 +175,7 @@ public class ServletUtil extends cn.hutool.extra.servlet.ServletUtil {
             }
 
             // 无请求体参数
-            if (StrUtil.isNotBlank(queryParam)) {
-                return queryParam;
-            }
+            return queryParam;
         }
 
         return StrUtil.EMPTY;
@@ -204,7 +202,7 @@ public class ServletUtil extends cn.hutool.extra.servlet.ServletUtil {
      * 参数格式示例：Form-Data【pageNum=1&pageSize=10】或Form-Data【status=1【文件上传】】
      *
      * @param args 参数数组
-     * @return 表单参数或{@code null}
+     * @return 表单参数
      */
     private static String getFormParam(Object[] args) {
         // 排除值为空的参数（包括空数组）
@@ -237,7 +235,7 @@ public class ServletUtil extends cn.hutool.extra.servlet.ServletUtil {
 
             return StrUtil.format("Form-Data【{}】", formParam);
         }
-        return null;
+        return StrUtil.EMPTY;
     }
 
     /**
