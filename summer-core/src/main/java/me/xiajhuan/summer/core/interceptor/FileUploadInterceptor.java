@@ -53,6 +53,7 @@ public class FileUploadInterceptor implements HandlerInterceptor {
      *
      * @throws FileNotFoundException 如果文件没找到
      */
+    @SuppressWarnings("unchecked")
     private FileUploadInterceptor() throws FileNotFoundException {
         FileReader fileReader = FileReader.create(ResourceUtils
                 .getFile("classpath:custom/upload-limit.json"));

@@ -170,7 +170,7 @@ public class SecurityUtil extends SecurityUtils {
     private static Subject acquireSubject() {
         try {
             return getSubject();
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug(e, "获取Subject失败【{}】", e.getMessage());
             } else {

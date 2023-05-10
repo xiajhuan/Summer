@@ -145,7 +145,7 @@ public abstract class AbstractOssServer {
 
             // 将byte数组写入流（自动关闭输出流）
             IoUtil.write(response.getOutputStream(), true, data);
-        } catch (Exception e) {
+        } catch (IOException e) {
             throw FileDownloadException.of(e);
         }
     }

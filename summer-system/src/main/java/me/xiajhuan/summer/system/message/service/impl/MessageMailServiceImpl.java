@@ -16,7 +16,9 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.IORuntimeException;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.extra.mail.MailUtil;
 import cn.hutool.extra.mail.MailAccount;
+import cn.hutool.json.JSONUtil;
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
 import com.baomidou.dynamic.datasource.annotation.DS;
@@ -43,6 +45,7 @@ import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -50,6 +53,8 @@ import java.util.stream.Collectors;
  *
  * @author xiajhuan
  * @date 2023/5/9
+ * @see MailAccount
+ * @see MailUtil
  */
 @Service
 @DS(DataSourceConst.SYSTEM)
@@ -135,7 +140,15 @@ public class MessageMailServiceImpl extends ServiceImpl<MessageMailMapper, Messa
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void send(SendMailDto dto, MultipartFile[] files) {
+        // 参数
+        Map<String, String> params = null;
+        String json = dto.getJson();
+        if (StrUtil.isNotBlank(json)) {
+            params = JSONUtil.toBean(json, Map.class);
+        }
+
         LambdaQueryWrapper<MessageMailEntity> queryWrapper = getEmptyWrapper();
         queryWrapper.eq(MessageMailEntity::getId, dto.getMailId());
         queryWrapper.select(MessageMailEntity::getSubject, MessageMailEntity::getContent);
@@ -156,11 +169,10 @@ public class MessageMailServiceImpl extends ServiceImpl<MessageMailMapper, Messa
                 }
                 return true;
             }).map(file -> {
-                String name = file.getOriginalFilename();
                 try {
                     // 将流的内容写入文件（自动关闭输入流）
                     return FileUtil.writeFromStream(file.getInputStream(),
-                            tmpDir + File.separator + name);
+                            tmpDir + File.separator + file.getOriginalFilename());
                 } catch (IOException e) {
                     throw FileUploadException.of(e);
                 }
@@ -168,7 +180,7 @@ public class MessageMailServiceImpl extends ServiceImpl<MessageMailMapper, Messa
         }
 
         // 发送处理
-        sendInternal(entity.getSubject(), entity.getContent(), dto.getJson(), dto.getReceiversTo(), dto.getReceiversCc(), dto.getReceiversBcc(), fileArray);
+        sendInternal(entity.getSubject(), entity.getContent(), params, dto.getReceiversTo(), dto.getReceiversCc(), dto.getReceiversBcc(), fileArray);
     }
 
     /**
@@ -176,14 +188,14 @@ public class MessageMailServiceImpl extends ServiceImpl<MessageMailMapper, Messa
      *
      * @param subject      邮件标题
      * @param content      邮件正文
-     * @param json         参数（Json格式）
+     * @param params       参数
      * @param receiversTo  收件人，多个以“,”分隔
      * @param receiversCc  抄送人，多个以“,”分隔
      * @param receiversBcc 密送人，多个以“,”分隔
      * @param files        附件
      */
-    private void sendInternal(String subject, String content, String json, String receiversTo, String receiversCc, String receiversBcc, File... files) {
-        // TODO
+    private void sendInternal(String subject, String content, Map<String, String> params, String receiversTo, String receiversCc, String receiversBcc, File... files) {
+
 
         // 删除临时文件
         if (ArrayUtil.isNotEmpty(files)) {

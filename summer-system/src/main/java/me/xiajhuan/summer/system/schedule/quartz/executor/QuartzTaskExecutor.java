@@ -92,7 +92,7 @@ public class QuartzTaskExecutor extends QuartzJobBean {
 
             entity.setTaskTime((int) cost);
             entity.setStatus(OperationStatusEnum.SUCCESS.getValue());
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             // 执行失败
             long cost = timer.interval();
             LOGGER.info(endMsg(type, className, OperationStatusEnum.FAIL.getName(), cost));
