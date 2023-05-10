@@ -37,6 +37,6 @@ public interface MessageMailService extends IService<MessageMailEntity> {
 
     void delete(Long[] ids);
 
-    void send(SendMailDto dto, MultipartFile[] files);
+    boolean send(SendMailDto dto, MultipartFile[] files);
 
 }

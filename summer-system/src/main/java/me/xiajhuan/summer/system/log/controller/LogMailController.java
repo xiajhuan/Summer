@@ -18,6 +18,7 @@ import me.xiajhuan.summer.core.data.PageData;
 import me.xiajhuan.summer.core.data.Result;
 import me.xiajhuan.summer.core.exception.code.ErrorCode;
 import me.xiajhuan.summer.core.ratelimiter.annotation.RateLimiter;
+import me.xiajhuan.summer.core.utils.AssertUtil;
 import me.xiajhuan.summer.core.utils.ExcelUtil;
 import me.xiajhuan.summer.system.log.annotation.LogOperation;
 import me.xiajhuan.summer.system.log.dto.LogMailDto;
@@ -56,6 +57,20 @@ public class LogMailController extends BaseController {
     @LogOperation(OperationConst.PAGE)
     public Result<PageData<LogMailDto>> page(LogMailDto dto) {
         return Result.ofSuccess(PageData.of(mainService.page(dto)));
+    }
+
+    /**
+     * 根据ID获取
+     *
+     * @param id ID
+     * @return 响应结果
+     */
+    @GetMapping("getById")
+    @RequiresPermissions("log:mail:getById")
+    @LogOperation(OperationConst.GET_BY_ID)
+    public Result<LogMailDto> getById(Long id) {
+        AssertUtil.isNotNull("id", id);
+        return Result.ofSuccess(mainService.getById(id));
     }
 
     //*******************Excel Operation********************

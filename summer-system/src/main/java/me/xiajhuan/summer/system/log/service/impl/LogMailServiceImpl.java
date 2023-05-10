@@ -106,6 +106,15 @@ public class LogMailServiceImpl extends ServiceImpl<LogMailMapper, LogMailEntity
     }
 
     @Override
+    public LogMailDto getById(Long id) {
+        LambdaQueryWrapper<LogMailEntity> queryWrapper = getEmptyWrapper();
+        queryWrapper.eq(LogMailEntity::getId, id);
+        queryWrapper.select(LogMailEntity::getId, LogMailEntity::getErrorInfo);
+
+        return BeanUtil.convert(getOne(queryWrapper), LogMailDto.class);
+    }
+
+    @Override
     public long count(LogMailDto dto) {
         return count(getQueryWrapper(dto));
     }

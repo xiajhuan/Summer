@@ -129,9 +129,14 @@ public interface ErrorCode {
     int NOT_NULL = 1016;
 
     /**
+     * Json解析异常【{0}】
+     */
+    int JSON_PARSE_ERROR = 1017;
+
+    /**
      * 定时任务异常【{0}】
      */
-    int SCHEDULE_ERROR = 1017;
+    int SCHEDULE_ERROR = 1018;
 
     //*******************system********************
 
@@ -294,6 +299,11 @@ public interface ErrorCode {
      * 邮件【{0}】不存在
      */
     int MAIL_NOT_EXISTS = 16001;
+
+    /**
+     * 邮件正文和参数不匹配
+     */
+    int PARAMS_NOT_MATCHES_CONTENT = 16002;
 
     //*******************business********************
 

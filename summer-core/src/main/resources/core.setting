@@ -161,8 +161,8 @@ qi-niu.public-bucket = summer-public
 smtp-host = smtp.163.com
 # SMTP端口，默认为25
 smtp-port = 25
-# 启用SSL安全连接，note：部分邮箱需强制开启SSL支持
-enable-ssl = true
+# 启用SSL安全连接，值：true/false，note：部分邮箱需强制开启SSL支持
+enable-ssl = false
 
 # 发件人
 sender = zhengCping@163.com

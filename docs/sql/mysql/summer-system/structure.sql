@@ -324,13 +324,14 @@ CREATE TABLE `log_mail`
     `create_by`     varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci   NULL DEFAULT NULL COMMENT '创建者',
     `create_time`   datetime(0)                                                    NULL DEFAULT NULL COMMENT '创建时间',
     `mail_name`     varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci   NULL DEFAULT NULL COMMENT '邮件名称',
-    `sender`        varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci   NULL DEFAULT NULL COMMENT '发送人',
-    `receivers_to`  varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '收件人，多个以“,”分隔',
-    `receivers_cc`  varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '抄送人，多个以“,”分隔',
-    `receivers_bcc` varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '密送人，多个以“,”分隔',
+    `sender`        varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci   NULL DEFAULT NULL COMMENT '发件人',
+    `receivers_to`  varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '收件人',
+    `receivers_cc`  varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '抄送人',
+    `receivers_bcc` varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '密送人',
     `subject`       varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL COMMENT '邮件标题',
     `content`       text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci          NULL COMMENT '邮件正文',
     `status`        tinyint(1)                                                     NULL DEFAULT NULL COMMENT '状态  0：失败 1：成功',
+    `error_info`    text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci          NULL COMMENT '异常堆栈信息',
     PRIMARY KEY (`id`) USING BTREE,
     INDEX `idx_create_time` (`create_time`) USING BTREE
 ) ENGINE = InnoDB

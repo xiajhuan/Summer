@@ -48,23 +48,23 @@ public class LogMailDto extends ExcelDto {
     private String sender;
 
     /**
-     * 收件人，多个以“,”分隔
+     * 收件人
      */
-    @ColumnWidth(40)
+    @ColumnWidth(60)
     @ExcelProperty(value = "收件人", index = 2)
     private String receiversTo;
 
     /**
-     * 抄送人，多个以“,”分隔
+     * 抄送人
      */
-    @ColumnWidth(40)
+    @ColumnWidth(60)
     @ExcelProperty(value = "抄送人", index = 3)
     private String receiversCc;
 
     /**
-     * 密送人，多个以“,”分隔
+     * 密送人
      */
-    @ColumnWidth(40)
+    @ColumnWidth(60)
     @ExcelProperty(value = "密送人", index = 4)
     private String receiversBcc;
 
@@ -95,6 +95,11 @@ public class LogMailDto extends ExcelDto {
     @DateTimeFormat(DateFormatConst.DATE_TIME)
     @ExcelProperty(value = "创建时间", index = 8)
     private Date createTime;
+
+    /**
+     * 异常堆栈信息
+     */
+    private String errorInfo;
 
     //*******************查询参数********************
 

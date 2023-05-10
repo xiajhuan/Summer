@@ -33,6 +33,8 @@ public interface LogMailService extends IService<LogMailEntity> {
 
     List<LogMailDto> list(LogMailDto dto);
 
+    LogMailDto getById(Long id);
+
     /**
      * 统计记录数
      *

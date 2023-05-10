@@ -18,6 +18,7 @@ import cn.hutool.core.io.unit.DataSizeUtil;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.json.JSONUtil;
 import me.xiajhuan.summer.core.exception.code.ErrorCode;
+import me.xiajhuan.summer.core.exception.custom.SystemException;
 import me.xiajhuan.summer.core.exception.custom.ValidationException;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -57,7 +58,11 @@ public class FileUploadInterceptor implements HandlerInterceptor {
     private FileUploadInterceptor() throws FileNotFoundException {
         FileReader fileReader = FileReader.create(ResourceUtils
                 .getFile("classpath:custom/upload-limit.json"));
-        uploadLimit = JSONUtil.toBean(fileReader.readString(), Map.class);
+        try {
+            uploadLimit = JSONUtil.toBean(fileReader.readString(), Map.class);
+        } catch (RuntimeException e) {
+            throw SystemException.of(e, ErrorCode.JSON_PARSE_ERROR, e.getMessage());
+        }
     }
 
     /**

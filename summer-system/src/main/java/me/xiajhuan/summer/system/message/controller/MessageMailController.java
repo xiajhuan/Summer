@@ -134,8 +134,10 @@ public class MessageMailController {
     @LogOperation("发送")
     public Result<?> send(@Validated(DefaultGroup.class) SendMailDto dto, MultipartFile[] files) {
         // note：若没有文件上传，files为null而不是空数组
-        mainService.send(dto, files);
-        return Result.ofSuccess();
+        if (mainService.send(dto, files)) {
+            return Result.ofSuccess();
+        }
+        return Result.ofFail();
     }
 
 }

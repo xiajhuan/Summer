@@ -34,7 +34,7 @@ public class LogMailEntity extends SimpleEntity {
     /**
      * 邮件名称
      */
-    private Long mailName;
+    private String mailName;
 
     /**
      * 发件人
@@ -42,17 +42,17 @@ public class LogMailEntity extends SimpleEntity {
     private String sender;
 
     /**
-     * 收件人，多个以“,”分隔
+     * 收件人
      */
     private String receiversTo;
 
     /**
-     * 抄送人，多个以“,”分隔
+     * 抄送人
      */
     private String receiversCc;
 
     /**
-     * 密送人，多个以“,”分隔
+     * 密送人
      */
     private String receiversBcc;
 
@@ -72,5 +72,10 @@ public class LogMailEntity extends SimpleEntity {
      * @see OperationStatusEnum
      */
     private Integer status;
+
+    /**
+     * 异常堆栈信息
+     */
+    private String errorInfo;
 
 }
