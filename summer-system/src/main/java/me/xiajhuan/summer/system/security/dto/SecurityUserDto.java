@@ -27,7 +27,7 @@ import me.xiajhuan.summer.core.constant.DataScopeConst;
 import me.xiajhuan.summer.core.validation.annotation.Mobile;
 import me.xiajhuan.summer.core.validation.group.AddGroup;
 import me.xiajhuan.summer.core.validation.group.UpdateGroup;
-import me.xiajhuan.summer.system.security.excel.converter.DataScopeConverter;
+import me.xiajhuan.summer.core.excel.converter.DataScopeConverter;
 import me.xiajhuan.summer.system.security.excel.converter.GenderConverter;
 import org.hibernate.validator.constraints.Range;
 

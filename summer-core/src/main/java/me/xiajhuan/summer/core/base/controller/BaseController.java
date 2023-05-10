@@ -18,7 +18,7 @@ import cn.hutool.core.util.StrUtil;
 import me.xiajhuan.summer.core.data.LoginUser;
 import me.xiajhuan.summer.core.exception.code.ErrorCode;
 import me.xiajhuan.summer.core.exception.custom.ValidationException;
-import me.xiajhuan.summer.core.oss.factory.OssServerFactory;
+import me.xiajhuan.summer.core.oss.server.OssServerFactory;
 import me.xiajhuan.summer.core.utils.AssertUtil;
 import me.xiajhuan.summer.core.utils.SecurityUtil;
 import org.springframework.beans.factory.annotation.Value;

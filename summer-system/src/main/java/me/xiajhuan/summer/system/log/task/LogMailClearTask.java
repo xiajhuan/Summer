@@ -13,7 +13,7 @@
 package me.xiajhuan.summer.system.log.task;
 
 import me.xiajhuan.summer.system.log.service.LogMailService;
-import me.xiajhuan.summer.system.schedule.quartz.task.QuartzTask;
+import me.xiajhuan.summer.system.schedule.task.QuartzTask;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;

@@ -19,7 +19,7 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import me.xiajhuan.summer.core.cache.factory.CacheServerFactory;
+import me.xiajhuan.summer.core.cache.server.CacheServerFactory;
 import me.xiajhuan.summer.core.cache.server.CacheServer;
 import me.xiajhuan.summer.core.constant.CacheConst;
 import me.xiajhuan.summer.core.constant.DataSourceConst;

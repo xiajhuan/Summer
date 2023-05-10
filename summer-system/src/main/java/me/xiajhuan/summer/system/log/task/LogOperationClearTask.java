@@ -12,7 +12,7 @@
 
 package me.xiajhuan.summer.system.log.task;
 
-import me.xiajhuan.summer.system.schedule.quartz.task.QuartzTask;
+import me.xiajhuan.summer.system.schedule.task.QuartzTask;
 import me.xiajhuan.summer.system.log.service.LogOperationService;
 import org.springframework.stereotype.Component;
 

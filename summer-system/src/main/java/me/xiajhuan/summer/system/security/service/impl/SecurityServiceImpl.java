@@ -20,7 +20,7 @@ import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.setting.Setting;
 import com.baomidou.dynamic.datasource.annotation.DS;
-import me.xiajhuan.summer.core.cache.factory.CacheServerFactory;
+import me.xiajhuan.summer.core.cache.server.CacheServerFactory;
 import me.xiajhuan.summer.core.cache.server.CacheServer;
 import me.xiajhuan.summer.core.constant.*;
 import me.xiajhuan.summer.core.data.LoginUser;

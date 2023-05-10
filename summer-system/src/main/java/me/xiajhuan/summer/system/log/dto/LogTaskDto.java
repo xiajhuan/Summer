@@ -22,8 +22,8 @@ import me.xiajhuan.summer.core.base.dto.ExcelDto;
 import me.xiajhuan.summer.core.constant.DateFormatConst;
 import me.xiajhuan.summer.core.enums.OperationStatusEnum;
 import me.xiajhuan.summer.core.enums.TaskTypeEnum;
-import me.xiajhuan.summer.system.log.excel.converter.OperationStatusConverter;
-import me.xiajhuan.summer.system.log.excel.converter.TaskTypeConverter;
+import me.xiajhuan.summer.core.excel.converter.OperationStatusConverter;
+import me.xiajhuan.summer.core.excel.converter.TaskTypeConverter;
 
 import java.util.Date;
 

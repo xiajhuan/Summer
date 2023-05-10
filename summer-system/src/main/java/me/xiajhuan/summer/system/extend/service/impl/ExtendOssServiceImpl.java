@@ -20,7 +20,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import me.xiajhuan.summer.core.constant.DataSourceConst;
 import me.xiajhuan.summer.core.enums.BucketTypeEnum;
 import me.xiajhuan.summer.core.mp.helper.MpHelper;
-import me.xiajhuan.summer.core.oss.factory.OssServerFactory;
+import me.xiajhuan.summer.core.oss.server.OssServerFactory;
 import me.xiajhuan.summer.core.oss.server.AbstractOssServer;
 import me.xiajhuan.summer.core.utils.BeanUtil;
 import me.xiajhuan.summer.system.extend.dto.ExtendOssDto;

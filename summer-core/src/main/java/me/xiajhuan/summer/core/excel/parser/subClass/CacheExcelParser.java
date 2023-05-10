@@ -16,7 +16,7 @@ import cn.hutool.extra.spring.SpringUtil;
 import cn.hutool.json.JSONUtil;
 import cn.hutool.setting.Setting;
 import com.alibaba.excel.context.AnalysisContext;
-import me.xiajhuan.summer.core.cache.factory.CacheServerFactory;
+import me.xiajhuan.summer.core.cache.server.CacheServerFactory;
 import me.xiajhuan.summer.core.constant.SettingConst;
 import me.xiajhuan.summer.core.constant.TimeUnitConst;
 import me.xiajhuan.summer.core.excel.parser.AbstractExcelParser;

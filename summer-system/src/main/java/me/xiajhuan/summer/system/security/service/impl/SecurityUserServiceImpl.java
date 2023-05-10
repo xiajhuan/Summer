@@ -21,7 +21,7 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import me.xiajhuan.summer.core.cache.factory.CacheServerFactory;
+import me.xiajhuan.summer.core.cache.server.CacheServerFactory;
 import me.xiajhuan.summer.core.constant.DataSourceConst;
 import me.xiajhuan.summer.core.constant.SettingConst;
 import me.xiajhuan.summer.core.data.LoginUser;

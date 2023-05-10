@@ -14,7 +14,7 @@ package me.xiajhuan.summer.admin.task.api;
 
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
-import me.xiajhuan.summer.system.schedule.quartz.task.QuartzTask;
+import me.xiajhuan.summer.system.schedule.task.QuartzTask;
 import org.springframework.stereotype.Component;
 
 /**
