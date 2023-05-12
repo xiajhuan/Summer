@@ -37,7 +37,6 @@ public class ExtendOssDto extends PageSortDto {
     /**
      * 文件名称
      */
-    @NotBlank(message = "{extend.oss.name.require}", groups = DefaultGroup.class)
     private String name;
 
     /**

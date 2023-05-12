@@ -12,10 +12,11 @@
 
 package me.xiajhuan.summer.core.base.controller;
 
+import cn.hutool.core.io.file.FileNameUtil;
 import cn.hutool.core.lang.Dict;
-import cn.hutool.core.text.StrPool;
 import cn.hutool.core.util.StrUtil;
 import me.xiajhuan.summer.core.data.LoginUser;
+import me.xiajhuan.summer.core.enums.FileTypeEnum;
 import me.xiajhuan.summer.core.exception.code.ErrorCode;
 import me.xiajhuan.summer.core.exception.custom.ValidationException;
 import me.xiajhuan.summer.core.oss.server.OssServerFactory;
@@ -58,6 +59,19 @@ public abstract class BaseController {
     }
 
     /**
+     * 校验文件类型
+     *
+     * @param file {@link MultipartFile}
+     * @param type 类型，参考{@link FileTypeEnum}
+     */
+    protected void validateFileType(MultipartFile file, FileTypeEnum type) {
+        if (file != null && !StrUtil.equalsAny(
+                FileNameUtil.getSuffix(file.getOriginalFilename()), type.getSuffixArray())) {
+            throw ValidationException.of(ErrorCode.FILE_ALLOWED_ONLY, type.getName());
+        }
+    }
+
+    /**
      * 多文件上传
      *
      * @param files     {@link MultipartFile}数组
@@ -75,25 +89,14 @@ public abstract class BaseController {
      *
      * @param file      {@link MultipartFile}
      * @param isPrivate 是否私有，true：是 false：否
-     * @return {@link Dict}
+     * @return {@link Dict}或{@code null}
      */
     protected Dict fileUpload(MultipartFile file, boolean isPrivate) {
         return OssServerFactory.getOssServer().upload(file, isPrivate);
     }
 
     /**
-     * 文件下载，使用默认文件名称
-     *
-     * @param path      路径（相对路径）
-     * @param isPrivate 是否私有，true：是 false：否
-     * @param response  {@link HttpServletResponse}
-     */
-    protected void fileDownload(String path, boolean isPrivate, HttpServletResponse response) {
-        fileDownload(path, StrUtil.subAfter(path, StrPool.SLASH, true), isPrivate, response);
-    }
-
-    /**
-     * 文件下载，指定文件名称
+     * 文件下载
      *
      * @param path      路径（相对路径）
      * @param fileName  文件名称

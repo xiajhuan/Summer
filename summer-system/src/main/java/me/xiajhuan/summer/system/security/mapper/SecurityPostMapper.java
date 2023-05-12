@@ -17,6 +17,8 @@ import me.xiajhuan.summer.system.security.entity.SecurityPostEntity;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.Set;
+
 /**
  * 岗位 Mapper
  *
@@ -33,5 +35,19 @@ public interface SecurityPostMapper extends BaseMapper<SecurityPostEntity> {
      */
     @Select("SELECT 1 FROM security_post WHERE code = #{code} LIMIT 1")
     Integer exist(@Param("code") String code);
+
+    /**
+     * 获取岗位名称集合
+     *
+     * @param idSet ID集合
+     * @return 岗位名称集合
+     */
+    @Select("<script>" +
+            "  SELECT name FROM security_post WHERE id IN " +
+            "  <foreach item=\"id\" collection=\"idSet\" open=\"(\" separator=\",\" close=\")\">" +
+            "    #{id} " +
+            "  </foreach>" +
+            "</script>")
+    Set<String> getNameSet(@Param("idSet") Set<Long> idSet);
 
 }

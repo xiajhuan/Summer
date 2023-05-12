@@ -78,16 +78,6 @@ public class MinIoOssServer extends AbstractOssServer {
     //*******************单例处理结束********************
 
     @Override
-    public void delete(String path, boolean isPrivate) {
-        // 删除文件
-        if (isPrivate) {
-            minIoDelete(privateBucket, path);
-        } else {
-            minIoDelete(publicBucket, path);
-        }
-    }
-
-    @Override
     protected String getSupportType() {
         return OssSupportEnum.MIN_IO.getValue();
     }
@@ -117,9 +107,19 @@ public class MinIoOssServer extends AbstractOssServer {
                     // URL（外链）
                     minIoUrl(path);
         } catch (ErrorResponseException | InsufficientDataException | InternalException
-                 | InvalidKeyException | InvalidResponseException | IOException
-                 | NoSuchAlgorithmException | ServerException | XmlParserException e) {
+                | InvalidKeyException | InvalidResponseException | IOException
+                | NoSuchAlgorithmException | ServerException | XmlParserException e) {
             throw FileDownloadException.of(e);
+        }
+    }
+
+    @Override
+    public void deleteInternal(String path, boolean isPrivate) {
+        // 删除文件
+        if (isPrivate) {
+            minIoDelete(privateBucket, path);
+        } else {
+            minIoDelete(publicBucket, path);
         }
     }
 
@@ -135,8 +135,8 @@ public class MinIoOssServer extends AbstractOssServer {
                     .bucket(bucket)
                     .object(path).build());
         } catch (ErrorResponseException | InsufficientDataException | InternalException
-                 | InvalidKeyException | InvalidResponseException | IOException
-                 | NoSuchAlgorithmException | ServerException | XmlParserException e) {
+                | InvalidKeyException | InvalidResponseException | IOException
+                | NoSuchAlgorithmException | ServerException | XmlParserException e) {
             throw SystemException.of(e, ErrorCode.FILE_DELETE_FAILURE, e.getMessage());
         }
     }
@@ -156,8 +156,8 @@ public class MinIoOssServer extends AbstractOssServer {
                     .stream(inputStream, inputStream.available(), -1)
                     .contentType(MediaType.APPLICATION_OCTET_STREAM_VALUE).build());
         } catch (ErrorResponseException | InsufficientDataException | InternalException
-                 | InvalidKeyException | InvalidResponseException | IOException
-                 | NoSuchAlgorithmException | ServerException | XmlParserException e) {
+                | InvalidKeyException | InvalidResponseException | IOException
+                | NoSuchAlgorithmException | ServerException | XmlParserException e) {
             throw FileUploadException.of(e);
         }
     }

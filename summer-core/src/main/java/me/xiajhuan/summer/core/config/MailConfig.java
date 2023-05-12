@@ -40,7 +40,7 @@ public class MailConfig {
         MailAccount mailAccount = new MailAccount();
         mailAccount.setHost(setting.getByGroupWithLog("smtp-host", "Mail"));
         mailAccount.setPort(setting.getInt("smtp-port", "Mail", 25));
-        mailAccount.setSslEnable(setting.getBool("enable-ssl", "Mail", true));
+        mailAccount.setSslEnable(setting.getBool("enable-ssl", "Mail", false));
         mailAccount.setFrom(setting.getByGroupWithLog("sender", "Mail"));
         // 是否需要用户名/密码验证
         mailAccount.setAuth(true);

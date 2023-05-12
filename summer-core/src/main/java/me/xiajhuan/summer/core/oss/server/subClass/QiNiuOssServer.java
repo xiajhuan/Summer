@@ -108,16 +108,6 @@ public class QiNiuOssServer extends AbstractOssServer {
     //*******************单例处理结束********************
 
     @Override
-    public void delete(String path, boolean isPrivate) {
-        // 删除文件
-        if (isPrivate) {
-            qiNiuDelete(privateBucket, path);
-        } else {
-            qiNiuDelete(publicBucket, path);
-        }
-    }
-
-    @Override
     protected String getSupportType() {
         return OssSupportEnum.QI_NIU.getValue();
     }
@@ -142,6 +132,16 @@ public class QiNiuOssServer extends AbstractOssServer {
                 auth.privateDownloadUrl(qiNiuUrl(privateDomain, path)) :
                 // URL（外链）
                 qiNiuUrl(publicDomain, path);
+    }
+
+    @Override
+    public void deleteInternal(String path, boolean isPrivate) {
+        // 删除文件
+        if (isPrivate) {
+            qiNiuDelete(privateBucket, path);
+        } else {
+            qiNiuDelete(publicBucket, path);
+        }
     }
 
     /**

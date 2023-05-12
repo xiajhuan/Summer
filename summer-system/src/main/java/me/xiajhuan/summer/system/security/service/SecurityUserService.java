@@ -12,10 +12,12 @@
 
 package me.xiajhuan.summer.system.security.service;
 
+import cn.hutool.core.lang.Dict;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import me.xiajhuan.summer.system.security.dto.PasswordDto;
 import me.xiajhuan.summer.system.security.dto.SecurityUserDto;
+import me.xiajhuan.summer.system.security.dto.UserInfoDto;
 import me.xiajhuan.summer.system.security.entity.SecurityUserEntity;
 
 import java.util.List;
@@ -56,6 +58,10 @@ public interface SecurityUserService extends IService<SecurityUserEntity> {
      */
     SecurityUserEntity getByUsername(String username);
 
+    UserInfoDto info();
+
+    void updateInfo(UserInfoDto dto, Dict dict);
+
     /**
      * 修改密码并退出
      *
@@ -63,12 +69,6 @@ public interface SecurityUserService extends IService<SecurityUserEntity> {
      */
     void updatePasswordAndLogout(PasswordDto dto);
 
-    /**
-     * 重置密码
-     *
-     * @param ids ID数组
-     * @return 重置后的密码或{@code null}
-     */
     String reset(Long[] ids);
 
 }

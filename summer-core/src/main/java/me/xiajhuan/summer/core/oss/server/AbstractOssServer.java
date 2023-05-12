@@ -18,6 +18,7 @@ import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.io.file.FileNameUtil;
 import cn.hutool.core.lang.Dict;
 import cn.hutool.core.lang.UUID;
+import cn.hutool.core.text.StrPool;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.log.Log;
@@ -123,30 +124,32 @@ public abstract class AbstractOssServer {
      * @param response  {@link HttpServletResponse}
      */
     public void download(String path, String fileName, boolean isPrivate, HttpServletResponse response) {
-        // byte数组（文件内容）
-        final byte[] data;
-        // 下载URL，note：本地服务器存储时为绝对路径
-        String url = getDownloadUrl(path, isPrivate);
-        try {
-            // 下载处理
-            if (OssSupportEnum.LOCAL.getValue().equals(getSupportType())) {
-                // 本地下载
-                data = FileUtil.readBytes(url);
-            } else {
-                // 远程下载
-                data = HttpUtil.downloadBytes(url);
-            }
-            // 设置响应头
-            response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
-            response.setCharacterEncoding("UTF-8");
-            response.setHeader("Content-Disposition",
-                    StrUtil.format("attachment;filename={}",
-                            URLEncoder.encode(fileName, "UTF-8")));
+        if (response != null && StrUtil.isNotBlank(path)) {
+            // byte数组（文件内容）
+            final byte[] data;
+            // 下载URL，note：本地服务器存储时为绝对路径
+            String url = getDownloadUrl(path, isPrivate);
+            try {
+                // 下载处理
+                if (OssSupportEnum.LOCAL.getValue().equals(getSupportType())) {
+                    // 本地下载
+                    data = FileUtil.readBytes(url);
+                } else {
+                    // 远程下载
+                    data = HttpUtil.downloadBytes(url);
+                }
+                // 设置响应头
+                response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
+                response.setCharacterEncoding("UTF-8");
+                response.setHeader("Content-Disposition",
+                        StrUtil.format("attachment;filename={}", URLEncoder.encode(StrUtil.isNotBlank(fileName) ?
+                                fileName : StrUtil.subAfter(path, StrPool.SLASH, true), "UTF-8")));
 
-            // 将byte数组写入流（自动关闭输出流）
-            IoUtil.write(response.getOutputStream(), true, data);
-        } catch (IOException e) {
-            throw FileDownloadException.of(e);
+                // 将byte数组写入流（自动关闭输出流）
+                IoUtil.write(response.getOutputStream(), true, data);
+            } catch (IOException e) {
+                throw FileDownloadException.of(e);
+            }
         }
     }
 
@@ -156,7 +159,11 @@ public abstract class AbstractOssServer {
      * @param path      路径（相对路径）
      * @param isPrivate 是否私有，true：是 false：否
      */
-    public abstract void delete(String path, boolean isPrivate);
+    public void delete(String path, boolean isPrivate) {
+        if (StrUtil.isNotBlank(path)) {
+            deleteInternal(path, isPrivate);
+        }
+    }
 
     /**
      * 获取支持类型，参考{@link OssSupportEnum}
@@ -183,6 +190,14 @@ public abstract class AbstractOssServer {
      * @return 下载URL
      */
     protected abstract String getDownloadUrl(String path, boolean isPrivate);
+
+    /**
+     * 删除处理
+     *
+     * @param path      路径（相对路径）
+     * @param isPrivate 是否私有，true：是 false：否
+     */
+    protected abstract void deleteInternal(String path, boolean isPrivate);
 
     /**
      * 校验配置

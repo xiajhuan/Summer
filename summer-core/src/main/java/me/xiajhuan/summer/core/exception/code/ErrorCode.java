@@ -74,69 +74,74 @@ public interface ErrorCode {
     int FILE_TYPE_EXCEED = 1005;
 
     /**
+     * 只允许上传{0}
+     */
+    int FILE_ALLOWED_ONLY = 1006;
+
+    /**
      * 文件上传失败
      */
-    int FILE_UPLOAD_FAILURE = 1006;
+    int FILE_UPLOAD_FAILURE = 1007;
 
     /**
      * 文件下载失败
      */
-    int FILE_DOWNLOAD_FAILURE = 1007;
+    int FILE_DOWNLOAD_FAILURE = 1008;
 
     /**
      * 文件删除失败【{0}】
      */
-    int FILE_DELETE_FAILURE = 1008;
+    int FILE_DELETE_FAILURE = 1009;
 
     /**
      * 没有开启验证码校验功能
      */
-    int CAPTCHA_DISABLE = 1009;
+    int CAPTCHA_DISABLE = 1010;
 
     /**
      * 验证码获取失败
      */
-    int CAPTCHA_GET_FAILURE = 1010;
+    int CAPTCHA_GET_FAILURE = 1011;
 
     /**
      * Excel导入失败，第{0}行：
      */
-    int EXCEL_IMPORT_FAILURE_PREFIX = 1011;
+    int EXCEL_IMPORT_FAILURE_PREFIX = 1012;
 
     /**
      * Excel模板下载失败
      */
-    int EXCEL_TEMPLATE_DOWNLOAD_FAILURE = 1012;
+    int EXCEL_TEMPLATE_DOWNLOAD_FAILURE = 1013;
 
     /**
      * Excel导出失败
      */
-    int EXCEL_EXPORT_FAILURE = 1013;
+    int EXCEL_EXPORT_FAILURE = 1014;
 
     /**
      * 最多导出{0}条记录
      */
-    int EXCEL_EXPORT_MAXIMUM_LIMIT = 1014;
+    int EXCEL_EXPORT_MAXIMUM_LIMIT = 1015;
 
     /**
      * 不能包含非法字符
      */
-    int INVALID_SYMBOL = 1015;
+    int INVALID_SYMBOL = 1016;
 
     /**
      * {0}不能为空
      */
-    int NOT_NULL = 1016;
+    int NOT_NULL = 1017;
 
     /**
      * Json解析异常【{0}】
      */
-    int JSON_PARSE_ERROR = 1017;
+    int JSON_PARSE_ERROR = 1018;
 
     /**
      * 定时任务异常【{0}】
      */
-    int SCHEDULE_ERROR = 1018;
+    int SCHEDULE_ERROR = 1019;
 
     //*******************system********************
 

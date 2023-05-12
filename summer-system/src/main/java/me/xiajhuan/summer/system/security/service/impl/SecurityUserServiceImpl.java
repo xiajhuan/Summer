@@ -13,6 +13,7 @@
 package me.xiajhuan.summer.system.security.service.impl;
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.lang.Dict;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.setting.Setting;
 import com.baomidou.dynamic.datasource.annotation.DS;
@@ -29,17 +30,17 @@ import me.xiajhuan.summer.core.enums.UserTypeEnum;
 import me.xiajhuan.summer.core.exception.code.ErrorCode;
 import me.xiajhuan.summer.core.exception.custom.ValidationException;
 import me.xiajhuan.summer.core.mp.helper.MpHelper;
+import me.xiajhuan.summer.core.oss.server.OssServerFactory;
 import me.xiajhuan.summer.core.utils.BeanUtil;
 import me.xiajhuan.summer.core.utils.SecurityUtil;
 import me.xiajhuan.summer.system.monitor.service.MonitorOnlineService;
 import me.xiajhuan.summer.system.security.dto.PasswordDto;
 import me.xiajhuan.summer.system.security.dto.SecurityUserDto;
+import me.xiajhuan.summer.system.security.dto.UserInfoDto;
 import me.xiajhuan.summer.system.security.entity.SecurityRoleUserEntity;
 import me.xiajhuan.summer.system.security.entity.SecurityUserEntity;
 import me.xiajhuan.summer.system.security.entity.SecurityUserPostEntity;
-import me.xiajhuan.summer.system.security.mapper.SecurityRoleUserMapper;
-import me.xiajhuan.summer.system.security.mapper.SecurityUserMapper;
-import me.xiajhuan.summer.system.security.mapper.SecurityUserPostMapper;
+import me.xiajhuan.summer.system.security.mapper.*;
 import me.xiajhuan.summer.system.security.service.SecurityService;
 import me.xiajhuan.summer.system.security.service.SecurityUserService;
 
@@ -78,25 +79,31 @@ public class SecurityUserServiceImpl extends ServiceImpl<SecurityUserMapper, Sec
     private MonitorOnlineService monitorOnlineService;
 
     @Resource
+    private SecurityRoleMapper securityRoleMapper;
+
+    @Resource
     private SecurityRoleUserMapper securityRoleUserMapper;
 
     @Resource
     private SecurityUserPostMapper securityUserPostMapper;
 
+    @Resource
+    private SecurityPostMapper securityPostMapper;
+
     /**
-     * 重置后的密码
+     * 默认密码
      */
-    private String passwordReset;
+    private String defaultPassword;
 
     /**
      * 初始化
      */
     @PostConstruct
     private void init() {
-        passwordReset = setting.getByGroupWithLog("password-reset", "Security");
-        if (StrUtil.isBlank(passwordReset)) {
+        defaultPassword = setting.getByGroupWithLog("default-password", "Security");
+        if (StrUtil.isBlank(defaultPassword)) {
             // 没有配置则默认为：123456
-            passwordReset = "123456";
+            defaultPassword = "123456";
         }
     }
 
@@ -130,41 +137,26 @@ public class SecurityUserServiceImpl extends ServiceImpl<SecurityUserMapper, Sec
     @Override
     public LambdaQueryWrapper<SecurityUserEntity> addSelectField(LambdaQueryWrapper<SecurityUserEntity> queryWrapper) {
         return queryWrapper.select(SecurityUserEntity::getId, SecurityUserEntity::getUsername, SecurityUserEntity::getRealName,
-                SecurityUserEntity::getHeadUrl, SecurityUserEntity::getGender, SecurityUserEntity::getEmail,
-                SecurityUserEntity::getMobile, SecurityUserEntity::getDeptId, SecurityUserEntity::getStatus,
+                SecurityUserEntity::getGender, SecurityUserEntity::getDeptId, SecurityUserEntity::getStatus,
                 SecurityUserEntity::getDataScope, SecurityUserEntity::getCreateTime);
     }
 
     @Override
     public void handleDtoBefore(SecurityUserDto dto) {
-        String password = dto.getPassword();
-        if (StrUtil.isNotBlank(password)) {
-            if (!password.equals(dto.getConfirmPassword())) {
-                // 密码和确认密码不一致
-                throw ValidationException.of(ErrorCode.PASSWORD_CONFIRM_ERROR);
-            }
-
-            // 加密密码
-            dto.setPassword(SecurityUtil.encode(password));
-        } else {
-            // 修改时密码可能为空串，设为null让MybatisPlus更新时忽略
-            dto.setPassword(null);
-        }
-
-        // 新增时用户名不能重复
-        if (dto.getId() == null) {
-            String username = dto.getUsername();
-            if (baseMapper.exist(username) != null) {
-                throw ValidationException.of(ErrorCode.USER_EXISTS, username);
-            }
+        String username = dto.getUsername();
+        if (baseMapper.exist(username, dto.getId()) != null) {
+            throw ValidationException.of(ErrorCode.USER_EXISTS, username);
         }
     }
 
     @Override
     public void handleEntityAfter(SecurityUserEntity entity) {
         // 本部门名称
-        entity.setDeptName(String.valueOf(CacheServerFactory.getCacheServer()
-                .getHash(dept(entity.getDeptId()), "name")));
+        Long deptId = entity.getDeptId();
+        if (deptId != null) {
+            entity.setDeptName(String.valueOf(CacheServerFactory.getCacheServer()
+                    .getHash(dept(deptId), "name")));
+        }
     }
 
     //*******************MpHelper覆写结束********************
@@ -216,6 +208,8 @@ public class SecurityUserServiceImpl extends ServiceImpl<SecurityUserMapper, Sec
         handleDtoBefore(dto);
 
         SecurityUserEntity entity = BeanUtil.convert(dto, SecurityUserEntity.class);
+        // 加密密码
+        entity.setPassword(SecurityUtil.encode(defaultPassword));
 
         // 保存用户
         String currentUsername = SecurityUtil.getCurrentUsername();
@@ -243,10 +237,7 @@ public class SecurityUserServiceImpl extends ServiceImpl<SecurityUserMapper, Sec
 
         Long id = dto.getId();
         // 更新前的用户名
-        LambdaQueryWrapper<SecurityUserEntity> queryWrapper = getEmptyWrapper();
-        queryWrapper.eq(SecurityUserEntity::getId, id);
-        queryWrapper.select(SecurityUserEntity::getUsername);
-        String oldUsername = getOne(queryWrapper).getUsername();
+        String oldUsername = baseMapper.getUsername(id);
 
         SecurityUserEntity entity = BeanUtil.convert(dto, SecurityUserEntity.class);
 
@@ -307,6 +298,51 @@ public class SecurityUserServiceImpl extends ServiceImpl<SecurityUserMapper, Sec
     }
 
     @Override
+    public UserInfoDto info() {
+        Long id = SecurityUtil.getCurrentUserId();
+
+        LambdaQueryWrapper<SecurityUserEntity> queryWrapper = getEmptyWrapper();
+        queryWrapper.eq(SecurityUserEntity::getId, id);
+        queryWrapper.select(SecurityUserEntity::getId, SecurityUserEntity::getRealName, SecurityUserEntity::getDeptId,
+                SecurityUserEntity::getGender, SecurityUserEntity::getEmail, SecurityUserEntity::getMobile,
+                SecurityUserEntity::getHeadUrl, SecurityUserEntity::getHeadPath, SecurityUserEntity::getDescription);
+
+        SecurityUserEntity entity = getOne(queryWrapper);
+        if (entity != null) {
+            // 本部门名称
+            handleEntityAfter(entity);
+
+            UserInfoDto dto = BeanUtil.convert(entity, UserInfoDto.class);
+            // 角色名称集合
+            Set<Long> roleIdSet = securityRoleUserMapper.getRoleIdSet(id);
+            if (roleIdSet.size() > 0) {
+                dto.setRoleNameSet(securityRoleMapper.getNameSet(roleIdSet));
+            }
+            // 岗位名称集合
+            Set<Long> postIdSet = securityUserPostMapper.getPostIdSet(id);
+            if (postIdSet.size() > 0) {
+                dto.setPostNameSet(securityPostMapper.getNameSet(postIdSet));
+            }
+
+            return dto;
+        }
+        return null;
+    }
+
+    @Override
+    public void updateInfo(UserInfoDto dto, Dict dict) {
+        if (dict != null) {
+            // 先删除原来的头像
+            OssServerFactory.getOssServer().delete(dto.getHeadPath(), false);
+            // 新头像
+            dto.setHeadUrl(dict.getStr("url"));
+            dto.setHeadPath(dict.getStr("path"));
+        }
+
+        updateById(BeanUtil.convert(dto, SecurityUserEntity.class));
+    }
+
+    @Override
     @Transactional(rollbackFor = Exception.class)
     public void updatePasswordAndLogout(PasswordDto dto) {
         LoginUser loginUser = SecurityUtil.getLoginUser();
@@ -326,7 +362,8 @@ public class SecurityUserServiceImpl extends ServiceImpl<SecurityUserMapper, Sec
             throw ValidationException.of(ErrorCode.PASSWORD_RESET_ERROR);
         }
 
-        LambdaUpdateWrapper<SecurityUserEntity> updateWrapper = addUserSetField(SecurityUtil.encode(passwordReset), "superAdmin");
+        LambdaUpdateWrapper<SecurityUserEntity> updateWrapper = addUserSetField(
+                SecurityUtil.encode(defaultPassword), "superAdmin");
         updateWrapper.in(SecurityUserEntity::getId, ids);
         if (update(updateWrapper)) {
             // 被重置密码如果还在线的用户自动退出
@@ -336,7 +373,7 @@ public class SecurityUserServiceImpl extends ServiceImpl<SecurityUserMapper, Sec
 
             idSet.forEach(id -> securityService.logout(id, false));
 
-            return passwordReset;
+            return defaultPassword;
         }
         return null;
     }

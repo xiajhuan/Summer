@@ -11,8 +11,8 @@ anon-uris = /api/open/**,/api/test/**
 # accessToken过期时间（h）
 token-expire = 12
 
-# 重置后的密码
-password-reset = 123456
+# 默认密码
+default-password = 123456
 
 # 是否开启登录验证码校验，值：true/false
 enable-captcha = false

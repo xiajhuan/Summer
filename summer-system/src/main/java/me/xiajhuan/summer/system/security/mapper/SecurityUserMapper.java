@@ -29,9 +29,28 @@ public interface SecurityUserMapper extends BaseMapper<SecurityUserEntity> {
      * 判断是否存在
      *
      * @param username 用户名
+     * @param id       ID
      * @return 返回{@code null}则不存在
      */
-    @Select("SELECT 1 FROM security_user WHERE username = #{username} LIMIT 1")
-    Integer exist(@Param("username") String username);
+    @Select("<script>" +
+            "  SELECT 1 FROM security_user " +
+            "  <where>" +
+            "    username = #{username} " +
+            "    <if test=\"id != null\">" +
+            "      AND id <![CDATA[ <> ]]> #{id} " +
+            "    </if>" +
+            "  </where>" +
+            "  LIMIT 1" +
+            "</script>")
+    Integer exist(@Param("username") String username, @Param("id") Long id);
+
+    /**
+     * 获取用户名
+     *
+     * @param id ID
+     * @return 用户名
+     */
+    @Select("SELECT username FROM security_user WHERE id = #{id} LIMIT 1")
+    String getUsername(@Param("id") Long id);
 
 }

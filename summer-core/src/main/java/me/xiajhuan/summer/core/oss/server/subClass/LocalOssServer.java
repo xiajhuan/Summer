@@ -79,19 +79,6 @@ public class LocalOssServer extends AbstractOssServer {
     //*******************单例处理结束********************
 
     @Override
-    public void delete(String path, boolean isPrivate) {
-        try {
-            // 删除文件
-            if (!(isPrivate ? FileUtil.del(getFile(privateLocation, privateBucket, path))
-                    : FileUtil.del(getFile(publicLocation, publicBucket, path)))) {
-                throw SystemException.of(ErrorCode.FILE_DELETE_FAILURE, StrUtil.EMPTY);
-            }
-        } catch (IORuntimeException e) {
-            throw SystemException.of(e, ErrorCode.FILE_DELETE_FAILURE, e.getMessage());
-        }
-    }
-
-    @Override
     protected String getSupportType() {
         return OssSupportEnum.LOCAL.getValue();
     }
@@ -121,6 +108,19 @@ public class LocalOssServer extends AbstractOssServer {
         return isPrivate ?
                 StrUtil.format("{}/{}/{}", privateLocation, privateBucket, path) :
                 StrUtil.format("{}/{}/{}", publicLocation, publicBucket, path);
+    }
+
+    @Override
+    public void deleteInternal(String path, boolean isPrivate) {
+        try {
+            // 删除文件
+            if (!(isPrivate ? FileUtil.del(getFile(privateLocation, privateBucket, path))
+                    : FileUtil.del(getFile(publicLocation, publicBucket, path)))) {
+                throw SystemException.of(ErrorCode.FILE_DELETE_FAILURE, StrUtil.EMPTY);
+            }
+        } catch (IORuntimeException e) {
+            throw SystemException.of(e, ErrorCode.FILE_DELETE_FAILURE, e.getMessage());
+        }
     }
 
     /**

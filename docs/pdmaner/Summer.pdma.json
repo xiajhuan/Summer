@@ -4,7 +4,7 @@
   "avatar": "data:image/png;base64,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",
   "version": "4.5.1",
   "createdTime": "2023-2-28 08:15:18",
-  "updatedTime": "2023-5-10 15:51:17",
+  "updatedTime": "2023-5-12 16:43:51",
   "dbConns": [],
   "profile": {
     "default": {
@@ -1172,14 +1172,14 @@
           "autoIncrement": false,
           "defaultValue": "",
           "hideInGraph": false,
-          "refDict": "BF9E20E0-80D3-486D-BD58-5FADCF3E4A1D",
+          "refDict": "",
           "extProps": {},
           "domain": "6F7C1C5C-D159-41E6-BF9D-54DEEFA79AFF",
           "id": "054699E3-D6F9-4ED7-A473-EB7646BB7BF8"
         },
         {
           "defKey": "head_url",
-          "defName": "头像URL",
+          "defName": "头像URL（外链）",
           "comment": "",
           "type": "",
           "len": "",
@@ -1193,6 +1193,23 @@
           "extProps": {},
           "domain": "8B042CCB-37B4-47C7-A9C2-A6ADE4464DF6",
           "id": "FB080071-B7BB-4784-8202-135BB9FD48A8"
+        },
+        {
+          "defKey": "head_path",
+          "defName": "头像路径（相对路径）",
+          "comment": "",
+          "type": "",
+          "len": "",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "refDict": "",
+          "extProps": {},
+          "domain": "DCDA2C34-D4B8-434C-8E72-A97ED56D69CE",
+          "id": "DA70138F-14CC-4625-B1C8-F7FB5A3E49BD"
         },
         {
           "defKey": "email",
@@ -1278,6 +1295,23 @@
           "extProps": {},
           "domain": "6F7C1C5C-D159-41E6-BF9D-54DEEFA79AFF",
           "id": "ABED6E77-1930-4C55-86D4-B5523E0B55D8"
+        },
+        {
+          "defKey": "description",
+          "defName": "描述",
+          "comment": "",
+          "type": "",
+          "len": "",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "refDict": "",
+          "extProps": {},
+          "domain": "38A216E5-54CC-4DC6-BC74-A55CBC7747B7",
+          "id": "EBB2818C-6BB3-473D-A8C2-C440A1BC6D34"
         }
       ],
       "correlations": [],
@@ -5366,7 +5400,7 @@
           "primaryKey": false,
           "notNull": false,
           "autoIncrement": false,
-          "defaultValue": "0",
+          "defaultValue": "",
           "hideInGraph": true,
           "refDict": "",
           "uiHint": "",
@@ -5623,7 +5657,7 @@
           "primaryKey": false,
           "notNull": false,
           "autoIncrement": false,
-          "defaultValue": "0",
+          "defaultValue": "",
           "hideInGraph": true,
           "refDict": "",
           "uiHint": "",
@@ -5849,7 +5883,7 @@
           "primaryKey": false,
           "notNull": false,
           "autoIncrement": false,
-          "defaultValue": "0",
+          "defaultValue": "",
           "hideInGraph": true,
           "refDict": "",
           "uiHint": "",
@@ -6126,7 +6160,7 @@
           "primaryKey": false,
           "notNull": false,
           "autoIncrement": false,
-          "defaultValue": "0",
+          "defaultValue": "",
           "hideInGraph": true,
           "refDict": "",
           "uiHint": "",
@@ -6515,85 +6549,7 @@
     }
   ],
   "views": [],
-  "dicts": [
-    {
-      "defKey": "Gender",
-      "defName": "性别",
-      "intro": "",
-      "items": [
-        {
-          "defKey": "0",
-          "defName": "男",
-          "intro": "",
-          "parentKey": "",
-          "enabled": true,
-          "attr1": "",
-          "attr2": "",
-          "attr3": "",
-          "sort": "1",
-          "id": "3622D417-DA1A-408F-BEE1-11D328D534A0"
-        },
-        {
-          "defKey": "1",
-          "defName": "女",
-          "intro": "",
-          "parentKey": "",
-          "enabled": true,
-          "attr1": "",
-          "attr2": "",
-          "attr3": "",
-          "sort": "2",
-          "id": "380A0790-64A7-481E-831C-32F7BEE1502B"
-        },
-        {
-          "defKey": "2",
-          "defName": "保密",
-          "intro": "",
-          "parentKey": "",
-          "enabled": true,
-          "attr1": "",
-          "attr2": "",
-          "attr3": "",
-          "sort": "3",
-          "id": "FA239F4D-1276-40D9-B230-F66BD35C3C27"
-        }
-      ],
-      "id": "BF9E20E0-80D3-486D-BD58-5FADCF3E4A1D"
-    },
-    {
-      "defKey": "OperationStatus",
-      "defName": "操作状态",
-      "sort": "",
-      "intro": "",
-      "id": "F41F2030-5CEF-449E-88BB-869D99F2BF38",
-      "items": [
-        {
-          "defKey": "0",
-          "defName": "失败",
-          "sort": "1",
-          "parentKey": "",
-          "intro": "",
-          "enabled": true,
-          "attr1": "",
-          "attr2": "",
-          "attr3": "",
-          "id": "E7DF97E0-1F37-4BE1-8B82-8A661A1EB9DE"
-        },
-        {
-          "defKey": "1",
-          "defName": "成功",
-          "sort": "2",
-          "parentKey": "",
-          "intro": "",
-          "enabled": true,
-          "attr1": "",
-          "attr2": "",
-          "attr3": "",
-          "id": "AB46E86D-42FE-4EC8-87C3-4D424634AD7F"
-        }
-      ]
-    }
-  ],
+  "dicts": [],
   "viewGroups": [
     {
       "defKey": "summer-system",
@@ -6642,48 +6598,11 @@
     "referURL": "",
     "mappings": [
       {
-        "defKey": "string",
-        "id": "FC9790A7-36B8-4A48-8F9A-BC1042BCFE64",
-        "defName": "字串",
-        "29D1CE08-4C35-4D2D-AAA9-23D93305B52E": "VARCHAR",
-        "A4E23CB7-BB01-4BD1-9F71-F73F3E15A542": "VARCHAR2",
-        "BFC87171-C74F-494A-B7C2-76B9C55FACC9": "VARCHAR",
-        "DFBEC1DD-AA84-456E-BBF3-C95DD0DB2022": "VARCHAR",
-        "89504F5D-94BF-4C9E-8B2E-44F37305FED5": "VARCHAR",
-        "0BBCABA5-B8E4-41B0-B8E4-8F5EA6029307": "VARCHAR2",
-        "592C7013-143D-4E7B-AF64-0D7BF1E28230": "VARCHAR",
-        "77BD85E5-9D0D-4096-8427-CBA306FC9C6A": "VARCHAR",
-        "11D1FB71-A587-4217-89BA-611B8A1F83E0": "STRING",
-        "B363BE0B-F852-49B8-9B2E-F6D2174DEAC1": "TEXT",
-        "797A1496-D649-4261-89B4-544132EC3F36": "String",
-        "895CFD1D-4273-4D32-A2C4-CAC70200AB5B": "String",
-        "A2EE7B4A-CE62-4290-B00C-B26C1BF18073": "String",
-        "F3AC2415-E86B-40C6-9FEB-F4B7937D2C30": "string",
-        "81CCA482-3F4D-4EAC-8CF9-F5E7BC098AD2": "string",
-        "B91D99E0-9B7C-416C-8737-B760957DAF09": "string",
-        "BDF457FD-9F98-4AC3-A705-7587B00A3BAB": "String"
-      },
-      {
-        "defKey": "double",
-        "id": "1A0BDC09-0792-4174-9E8E-80BE8DF44B8E",
-        "defName": "小数",
-        "29D1CE08-4C35-4D2D-AAA9-23D93305B52E": "DECIMAL",
-        "A4E23CB7-BB01-4BD1-9F71-F73F3E15A542": "DECIMAL",
-        "BFC87171-C74F-494A-B7C2-76B9C55FACC9": "DECIMAL",
-        "DFBEC1DD-AA84-456E-BBF3-C95DD0DB2022": "NUMERIC",
-        "89504F5D-94BF-4C9E-8B2E-44F37305FED5": "DECIMAL",
-        "0BBCABA5-B8E4-41B0-B8E4-8F5EA6029307": "DECIMAL",
-        "592C7013-143D-4E7B-AF64-0D7BF1E28230": "NUMERIC",
-        "77BD85E5-9D0D-4096-8427-CBA306FC9C6A": "NUMERIC",
-        "11D1FB71-A587-4217-89BA-611B8A1F83E0": "DOUBLE",
-        "B363BE0B-F852-49B8-9B2E-F6D2174DEAC1": "REAL",
-        "797A1496-D649-4261-89B4-544132EC3F36": "Double",
-        "895CFD1D-4273-4D32-A2C4-CAC70200AB5B": "Double",
-        "A2EE7B4A-CE62-4290-B00C-B26C1BF18073": "Double",
-        "F3AC2415-E86B-40C6-9FEB-F4B7937D2C30": "decimal",
-        "81CCA482-3F4D-4EAC-8CF9-F5E7BC098AD2": "double",
-        "B91D99E0-9B7C-416C-8737-B760957DAF09": "*float64",
-        "BDF457FD-9F98-4AC3-A705-7587B00A3BAB": "f64"
+        "defKey": "tinyint",
+        "defName": "小整数",
+        "id": "CD9DF876-C7F1-4747-AB4F-CC5F746D3710",
+        "29D1CE08-4C35-4D2D-AAA9-23D93305B52E": "TINYINT",
+        "A2EE7B4A-CE62-4290-B00C-B26C1BF18073": "Integer"
       },
       {
         "defKey": "int",
@@ -6708,26 +6627,62 @@
         "BDF457FD-9F98-4AC3-A705-7587B00A3BAB": "i32"
       },
       {
-        "defKey": "date",
-        "id": "89D69E81-EA34-42EE-9FA2-93B8BD27E098",
-        "defName": "日期",
-        "29D1CE08-4C35-4D2D-AAA9-23D93305B52E": "DATETIME",
-        "A4E23CB7-BB01-4BD1-9F71-F73F3E15A542": "DATE",
-        "BFC87171-C74F-494A-B7C2-76B9C55FACC9": "DATETIME",
-        "DFBEC1DD-AA84-456E-BBF3-C95DD0DB2022": "TIMESTAMP",
-        "89504F5D-94BF-4C9E-8B2E-44F37305FED5": "DATE",
-        "0BBCABA5-B8E4-41B0-B8E4-8F5EA6029307": "DATE",
-        "592C7013-143D-4E7B-AF64-0D7BF1E28230": "DATE",
-        "77BD85E5-9D0D-4096-8427-CBA306FC9C6A": "DATE",
-        "11D1FB71-A587-4217-89BA-611B8A1F83E0": "DATETIME",
-        "B363BE0B-F852-49B8-9B2E-F6D2174DEAC1": "NUMERIC",
-        "797A1496-D649-4261-89B4-544132EC3F36": "Date",
-        "895CFD1D-4273-4D32-A2C4-CAC70200AB5B": "Date",
-        "A2EE7B4A-CE62-4290-B00C-B26C1BF18073": "Date",
-        "F3AC2415-E86B-40C6-9FEB-F4B7937D2C30": "DateTime",
-        "81CCA482-3F4D-4EAC-8CF9-F5E7BC098AD2": "timestamp",
-        "B91D99E0-9B7C-416C-8737-B760957DAF09": "*time.Time",
-        "BDF457FD-9F98-4AC3-A705-7587B00A3BAB": "DateTime<Local>"
+        "defKey": "long",
+        "defName": "长整数",
+        "id": "D31F695D-7283-4D85-BBBE-B0E8797AFC01",
+        "29D1CE08-4C35-4D2D-AAA9-23D93305B52E": "BIGINT",
+        "A2EE7B4A-CE62-4290-B00C-B26C1BF18073": "Long"
+      },
+      {
+        "defKey": "double",
+        "id": "1A0BDC09-0792-4174-9E8E-80BE8DF44B8E",
+        "defName": "小数",
+        "29D1CE08-4C35-4D2D-AAA9-23D93305B52E": "DECIMAL",
+        "A4E23CB7-BB01-4BD1-9F71-F73F3E15A542": "DECIMAL",
+        "BFC87171-C74F-494A-B7C2-76B9C55FACC9": "DECIMAL",
+        "DFBEC1DD-AA84-456E-BBF3-C95DD0DB2022": "NUMERIC",
+        "89504F5D-94BF-4C9E-8B2E-44F37305FED5": "DECIMAL",
+        "0BBCABA5-B8E4-41B0-B8E4-8F5EA6029307": "DECIMAL",
+        "592C7013-143D-4E7B-AF64-0D7BF1E28230": "NUMERIC",
+        "77BD85E5-9D0D-4096-8427-CBA306FC9C6A": "NUMERIC",
+        "11D1FB71-A587-4217-89BA-611B8A1F83E0": "DOUBLE",
+        "B363BE0B-F852-49B8-9B2E-F6D2174DEAC1": "REAL",
+        "797A1496-D649-4261-89B4-544132EC3F36": "Double",
+        "895CFD1D-4273-4D32-A2C4-CAC70200AB5B": "Double",
+        "A2EE7B4A-CE62-4290-B00C-B26C1BF18073": "Double",
+        "F3AC2415-E86B-40C6-9FEB-F4B7937D2C30": "decimal",
+        "81CCA482-3F4D-4EAC-8CF9-F5E7BC098AD2": "double",
+        "B91D99E0-9B7C-416C-8737-B760957DAF09": "*float64",
+        "BDF457FD-9F98-4AC3-A705-7587B00A3BAB": "f64"
+      },
+      {
+        "defKey": "char",
+        "defName": "定长字符",
+        "id": "CBED272C-F4AD-43C3-8DBE-09E7C5CD90A0",
+        "29D1CE08-4C35-4D2D-AAA9-23D93305B52E": "CHAR",
+        "A2EE7B4A-CE62-4290-B00C-B26C1BF18073": "String"
+      },
+      {
+        "defKey": "string",
+        "id": "FC9790A7-36B8-4A48-8F9A-BC1042BCFE64",
+        "defName": "字串",
+        "29D1CE08-4C35-4D2D-AAA9-23D93305B52E": "VARCHAR",
+        "A4E23CB7-BB01-4BD1-9F71-F73F3E15A542": "VARCHAR2",
+        "BFC87171-C74F-494A-B7C2-76B9C55FACC9": "VARCHAR",
+        "DFBEC1DD-AA84-456E-BBF3-C95DD0DB2022": "VARCHAR",
+        "89504F5D-94BF-4C9E-8B2E-44F37305FED5": "VARCHAR",
+        "0BBCABA5-B8E4-41B0-B8E4-8F5EA6029307": "VARCHAR2",
+        "592C7013-143D-4E7B-AF64-0D7BF1E28230": "VARCHAR",
+        "77BD85E5-9D0D-4096-8427-CBA306FC9C6A": "VARCHAR",
+        "11D1FB71-A587-4217-89BA-611B8A1F83E0": "STRING",
+        "B363BE0B-F852-49B8-9B2E-F6D2174DEAC1": "TEXT",
+        "797A1496-D649-4261-89B4-544132EC3F36": "String",
+        "895CFD1D-4273-4D32-A2C4-CAC70200AB5B": "String",
+        "A2EE7B4A-CE62-4290-B00C-B26C1BF18073": "String",
+        "F3AC2415-E86B-40C6-9FEB-F4B7937D2C30": "string",
+        "81CCA482-3F4D-4EAC-8CF9-F5E7BC098AD2": "string",
+        "B91D99E0-9B7C-416C-8737-B760957DAF09": "string",
+        "BDF457FD-9F98-4AC3-A705-7587B00A3BAB": "String"
       },
       {
         "defKey": "largeText",
@@ -6752,46 +6707,38 @@
         "BDF457FD-9F98-4AC3-A705-7587B00A3BAB": "String"
       },
       {
-        "defKey": "long",
-        "defName": "长整数",
-        "id": "D31F695D-7283-4D85-BBBE-B0E8797AFC01",
-        "29D1CE08-4C35-4D2D-AAA9-23D93305B52E": "BIGINT",
-        "A2EE7B4A-CE62-4290-B00C-B26C1BF18073": "Long"
-      },
-      {
-        "defKey": "tinyint",
-        "defName": "小整数",
-        "id": "CD9DF876-C7F1-4747-AB4F-CC5F746D3710",
-        "29D1CE08-4C35-4D2D-AAA9-23D93305B52E": "TINYINT",
-        "A2EE7B4A-CE62-4290-B00C-B26C1BF18073": "Integer"
-      },
-      {
-        "defKey": "char",
-        "defName": "定长字符",
-        "id": "CBED272C-F4AD-43C3-8DBE-09E7C5CD90A0",
-        "29D1CE08-4C35-4D2D-AAA9-23D93305B52E": "CHAR",
-        "A2EE7B4A-CE62-4290-B00C-B26C1BF18073": "String"
+        "defKey": "date",
+        "id": "89D69E81-EA34-42EE-9FA2-93B8BD27E098",
+        "defName": "日期",
+        "29D1CE08-4C35-4D2D-AAA9-23D93305B52E": "DATETIME",
+        "A4E23CB7-BB01-4BD1-9F71-F73F3E15A542": "DATE",
+        "BFC87171-C74F-494A-B7C2-76B9C55FACC9": "DATETIME",
+        "DFBEC1DD-AA84-456E-BBF3-C95DD0DB2022": "TIMESTAMP",
+        "89504F5D-94BF-4C9E-8B2E-44F37305FED5": "DATE",
+        "0BBCABA5-B8E4-41B0-B8E4-8F5EA6029307": "DATE",
+        "592C7013-143D-4E7B-AF64-0D7BF1E28230": "DATE",
+        "77BD85E5-9D0D-4096-8427-CBA306FC9C6A": "DATE",
+        "11D1FB71-A587-4217-89BA-611B8A1F83E0": "DATETIME",
+        "B363BE0B-F852-49B8-9B2E-F6D2174DEAC1": "NUMERIC",
+        "797A1496-D649-4261-89B4-544132EC3F36": "Date",
+        "895CFD1D-4273-4D32-A2C4-CAC70200AB5B": "Date",
+        "A2EE7B4A-CE62-4290-B00C-B26C1BF18073": "Date",
+        "F3AC2415-E86B-40C6-9FEB-F4B7937D2C30": "DateTime",
+        "81CCA482-3F4D-4EAC-8CF9-F5E7BC098AD2": "timestamp",
+        "B91D99E0-9B7C-416C-8737-B760957DAF09": "*time.Time",
+        "BDF457FD-9F98-4AC3-A705-7587B00A3BAB": "DateTime<Local>"
       }
     ]
   },
   "domains": [
     {
-      "defKey": "String-16",
-      "defName": "字串-16",
-      "applyFor": "FC9790A7-36B8-4A48-8F9A-BC1042BCFE64",
-      "len": 16,
+      "defKey": "Status-Tinyint",
+      "defName": "Status-小整数",
+      "applyFor": "CD9DF876-C7F1-4747-AB4F-CC5F746D3710",
+      "len": "1",
       "scale": "",
       "uiHint": "",
-      "id": "9092C4E0-1A54-4859-ABBB-5B62DBC27573"
-    },
-    {
-      "defKey": "Long",
-      "defName": "长整数",
-      "applyFor": "D31F695D-7283-4D85-BBBE-B0E8797AFC01",
-      "len": "",
-      "scale": "",
-      "uiHint": "",
-      "id": "16120F75-6AA7-4483-868D-F07F511BB081"
+      "id": "6F7C1C5C-D159-41E6-BF9D-54DEEFA79AFF"
     },
     {
       "defKey": "Int",
@@ -6801,6 +6748,15 @@
       "scale": "",
       "uiHint": "",
       "id": "6BC8F04B-6CFA-4995-98D3-318F5CDD774E"
+    },
+    {
+      "defKey": "Long",
+      "defName": "长整数",
+      "applyFor": "D31F695D-7283-4D85-BBBE-B0E8797AFC01",
+      "len": "",
+      "scale": "",
+      "uiHint": "",
+      "id": "16120F75-6AA7-4483-868D-F07F511BB081"
     },
     {
       "defKey": "Double-2",
@@ -6821,24 +6777,6 @@
       "id": "C3B1681B-99F9-4818-9E80-DE1652A51D85"
     },
     {
-      "defKey": "DateTime",
-      "defName": "日期时间",
-      "applyFor": "89D69E81-EA34-42EE-9FA2-93B8BD27E098",
-      "len": "",
-      "scale": "",
-      "uiHint": "",
-      "id": "7CFFA0D3-6A93-4DDC-BC10-DF21211064DC"
-    },
-    {
-      "defKey": "Status-Tinyint",
-      "defName": "Status-小整数",
-      "applyFor": "CD9DF876-C7F1-4747-AB4F-CC5F746D3710",
-      "len": "1",
-      "scale": "",
-      "uiHint": "",
-      "id": "6F7C1C5C-D159-41E6-BF9D-54DEEFA79AFF"
-    },
-    {
       "defKey": "Status-Char",
       "defName": "Status-字长字符",
       "applyFor": "CBED272C-F4AD-43C3-8DBE-09E7C5CD90A0",
@@ -6848,13 +6786,13 @@
       "id": "73FD2BAD-2358-4336-B96D-45DC897BD792"
     },
     {
-      "defKey": "BigText",
-      "defName": "大文本",
-      "applyFor": "B17BDED3-085F-40E1-9019-3B79CF2BF075",
-      "len": "",
+      "defKey": "String-16",
+      "defName": "字串-16",
+      "applyFor": "FC9790A7-36B8-4A48-8F9A-BC1042BCFE64",
+      "len": 16,
       "scale": "",
       "uiHint": "",
-      "id": "3E948CEC-3070-472C-AF92-F3CA11EC9D15"
+      "id": "9092C4E0-1A54-4859-ABBB-5B62DBC27573"
     },
     {
       "defKey": "String-32",
@@ -6891,6 +6829,24 @@
       "scale": "",
       "uiHint": "",
       "id": "8B042CCB-37B4-47C7-A9C2-A6ADE4464DF6"
+    },
+    {
+      "defKey": "BigText",
+      "defName": "大文本",
+      "applyFor": "B17BDED3-085F-40E1-9019-3B79CF2BF075",
+      "len": "",
+      "scale": "",
+      "uiHint": "",
+      "id": "3E948CEC-3070-472C-AF92-F3CA11EC9D15"
+    },
+    {
+      "defKey": "DateTime",
+      "defName": "日期时间",
+      "applyFor": "89D69E81-EA34-42EE-9FA2-93B8BD27E098",
+      "len": "",
+      "scale": "",
+      "uiHint": "",
+      "id": "7CFFA0D3-6A93-4DDC-BC10-DF21211064DC"
     },
     {
       "defKey": "String-512",

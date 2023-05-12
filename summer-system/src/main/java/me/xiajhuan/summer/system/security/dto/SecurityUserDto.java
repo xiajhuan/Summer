@@ -15,7 +15,6 @@ package me.xiajhuan.summer.system.security.dto;
 import cn.hutool.core.collection.CollUtil;
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.annotation.format.DateTimeFormat;
-import com.alibaba.excel.annotation.write.style.ColumnWidth;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import me.xiajhuan.summer.core.base.dto.ExcelDto;
@@ -24,7 +23,6 @@ import me.xiajhuan.summer.core.enums.StatusEnum;
 import me.xiajhuan.summer.core.excel.converter.StatusConverter;
 import me.xiajhuan.summer.system.security.enums.GenderEnum;
 import me.xiajhuan.summer.core.constant.DataScopeConst;
-import me.xiajhuan.summer.core.validation.annotation.Mobile;
 import me.xiajhuan.summer.core.validation.group.AddGroup;
 import me.xiajhuan.summer.core.validation.group.UpdateGroup;
 import me.xiajhuan.summer.core.excel.converter.DataScopeConverter;
@@ -56,32 +54,11 @@ public class SecurityUserDto extends ExcelDto {
     private String username;
 
     /**
-     * 密码
-     */
-    @NotBlank(message = "{security.user.password.require}", groups = AddGroup.class)
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private String password;
-
-    /**
-     * 确认密码
-     */
-    @NotBlank(message = "{security.user.confirmPassword.require}", groups = AddGroup.class)
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private String confirmPassword;
-
-    /**
      * 真实姓名
      */
     @NotBlank(message = "{security.user.realName.require}", groups = {AddGroup.class, UpdateGroup.class})
     @ExcelProperty(value = "真实姓名", index = 1)
     private String realName;
-
-    /**
-     * 头像URL
-     */
-    @ColumnWidth(40)
-    @ExcelProperty(value = "头像URL", index = 2)
-    private String headUrl;
 
     /**
      * 性别
@@ -90,24 +67,8 @@ public class SecurityUserDto extends ExcelDto {
      */
     @Range(min = 0, max = 2, message = "{security.user.gender.range}", groups = {AddGroup.class, UpdateGroup.class})
     @NotNull(message = "{security.user.gender.require}", groups = {AddGroup.class, UpdateGroup.class})
-    @ExcelProperty(value = "性别", index = 3, converter = GenderConverter.class)
+    @ExcelProperty(value = "性别", index = 2, converter = GenderConverter.class)
     private Integer gender;
-
-    /**
-     * 邮箱
-     */
-//    @NotBlank(message = "{security.user.email.require}", groups = {AddGroup.class, UpdateGroup.class})
-    @Email(message = "{security.user.email.error}", groups = {AddGroup.class, UpdateGroup.class})
-    @ExcelProperty(value = "邮箱", index = 4)
-    private String email;
-
-    /**
-     * 手机号
-     */
-//    @NotBlank(message = "{security.user.mobile.require}", groups = {AddGroup.class, UpdateGroup.class})
-    @Mobile(groups = {AddGroup.class, UpdateGroup.class})
-    @ExcelProperty(value = "手机号", index = 5)
-    private String mobile;
 
     /**
      * 本部门ID
@@ -122,7 +83,7 @@ public class SecurityUserDto extends ExcelDto {
      */
     @Range(min = 0, max = 1, message = "{status.range}", groups = {AddGroup.class, UpdateGroup.class})
     @NotNull(message = "{status.require}", groups = {AddGroup.class, UpdateGroup.class})
-    @ExcelProperty(value = "状态", index = 6, converter = StatusConverter.class)
+    @ExcelProperty(value = "状态", index = 3, converter = StatusConverter.class)
     private Integer status;
 
     /**
@@ -132,7 +93,7 @@ public class SecurityUserDto extends ExcelDto {
      */
     @Range(min = 0, max = 4, message = "{security.user.dataScope.range}", groups = {AddGroup.class, UpdateGroup.class})
     @NotNull(message = "{security.user.dataScope.require}", groups = {AddGroup.class, UpdateGroup.class})
-    @ExcelProperty(value = "数据权限", index = 7, converter = DataScopeConverter.class)
+    @ExcelProperty(value = "数据权限", index = 4, converter = DataScopeConverter.class)
     private Integer dataScope;
 
     /**
@@ -140,14 +101,14 @@ public class SecurityUserDto extends ExcelDto {
      */
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @DateTimeFormat(DateFormatConst.DATE_TIME)
-    @ExcelProperty(value = "创建时间", index = 8)
+    @ExcelProperty(value = "创建时间", index = 5)
     private Date createTime;
 
     /**
      * 本部门名称
      */
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    @ExcelProperty(value = "本部门名称", index = 9)
+    @ExcelProperty(value = "本部门名称", index = 6)
     private String deptName;
 
     /**

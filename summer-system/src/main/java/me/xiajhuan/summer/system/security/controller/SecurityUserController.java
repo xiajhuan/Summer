@@ -16,6 +16,7 @@ import me.xiajhuan.summer.core.base.controller.BaseController;
 import me.xiajhuan.summer.core.constant.OperationConst;
 import me.xiajhuan.summer.core.data.PageData;
 import me.xiajhuan.summer.core.data.Result;
+import me.xiajhuan.summer.core.enums.FileTypeEnum;
 import me.xiajhuan.summer.core.exception.code.ErrorCode;
 import me.xiajhuan.summer.core.ratelimiter.annotation.RateLimiter;
 import me.xiajhuan.summer.core.utils.AssertUtil;
@@ -26,10 +27,12 @@ import me.xiajhuan.summer.core.validation.group.UpdateGroup;
 import me.xiajhuan.summer.system.log.annotation.LogOperation;
 import me.xiajhuan.summer.system.security.dto.PasswordDto;
 import me.xiajhuan.summer.system.security.dto.SecurityUserDto;
+import me.xiajhuan.summer.system.security.dto.UserInfoDto;
 import me.xiajhuan.summer.system.security.service.SecurityUserService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
@@ -141,6 +144,32 @@ public class SecurityUserController extends BaseController {
     }
 
     //*******************Other Operation********************
+
+    /**
+     * 信息
+     *
+     * @return 响应结果
+     */
+    @GetMapping("info")
+    @LogOperation("信息")
+    public Result<UserInfoDto> info() {
+        return Result.ofSuccess(mainService.info());
+    }
+
+    /**
+     * 修改信息
+     *
+     * @param dto  用户信息Dto
+     * @param file {@link MultipartFile}
+     * @return 响应结果
+     */
+    @PutMapping("updateInfo")
+    @LogOperation("修改信息")
+    public Result<?> updateInfo(@Validated(DefaultGroup.class) UserInfoDto dto, MultipartFile file) {
+        validateFileType(file, FileTypeEnum.IMAGE);
+        mainService.updateInfo(dto, fileUpload(file, false));
+        return Result.ofSuccess();
+    }
 
     /**
      * 修改密码

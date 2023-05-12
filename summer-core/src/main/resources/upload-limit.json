@@ -1,0 +1,27 @@
+{
+  "doc": "10MB",
+  "docx": "10MB",
+  "xls": "10MB",
+  "xlsx": "10MB",
+  "ppt": "10MB",
+  "pptx": "10MB",
+  "htm": "10MB",
+  "html": "10MB",
+  "txt": "10MB",
+  "pdf": "10MB",
+
+  "bmp": "15MB",
+  "gif": "15MB",
+  "jpg": "15MB",
+  "jpeg": "15MB",
+  "png": "15MB",
+
+  "zip": "20MB",
+  "rar": "20MB",
+  "7z": "20MB",
+  "gz": "20MB",
+
+  "mp4": "25MB",
+  "avi": "25MB",
+  "rmvb": "25MB"
+}

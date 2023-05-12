@@ -18,10 +18,8 @@ import me.xiajhuan.summer.core.exception.code.ErrorCode;
 import me.xiajhuan.summer.core.exception.custom.SystemException;
 import me.xiajhuan.summer.core.ratelimiter.annotation.RateLimiter;
 import me.xiajhuan.summer.core.utils.AssertUtil;
-import me.xiajhuan.summer.core.utils.BeanUtil;
 import me.xiajhuan.summer.core.validation.group.DefaultGroup;
 import me.xiajhuan.summer.system.security.dto.LoginDto;
-import me.xiajhuan.summer.system.security.dto.SecurityUserDto;
 import me.xiajhuan.summer.system.security.dto.TokenDto;
 import me.xiajhuan.summer.system.security.service.SecurityService;
 import org.springframework.validation.annotation.Validated;
@@ -72,16 +70,6 @@ public class SecurityController extends BaseController {
     @RateLimiter(0.5)
     public Result<TokenDto> login(@Validated(DefaultGroup.class) LoginDto loginDto, HttpServletRequest request) {
         return Result.ofSuccess(mainService.login(loginDto, request));
-    }
-
-    /**
-     * 登录信息
-     *
-     * @return 响应结果
-     */
-    @GetMapping("info")
-    public Result<SecurityUserDto> info() {
-        return Result.ofSuccess(BeanUtil.convert(getLoginUser(), SecurityUserDto.class));
     }
 
     /**

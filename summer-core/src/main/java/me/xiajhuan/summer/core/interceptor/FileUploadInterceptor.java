@@ -17,6 +17,7 @@ import cn.hutool.core.io.file.FileReader;
 import cn.hutool.core.io.unit.DataSizeUtil;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.json.JSONUtil;
+import me.xiajhuan.summer.core.enums.FileTypeEnum;
 import me.xiajhuan.summer.core.exception.code.ErrorCode;
 import me.xiajhuan.summer.core.exception.custom.SystemException;
 import me.xiajhuan.summer.core.exception.custom.ValidationException;
@@ -36,15 +37,19 @@ import java.util.Map;
  * @author xiajhuan
  * @date 2023/4/2
  * @see HandlerInterceptor
+ * @see FileTypeEnum
  */
 public class FileUploadInterceptor implements HandlerInterceptor {
 
     /**
      * 文件上传限制，note：
      * <ul>
-     *   <li>配置位置：/custom/upload-limit.json</li>
-     *   <li>Key：支持的文件类型后缀（不包括”.“） Value：大小限制</li>
-     *   <li>Value不能超过 spring.servlet.multipart.max-file-size 配置的值</li>
+     *   <li>配置位置：classpath:upload-limit.json</li>
+     *   <li>
+     *     Key：支持的文件类型后缀（不包括”.“），参考{@link FileTypeEnum}<br>
+     *     Value：大小限制（B、KB、MB、GB）
+     *   </li>
+     *   <li>Value不能超过spring.servlet.multipart.max-file-size配置的值</li>
      * </ul>
      */
     private final Map<String, String> uploadLimit;
@@ -57,7 +62,7 @@ public class FileUploadInterceptor implements HandlerInterceptor {
     @SuppressWarnings("unchecked")
     private FileUploadInterceptor() throws FileNotFoundException {
         FileReader fileReader = FileReader.create(ResourceUtils
-                .getFile("classpath:custom/upload-limit.json"));
+                .getFile("classpath:upload-limit.json"));
         try {
             uploadLimit = JSONUtil.toBean(fileReader.readString(), Map.class);
         } catch (RuntimeException e) {

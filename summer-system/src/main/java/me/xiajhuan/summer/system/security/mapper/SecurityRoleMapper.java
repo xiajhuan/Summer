@@ -17,6 +17,8 @@ import me.xiajhuan.summer.system.security.entity.SecurityRoleEntity;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.Set;
+
 /**
  * 角色 Mapper
  *
@@ -33,5 +35,19 @@ public interface SecurityRoleMapper extends BaseMapper<SecurityRoleEntity> {
      */
     @Select("SELECT 1 FROM security_role WHERE name = #{name} LIMIT 1")
     Integer exist(@Param("name") String name);
+
+    /**
+     * 获取角色名称集合
+     *
+     * @param idSet ID集合
+     * @return 角色名称集合
+     */
+    @Select("<script>" +
+            "  SELECT name FROM security_role WHERE id IN " +
+            "  <foreach item=\"id\" collection=\"idSet\" open=\"(\" separator=\",\" close=\")\">" +
+            "    #{id} " +
+            "  </foreach>" +
+            "</script>")
+    Set<String> getNameSet(@Param("idSet") Set<Long> idSet);
 
 }

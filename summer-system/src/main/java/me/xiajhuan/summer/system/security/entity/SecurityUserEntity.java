@@ -88,9 +88,14 @@ public class SecurityUserEntity extends CommonEntity {
     private Integer gender;
 
     /**
-     * 头像URL
+     * 头像URL（外链）
      */
     private String headUrl;
+
+    /**
+     * 头像路径（相对路径）
+     */
+    private String headPath;
 
     /**
      * 邮箱
@@ -122,6 +127,11 @@ public class SecurityUserEntity extends CommonEntity {
      * @see DataScopeConst.Type
      */
     private Integer dataScope;
+
+    /**
+     * 描述
+     */
+    private String description;
 
     /**
      * 本部门名称
