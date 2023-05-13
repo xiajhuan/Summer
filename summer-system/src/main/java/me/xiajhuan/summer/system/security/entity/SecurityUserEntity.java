@@ -119,7 +119,7 @@ public class SecurityUserEntity extends CommonEntity {
      *
      * @see UserTypeEnum
      */
-    private Integer userType = 1;
+    private Integer userType;
 
     /**
      * 数据权限

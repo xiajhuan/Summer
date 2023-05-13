@@ -61,7 +61,7 @@ CREATE TABLE `security_user`
     `email`       varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '邮箱',
     `mobile`      varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL COMMENT '手机号',
     `status`      tinyint(1)                                                    NULL DEFAULT NULL COMMENT '状态 0：停用 1：正常',
-    `user_type`   tinyint(1)                                                    NULL DEFAULT NULL COMMENT '用户类型 0：超级管理员 1：普通用户',
+    `user_type`   tinyint(1)                                                    NULL DEFAULT 1 COMMENT '用户类型 0：超级管理员 1：普通用户',
     `data_scope`  tinyint(1)                                                    NULL DEFAULT NULL COMMENT '数据权限 0：全部 1：基于角色 2：本部门 3：本部门及以下 4：仅本人',
     `description` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
     PRIMARY KEY (`id`) USING BTREE,

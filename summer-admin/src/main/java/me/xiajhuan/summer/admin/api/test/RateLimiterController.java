@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
  * 限流 TestApi
  *
  * @author xiajhuan
- * @date 2022/3/8
+ * @date 2023/3/8
  */
 @RestController
 @RequestMapping("api/test/rateLimiter")

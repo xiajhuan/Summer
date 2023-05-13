@@ -339,7 +339,12 @@ public class SecurityUserServiceImpl extends ServiceImpl<SecurityUserMapper, Sec
             dto.setHeadPath(dict.getStr("path"));
         }
 
-        updateById(BeanUtil.convert(dto, SecurityUserEntity.class));
+        SecurityUserEntity entity = BeanUtil.convert(dto, SecurityUserEntity.class);
+
+        // 更新用户，note：这里不能使用字段自动填充，否则deptId会被覆盖！
+        entity.setUpdateBy(SecurityUtil.getCurrentUsername());
+        entity.setUpdateTime(DateUtil.date());
+        updateById(entity);
     }
 
     @Override
