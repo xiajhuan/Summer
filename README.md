@@ -1,18 +1,18 @@
 ## 📚简介
-Summer是一套基于SpringBoot2.7的轻量级权限管理系统，具有项目结构简单、文档品类齐全、代码易读易懂、上手门槛低等特点，它提供相对完善的基础设施（已集成上百个接口），可帮助中小企业或个人开发者快速构筑业务开发平台
+Summer是一套基于SpringBoot2.7的轻量级权限管理系统，具有项目结构简单、文档类别齐全、代码规范易读、开发门槛低等特点，它提供相对完善的基础设施（内置常用功能实现和上百个通用模块接口），为中小团队或个人开发者提供开箱即用的业务开发平台
 
 ## 🍺特性
-区别于市面上大多数权限管理系统，在本项目中你可以看到：
-- 标准完善的Javadoc注释，可生成美观易读的Api文档
-- 常用设计模式的实践运用，代码整体更加简洁优雅、侵入性低且扩展性强
+区别于市面上绝大多数权限管理系统，本项目具有：
+- 完善但不赘余的代码注释，可生成标准美观的Javadoc文档
+- 常用设计模式的应用实践，功能实现更加简洁优雅、侵入性低且扩展性强
 - 精细化的日志和异常处理，能有效帮助你过滤无用信息、快速定位系统异常
 - 丰富的个性化配置项和注释说明，简单修改配置即可定制不同的系统需求
-- 干净规整的Controller层代码，不含任何业务逻辑或受检异常抛出
-- 变量方法命名规范且注重编码细节，基本不存在冗余代码或IDE警告信息
-- 使用专业工具（ApiPost/PDManer）构筑项目文档，更加方便团队管理和交付使用
+- 干净整洁的Controller层代码，不包含任何业务逻辑和受检异常抛出
+- 变量方法命名规范且注重编码细节，基本避免冗余代码和IDE警告信息
+- 使用专业工具（ApiPost/PDManer）构建项目文档，更加方便团队管理和交付使用
 
 ## 🛠️项目结构
-### 🍊模块关系
+### 📙模块关系
 ```
 Summer
 └─summer-admin -- 管理模块
@@ -20,7 +20,7 @@ Summer
           └─summer-core -- 核心模块
 ```
 
-### 🍐目录说明
+### 📘目录说明
 ```
 Summer
 ├─docs               文档
@@ -81,7 +81,7 @@ Summer
 │         └─i18n          国际化配置
 ```
 
-### 📦依赖清单
+### 📝依赖清单
 - SpringBoot：2.7.11
 - MysqlConnector：8.0.33
 - DynamicDatasource：3.6.1
@@ -130,22 +130,24 @@ Summer
 |  用户注册 | 自开发    |   🏗          |  用户注册相关接口                                     |
 |  流程管理 | Flowable    |   🏗          |  流程相关接口                                     |
 
-## 🔔️快速开始
-环境需求
+## ⭐快速开始
+### 📦环境需求
 - Jdk1.8
 - Maven3.0+
 - Mysql5.7+
 
-核心技术：Springboot2.7.x、Hutool5.8.x、MybatisPlus3.5.x
+### 🍊核心技术
+Springboot2.7.x、Hutool5.8.x、MybatisPlus3.5.x
 - [SpringBoot文档](https://spring.io/projects/spring-boot#learn)
 - [Hutool文档](https://hutool.cn/docs/#/)
 - [MybatisPlus文档](https://baomidou.com/pages/24112f/) 
 
-文档工具：ApiPost7.x、PDManer4.x
+### 🍐文档工具
+ApiPost7.x、PDManer4.x
 - [ApiPost文档](https://v7-wiki.apipost.cn/)
 - [PDManer文档](https://www.yuque.com/pdmaner/docs/pdmaner-manual)
 
-## 📘学习交流
+## 👦学习交流
 如果觉得还不错麻烦点个Star支持作者~
 
 - Email：xiaJhuan@163.com
@@ -156,7 +158,7 @@ Summer
 - 欢迎提交Issue，请注明使用版本、问题原因、重现步骤等
 - 以gitee为主，github为辅
 
-### 📐Commit规范
+### 🔔️Commit规范
 - feat：新功能
 - fix：修复Bug
 - docs：文档修改
