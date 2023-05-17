@@ -19,7 +19,6 @@ import me.xiajhuan.summer.core.constant.DateFormatConst;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -38,21 +37,13 @@ public class DateConverter implements Converter<String, Date> {
     /**
      * 日期正则表达式列表
      */
-    private List<Pattern> patternList;
-
-    /**
-     * 初始化
-     */
-    @PostConstruct
-    private void init() {
-        patternList = ListUtil.of(
-                Pattern.compile("^\\d{4}-\\d{2}$"),
-                Pattern.compile("^\\d{4}-\\d{2}-\\d{2}$"),
-                Pattern.compile("^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}$"),
-                Pattern.compile("^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$"),
-                Pattern.compile("^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\\.\\d{3}$")
-        );
-    }
+    private final List<Pattern> patternList = ListUtil.of(
+            Pattern.compile("^\\d{4}-\\d{2}$"),
+            Pattern.compile("^\\d{4}-\\d{2}-\\d{2}$"),
+            Pattern.compile("^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}$"),
+            Pattern.compile("^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$"),
+            Pattern.compile("^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\\.\\d{3}$")
+    );
 
     @Override
     public Date convert(String source) {
