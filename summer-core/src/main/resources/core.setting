@@ -128,7 +128,7 @@ local.public-end-point = http://localhost:8888
 # 公有空间
 local.public-bucket = summer-public
 # 公有存储位置，可使用Nginx、Tomcat等充当文件服务器
-local.public-location = D:\\Job\\devPrograms\\apache-tomcat-9.0.74\\webapps
+local.public-location = D:\\Job\\devPrograms\\apache-tomcat-9.0.75\\webapps
 
 # MinIo对象存储，只有application.oss.type: MIN_IO时会生效
 # 密钥AK

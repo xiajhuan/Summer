@@ -1,5 +1,5 @@
 # 相对固定的配置
-project:
+info:
   # 项目描述
   description: Summer权限管理系统
   # 项目LICENSE
@@ -164,7 +164,7 @@ management:
       show-details: ALWAYS
     # 应用信息
     info:
-      enabled: true
+      enabled: false
     # Conditions
     conditions:
       enabled: true

@@ -82,7 +82,7 @@ Summer
 ```
 
 ### 📝依赖清单
-- SpringBoot：2.7.11
+- SpringBoot：2.7.12
 - MysqlConnector：8.0.33
 - DynamicDatasource：3.6.1
 - MybatisPlus：3.5.3.1

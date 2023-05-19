@@ -42,19 +42,19 @@ public class MonitorSystemServiceImpl implements MonitorSystemService {
     /**
      * 项目描述
      */
-    @Value("${project.description}")
+    @Value("${info.description}")
     private String projectDescription;
 
     /**
      * 项目LICENSE
      */
-    @Value("${project.license}")
+    @Value("${info.license}")
     private String projectLicense;
 
     /**
      * 项目版本
      */
-    @Value("${project.version}")
+    @Value("${info.version}")
     private String projectVersion;
 
     @Override
