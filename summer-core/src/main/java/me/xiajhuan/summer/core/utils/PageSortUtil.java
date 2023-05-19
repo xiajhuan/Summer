@@ -56,11 +56,6 @@ public class PageSortUtil {
     private static final String[] DESC = {"desc", "descend", "descending"};
 
     /**
-     * 分页单页条数限制
-     */
-    private static final long MAX_SIZE_LIMIT;
-
-    /**
      * 默认排序字段数组
      */
     private static String[] defaultFieldArray;
@@ -77,8 +72,6 @@ public class PageSortUtil {
 
     static {
         Setting setting = SpringUtil.getBean(SettingConst.CORE, Setting.class);
-
-        MAX_SIZE_LIMIT = setting.getLong("page.max-size-limit", "Mp", 2000L);
 
         String defaultField = setting.getByGroup("sort.default-field", "Mp");
         if (StrUtil.isNotBlank(defaultField)) {
@@ -169,7 +162,6 @@ public class PageSortUtil {
             // 自定义分页总记录数
             page = Page.of(pageNum, pageSize, customTotal, false);
         }
-        page.setMaxLimit(MAX_SIZE_LIMIT);
 
         //*******************排序处理********************
 
