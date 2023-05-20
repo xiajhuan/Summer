@@ -114,11 +114,13 @@ public class SecurityUserDto extends ExcelDto {
     /**
      * 角色ID集合
      */
+    @Builder.Default
     private Set<Long> roleIdSet = CollUtil.newHashSet();
 
     /**
      * 岗位ID集合
      */
+    @Builder.Default
     private Set<Long> postIdSet = CollUtil.newHashSet();
 
 }

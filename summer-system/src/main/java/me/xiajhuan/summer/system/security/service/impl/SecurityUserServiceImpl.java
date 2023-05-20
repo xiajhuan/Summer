@@ -367,13 +367,13 @@ public class SecurityUserServiceImpl extends ServiceImpl<SecurityUserMapper, Sec
             throw ValidationException.of(ErrorCode.PASSWORD_RESET_ERROR);
         }
 
+        Set<Long> idSet = Arrays.stream(ids).collect(Collectors.toSet());
+
         LambdaUpdateWrapper<SecurityUserEntity> updateWrapper = addUserSetField(
                 SecurityUtil.encode(defaultPassword), "superAdmin");
-        updateWrapper.in(SecurityUserEntity::getId, ids);
+        updateWrapper.in(SecurityUserEntity::getId, idSet);
         if (update(updateWrapper)) {
             // 被重置密码如果还在线的用户自动退出
-            Set<Long> idSet = Arrays.stream(ids).collect(Collectors.toSet());
-
             monitorOnlineService.deleteBatch(idSet);
 
             idSet.forEach(id -> securityService.logout(id, false));
