@@ -98,7 +98,7 @@ Summer
 - Hutool：5.8.18
 - JavaxMail：1.6.2
 - EasyExcel：3.3.1
-- MicaXss：2.7.11
+- MicaXss：2.7.12
 - MinIoSdk：8.5.2
 - QiNiuSdk：7.13.0
 
