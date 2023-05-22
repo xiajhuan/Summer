@@ -20,13 +20,20 @@ application:
     type: LOCAL
 
 server:
-  # Tomcat
-  tomcat:
+  # Undertow
+  undertow:
+    # Post请求体最大限制，值为-1则无限制
+    max-http-post-size: -1
+    # Buffer配置（这些Buffer会用于服务器连接的IO操作，有点类似于Netty的池化内存管理）
+    # 每块Buffer的空间大小（空间越小被利用的越充分）
+    buffer-size: 512
+    # 是否分配直接内存
+    direct-buffers: true
     threads:
-      # 最大工作线程（并发）
-      max: 1000
-      # 最小工作线程
-      min-spare: 30
+      # IO线程数（主要执行非阻塞任务），它们会负责多个连接，建议：和CPU核心数相等
+      io: 8
+      # 工作线程数（主要执行阻塞任务），当执行Servlet请求（阻塞操作）时，Undertow会从工作线程池中取得线程，建议：依据系统负载设置
+      worker: 256
   # 最大请求头大小
   max-http-header-size: 10KB
   # Servlet
