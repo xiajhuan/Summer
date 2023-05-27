@@ -22,10 +22,10 @@ spring:
           password: asda1992
   # Redis，只有application.cache.type: REDIS时会生效
   redis:
-    host: 192.168.0.7
+    host: origin-1
     port: 6379
-    password: jack_2021
-    database: 2
+    password: asda1992
+    database: 0
 
 quartz:
   # 定时任务启动
