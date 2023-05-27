@@ -46,12 +46,12 @@
         <commons-compress.version>1.23.0</commons-compress.version>
         <commons-pool2.version>2.11.1</commons-pool2.version>
         <guava.version>31.1-jre</guava.version>
-        <hutool.version>5.8.18</hutool.version>
+        <hutool.version>5.8.19</hutool.version>
         <javax-mail.version>1.6.2</javax-mail.version>
         <easyexcel.version>3.3.1</easyexcel.version>
         <mica-xss.version>2.7.12</mica-xss.version>
         <minio.version>8.5.3</minio.version>
-        <qiniu.version>7.13.0</qiniu.version>
+        <qiniu.version>7.13.1</qiniu.version>
         <maven-compiler.version>3.11.0</maven-compiler.version>
         <maven-surefire.version>3.1.0</maven-surefire.version>
     </properties>

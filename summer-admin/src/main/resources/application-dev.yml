@@ -11,15 +11,15 @@ spring:
         # business模块数据源
         business:
           driver-class-name: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://192.168.0.142:3306/summer-business?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true
+          url: jdbc:mysql://origin-1:3306/summer-business?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true
           username: root
-          password: jack%2021#2@6XJH
+          password: asda1992
         # system模块数据源
         system:
           driver-class-name: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://192.168.0.142:3306/summer-system?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true
+          url: jdbc:mysql://origin-1:3306/summer-system?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true
           username: root
-          password: jack%2021#2@6XJH
+          password: asda1992
   # Redis，只有application.cache.type: REDIS时会生效
   redis:
     host: 192.168.0.7

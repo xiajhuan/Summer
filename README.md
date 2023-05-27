@@ -95,12 +95,12 @@ Summer
 - CommonsCompress：1.23.0
 - CommonsPool2：2.11.1
 - Guava：31.1-jre
-- Hutool：5.8.18
+- Hutool：5.8.19
 - JavaxMail：1.6.2
 - EasyExcel：3.3.1
 - MicaXss：2.7.12
 - MinIoSdk：8.5.3
-- QiNiuSdk：7.13.0
+- QiNiuSdk：7.13.1
 
 ## 🎁功能支持
 |  服务     | 使用技术     |   进度         |    备注   |
