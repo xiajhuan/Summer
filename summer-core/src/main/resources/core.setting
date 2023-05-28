@@ -122,21 +122,21 @@ await-termination-Seconds = 30
 # 私有空间
 local.private-bucket = summer-private
 # 私有存储位置
-local.private-location = D:\\Job\\oss
+local.private-location = /opt/projects/Summer/oss/private
 # 公有端点（协议://ip:端口或域名）
-local.public-end-point = http://localhost:8888
+local.public-end-point = http://origin-1:8888
 # 公有空间
 local.public-bucket = summer-public
 # 公有存储位置，可使用Nginx、Tomcat等充当文件服务器
-local.public-location = D:\\Job\\devPrograms\\apache-tomcat-9.0.75\\webapps
+local.public-location = /opt/projects/Summer/oss/public
 
 # MinIo对象存储，只有application.oss.type: MIN_IO时会生效
 # 密钥AK
 min-io.access-key = admin
 # 密钥SK
-min-io.secret-key = admin123
+min-io.secret-key = asda1992
 # 端点（协议://ip:端口或域名）
-min-io.end-point = http://192.168.0.143:9000
+min-io.end-point = http://docker-1:9100
 # 私有空间，note：需在MinIo控制台创建并指定为private
 min-io.private-bucket = summer-private
 # 公有空间，note：需在MinIo控制台创建并指定为public

@@ -17,7 +17,7 @@ application:
     type: REDIS
   oss:
     # 对象存储类型，值：LOCAL/MIN_IO/QI_NIU
-    type: LOCAL
+    type: MIN_IO
 
 server:
   # Undertow
