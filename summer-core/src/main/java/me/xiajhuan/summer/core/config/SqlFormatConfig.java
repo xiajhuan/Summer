@@ -114,9 +114,7 @@ public class SqlFormatConfig implements MessageFormattingStrategy {
         return SQL_REPLACE_SET.stream().filter(replace -> {
             if (replace.indexOf("->") > 0) {
                 String[] operationAndTable = replace.split("->");
-                if (sql.contains(operationAndTable[0]) && sql.contains(operationAndTable[1])) {
-                    return true;
-                }
+                return sql.contains(operationAndTable[0]) && sql.contains(operationAndTable[1]);
             }
             return false;
         }).findAny().orElse(null);

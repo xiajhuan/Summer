@@ -16,7 +16,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
-import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
 
 /**
  * 失败重试数
@@ -29,13 +28,6 @@ import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInt
 @Component
 @ConfigurationProperties("fail.retry-times")
 public class FailRetryTimesProperties {
-
-    /**
-     * 乐观锁
-     *
-     * @see OptimisticLockerInnerInterceptor
-     */
-    private int optimisticLock = 20;
 
     /**
      * 调用外部api

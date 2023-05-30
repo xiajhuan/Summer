@@ -127,8 +127,6 @@ batch:
 fail:
   # 失败重试数
   retry-times:
-    # 乐观锁
-    optimistic-lock: 20
     # 调用外部Api
     call-outside-api: 5
 
