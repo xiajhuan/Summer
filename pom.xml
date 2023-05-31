@@ -38,17 +38,17 @@
         <dynamic-datasource.version>3.6.1</dynamic-datasource.version>
         <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
         <p6spy.version>3.9.1</p6spy.version>
-        <lombok.version>1.18.26</lombok.version>
+        <lombok.version>1.18.28</lombok.version>
         <shiro.version>1.11.0</shiro.version>
         <quartz.version>2.4.0-rc2</quartz.version>
         <okhttp.version>4.11.0</okhttp.version>
         <freemarker.version>2.3.32</freemarker.version>
         <commons-compress.version>1.23.0</commons-compress.version>
         <commons-pool2.version>2.11.1</commons-pool2.version>
-        <guava.version>31.1-jre</guava.version>
+        <guava.version>32.0.0-jre</guava.version>
         <hutool.version>5.8.19</hutool.version>
         <javax-mail.version>1.6.2</javax-mail.version>
-        <easyexcel.version>3.3.1</easyexcel.version>
+        <easyexcel.version>3.3.2</easyexcel.version>
         <mica-xss.version>2.7.12</mica-xss.version>
         <minio.version>8.5.3</minio.version>
         <qiniu.version>7.13.1</qiniu.version>
