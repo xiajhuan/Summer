@@ -51,13 +51,8 @@ public class BaseKeyStrategy implements KeyStrategy {
     //*******************单例处理结束********************
 
     @Override
-    public String getKey(JoinPoint point, HttpServletRequest request, String username) {
+    public String getKey(JoinPoint point, HttpServletRequest request) {
         return StrUtil.format(KEY_FORMAT, ServletUtil.getInterfaceSignature(request), StrUtil.EMPTY);
-    }
-
-    @Override
-    public String extraMsgFormat() {
-        return StrUtil.EMPTY;
     }
 
 }

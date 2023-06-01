@@ -145,23 +145,6 @@ public class QiNiuOssServer extends AbstractOssServer {
     }
 
     /**
-     * 七牛云删除
-     *
-     * @param bucket 空间
-     * @param path   路径（相对路径）
-     */
-    private void qiNiuDelete(String bucket, String path) {
-        try {
-            Response response = bucketManager.delete(bucket, path);
-            if (!response.isOK()) {
-                throw SystemException.of(ErrorCode.FILE_DELETE_FAILURE, response.error);
-            }
-        } catch (QiniuException e) {
-            throw SystemException.of(e, ErrorCode.FILE_DELETE_FAILURE, e.getMessage());
-        }
-    }
-
-    /**
      * 七牛云存储
      *
      * @param bucket      空间
@@ -189,6 +172,23 @@ public class QiNiuOssServer extends AbstractOssServer {
      */
     private String qiNiuUrl(String domain, String path) {
         return StrUtil.format("{}/{}", domain, path);
+    }
+
+    /**
+     * 七牛云删除
+     *
+     * @param bucket 空间
+     * @param path   路径（相对路径）
+     */
+    private void qiNiuDelete(String bucket, String path) {
+        try {
+            Response response = bucketManager.delete(bucket, path);
+            if (!response.isOK()) {
+                throw SystemException.of(ErrorCode.FILE_DELETE_FAILURE, response.error);
+            }
+        } catch (QiniuException e) {
+            throw SystemException.of(e, ErrorCode.FILE_DELETE_FAILURE, e.getMessage());
+        }
     }
 
 }

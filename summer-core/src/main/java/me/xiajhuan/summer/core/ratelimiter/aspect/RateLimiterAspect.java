@@ -19,7 +19,6 @@ import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
 import cn.hutool.setting.Setting;
 import me.xiajhuan.summer.core.constant.SettingConst;
-import me.xiajhuan.summer.core.enums.NonLoggedUserEnum;
 import me.xiajhuan.summer.core.exception.code.ErrorCode;
 import me.xiajhuan.summer.core.exception.custom.SystemException;
 import me.xiajhuan.summer.core.ratelimiter.annotation.RateLimiter;
@@ -29,7 +28,6 @@ import me.xiajhuan.summer.core.ratelimiter.strategy.StrategyFactory;
 import me.xiajhuan.summer.core.ratelimiter.strategy.impl.SettingKeyStrategy;
 import me.xiajhuan.summer.core.ratelimiter.strategy.impl.SettingLoadBalanceStrategy;
 import me.xiajhuan.summer.core.utils.JoinPointUtil;
-import me.xiajhuan.summer.core.utils.SecurityUtil;
 import me.xiajhuan.summer.core.utils.ServletUtil;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -183,14 +181,13 @@ public class RateLimiterAspect {
                 // 获取限流key策略实例
                 keyStrategy = StrategyFactory.getKeyStrategy(keyStrategyClass);
 
-                rateLimiterKey = keyStrategy.getKey(point, request, SecurityUtil.getCurrentUsername(NonLoggedUserEnum.THIRD_PART.getValue()));
+                rateLimiterKey = keyStrategy.getKey(point, request);
 
                 extraMsgFormat = keyStrategy.extraMsgFormat();
             } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
                 LOGGER.error(e, "key-Class【{}】获取Key失败，自动切换为基本Key策略，请参考【BaseKeyStrategy】编写", keyStrategyClass.getSimpleName());
 
                 rateLimiterKey = StrUtil.format(KeyStrategy.KEY_FORMAT, ServletUtil.getInterfaceSignature(request), StrUtil.EMPTY);
-                extraMsgFormat = StrUtil.EMPTY;
             }
 
             //*******************实际Qps获取********************
@@ -243,7 +240,7 @@ public class RateLimiterAspect {
                 LOGGER.debug("接口【{}[{}]】设置Qps为：【{}】，当前节点实际Qps为：【{}】，key-Class【{}】，LoadBalance-Class【{}】{}",
                         request.getRequestURI(), request.getMethod(), setQps, RATE_LIMITER_CACHE.get(rateLimiterKey).getRate(),
                         keyStrategyClass.getSimpleName(), loadBalanceStrategyClass.getSimpleName(),
-                        StrUtil.isNotBlank(extraMsgFormat) ? StrUtil.format(extraMsgFormat, StrUtil.subAfter(rateLimiterKey, "#", true)) : StrUtil.EMPTY);
+                        extraMsgFormat != null ? StrUtil.format(extraMsgFormat, StrUtil.subAfter(rateLimiterKey, "#", true)) : StrUtil.EMPTY);
             }
 
             // 尝试获取令牌
@@ -257,7 +254,7 @@ public class RateLimiterAspect {
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("接口【{}[{}]】限流成功，key-Class【{}】，LoadBalance-Class【{}】{}",
                             request.getRequestURI(), request.getMethod(), keyStrategyClass.getSimpleName(), loadBalanceStrategyClass.getSimpleName(),
-                            StrUtil.isNotBlank(extraMsgFormat) ? StrUtil.format(extraMsgFormat, StrUtil.subAfter(rateLimiterKey, "#", true)) : StrUtil.EMPTY);
+                            extraMsgFormat != null ? StrUtil.format(extraMsgFormat, StrUtil.subAfter(rateLimiterKey, "#", true)) : StrUtil.EMPTY);
                 }
 
                 // 注解中设置的提示消息

@@ -35,12 +35,7 @@ public class SettingKeyStrategy implements KeyStrategy {
     }
 
     @Override
-    public String getKey(JoinPoint point, HttpServletRequest request, String username) {
-        throw new UnsupportedOperationException("不允许调用配置策略类的方法");
-    }
-
-    @Override
-    public String extraMsgFormat() {
+    public String getKey(JoinPoint point, HttpServletRequest request) {
         throw new UnsupportedOperationException("不允许调用配置策略类的方法");
     }
 

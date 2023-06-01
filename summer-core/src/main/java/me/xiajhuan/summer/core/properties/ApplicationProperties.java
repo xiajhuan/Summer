@@ -63,13 +63,13 @@ public class ApplicationProperties {
     public static class Oss {
 
         /**
-         * 类型，默认为LOCAL
+         * 类型，默认为MIN_IO
          *
          * @see OssSupportEnum#LOCAL
          * @see OssSupportEnum#MIN_IO
          * @see OssSupportEnum#QI_NIU
          */
-        private String type = OssSupportEnum.LOCAL.getValue();
+        private String type = OssSupportEnum.MIN_IO.getValue();
 
     }
 

@@ -13,7 +13,9 @@
 package me.xiajhuan.summer.core.ratelimiter.strategy.impl;
 
 import cn.hutool.core.util.StrUtil;
+import me.xiajhuan.summer.core.enums.NonLoggedUserEnum;
 import me.xiajhuan.summer.core.ratelimiter.strategy.KeyStrategy;
+import me.xiajhuan.summer.core.utils.SecurityUtil;
 import me.xiajhuan.summer.core.utils.ServletUtil;
 import org.aspectj.lang.JoinPoint;
 
@@ -52,8 +54,9 @@ public class UsernameKeyStrategy implements KeyStrategy {
     //*******************单例处理结束********************
 
     @Override
-    public String getKey(JoinPoint point, HttpServletRequest request, String username) {
-        return StrUtil.format(KEY_FORMAT, ServletUtil.getInterfaceSignature(request), username);
+    public String getKey(JoinPoint point, HttpServletRequest request) {
+        return StrUtil.format(KEY_FORMAT, ServletUtil.getInterfaceSignature(request),
+                SecurityUtil.getCurrentUsername(NonLoggedUserEnum.THIRD_PART.getValue()));
     }
 
     @Override

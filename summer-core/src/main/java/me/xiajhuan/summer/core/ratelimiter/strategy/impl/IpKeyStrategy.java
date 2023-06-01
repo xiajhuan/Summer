@@ -51,8 +51,9 @@ public class IpKeyStrategy implements KeyStrategy {
     //*******************单例处理结束********************
 
     @Override
-    public String getKey(JoinPoint point, HttpServletRequest request, String username) {
-        return StrUtil.format(KEY_FORMAT, ServletUtil.getInterfaceSignature(request), ServletUtil.getClientIP(request));
+    public String getKey(JoinPoint point, HttpServletRequest request) {
+        return StrUtil.format(KEY_FORMAT, ServletUtil.getInterfaceSignature(request),
+                ServletUtil.getClientIP(request));
     }
 
     @Override

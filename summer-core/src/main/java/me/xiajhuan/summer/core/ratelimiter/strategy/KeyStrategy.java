@@ -12,6 +12,7 @@
 
 package me.xiajhuan.summer.core.ratelimiter.strategy;
 
+import cn.hutool.core.util.StrUtil;
 import org.aspectj.lang.JoinPoint;
 import me.xiajhuan.summer.core.utils.ServletUtil;
 import me.xiajhuan.summer.core.ratelimiter.aspect.RateLimiterAspect;
@@ -22,8 +23,8 @@ import javax.servlet.http.HttpServletRequest;
  * 限流Key策略，note：
  * <ul>
  *   <li>
- *     通过实现该接口覆写{@link KeyStrategy#getKey}和<br>
- *     {@link KeyStrategy#extraMsgFormat()}可个性化自己的限流Key策略
+ *     通过实现该接口覆写{@link KeyStrategy#getKey(JoinPoint, HttpServletRequest)}<br>
+ *     可个性化自己的限流Key策略
  *   </li>
  *   <li>
  *     所有Key必须以“接口签名#”作为前缀，接口签名参考<br>
@@ -43,20 +44,21 @@ public interface KeyStrategy {
 
     /**
      * 获取限流key<br>
-     * note：这里为了切面{@link RateLimiterAspect}代码通用必须包含3个参数（固定写法）
+     * note：这里为了切面{@link RateLimiterAspect}代码通用必须包含2个参数（固定写法）
      *
-     * @param point    {@link JoinPoint}
-     * @param request  {@link HttpServletRequest}
-     * @param username 用户名
+     * @param point   {@link JoinPoint}
+     * @param request {@link HttpServletRequest}
      * @return 限流Key
      */
-    String getKey(JoinPoint point, HttpServletRequest request, String username);
+    String getKey(JoinPoint point, HttpServletRequest request);
 
     /**
-     * 附加消息格式，例如：，Key-Ip【{}】
+     * 附加消息格式，默认为{@code null}
      *
-     * @return 附加消息格式
+     * @return 附加消息格式或{@code null}
      */
-    String extraMsgFormat();
+    default String extraMsgFormat() {
+        return null;
+    }
 
 }
