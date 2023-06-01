@@ -12,7 +12,6 @@
 
 package me.xiajhuan.summer.core.ratelimiter.strategy;
 
-import cn.hutool.core.util.StrUtil;
 import org.aspectj.lang.JoinPoint;
 import me.xiajhuan.summer.core.utils.ServletUtil;
 import me.xiajhuan.summer.core.ratelimiter.aspect.RateLimiterAspect;
@@ -23,8 +22,8 @@ import javax.servlet.http.HttpServletRequest;
  * 限流Key策略，note：
  * <ul>
  *   <li>
- *     通过实现该接口覆写{@link KeyStrategy#getKey(JoinPoint, HttpServletRequest)}<br>
- *     可个性化自己的限流Key策略
+ *     若想个性化自己的限流Key策略，可通过实现该接口覆写<br>
+ *     {@link KeyStrategy#getKey(JoinPoint, HttpServletRequest)}
  *   </li>
  *   <li>
  *     所有Key必须以“接口签名#”作为前缀，接口签名参考<br>
