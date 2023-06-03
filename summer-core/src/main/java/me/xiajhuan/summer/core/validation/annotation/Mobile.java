@@ -34,7 +34,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 @Repeatable(Mobile.List.class)
 @Documented
-@Constraint(validatedBy = {MobileValidator.class})
+@Constraint(validatedBy = MobileValidator.class)
 public @interface Mobile {
 
     String message() default "{security.user.mobile.error}";

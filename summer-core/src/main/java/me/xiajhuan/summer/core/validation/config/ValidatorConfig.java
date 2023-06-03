@@ -41,7 +41,7 @@ public class ValidatorConfig {
      * @return {@link Validator}
      */
     @Bean
-    public Validator getValidator() {
+    public Validator i18nValidator() {
         LocalValidatorFactoryBean validator = new LocalValidatorFactoryBean();
         validator.setValidationMessageSource(messageSource);
         return validator;

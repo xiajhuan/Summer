@@ -79,8 +79,8 @@
             discardingThreshold为日志条数，不是百分比
             neverBlock默认false意味着可能会出现阻塞
         3.建议：
-            若优先绝对性能，设置 neverBlock = true，永不阻塞
-            若优先绝不丢失日志，设置 discardingThreshold = 0 且最好把queueSize设置大点
+            若优先绝对性能，设置neverBlock = true，永不阻塞
+            若优先绝不丢失日志，设置discardingThreshold = 0且最好把queueSize设置大点
             若两者兼顾，可丢弃不重要日志，把queueSize设置大点，再设置合理的discardingThreshold
     -->
 

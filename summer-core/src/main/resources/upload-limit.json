@@ -10,18 +10,18 @@
   "txt": "10MB",
   "pdf": "10MB",
 
-  "bmp": "15MB",
-  "gif": "15MB",
-  "jpg": "15MB",
-  "jpeg": "15MB",
-  "png": "15MB",
+  "bmp": "20MB",
+  "gif": "20MB",
+  "jpg": "20MB",
+  "jpeg": "20MB",
+  "png": "20MB",
 
-  "zip": "20MB",
-  "rar": "20MB",
-  "7z": "20MB",
-  "gz": "20MB",
+  "zip": "30MB",
+  "rar": "30MB",
+  "7z": "30MB",
+  "gz": "30MB",
 
-  "mp4": "25MB",
-  "avi": "25MB",
-  "rmvb": "25MB"
+  "mp4": "40MB",
+  "avi": "40MB",
+  "rmvb": "40MB"
 }

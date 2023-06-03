@@ -84,7 +84,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
             allowedMethod = "GET,POST,PUT,DELETE,OPTIONS";
         }
         allowedMethodArray = allowedMethod.split(StrPool.COMMA);
-        maxAge = setting.getInt("cors.max-age", "Http", 3600);
+        maxAge = setting.getInt("cors.max-age", "Http", 1800);
 
         // 拦截器启用
         enableContentTypeFilter = setting.getBool("enable-content-type-filter", "Http", true);

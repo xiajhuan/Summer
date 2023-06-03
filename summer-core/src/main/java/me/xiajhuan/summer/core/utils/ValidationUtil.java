@@ -45,7 +45,7 @@ public class ValidationUtil {
     /**
      * 校验器
      */
-    private static final Validator VALIDATOR = SpringUtil.getBean("getValidator", Validator.class);
+    private static final Validator VALIDATOR = SpringUtil.getBean("i18nValidator", Validator.class);
 
     /**
      * 校验List<Dto>

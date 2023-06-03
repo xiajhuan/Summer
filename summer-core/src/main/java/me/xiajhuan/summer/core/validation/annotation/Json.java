@@ -34,7 +34,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 @Repeatable(Json.List.class)
 @Documented
-@Constraint(validatedBy = {JsonValidator.class})
+@Constraint(validatedBy = JsonValidator.class)
 public @interface Json {
 
     String message() default "{json.error}";

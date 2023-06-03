@@ -23,7 +23,7 @@ server:
   # Undertow
   undertow:
     # Post请求体最大限制，值为-1则无限制
-    max-http-post-size: -1
+    max-http-post-size: 200MB
     # Buffer配置（这些Buffer会用于服务器连接的IO操作，有点类似于Netty的池化内存管理）
     # 每块Buffer的空间大小（空间越小被利用的越充分）
     buffer-size: 512
@@ -52,9 +52,9 @@ spring:
     # 文件上传
     multipart:
       # 单个文件最大限制
-      max-file-size: 30MB
+      max-file-size: 50MB
       # 请求最大限制
-      max-request-size: 100MB
+      max-request-size: 200MB
   # 消息国际化
   messages:
     encoding: UTF-8
@@ -94,10 +94,10 @@ spring:
 
 # MybatisPlus
 mybatis-plus:
-  # Entity扫描，多个package用“,”或者“;”分隔
-  typeAliasesPackage: me.xiajhuan.summer.**.entity
+  # Entity扫描，多个package用“,”或“;”分隔
+  type-aliases-package: me.xiajhuan.summer.**.entity
   # Mapper.xml文件位置，多个location用“,”分隔
-  mapperlocations: classpath*:/mapper/*/*.xml
+  mapper-locations: classpath*:/mapper/*/*.xml
   global-config:
     # 数据库相关配置
     db-config:
@@ -113,7 +113,7 @@ mybatis-plus:
     cache-enabled: false
     # 指定当结果集中值为null的时候是否调用映射对象的setter（map对象时为put）方法
     call-setters-on-nulls: true
-    # 当没有为参数指定特定的JDBC类型时，空值的默认JDBC类型
+    # 当没有为参数指定特定的JDBC类型时，空值默认的JDBC类型
     jdbc-type-for-null: NULL
 
 batch:

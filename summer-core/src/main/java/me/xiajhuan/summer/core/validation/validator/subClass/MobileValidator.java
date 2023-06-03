@@ -32,7 +32,7 @@ public class MobileValidator extends AbstractPatternValidator<Mobile> {
     public void initialize(Mobile constraintAnnotation) {
         // 获取地区语言
         Locale locale = LocaleUtil.getLocalePriority();
-        if ("zh_CN".equals(locale.toString())) {
+        if (LocaleSupportEnum.ZH_CN.getName().equals(locale.toString())) {
             pattern = Pattern.compile(LocaleSupportEnum.ZH_CN.getMobileRegex());
         } else {
             pattern = Pattern.compile(LocaleSupportEnum.EN_US.getMobileRegex());

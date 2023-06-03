@@ -58,16 +58,16 @@
 
     <dependencyManagement>
         <dependencies>
-            <!--Summer系统模块-->
-            <dependency>
-                <groupId>me.xiajhuan</groupId>
-                <artifactId>summer-system</artifactId>
-                <version>${summer.version}</version>
-            </dependency>
             <!--Summer核心模块-->
             <dependency>
                 <groupId>me.xiajhuan</groupId>
                 <artifactId>summer-core</artifactId>
+                <version>${summer.version}</version>
+            </dependency>
+            <!--Summer系统模块-->
+            <dependency>
+                <groupId>me.xiajhuan</groupId>
+                <artifactId>summer-system</artifactId>
                 <version>${summer.version}</version>
             </dependency>
             <!--SpringBoot-->
