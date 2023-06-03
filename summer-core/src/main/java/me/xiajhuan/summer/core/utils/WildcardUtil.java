@@ -15,6 +15,7 @@ package me.xiajhuan.summer.core.utils;
 import cn.hutool.core.util.ArrayUtil;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * 通配符工具
@@ -54,7 +55,7 @@ public class WildcardUtil {
      * 检查源字符串是否匹配指定的通配符模板字符串，note：
      * <ul>
      *   <li>仅支持“*”（任意匹配）和“?”（单值匹配）</li>
-     *   <li>都为{@code null}则返回true，任一为{@code null}则返回false</li>
+     *   <li>都为{@code null}或引用同一对象则返回true，任一为{@code null}则返回false</li>
      * </ul>
      * <p>
      * 失效回溯法：
@@ -99,16 +100,15 @@ public class WildcardUtil {
      * @return 是否匹配，true：是 false：否
      */
     public static boolean matches(String source, String pattern) {
-        // 引用同一对象或都为null
-        if (source == pattern) {
+        // 都为null或引用同一对象
+        if (Objects.equals(source, pattern)) {
             return true;
         }
         // 任一为null
-        if ((source == null && pattern != null) || (source != null && pattern == null)) {
+        if (source == null || pattern == null) {
             return false;
         }
 
-        // 都不为null
         // i用来记录source串检测的索引的位置
         int i = 0;
         // j用来记录pattern串检测的索引的位置

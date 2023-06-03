@@ -68,7 +68,7 @@ public class ContentTypeInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         String contentType = request.getContentType();
-        if (StrUtil.isNotBlank(contentType)) {
+        if (contentType != null) {
             if (StrUtil.startWithAnyIgnoreCase(contentType, ArrayUtil.toArray(contentTypeSet, String.class))) {
                 return true;
             } else {

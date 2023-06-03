@@ -135,7 +135,7 @@ public class ServletUtil extends cn.hutool.extra.servlet.ServletUtil {
             }
 
             String contentType = request.getContentType();
-            if (StrUtil.isNotBlank(contentType)) {
+            if (contentType != null) {
                 // 有请求体参数
                 // Form参数格式示例：Form-Data【pageNum=1&pageSize=10】或Form-Data【status=1【文件上传】】
                 if (StrUtil.startWithAnyIgnoreCase(contentType, ContentTypeConst.FORM_DATA)) {

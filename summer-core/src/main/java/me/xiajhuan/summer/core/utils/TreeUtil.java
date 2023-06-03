@@ -28,8 +28,6 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * 树形结构工具
@@ -120,14 +118,13 @@ public class TreeUtil extends cn.hutool.core.lang.tree.TreeUtil {
     private static <D extends TreeDto<Long>> Map<String, Method> getExtraGetters(Class<D> dtoClass, String... extraField) {
         final Map<String, Method> extraGetters = MapUtil.newHashMap(true);
         if (ArrayUtil.isNotEmpty(extraField)) {
-            // 去重
-            Set<String> extraSet = Arrays.stream(extraField).collect(Collectors.toSet());
-            extraSet.forEach(extra -> {
+            Arrays.stream(extraField).distinct().forEach(extra -> {
+                String extra_upper_first = StrUtil.upperFirst(extra);
                 // 以“get”开头的方法
-                Method extraGetter = ReflectUtil.getMethodByNameIgnoreCase(dtoClass, StrUtil.format("get{}", extra));
+                Method extraGetter = ReflectUtil.getMethodByName(dtoClass, StrUtil.format("get{}", extra_upper_first));
                 if (extraGetter == null) {
                     // 以“is”开头的方法
-                    extraGetter = ReflectUtil.getMethodByNameIgnoreCase(dtoClass, StrUtil.format("is{}", extra));
+                    extraGetter = ReflectUtil.getMethodByName(dtoClass, StrUtil.format("is{}", extra_upper_first));
                 }
                 if (extraGetter != null) {
                     extraGetters.put(extra, extraGetter);

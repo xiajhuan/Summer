@@ -132,9 +132,9 @@ local.public-location = /opt/projects/Summer/oss/public
 
 # MinIo对象存储，只有application.oss.type: MIN_IO时会生效
 # 密钥AK
-min-io.access-key = admin
+min-io.access-key = 8P6SFeTXIkS3hJc8QSLq
 # 密钥SK
-min-io.secret-key = asda1992
+min-io.secret-key = wz8aMHgoHx9JDulmT9Zexd3yoNOdL1ysNLXFkLzd
 # 端点（协议://ip:端口或域名）
 min-io.end-point = http://docker-1:9100
 # 私有空间，note：需在MinIo控制台创建并指定为private
