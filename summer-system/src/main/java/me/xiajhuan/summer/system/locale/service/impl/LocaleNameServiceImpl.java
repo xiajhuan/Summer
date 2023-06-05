@@ -46,7 +46,7 @@ import java.util.stream.Collectors;
 @DS(DataSourceConst.SYSTEM)
 public class LocaleNameServiceImpl extends ServiceImpl<LocaleNameMapper, LocaleNameEntity> implements LocaleNameService, MpHelper<LocaleNameDto, LocaleNameEntity> {
 
-    @Value("${batch.limit.real-save-num-every-time}")
+    @Value("${batch-limit.real-save-num-every-time}")
     private int realSaveNumEveryTime;
 
     //*******************MpHelper覆写开始********************

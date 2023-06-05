@@ -36,7 +36,7 @@ import java.util.Arrays;
  */
 public abstract class BaseController {
 
-    @Value("${batch.limit.excel-max-export}")
+    @Value("${batch-limit.excel-max-export}")
     private long excelMaxExport;
 
     /**

@@ -38,15 +38,15 @@ public class TaskInitRunner implements ApplicationRunner {
 
     private static final Log LOGGER = LogFactory.get();
 
-    @Value("${quartz.startup.auto}")
-    private boolean isAuto;
+    @Value("${quartz-startup.auto}")
+    private boolean auto;
 
     @Resource
     private ScheduleTaskService scheduleTaskService;
 
     @Override
     public void run(ApplicationArguments args) {
-        if (isAuto && scheduleTaskService.initTask()) {
+        if (auto && scheduleTaskService.initTask()) {
             LOGGER.info("【{}】定时任务初始化完毕", SystemUtil.getApplicationName());
         }
     }

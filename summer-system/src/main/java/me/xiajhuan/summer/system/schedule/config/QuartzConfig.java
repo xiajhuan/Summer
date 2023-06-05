@@ -43,10 +43,10 @@ import javax.annotation.Resource;
 @Configuration
 public class QuartzConfig {
 
-    @Value("${quartz.startup.auto}")
+    @Value("${quartz-startup.auto}")
     private boolean isAuto;
 
-    @Value("${quartz.startup.delay}")
+    @Value("${quartz-startup.delay}")
     private int delay;
 
     @Resource(name = SettingConst.SYSTEM)

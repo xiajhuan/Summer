@@ -74,23 +74,33 @@ spring:
       strict: true
       # 连接池配置
       hikari:
-        # 配置项说明参考com.zaxxer.hikari.HikariConfigMXBean
-        connection-timeout: 10000
-        validation-timeout: 3000
-        idle-timeout: 60000
-        max-lifetime: 180000
-        max-pool-size: 10
-        min-idle: 5
-  # Redis，只有application.cache.type: REDIS时会生效
-  redis:
-    timeout: 6000
-    lettuce:
-      # 连接池配置
-      pool:
-        min-idle: 5
-        max-idle: 10
-        max-active: 1000
-        max-wait: -1
+        # 获取连接的等待超时时间（ms）
+        connection-timeout: 30000
+        # 校验超时时间（ms）
+        validation-timeout: 5000
+        # 空间连接最大存活时间（ms）
+        idle-timeout: 600000
+        # 连接最大生命周期（ms）
+        max-lifetime: 1800000
+        # 最大连接数
+        max-pool-size: 16
+        # 最小空闲连接数
+        min-idle: 8
+        # 连接测试查询Sql
+        connection-test-query: SELECT 1
+        # 检查连接活性的时间间隔（ms）
+        keepalive-time: 30000
+
+# Redis，只有application.cache.type: REDIS时会生效
+redis:
+  timeout: 5000
+  # 连接池配置
+  pool:
+    min-idle: 0
+    max-idle: 16
+    max-active: 32
+    max-wait: 5000
+    time-between-eviction-runs: 1000
 
 # MybatisPlus
 mybatis-plus:
@@ -116,19 +126,12 @@ mybatis-plus:
     # 当没有为参数指定特定的JDBC类型时，空值默认的JDBC类型
     jdbc-type-for-null: NULL
 
-batch:
-  # 批量操作限制
-  limit:
-    # 每次批量插入数（JDBC批量提交）
-    real-save-num-every-time: 100
-    # Excel最大导出数
-    excel-max-export: 40000
-
-fail:
-  # 失败重试数
-  retry-times:
-    # 调用外部Api
-    call-outside-api: 5
+# 批量操作限制
+batch-limit:
+  # 每次批量插入数（JDBC批量提交）
+  real-save-num-every-time: 100
+  # Excel最大导出数
+  excel-max-export: 40000
 
 mica:
   # XSS过滤

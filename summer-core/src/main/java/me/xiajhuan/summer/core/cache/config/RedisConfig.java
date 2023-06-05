@@ -12,89 +12,77 @@
 
 package me.xiajhuan.summer.core.cache.config;
 
+import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
+import me.xiajhuan.summer.core.utils.AssertUtil;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
-import org.springframework.data.redis.connection.lettuce.LettuceClientConfiguration;
+import org.springframework.data.redis.connection.*;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.connection.lettuce.LettucePoolingClientConfiguration;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
+import me.xiajhuan.summer.core.enums.RedisModeEnum;
 
 import java.time.Duration;
+import java.util.Set;
 
 /**
- * Redis模板配置
+ * Redis配置
  *
  * @author xiajhuan
- * @date 2022/11/30
+ * @date 2023/6/5
+ * @see RedisConnectionFactory
+ * @see RedisTemplate
+ * @see RedisStandaloneConfiguration
+ * @see RedisClusterConfiguration
  */
 @Configuration
 @ConditionalOnProperty(prefix = "application.cache", name = "type", havingValue = "REDIS")
-public class RedisTemplateConfig {
+public class RedisConfig {
 
-    /**
-     * 主机（ip）
-     */
-    @Value("${spring.redis.host}")
-    private String host;
-
-    /**
-     * 端口
-     */
-    @Value("${spring.redis.port}")
-    private int port;
-
-    /**
-     * 密码
-     */
-    @Value("${spring.redis.password}")
+    @Value("${redis.password}")
     private String password;
 
-    /**
-     * 数据库
-     */
-    @Value("${spring.redis.database}")
-    private int database;
+    @Value("${redis.mode}")
+    private String mode;
 
-    /**
-     * 超时时间（ms）
-     */
-    @Value("${spring.redis.timeout}")
+    @Value("${redis.timeout}")
     private long timeout;
 
-    /**
-     * 最小空闲连接数
-     */
-    @Value("${spring.redis.lettuce.pool.min-idle}")
+    @Value("${redis.pool.min-idle}")
     private int minIdle;
 
-    /**
-     * 最大空闲连接数
-     */
-    @Value("${spring.redis.lettuce.pool.max-idle}")
+    @Value("${redis.pool.max-idle}")
     private int maxIdle;
 
-    /**
-     * 最大可分配连接数
-     */
-    @Value("${spring.redis.lettuce.pool.max-active}")
+    @Value("${redis.pool.max-active}")
     private int maxActive;
 
-    /**
-     * 抛出异常之前连接分配应阻塞的最大时间（ms）
-     */
-    @Value("${spring.redis.lettuce.pool.max-wait}")
+    @Value("${redis.pool.max-wait}")
     private long maxWait;
+
+    @Value("${redis.pool.time-between-eviction-runs}")
+    private long timeBetweenEvictionRuns;
+
+    @Value("${redis.standalone.host}")
+    private String host;
+
+    @Value("${redis.standalone.port}")
+    private int port;
+
+    @Value("${redis.standalone.database}")
+    private int database;
+
+    @Value("#{'${redis.cluster.node-set}'.split(',')}")
+    private Set<String> nodeSet;
 
     /**
      * 注册{@link RedisConnectionFactory}
@@ -109,20 +97,13 @@ public class RedisTemplateConfig {
         poolConfig.setMaxIdle(maxIdle);
         poolConfig.setMaxTotal(maxActive);
         poolConfig.setMaxWait(Duration.ofMillis(maxWait));
+        poolConfig.setTimeBetweenEvictionRuns(Duration.ofMillis(timeBetweenEvictionRuns));
 
-        // Lettuce客户端配置
-        LettuceClientConfiguration clientConfig = LettucePoolingClientConfiguration.builder()
-                .commandTimeout(Duration.ofMillis(timeout))
-                .shutdownTimeout(Duration.ofMillis(timeout))
-                .poolConfig(poolConfig).build();
-
-        // Standalone模式客户端
-        RedisStandaloneConfiguration serverConfig = new RedisStandaloneConfiguration(host, port);
-        serverConfig.setDatabase(database);
-        serverConfig.setPassword(password);
-
-        // Lettuce客户端连接工厂
-        return new LettuceConnectionFactory(serverConfig, clientConfig);
+        // Lettuce连接工厂
+        return new LettuceConnectionFactory(getRedisConfiguration(),
+                LettucePoolingClientConfiguration.builder()
+                        .commandTimeout(Duration.ofMillis(timeout))
+                        .poolConfig(poolConfig).build());
     }
 
     /**
@@ -134,7 +115,6 @@ public class RedisTemplateConfig {
     @Bean
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory factory) {
         RedisTemplate<String, Object> template = new RedisTemplate<>();
-
         // 连接工厂
         template.setConnectionFactory(factory);
 
@@ -145,7 +125,6 @@ public class RedisTemplateConfig {
         mapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
         mapper.activateDefaultTyping(LaissezFaireSubTypeValidator.instance, ObjectMapper.DefaultTyping.NON_FINAL);
         jackson2JsonRedisSerializer.setObjectMapper(mapper);
-
         // String的序列化方式
         StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
 
@@ -161,6 +140,33 @@ public class RedisTemplateConfig {
         template.afterPropertiesSet();
 
         return template;
+    }
+
+    /**
+     * 获取Redis配置
+     *
+     * @return {@link RedisConfiguration}
+     * @see RedisModeEnum
+     */
+    private RedisConfiguration getRedisConfiguration() {
+        if (RedisModeEnum.STANDALONE.getValue().equals(mode)) {
+            // 单机模式
+            RedisStandaloneConfiguration standaloneConfig = new RedisStandaloneConfiguration(host, port);
+            standaloneConfig.setDatabase(database);
+            standaloneConfig.setPassword(password);
+
+            return standaloneConfig;
+        } else if (RedisModeEnum.CLUSTER.getValue().equals(mode)) {
+            // 集群模式
+            AssertUtil.isNotEmpty("nodeSet", nodeSet);
+            RedisClusterConfiguration clusterConfig = new RedisClusterConfiguration();
+            nodeSet.forEach(node -> clusterConfig.addClusterNode(RedisNode.fromString(node)));
+            clusterConfig.setPassword(password);
+
+            return clusterConfig;
+        } else {
+            throw new IllegalArgumentException(StrUtil.format("不支持的Redis模式【{}】", mode));
+        }
     }
 
 }

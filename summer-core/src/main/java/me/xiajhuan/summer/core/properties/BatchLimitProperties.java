@@ -29,7 +29,7 @@ import java.util.List;
 @Setter
 @Getter
 @Component
-@ConfigurationProperties("batch.limit")
+@ConfigurationProperties("batch-limit")
 public class BatchLimitProperties {
 
     /**

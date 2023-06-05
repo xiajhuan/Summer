@@ -58,7 +58,7 @@ import java.util.stream.Collectors;
 @DS(DataSourceConst.SYSTEM)
 public class ScheduleTaskServiceImpl extends ServiceImpl<ScheduleTaskMapper, ScheduleTaskEntity> implements ScheduleTaskService, MpHelper<ScheduleTaskDto, ScheduleTaskEntity> {
 
-    @Value("${quartz.startup.delay}")
+    @Value("${quartz-startup.delay}")
     private int delay;
 
     @Resource

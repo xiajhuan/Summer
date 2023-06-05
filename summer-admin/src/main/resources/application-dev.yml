@@ -20,18 +20,25 @@ spring:
           url: jdbc:mysql://origin-1:3306/summer-system?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true
           username: root
           password: asda1992
-  # Redis，只有application.cache.type: REDIS时会生效
-  redis:
+
+# Redis，只有application.cache.type: REDIS时会生效
+redis:
+  password: asda1992
+  # 模式，值：STANDALONE/CLUSTER
+  mode: STANDALONE
+  # 单机模式，只有redis.mode: STANDALONE时会生效
+  standalone:
     host: origin-1
     port: 6379
-    password: asda1992
     database: 0
+  # 集群模式，只有redis.mode: CLUSTER时会生效
+  cluster:
+    node-set: docker-1:6381,docker-1:6382,docker-1:6383,docker-1:6384,docker-1:6385,docker-1:6386
 
-quartz:
-  # 定时任务启动
-  startup:
-    auto: false
-    delay: 20
+# 定时任务启动
+quartz-startup:
+  auto: false
+  delay: 20
 
 logging:
   # 日志级别

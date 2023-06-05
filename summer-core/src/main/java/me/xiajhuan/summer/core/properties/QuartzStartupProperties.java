@@ -27,7 +27,7 @@ import org.springframework.stereotype.Component;
 @Setter
 @Getter
 @Component
-@ConfigurationProperties("quartz.startup")
+@ConfigurationProperties("quartz-startup")
 public class QuartzStartupProperties {
 
     /**

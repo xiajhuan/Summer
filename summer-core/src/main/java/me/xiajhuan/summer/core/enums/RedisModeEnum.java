@@ -10,28 +10,33 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package me.xiajhuan.summer.core.properties;
+package me.xiajhuan.summer.core.enums;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
 
 /**
- * 失败重试数
+ * Redis模式枚举
  *
  * @author xiajhuan
- * @date 2023/4/23
+ * @date 2023/6/5
  */
-@Setter
 @Getter
-@Component
-@ConfigurationProperties("fail.retry-times")
-public class FailRetryTimesProperties {
+@AllArgsConstructor
+public enum RedisModeEnum {
 
     /**
-     * 调用外部api
+     * 单机
      */
-    private int callOutsideApi = 5;
+    STANDALONE("STANDALONE", "单机"),
+
+    /**
+     * 集群
+     */
+    CLUSTER("CLUSTER", "集群");
+
+    private final String value;
+
+    private final String name;
 
 }
