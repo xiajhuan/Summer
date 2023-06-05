@@ -29,7 +29,7 @@ public interface SecurityPostService extends IService<SecurityPostEntity> {
 
     Page<SecurityPostDto> page(SecurityPostDto dto);
 
-    List<SecurityPostDto> list(int status);
+    List<SecurityPostDto> list(Integer status);
 
     SecurityPostDto getById(Long id);
 

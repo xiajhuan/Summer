@@ -34,7 +34,7 @@ public interface SecurityRoleDeptMapper extends BaseMapper<SecurityRoleDeptEntit
      * @return 部门ID集合
      */
     @Select("SELECT dept_id from security_role_dept WHERE role_id = #{roleId}")
-    Set<Long> getDeptIdSet(@Param("roleId") Long roleId);
+    Set<Long> getDeptIdSet(@Param("roleId") long roleId);
 
     /**
      * 获取部门ID集合（用户所有角色关联的所有部门ID）
@@ -42,6 +42,6 @@ public interface SecurityRoleDeptMapper extends BaseMapper<SecurityRoleDeptEntit
      * @param userId 用户ID
      * @return 部门ID集合
      */
-    Set<Long> getDeptIdRoleBasedSet(@Param("userId") Long userId);
+    Set<Long> getDeptIdRoleBasedSet(@Param("userId") long userId);
 
 }

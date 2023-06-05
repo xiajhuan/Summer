@@ -42,7 +42,7 @@ public interface SecurityUserMapper extends BaseMapper<SecurityUserEntity> {
             "  </where>" +
             "  LIMIT 1" +
             "</script>")
-    Integer exist(@Param("username") String username, @Param("id") Long id);
+    Integer exist(@Param("username") String username, @Param("id") long id);
 
     /**
      * 获取用户名
@@ -51,6 +51,6 @@ public interface SecurityUserMapper extends BaseMapper<SecurityUserEntity> {
      * @return 用户名
      */
     @Select("SELECT username FROM security_user WHERE id = #{id} LIMIT 1")
-    String getUsername(@Param("id") Long id);
+    String getUsername(@Param("id") long id);
 
 }

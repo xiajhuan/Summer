@@ -37,7 +37,7 @@ public interface SecurityMenuMapper extends BaseMapper<SecurityMenuEntity> {
      * @param locale 地区语言，参考{@link LocaleSupportEnum}
      * @return 菜单Entity
      */
-    SecurityMenuEntity getByIdAndLocale(@Param("id") Long id, @Param("locale") String locale);
+    SecurityMenuEntity getByIdAndLocale(@Param("id") long id, @Param("locale") String locale);
 
     /**
      * 获取全部菜单
@@ -46,7 +46,7 @@ public interface SecurityMenuMapper extends BaseMapper<SecurityMenuEntity> {
      * @param type   类型，参考{@link ComponentTypeEnum}
      * @return 菜单Entity列表
      */
-    List<SecurityMenuEntity> getMenusAll(@Param("locale") String locale, @Param("type") Integer type);
+    List<SecurityMenuEntity> getMenusAll(@Param("locale") String locale, @Param("type") int type);
 
     /**
      * 获取菜单
@@ -56,7 +56,7 @@ public interface SecurityMenuMapper extends BaseMapper<SecurityMenuEntity> {
      * @param userId 用户ID
      * @return 菜单Entity列表
      */
-    List<SecurityMenuEntity> getMenus(@Param("locale") String locale, @Param("type") Integer type, @Param("userId") Long userId);
+    List<SecurityMenuEntity> getMenus(@Param("locale") String locale, @Param("type") int type, @Param("userId") long userId);
 
     /**
      * 获取全部菜单权限
@@ -72,6 +72,6 @@ public interface SecurityMenuMapper extends BaseMapper<SecurityMenuEntity> {
      * @param userId 用户ID
      * @return 菜单权限集合
      */
-    Set<String> getMenuPermissions(@Param("userId") Long userId);
+    Set<String> getMenuPermissions(@Param("userId") long userId);
 
 }

@@ -85,7 +85,7 @@ public class MonitorOnlineServiceImpl extends ServiceImpl<MonitorOnlineMapper, M
     }
 
     @Override
-    public void saveOrUpdateAsync(SecurityUserEntity userEntity, int expireTime) {
+    public void saveOrUpdateAsync(SecurityUserEntity userEntity, Integer expireTime) {
         Date now = DateUtil.date();
         Date expire = DateUtil.offsetSecond(now, expireTime);
         String realName = userEntity.getRealName();

@@ -44,7 +44,7 @@ public interface ExtendRegionMapper extends BaseMapper<ExtendRegionEntity> {
      * @param id ID
      * @return 行政区域Entity
      */
-    ExtendRegionEntity getById(@Param("id") Long id);
+    ExtendRegionEntity getById(@Param("id") long id);
 
     /**
      * 查询列表（忽略数据权限）
@@ -63,6 +63,6 @@ public interface ExtendRegionMapper extends BaseMapper<ExtendRegionEntity> {
      */
     @Select("SELECT level FROM extend_region WHERE id = #{id}")
     @InterceptorIgnore
-    Integer getLevelById(@Param("id") Long id);
+    Integer getLevelById(@Param("id") long id);
 
 }

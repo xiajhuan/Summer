@@ -63,6 +63,6 @@ public interface LocaleNameService extends IService<LocaleNameEntity> {
      * @param locale 地区语言
      * @return 是否存在，true：是 false：否
      */
-    boolean exist(long lineId, String locale);
+    boolean exist(Long lineId, String locale);
 
 }

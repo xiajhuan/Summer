@@ -97,7 +97,7 @@ public class SecurityPostServiceImpl extends ServiceImpl<SecurityPostMapper, Sec
     }
 
     @Override
-    public List<SecurityPostDto> list(int status) {
+    public List<SecurityPostDto> list(Integer status) {
         LambdaQueryWrapper<SecurityPostEntity> queryWrapper = getEmptyWrapper();
         queryWrapper.eq(SecurityPostEntity::getStatus, status);
         queryWrapper.select(SecurityPostEntity::getId, SecurityPostEntity::getName);

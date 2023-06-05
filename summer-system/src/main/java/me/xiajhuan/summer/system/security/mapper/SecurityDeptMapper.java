@@ -41,6 +41,6 @@ public interface SecurityDeptMapper extends BaseMapper<SecurityDeptEntity> {
      * @param id ID
      * @return 部门Entity
      */
-    SecurityDeptEntity getById(@Param("id") Long id);
+    SecurityDeptEntity getById(@Param("id") long id);
 
 }

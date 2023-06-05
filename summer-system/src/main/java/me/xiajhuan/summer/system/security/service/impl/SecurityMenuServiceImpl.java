@@ -61,7 +61,7 @@ public class SecurityMenuServiceImpl extends ServiceImpl<SecurityMenuMapper, Sec
     private SecurityRoleMenuMapper securityRoleMenuMapper;
 
     @Override
-    public List<SecurityMenuDto> treeList(Integer type, boolean needAll) {
+    public List<SecurityMenuDto> treeList(Integer type, Boolean needAll) {
         final List<SecurityMenuEntity> entityList;
         LoginUser loginUser = SecurityUtil.getLoginUser();
         String locale = LocaleUtil.getAcceptLanguage(ServletUtil.getHttpRequest());

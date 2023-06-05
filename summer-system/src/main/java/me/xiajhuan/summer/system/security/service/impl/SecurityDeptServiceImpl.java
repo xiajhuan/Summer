@@ -65,7 +65,7 @@ public class SecurityDeptServiceImpl extends ServiceImpl<SecurityDeptMapper, Sec
     private SecurityRoleDeptMapper securityRoleDeptMapper;
 
     @Override
-    public List<SecurityDeptDto> treeList(boolean needAll) {
+    public List<SecurityDeptDto> treeList(Boolean needAll) {
         Set<Long> idSet = null;
         LoginUser loginUser = SecurityUtil.getLoginUser();
 

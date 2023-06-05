@@ -39,7 +39,7 @@ public interface MonitorOnlineService extends IService<MonitorOnlineEntity> {
      * @param expireTime 过期时间（s）
      */
     @Async(ThreadPoolConst.ASYNC_COMMON)
-    void saveOrUpdateAsync(SecurityUserEntity userEntity, int expireTime);
+    void saveOrUpdateAsync(SecurityUserEntity userEntity, Integer expireTime);
 
     /**
      * 删除

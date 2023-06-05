@@ -53,7 +53,7 @@ page.max-size-limit = 1000
 # 默认排序字段，以“,”分隔，为空则不排序
 sort.default-field = create_time
 # 默认排序规则，以“,”分隔（必须与sort.default-field匹配），为空则不排序
-sort.default-order = DESC
+sort.default-order = desc
 # 排序字段是否驼峰转下划线
 sort.field-camel-to-underscore = true
 
@@ -132,9 +132,9 @@ local.public-location = /opt/projects/Summer/oss/public
 
 # MinIo对象存储，只有application.oss.type: MIN_IO时会生效
 # 密钥AK
-min-io.access-key = 8P6SFeTXIkS3hJc8QSLq
+min-io.access-key = gTnlNRNvmOZPBKU3J7Cz
 # 密钥SK
-min-io.secret-key = wz8aMHgoHx9JDulmT9Zexd3yoNOdL1ysNLXFkLzd
+min-io.secret-key = eqM9iMQ2OYm2MCwugm3fsxLT01Gh4YYUIrfarubA
 # 端点（协议://ip:端口或域名）
 min-io.end-point = http://docker-1:9100
 # 私有空间，note：需在MinIo控制台创建并指定为private

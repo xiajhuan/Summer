@@ -34,6 +34,6 @@ public interface SecurityRoleMenuMapper extends BaseMapper<SecurityRoleMenuEntit
      * @return 菜单ID集合
      */
     @Select("SELECT menu_id from security_role_menu WHERE role_id = #{roleId}")
-    Set<Long> getMenuIdSet(@Param("roleId") Long roleId);
+    Set<Long> getMenuIdSet(@Param("roleId") long roleId);
 
 }

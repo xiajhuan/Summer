@@ -36,7 +36,7 @@ public interface SecurityMenuService extends IService<SecurityMenuEntity> {
      * @param needAll 是否需要全部，true：是 false：否
      * @return 菜单列表（树形结构、菜单名称国际化）或{@code null}
      */
-    List<SecurityMenuDto> treeList(Integer type, boolean needAll);
+    List<SecurityMenuDto> treeList(Integer type, Boolean needAll);
 
     SecurityMenuDto getById(Long id);
 

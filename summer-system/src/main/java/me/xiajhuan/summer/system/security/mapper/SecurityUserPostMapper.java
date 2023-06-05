@@ -34,6 +34,6 @@ public interface SecurityUserPostMapper extends BaseMapper<SecurityUserPostEntit
      * @return 岗位ID集合
      */
     @Select("SELECT post_id from security_user_post WHERE user_id = #{userId}")
-    Set<Long> getPostIdSet(@Param("userId") Long userId);
+    Set<Long> getPostIdSet(@Param("userId") long userId);
 
 }

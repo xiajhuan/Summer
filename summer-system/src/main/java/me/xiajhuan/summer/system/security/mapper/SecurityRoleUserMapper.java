@@ -34,6 +34,6 @@ public interface SecurityRoleUserMapper extends BaseMapper<SecurityRoleUserEntit
      * @return 角色ID集合
      */
     @Select("SELECT role_id from security_role_user WHERE user_id = #{userId}")
-    Set<Long> getRoleIdSet(@Param("userId") Long userId);
+    Set<Long> getRoleIdSet(@Param("userId") long userId);
 
 }

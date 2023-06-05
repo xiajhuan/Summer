@@ -33,7 +33,7 @@ public interface SecurityDeptService extends IService<SecurityDeptEntity> {
      * @param needAll 是否需要全部，true：是 false：否
      * @return 部门列表（树形结构）或{@code null}
      */
-    List<SecurityDeptDto> treeList(boolean needAll);
+    List<SecurityDeptDto> treeList(Boolean needAll);
 
     SecurityDeptDto getById(Long id);
 

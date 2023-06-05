@@ -41,9 +41,9 @@ import java.util.List;
 public class ExtendRegionServiceImpl extends ServiceImpl<ExtendRegionMapper, ExtendRegionEntity> implements ExtendRegionService {
 
     @Override
-    public List<ExtendRegionDto> treeList(boolean isFiltered) {
+    public List<ExtendRegionDto> treeList(boolean needFilter) {
         final List<ExtendRegionEntity> entityList;
-        if (isFiltered) {
+        if (needFilter) {
             // 过滤数据权限
             entityList = baseMapper.getList();
         } else {
@@ -116,11 +116,11 @@ public class ExtendRegionServiceImpl extends ServiceImpl<ExtendRegionMapper, Ext
      * @param dto 行政区域Dto
      */
     private void checkLevel(ExtendRegionDto dto) {
-        // 上级区域级别，没有上级时为-1
+        // 上级区域级别，没有时为-1
         int parentLevel = -1;
         long parentId = dto.getParentId();
         if (parentId > 0L) {
-            parentLevel = baseMapper.getLevelById(dto.getParentId());
+            parentLevel = baseMapper.getLevelById(parentId);
         }
 
         // 上级区域级别必须比自身大一级

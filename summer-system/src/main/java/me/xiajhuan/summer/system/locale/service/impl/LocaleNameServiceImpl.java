@@ -128,7 +128,7 @@ public class LocaleNameServiceImpl extends ServiceImpl<LocaleNameMapper, LocaleN
     }
 
     @Override
-    public boolean exist(long lineId, String locale) {
+    public boolean exist(Long lineId, String locale) {
         return baseMapper.exist(lineId, locale) != null;
     }
 
