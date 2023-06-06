@@ -26,8 +26,13 @@ public class DataSourceConst {
     public static final String SYSTEM = "system";
 
     /**
-     * business模块数据源，summer-business
+     * business模块主数据源，summer-business
      */
-    public static final String BUSINESS = "business";
+    public static final String MASTER = "master";
+
+    /**
+     * business模块从数据源，summer-business
+     */
+    public static final String SLAVE = "slave";
 
 }

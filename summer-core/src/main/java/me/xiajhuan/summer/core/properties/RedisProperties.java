@@ -34,17 +34,17 @@ import java.util.Set;
 public class RedisProperties {
 
     /**
-     * 密码
-     */
-    private String password;
-
-    /**
      * 模式，默认为STANDALONE
      *
      * @see RedisModeEnum#STANDALONE
      * @see RedisModeEnum#CLUSTER
      */
     private String mode = RedisModeEnum.STANDALONE.getValue();
+
+    /**
+     * 密码
+     */
+    private String password;
 
     /**
      * 命令超时时间（ms）

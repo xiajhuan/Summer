@@ -48,11 +48,11 @@ import java.util.Set;
 @ConditionalOnProperty(prefix = "application.cache", name = "type", havingValue = "REDIS")
 public class RedisConfig {
 
-    @Value("${redis.password}")
-    private String password;
-
     @Value("${redis.mode}")
     private String mode;
+
+    @Value("${redis.password}")
+    private String password;
 
     @Value("${redis.timeout}")
     private long timeout;

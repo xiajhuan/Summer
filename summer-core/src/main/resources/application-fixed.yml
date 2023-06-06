@@ -68,11 +68,8 @@ spring:
       - org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
       - org.springframework.boot.autoconfigure.data.redis.RedisRepositoriesAutoConfiguration
   datasource:
-    # 多数据源
     dynamic:
-      # 必须严格匹配所有数据源
-      strict: true
-      # 连接池配置
+      # HikariCP连接池
       hikari:
         # 获取连接的等待超时时间（ms）
         connection-timeout: 30000
@@ -91,10 +88,8 @@ spring:
         # 检查连接活性的时间间隔（ms）
         keepalive-time: 30000
 
-# Redis，只有application.cache.type: REDIS时会生效
 redis:
-  timeout: 5000
-  # 连接池配置
+  # Lettuce连接池，只有application.cache.type: REDIS时会生效
   pool:
     min-idle: 0
     max-idle: 16

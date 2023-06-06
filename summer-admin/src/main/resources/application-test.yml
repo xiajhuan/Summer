@@ -5,27 +5,37 @@ spring:
     dynamic:
       # Sql打印
       p6spy: true
+      # 是否严格匹配所有数据源
+      strict: true
       # 默认数据源
-      primary: business
+      primary: master
       datasource:
-        # business模块数据源
-        business:
-          driver-class-name: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://origin-1:3306/summer-business?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true
-          username: root
-          password: asda1992
         # system模块数据源
         system:
           driver-class-name: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://origin-1:3306/summer-system?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true
+          # rewriteBatchedStatements=true（批处理优化，大幅提升批量插入/更新/删除性能，但对数据库有性能损耗）
+          url: jdbc:mysql://origin-1:3306/summer-system?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai&autoReconnect=true&rewriteBatchedStatements=true
+          username: root
+          password: asda1992
+        # business模块数据源（主从）
+        master:
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          url: jdbc:mysql://docker-1:3307/summer-business?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai&autoReconnect=true&rewriteBatchedStatements=true
+          username: root
+          password: asda1992
+        slave:
+          lazy: false
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          url: jdbc:mysql://docker-1:3308/summer-business?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai&autoReconnect=true
           username: root
           password: asda1992
 
 # Redis，只有application.cache.type: REDIS时会生效
 redis:
-  password: asda1992
   # 模式，值：STANDALONE/CLUSTER
   mode: CLUSTER
+  password: asda1992
+  timeout: 5000
   # 单机模式，只有redis.mode: STANDALONE时会生效
   standalone:
     host: origin-1
