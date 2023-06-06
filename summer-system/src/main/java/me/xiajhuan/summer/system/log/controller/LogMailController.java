@@ -56,7 +56,7 @@ public class LogMailController extends BaseController {
     @RequiresPermissions("log:mail:page")
     @LogOperation(OperationConst.PAGE)
     public Result<PageData<LogMailDto>> page(LogMailDto dto) {
-        return Result.ofSuccess(PageData.of(mainService.page(dto)));
+        return Result.ok(PageData.of(mainService.page(dto)));
     }
 
     /**
@@ -70,7 +70,7 @@ public class LogMailController extends BaseController {
     @LogOperation(OperationConst.GET_BY_ID)
     public Result<LogMailDto> getById(Long id) {
         AssertUtil.isNotNull("id", id);
-        return Result.ofSuccess(mainService.getById(id));
+        return Result.ok(mainService.getById(id));
     }
 
     //*******************Excel Operation********************

@@ -78,7 +78,7 @@ public class Oauth2Filter extends AuthenticatingFilter {
             setResponseHeader((HttpServletRequest) request, httpResponse);
 
             ServletUtil.response(httpResponse, StrUtil.format("{};{}", ContentTypeConst.JSON, "charset=utf-8"),
-                    ErrorCode.UNAUTHORIZED, Result.ofFail(ErrorCode.UNAUTHORIZED));
+                    ErrorCode.UNAUTHORIZED, Result.fail(ErrorCode.UNAUTHORIZED));
 
             return false;
         }
@@ -93,7 +93,7 @@ public class Oauth2Filter extends AuthenticatingFilter {
         Throwable cause = authException.getCause() == null ? authException : authException.getCause();
 
         ServletUtil.response(httpResponse, StrUtil.format("{};{}", ContentTypeConst.JSON, "charset=utf-8"),
-                ErrorCode.UNAUTHORIZED, Result.ofFail(cause.getMessage()));
+                ErrorCode.UNAUTHORIZED, Result.fail(cause.getMessage()));
         return false;
     }
 

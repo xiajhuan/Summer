@@ -69,7 +69,7 @@ public class SecurityController extends BaseController {
     @PostMapping("login")
     @RateLimiter(0.5)
     public Result<TokenDto> login(@Validated(DefaultGroup.class) LoginDto loginDto, HttpServletRequest request) {
-        return Result.ofSuccess(mainService.login(loginDto, request));
+        return Result.ok(mainService.login(loginDto, request));
     }
 
     /**
@@ -81,7 +81,7 @@ public class SecurityController extends BaseController {
     @PostMapping("logout")
     public Result<?> logout(HttpServletRequest request) {
         mainService.logoutAndLog(getLoginUser(), request);
-        return Result.ofSuccess();
+        return Result.ok();
     }
 
 }

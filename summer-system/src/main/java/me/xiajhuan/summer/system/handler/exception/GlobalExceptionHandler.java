@@ -147,7 +147,7 @@ public class GlobalExceptionHandler {
 
         String msg = message.substring(0, message.length() - 1);
         logInfoOrDebugStacktrace(e, msg);
-        return Result.ofFail(msg);
+        return Result.fail(msg);
     }
 
     /**
@@ -166,7 +166,7 @@ public class GlobalExceptionHandler {
     public Result<?> handleValidationException(ValidationException e) {
         String msg = e.getMessage();
         logInfoOrDebugStacktrace(e, msg);
-        return Result.ofFail(msg);
+        return Result.fail(msg);
     }
 
     /**
@@ -180,7 +180,7 @@ public class GlobalExceptionHandler {
     public Result<?> handleFileUploadOrDownloadException(RuntimeException e) {
         String msg = e.getMessage();
         LOGGER.error(e, msg);
-        return Result.ofFail(msg);
+        return Result.fail(msg);
     }
 
     /**
@@ -193,7 +193,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public Result<?> handleAuthorizationException(AuthorizationException e) {
         logInfoOrDebugStacktrace(e, null);
-        return Result.ofFail(ErrorCode.FORBIDDEN);
+        return Result.fail(ErrorCode.FORBIDDEN);
     }
 
     /**
@@ -216,7 +216,7 @@ public class GlobalExceptionHandler {
         } else {
             LOGGER.error(e, msg);
         }
-        return Result.ofFail(msg);
+        return Result.fail(msg);
     }
 
     /**

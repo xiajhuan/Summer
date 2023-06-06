@@ -56,7 +56,7 @@ public class MessageMailController {
     @RequiresPermissions("message:mail:page")
     @LogOperation(OperationConst.PAGE)
     public Result<PageData<MessageMailDto>> page(MessageMailDto dto) {
-        return Result.ofSuccess(PageData.of(mainService.page(dto)));
+        return Result.ok(PageData.of(mainService.page(dto)));
     }
 
     /**
@@ -70,7 +70,7 @@ public class MessageMailController {
     @LogOperation(OperationConst.GET_BY_ID)
     public Result<MessageMailDto> getById(Long id) {
         AssertUtil.isNotNull("id", id);
-        return Result.ofSuccess(mainService.getById(id));
+        return Result.ok(mainService.getById(id));
     }
 
     /**
@@ -85,7 +85,7 @@ public class MessageMailController {
     @LogOperation(OperationConst.ADD)
     public Result<?> add(@Validated(AddGroup.class) MessageMailDto dto) {
         mainService.add(dto);
-        return Result.ofSuccess();
+        return Result.ok();
     }
 
     /**
@@ -100,7 +100,7 @@ public class MessageMailController {
     @LogOperation(OperationConst.UPDATE)
     public Result<?> update(@Validated(UpdateGroup.class) MessageMailDto dto) {
         mainService.update(dto);
-        return Result.ofSuccess();
+        return Result.ok();
     }
 
     /**
@@ -116,7 +116,7 @@ public class MessageMailController {
     public Result<?> delete(Long[] ids) {
         AssertUtil.isNotEmpty("ids", ids);
         mainService.delete(ids);
-        return Result.ofSuccess();
+        return Result.ok();
     }
 
     //*******************Other Operation********************
@@ -135,9 +135,9 @@ public class MessageMailController {
     public Result<?> send(@Validated(DefaultGroup.class) SendMailDto dto, MultipartFile[] files) {
         // note：若没有文件上传，files为null而不是空数组
         if (mainService.send(dto, files)) {
-            return Result.ofSuccess();
+            return Result.ok();
         }
-        return Result.ofFail();
+        return Result.fail();
     }
 
 }

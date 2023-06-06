@@ -92,9 +92,9 @@ public class RateLimiterController {
     private Result<?> printAndResponse(String json) {
         if (JSONUtil.isTypeJSON(json)) {
             Console.log("接收到Json数据：{}", json);
-            return Result.ofSuccess();
+            return Result.ok();
         }
-        return Result.ofFail("参数必须是Json格式");
+        return Result.fail("参数必须是Json格式");
     }
 
 }

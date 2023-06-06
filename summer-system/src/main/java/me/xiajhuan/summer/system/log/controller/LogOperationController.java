@@ -55,7 +55,7 @@ public class LogOperationController extends BaseController {
     @RequiresPermissions("log:operation:page")
     @LogOperation(OperationConst.PAGE)
     public Result<PageData<LogOperationDto>> page(LogOperationDto dto) {
-        return Result.ofSuccess(PageData.of(mainService.page(dto)));
+        return Result.ok(PageData.of(mainService.page(dto)));
     }
 
     //*******************Excel Operation********************

@@ -52,7 +52,7 @@ public class MonitorOnlineController {
     @RequiresPermissions("monitor:online:page")
     @LogOperation(OperationConst.PAGE)
     public Result<PageData<MonitorOnlineDto>> list(MonitorOnlineDto dto) {
-        return Result.ofSuccess(PageData.of(mainService.page(dto)));
+        return Result.ok(PageData.of(mainService.page(dto)));
     }
 
     //*******************Other Operation********************
@@ -68,7 +68,7 @@ public class MonitorOnlineController {
     public Result<?> kick(Long[] userIds) {
         AssertUtil.isNotEmpty("userIds", userIds);
         mainService.kick(userIds);
-        return Result.ofSuccess();
+        return Result.ok();
     }
 
 }

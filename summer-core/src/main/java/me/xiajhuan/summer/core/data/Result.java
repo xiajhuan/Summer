@@ -59,8 +59,8 @@ public class Result<T> implements Serializable {
      *
      * @return 响应结果
      */
-    public static Result<?> ofSuccess() {
-        return ofSuccess(LocaleUtil.getI18nMessage(SuccessCode.OPERATION));
+    public static Result<?> ok() {
+        return ok(LocaleUtil.getI18nMessage(OkCode.OPERATION));
     }
 
     /**
@@ -70,20 +70,20 @@ public class Result<T> implements Serializable {
      * @param <T>  数据类型
      * @return 响应结果
      */
-    public static <T> Result<T> ofSuccess(T data) {
-        return ofSuccess(data, null);
+    public static <T> Result<T> ok(T data) {
+        return ok(data, null);
     }
 
     /**
      * 成功（不带数据、消息国际化）<br>
-     * note：预留方法，需自定义成功消息编码，参考{@link SuccessCode#OPERATION}
+     * note：预留方法，需自定义成功消息编码，参考{@link OkCode#OPERATION}
      *
      * @param code  成功编码
      * @param param 消息填充参数
      * @return 响应结果
      */
-    public static Result<?> ofSuccess(int code, String... param) {
-        return ofSuccess(null, LocaleUtil.getI18nMessage(code, param));
+    public static Result<?> ok(int code, String... param) {
+        return ok(null, LocaleUtil.getI18nMessage(code, param));
     }
 
     /**
@@ -92,13 +92,13 @@ public class Result<T> implements Serializable {
      * @param msg 消息
      * @return 响应结果
      */
-    public static Result<?> ofSuccess(String msg) {
-        return ofSuccess(null, msg);
+    public static Result<?> ok(String msg) {
+        return ok(null, msg);
     }
 
     /**
      * 成功（带数据、消息国际化）<br>
-     * note：预留方法，需自定义成功消息编码，参考{@link SuccessCode#OPERATION}
+     * note：预留方法，需自定义成功消息编码，参考{@link OkCode#OPERATION}
      *
      * @param data  数据
      * @param code  成功编码
@@ -106,8 +106,8 @@ public class Result<T> implements Serializable {
      * @param <T>   数据类型
      * @return 响应结果
      */
-    public static <T> Result<T> ofSuccess(T data, int code, String... param) {
-        return ofSuccess(data, LocaleUtil.getI18nMessage(code, param));
+    public static <T> Result<T> ok(T data, int code, String... param) {
+        return ok(data, LocaleUtil.getI18nMessage(code, param));
     }
 
     /**
@@ -118,7 +118,7 @@ public class Result<T> implements Serializable {
      * @param <T>  数据类型
      * @return 响应结果
      */
-    public static <T> Result<T> ofSuccess(T data, String msg) {
+    public static <T> Result<T> ok(T data, String msg) {
         Result<T> result = new Result<>();
         result.setCode("1");
         result.setData(data);
@@ -131,8 +131,8 @@ public class Result<T> implements Serializable {
      *
      * @return 响应结果
      */
-    public static Result<?> ofFail() {
-        return ofFail(ErrorCode.OPERATION_FAILURE);
+    public static Result<?> fail() {
+        return fail(ErrorCode.OPERATION_FAILURE);
     }
 
     /**
@@ -142,8 +142,8 @@ public class Result<T> implements Serializable {
      * @param param 消息填充参数
      * @return 响应结果
      */
-    public static Result<?> ofFail(int code, String... param) {
-        return ofFail(null, LocaleUtil.getI18nMessage(code, param));
+    public static Result<?> fail(int code, String... param) {
+        return fail(null, LocaleUtil.getI18nMessage(code, param));
     }
 
     /**
@@ -152,8 +152,8 @@ public class Result<T> implements Serializable {
      * @param msg 消息
      * @return 响应结果
      */
-    public static Result<?> ofFail(String msg) {
-        return ofFail(null, msg);
+    public static Result<?> fail(String msg) {
+        return fail(null, msg);
     }
 
     /**
@@ -165,8 +165,8 @@ public class Result<T> implements Serializable {
      * @param <T>   数据类型
      * @return 响应结果
      */
-    public static <T> Result<T> ofFail(T data, int code, String... param) {
-        return ofFail(data, LocaleUtil.getI18nMessage(code, param));
+    public static <T> Result<T> fail(T data, int code, String... param) {
+        return fail(data, LocaleUtil.getI18nMessage(code, param));
     }
 
     /**
@@ -177,7 +177,7 @@ public class Result<T> implements Serializable {
      * @param <T>  数据类型
      * @return 响应结果
      */
-    public static <T> Result<T> ofFail(T data, String msg) {
+    public static <T> Result<T> fail(T data, String msg) {
         Result<T> result = new Result<>();
         result.setCode("0");
         result.setData(data);
@@ -188,7 +188,7 @@ public class Result<T> implements Serializable {
     /**
      * 成功代码
      */
-    public static class SuccessCode {
+    public static class OkCode {
 
         /**
          * 操作成功

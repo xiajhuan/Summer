@@ -62,7 +62,7 @@ public class SecurityUserController extends BaseController {
     @RequiresPermissions("security:user:page")
     @LogOperation(OperationConst.PAGE)
     public Result<PageData<SecurityUserDto>> page(SecurityUserDto dto) {
-        return Result.ofSuccess(PageData.of(mainService.page(dto)));
+        return Result.ok(PageData.of(mainService.page(dto)));
     }
 
     /**
@@ -76,7 +76,7 @@ public class SecurityUserController extends BaseController {
     @LogOperation(OperationConst.GET_BY_ID)
     public Result<SecurityUserDto> getById(Long id) {
         AssertUtil.isNotNull("id", id);
-        return Result.ofSuccess(mainService.getById(id));
+        return Result.ok(mainService.getById(id));
     }
 
     /**
@@ -91,7 +91,7 @@ public class SecurityUserController extends BaseController {
     @LogOperation(OperationConst.ADD)
     public Result<?> add(@Validated(AddGroup.class) SecurityUserDto dto) {
         mainService.add(dto);
-        return Result.ofSuccess();
+        return Result.ok();
     }
 
     /**
@@ -106,7 +106,7 @@ public class SecurityUserController extends BaseController {
     @LogOperation(OperationConst.UPDATE)
     public Result<?> update(@Validated(UpdateGroup.class) SecurityUserDto dto) {
         mainService.update(dto);
-        return Result.ofSuccess();
+        return Result.ok();
     }
 
     /**
@@ -122,7 +122,7 @@ public class SecurityUserController extends BaseController {
     public Result<?> delete(Long[] ids) {
         AssertUtil.isNotEmpty("ids", ids);
         mainService.delete(ids);
-        return Result.ofSuccess();
+        return Result.ok();
     }
 
     //*******************Excel Operation********************
@@ -153,7 +153,7 @@ public class SecurityUserController extends BaseController {
     @GetMapping("info")
     @LogOperation("信息")
     public Result<UserInfoDto> info() {
-        return Result.ofSuccess(mainService.info());
+        return Result.ok(mainService.info());
     }
 
     /**
@@ -168,7 +168,7 @@ public class SecurityUserController extends BaseController {
     public Result<?> updateInfo(@Validated(DefaultGroup.class) UserInfoDto dto, MultipartFile file) {
         validateFileType(file, FileTypeEnum.IMAGE);
         mainService.updateInfo(dto, fileUpload(file, false));
-        return Result.ofSuccess();
+        return Result.ok();
     }
 
     /**
@@ -181,7 +181,7 @@ public class SecurityUserController extends BaseController {
     @LogOperation("修改密码")
     public Result<?> password(@Validated(DefaultGroup.class) PasswordDto dto) {
         mainService.updatePasswordAndLogout(dto);
-        return Result.ofSuccess();
+        return Result.ok();
     }
 
     /**
@@ -195,8 +195,8 @@ public class SecurityUserController extends BaseController {
     public Result<?> reset(Long[] ids) {
         AssertUtil.isNotEmpty("ids", ids);
         String passwordReset = mainService.reset(ids);
-        return passwordReset == null ? Result.ofFail() :
-                Result.ofSuccess(null, Result.SuccessCode.PASSWORD_RESET, passwordReset);
+        return passwordReset == null ? Result.fail() :
+                Result.ok(null, Result.OkCode.PASSWORD_RESET, passwordReset);
     }
 
 }

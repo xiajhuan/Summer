@@ -53,7 +53,7 @@ public class DictionaryItemController {
     @RequiresPermissions("dictionary:item:page")
     @LogOperation(OperationConst.PAGE)
     public Result<PageData<DictionaryItemDto>> page(DictionaryItemDto dto) {
-        return Result.ofSuccess(PageData.of(mainService.page(dto)));
+        return Result.ok(PageData.of(mainService.page(dto)));
     }
 
     /**
@@ -67,7 +67,7 @@ public class DictionaryItemController {
     @LogOperation(OperationConst.GET_BY_ID)
     public Result<DictionaryItemDto> getById(Long id) {
         AssertUtil.isNotNull("id", id);
-        return Result.ofSuccess(mainService.getById(id));
+        return Result.ok(mainService.getById(id));
     }
 
     /**
@@ -82,7 +82,7 @@ public class DictionaryItemController {
     @LogOperation(OperationConst.ADD)
     public Result<?> add(@Validated(AddGroup.class) DictionaryItemDto dto) {
         mainService.add(dto);
-        return Result.ofSuccess();
+        return Result.ok();
     }
 
     /**
@@ -97,7 +97,7 @@ public class DictionaryItemController {
     @LogOperation(OperationConst.UPDATE)
     public Result<?> update(@Validated(UpdateGroup.class) DictionaryItemDto dto) {
         mainService.update(dto);
-        return Result.ofSuccess();
+        return Result.ok();
     }
 
     /**
@@ -113,7 +113,7 @@ public class DictionaryItemController {
     public Result<?> delete(Long[] ids) {
         AssertUtil.isNotEmpty("ids", ids);
         mainService.delete(ids);
-        return Result.ofSuccess();
+        return Result.ok();
     }
 
 }

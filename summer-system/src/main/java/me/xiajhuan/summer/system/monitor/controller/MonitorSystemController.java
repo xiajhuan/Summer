@@ -46,7 +46,7 @@ public class MonitorSystemController {
     @RequiresPermissions("monitor:system:info")
     @LogOperation("信息")
     public Result<?> info() {
-        return Result.ofSuccess(mainService.info());
+        return Result.ok(mainService.info());
     }
 
 }

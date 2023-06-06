@@ -56,7 +56,7 @@ public class ExtendOssController extends BaseController {
     @RequiresPermissions("extend:oss:page")
     @LogOperation(OperationConst.PAGE)
     public Result<PageData<ExtendOssDto>> page(ExtendOssDto dto) {
-        return Result.ofSuccess(PageData.of(mainService.page(dto)));
+        return Result.ok(PageData.of(mainService.page(dto)));
     }
 
     /**
@@ -72,7 +72,7 @@ public class ExtendOssController extends BaseController {
     public Result<?> delete(Long[] ids) {
         AssertUtil.isNotEmpty("ids", ids);
         mainService.delete(ids);
-        return Result.ofSuccess();
+        return Result.ok();
     }
 
     //*******************Other Operation********************
@@ -92,7 +92,7 @@ public class ExtendOssController extends BaseController {
         // note：若没有文件上传，files为null而不是空数组
         AssertUtil.isNotNull("files", files);
         mainService.addBatch(multiFileUpload(files, isPrivate));
-        return Result.ofSuccess();
+        return Result.ok();
     }
 
     /**

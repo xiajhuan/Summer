@@ -53,7 +53,7 @@ public class ScheduleTaskController {
     @RequiresPermissions("schedule:task:page")
     @LogOperation(OperationConst.PAGE)
     public Result<PageData<ScheduleTaskDto>> page(ScheduleTaskDto dto) {
-        return Result.ofSuccess(PageData.of(mainService.page(dto)));
+        return Result.ok(PageData.of(mainService.page(dto)));
     }
 
     /**
@@ -67,7 +67,7 @@ public class ScheduleTaskController {
     @LogOperation(OperationConst.GET_BY_ID)
     public Result<ScheduleTaskDto> getById(Long id) {
         AssertUtil.isNotNull("id", id);
-        return Result.ofSuccess(mainService.getById(id));
+        return Result.ok(mainService.getById(id));
     }
 
     /**
@@ -82,7 +82,7 @@ public class ScheduleTaskController {
     @LogOperation(OperationConst.ADD)
     public Result<?> add(@Validated(AddGroup.class) ScheduleTaskDto dto) {
         mainService.add(dto);
-        return Result.ofSuccess();
+        return Result.ok();
     }
 
     /**
@@ -97,7 +97,7 @@ public class ScheduleTaskController {
     @LogOperation(OperationConst.UPDATE)
     public Result<?> update(@Validated(UpdateGroup.class) ScheduleTaskDto dto) {
         mainService.update(dto);
-        return Result.ofSuccess();
+        return Result.ok();
     }
 
     /**
@@ -113,7 +113,7 @@ public class ScheduleTaskController {
     public Result<?> delete(Long[] ids) {
         AssertUtil.isNotEmpty("ids", ids);
         mainService.delete(ids);
-        return Result.ofSuccess();
+        return Result.ok();
     }
 
     //*******************Other Operation********************
@@ -131,7 +131,7 @@ public class ScheduleTaskController {
     public Result<?> execute(Long[] ids) {
         AssertUtil.isNotEmpty("ids", ids);
         mainService.execute(ids);
-        return Result.ofSuccess();
+        return Result.ok();
     }
 
     /**
@@ -147,7 +147,7 @@ public class ScheduleTaskController {
     public Result<?> pause(Long[] ids) {
         AssertUtil.isNotEmpty("ids", ids);
         mainService.pause(ids);
-        return Result.ofSuccess();
+        return Result.ok();
     }
 
     /**
@@ -163,7 +163,7 @@ public class ScheduleTaskController {
     public Result<?> resume(Long[] ids) {
         AssertUtil.isNotEmpty("ids", ids);
         mainService.resume(ids);
-        return Result.ofSuccess();
+        return Result.ok();
     }
 
     /**
@@ -175,7 +175,7 @@ public class ScheduleTaskController {
     @LogOperation("手动启动")
     public Result<?> manualStart() {
         mainService.manualStart();
-        return Result.ofSuccess();
+        return Result.ok();
     }
 
 }

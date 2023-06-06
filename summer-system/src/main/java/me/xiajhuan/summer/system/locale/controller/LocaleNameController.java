@@ -60,7 +60,7 @@ public class LocaleNameController extends BaseController {
     @RequiresPermissions("locale:name:page")
     @LogOperation(OperationConst.PAGE)
     public Result<PageData<LocaleNameDto>> page(LocaleNameDto dto) {
-        return Result.ofSuccess(PageData.of(mainService.page(dto)));
+        return Result.ok(PageData.of(mainService.page(dto)));
     }
 
     /**
@@ -74,7 +74,7 @@ public class LocaleNameController extends BaseController {
     @LogOperation(OperationConst.GET_BY_ID)
     public Result<LocaleNameDto> getById(Long id) {
         AssertUtil.isNotNull("id", id);
-        return Result.ofSuccess(mainService.getById(id));
+        return Result.ok(mainService.getById(id));
     }
 
     /**
@@ -89,7 +89,7 @@ public class LocaleNameController extends BaseController {
     @LogOperation(OperationConst.ADD)
     public Result<?> add(@Validated(AddGroup.class) LocaleNameDto dto) {
         mainService.add(dto);
-        return Result.ofSuccess();
+        return Result.ok();
     }
 
     /**
@@ -104,7 +104,7 @@ public class LocaleNameController extends BaseController {
     @LogOperation(OperationConst.UPDATE)
     public Result<?> update(@Validated(UpdateGroup.class) LocaleNameDto dto) {
         mainService.update(dto);
-        return Result.ofSuccess();
+        return Result.ok();
     }
 
     /**
@@ -120,7 +120,7 @@ public class LocaleNameController extends BaseController {
     public Result<?> delete(Long[] ids) {
         AssertUtil.isNotEmpty("ids", ids);
         mainService.delete(ids);
-        return Result.ofSuccess();
+        return Result.ok();
     }
 
     //*******************Excel Operation********************
@@ -152,7 +152,7 @@ public class LocaleNameController extends BaseController {
     public Result<?> excelImport(MultipartFile file) {
         ExcelUtil.importDb(file, LocaleNameDto.class,
                 LocaleNameDbExcelParser.of(mainService, LocaleNameEntity.class));
-        return Result.ofSuccess();
+        return Result.ok();
     }
 
     /**

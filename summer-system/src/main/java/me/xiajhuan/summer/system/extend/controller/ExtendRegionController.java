@@ -53,7 +53,7 @@ public class ExtendRegionController {
     @RequiresPermissions("extend:region:list")
     @LogOperation(OperationConst.LIST)
     public Result<List<ExtendRegionDto>> list() {
-        return Result.ofSuccess(mainService.treeList(true));
+        return Result.ok(mainService.treeList(true));
     }
 
     /**
@@ -67,7 +67,7 @@ public class ExtendRegionController {
     @LogOperation(OperationConst.GET_BY_ID)
     public Result<ExtendRegionDto> getById(Long id) {
         AssertUtil.isNotNull("id", id);
-        return Result.ofSuccess(mainService.getById(id));
+        return Result.ok(mainService.getById(id));
     }
 
     /**
@@ -82,7 +82,7 @@ public class ExtendRegionController {
     @LogOperation(OperationConst.ADD)
     public Result<?> add(@Validated(AddGroup.class) ExtendRegionDto dto) {
         mainService.add(dto);
-        return Result.ofSuccess();
+        return Result.ok();
     }
 
     /**
@@ -97,7 +97,7 @@ public class ExtendRegionController {
     @LogOperation(OperationConst.UPDATE)
     public Result<?> update(@Validated(UpdateGroup.class) ExtendRegionDto dto) {
         mainService.update(dto);
-        return Result.ofSuccess();
+        return Result.ok();
     }
 
     /**
@@ -113,7 +113,7 @@ public class ExtendRegionController {
     public Result<?> delete(Long id) {
         AssertUtil.isNotNull("id", id);
         mainService.delete(id);
-        return Result.ofSuccess();
+        return Result.ok();
     }
 
     //*******************Other Operation********************
@@ -126,7 +126,7 @@ public class ExtendRegionController {
     @GetMapping("all")
     @LogOperation("全部")
     public Result<List<ExtendRegionDto>> all() {
-        return Result.ofSuccess(mainService.treeList(false));
+        return Result.ok(mainService.treeList(false));
     }
 
     /**
@@ -138,7 +138,7 @@ public class ExtendRegionController {
     @GetMapping("listByParentId")
     @LogOperation("根据上级ID列表")
     public Result<List<ExtendRegionDto>> listByParentId(Long parentId) {
-        return Result.ofSuccess(mainService.listByParentId(parentId == null ? TreeConst.ROOT : parentId));
+        return Result.ok(mainService.listByParentId(parentId == null ? TreeConst.ROOT : parentId));
     }
 
 }

@@ -56,7 +56,7 @@ public class SecurityMenuController extends BaseController {
     @RequiresPermissions("security:menu:list")
     @LogOperation(OperationConst.LIST)
     public Result<List<SecurityMenuDto>> list() {
-        return Result.ofSuccess(mainService.treeList(null, false));
+        return Result.ok(mainService.treeList(null, false));
     }
 
     /**
@@ -70,7 +70,7 @@ public class SecurityMenuController extends BaseController {
     @LogOperation(OperationConst.GET_BY_ID)
     public Result<SecurityMenuDto> getById(Long id) {
         AssertUtil.isNotNull("id", id);
-        return Result.ofSuccess(mainService.getById(id));
+        return Result.ok(mainService.getById(id));
     }
 
     /**
@@ -85,7 +85,7 @@ public class SecurityMenuController extends BaseController {
     @LogOperation(OperationConst.ADD)
     public Result<?> add(@Validated(AddGroup.class) SecurityMenuDto dto) {
         mainService.add(dto);
-        return Result.ofSuccess();
+        return Result.ok();
     }
 
     /**
@@ -100,7 +100,7 @@ public class SecurityMenuController extends BaseController {
     @LogOperation(OperationConst.UPDATE)
     public Result<?> update(@Validated(UpdateGroup.class) SecurityMenuDto dto) {
         mainService.update(dto);
-        return Result.ofSuccess();
+        return Result.ok();
     }
 
     /**
@@ -116,7 +116,7 @@ public class SecurityMenuController extends BaseController {
     public Result<?> delete(Long id) {
         AssertUtil.isNotNull("id", id);
         mainService.delete(id);
-        return Result.ofSuccess();
+        return Result.ok();
     }
 
     //*******************Other Operation********************
@@ -130,7 +130,7 @@ public class SecurityMenuController extends BaseController {
     @GetMapping("nav")
     @LogOperation("导航")
     public Result<List<SecurityMenuDto>> nav() {
-        return Result.ofSuccess(mainService.treeList(ComponentTypeEnum.MENU.getValue(), false));
+        return Result.ok(mainService.treeList(ComponentTypeEnum.MENU.getValue(), false));
     }
 
     /**
@@ -143,7 +143,7 @@ public class SecurityMenuController extends BaseController {
     @RequiresPermissions(value = {"security:role:add", "security:role:update"}, logical = Logical.OR)
     @LogOperation("全部")
     public Result<List<SecurityMenuDto>> all() {
-        return Result.ofSuccess(mainService.treeList(null, true));
+        return Result.ok(mainService.treeList(null, true));
     }
 
     /**
@@ -154,7 +154,7 @@ public class SecurityMenuController extends BaseController {
     @GetMapping("permissions")
     @LogOperation("用户权限集合")
     public Result<Set<String>> permissions() {
-        return Result.ofSuccess(mainService.getPermissions(getLoginUser()));
+        return Result.ok(mainService.getPermissions(getLoginUser()));
     }
 
 }

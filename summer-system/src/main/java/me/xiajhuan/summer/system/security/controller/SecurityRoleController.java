@@ -54,7 +54,7 @@ public class SecurityRoleController {
     @RequiresPermissions("security:role:page")
     @LogOperation(OperationConst.PAGE)
     public Result<PageData<SecurityRoleDto>> page(SecurityRoleDto dto) {
-        return Result.ofSuccess(PageData.of(mainService.page(dto)));
+        return Result.ok(PageData.of(mainService.page(dto)));
     }
 
     /**
@@ -66,7 +66,7 @@ public class SecurityRoleController {
     @RequiresPermissions("security:role:list")
     @LogOperation(OperationConst.LIST)
     public Result<List<SecurityRoleDto>> list() {
-        return Result.ofSuccess(mainService.list(new SecurityRoleDto()));
+        return Result.ok(mainService.list(new SecurityRoleDto()));
     }
 
     /**
@@ -80,7 +80,7 @@ public class SecurityRoleController {
     @LogOperation(OperationConst.GET_BY_ID)
     public Result<SecurityRoleDto> getById(Long id) {
         AssertUtil.isNotNull("id", id);
-        return Result.ofSuccess(mainService.getById(id));
+        return Result.ok(mainService.getById(id));
     }
 
     /**
@@ -95,7 +95,7 @@ public class SecurityRoleController {
     @LogOperation(OperationConst.ADD)
     public Result<?> add(@Validated(AddGroup.class) SecurityRoleDto dto) {
         mainService.add(dto);
-        return Result.ofSuccess();
+        return Result.ok();
     }
 
     /**
@@ -110,7 +110,7 @@ public class SecurityRoleController {
     @LogOperation(OperationConst.UPDATE)
     public Result<?> update(@Validated(UpdateGroup.class) SecurityRoleDto dto) {
         mainService.update(dto);
-        return Result.ofSuccess();
+        return Result.ok();
     }
 
     /**
@@ -126,7 +126,7 @@ public class SecurityRoleController {
     public Result<?> delete(Long[] ids) {
         AssertUtil.isNotEmpty("ids", ids);
         mainService.delete(ids);
-        return Result.ofSuccess();
+        return Result.ok();
     }
 
 }

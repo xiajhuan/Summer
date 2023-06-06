@@ -53,7 +53,7 @@ public class SecurityDeptController {
     @RequiresPermissions("security:dept:list")
     @LogOperation(OperationConst.LIST)
     public Result<List<SecurityDeptDto>> list() {
-        return Result.ofSuccess(mainService.treeList(false));
+        return Result.ok(mainService.treeList(false));
     }
 
     /**
@@ -67,7 +67,7 @@ public class SecurityDeptController {
     @LogOperation(OperationConst.GET_BY_ID)
     public Result<SecurityDeptDto> getById(Long id) {
         AssertUtil.isNotNull("id", id);
-        return Result.ofSuccess(mainService.getById(id));
+        return Result.ok(mainService.getById(id));
     }
 
     /**
@@ -82,7 +82,7 @@ public class SecurityDeptController {
     @LogOperation(OperationConst.ADD)
     public Result<?> add(@Validated(AddGroup.class) SecurityDeptDto dto) {
         mainService.add(dto);
-        return Result.ofSuccess();
+        return Result.ok();
     }
 
     /**
@@ -97,7 +97,7 @@ public class SecurityDeptController {
     @LogOperation(OperationConst.UPDATE)
     public Result<?> update(@Validated(UpdateGroup.class) SecurityDeptDto dto) {
         mainService.update(dto);
-        return Result.ofSuccess();
+        return Result.ok();
     }
 
     /**
@@ -113,7 +113,7 @@ public class SecurityDeptController {
     public Result<?> delete(Long id) {
         AssertUtil.isNotNull("id", id);
         mainService.delete(id);
-        return Result.ofSuccess();
+        return Result.ok();
     }
 
     //*******************Other Operation********************
@@ -128,7 +128,7 @@ public class SecurityDeptController {
     @RequiresPermissions(value = {"security:role:add", "security:role:update"}, logical = Logical.OR)
     @LogOperation("全部")
     public Result<List<SecurityDeptDto>> all() {
-        return Result.ofSuccess(mainService.treeList(true));
+        return Result.ok(mainService.treeList(true));
     }
 
 }

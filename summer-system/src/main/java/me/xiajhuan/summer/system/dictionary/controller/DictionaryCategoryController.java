@@ -55,7 +55,7 @@ public class DictionaryCategoryController {
     @RequiresPermissions("dictionary:category:page")
     @LogOperation(OperationConst.PAGE)
     public Result<PageData<DictionaryCategoryDto>> page(DictionaryCategoryDto dto) {
-        return Result.ofSuccess(PageData.of(mainService.page(dto)));
+        return Result.ok(PageData.of(mainService.page(dto)));
     }
 
     /**
@@ -69,7 +69,7 @@ public class DictionaryCategoryController {
     @LogOperation(OperationConst.GET_BY_ID)
     public Result<DictionaryCategoryDto> getById(Long id) {
         AssertUtil.isNotNull("id", id);
-        return Result.ofSuccess(mainService.getById(id));
+        return Result.ok(mainService.getById(id));
     }
 
     /**
@@ -84,7 +84,7 @@ public class DictionaryCategoryController {
     @LogOperation(OperationConst.ADD)
     public Result<?> add(@Validated(AddGroup.class) DictionaryCategoryDto dto) {
         mainService.add(dto);
-        return Result.ofSuccess();
+        return Result.ok();
     }
 
     /**
@@ -99,7 +99,7 @@ public class DictionaryCategoryController {
     @LogOperation(OperationConst.UPDATE)
     public Result<?> update(@Validated(UpdateGroup.class) DictionaryCategoryDto dto) {
         mainService.update(dto);
-        return Result.ofSuccess();
+        return Result.ok();
     }
 
     /**
@@ -115,7 +115,7 @@ public class DictionaryCategoryController {
     public Result<?> delete(Long[] ids) {
         AssertUtil.isNotEmpty("ids", ids);
         mainService.delete(ids);
-        return Result.ofSuccess();
+        return Result.ok();
     }
 
     //*******************Other Operation********************
@@ -128,7 +128,7 @@ public class DictionaryCategoryController {
     @GetMapping("all")
     @LogOperation("全部")
     public Result<List<DictionaryCategoryDto>> all() {
-        return Result.ofSuccess(mainService.all());
+        return Result.ok(mainService.all());
     }
 
 }
