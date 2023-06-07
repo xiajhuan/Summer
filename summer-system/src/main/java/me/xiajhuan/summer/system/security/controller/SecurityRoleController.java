@@ -93,7 +93,7 @@ public class SecurityRoleController {
     @RequiresPermissions("security:role:add")
     @RateLimiter(0.5)
     @LogOperation(OperationConst.ADD)
-    public Result<?> add(@Validated(AddGroup.class) SecurityRoleDto dto) {
+    public Result<Void> add(@Validated(AddGroup.class) SecurityRoleDto dto) {
         mainService.add(dto);
         return Result.ok();
     }
@@ -108,7 +108,7 @@ public class SecurityRoleController {
     @RequiresPermissions("security:role:update")
     @RateLimiter(0.5)
     @LogOperation(OperationConst.UPDATE)
-    public Result<?> update(@Validated(UpdateGroup.class) SecurityRoleDto dto) {
+    public Result<Void> update(@Validated(UpdateGroup.class) SecurityRoleDto dto) {
         mainService.update(dto);
         return Result.ok();
     }
@@ -123,7 +123,7 @@ public class SecurityRoleController {
     @RequiresPermissions("security:role:delete")
     @RateLimiter(0.5)
     @LogOperation(OperationConst.DELETE)
-    public Result<?> delete(Long[] ids) {
+    public Result<Void> delete(Long[] ids) {
         AssertUtil.isNotEmpty("ids", ids);
         mainService.delete(ids);
         return Result.ok();

@@ -80,7 +80,7 @@ public class DictionaryItemController {
     @RequiresPermissions("dictionary:item:add")
     @RateLimiter(0.5)
     @LogOperation(OperationConst.ADD)
-    public Result<?> add(@Validated(AddGroup.class) DictionaryItemDto dto) {
+    public Result<Void> add(@Validated(AddGroup.class) DictionaryItemDto dto) {
         mainService.add(dto);
         return Result.ok();
     }
@@ -95,7 +95,7 @@ public class DictionaryItemController {
     @RequiresPermissions("dictionary:item:update")
     @RateLimiter(0.5)
     @LogOperation(OperationConst.UPDATE)
-    public Result<?> update(@Validated(UpdateGroup.class) DictionaryItemDto dto) {
+    public Result<Void> update(@Validated(UpdateGroup.class) DictionaryItemDto dto) {
         mainService.update(dto);
         return Result.ok();
     }
@@ -110,7 +110,7 @@ public class DictionaryItemController {
     @RequiresPermissions("dictionary:item:delete")
     @RateLimiter(0.5)
     @LogOperation(OperationConst.DELETE)
-    public Result<?> delete(Long[] ids) {
+    public Result<Void> delete(Long[] ids) {
         AssertUtil.isNotEmpty("ids", ids);
         mainService.delete(ids);
         return Result.ok();

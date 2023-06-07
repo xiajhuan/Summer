@@ -80,7 +80,7 @@ public class ScheduleTaskController {
     @RequiresPermissions("schedule:task:add")
     @RateLimiter(0.5)
     @LogOperation(OperationConst.ADD)
-    public Result<?> add(@Validated(AddGroup.class) ScheduleTaskDto dto) {
+    public Result<Void> add(@Validated(AddGroup.class) ScheduleTaskDto dto) {
         mainService.add(dto);
         return Result.ok();
     }
@@ -95,7 +95,7 @@ public class ScheduleTaskController {
     @RequiresPermissions("schedule:task:update")
     @RateLimiter(0.5)
     @LogOperation(OperationConst.UPDATE)
-    public Result<?> update(@Validated(UpdateGroup.class) ScheduleTaskDto dto) {
+    public Result<Void> update(@Validated(UpdateGroup.class) ScheduleTaskDto dto) {
         mainService.update(dto);
         return Result.ok();
     }
@@ -110,7 +110,7 @@ public class ScheduleTaskController {
     @RequiresPermissions("schedule:task:delete")
     @RateLimiter(0.5)
     @LogOperation(OperationConst.DELETE)
-    public Result<?> delete(Long[] ids) {
+    public Result<Void> delete(Long[] ids) {
         AssertUtil.isNotEmpty("ids", ids);
         mainService.delete(ids);
         return Result.ok();
@@ -128,7 +128,7 @@ public class ScheduleTaskController {
     @RequiresPermissions("schedule:task:execute")
     @RateLimiter(0.5)
     @LogOperation("执行")
-    public Result<?> execute(Long[] ids) {
+    public Result<Void> execute(Long[] ids) {
         AssertUtil.isNotEmpty("ids", ids);
         mainService.execute(ids);
         return Result.ok();
@@ -144,7 +144,7 @@ public class ScheduleTaskController {
     @RequiresPermissions("schedule:task:pause")
     @RateLimiter(0.5)
     @LogOperation("暂停")
-    public Result<?> pause(Long[] ids) {
+    public Result<Void> pause(Long[] ids) {
         AssertUtil.isNotEmpty("ids", ids);
         mainService.pause(ids);
         return Result.ok();
@@ -160,7 +160,7 @@ public class ScheduleTaskController {
     @RequiresPermissions("schedule:task:resume")
     @RateLimiter(0.5)
     @LogOperation("恢复")
-    public Result<?> resume(Long[] ids) {
+    public Result<Void> resume(Long[] ids) {
         AssertUtil.isNotEmpty("ids", ids);
         mainService.resume(ids);
         return Result.ok();
@@ -173,7 +173,7 @@ public class ScheduleTaskController {
      */
     @PostMapping("manualStart")
     @LogOperation("手动启动")
-    public Result<?> manualStart() {
+    public Result<Void> manualStart() {
         mainService.manualStart();
         return Result.ok();
     }

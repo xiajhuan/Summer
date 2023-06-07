@@ -59,7 +59,7 @@ public class Result<T> implements Serializable {
      *
      * @return 响应结果
      */
-    public static Result<?> ok() {
+    public static <T> Result<T> ok() {
         return ok(LocaleUtil.getI18nMessage(OkCode.OPERATION));
     }
 
@@ -82,7 +82,7 @@ public class Result<T> implements Serializable {
      * @param param 消息填充参数
      * @return 响应结果
      */
-    public static Result<?> ok(int code, String... param) {
+    public static <T> Result<T> ok(int code, String... param) {
         return ok(null, LocaleUtil.getI18nMessage(code, param));
     }
 
@@ -92,7 +92,7 @@ public class Result<T> implements Serializable {
      * @param msg 消息
      * @return 响应结果
      */
-    public static Result<?> ok(String msg) {
+    public static <T> Result<T> ok(String msg) {
         return ok(null, msg);
     }
 
@@ -131,7 +131,7 @@ public class Result<T> implements Serializable {
      *
      * @return 响应结果
      */
-    public static Result<?> fail() {
+    public static <T> Result<T> fail() {
         return fail(ErrorCode.OPERATION_FAILURE);
     }
 
@@ -142,7 +142,7 @@ public class Result<T> implements Serializable {
      * @param param 消息填充参数
      * @return 响应结果
      */
-    public static Result<?> fail(int code, String... param) {
+    public static <T> Result<T> fail(int code, String... param) {
         return fail(null, LocaleUtil.getI18nMessage(code, param));
     }
 
@@ -152,7 +152,7 @@ public class Result<T> implements Serializable {
      * @param msg 消息
      * @return 响应结果
      */
-    public static Result<?> fail(String msg) {
+    public static <T> Result<T> fail(String msg) {
         return fail(null, msg);
     }
 

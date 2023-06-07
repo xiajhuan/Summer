@@ -87,7 +87,7 @@ public class LocaleNameController extends BaseController {
     @RequiresPermissions("locale:name:add")
     @RateLimiter(0.5)
     @LogOperation(OperationConst.ADD)
-    public Result<?> add(@Validated(AddGroup.class) LocaleNameDto dto) {
+    public Result<Void> add(@Validated(AddGroup.class) LocaleNameDto dto) {
         mainService.add(dto);
         return Result.ok();
     }
@@ -102,7 +102,7 @@ public class LocaleNameController extends BaseController {
     @RequiresPermissions("locale:name:update")
     @RateLimiter(0.5)
     @LogOperation(OperationConst.UPDATE)
-    public Result<?> update(@Validated(UpdateGroup.class) LocaleNameDto dto) {
+    public Result<Void> update(@Validated(UpdateGroup.class) LocaleNameDto dto) {
         mainService.update(dto);
         return Result.ok();
     }
@@ -117,7 +117,7 @@ public class LocaleNameController extends BaseController {
     @RequiresPermissions("locale:name:delete")
     @RateLimiter(0.5)
     @LogOperation(OperationConst.DELETE)
-    public Result<?> delete(Long[] ids) {
+    public Result<Void> delete(Long[] ids) {
         AssertUtil.isNotEmpty("ids", ids);
         mainService.delete(ids);
         return Result.ok();
@@ -149,7 +149,7 @@ public class LocaleNameController extends BaseController {
     @RequiresPermissions("locale:name:excelImport")
     @RateLimiter(0.2)
     @LogOperation(OperationConst.EXCEL_IMPORT)
-    public Result<?> excelImport(MultipartFile file) {
+    public Result<Void> excelImport(MultipartFile file) {
         ExcelUtil.importDb(file, LocaleNameDto.class,
                 LocaleNameDbExcelParser.of(mainService, LocaleNameEntity.class));
         return Result.ok();

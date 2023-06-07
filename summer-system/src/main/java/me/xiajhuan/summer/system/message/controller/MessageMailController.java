@@ -83,7 +83,7 @@ public class MessageMailController {
     @RequiresPermissions("message:mail:add")
     @RateLimiter(0.5)
     @LogOperation(OperationConst.ADD)
-    public Result<?> add(@Validated(AddGroup.class) MessageMailDto dto) {
+    public Result<Void> add(@Validated(AddGroup.class) MessageMailDto dto) {
         mainService.add(dto);
         return Result.ok();
     }
@@ -98,7 +98,7 @@ public class MessageMailController {
     @RequiresPermissions("message:mail:update")
     @RateLimiter(0.5)
     @LogOperation(OperationConst.UPDATE)
-    public Result<?> update(@Validated(UpdateGroup.class) MessageMailDto dto) {
+    public Result<Void> update(@Validated(UpdateGroup.class) MessageMailDto dto) {
         mainService.update(dto);
         return Result.ok();
     }
@@ -113,7 +113,7 @@ public class MessageMailController {
     @RequiresPermissions("message:mail:delete")
     @RateLimiter(0.5)
     @LogOperation(OperationConst.DELETE)
-    public Result<?> delete(Long[] ids) {
+    public Result<Void> delete(Long[] ids) {
         AssertUtil.isNotEmpty("ids", ids);
         mainService.delete(ids);
         return Result.ok();
@@ -132,7 +132,7 @@ public class MessageMailController {
     @RequiresPermissions("message:mail:send")
     @RateLimiter(0.2)
     @LogOperation("发送")
-    public Result<?> send(@Validated(DefaultGroup.class) SendMailDto dto, MultipartFile[] files) {
+    public Result<Void> send(@Validated(DefaultGroup.class) SendMailDto dto, MultipartFile[] files) {
         // note：若没有文件上传，files为null而不是空数组
         if (mainService.send(dto, files)) {
             return Result.ok();

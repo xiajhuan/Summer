@@ -69,7 +69,7 @@ public class ExtendOssController extends BaseController {
     @RequiresPermissions("extend:oss:delete")
     @RateLimiter(0.5)
     @LogOperation(OperationConst.DELETE)
-    public Result<?> delete(Long[] ids) {
+    public Result<Void> delete(Long[] ids) {
         AssertUtil.isNotEmpty("ids", ids);
         mainService.delete(ids);
         return Result.ok();
@@ -87,7 +87,7 @@ public class ExtendOssController extends BaseController {
     @RequiresPermissions("extend:oss:uploadBatch")
     @RateLimiter(0.2)
     @LogOperation("批量上传")
-    public Result<?> uploadBatch(Boolean isPrivate, MultipartFile[] files) {
+    public Result<Void> uploadBatch(Boolean isPrivate, MultipartFile[] files) {
         AssertUtil.isNotNull("isPrivate", isPrivate);
         // note：若没有文件上传，files为null而不是空数组
         AssertUtil.isNotNull("files", files);

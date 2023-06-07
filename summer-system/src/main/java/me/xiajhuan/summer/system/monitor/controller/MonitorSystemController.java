@@ -14,6 +14,7 @@ package me.xiajhuan.summer.system.monitor.controller;
 
 import me.xiajhuan.summer.core.data.Result;
 import me.xiajhuan.summer.system.log.annotation.LogOperation;
+import me.xiajhuan.summer.system.monitor.dto.MonitorSystemDto;
 import me.xiajhuan.summer.system.monitor.service.MonitorSystemService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,7 +46,7 @@ public class MonitorSystemController {
     @GetMapping("info")
     @RequiresPermissions("monitor:system:info")
     @LogOperation("信息")
-    public Result<?> info() {
+    public Result<MonitorSystemDto> info() {
         return Result.ok(mainService.info());
     }
 

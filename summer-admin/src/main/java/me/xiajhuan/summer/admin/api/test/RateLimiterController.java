@@ -43,7 +43,7 @@ public class RateLimiterController {
      */
     @PostMapping("base")
     @RateLimiter(value = 0.2, msg = ErrorCode.SERVER_BUSY, keyStrategy = BaseKeyStrategy.class)
-    public Result<?> base(@RequestBody String json) {
+    public Result<Void> base(@RequestBody String json) {
         return printAndResponse(json);
     }
 
@@ -55,7 +55,7 @@ public class RateLimiterController {
      */
     @PostMapping("ip")
     @RateLimiter(value = 0.2, msg = ErrorCode.SERVER_BUSY)
-    public Result<?> ip(@RequestBody String json) {
+    public Result<Void> ip(@RequestBody String json) {
         return printAndResponse(json);
     }
 
@@ -67,7 +67,7 @@ public class RateLimiterController {
      */
     @PostMapping("param")
     @RateLimiter(value = 0.2, msg = ErrorCode.SERVER_BUSY, keyStrategy = ParamKeyStrategy.class)
-    public Result<?> param(@RequestBody String json) {
+    public Result<Void> param(@RequestBody String json) {
         return printAndResponse(json);
     }
 
@@ -79,7 +79,7 @@ public class RateLimiterController {
      */
     @PostMapping("username")
     @RateLimiter(value = 0.2, msg = ErrorCode.SERVER_BUSY, keyStrategy = UsernameKeyStrategy.class)
-    public Result<?> username(@RequestBody String json) {
+    public Result<Void> username(@RequestBody String json) {
         return printAndResponse(json);
     }
 
@@ -89,7 +89,7 @@ public class RateLimiterController {
      * @param json Json格式参数
      * @return 响应结果
      */
-    private Result<?> printAndResponse(String json) {
+    private Result<Void> printAndResponse(String json) {
         if (JSONUtil.isTypeJSON(json)) {
             Console.log("接收到Json数据：{}", json);
             return Result.ok();

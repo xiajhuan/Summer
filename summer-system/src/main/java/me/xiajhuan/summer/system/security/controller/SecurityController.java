@@ -79,7 +79,7 @@ public class SecurityController extends BaseController {
      * @return 响应结果
      */
     @PostMapping("logout")
-    public Result<?> logout(HttpServletRequest request) {
+    public Result<Void> logout(HttpServletRequest request) {
         mainService.logoutAndLog(getLoginUser(), request);
         return Result.ok();
     }

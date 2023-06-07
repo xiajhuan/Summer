@@ -89,7 +89,7 @@ public class SecurityUserController extends BaseController {
     @RequiresPermissions("security:user:add")
     @RateLimiter(0.5)
     @LogOperation(OperationConst.ADD)
-    public Result<?> add(@Validated(AddGroup.class) SecurityUserDto dto) {
+    public Result<Void> add(@Validated(AddGroup.class) SecurityUserDto dto) {
         mainService.add(dto);
         return Result.ok();
     }
@@ -104,7 +104,7 @@ public class SecurityUserController extends BaseController {
     @RequiresPermissions("security:user:update")
     @RateLimiter(0.5)
     @LogOperation(OperationConst.UPDATE)
-    public Result<?> update(@Validated(UpdateGroup.class) SecurityUserDto dto) {
+    public Result<Void> update(@Validated(UpdateGroup.class) SecurityUserDto dto) {
         mainService.update(dto);
         return Result.ok();
     }
@@ -119,7 +119,7 @@ public class SecurityUserController extends BaseController {
     @RequiresPermissions("security:user:delete")
     @RateLimiter(0.5)
     @LogOperation(OperationConst.DELETE)
-    public Result<?> delete(Long[] ids) {
+    public Result<Void> delete(Long[] ids) {
         AssertUtil.isNotEmpty("ids", ids);
         mainService.delete(ids);
         return Result.ok();
@@ -165,7 +165,7 @@ public class SecurityUserController extends BaseController {
      */
     @PutMapping("updateInfo")
     @LogOperation("修改信息")
-    public Result<?> updateInfo(@Validated(DefaultGroup.class) UserInfoDto dto, MultipartFile file) {
+    public Result<Void> updateInfo(@Validated(DefaultGroup.class) UserInfoDto dto, MultipartFile file) {
         validateFileType(file, FileTypeEnum.IMAGE);
         mainService.updateInfo(dto, fileUpload(file, false));
         return Result.ok();
@@ -179,7 +179,7 @@ public class SecurityUserController extends BaseController {
      */
     @PutMapping("password")
     @LogOperation("修改密码")
-    public Result<?> password(@Validated(DefaultGroup.class) PasswordDto dto) {
+    public Result<Void> password(@Validated(DefaultGroup.class) PasswordDto dto) {
         mainService.updatePasswordAndLogout(dto);
         return Result.ok();
     }
@@ -192,7 +192,7 @@ public class SecurityUserController extends BaseController {
      */
     @PutMapping("reset")
     @LogOperation("重置密码")
-    public Result<?> reset(Long[] ids) {
+    public Result<Void> reset(Long[] ids) {
         AssertUtil.isNotEmpty("ids", ids);
         String passwordReset = mainService.reset(ids);
         return passwordReset == null ? Result.fail() :
