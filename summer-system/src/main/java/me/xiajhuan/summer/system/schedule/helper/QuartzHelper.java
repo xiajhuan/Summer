@@ -69,7 +69,7 @@ public class QuartzHelper {
      * @param taskId    任务ID
      * @return {@link CronTrigger}
      */
-    public static CronTrigger getCronTrigger(Scheduler scheduler, Long taskId) {
+    public static CronTrigger getCronTrigger(Scheduler scheduler, long taskId) {
         try {
             return (CronTrigger) scheduler.getTrigger(getTriggerKey(taskId));
         } catch (SchedulerException e) {
@@ -84,7 +84,7 @@ public class QuartzHelper {
      * @param entity    定时任务Entity
      */
     public static void addTask(Scheduler scheduler, ScheduleTaskEntity entity) {
-        Long taskId = entity.getId();
+        long taskId = entity.getId();
 
         // 构建任务详情
         JobDetail jobDetail = JobBuilder.newJob(QuartzTaskExecutor.class)
@@ -118,7 +118,7 @@ public class QuartzHelper {
      * @param entity    定时任务Entity
      */
     public static void updateTask(Scheduler scheduler, ScheduleTaskEntity entity) {
-        Long taskId = entity.getId();
+        long taskId = entity.getId();
 
         TriggerKey triggerKey = getTriggerKey(taskId);
 
@@ -150,7 +150,7 @@ public class QuartzHelper {
      * @param scheduler {@link Scheduler}
      * @param taskId    任务ID
      */
-    public static void deleteTask(Scheduler scheduler, Long taskId) {
+    public static void deleteTask(Scheduler scheduler, long taskId) {
         try {
             // 删除任务
             scheduler.deleteJob(getJobKey(taskId));
@@ -166,7 +166,7 @@ public class QuartzHelper {
      * @param entity    定时任务Entity
      */
     public static void executeTask(Scheduler scheduler, ScheduleTaskEntity entity) {
-        Long taskId = entity.getId();
+        long taskId = entity.getId();
 
         // 任务信息放入JobDataMap，用于运行时获取
         JobDataMap jobDataMap = new JobDataMap();
@@ -186,7 +186,7 @@ public class QuartzHelper {
      * @param scheduler {@link Scheduler}
      * @param taskId    任务ID
      */
-    public static void pauseTask(Scheduler scheduler, Long taskId) {
+    public static void pauseTask(Scheduler scheduler, long taskId) {
         try {
             // 暂停任务
             scheduler.pauseJob(getJobKey(taskId));
@@ -201,7 +201,7 @@ public class QuartzHelper {
      * @param scheduler {@link Scheduler}
      * @param taskId    任务ID
      */
-    public static void resumeTask(Scheduler scheduler, Long taskId) {
+    public static void resumeTask(Scheduler scheduler, long taskId) {
         try {
             // 恢复任务
             scheduler.resumeJob(getJobKey(taskId));
@@ -233,7 +233,7 @@ public class QuartzHelper {
      * @param json       参数（Json格式）
      * @param type       类型，参考{@link TaskTypeEnum}
      */
-    private static void fillDataMap(JobDataMap jobDataMap, Long taskId, String beanName, String json, Integer type) {
+    private static void fillDataMap(JobDataMap jobDataMap, long taskId, String beanName, String json, int type) {
         jobDataMap.put(TASK_ID, taskId);
         jobDataMap.put(BEAN_NAME, beanName);
         jobDataMap.put(JSON, json);
@@ -246,7 +246,7 @@ public class QuartzHelper {
      * @param taskId 任务ID
      * @return {@link JobKey}
      */
-    private static JobKey getJobKey(Long taskId) {
+    private static JobKey getJobKey(long taskId) {
         return JobKey.jobKey(getTaskKey(taskId));
     }
 
@@ -256,7 +256,7 @@ public class QuartzHelper {
      * @param taskId 任务ID
      * @return {@link TriggerKey}
      */
-    private static TriggerKey getTriggerKey(Long taskId) {
+    private static TriggerKey getTriggerKey(long taskId) {
         return TriggerKey.triggerKey(getTaskKey(taskId));
     }
 
@@ -266,7 +266,7 @@ public class QuartzHelper {
      * @param taskId 任务ID
      * @return 任务Key
      */
-    private static String getTaskKey(Long taskId) {
+    private static String getTaskKey(long taskId) {
         return StrUtil.format("TASK_{}", taskId);
     }
 

@@ -12,7 +12,6 @@
 
 package me.xiajhuan.summer.system.schedule.service.impl;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -170,7 +169,7 @@ public class ScheduleTaskServiceImpl extends ServiceImpl<ScheduleTaskMapper, Sch
         checkStartup();
 
         LambdaQueryWrapper<ScheduleTaskEntity> queryWrapper = addSelectFieldForQuartz();
-        queryWrapper.in(ScheduleTaskEntity::getId, CollUtil.newHashSet(ids));
+        queryWrapper.in(ScheduleTaskEntity::getId, Arrays.stream(ids).collect(Collectors.toSet()));
         List<ScheduleTaskEntity> entityList = list(queryWrapper);
 
         if (entityList.size() > 0) {

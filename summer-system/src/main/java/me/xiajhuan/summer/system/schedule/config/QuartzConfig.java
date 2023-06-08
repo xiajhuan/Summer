@@ -102,8 +102,8 @@ public class QuartzConfig {
         factory.setQuartzProperties(buildCustomProps());
 
         // 应用关闭时是否等待所有任务执行完
-        factory.setWaitForJobsToCompleteOnShutdown(setting
-                .getBool("wait-for-jobs-to-complete-on-shutdown", "Schedule", true));
+        factory.setWaitForJobsToCompleteOnShutdown(
+                setting.getBool("wait-for-jobs-to-complete-on-shutdown", "Schedule", true));
 
         // 将Spring的applicationContext加入到Quartz的schedulerContext中
         factory.setApplicationContextSchedulerContextKey("springContext");

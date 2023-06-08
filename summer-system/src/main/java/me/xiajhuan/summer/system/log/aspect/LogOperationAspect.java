@@ -121,8 +121,8 @@ public class LogOperationAspect {
      */
     private void saveLog(ProceedingJoinPoint point, long cost, OperationStatusEnum status) {
         // 获取切入点方法所属Controller上的RequestMapping注解
-        Class<?> controllerClass = point.getTarget().getClass();
-        RequestMapping requestMapping = AnnotationUtils.findAnnotation(controllerClass, RequestMapping.class);
+        RequestMapping requestMapping = AnnotationUtils.findAnnotation(
+                point.getTarget().getClass(), RequestMapping.class);
         if (requestMapping == null) {
             return;
         }
@@ -139,10 +139,11 @@ public class LogOperationAspect {
         HttpServletRequest request = ServletUtil.getHttpRequest();
 
         if (request != null) {
+            String operationName = logOperation.name();
             // 构建操作日志
             LogOperationEntity entity = LogOperationEntity.builder()
-                    .operation(StrUtil.format(OPERATION_FORMAT, logOperation.name(), requestMapping.path()))
-                    .operationGroup(getOperationGroup(logOperation.name()))
+                    .operation(StrUtil.format(OPERATION_FORMAT, operationName, requestMapping.path()))
+                    .operationGroup(getOperationGroup(operationName))
                     .operateBy(SecurityUtil.getCurrentUsername(NonLoggedUserEnum.THIRD_PART.getValue()))
                     .status(status.getValue())
                     .requestTime((int) cost)

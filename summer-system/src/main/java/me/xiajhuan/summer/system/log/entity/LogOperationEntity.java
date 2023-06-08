@@ -12,12 +12,8 @@
 
 package me.xiajhuan.summer.system.log.entity;
 
-import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import me.xiajhuan.summer.core.base.entity.SimpleEntity;
 import me.xiajhuan.summer.core.enums.NonLoggedUserEnum;
 import me.xiajhuan.summer.system.log.enums.OperationGroupEnum;
@@ -32,6 +28,7 @@ import java.util.Date;
  * @date 2022/11/28
  */
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
@@ -104,112 +101,5 @@ public class LogOperationEntity extends SimpleEntity {
      * 操作人
      */
     private String operateBy;
-
-    //*******************改造lombok @Builder生成代码********************
-
-    public static LogOperationEntityBuilder builder() {
-        return new LogOperationEntityBuilder();
-    }
-
-    public static class LogOperationEntityBuilder {
-
-        private String createBy;
-
-        private Date createTime;
-
-        private String operation;
-
-        private Integer operationGroup;
-
-        private String requestUri;
-
-        private String requestMethod;
-
-        private String requestParams;
-
-        private Integer requestTime;
-
-        private String userAgent;
-
-        private String ip;
-
-        private Integer status;
-
-        private String operateBy;
-
-        LogOperationEntityBuilder() {
-        }
-
-        public LogOperationEntityBuilder createBy(final String createBy) {
-            this.createBy = createBy;
-            return this;
-        }
-
-        public LogOperationEntityBuilder createTime(final Date createTime) {
-            this.createTime = createTime;
-            return this;
-        }
-
-        public LogOperationEntityBuilder operation(final String operation) {
-            if (StrUtil.isNotBlank(operation)) {
-                this.operation = operation;
-            }
-            return this;
-        }
-
-        public LogOperationEntityBuilder operationGroup(final Integer operationGroup) {
-            this.operationGroup = operationGroup;
-            return this;
-        }
-
-        public LogOperationEntityBuilder requestUri(final String requestUri) {
-            this.requestUri = requestUri;
-            return this;
-        }
-
-        public LogOperationEntityBuilder requestMethod(final String requestMethod) {
-            this.requestMethod = requestMethod;
-            return this;
-        }
-
-        public LogOperationEntityBuilder requestParams(final String requestParams) {
-            this.requestParams = requestParams;
-            return this;
-        }
-
-        public LogOperationEntityBuilder requestTime(final Integer requestTime) {
-            this.requestTime = requestTime;
-            return this;
-        }
-
-        public LogOperationEntityBuilder userAgent(final String userAgent) {
-            this.userAgent = userAgent;
-            return this;
-        }
-
-        public LogOperationEntityBuilder ip(final String ip) {
-            this.ip = ip;
-            return this;
-        }
-
-        public LogOperationEntityBuilder status(final Integer status) {
-            this.status = status;
-            return this;
-        }
-
-        public LogOperationEntityBuilder operateBy(final String operateBy) {
-            this.operateBy = operateBy;
-            return this;
-        }
-
-        public LogOperationEntity build() {
-            return new LogOperationEntity(this.createBy, this.createTime, this.operation, this.operationGroup, this.requestUri, this.requestMethod, this.requestParams, this.requestTime, this.userAgent, this.ip, this.status, this.operateBy);
-        }
-
-        public String toString() {
-            return "LogOperationEntity.LogOperationEntityBuilder(createBy=" + this.createBy + ", createTime=" + createTime + ", operation=" + this.operation + ", operationGroup=" + operationGroup + ", requestUri=" + this.requestUri + ", requestMethod=" + this.requestMethod + ", requestParams=" + this.requestParams + ", requestTime=" + this.requestTime + ", userAgent=" + this.userAgent + ", ip=" + this.ip + ", status=" + this.status + ", operateBy=" + this.operateBy + ")";
-        }
-
-    }
 
 }

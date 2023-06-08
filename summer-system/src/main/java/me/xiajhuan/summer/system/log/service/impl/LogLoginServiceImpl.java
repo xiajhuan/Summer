@@ -111,7 +111,7 @@ public class LogLoginServiceImpl extends ServiceImpl<LogLoginMapper, LogLoginEnt
     }
 
     @Override
-    public void saveAsync(String loginUser, int loginOperation, int loginStatus, HttpServletRequest request) {
+    public void saveAsync(String loginUser, Integer loginOperation, Integer loginStatus, HttpServletRequest request) {
         // 构建登录日志
         LogLoginEntity entity = LogLoginEntity.builder()
                 .loginUser(loginUser)

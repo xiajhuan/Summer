@@ -202,14 +202,15 @@ public class MessageMailServiceImpl extends ServiceImpl<MessageMailMapper, Messa
             }
         }
 
+        long mailId = dto.getMailId();
         LambdaQueryWrapper<MessageMailEntity> queryWrapper = getEmptyWrapper();
-        queryWrapper.eq(MessageMailEntity::getId, dto.getMailId());
+        queryWrapper.eq(MessageMailEntity::getId, mailId);
         queryWrapper.select(MessageMailEntity::getName, MessageMailEntity::getSubject, MessageMailEntity::getContent,
                 MessageMailEntity::getContentType);
         MessageMailEntity entity = getOne(queryWrapper);
         // 邮件不存在
         if (entity == null) {
-            throw ValidationException.of(ErrorCode.MAIL_NOT_EXISTS, String.valueOf(dto.getMailId()));
+            throw ValidationException.of(ErrorCode.MAIL_NOT_EXISTS, String.valueOf(mailId));
         }
 
         // 邮件正文
@@ -223,8 +224,6 @@ public class MessageMailServiceImpl extends ServiceImpl<MessageMailMapper, Messa
             }
         }
 
-        // 收件人集合
-        Set<String> toSet = Arrays.stream(dto.getReceiversTo().split(StrPool.COMMA)).collect(Collectors.toSet());
         // 抄送人集合
         Set<String> ccSet = null;
         String receiversCc = dto.getReceiversCc();
@@ -260,7 +259,8 @@ public class MessageMailServiceImpl extends ServiceImpl<MessageMailMapper, Messa
         }
 
         // 发送处理
-        return sendInternal(entity.getName(), entity.getSubject(), content, entity.getContentType(), toSet, ccSet, bccSet, fileArray);
+        return sendInternal(entity.getName(), entity.getSubject(), content, entity.getContentType(),
+                Arrays.stream(dto.getReceiversTo().split(StrPool.COMMA)).collect(Collectors.toSet()), ccSet, bccSet, fileArray);
     }
 
     /**

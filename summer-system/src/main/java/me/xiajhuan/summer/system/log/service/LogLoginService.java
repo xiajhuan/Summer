@@ -53,7 +53,7 @@ public interface LogLoginService extends IService<LogLoginEntity> {
      * @param request        {@link HttpServletRequest}
      */
     @Async(ThreadPoolConst.ASYNC_COMMON)
-    void saveAsync(String loginUser, int loginOperation, int loginStatus, HttpServletRequest request);
+    void saveAsync(String loginUser, Integer loginOperation, Integer loginStatus, HttpServletRequest request);
 
     /**
      * 清理

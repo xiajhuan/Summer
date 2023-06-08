@@ -92,7 +92,7 @@ public class MonitorOnlineServiceImpl extends ServiceImpl<MonitorOnlineMapper, M
         String deptName = String.valueOf(CacheServerFactory.getCacheServer()
                 .getHash(dept(userEntity.getDeptId()), "name"));
 
-        Long userId = userEntity.getId();
+        long userId = userEntity.getId();
         // 查询原来的在线用户
         MonitorOnlineEntity entity = getOne(getUserIdCondition(userId));
 
@@ -150,7 +150,7 @@ public class MonitorOnlineServiceImpl extends ServiceImpl<MonitorOnlineMapper, M
      * @param userId 用户ID
      * @return {@link LambdaQueryWrapper}
      */
-    private LambdaQueryWrapper<MonitorOnlineEntity> getUserIdCondition(Long userId) {
+    private LambdaQueryWrapper<MonitorOnlineEntity> getUserIdCondition(long userId) {
         LambdaQueryWrapper<MonitorOnlineEntity> queryWrapper = getEmptyWrapper();
         queryWrapper.eq(MonitorOnlineEntity::getUserId, userId);
         return queryWrapper;
