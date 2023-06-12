@@ -45,7 +45,7 @@
         <freemarker.version>2.3.32</freemarker.version>
         <commons-compress.version>1.23.0</commons-compress.version>
         <commons-pool2.version>2.11.1</commons-pool2.version>
-        <guava.version>32.0.0-jre</guava.version>
+        <guava.version>32.0.1-jre</guava.version>
         <hutool.version>5.8.19</hutool.version>
         <javax-mail.version>1.6.2</javax-mail.version>
         <easyexcel.version>3.3.2</easyexcel.version>
@@ -53,7 +53,7 @@
         <minio.version>8.5.3</minio.version>
         <qiniu.version>7.13.1</qiniu.version>
         <maven-compiler.version>3.11.0</maven-compiler.version>
-        <maven-surefire.version>3.1.0</maven-surefire.version>
+        <maven-surefire.version>3.1.2</maven-surefire.version>
     </properties>
 
     <dependencyManagement>
