@@ -79,6 +79,6 @@ public interface SecurityService {
      * @param delOnline 是否删除在线用户，true：是 false：否
      * @return 是否退出成功，true：是 false：否
      */
-    boolean logout(Long userId, boolean delOnline);
+    boolean logout(Long userId, Boolean delOnline);
 
 }

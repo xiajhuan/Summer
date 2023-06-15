@@ -233,7 +233,7 @@ public class SecurityDeptServiceImpl extends ServiceImpl<SecurityDeptMapper, Sec
      * @param idToDeptMap 部门ID和部门Entity映射
      * @param parentIdSet 上级部门ID集合
      */
-    private void getParentIdSetRecursion(Long parentId, Map<Long, SecurityDeptEntity> idToDeptMap, Set<Long> parentIdSet) {
+    private void getParentIdSetRecursion(long parentId, Map<Long, SecurityDeptEntity> idToDeptMap, Set<Long> parentIdSet) {
         if (TreeConst.ROOT != parentId) {
             // 非顶级部门，必然存在上级部门
             SecurityDeptEntity parent = idToDeptMap.get(parentId);

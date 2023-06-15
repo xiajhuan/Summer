@@ -222,11 +222,13 @@ public class SecurityServiceImpl implements SecurityService {
     public TokenDto login(LoginDto loginDto, HttpServletRequest request) {
         if (enableCaptcha) {
             // 校验验证码
-            AssertUtil.isNotBlank("uuid", loginDto.getUuid());
-            if (StrUtil.isBlank(loginDto.getCaptcha())) {
+            String uuid = loginDto.getUuid();
+            AssertUtil.isNotBlank("uuid", uuid);
+            String captcha = loginDto.getCaptcha();
+            if (StrUtil.isBlank(captcha)) {
                 throw ValidationException.of(ErrorCode.CAPTCHA_NOT_NULL);
             }
-            if (!validateCaptcha(loginDto.getUuid(), loginDto.getCaptcha())) {
+            if (!validateCaptcha(uuid, captcha)) {
                 throw ValidationException.of(ErrorCode.CAPTCHA_ERROR);
             }
         }
@@ -288,7 +290,7 @@ public class SecurityServiceImpl implements SecurityService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean logout(Long userId, boolean delOnline) {
+    public boolean logout(Long userId, Boolean delOnline) {
         if (delOnline) {
             // 删除在线用户
             monitorOnlineService.delete(userId);
@@ -396,7 +398,7 @@ public class SecurityServiceImpl implements SecurityService {
             loginUser.setDeptIdRoleBasedSet(securityRoleDeptMapper.getDeptIdRoleBasedSet(loginUser.getId()));
 
             // 本部门及本部门下子部门ID
-            Long deptId = loginUser.getDeptId();
+            long deptId = loginUser.getDeptId();
             Set<Long> deptIdSet = securityDeptService.getChildIdSet(deptId);
             deptIdSet.add(deptId);
             loginUser.setDeptAndChildIdSet(deptIdSet);

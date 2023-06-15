@@ -220,7 +220,7 @@ public class SecurityUserServiceImpl extends ServiceImpl<SecurityUserMapper, Sec
         entity.setUpdateBy(currentUsername);
         entity.setUpdateTime(now);
         if (save(entity)) {
-            Long id = entity.getId();
+            long id = entity.getId();
 
             // 保存角色用户关联
             saveOrUpdateRoleUser(id, dto.getRoleIdSet(), false);
@@ -235,7 +235,7 @@ public class SecurityUserServiceImpl extends ServiceImpl<SecurityUserMapper, Sec
     public void update(SecurityUserDto dto) {
         handleDtoBefore(dto);
 
-        Long id = dto.getId();
+        long id = dto.getId();
         // 更新前的用户名
         String oldUsername = baseMapper.getUsername(id);
 
@@ -299,7 +299,7 @@ public class SecurityUserServiceImpl extends ServiceImpl<SecurityUserMapper, Sec
 
     @Override
     public UserInfoDto info() {
-        Long id = SecurityUtil.getCurrentUserId();
+        long id = SecurityUtil.getCurrentUserId();
 
         LambdaQueryWrapper<SecurityUserEntity> queryWrapper = getEmptyWrapper();
         queryWrapper.eq(SecurityUserEntity::getId, id);
@@ -390,7 +390,7 @@ public class SecurityUserServiceImpl extends ServiceImpl<SecurityUserMapper, Sec
      * @param roleIdSet 角色ID集合
      * @param isUpdate  是否为更新，true：是 false：否
      */
-    private void saveOrUpdateRoleUser(Long id, Set<Long> roleIdSet, boolean isUpdate) {
+    private void saveOrUpdateRoleUser(long id, Set<Long> roleIdSet, boolean isUpdate) {
         if (isUpdate) {
             // 更新则先删除原来的角色用户关联
             LambdaQueryWrapper<SecurityRoleUserEntity> queryWrapper = Wrappers.lambdaQuery();
@@ -416,7 +416,7 @@ public class SecurityUserServiceImpl extends ServiceImpl<SecurityUserMapper, Sec
      * @param postIdSet 岗位ID集合
      * @param isUpdate  是否为更新，true：是 false：否
      */
-    private void saveOrUpdateUserPost(Long id, Set<Long> postIdSet, boolean isUpdate) {
+    private void saveOrUpdateUserPost(long id, Set<Long> postIdSet, boolean isUpdate) {
         if (isUpdate) {
             // 更新则先删除原来的用户岗位关联
             LambdaQueryWrapper<SecurityUserPostEntity> queryWrapper = Wrappers.lambdaQuery();
@@ -468,7 +468,7 @@ public class SecurityUserServiceImpl extends ServiceImpl<SecurityUserMapper, Sec
      * @return {@link LambdaUpdateWrapper}
      */
     private LambdaUpdateWrapper<SecurityUserEntity> addUserSetField(String newPassword, String username) {
-        // note：通过 update(LambdaUpdateWrapper) 更新时字段自动填充不会生效
+        // note：通过update(LambdaUpdateWrapper)更新时字段自动填充不会生效
         LambdaUpdateWrapper<SecurityUserEntity> updateWrapper = Wrappers.lambdaUpdate();
         updateWrapper.set(SecurityUserEntity::getPassword, newPassword);
         updateWrapper.set(SecurityUserEntity::getUpdateBy, username);

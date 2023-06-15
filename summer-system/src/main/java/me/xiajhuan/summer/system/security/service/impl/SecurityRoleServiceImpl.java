@@ -40,6 +40,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -137,7 +138,7 @@ public class SecurityRoleServiceImpl extends ServiceImpl<SecurityRoleMapper, Sec
         SecurityRoleEntity entity = BeanUtil.convert(dto, SecurityRoleEntity.class);
 
         if (save(entity)) {
-            Long id = entity.getId();
+            long id = entity.getId();
 
             // 保存角色菜单关联
             saveOrUpdateRoleMenu(id, dto.getMenuIdSet(), false);
@@ -153,7 +154,7 @@ public class SecurityRoleServiceImpl extends ServiceImpl<SecurityRoleMapper, Sec
         SecurityRoleEntity entity = BeanUtil.convert(dto, SecurityRoleEntity.class);
 
         if (updateById(entity)) {
-            Long id = entity.getId();
+            long id = entity.getId();
 
             // 修改角色菜单关联
             saveOrUpdateRoleMenu(id, dto.getMenuIdSet(), true);
@@ -193,7 +194,7 @@ public class SecurityRoleServiceImpl extends ServiceImpl<SecurityRoleMapper, Sec
      * @param menuIdSet 菜单ID集合
      * @param isUpdate  是否为更新，true：是 false：否
      */
-    private void saveOrUpdateRoleMenu(Long id, Set<Long> menuIdSet, boolean isUpdate) {
+    private void saveOrUpdateRoleMenu(long id, Set<Long> menuIdSet, boolean isUpdate) {
         if (isUpdate) {
             // 更新则先删除原来的角色菜单关联
             LambdaQueryWrapper<SecurityRoleMenuEntity> queryWrapper = Wrappers.lambdaQuery();
@@ -219,7 +220,7 @@ public class SecurityRoleServiceImpl extends ServiceImpl<SecurityRoleMapper, Sec
      * @param deptIdSet 部门ID集合
      * @param isUpdate  是否为更新，true：是 false：否
      */
-    private void saveOrUpdateRoleDept(Long id, Set<Long> deptIdSet, boolean isUpdate) {
+    private void saveOrUpdateRoleDept(long id, Set<Long> deptIdSet, boolean isUpdate) {
         if (isUpdate) {
             // 更新则先删除原来的角色部门关联
             LambdaQueryWrapper<SecurityRoleDeptEntity> queryWrapper = Wrappers.lambdaQuery();
@@ -230,13 +231,14 @@ public class SecurityRoleServiceImpl extends ServiceImpl<SecurityRoleMapper, Sec
         if (deptIdSet.size() > 0) {
             // 保存新角色部门关联，note：这里数据量不会很大，直接循环插入就好
             String currentUsername = SecurityUtil.getCurrentUsername();
+            Date now = DateUtil.date();
             deptIdSet.forEach(deptId -> {
                 SecurityRoleDeptEntity entity = new SecurityRoleDeptEntity();
                 entity.setRoleId(id);
                 entity.setDeptId(deptId);
                 // note：这里不能使用字段自动填充，否则deptId会被覆盖！
                 entity.setCreateBy(currentUsername);
-                entity.setCreateTime(DateUtil.date());
+                entity.setCreateTime(now);
                 securityRoleDeptMapper.insert(entity);
             });
         }
