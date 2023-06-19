@@ -95,7 +95,7 @@ Summer
 - CommonsCompress：1.23.0
 - CommonsPool2：2.11.1
 - Guava：32.0.1-jre
-- Hutool：5.8.19
+- Hutool：5.8.20
 - JavaxMail：1.6.2
 - EasyExcel：3.3.2
 - MicaXss：2.7.12

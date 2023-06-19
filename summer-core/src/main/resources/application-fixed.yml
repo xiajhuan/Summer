@@ -75,7 +75,7 @@ spring:
         connection-timeout: 30000
         # 校验超时时间（ms）
         validation-timeout: 5000
-        # 空间连接最大存活时间（ms）
+        # 空闲连接最大存活时间（ms）
         idle-timeout: 600000
         # 连接最大生命周期（ms）
         max-lifetime: 1800000
