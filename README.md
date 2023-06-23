@@ -82,7 +82,7 @@ Summer
 ```
 
 ### 📝依赖清单
-- SpringBoot：2.7.12
+- SpringBoot：2.7.13
 - MysqlConnector：8.0.33
 - DynamicDatasource：3.6.1
 - MybatisPlus：3.5.3.1
@@ -99,7 +99,7 @@ Summer
 - JavaxMail：1.6.2
 - EasyExcel：3.3.2
 - MicaXss：2.7.12
-- MinIoSdk：8.5.3
+- MinIoSdk：8.5.4
 - QiNiuSdk：7.13.1
 
 ## 🎁功能支持

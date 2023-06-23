@@ -33,7 +33,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <summer.version>1.2.3</summer.version>
-        <spring-boot.version>2.7.12</spring-boot.version>
+        <spring-boot.version>2.7.13</spring-boot.version>
         <mysql-connector.version>8.0.33</mysql-connector.version>
         <dynamic-datasource.version>3.6.1</dynamic-datasource.version>
         <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
@@ -50,7 +50,7 @@
         <javax-mail.version>1.6.2</javax-mail.version>
         <easyexcel.version>3.3.2</easyexcel.version>
         <mica-xss.version>2.7.12</mica-xss.version>
-        <minio.version>8.5.3</minio.version>
+        <minio.version>8.5.4</minio.version>
         <qiniu.version>7.13.1</qiniu.version>
         <maven-compiler.version>3.11.0</maven-compiler.version>
         <maven-surefire.version>3.1.2</maven-surefire.version>
@@ -245,7 +245,8 @@
         </resources>
     </build>
 
-    <!--阿里云maven仓库-->
+    <!--中央仓库：https://repo1.maven.org/maven2-->
+    <!--阿里云仓库-->
     <repositories>
         <repository>
             <id>public</id>
