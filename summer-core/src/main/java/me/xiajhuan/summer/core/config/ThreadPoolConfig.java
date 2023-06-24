@@ -50,9 +50,9 @@ public class ThreadPoolConfig {
     @Bean(ThreadPoolConst.ASYNC_COMMON)
     public ThreadPoolTaskExecutor threadPoolTaskExecutor(@Qualifier(SettingConst.CORE) Setting setting) {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        executor.setCorePoolSize(setting.getInt("core-pool-size", "Async", 8));
+        executor.setCorePoolSize(setting.getInt("core-pool-size", "Async", 16));
         executor.setAllowCoreThreadTimeOut(setting.getBool("allow-core-thread-timeout", "Async", false));
-        executor.setMaxPoolSize(setting.getInt("max-pool-size", "Async", 32));
+        executor.setMaxPoolSize(setting.getInt("max-pool-size", "Async", 64));
         executor.setQueueCapacity(setting.getInt("queue-capacity", "Async", 512));
         executor.setKeepAliveSeconds(setting.getInt("keep-alive-seconds", "Async", 30));
         executor.setThreadNamePrefix(ThreadPoolConst.ASYNC_COMMON_PREFIX);

@@ -49,7 +49,7 @@
         <hutool.version>5.8.20</hutool.version>
         <javax-mail.version>1.6.2</javax-mail.version>
         <easyexcel.version>3.3.2</easyexcel.version>
-        <mica-xss.version>2.7.12</mica-xss.version>
+        <mica-xss.version>2.7.13</mica-xss.version>
         <minio.version>8.5.4</minio.version>
         <qiniu.version>7.13.1</qiniu.version>
         <maven-compiler.version>3.11.0</maven-compiler.version>
