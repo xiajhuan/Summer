@@ -25,6 +25,8 @@ import me.xiajhuan.summer.core.ratelimiter.annotation.RateLimiter;
 import me.xiajhuan.summer.core.ratelimiter.strategy.KeyStrategy;
 import me.xiajhuan.summer.core.ratelimiter.strategy.LoadBalanceStrategy;
 import me.xiajhuan.summer.core.ratelimiter.strategy.StrategyFactory;
+import me.xiajhuan.summer.core.ratelimiter.strategy.impl.BaseKeyStrategy;
+import me.xiajhuan.summer.core.ratelimiter.strategy.impl.BaseLoadBalanceStrategy;
 import me.xiajhuan.summer.core.ratelimiter.strategy.impl.SettingKeyStrategy;
 import me.xiajhuan.summer.core.ratelimiter.strategy.impl.SettingLoadBalanceStrategy;
 import me.xiajhuan.summer.core.utils.JoinPointUtil;
@@ -43,7 +45,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.math.BigDecimal;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -171,24 +172,22 @@ public class RateLimiterAspect {
             }
 
             // 限流key策略实例
-            final KeyStrategy keyStrategy;
+            KeyStrategy keyStrategy;
             // 限流Key
-            String rateLimiterKey;
+            final String rateLimiterKey;
             // 附加消息格式
-            String extraMsgFormat = null;
+            final String extraMsgFormat;
 
             try {
                 // 获取限流key策略实例
                 keyStrategy = StrategyFactory.getKeyStrategy(keyStrategyClass);
-
-                rateLimiterKey = keyStrategy.getKey(point, request);
-
-                extraMsgFormat = keyStrategy.extraMsgFormat();
             } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
                 LOGGER.error(e, "key-Class【{}】获取Key失败，自动切换为基本Key策略，请参考【BaseKeyStrategy】编写", keyStrategyClass.getSimpleName());
 
-                rateLimiterKey = StrUtil.format(KeyStrategy.KEY_FORMAT, ServletUtil.getInterfaceSignature(request), StrUtil.EMPTY);
+                keyStrategy = BaseKeyStrategy.getInstance();
             }
+            rateLimiterKey = keyStrategy.getKey(point, request);
+            extraMsgFormat = keyStrategy.extraMsgFormat();
 
             //*******************实际Qps获取********************
 
@@ -212,20 +211,19 @@ public class RateLimiterAspect {
             }
 
             // 限流负载均衡策略实例
-            final LoadBalanceStrategy loadBalanceStrategy;
+            LoadBalanceStrategy loadBalanceStrategy;
             // 实际的Qps
-            double realQps;
+            final double realQps;
 
             try {
                 // 获取限流负载均衡策略实例
                 loadBalanceStrategy = StrategyFactory.getLoadBalanceStrategy(loadBalanceStrategyClass);
-
-                realQps = loadBalanceStrategy.calRealQps(setQps, nodeNum);
             } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
                 LOGGER.error(e, "LoadBalance-Class【{}】获取realQps失败，自动切换为基本负载均衡策略，请参考【BaseLoadBalanceStrategy】编写", loadBalanceStrategyClass.getSimpleName());
 
-                realQps = BigDecimal.valueOf(setQps / nodeNum).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+                loadBalanceStrategy = BaseLoadBalanceStrategy.getInstance();
             }
+            realQps = loadBalanceStrategy.calRealQps(setQps, nodeNum);
 
             //*******************限流处理********************
 
@@ -236,9 +234,11 @@ public class RateLimiterAspect {
                 RATE_LIMITER_CACHE.put(rateLimiterKey, limiter);
             }
 
+            String interfaceSignature = null;
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("接口【{}[{}]】设置Qps为：【{}】，当前节点实际Qps为：【{}】，key-Class【{}】，LoadBalance-Class【{}】{}",
-                        request.getRequestURI(), request.getMethod(), setQps, RATE_LIMITER_CACHE.get(rateLimiterKey).getRate(),
+                interfaceSignature = ServletUtil.getInterfaceSignature(request);
+                LOGGER.debug("接口【{}】设置Qps为：【{}】，当前节点实际Qps为：【{}】，key-Class【{}】，LoadBalance-Class【{}】{}",
+                        interfaceSignature, setQps, RATE_LIMITER_CACHE.get(rateLimiterKey).getRate(),
                         keyStrategyClass.getSimpleName(), loadBalanceStrategyClass.getSimpleName(),
                         extraMsgFormat != null ? StrUtil.format(extraMsgFormat, StrUtil.subAfter(rateLimiterKey, "#", true)) : StrUtil.EMPTY);
             }
@@ -252,8 +252,8 @@ public class RateLimiterAspect {
             }
             if (!limiter.tryAcquire(timeout, TimeUnit.MILLISECONDS)) {
                 if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("接口【{}[{}]】限流成功，key-Class【{}】，LoadBalance-Class【{}】{}",
-                            request.getRequestURI(), request.getMethod(), keyStrategyClass.getSimpleName(), loadBalanceStrategyClass.getSimpleName(),
+                    LOGGER.debug("接口【{}】限流成功，key-Class【{}】，LoadBalance-Class【{}】{}",
+                            interfaceSignature, keyStrategyClass.getSimpleName(), loadBalanceStrategyClass.getSimpleName(),
                             extraMsgFormat != null ? StrUtil.format(extraMsgFormat, StrUtil.subAfter(rateLimiterKey, "#", true)) : StrUtil.EMPTY);
                 }
 
