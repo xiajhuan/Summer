@@ -76,8 +76,8 @@ public class LocaleUtil {
         Setting setting = SpringUtil.getBean(SettingConst.CORE, Setting.class);
         defaultRequestHeader = setting.getByGroupWithLog("default.request-header", "Locale");
         if (StrUtil.isBlank(defaultRequestHeader)) {
-            // 没有配置则默认为：zh_CN
-            defaultRequestHeader = LocaleSupportEnum.ZH_CN.getName();
+            // 没有配置则默认为：en_US
+            defaultRequestHeader = LocaleSupportEnum.EN_US.getName();
         }
         defaultJvm = setting.getByGroupWithLog("default.jvm", "Locale");
         if (StrUtil.isBlank(defaultJvm)) {

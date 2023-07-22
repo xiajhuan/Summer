@@ -82,13 +82,13 @@ Summer
 ```
 
 ### 📝依赖清单
-- SpringBoot：2.7.13
-- MysqlConnector：8.0.33
+- SpringBoot：2.7.14
+- MysqlConnector：8.1.0
 - DynamicDatasource：3.6.1
 - MybatisPlus：3.5.3.1
 - P6spy：3.9.1
 - Lombok：1.18.28
-- Shiro：1.11.0
+- Shiro：1.12.0
 - Quartz：2.4.0-rc2
 - OkHttp：4.11.0
 - Freemarker：2.3.32
