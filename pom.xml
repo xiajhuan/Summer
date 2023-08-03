@@ -45,8 +45,8 @@
         <freemarker.version>2.3.32</freemarker.version>
         <commons-compress.version>1.23.0</commons-compress.version>
         <commons-pool2.version>2.11.1</commons-pool2.version>
-        <guava.version>32.1.1-jre</guava.version>
-        <hutool.version>5.8.20</hutool.version>
+        <guava.version>32.1.2-jre</guava.version>
+        <hutool.version>5.8.21</hutool.version>
         <javax-mail.version>1.6.2</javax-mail.version>
         <easyexcel.version>3.3.2</easyexcel.version>
         <mica-xss.version>2.7.14</mica-xss.version>
