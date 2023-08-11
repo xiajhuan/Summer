@@ -85,7 +85,7 @@ Summer
 - SpringBoot：2.7.14
 - MysqlConnector：8.1.0
 - DynamicDatasource：3.6.1
-- MybatisPlus：3.5.3.1
+- MybatisPlus：3.5.3.2
 - P6spy：3.9.1
 - Lombok：1.18.28
 - Shiro：1.12.0
@@ -100,7 +100,7 @@ Summer
 - EasyExcel：3.3.2
 - MicaXss：2.7.14
 - MinIoSdk：8.5.4
-- QiNiuSdk：7.13.1
+- QiNiuSdk：7.14.0
 
 ## 🎁功能支持
 |  服务     | 使用技术     |   进度         |    备注   |
