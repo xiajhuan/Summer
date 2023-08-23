@@ -50,7 +50,7 @@
         <javax-mail.version>1.6.2</javax-mail.version>
         <easyexcel.version>3.3.2</easyexcel.version>
         <mica-xss.version>2.7.14</mica-xss.version>
-        <minio.version>8.5.4</minio.version>
+        <minio.version>8.5.5</minio.version>
         <qiniu.version>7.14.0</qiniu.version>
         <maven-compiler.version>3.11.0</maven-compiler.version>
         <maven-surefire.version>3.1.2</maven-surefire.version>

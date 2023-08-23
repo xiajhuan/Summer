@@ -99,7 +99,7 @@ Summer
 - JavaxMail：1.6.2
 - EasyExcel：3.3.2
 - MicaXss：2.7.14
-- MinIoSdk：8.5.4
+- MinIoSdk：8.5.5
 - QiNiuSdk：7.14.0
 
 ## 🎁功能支持
