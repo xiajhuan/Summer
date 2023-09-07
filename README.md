@@ -82,7 +82,7 @@ Summer
 ```
 
 ### 📝依赖清单
-- SpringBoot：2.7.14
+- SpringBoot：2.7.15
 - MysqlConnector：8.1.0
 - DynamicDatasource：3.6.1
 - MybatisPlus：3.5.3.2
@@ -98,7 +98,7 @@ Summer
 - Hutool：5.8.21
 - JavaxMail：1.6.2
 - EasyExcel：3.3.2
-- MicaXss：2.7.14
+- MicaXss：2.7.15
 - MinIoSdk：8.5.5
 - QiNiuSdk：7.14.0
 
