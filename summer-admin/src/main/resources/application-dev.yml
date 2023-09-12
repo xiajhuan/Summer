@@ -14,15 +14,15 @@ spring:
         system:
           driver-class-name: com.mysql.cj.jdbc.Driver
           # rewriteBatchedStatements=true（批处理优化，大幅提升批量插入/更新/删除性能，但对数据库有性能损耗）
-          url: jdbc:mysql://origin-1:3306/summer-system?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai&autoReconnect=true&rewriteBatchedStatements=true
+          url: jdbc:mysql://192.168.2.71:3306/summer-system?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai&autoReconnect=true&rewriteBatchedStatements=true
           username: root
-          password: asda1992
+          password: 123456
         # business模块数据源（主从）
         master:
           driver-class-name: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://docker-1:3307/summer-business?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai&autoReconnect=true&rewriteBatchedStatements=true
+          url: jdbc:mysql://192.168.2.71:3306/summer-business?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai&autoReconnect=true&rewriteBatchedStatements=true
           username: root
-          password: asda1992
+          password: 123456
         slave:
           lazy: true
           driver-class-name: com.mysql.cj.jdbc.Driver
