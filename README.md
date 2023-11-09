@@ -82,15 +82,15 @@ Summer
 ```
 
 ### 📝依赖清单
-- SpringBoot：2.7.16
-- MysqlConnector：8.1.0
+- SpringBoot：2.7.17
+- MysqlConnector：8.2.0
 - DynamicDatasource：3.6.1
-- MybatisPlus：3.5.3.2
+- MybatisPlus：3.5.4.1
 - P6spy：3.9.1
 - Lombok：1.18.30
-- Shiro：1.12.0
+- Shiro：1.13.0
 - Quartz：2.4.0-rc2
-- OkHttp：4.11.0
+- OkHttp：4.12.0
 - Freemarker：2.3.32
 - CommonsCompress：1.24.0
 - CommonsPool2：2.12.0
@@ -98,7 +98,7 @@ Summer
 - Hutool：5.8.22
 - JavaxMail：1.6.2
 - EasyExcel：3.3.2
-- MicaXss：2.7.15
+- MicaXss：2.7.17.1
 - MinIoSdk：8.5.6
 - QiNiuSdk：7.14.0
 
