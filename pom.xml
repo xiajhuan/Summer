@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>me.xiajhuan</groupId>
     <artifactId>Summer</artifactId>
-    <version>1.2.5</version>
+    <version>1.2.6</version>
     <packaging>pom</packaging>
 
     <name>Summer</name>
@@ -32,16 +32,16 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
-        <summer.version>1.2.5</summer.version>
-        <spring-boot.version>2.7.16</spring-boot.version>
-        <mysql-connector.version>8.1.0</mysql-connector.version>
+        <summer.version>1.2.6</summer.version>
+        <spring-boot.version>2.7.17</spring-boot.version>
+        <mysql-connector.version>8.2.0</mysql-connector.version>
         <dynamic-datasource.version>3.6.1</dynamic-datasource.version>
-        <mybatis-plus.version>3.5.3.2</mybatis-plus.version>
+        <mybatis-plus.version>3.5.4.1</mybatis-plus.version>
         <p6spy.version>3.9.1</p6spy.version>
         <lombok.version>1.18.30</lombok.version>
-        <shiro.version>1.12.0</shiro.version>
+        <shiro.version>1.13.0</shiro.version>
         <quartz.version>2.4.0-rc2</quartz.version>
-        <okhttp.version>4.11.0</okhttp.version>
+        <okhttp.version>4.12.0</okhttp.version>
         <freemarker.version>2.3.32</freemarker.version>
         <commons-compress.version>1.24.0</commons-compress.version>
         <commons-pool2.version>2.12.0</commons-pool2.version>
@@ -49,11 +49,11 @@
         <hutool.version>5.8.22</hutool.version>
         <javax-mail.version>1.6.2</javax-mail.version>
         <easyexcel.version>3.3.2</easyexcel.version>
-        <mica-xss.version>2.7.15</mica-xss.version>
+        <mica-xss.version>2.7.17.1</mica-xss.version>
         <minio.version>8.5.6</minio.version>
         <qiniu.version>7.14.0</qiniu.version>
         <maven-compiler.version>3.11.0</maven-compiler.version>
-        <maven-surefire.version>3.1.2</maven-surefire.version>
+        <maven-surefire.version>3.2.2</maven-surefire.version>
     </properties>
 
     <dependencyManagement>
