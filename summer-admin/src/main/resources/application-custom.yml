@@ -1,9 +1,6 @@
 # 自定义配置
 # api模块配置
-template:
-  # Excel模板位置
-  # location: D:\Temp
-  location: /opt/module/summer/template
+
 
 # business模块配置
 

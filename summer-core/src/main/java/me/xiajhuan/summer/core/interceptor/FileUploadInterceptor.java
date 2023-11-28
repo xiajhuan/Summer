@@ -62,8 +62,7 @@ public class FileUploadInterceptor implements HandlerInterceptor {
     @SuppressWarnings("unchecked")
     private FileUploadInterceptor() throws FileNotFoundException {
         FileReader fileReader = FileReader.create(ResourceUtils
-                .getFile("/opt/module/summer/upload-limit.json"));
-//                .getFile("classpath:upload-limit.json"));
+                .getFile("classpath:upload-limit.json"));
         try {
             uploadLimit = JSONUtil.toBean(fileReader.readString(), Map.class);
         } catch (RuntimeException e) {

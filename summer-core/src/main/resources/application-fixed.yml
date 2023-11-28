@@ -14,7 +14,7 @@ application:
     #    1.在应用集群部署时数据无法共享！
     #    2.在应用关闭或重启时数据会丢失！
     #    3.当且仅当“应用单机部署且不想依赖Redis”或“集群部署作为Redis的次级缓存”时推荐使用！
-    type: HEAP
+    type: REDIS
   oss:
     # 对象存储类型，值：LOCAL/MIN_IO/QI_NIU
     type: MIN_IO
@@ -134,7 +134,7 @@ mica:
     # 拦截的路由
     path-patterns: /**
     # 放行的路由
-    path-exclude-patterns: /api/**
+    path-exclude-patterns: /api/test/**
 
 logging:
   # 日志级别
