@@ -33,7 +33,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <summer.version>1.2.6</summer.version>
-        <spring-boot.version>2.7.17</spring-boot.version>
+        <spring-boot.version>2.7.18</spring-boot.version>
         <mysql-connector.version>8.2.0</mysql-connector.version>
         <dynamic-datasource.version>3.6.1</dynamic-datasource.version>
         <mybatis-plus.version>3.5.4.1</mybatis-plus.version>
@@ -43,14 +43,14 @@
         <quartz.version>2.4.0-rc2</quartz.version>
         <okhttp.version>4.12.0</okhttp.version>
         <freemarker.version>2.3.32</freemarker.version>
-        <commons-compress.version>1.24.0</commons-compress.version>
+        <commons-compress.version>1.25.0</commons-compress.version>
         <commons-pool2.version>2.12.0</commons-pool2.version>
         <guava.version>32.1.3-jre</guava.version>
-        <hutool.version>5.8.22</hutool.version>
+        <hutool.version>5.8.23</hutool.version>
         <javax-mail.version>1.6.2</javax-mail.version>
         <easyexcel.version>3.3.2</easyexcel.version>
         <mica-xss.version>2.7.17.1</mica-xss.version>
-        <minio.version>8.5.6</minio.version>
+        <minio.version>8.5.7</minio.version>
         <qiniu.version>7.14.0</qiniu.version>
         <maven-compiler.version>3.11.0</maven-compiler.version>
         <maven-surefire.version>3.2.2</maven-surefire.version>
